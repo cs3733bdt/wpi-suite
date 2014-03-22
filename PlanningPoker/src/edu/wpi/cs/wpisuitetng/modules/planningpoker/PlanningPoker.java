@@ -36,11 +36,23 @@ public class PlanningPoker implements IJanewayModule {
 	    tabs.add(tab1);
 	}
 	
+	/**
+	 * Returns the name of the PlanningPoker tab.
+	
+	 * @return String * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName() * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName()
+	 */
 	@Override
 	public String getName() {
 		return "PlanningPoker";
 	}
 
+	
+	/**
+	 * Returns the tab that makes up the Planning Poker tab.
+	
+	
+	 * @return List<JanewayTabModel> * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs() * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs()
+	 */
 	@Override
 	public List<JanewayTabModel> getTabs() {
 		return tabs;
