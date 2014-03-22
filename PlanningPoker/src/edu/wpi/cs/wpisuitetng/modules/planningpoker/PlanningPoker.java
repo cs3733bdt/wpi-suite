@@ -9,6 +9,7 @@ import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 public class PlanningPoker implements IJanewayModule {
 	
@@ -23,6 +24,10 @@ public class PlanningPoker implements IJanewayModule {
 
 	    // Create a JPanel to hold the main contents of the tab
 	    MainView mainPanel = new MainView();
+	    
+	    //Add the panels to the view controller
+	    ViewEventController.getInstance().setMainView(mainPanel);
+	    ViewEventController.getInstance().setToolBar(toolbarPanel);
 
 	    // Create a tab model that contains the toolbar panel and the main content panel
 	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarPanel, mainPanel);
