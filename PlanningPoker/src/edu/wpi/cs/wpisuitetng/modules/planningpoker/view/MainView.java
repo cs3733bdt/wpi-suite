@@ -16,6 +16,9 @@ import javax.swing.JPanel;
  */
 public class MainView extends JPanel {
 	
+	/**
+	 * Adds Main View of the planning poker pannel when the user goes to the planning poker tab
+	 */
 	public MainView(){
 		this.add(new JLabel("PlanningPoker placeholder"));
 	    this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
