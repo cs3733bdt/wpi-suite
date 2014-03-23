@@ -3,6 +3,10 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import java.util.ArrayList;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
+
 /**
  * @author jonathanleitschuh
  *
@@ -11,6 +15,7 @@ public class ViewEventController {
 	private static ViewEventController instance = null;
 	private MainView main = null;
 	private ToolbarView toolbar = null;
+	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
 	
 	/**
 	 * Default constructor for the ViewEventController. Is protected to prevent instantiation.
@@ -47,5 +52,11 @@ public class ViewEventController {
 		toolbar = tb;
 		toolbar.repaint(); //Unsure why this is necessary but this is what is done in Requirement Manager
 	}
+	
+	
+	//When creating this method remember to uncomment the call for this in the closable tab component class
+	/*public void removeTab(JComponent comp){
+		if
+	} */
 
 }

@@ -10,12 +10,17 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.overview.OverviewPanel;
+
 /**
  * This class sets the main view when the user goes to the PlanningPoker tab 
  * @author jonathanleitschuh
  *
  */
 public class MainView extends JTabbedPane {
+	
+	
+	private OverviewPanel overview = new OverviewPanel();
 	
 	/**
 	 * Adds Main View of the planning poker panel when the user goes to the planning poker tab
