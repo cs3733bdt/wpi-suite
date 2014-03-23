@@ -11,10 +11,21 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
+/**
+ * This is the module for WPISuite that provides the Planning Poker system.
+ * This is where WPISuite users will be able to play the Planning Poker game.
+ * 
+ * @author Andrew Busch
+ */
 public class PlanningPoker implements IJanewayModule {
 	
 	List<JanewayTabModel> tabs;
 
+	/**
+	 * This is the only constructor for PlanningPoker. It constructs the main
+	 * view of the PlanningPoker module. Only creates the toolbar panel and the
+	 * main panel.
+	 */
 	public PlanningPoker() {
 	    // Initialize the list of tabs (however, this module has only one tab)
 	    tabs = new ArrayList<JanewayTabModel>();

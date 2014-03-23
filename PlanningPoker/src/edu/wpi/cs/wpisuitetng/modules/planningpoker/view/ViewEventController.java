@@ -13,7 +13,7 @@ public class ViewEventController {
 	private ToolbarView toolbar = null;
 	
 	/**
-	 * Default constructor for the ViewEventController. Is protected to prevent instaniation.
+	 * Default constructor for the ViewEventController. Is protected to prevent instantiation.
 	 */
 	private ViewEventController(){}
 	
