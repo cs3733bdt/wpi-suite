@@ -3,6 +3,7 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import java.util.ArrayList;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 
 /**
@@ -13,6 +14,7 @@ public class ViewEventController {
 	private static ViewEventController instance = null;
 	private MainView main = null;
 	private ToolbarView toolbar = null;
+	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
 	
 	/**
 	 * Default constructor for the ViewEventController. Is protected to prevent instantiation.
@@ -57,5 +59,10 @@ public class ViewEventController {
 		main.repaint();
 		main.setSelectedComponent(newGame);
 	}
+	
+	//When creating this method remember to uncomment the call for this in the closable tab component class
+	/*public void removeTab(JComponent comp){
+		if
+	} */
 
 }
