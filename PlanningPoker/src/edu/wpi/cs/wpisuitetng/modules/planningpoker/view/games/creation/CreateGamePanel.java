@@ -1,11 +1,3 @@
-<<<<<<< HEAD
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
-
-public class CreateGamePanel {
-
-	
-	
-=======
 /**
  * 
  */
@@ -32,5 +24,4 @@ public class CreateGamePanel extends JPanel {
 		this.add(new JLabel("This is a create game panel"));
 	}
 
->>>>>>> 72a622b2f7a0ec92cbbe3288d3b89e976e3cce93
 }

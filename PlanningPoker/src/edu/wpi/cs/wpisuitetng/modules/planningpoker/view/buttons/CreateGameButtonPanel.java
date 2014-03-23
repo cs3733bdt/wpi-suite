@@ -36,7 +36,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 public class CreateGameButtonPanel extends ToolbarGroupView{
 	
 	// initialize the main view toolbar buttons
-		private JButton createGameButton = new JButton("<html>Create<br />Requirement</html>");
+		private JButton createGameButton = new JButton("<html>Create<br />Game</html>");
 		private final JPanel contentPanel = new JPanel();
 	
 	public CreateGameButtonPanel(){
@@ -44,19 +44,14 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		this.setPreferredWidth(350);
-		
-		//this.createIterationButton.setSize(200, 200);
-		//this.createButton.setPreferredSize(new Dimension(200, 200));
 		this.createGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
-		// the action listener for the Create Requirement Button
+		// the action listener for the Create Game Button
 		createGameButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// bring up a create requirement pane if not in Multiple Requirement Editing Mode
-				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
+				// bring up a create game panel
 					ViewEventController.getInstance().createGame();
-			//	}
 			}
 		});		
 			

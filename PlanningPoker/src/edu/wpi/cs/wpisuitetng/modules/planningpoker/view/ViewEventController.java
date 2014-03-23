@@ -52,9 +52,13 @@ public class ViewEventController {
 		toolbar.repaint(); //Unsure why this is necessary but this is what is done in Requirement Manager
 	}
 	
+	/**
+	 * Creates a CreateGamePanel instance, adds a tab representing 
+	 * that panel, and switches to that new panel
+	 */
 	public void createGame() {
 		CreateGamePanel newGame = new CreateGamePanel();
-		main.addTab("New Game.", null, newGame, "New Game");
+		main.addTab("New Game", null, newGame, "New Game");
 		main.invalidate(); //force the tabbedpane to redraw.
 		main.repaint();
 		main.setSelectedComponent(newGame);

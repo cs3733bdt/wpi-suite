@@ -12,8 +12,6 @@ import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.overview.OverviewPanel;
 
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.overview.OverviewPanel;
-
 /**
  * This class sets the main view when the user goes to the PlanningPoker tab 
  * @author jonathanleitschuh
@@ -28,8 +26,7 @@ public class MainView extends JTabbedPane {
 	 * Adds Main View of the planning poker panel when the user goes to the planning poker tab
 	 */
 	public MainView(){
-		this.add(new JLabel("PlanningPoker placeholder"));
-		this.addTab("Requirement Overview", overview);
+		this.addTab("Overview", overview);
 	    this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
 	}
 
