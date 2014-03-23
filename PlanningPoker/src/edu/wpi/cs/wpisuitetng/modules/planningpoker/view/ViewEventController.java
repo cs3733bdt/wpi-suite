@@ -3,6 +3,8 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
+
 /**
  * @author jonathanleitschuh
  *
@@ -46,6 +48,14 @@ public class ViewEventController {
 	public void setToolBar(ToolbarView tb){
 		toolbar = tb;
 		toolbar.repaint(); //Unsure why this is necessary but this is what is done in Requirement Manager
+	}
+	
+	public void createGame() {
+		CreateGamePanel newGame = new CreateGamePanel();
+		main.addTab("New Game.", null, newGame, "New Game");
+		main.invalidate(); //force the tabbedpane to redraw.
+		main.repaint();
+		main.setSelectedComponent(newGame);
 	}
 
 }

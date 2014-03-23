@@ -9,6 +9,8 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.overview.OverviewPanel;
+
 /**
  * This class sets the main view when the user goes to the PlanningPoker tab 
  * @author jonathanleitschuh
@@ -21,6 +23,7 @@ public class MainView extends JPanel {
 	 */
 	public MainView(){
 		this.add(new JLabel("PlanningPoker placeholder"));
+		this.addTab("Requirement Overview", overview);
 	    this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
 	}
 

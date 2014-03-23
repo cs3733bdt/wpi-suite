@@ -22,5 +22,4 @@ public class ToolbarView extends DefaultToolbarView {
 		this.add(new JLabel("PlanningPoker toolbar placeholder")); // add a label with some placeholder text
 	    this.setBorder(BorderFactory.createLineBorder(Color.blue, 2)); // add a border so you can see the panel
 	}
-
 }
