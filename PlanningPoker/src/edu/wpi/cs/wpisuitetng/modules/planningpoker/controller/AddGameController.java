@@ -42,7 +42,7 @@ public class AddGameController implements ActionListener {
 		//and adding the parameter view in this constructor
 	}
 	
-	/*
+	/**
 	 * This method is called when the user click the create a new game button.
 	 * ******This method should be modified after the planningpoker.view is created.******
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
