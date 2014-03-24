@@ -3,6 +3,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -46,7 +47,7 @@ public class AddGameController implements ActionListener {
 	 * ******Need to be modified after the relative method is created in the model class******
 	 * @param game
 	 */
-	public void addGameToModel(){
+	public void addGameToModel(Game name){
 		
 	}
 	
@@ -55,7 +56,7 @@ public class AddGameController implements ActionListener {
 	 * ******Need to be modified after the relative method is created in the model class******
 	 * @param creator
 	 */
-	public void addCreatorToModel(){
+	public void addCreatorToModel(Game creator){
 		
 	}
 	
