@@ -8,7 +8,7 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
+//import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * Basic Game class that contains the data to be store for a Game
@@ -24,7 +24,7 @@ public class Game extends AbstractModel{
 	private Date creationTime;
 	
 	//TODO find out how to implement existing module classes
-	private List<Requirement> requirements;
+	//private List<Requirement> requirements;
 	
 	/*
 	 * dstapply

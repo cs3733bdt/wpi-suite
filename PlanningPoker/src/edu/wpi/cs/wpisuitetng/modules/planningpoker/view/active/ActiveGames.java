@@ -15,7 +15,7 @@ public class ActiveGames extends JTabbedPane {
 	
 	
 	public ActiveGames(){
-		this.add(new JLabel("This is the active games panel"));
+		//this.add(new JLabel("This is the active games panel"));
 		this.add(activeview);
 		
 	}
