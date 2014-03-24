@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 WPI-Suite
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: Team Bobby Drop Tables
+ ******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionListener;
@@ -27,12 +37,12 @@ public class AddGameController implements ActionListener {
 	 */
 	
 	public AddGameController(GameModel model){
-		this.model=model;
+		this.model=model;		
 		//delete this line of comment after adding this.view=view
 		//and adding the parameter view in this constructor
 	}
 	
-	/*
+	/**
 	 * This method is called when the user click the create a new game button.
 	 * ******This method should be modified after the planningpoker.view is created.******
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)

@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 WPI-Suite
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: Team Bobby Drop Tables
+ ******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
@@ -19,7 +29,7 @@ public class AddGameRequestObserver implements RequestObserver{
 		this.controller=controller;
 	}
 	
-	/*
+	/**
 	 * Parse the details of the new game that was received from the server 
 	 * then pass them to the controller
 	 * 
