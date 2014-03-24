@@ -19,7 +19,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.overview.OverviewPanel;
  */
 public class MainView extends JTabbedPane {
 	
-	
 	private OverviewPanel overview = new OverviewPanel();
 	
 	/**
