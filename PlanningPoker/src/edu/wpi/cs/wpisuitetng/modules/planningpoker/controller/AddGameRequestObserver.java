@@ -19,7 +19,7 @@ public class AddGameRequestObserver implements RequestObserver{
 		this.controller=controller;
 	}
 	
-	/*
+	/**
 	 * Parse the details of the new game that was received from the server 
 	 * then pass them to the controller
 	 * 
