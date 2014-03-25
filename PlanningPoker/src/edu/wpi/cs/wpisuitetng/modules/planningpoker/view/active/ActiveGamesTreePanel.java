@@ -16,7 +16,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.lists.JoinGameList;
  * @author TomPaolillo
  *
  */
-public class ActiveGamesTreePanel extends JPanel /*implements MouseListener, TreeSelectionListener*/{
+public class ActiveGamesTreePanel extends JPanel {
 
 	private JTree tree;
 	private JPanel gamesPanel = new JPanel();
@@ -28,11 +28,6 @@ public class ActiveGamesTreePanel extends JPanel /*implements MouseListener, Tre
 		this.gamesPanel.setBackground(Color.RED);
 		this.gamesPanel.setPreferredSize(new Dimension(150,350));		
 		this.add(new JoinGameList());
-		this.add(new CreateGameButtonPanel());
-		
-      //  this.setViewportView(tree);
-        
-        //ViewEventController.getInstance().setOverviewTree(this);
-		//this.refresh();  
+		this.add(new CreateGameButtonPanel());     
 	}
 }

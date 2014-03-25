@@ -22,22 +22,24 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 public class JoinGameList extends JPanel{
-	// initialize the main view toolbar buttons
-		private ArrayList<String> gameNames = new ArrayList<String>(); 	
-		private JList joinGameList;
-		private JScrollPane joinGameScroll;
-		private final JPanel contentPanel = new JPanel();
-	
-	public JoinGameList(){
+
+	// initializes the features that will be used in this panel
+	private ArrayList<String> gameNames = new ArrayList<String>();
+	private JList joinGameList;
+	private JScrollPane joinGameScroll;
+
+	public JoinGameList() {
+		// fills ArrayList with game names
 		this.gameNames.add("test game1");
 		this.gameNames.add("test game2");
 		this.gameNames.add("test game3");
 		this.gameNames.add("test game4");
 		this.gameNames.add("test game5");
+
+		this.joinGameList = new JList(gameNames.toArray()); // place ArrayList data into JList
+		this.joinGameScroll = new JScrollPane(joinGameList); // place JList into JScrollPane
 		
-		this.joinGameList = new JList(gameNames.toArray());
-		this.joinGameScroll = new JScrollPane(joinGameList);
-		
+		// Set Sizes
 		this.setPreferredSize(new Dimension(190,350));
 		this.joinGameScroll.setPreferredSize(new Dimension(175,350));
 		this.joinGameList.setPreferredSize(new Dimension(200,1000));
