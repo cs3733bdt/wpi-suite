@@ -27,7 +27,9 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * 
  * ******This class should be modified after the planningpoker.models and .view
  * are finished.******
+ *  * @author Andrew Busch
  * 
+
  * @author tianchanggu
  * 
  */
