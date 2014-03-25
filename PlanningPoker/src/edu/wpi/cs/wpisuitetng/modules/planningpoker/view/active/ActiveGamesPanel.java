@@ -2,7 +2,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-
 import javax.swing.JTable;
 
 /*
@@ -45,6 +44,7 @@ public class ActiveGamesPanel extends JSplitPane {
 		
 		/*table.getColumnModel().getColumn(7).setMinWidth(75); // Estimate
 		table.getColumnModel().getColumn(7).setMaxWidth(75); // Estimate*/
+		
 		
 		this.setLeftComponent(filterPanel);
 		this.setRightComponent(tablePanel);

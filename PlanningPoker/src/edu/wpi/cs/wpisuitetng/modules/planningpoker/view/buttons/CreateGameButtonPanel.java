@@ -10,6 +10,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -36,14 +37,14 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 public class CreateGameButtonPanel extends ToolbarGroupView{
 	
 	// initialize the main view toolbar buttons
-		private JButton createGameButton = new JButton("<html>Create<br />Game</html>");
+		private JButton createGameButton = new JButton("Create Game");
 		private final JPanel contentPanel = new JPanel();
 	
 	public CreateGameButtonPanel(){
 		super("");
 		
 		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-		this.setPreferredWidth(350);
+		this.setPreferredSize(new Dimension(110,100));
 		this.createGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		// the action listener for the Create Game Button

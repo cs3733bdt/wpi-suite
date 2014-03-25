@@ -20,14 +20,14 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGames;
  */
 public class MainView extends JTabbedPane {
 	
-	private OverviewPanel overview = new OverviewPanel();
+	//private OverviewPanel overview = new OverviewPanel();
 	private ActiveGames activeGames = new ActiveGames();
 	
 	/**
 	 * Adds Main View of the planning poker panel when the user goes to the planning poker tab
 	 */
 	public MainView(){
-		this.addTab("Overview", overview);
+		//this.addTab("Overview", overview);
 		this.addTab("Active Games", activeGames);
 	    this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
 	}

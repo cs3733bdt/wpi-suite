@@ -20,7 +20,6 @@ public class ToolbarView extends DefaultToolbarView {
 	 * Creates and positions the buttons/other information in the tool bar
 	 */
 	public ToolbarView(){
-		this.add(new CreateGameButtonPanel());
 	    this.setBorder(BorderFactory.createLineBorder(Color.blue, 2)); // add a border so you can see the panel
 	}
 }
