@@ -31,6 +31,7 @@ public class JoinGameTree extends JPanel{
 		this.createNodes(top);
 	    JTree gamesTree = new JTree(top);
 	    JScrollPane gameTreeScroll = new JScrollPane(gamesTree);
+	    gameTreeScroll.setPreferredSize(new Dimension(175,400));
 		
 	    this.add(gameTreeScroll);
 		}
