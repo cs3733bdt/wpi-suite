@@ -97,7 +97,7 @@ public class Game extends AbstractModel{
 	    final Gson parser = new Gson();
 	    return parser.fromJson(json, Game[].class);
 	}
-	
+
 	@Override
 	public void save() {}
 
