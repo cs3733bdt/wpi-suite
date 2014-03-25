@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.overview.OverviewPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGames;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 
 /**
  * This class sets the main view when the user goes to the PlanningPoker tab 
@@ -20,14 +20,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGames;
  */
 public class MainView extends JTabbedPane {
 	
-	//private OverviewPanel overview = new OverviewPanel();
-	private ActiveGames activeGames = new ActiveGames();
+	private ActiveGamesPanel activeGames = new ActiveGamesPanel();
 	
 	/**
 	 * Adds Main View of the planning poker panel when the user goes to the planning poker tab
 	 */
 	public MainView(){
-		//this.addTab("Overview", overview);
 		this.addTab("Active Games", activeGames);
 	    this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
 	}
