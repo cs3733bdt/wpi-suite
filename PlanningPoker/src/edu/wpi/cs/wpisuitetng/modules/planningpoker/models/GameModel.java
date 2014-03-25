@@ -37,4 +37,15 @@ public class GameModel extends AbstractListModel{
 		return 0;
 	}
 
+	/**
+	 * adds a Game to the data model games
+	 * @param newGame
+	 * 			game to be added to the games ArrayList
+	 */
+	public void addGame(Game newGame) {
+		games.add(newGame);
+		
+		this.fireIntervalAdded(this, 0, 0);
+	}
+
 }

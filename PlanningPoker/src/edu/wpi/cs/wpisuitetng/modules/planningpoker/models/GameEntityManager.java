@@ -4,6 +4,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 
 import edu.wpi.cs.wpisuitetng.Session;
+import edu.wpi.cs.wpisuitetng.database.Data;
 import edu.wpi.cs.wpisuitetng.exceptions.BadRequestException;
 import edu.wpi.cs.wpisuitetng.exceptions.ConflictException;
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
@@ -16,11 +17,24 @@ import edu.wpi.cs.wpisuitetng.modules.EntityManager;
  */
 public class GameEntityManager implements EntityManager<Game>{
 
+	private Data db;
+
+	public GameEntityManager(Data db) {
+		this.db = db;
+	}
+	
 	@Override
 	public Game makeEntity(Session s, String content)
 			throws BadRequestException, ConflictException, WPISuiteException {
 		// TODO Auto-generated method stub
-		return null;
+		
+		final Game newGame = Game.fromJSON(content);
+
+		if (!db.save(newGame, s.getProject())) {
+	        throw new WPISuiteException();
+	    }
+		
+		return newGame;
 	}
 
 	@Override
