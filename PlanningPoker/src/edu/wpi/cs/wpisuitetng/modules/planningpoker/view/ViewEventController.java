@@ -66,6 +66,11 @@ public class ViewEventController {
 		main.repaint();
 		main.setSelectedComponent(newGame);
 	}
+	/**
+	public void joinGame(){
+		
+	}
+	**/
 	
 	//When creating this method remember to uncomment the call for this in the closable tab component class
 	public void removeTab(JComponent comp){

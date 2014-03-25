@@ -42,6 +42,8 @@ public class ActiveGamesPanel extends JSplitPane {
 		table.getColumnModel().getColumn(6).setMinWidth(60); // Priority
 		table.getColumnModel().getColumn(6).setMaxWidth(60); // Priority
 		
+		//	table.getColumnModel().getColumn(0).
+		
 		/*table.getColumnModel().getColumn(7).setMinWidth(75); // Estimate
 		table.getColumnModel().getColumn(7).setMaxWidth(75); // Estimate*/
 		
@@ -50,4 +52,6 @@ public class ActiveGamesPanel extends JSplitPane {
 		this.setRightComponent(tablePanel);
 		this.setDividerLocation(180);
 	}
+	
+	
 }
