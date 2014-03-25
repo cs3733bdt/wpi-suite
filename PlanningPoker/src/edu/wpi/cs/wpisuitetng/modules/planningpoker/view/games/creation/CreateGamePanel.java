@@ -12,6 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
+
 /**
  * Used to create a new Planning Poker game using the input of a user
  * Allows the user to select a set of requirements from a list and create a game out of these.
@@ -24,7 +26,7 @@ public class CreateGamePanel extends JPanel {
 	private boolean readyToRemove = true; //The window starts off ready to remove because no changes have happened
 	
 	//TODO add an implemenation of the game
-	//Game displayGame;
+	Game displayGame;
 	
 	/**
 	 * Constructor for creating a game
@@ -32,8 +34,8 @@ public class CreateGamePanel extends JPanel {
 	public CreateGamePanel(){
 		super(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		//TODO add the implementation of a game
-				//displaygame = new Game();
+		
+		//displayGame = new Game();
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		//c.anchor = GridBagConstraints.PAGE_START;
