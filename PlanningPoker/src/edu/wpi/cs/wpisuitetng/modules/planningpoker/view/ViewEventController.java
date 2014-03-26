@@ -3,10 +3,12 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 
 /**
@@ -72,13 +74,74 @@ public class ViewEventController {
 	}
 	**/
 	
-	//When creating this method remember to uncomment the call for this in the closable tab component class
+	
+	/**
+	 * Removes the tab for the given JComponent
+	 * CreateGamePanel is only removed when it returns that it is ready to be removed
+	 * 
+	 * @param comp the component to remove
+	 */
 	public void removeTab(JComponent comp){
 		if (comp instanceof CreateGamePanel){
 			if(!((CreateGamePanel) comp).readyToRemove()) return;
 			this.listOfCreateGamePanels.remove(comp);
 		}
 		main.remove(comp);
+	}
+	
+	/**
+	 * Closes all of the tabs besides the overview tab in the main view.
+	 */
+	public void closeAllTabs() {
+
+		int tabCount = main.getTabCount();
+
+		for(int i = tabCount - 1; i >= 0; i--)
+		{
+			Component toBeRemoved = main.getComponentAt(i);
+
+			if(toBeRemoved instanceof ActiveGamesPanel) continue;
+			
+
+			if(toBeRemoved instanceof CreateGamePanel)
+			{
+				if(!((CreateGamePanel)toBeRemoved).readyToRemove()) continue;
+				this.listOfCreateGamePanels.remove(toBeRemoved);
+			}
+
+			main.removeTabAt(i);
+		}
+
+		main.repaint();
+	}
+	
+	/**
+	 * Closes all the tabs except for the one that was clicked.
+	 * 
+	 */
+	public void closeOthers() {
+		int tabCount = main.getTabCount();
+		Component selected = main.getSelectedComponent();
+
+		for(int i = tabCount - 1; i >= 0; i--)
+		{
+			Component toBeRemoved = main.getComponentAt(i);
+
+			if(toBeRemoved instanceof ActiveGamesPanel){continue;}
+			if(toBeRemoved == selected){
+				continue;}
+
+			if(toBeRemoved instanceof CreateGamePanel)
+			{
+				if(!((CreateGamePanel)toBeRemoved).readyToRemove()){
+					break;}
+				this.listOfCreateGamePanels.remove(toBeRemoved);
+			}
+
+			main.removeTabAt(i);
+		}
+		main.repaint();
+
 	}
 
 }

@@ -65,7 +65,6 @@ public class CreateGamePanel extends JPanel {
 			return result == 0;
 		}
 		
-		
 	}
 	
 	
