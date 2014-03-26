@@ -4,9 +4,12 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
+
+//import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game;
 
 /**
  * @author dstapply
@@ -35,6 +38,34 @@ public class GameModel extends AbstractListModel{
 	public int getSize() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	/**
+	 * adds a Game to the data model games
+	 * @param newGame
+	 * 			game to be added to the games ArrayList
+	 */
+	public void addGame(Game newGame) {
+		games.add(newGame);
+		
+		this.fireIntervalAdded(this, 0, 0);
+	}
+
+	public void emptyModel() {
+		int oldSize = getSize();
+		Iterator<Game> iterator = games.iterator();
+		while (iterator.hasNext()) {
+			iterator.next();
+			iterator.remove();
+		}
+		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));		
+	}
+
+	public void addGames(Game[] games2) {
+		for (int i = 0; i < games2.length; i++) {
+			this.games.add(games2[i]);
+		}
+		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
 	}
 
 }

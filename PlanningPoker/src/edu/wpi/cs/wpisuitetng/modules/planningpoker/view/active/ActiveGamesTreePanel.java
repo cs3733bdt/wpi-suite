@@ -20,8 +20,9 @@ public class ActiveGamesTreePanel extends JPanel {
 	 */
 	public ActiveGamesTreePanel()
 	{
-		this.gamesPanel.setPreferredSize(new Dimension(150,350));		
-		this.add(new JoinGameTree());
-		this.add(new CreateGameButtonPanel());     
+		this.gamesPanel.setPreferredSize(new Dimension(200,600));		
+		this.gamesPanel.add(new JoinGameTree());
+		this.gamesPanel.add(new CreateGameButtonPanel());     
+		this.add(gamesPanel);
 	}
 }
