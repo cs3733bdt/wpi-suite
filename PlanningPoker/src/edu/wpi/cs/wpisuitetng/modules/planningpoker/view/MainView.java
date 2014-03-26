@@ -4,15 +4,12 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Color;
+import java.awt.Component;
 
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.Icon;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.overview.OverviewPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 
 /**
@@ -39,5 +36,23 @@ public class MainView extends JTabbedPane {
 	 */
 	public boolean getNewGame(){
 		return true;
+	}
+	
+	/**
+	 * Overridden insertTab function to add the closable tab element.
+	 * 
+	 * @param title	Title of the tab
+	 * @param icon	Icon for the tab
+	 * @param component	The tab
+	 * @param tip	Showing mouse tip when hovering over tab
+	 * @param index	Location of the tab
+	 */
+	@Override
+	public void insertTab(String title, Icon icon, Component component,
+			String tip, int index) {
+		super.insertTab(title, icon, component, tip, index);
+		if (!(component instanceof ActiveGamesPanel)) {
+			setTabComponentAt(index, new ClosableTabComponent(this));
+		}
 	}
 }

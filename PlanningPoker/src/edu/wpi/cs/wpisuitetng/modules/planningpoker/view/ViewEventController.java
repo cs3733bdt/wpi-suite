@@ -76,8 +76,9 @@ public class ViewEventController {
 	public void removeTab(JComponent comp){
 		if (comp instanceof CreateGamePanel){
 			if(!((CreateGamePanel) comp).readyToRemove()) return;
-			
+			this.listOfCreateGamePanels.remove(comp);
 		}
-	} 
+		main.remove(comp);
+	}
 
 }
