@@ -37,6 +37,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 public class AddGameController implements ActionListener {
 	private final GameModel model;
 	private final CreateGamePanel view;
+	private final String newGameName;
 
 	/**
 	 * Construct an AddGameController for the game model.
@@ -50,8 +51,8 @@ public class AddGameController implements ActionListener {
 	public AddGameController(GameModel model, CreateGamePanel view) {
 		this.model = model;
 		this.view = view;
+		this.newGameName = this.view.getNameText();
 		
-		this.model.addGame(new Game(this.view.getNameText(), true));
 		// delete this line of comment after adding this.view=view
 		// and adding the parameter view in this constructor
 	}
@@ -65,11 +66,9 @@ public class AddGameController implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event){
-		String message = "Game test";
-		
-		if (message.length() > 0) {
+		if (newGameName.length() > 0) {
 			final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.PUT); // PUT == create
-			request.setBody(new Game("test", false).toJSON()); // put the new message in the body of the request
+			request.setBody(new Game(newGameName, true).toJSON()); // put the new message in the body of the request
 			request.addObserver(new AddGameRequestObserver(this)); // add an observer to process the response
 			request.send(); // send the request
 		}
