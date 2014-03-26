@@ -31,7 +31,6 @@ public class ActiveGamesPanel extends JSplitPane {
 		
 		c.gridx = 1;
 		c.gridy = 1;
-		//c.anchor = GridBagConstraints.CENTER;
 		
 		rightPanel.add(desc, c);
 		
@@ -59,12 +58,37 @@ public class ActiveGamesPanel extends JSplitPane {
 		
 		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
 		
+		table.tableModel.addRow(new Object[]{"Requirement1", "Description1"});
+		table.tableModel.addRow(new Object[]{"Requirement2", "Description2"});
+		table.tableModel.addRow(new Object[]{"Requirement3", "Description3"});
+		table.tableModel.addRow(new Object[]{"Requirement4", "Description4"});
+		table.tableModel.addRow(new Object[]{"Requirement5", "Description5"});
+		table.tableModel.addRow(new Object[]{"Requirement6", "Description6"});
+		
 		JScrollPane tablePanel = new JScrollPane(table);
 		
 		c.gridx = 1;
 		c.gridy = 3;
+		c.ipady = 200;
 		
 		rightPanel.add(tablePanel, c);
+		
+		JLabel reqdesc = new JLabel("This is the description of the requirement");
+		
+		c.gridx = 1;
+		c.gridy = 4;
+		c.ipady = 125;
+		
+		rightPanel.add(reqdesc, c);
+		
+		JLabel userstorydesc = new JLabel("This is the description of the user story of that requirement");
+		
+		c.gridx = 1;
+		c.gridy = 5;
+		c.ipady = 50;
+		//c.anchor = GridBagConstraints.CENTER;
+		
+		rightPanel.add(userstorydesc, c);
 		
 		/*String[] columnNames = {"Game ID", "Name", "Number of Requirements", "Game Admin", "Number of Participants", "Status", "Priority"};
 		

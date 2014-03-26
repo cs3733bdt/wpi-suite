@@ -7,7 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 public class ActiveGamesTable extends JTable
 {
-	private DefaultTableModel tableModel = null;
+	public DefaultTableModel tableModel = null;
 	private boolean initialized;
 	private boolean isInEditMode;
 	private boolean changedByRefresh = false;	
@@ -23,6 +23,7 @@ public class ActiveGamesTable extends JTable
 	{
 		this.tableModel = new DefaultTableModel(data, columnNames);
 		this.setModel(tableModel);
+		
 		
 		//TODO ALOT
 		
