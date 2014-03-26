@@ -17,7 +17,7 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
  */
 public class Game extends AbstractModel{
 	
-	private int id;
+	private String name;
 	
 	private boolean hasTimeLimit;
 	
@@ -46,8 +46,8 @@ public class Game extends AbstractModel{
 	 * 
 	 * @author dstapply
 	 */
-	public Game(int id, boolean hasTimeLimit) {
-		this.id = id;
+	public Game(String name, boolean hasTimeLimit) {
+		this.name = name;
 		this.hasTimeLimit = hasTimeLimit;
 		creationTime = new Date();
 	}
@@ -113,7 +113,7 @@ public class Game extends AbstractModel{
 			return false;
 		}
 		Game comp = (Game)o;
-		if(id != comp.id){
+		if(!name.equals(comp.name)){
 			return false;
 		}
 		return true;

@@ -61,9 +61,9 @@ public class GameModel extends AbstractListModel{
 		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));		
 	}
 
-	public void addGames(Game[] games2) {
-		for (int i = 0; i < games2.length; i++) {
-			this.games.add(games2[i]);
+	public void addGames(Game[] newGames) {
+		for (int i = 0; i < newGames.length; i++) {
+			this.games.add(newGames[i]);
 		}
 		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
 	}

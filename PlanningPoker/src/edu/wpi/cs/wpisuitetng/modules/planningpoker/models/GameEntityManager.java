@@ -60,7 +60,7 @@ public class GameEntityManager implements EntityManager<Game> {
 		// Passing a dummy Game lets the db know what type of object
 		// to retrieve
 		// Passing the project makes it only get messages from that project
-		List<Model> messages = db.retrieveAll(new Game(-1, false), s.getProject());
+		List<Model> messages = db.retrieveAll(new Game(null, false), s.getProject());
 
 		// Return the list of Games as an array
 		return messages.toArray(new Game[0]);
@@ -100,7 +100,7 @@ public class GameEntityManager implements EntityManager<Game> {
 	@Override
 	public int Count() throws WPISuiteException {
 		// Return the number of Games currently in the database.
-	    return db.retrieveAll(new Game(-1, true)).size();
+	    return db.retrieveAll(new Game(null, true)).size();
 	}
 
 	@Override
