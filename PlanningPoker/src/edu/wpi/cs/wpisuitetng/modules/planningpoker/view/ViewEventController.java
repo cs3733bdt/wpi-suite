@@ -13,7 +13,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGa
 
 /**
  * @author jonathanleitschuh
- *
+ * 
  */
 public class ViewEventController {
 	private static ViewEventController instance = null;
@@ -40,7 +40,7 @@ public class ViewEventController {
 	
 	/**
 	 * Sets the main view to the given view.
-
+	
 	 * @param mainview The MainView
 	 */
 	public void setMainView(MainView mainview){
@@ -49,7 +49,7 @@ public class ViewEventController {
 	
 	/**
 	 * Sets the ToolBar view to the given toolbar
-
+	
 	 * @param tb The toolbar to be set as active.
 	 */
 	public void setToolBar(ToolbarView tb){
@@ -68,12 +68,18 @@ public class ViewEventController {
 		main.repaint();
 		main.setSelectedComponent(newGame);
 	}
-	/**
-	public void joinGame(){
-		
-	}
-	**/
 	
+	/**
+	 * After clicking a game in the games list, the active games view will be displayed.
+	 */
+	public void joinGame(){
+		ActiveGamesPanel viewGame = new ActiveGamesPanel();
+		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
+		main.addTab("Active Game",  viewGame);
+		main.invalidate();
+		main.repaint();
+		main.setSelectedComponent(viewGame);
+	}	
 	
 	/**
 	 * Removes the tab for the given JComponent
