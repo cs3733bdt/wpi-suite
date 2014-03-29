@@ -8,6 +8,7 @@ import java.util.List;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 //import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
@@ -17,11 +18,15 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
  */
 public class Game extends AbstractModel{
 	
+	int id;
+	
 	private String name;
 	
 	private boolean hasTimeLimit;
 	
 	private Date creationTime;
+	
+	private String creator;
 	
 	//TODO find out how to implement existing module classes
 	//private List<Requirement> requirements;
@@ -39,18 +44,67 @@ public class Game extends AbstractModel{
 	 * 
 	 */
 	
+	
+	
+	/**
+	 * The basic constructor for a game
+	 * Sets all of the default values for a game class
+	 * 
+	 */
+	private Game(){
+		super();
+		name = "";
+		creationTime = new Date();
+		hasTimeLimit = false;
+	}
+	
+	
 	/**
 	 * Constructs a Game with given id
-	 * @param id
+	 * @param id the id number of the game
+	 * @param name the name of the game
 	 * @param hasTimeLimit checks if game has a time limit
 	 * 
 	 * @author dstapply
 	 */
-	public Game(String name, boolean hasTimeLimit) {
+	public Game(String name, String creator, boolean hasTimeLimit) {
+		this(); //Calls the default constructor
 		this.name = name;
+		this.creator = creator;
 		this.hasTimeLimit = hasTimeLimit;
-		creationTime = new Date();
+		
 	}
+	
+	/**
+	 * Used for junit testing
+	 * Constructs a game from the provided characteristics
+	 * @param id
+	 * 			The ID number of the requirement
+	 * @param name
+	 * 			The name of the game
+	 * @param creator
+	 * 			The creator of the game
+	 * @param hasTimeLimit
+	 * 			Whether or not this game has a time limit or not.
+	 */
+	@Deprecated
+	public Game(int id, String name, String creator, boolean hasTimeLimit){
+		this(name, creator, hasTimeLimit);
+		this.id = id;
+	}
+	
+	public int getId(){
+		return id;
+	}
+	
+	/**
+	 * Gets the name of this game
+	 * @return the name of the game
+	 */
+	public String getName(){
+		return name;
+	}
+	
 	
 	/**
 	 * Gets the creating time and date of the game
