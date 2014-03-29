@@ -79,7 +79,8 @@ public class CreateGamePanel extends JPanel {
 	}
 	
 	public String getNameText(){
-		return nameTextField.getText();
+		System.out.println(this.nameTextField.getText());
+		return this.nameTextField.getText();
 	}
 	
 	

@@ -15,6 +15,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 
+/**
+ * 
+ * @author TomPaolillo
+ *
+ */
+
 public class AddGameButtonPanel extends ToolbarGroupView{
 
 	
@@ -30,9 +36,8 @@ public class AddGameButtonPanel extends ToolbarGroupView{
 		
 		// the action listener for the Create Game Button
 		addGameButton.addActionListener(new AddGameController(new GameModel(), panel) {
-			
 		});
-			
+		
 		contentPanel.add(addGameButton);
 		contentPanel.setOpaque(false);
 		

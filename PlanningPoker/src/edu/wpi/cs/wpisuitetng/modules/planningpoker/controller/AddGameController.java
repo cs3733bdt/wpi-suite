@@ -50,7 +50,7 @@ public class AddGameController implements ActionListener {
 	public AddGameController(GameModel model, CreateGamePanel view) {
 		this.model = model;
 		this.view = view;
-		this.newGameName = this.view.getNameText();
+		newGameName = "";
 		
 		// delete this line of comment after adding this.view=view
 		// and adding the parameter view in this constructor
@@ -65,7 +65,8 @@ public class AddGameController implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event){
-		System.out.println("Hi I made it this far.");
+		newGameName = view.getNameText();
+		System.out.println(newGameName);
 		System.out.println("Hi I made it this far.");
 		final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.PUT); // PUT == create
 		request.setBody(new Game(newGameName, true).toJSON()); // put the new message in the body of the request
