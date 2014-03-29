@@ -8,7 +8,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
 /*
  * This class will be used to export requirements into CSV files. The class is incomplete
  * and not fully functional. Its build paths need to be configured. Needs to have a button
- * in Janeway to function.
+ * in Janeway to function in order to be tested.
  * 
  * @author Doruk Uzunoglu
  */
@@ -32,13 +32,13 @@ public class ExportToCsv  {
 			writer.append(';');
 			writer.append(requestedReq.getDescription());
 			writer.append(';');
-			//writer.append(requestedReq.getType());
-			//writer.append(';');
-			//writer.append(requestedReq.getPriority());
-			//writer.append(requestedReq.getNotes());
-			//writer.append(';');
-			//writer.append(requestedReq.getHistory());
-			//writer.append(';');
+			writer.append(requestedReq.getType().toString());
+			writer.append(';');
+			writer.append(requestedReq.getPriority().toString());
+			writer.append(requestedReq.getNotes().toString());
+			writer.append(';');
+			writer.append(requestedReq.getHistory().toString());
+			writer.append(';');
 			
 			writer.flush();
 			writer.close();
