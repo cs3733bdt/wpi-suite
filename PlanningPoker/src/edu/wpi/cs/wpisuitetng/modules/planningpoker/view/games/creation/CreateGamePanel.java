@@ -33,6 +33,7 @@ public class CreateGamePanel extends JPanel {
 	private boolean readyToRemove = true; //The window starts off ready to remove because no changes have happened
 	
 	JTextField nameTextField;
+	JTextField descriptionTextField;
 	//TODO add an implemenation of the game
 	Game displayGame;
 	
@@ -43,19 +44,20 @@ public class CreateGamePanel extends JPanel {
 		super(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		nameTextField = new JTextField(30);	
+		descriptionTextField = new JTextField(30);
 		
 		//displayGame = new Game();
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
-		//c.anchor = GridBagConstraints.PAGE_START;
-		c.gridx = 1;
-		c.gridy = 1;
+		c.gridx = 0;
+		c.gridy = 0;
 		add(new JLabel("Game Name:"),c);
-		c.gridx = 3;
+		
+		c.gridx = 1;
 		add(nameTextField, c);
 		
-		this.add(new AddGameButtonPanel(this));		
-		
+		c.gridy = 3;
+		add(new AddGameButtonPanel(this), c);		
 	}
 	
 	/**
