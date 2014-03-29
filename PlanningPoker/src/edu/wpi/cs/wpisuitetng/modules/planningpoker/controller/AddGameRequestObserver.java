@@ -52,7 +52,7 @@ public class AddGameRequestObserver implements RequestObserver{
 	
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println("The request to add a Game failed.");
+		System.err.println("The request to add a Game failed. " + iReq.getResponse().toString());
 	}
 
 	@Override

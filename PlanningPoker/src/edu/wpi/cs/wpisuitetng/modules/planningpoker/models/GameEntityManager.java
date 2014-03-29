@@ -10,11 +10,16 @@ import edu.wpi.cs.wpisuitetng.database.Data;
 import edu.wpi.cs.wpisuitetng.exceptions.BadRequestException;
 import edu.wpi.cs.wpisuitetng.exceptions.ConflictException;
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
+import edu.wpi.cs.wpisuitetng.exceptions.UnauthorizedException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.EntityManager;
 import edu.wpi.cs.wpisuitetng.modules.Model;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
+ * 
+ * Most of the code is referenced and refactored directly from the Requirement Entity Manager module
  * @author dstapply
  * 
  */
@@ -44,23 +49,33 @@ public class GameEntityManager implements EntityManager<Game> {
 	}
 
 	@Override
-	public Game[] getEntity(Session s, String id) throws NotFoundException,
-			WPISuiteException {
-		// The module does not support retrieving a specific game right now. If that feature
-		// is implemented in the future and the user is allowed to retrieve specific games,
-		// this method has to be updated
-	    throw new WPISuiteException();
+	public Game[] getEntity(Session s, String id) throws NotFoundException{
+		final int intId = Integer.parseInt(id);
+		if(intId < 1) {
+			throw new NotFoundException();
+		}
+		Game[] games = null;
+		try {
+			games = db.retrieve(Game.class, "id", intId, s.getProject()).toArray(new Game[0]);
+		} catch (WPISuiteException e) {
+			e.printStackTrace();
+		}
+		if(games.length < 1 || games[0] == null) {
+			throw new NotFoundException();
+		}
+		return games;
+		
 	}
 
 	@Override
 	public Game[] getAll(Session s) throws WPISuiteException {
-
+		
 		// Ask the database to retrieve all objects of the type
 		// Game.
 		// Passing a dummy Game lets the db know what type of object
 		// to retrieve
 		// Passing the project makes it only get messages from that project
-		List<Model> messages = db.retrieveAll(new Game(null, false), s.getProject());
+		List<Model> messages = db.retrieveAll(new Game(null, null, false), s.getProject());
 
 		// Return the list of Games as an array
 		return messages.toArray(new Game[0]);
@@ -77,11 +92,19 @@ public class GameEntityManager implements EntityManager<Game> {
 	    // Save the given defect in the database
 	    db.save(model);
 	}
+	
+	/**
+	 * Deletes a requirement from the database
+	 * @param s the session
+	 * @param id the id of the requirement to delete
+
+	 * @return true if the deletion was successful * @throws WPISuiteException * @throws WPISuiteException * @throws WPISuiteException
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String) */
 
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
-		// TODO Auto-generated method stub
-		return false;
+		ensureRole(s, Role.ADMIN);
+		return(db.delete(getEntity(s, id)[0])!= null) ? true: false;
 	}
 
 	@Override
@@ -100,7 +123,7 @@ public class GameEntityManager implements EntityManager<Game> {
 	@Override
 	public int Count() throws WPISuiteException {
 		// Return the number of Games currently in the database.
-	    return db.retrieveAll(new Game(null, true)).size();
+	    return db.retrieveAll(new Game(null, null, true)).size();
 	}
 
 	@Override
@@ -115,6 +138,19 @@ public class GameEntityManager implements EntityManager<Game> {
 			throws WPISuiteException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	/**
+	 * Ensures that a user is of the specified role
+	 * @param session the session
+	 * @param role the role being verified
+	
+	 * @throws WPISuiteException user isn't authorized for the given role */
+	private void ensureRole(Session session, Role role) throws WPISuiteException {
+		User user = (User) db.retrieve(User.class, "username", session.getUsername()).get(0);
+		if(!user.getRole().equals(role)) {
+			throw new UnauthorizedException();
+		}
 	}
 
 }
