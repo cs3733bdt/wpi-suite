@@ -517,5 +517,5 @@ public class ViewEventController {
 	 */
 	public ArrayList<RequirementPanel> getListOfRequirementPanels() {
 		return listOfEditingPanels;
-	}
+	}	
 }
