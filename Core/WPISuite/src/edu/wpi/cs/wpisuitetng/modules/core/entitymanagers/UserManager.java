@@ -275,6 +275,10 @@ public class UserManager implements EntityManager<User> {
 					logger.log(Level.WARNING,"User: "+s.getUser().getUsername()+" attempted unauthorized priveledge elevation");
 				}
 			}
+			if ((changes.getEmail() != null))
+			{
+				toUpdate.setEmail(changes.getEmail());
+			}
 	
 			// save the changes back
 			this.save(s, toUpdate);
