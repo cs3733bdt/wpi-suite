@@ -38,14 +38,22 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 	
 	// initialize the main view toolbar buttons
 		private JButton createGameButton = new JButton("Create Game");
+		/*
+		 * Temporary join game button until tree has clickable functionality
+		 */
+		private JButton joinGameButton = new JButton("  Join Game  ");
 		private final JPanel contentPanel = new JPanel();
 	
 	public CreateGameButtonPanel(){
 		super("");
 		
-		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-		this.setPreferredSize(new Dimension(110,35));
+		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+		//35
+		this.setPreferredSize(new Dimension(110,55));
+		this.createGameButton.setVerticalAlignment(SwingConstants.TOP);
 		this.createGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+		this.joinGameButton.setVerticalAlignment(SwingConstants.BOTTOM);
+		this.joinGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		// the action listener for the Create Game Button
 		createGameButton.addActionListener(new ActionListener() {
@@ -55,11 +63,24 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 					ViewEventController.getInstance().createGame();
 			}
 		});		
+		
+		/*
+		 * The action listener for the Join Game Button
+		 */
+		joinGameButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// bring up an active game panel
+					ViewEventController.getInstance().joinGame();
+			}
+		});	
 			
 		contentPanel.add(createGameButton);
+		//contentPanel.setOpaque(false);
+		
+		contentPanel.add(joinGameButton);
 		contentPanel.setOpaque(false);
 		
-
 		this.add(contentPanel);
 	}
 	/**
@@ -68,6 +89,13 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 	 * @return JButton */
 	public JButton getCreateGameButton() {
 		return createGameButton;
+	}
+	
+	/*
+	 * Method getJoinGameButton
+	 */
+	public JButton getJoinGameButton() {
+		return joinGameButton;
 	}
 	
 }
