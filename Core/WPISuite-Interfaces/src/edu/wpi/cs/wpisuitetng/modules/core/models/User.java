@@ -38,7 +38,6 @@ public class User extends AbstractModel
 	 * @param name	User's full name
 	 * @param username	User's username (nickname)
 	 * @param idNum	User's ID number
-	 * @param email user's email address
 	 */
 	public User(String name, String username, String password, String email, int idNum)
 	{
