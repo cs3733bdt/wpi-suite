@@ -22,6 +22,7 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.ChartButtonsPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.EditButtonsPanel;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.RequirementButtonsPanel;
+import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons.ExportButtonPanel;
 
 /**
  * Sets up upper toolbar of RequirementManager tab
@@ -35,6 +36,7 @@ public class ToolbarView  extends DefaultToolbarView {
 	public ChartButtonsPanel chartButton = new ChartButtonsPanel();
 	public EditButtonsPanel editButton = new EditButtonsPanel();
 	public RequirementButtonsPanel reqButton = new RequirementButtonsPanel();
+	public ExportButtonPanel exportButton = new ExportButtonPanel();
 	
 	/**
 	 * Creates and positions option buttons in upper toolbar
@@ -45,6 +47,7 @@ public class ToolbarView  extends DefaultToolbarView {
 		this.addGroup(reqButton);
 		this.addGroup(chartButton);
 		this.addGroup(editButton);
+		this.addGroup(exportButton);
 
 	}
 	
@@ -70,5 +73,13 @@ public class ToolbarView  extends DefaultToolbarView {
 	 * @return RequirementButtonsPanel */
 	public RequirementButtonsPanel getReqButton() {
 		return reqButton;
+	}
+	
+	/**
+	 * Method getExpButton.
+	
+	 * @return ExportButtonPanel */
+	public ExportButtonPanel getExpButton() {
+		return exportButton;
 	}
 }

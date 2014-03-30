@@ -17,7 +17,7 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-/*
+/**
  * @author Jeffrey Signore
  * Sets up the panel for the active games screen, which has the list of all active games in which the user is playing.
  * When you click on a game, the bottom section of the screen will display more details about that specific game.
@@ -26,6 +26,9 @@ public class ActiveGamesPanel extends JSplitPane {
 	
 	private JTextField estText = new JTextField();
 	
+
+
+
 	public ActiveGamesPanel() {
 		
 		Container rightPanel = new Container();

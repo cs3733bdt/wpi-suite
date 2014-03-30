@@ -15,7 +15,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel
 public class ExportToCsv  {
 
 	
-	private static void exportToCsvFile (String sourceFileName, int reqId) 
+	public static void exportToCsvFile (String sourceFileName, int reqId) 
 	{
 		
 		// Get the requested requirement
