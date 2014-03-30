@@ -116,8 +116,8 @@ public class GameEntityManager implements EntityManager<Game> {
 
 	@Override
 	public void deleteAll(Session s) throws WPISuiteException {
-		// TODO Auto-generated method stub
-
+		ensureRole(s, Role.ADMIN);
+		db.deleteAll(new Game(), s.getProject());
 	}
 
 	@Override

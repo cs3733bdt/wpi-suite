@@ -1,15 +1,12 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 
-import java.util.Date;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.List;
+import java.util.Date;
 
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-//import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 
 /**
  * Basic Game class that contains the data to be store for a Game
@@ -51,7 +48,7 @@ public class Game extends AbstractModel{
 	 * Sets all of the default values for a game class
 	 * 
 	 */
-	private Game(){
+	public Game(){
 		super();
 		name = "";
 		creationTime = new Date();

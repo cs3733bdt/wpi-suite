@@ -16,7 +16,7 @@ import javax.swing.AbstractListModel;
  *
  */
 @SuppressWarnings({"serial"})
-public class GameModel extends AbstractListModel{
+public class GameModel extends AbstractListModel<Game>{
 	
 	/** List of available games */
 	private List<Game> games;
@@ -28,20 +28,23 @@ public class GameModel extends AbstractListModel{
 		games = new ArrayList<Game>();
 	}
 
+	/**
+	 * Gets a game at the specified location
+	 * @param the index to retrive
+	 */
 	@Override
-	public Object getElementAt(int arg0) {
+	public Game getElementAt(int arg0) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public int getSize() {
-		// TODO Auto-generated method stub
-		return 0;
+		return games.size();
 	}
 
 	/**
-	 * adds a Game to the data model games
+	 * Adds a Game to the data model games
 	 * @param newGame
 	 * 			game to be added to the games ArrayList
 	 */

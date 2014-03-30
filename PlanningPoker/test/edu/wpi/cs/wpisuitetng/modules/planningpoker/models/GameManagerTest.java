@@ -3,18 +3,19 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 
 import java.util.HashSet;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.Session;
-import edu.wpi.cs.wpisuitetng.exceptions.BadRequestException;
-import edu.wpi.cs.wpisuitetng.exceptions.ConflictException;
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
+import edu.wpi.cs.wpisuitetng.exceptions.UnauthorizedException;
 import edu.wpi.cs.wpisuitetng.exceptions.WPISuiteException;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
@@ -22,6 +23,8 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
 
 /**
+ * Used to test the Game Manager's functionality
+ * 
  * @author jonathanleitschuh
  *
  */
@@ -101,13 +104,74 @@ public class GameManagerTest {
 	@Test(expected = NotFoundException.class)
 	public void testGetBadId() throws NotFoundException {
 		manager.getEntity(defaultSession, "-1");
+		fail("Should have thrown an exception");
 	}
 	
+	/**
+	 * Ensures that games can be deleted
+	 * 
+	 * @throws WPISuiteException
+	 */
 	@Test
 	public void testDelete() throws WPISuiteException{
 		assertSame(game1, db.retrieve(Game.class, "id", 1).get(0));
 		assertTrue(manager.deleteEntity(adminSession, "1"));
 		assertEquals(0, db.retrieve(Game.class, "id", 1).size());
 	}
+	
+	/**
+	 * Ensures that an exception is thrown when trying to delete an invalid game
+	 * 
+	 * @throws WPISuiteException
+	 */
+	@Test(expected = NotFoundException.class)
+	public void testDeleteMissing() throws WPISuiteException{
+		manager.deleteEntity(adminSession, "-404");
+		fail("The code should have thrown an exception");
+	}
+	
+	/**
+	 * Ensures an UnauthorizedException is thrown when trying to delete an entity while not authorized
+	 * @throws WPISuiteException
+	 */
+	@Test(expected=UnauthorizedException.class)
+	public void testDeleteNotAllowed() throws WPISuiteException{
+		manager.deleteEntity(defaultSession, Integer.toString(game1.getId()));
+		fail("This should have thrown an Unauthorized access exception");
+	}
+	
+	/**
+	 * Ensures that the deletion of all games works properly
+	 * @throws WPISuiteException
+	 */
+	@Test
+	public void testDeleteAll() throws WPISuiteException{
+		Game anotherGame = new Game();
+		manager.makeEntity(defaultSession, anotherGame.toJSON());
+		assertEquals(2, db.retrieveAll(new Game(), testProject).size());
+		manager.deleteAll(adminSession);
+		assertEquals(0, db.retrieveAll(new Game(), testProject).size());
+		//Other games should still be around
+		assertEquals(1, db.retrieveAll(new Game(), otherProject).size());
+	}
+	
+	
+	/**
+	 * Tests that no exceptions are thrown when you remove all games from an empty session
+	 * @throws WPISuiteException
+	 */
+	@Test
+	public void testDeleteAllWhenEmpty() throws WPISuiteException{
+		manager.deleteAll(adminSession);
+		manager.deleteAll(adminSession);
+		// no exceptions get thrown
+	}
+	
+	
+	
+	
+	
+	
+	
 
 }
