@@ -71,7 +71,7 @@ public class User extends AbstractModel
 					return false;
 				}
 				
-				if(this.email != null && !this.email.equals((User)other).email)) {
+				if(this.email != null && !this.email.equals(((User)other).email)) {
 					return false;
 				}
 				
