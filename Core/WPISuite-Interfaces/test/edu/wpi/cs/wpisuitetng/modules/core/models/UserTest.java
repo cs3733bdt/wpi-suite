@@ -33,16 +33,16 @@ public class UserTest {
 	@Before
 	public void setUp()
 	{
-		u1 = new User("James Bond", "jbond", null, 7);
-		u2 = new User("Money Penny", "mpenny", null, 2);
-		u3 = new User("Q", "q", "secret", 1);
-		u4 = new User("M", "m", null, 0);
+		u1 = new User("James Bond", "jbond", "email@email.email", null, 7);
+		u2 = new User("Money Penny", "mpenny", null, "email@email.email", 2);
+		u3 = new User("Q", "q", "secret", "email@email.email", 1);
+		u4 = new User("M", "m", null, "email@email.email", 0);
 	}
 	
 	@Test
 	public void testEquals()
 	{
-		User dup3 = new User("Q", "q", "secret", 1);
+		User dup3 = new User("Q", "q", "secret", "email@email.email", 1);
 		
 		assertTrue(u3.equals(dup3));
 		assertFalse(u3.equals(u1));

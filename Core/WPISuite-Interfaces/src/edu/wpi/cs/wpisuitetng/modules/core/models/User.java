@@ -39,7 +39,7 @@ public class User extends AbstractModel
 	 * @param username	User's username (nickname)
 	 * @param idNum	User's ID number
 	 */
-	public User(String name, String username, String password, int idNum)
+	public User(String name, String username, String password, String email, int idNum)
 	{
 		this.name = name;
 		this.username = username;
