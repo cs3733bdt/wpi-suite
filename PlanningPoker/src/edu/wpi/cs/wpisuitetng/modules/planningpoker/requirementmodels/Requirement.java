@@ -54,9 +54,10 @@ public class Requirement extends AbstractModel {
 	 *            A short description of the requirement
 	 */
 	// need to phase out supplying the ID
-	public Requirement(int id, String name, String description) {
+	//We took out int id -- Jeff, Tom, Jordan
+	public Requirement(String name, String description) {
 		this();
-		this.id = id;
+		//this.id = id;
 		this.name = name;
 		this.description = description;
 	}

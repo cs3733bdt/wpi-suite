@@ -127,7 +127,7 @@ public class GameEntityManager implements EntityManager<Game> {
 	@Override
 	public int Count() throws WPISuiteException {
 		// Return the number of Games currently in the database.
-	    return db.retrieveAll(new Game(null, null, true)).size();
+	    return db.retrieveAll(new Game(null, null, null, true)).size();
 	}
 
 	@Override

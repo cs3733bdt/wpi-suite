@@ -12,10 +12,12 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -36,6 +38,7 @@ public class AddGameController implements ActionListener {
 	private final GameModel model;
 	private final CreateGamePanel view;
 	private String newGameName;
+	private ArrayList<Requirement> requirements;
 
 	/**
 	 * Construct an AddGameController for the game model.
@@ -65,16 +68,15 @@ public class AddGameController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent event){
 		newGameName = view.getNameText();
+		requirements = view.getRequirements();
 		System.out.println(newGameName);
-		System.out.println("Hi I made it this far.");
 		
 		String currentUser = ConfigManager.getConfig().getUserName(); //Gets the currently active user
 		
 		final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.PUT); // PUT == create
-		request.setBody(new Game(newGameName, currentUser, true).toJSON()); // put the new message in the body of the request
+		request.setBody(new Game(newGameName, currentUser, requirements, true).toJSON()); // put the new message in the body of the request
 		request.addObserver(new AddGameRequestObserver(this)); // add an observer to process the response
 		request.send(); // send the request
-		System.out.println("Yo I made it this far too.");
 	}
 
 	/**
