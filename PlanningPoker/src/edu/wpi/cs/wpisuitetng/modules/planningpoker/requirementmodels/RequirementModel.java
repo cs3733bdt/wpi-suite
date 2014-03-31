@@ -18,6 +18,8 @@ import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller.AddRequirementController;
+
 
 //import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 
@@ -68,6 +70,16 @@ public class RequirementModel extends AbstractListModel{
 	public void addRequirement(Requirement newReq){
 		// add the requirement
 		requirements.add(newReq);
+		try{
+			AddRequirementController.getInstance().addRequirement(newReq);
+			/*
+			ViewEventController.getInstance().refreshTable();
+			ViewEventController.getInstance().refreshTree();
+			*/
+		}
+		catch(Exception e){
+			
+		}
 	}
 	
 	/**
