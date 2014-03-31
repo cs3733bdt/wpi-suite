@@ -18,6 +18,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.InitialView;
 
 /**
  * This class sets the main view when the user goes to the PlanningPoker tab 
@@ -28,7 +29,7 @@ public class MainView extends JTabbedPane {
 	private boolean dragging = false;
 	private Image tabImage = null;
 	private int draggedTabIndex = 0;
-	private ActiveGamesPanel activeGames = new ActiveGamesPanel();
+	private InitialView initView = new InitialView();
 	
 	private final JPopupMenu popup = new JPopupMenu();
 	private JMenuItem closeAll = new JMenuItem("Close All Tabs");
@@ -39,7 +40,7 @@ public class MainView extends JTabbedPane {
 	 */
 	public MainView(){
 		
-		this.addTab("Active Games", activeGames);
+		this.addTab("Overview", initView);
 	    this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
 	    
 	    closeAll.addActionListener(new ActionListener()
@@ -113,7 +114,7 @@ public class MainView extends JTabbedPane {
 	public void insertTab(String title, Icon icon, Component component,
 			String tip, int index) {
 		super.insertTab(title, icon, component, tip, index);
-		if (!(component instanceof ActiveGamesPanel)) {
+		if (!(component instanceof InitialView)) {
 			setTabComponentAt(index, new ClosableTabComponent(this));
 		}
 	}

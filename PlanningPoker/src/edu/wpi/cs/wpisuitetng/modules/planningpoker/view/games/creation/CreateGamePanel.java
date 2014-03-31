@@ -5,14 +5,21 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.AddGameButtonPanel;
 
 /**
  * Used to create a new Planning Poker game using the input of a user
@@ -25,6 +32,8 @@ public class CreateGamePanel extends JPanel {
 	private boolean readyToClose = false;
 	private boolean readyToRemove = true; //The window starts off ready to remove because no changes have happened
 	
+	JTextField nameTextField;
+	JTextField descriptionTextField;
 	//TODO add an implemenation of the game
 	Game displayGame;
 	
@@ -34,19 +43,21 @@ public class CreateGamePanel extends JPanel {
 	public CreateGamePanel(){
 		super(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
+		nameTextField = new JTextField(30);	
+		descriptionTextField = new JTextField(30);
 		
 		//displayGame = new Game();
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
-		//c.anchor = GridBagConstraints.PAGE_START;
-		c.gridx = 1;
-		c.gridy = 1;
+		c.gridx = 0;
+		c.gridy = 0;
 		add(new JLabel("Game Name:"),c);
-		c.gridx = 3;
-		add(new JTextField(30), c);
 		
+		c.gridx = 1;
+		add(nameTextField, c);
 		
-		
+		c.gridy = 3;
+		add(new AddGameButtonPanel(this), c);		
 	}
 	
 	/**
@@ -65,6 +76,11 @@ public class CreateGamePanel extends JPanel {
 			return result == 0;
 		}
 		
+	}
+	
+	public String getNameText(){
+		System.out.println(this.nameTextField.getText());
+		return this.nameTextField.getText();
 	}
 	
 	
