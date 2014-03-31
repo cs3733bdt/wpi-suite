@@ -161,7 +161,7 @@ public class UserManager implements EntityManager<User> {
 	@Override
 	public User[] getAll(Session s) {
 		User[] ret = new User[1];
-		ret = data.retrieveAll(new User("","","", "", 0)).toArray(ret);
+		ret = data.retrieveAll(new User("","","","",0)).toArray(ret);
 		return ret;
 	}
 
@@ -195,9 +195,6 @@ public class UserManager implements EntityManager<User> {
 			logger.log(Level.WARNING,"User: "+s1.getUser().getUsername()+"attempted to delete: "+id);
 			throw new UnauthorizedException("Delete not authorized");
 		}
-		
-		
-		
 		
 	}
 

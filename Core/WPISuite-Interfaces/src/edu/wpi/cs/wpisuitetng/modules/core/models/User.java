@@ -240,7 +240,6 @@ public class User extends AbstractModel
 		return this;
 	}
 	
-	
 	public Role getRole()
 	{
 		return this.role;

@@ -151,5 +151,6 @@ public class UserTest {
 		assertTrue(serialized.contains("q"));
 		assertTrue(serialized.contains("name"));
 		assertTrue(serialized.contains("Q"));
+		assertTrue(serialized.contains("email@email.email"));
 	}
 }
