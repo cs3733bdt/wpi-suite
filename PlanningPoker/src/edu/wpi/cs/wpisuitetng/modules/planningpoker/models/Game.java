@@ -140,6 +140,10 @@ public class Game extends AbstractModel{
 		
 		return dateFormat.format(creationTime);
 	}
+	
+	public String toString(){
+		return name;
+	}
 
 	/**
 	 * Method toJSON.

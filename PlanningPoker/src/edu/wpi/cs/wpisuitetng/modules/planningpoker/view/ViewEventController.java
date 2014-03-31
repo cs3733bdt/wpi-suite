@@ -20,7 +20,7 @@ public class ViewEventController {
 	private static ViewEventController instance = null;
 	private MainView main = null;
 	private ToolbarView toolbar = null;
-	private JoinGameTree gameTreee = null;
+	private JoinGameTree gameTree = null;
 	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
 	
 	/**
@@ -162,7 +162,12 @@ public class ViewEventController {
 	public void refreshGameTree() {
 		// TODO Auto-generated method stub
 		//This method will call a method that refreshes the the tree
-		// something like this.overviewTree.refresh();
+		this.gameTree.refresh();
+		
+	}
+
+	public void setGameOverviewTree(JoinGameTree gameTree) {
+		this.gameTree = gameTree;
 		
 	}
 

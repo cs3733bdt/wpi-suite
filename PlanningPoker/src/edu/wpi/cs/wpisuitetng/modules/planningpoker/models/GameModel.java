@@ -87,4 +87,8 @@ public class GameModel extends AbstractListModel<Game>{
 		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
 	}
 
+	public List<Game> getGames() {
+		return games;
+	}
+
 }
