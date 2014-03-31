@@ -3,6 +3,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 import com.google.gson.Gson;
 
@@ -15,7 +16,10 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
  */
 public class Game extends AbstractModel{
 	
-	int id;
+	//This is the best way to keep games unique so that you are not relying upon data that can change
+	private UUID identity;
+	
+	private int id;
 	
 	private String name;
 	
@@ -24,6 +28,8 @@ public class Game extends AbstractModel{
 	private Date creationTime;
 	
 	private String creator;
+	
+	private boolean complete;
 	
 	//TODO find out how to implement existing module classes
 	//private List<Requirement> requirements;
@@ -53,6 +59,8 @@ public class Game extends AbstractModel{
 		name = "";
 		creationTime = new Date();
 		hasTimeLimit = false;
+		complete = false;
+		identity = UUID.randomUUID();
 	}
 	
 	
@@ -90,9 +98,22 @@ public class Game extends AbstractModel{
 		this.id = id;
 	}
 	
+	/**
+	 * Gets the id for this game
+	 * @return the id of the game
+	 */
 	public int getId(){
 		return id;
 	}
+	
+	/**
+	 * Gets the Identifier for this game
+	 * @return the UUID for this class
+	 */
+	public UUID getIdentifier(){
+		return identity;
+	}
+	
 	
 	/**
 	 * Gets the name of this game
@@ -100,6 +121,10 @@ public class Game extends AbstractModel{
 	 */
 	public String getName(){
 		return name;
+	}
+	
+	public boolean isComplete(){
+		return complete;
 	}
 	
 	
@@ -164,7 +189,10 @@ public class Game extends AbstractModel{
 			return false;
 		}
 		Game comp = (Game)o;
-		if(!name.equals(comp.name)){
+		/* Changed so that this comparison does not run off of the name because the
+		 * name of the game may be changed by the user at a later time.
+		 */
+		if(!identity.equals(comp.identity)){
 			return false;
 		}
 		return true;

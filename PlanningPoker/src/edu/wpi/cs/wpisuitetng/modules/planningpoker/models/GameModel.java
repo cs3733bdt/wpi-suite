@@ -9,6 +9,8 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game;
 
 /**
@@ -18,14 +20,25 @@ import javax.swing.AbstractListModel;
 @SuppressWarnings({"serial"})
 public class GameModel extends AbstractListModel<Game>{
 	
+	private static GameModel instance;
+	private int nexID;
+	
 	/** List of available games */
 	private List<Game> games;
 	
 	/**
-	 * Constructs an empty list of games
+	 * Constructs an empty list of games for the project.
+	 * This is private in order to prevent multiple instantiations of this.
 	 */
-	public GameModel() {
+	private GameModel() {
 		games = new ArrayList<Game>();
+	}
+	
+	public static GameModel getInstance(){
+		if(instance == null){
+			instance = new GameModel();
+		}
+		return instance;
 	}
 
 	/**
@@ -60,7 +73,11 @@ public class GameModel extends AbstractListModel<Game>{
 			iterator.next();
 			iterator.remove();
 		}
-		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));		
+		this.fireIntervalRemoved(this, 0, Math.max(oldSize -1, 0));	
+		try{
+			ViewEventController.getInstance().refreshGameTable();
+			ViewEventController.getInstance().refreshGameTree();
+		} catch (Exception e) {}
 	}
 
 	public void addGames(Game[] newGames) {
