@@ -7,6 +7,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,8 +47,8 @@ public class CreateGamePanel extends JPanel {
 	private boolean readyToClose = false;
 	private boolean readyToRemove = true; //The window starts off ready to remove because no changes have happened
 	
-	JTextField nameTextField;
-	JTextField descriptionTextField;
+	private JTextField nameTextField;
+	private JTextField descriptionTextField;
 	//TODO add an implemenation of the game
 	Game displayGame;
 	
@@ -59,9 +60,7 @@ public class CreateGamePanel extends JPanel {
 		super(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		nameTextField = new JTextField(30);	
-		descriptionTextField = new JTextField(30);
-		
-		//displayGame = new Game();
+		descriptionTextField = new JTextField(30);		
 		
 		Container rightPanel = new Container();
 		rightPanel.setLayout(new GridBagLayout());
@@ -69,10 +68,44 @@ public class CreateGamePanel extends JPanel {
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.anchor = GridBagConstraints.NORTH;
 		
+		JPanel nameAndDescPanel = new JPanel();
+		//nameAndDescPanel.setLayout(new GridLayout(2,2));
+		nameAndDescPanel.setLayout(new GridBagLayout());
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 6;
+		//c.insets = new Insets(0, 125, 0, 0);
+		rightPanel.add(nameAndDescPanel, c);
+		
+		JLabel gameName = new JLabel("Game Name:");
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		nameAndDescPanel.add(gameName, c);
+		
+		nameTextField.setMinimumSize(new Dimension(175, 20));
+		c.gridx = 1;
+		c.gridy = 0;
+		c.gridwidth = 1;
+		
+		nameAndDescPanel.add(nameTextField, c);
+		
+		JLabel gameDesc = new JLabel("Game Description:");
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		nameAndDescPanel.add(gameDesc, c);
+		
+		descriptionTextField.setMinimumSize(new Dimension(175, 20));
+		c.gridx = 1;
+		c.gridy = 1;
+		c.gridwidth = 1;
+		nameAndDescPanel.add(descriptionTextField, c);
+		
 		JPanel estimateTypePanel = new JPanel();
 		estimateTypePanel.setLayout(new BoxLayout(estimateTypePanel, BoxLayout.X_AXIS));
 		c.gridx = 0;
-		c.gridy = 0;
+		c.gridy = 1;
 		c.gridwidth = 6;
 		c.insets = new Insets(0, 125, 0 ,0);
 		rightPanel.add(estimateTypePanel, c);
@@ -89,26 +122,26 @@ public class CreateGamePanel extends JPanel {
 		c.ipadx = 0;
 		c.gridwidth = 2;
 		c.gridx = 0;
-		c.gridy = 1;
+		c.gridy = 2;
 		rightPanel.add(createReqPanel, c);
 		
 		JPanel blankPanel = new JPanel();
 		blankPanel.setMinimumSize(new Dimension(310, 200));
 		c.gridx = 1;
-		c.gridy = 1;
+		c.gridy = 2;
 		c.gridwidth = 2;
 		rightPanel.add(blankPanel, c);
 		
 		JPanel importReqPanel = new JPanel();
 		importReqPanel.setLayout(new GridBagLayout());
 		c.gridx = 4;
-		c.gridy = 1;
+		c.gridy = 2;
 		rightPanel.add(importReqPanel, c);
 		
 		JPanel currentReqsPanel = new JPanel();
 		currentReqsPanel.setLayout(new GridBagLayout());
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy = 3;
 		c.gridwidth = 6;
 		rightPanel.add(currentReqsPanel, c);
 		
@@ -296,11 +329,23 @@ public class CreateGamePanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Getter for the Game Name text entry
+	 * @return nameTextField
+	 */
 	public String getNameText(){
 		System.out.println(this.nameTextField.getText());
 		return this.nameTextField.getText();
 	}
 	
+	/**
+	 * Getter for the Game Description text entry
+	 * @return descriptionTextField
+	 */
+	public String getDescText(){
+		System.out.println(this.descriptionTextField.getText());
+		return this.descriptionTextField.getText();
+	}
 	
 	
 	public static void main(String args[]){
@@ -316,11 +361,19 @@ public class CreateGamePanel extends JPanel {
         frame.setVisible(true);
 	}
 	
-	public JTextArea getNameArea() {
+	/**
+	 * Getter for the Requirement Name text entry
+	 * @return nameArea
+	 */
+	public JTextArea getReqNameArea() {
 		return nameArea;
 	}
 	
-	public JTextArea getDescArea() {
+	/**
+	 * Getter for the Requirement Description text entry
+	 * @return descArea
+	 */
+	public JTextArea getReqDescArea() {
 		return descArea;
 	}
 
