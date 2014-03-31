@@ -2,6 +2,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
@@ -23,6 +24,7 @@ public class ActiveGamesTable extends JTable
 	{
 		this.tableModel = new DefaultTableModel(data, columnNames);
 		this.setModel(tableModel);
+		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		
 		//TODO ALOT

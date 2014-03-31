@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.JoinGameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 
 /**
@@ -19,6 +20,7 @@ public class ViewEventController {
 	private static ViewEventController instance = null;
 	private MainView main = null;
 	private ToolbarView toolbar = null;
+	private JoinGameTree gameTree = null;
 	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
 	
 	/**
@@ -148,6 +150,25 @@ public class ViewEventController {
 		}
 		main.repaint();
 
+	}
+
+	public void refreshGameTable() {
+		// TODO Auto-generated method stub
+		//This method will call a method that refreshes the data in the requirement model
+		// something like: overviewTable.refresh();
+		
+	}
+
+	public void refreshGameTree() {
+		// TODO Auto-generated method stub
+		//This method will call a method that refreshes the the tree
+		this.gameTree.refresh();
+		
+	}
+
+	public void setGameOverviewTree(JoinGameTree gameTree) {
+		this.gameTree = gameTree;
+		
 	}
 
 }
