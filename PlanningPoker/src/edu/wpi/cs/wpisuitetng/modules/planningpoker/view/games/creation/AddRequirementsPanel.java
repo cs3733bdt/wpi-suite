@@ -33,7 +33,7 @@ public class AddRequirementsPanel extends JPanel {
 	//THIS IS THE REQUIREMENT DESCRIPTION FIELD THAT WILL BE NEEDED FOR CONTROLLER
 	private JTextArea descArea = new JTextArea();
 	
-	public AddRequirementsPanel(){
+	public AddRequirementsPanel(CreateGamePanel view){
 		
 		super(new GridBagLayout());
 		

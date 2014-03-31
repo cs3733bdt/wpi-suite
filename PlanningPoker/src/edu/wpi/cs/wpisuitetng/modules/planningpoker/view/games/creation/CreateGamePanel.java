@@ -129,7 +129,7 @@ public class CreateGamePanel extends JPanel {
 		c.gridy = 3;
 		c.weighty = .5;
 		
-		add(new AddRequirementsPanel(), c);
+		add(new AddRequirementsPanel(this), c);
 		
 		c.gridwidth = 6;
 		c.gridheight = 1;
