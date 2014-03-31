@@ -72,7 +72,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
 			 name = deflated.get("name").getAsString();
 		 }
 		 
-		 User inflated = new User(name, username, password, idNum);
+		 User inflated = new User(name, username, password, email, idNum);
 		 
 		 if(deflated.has("role")  && !deflated.get("role").getAsString().equals(""))
 		 {
