@@ -4,7 +4,9 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Panel;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
