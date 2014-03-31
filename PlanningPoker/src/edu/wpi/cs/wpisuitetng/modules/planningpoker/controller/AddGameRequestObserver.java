@@ -48,11 +48,13 @@ public class AddGameRequestObserver implements RequestObserver{
 		// Pass the messages back to the controller
 		controller.addGameToModel(name);	
 		//controller.addCreatorToModel(creator);
+		
+		System.out.println("The request to add a game has sucseeded!");
 	}
 	
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println("The request to add a Game failed. " + iReq.getResponse().toString());
+		System.err.println("The request to add a Game failed. Response Error! " + iReq.getResponse().toString());
 	}
 
 	@Override

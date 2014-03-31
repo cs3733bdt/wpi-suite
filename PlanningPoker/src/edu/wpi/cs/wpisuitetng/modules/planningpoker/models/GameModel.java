@@ -34,8 +34,7 @@ public class GameModel extends AbstractListModel<Game>{
 	 */
 	@Override
 	public Game getElementAt(int arg0) {
-		// TODO Auto-generated method stub
-		return null;
+		return games.get(arg0);
 	}
 
 	@Override

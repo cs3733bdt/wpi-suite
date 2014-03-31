@@ -75,7 +75,7 @@ public class GameEntityManager implements EntityManager<Game> {
 		// Passing a dummy Game lets the db know what type of object
 		// to retrieve
 		// Passing the project makes it only get messages from that project
-		List<Model> messages = db.retrieveAll(new Game(null, null, false), s.getProject());
+		List<Model> messages = db.retrieveAll(new Game(), s.getProject());
 
 		// Return the list of Games as an array
 		return messages.toArray(new Game[0]);
@@ -87,10 +87,14 @@ public class GameEntityManager implements EntityManager<Game> {
 	    throw new WPISuiteException();
 	}
 
+	/**
+	 * Saves the game into the database for the current session
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#save(edu.wpi.cs.wpisuitetng.Session, edu.wpi.cs.wpisuitetng.modules.Model)
+	 */
 	@Override
-	public void save(Session s, Game model) throws WPISuiteException {
-	    // Save the given defect in the database
-	    db.save(model);
+	public void save(Session s, Game model){
+	    // Save the given game in the database
+		db.save(model, s.getProject());
 	}
 	
 	/**
@@ -130,14 +134,14 @@ public class GameEntityManager implements EntityManager<Game> {
 	public String advancedPut(Session s, String[] args, String content)
 			throws WPISuiteException {
 		// TODO Auto-generated method stub
-		return null;
+		throw new WPISuiteException();
 	}
 
 	@Override
 	public String advancedPost(Session s, String string, String content)
 			throws WPISuiteException {
 		// TODO Auto-generated method stub
-		return null;
+		throw new WPISuiteException();
 	}
 	
 	/**

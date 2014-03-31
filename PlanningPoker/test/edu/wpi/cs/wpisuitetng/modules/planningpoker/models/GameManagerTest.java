@@ -167,10 +167,17 @@ public class GameManagerTest {
 		// no exceptions get thrown
 	}
 	
+	@Test
+	public void testCount() throws WPISuiteException{
+		assertEquals(2, manager.Count());
+	}
 	
-	
-	
-	
+	@Test
+	public void testGetAll() throws WPISuiteException{
+		manager.save(defaultSession, game2);
+		Game returnedGameList [] = manager.getAll(defaultSession);
+		assertEquals(2, returnedGameList.length);
+	}
 	
 	
 
