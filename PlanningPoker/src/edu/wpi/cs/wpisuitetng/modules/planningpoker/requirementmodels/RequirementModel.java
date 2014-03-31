@@ -18,10 +18,8 @@ import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller.AddRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.characteristics.RequirementStatus;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.Iteration;
-import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
+
+//import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 
 /**
  * List of Requirements being pulled from the server
@@ -72,9 +70,10 @@ public class RequirementModel extends AbstractListModel{
 		requirements.add(newReq);
 		try 
 		{
+			/*
 			AddRequirementController.getInstance().addRequirement(newReq);
 			ViewEventController.getInstance().refreshTable();
-			ViewEventController.getInstance().refreshTree();
+			ViewEventController.getInstance().refreshTree();*/
 		}
 		catch(Exception e)
 		{
@@ -114,8 +113,10 @@ public class RequirementModel extends AbstractListModel{
 			}
 		}
 		try {
+			/*
 			ViewEventController.getInstance().refreshTable();
 			ViewEventController.getInstance().refreshTree();
+			*/
 		}
 		catch(Exception e) {}
 	}
@@ -177,8 +178,10 @@ public class RequirementModel extends AbstractListModel{
 		}
 		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));
 		try{
+			/*
 			ViewEventController.getInstance().refreshTable();
 			ViewEventController.getInstance().refreshTree();
+			*/
 		}
 		catch (Exception e) {}
 	}
@@ -194,8 +197,10 @@ public class RequirementModel extends AbstractListModel{
 			if(requirements[i].getId() >= nextID) nextID = requirements[i].getId() + 1;
 		}
 		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
+		/*
 		ViewEventController.getInstance().refreshTable();
 		ViewEventController.getInstance().refreshTree();
+		*/
 	}
 
 	/**
@@ -216,7 +221,7 @@ public class RequirementModel extends AbstractListModel{
 		
 		for(Requirement possibleChild : requirements)
 		{
-			if(possibleChild.getParentID() == requirement.getId()) children.add(possibleChild);
+			//if(possibleChild.getParentID() == requirement.getId()) children.add(possibleChild);
 		}
 		
 		return children;
@@ -233,10 +238,12 @@ public class RequirementModel extends AbstractListModel{
 		
 		for(Requirement possChild : requirements)
 		{
+			/*
 			if(possChild.isAncestor(req.getId()) || possChild.getParentID() != -1) continue;
 			if(possChild == req) continue;
 			if(possChild.getStatus() == RequirementStatus.COMPLETE || possChild.getStatus() == RequirementStatus.DELETED) continue;
 			possibleChildren.addElement(possChild);
+			*/
 		}
 		
 		return possibleChildren;
@@ -254,10 +261,10 @@ public class RequirementModel extends AbstractListModel{
 		
 		for(Requirement possParent : requirements)
 		{
-			if(possParent.hasAncestor(req.getId())) continue;
-			if(possParent == req) continue;
-			if(possParent.getStatus() == RequirementStatus.COMPLETE || possParent.getStatus() == RequirementStatus.DELETED) continue;
-			possibleParents.addElement(possParent);
+			//if(possParent.hasAncestor(req.getId())) continue;
+			//if(possParent == req) continue;
+			//if(possParent.getStatus() == RequirementStatus.COMPLETE || possParent.getStatus() == RequirementStatus.DELETED) continue;
+			//possibleParents.addElement(possParent);
 		}
 		
 		return possibleParents;
@@ -278,28 +285,30 @@ public class RequirementModel extends AbstractListModel{
 		{
 			if(backlog)
 			{
-				if(req.getIteration().equals("Backlog") || req.getIteration().trim().equals(""))
-				{
-					reqForIteration.add(req);
-				}
+				//if(req.getIteration().equals("Backlog") || req.getIteration().trim().equals(""))
+				//{
+				//	reqForIteration.add(req);
+				//}
 			}
 			else
 			{
-				if(req.getIteration().equals(name))
-				{
-					reqForIteration.add(req);
-				}
+				//if(req.getIteration().equals(name))
+				//{
+				//	reqForIteration.add(req);
+				//}
 			}
 		}
 		
 		return reqForIteration;
 	}
 
+	
 	/**
 	 * Gets the summed estimates of all requirements in the given iteration.
 	 * @param displayIteration the iteration to get requirements for
 	
 	 * @return the summed estimates of the requirements. */
+	/*
 	public int getRequirementEstimateForIteration(Iteration displayIteration) {
 		int estimate = 0;
 		List<Requirement> inIteration = getRequirementsForIteration(displayIteration.getName());
@@ -311,5 +320,6 @@ public class RequirementModel extends AbstractListModel{
 		
 		return estimate;
 	}
+	*/
 	
 }
