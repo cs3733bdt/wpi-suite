@@ -9,8 +9,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import com.google.gson.Gson;
 
