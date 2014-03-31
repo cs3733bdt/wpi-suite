@@ -359,7 +359,7 @@ public class ActiveGamesPanel extends JSplitPane {
 		
 	}
 	
-	private JTextField getEstimateText() {
+	public JTextField getEstimateText() {
 		return estText;
 	}
 	
