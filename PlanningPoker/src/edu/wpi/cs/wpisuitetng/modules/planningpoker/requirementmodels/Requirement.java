@@ -9,8 +9,6 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels;
 
-import java.util.ArrayList;
-import java.util.List;
 
 import com.google.gson.Gson;
 
@@ -19,12 +17,12 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 
 /**
  * Basic Requirement class that contains the data to be stored for a Requirement
- * @author tianchanggu
+ * @author tianchanggu & jmwetzel
  *
  */
 public class Requirement extends AbstractModel {
 	/** the ID of the requirement */
-	private int id; // TODO: move ID stuff to server side?
+	private int id;
 
 	/** the name of the requirement */
 	private String name;
@@ -32,17 +30,21 @@ public class Requirement extends AbstractModel {
 	/** a short description of the requirement */
 	private String description;
 
+	
+	
 	/**
-	 * Constructs a Requirement with default characteristics
+	 * The basic constructor for a game
+	 * Sets all of the default values for a game class
+	 * 
 	 */
 	public Requirement() {
 		super();
 		name = description = "";
+		
 	}
 
 	/**
-	 * Construct a Requirement with required properties provided and others set
-	 * to default
+	 * Construct a Requirement with required properties provided
 	 * 
 	 * @param id
 	 *            The ID number of the requirement
@@ -59,34 +61,17 @@ public class Requirement extends AbstractModel {
 		this.description = description;
 	}
 
-
 	/**
-	 * Returns an instance of Requirement constructed using the given
-	 * Requirement encoded as a JSON string.
-	 * 
-	 * @param json
-	 *            JSON-encoded Requirement to deserialize
-	
-	 * @return the Requirement contained in the given JSON */
-	public static Requirement fromJson(String json) {
-		final Gson parser = new Gson();
-		return parser.fromJson(json, Requirement.class);
-	}
-
-	/**
-	 * /**Getter for the id
-	 * 
-	
-	 * @return the id */
+	 * Getter for the id
+	 * @return the id 
+	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
 	 * Setter for the id
-	 * 
-	 * @param id
-	 *            the id to set
+	 * @param id the id to set         
 	 */
 	public void setId(int id) {
 		this.id = id;
@@ -94,18 +79,15 @@ public class Requirement extends AbstractModel {
 
 	/**
 	 * getter for the name
-	 * 
-	
-	 * @return the name */
+	 * @return the name 
+	 */
 	public String getName() {
 		return name;
 	}
 
 	/**
 	 * setter for the name
-	 * 
-	 * @param name
-	 *            the name to set
+	 * @param name the name to set          
 	 */
 	public void setName(String n) {
 		this.name=n;
@@ -113,18 +95,15 @@ public class Requirement extends AbstractModel {
 
 	/**
 	 * Getter for the description
-	 * 
-	
-	 * @return the description */
+	 * @return the description 
+	 */
 	public String getDescription() {
 		return description;
 	}
 
 	/**
 	 * Setter for the description
-	 * 
-	 * @param description
-	 *            the description to set
+	 * @param description the description to set           
 	 */
 	public void setDescription(String desc) {
 		this.description=desc;
@@ -165,7 +144,21 @@ public class Requirement extends AbstractModel {
 	public String toJSON() {
 		return new Gson().toJson(this, Requirement.class);
 	}
+	
 
+	/**
+	 * Returns an instance of Requirement constructed using the given
+	 * Requirement encoded as a JSON string.
+	 * 
+	 * @param json
+	 *            JSON-encoded Requirement to deserialize
+	
+	 * @return the Requirement contained in the given JSON */
+	public static Requirement fromJson(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, Requirement.class);
+	}
+	
 	/**
 	 * Returns an array of Requirements parsed from the given JSON-encoded
 	 * string.
@@ -182,8 +175,6 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Method identify.
 	 * @param o Object
-	
-	
 	 * @return Boolean * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(Object) * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(Object)
 	 */
 	@Override
