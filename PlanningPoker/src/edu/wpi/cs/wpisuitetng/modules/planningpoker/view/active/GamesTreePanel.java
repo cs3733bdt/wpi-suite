@@ -12,13 +12,13 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CreateGameButto
  * @author TomPaolillo
  *
  */
-public class ActiveGamesTreePanel extends JPanel {
+public class GamesTreePanel extends JPanel {
 
 	private JPanel gamesPanel = new JPanel();
 	/**
 	 * Sets up the left hand panel of the overview
 	 */
-	public ActiveGamesTreePanel()
+	public GamesTreePanel()
 	{
 		this.gamesPanel.setPreferredSize(new Dimension(200,600));		
 		this.gamesPanel.add(new JoinGameTree());

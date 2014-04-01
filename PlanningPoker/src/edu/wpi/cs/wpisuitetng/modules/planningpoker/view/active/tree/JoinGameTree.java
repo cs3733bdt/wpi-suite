@@ -24,27 +24,6 @@ public class JoinGameTree extends JScrollPane{
 		this.setViewportView(viewPort);
 		ViewEventController.getInstance().setGameOverviewTree(this);
 		this.refresh();
-		/*
-		DefaultMutableTreeNode active;
-		DefaultMutableTreeNode history;
-		active = new DefaultMutableTreeNode("Active Games");
-		history = new DefaultMutableTreeNode("Past Games");
-		
-		this.createNodes(active, history);
-	    JTree activeTree = new JTree(active);
-	    JTree historyTree = new JTree(history);
-	    
-	    int width = 175;
-		activeTree.setPreferredSize(new Dimension(width , 200));
-		historyTree.setPreferredSize(new Dimension(width, 200));
-		viewPort = new JPanel();
-	    viewPort.add(activeTree);
-	    viewPort.add(historyTree);
-	    
-	    viewPort.setPreferredSize(new Dimension(176,400));
-		
-	    this.setViewportView(viewPort);
-	    */
 	}
 	
 	
@@ -139,7 +118,7 @@ public class JoinGameTree extends JScrollPane{
 	    this.setViewportView(viewPort);
 	    
 	    ViewEventController.getInstance().setGameOverviewTree(this);
-	    
+	    this.repaint();
 	    System.out.println("Finished refresshing the tree");
 		
 	}

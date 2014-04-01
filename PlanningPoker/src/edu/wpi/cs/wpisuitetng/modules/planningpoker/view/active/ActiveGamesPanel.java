@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  * Sets up the panel for the active games screen, which has the list of all active games in which the user is playing.
  * When you click on a game, the bottom section of the screen will display more details about that specific game.
  */
-public class ActiveGamesPanel extends JSplitPane {
+public class ActiveGamesPanel extends JPanel {
 	
 	private JTextField estText = new JTextField();
 	
@@ -103,7 +103,7 @@ public class ActiveGamesPanel extends JSplitPane {
 		/*
 		 * Creates the left half of the active games view, which has the list of active games.
 		 */
-		ActiveGamesTreePanel filterPanel = new ActiveGamesTreePanel();
+		GamesTreePanel filterPanel = new GamesTreePanel();
 		
 		
 		/*
@@ -353,9 +353,7 @@ public class ActiveGamesPanel extends JSplitPane {
 		 * Adds the right and left half of the view to the entire split pane view.
 		 * Also creates the divider.
 		 */
-		this.setRightComponent(rightPanel);
-		this.setLeftComponent(filterPanel);
-		this.setDividerLocation(180);
+		this.add(rightPanel);
 		
 	}
 	
