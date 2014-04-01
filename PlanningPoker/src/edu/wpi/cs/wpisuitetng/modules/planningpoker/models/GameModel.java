@@ -21,7 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 public class GameModel extends AbstractListModel<Game>{
 	
 	private static GameModel instance;
-	private int nexID;
+	private int nextID;
 	
 	/** List of available games */
 	private List<Game> games;
@@ -32,6 +32,7 @@ public class GameModel extends AbstractListModel<Game>{
 	 */
 	private GameModel() {
 		games = new ArrayList<Game>();
+		nextID = 0;
 	}
 	
 	public static GameModel getInstance(){
@@ -62,7 +63,13 @@ public class GameModel extends AbstractListModel<Game>{
 	 */
 	public void addGame(Game newGame) {
 		games.add(newGame);
-		
+		try{
+			//AddGameController.getInstance().addGame(newGame);
+			ViewEventController.getInstance().refreshGameTable();
+			ViewEventController.getInstance().refreshGameTree();
+		} catch (Exception e){
+			
+		}
 		this.fireIntervalAdded(this, 0, 0);
 	}
 
@@ -83,8 +90,11 @@ public class GameModel extends AbstractListModel<Game>{
 	public void addGames(Game[] newGames) {
 		for (int i = 0; i < newGames.length; i++) {
 			this.games.add(newGames[i]);
+			if(newGames[i].getId() >= nextID) nextID = newGames[i].getId() + 1;
 		}
 		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
+		ViewEventController.getInstance().refreshGameTable();
+		ViewEventController.getInstance().refreshGameTree();
 	}
 
 	public List<Game> getGames() {

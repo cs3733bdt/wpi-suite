@@ -84,7 +84,22 @@ public class GameEntityManager implements EntityManager<Game> {
 	@Override
 	public Game update(Session s, String content) throws WPISuiteException {
 		// This module does not allow Games to be modified, so throw an exception
-	    throw new WPISuiteException();
+		Game updatedGame = Game.fromJSON(content);
+		
+		
+		List<Model> oldGame = db.retrieve(Game.class, "identity", updatedGame.getIdentifier(), s.getProject());
+		if(oldGame.size() < 1 || oldGame.get(0) == null){
+			throw new BadRequestException("Requirement with ID does not exist.");
+		}
+		
+		Game existingGame = (Game)oldGame.get(0);
+		existingGame.copyFrom(updatedGame);
+		
+		if(!db.save(existingGame, s.getProject())){
+			throw new WPISuiteException();
+		}
+		
+		return existingGame;
 	}
 
 	/**

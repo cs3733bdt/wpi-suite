@@ -32,6 +32,7 @@ public class AddGameButtonPanel extends ToolbarGroupView{
 		this.addGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		// the action listener for the Create Game Button
+		
 		addGameButton.addActionListener(new AddGameController(GameModel.getInstance(), panel) {
 		});
 		
