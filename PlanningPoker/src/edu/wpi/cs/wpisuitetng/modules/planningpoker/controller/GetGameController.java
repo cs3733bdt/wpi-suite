@@ -24,22 +24,45 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  *
  */
 public class GetGameController implements ActionListener {
+	private GetGameRequestObserver observer;
+	private static GetGameController instance;
 
-	private final GameModel model;
-
+	//private final GameModel model;
+	
+	public static GetGameController getInstance(){
+		if (instance == null){
+			instance = new GetGameController();
+		}
+		return instance;
+	}
+	/*
 	public GetGameController(GameModel model) {
 		this.model = model;
 	}
+	*/
 	
+	public GetGameController() {
+		observer = new GetGameRequestObserver(this);
+	}
+
 	/**
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 	    // Send a request to the core to save this Game
-	    final Request request = Network.getInstance().makeRequest("postboard/postboardGame", HttpMethod.GET); // GET == read
+	    final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.GET); // GET == read
 	    request.addObserver(new GetGameRequestObserver(this)); // add an observer to process the response
 	    request.send(); // send the request
+	}
+	
+	/**
+	 * Sends an HTTP request to retrieve all requirements
+	 */
+	public void retrieveGames() {
+		final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.GET); // GET == read
+		request.addObserver(observer); // add an observer to process the response
+		request.send(); // send the request
 	}
 	
 	/**
@@ -50,13 +73,13 @@ public class GetGameController implements ActionListener {
 	 */
 	public void receivedGames(Game[] Games) {
 	    // Empty the local model to eliminate duplications
-	    model.emptyModel();
+	    GameModel.getInstance().emptyModel();
 
 	    // Make sure the response was not null
 	    if (Games != null) {
 
 	        // add the Games to the local model
-	        model.addGames(Games);
+	        GameModel.getInstance().addGames(Games);
 	    }
 	}
 }
