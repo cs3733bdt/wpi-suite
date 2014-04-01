@@ -21,6 +21,7 @@ import javax.swing.JTextField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.AddGameButtonPanel;
@@ -33,7 +34,7 @@ public class AddRequirementsPanel extends JPanel {
 	//THIS IS THE REQUIREMENT DESCRIPTION FIELD THAT WILL BE NEEDED FOR CONTROLLER
 	private JTextArea descArea = new JTextArea();
 	
-	public AddRequirementsPanel(){
+	public AddRequirementsPanel(final CreateGamePanel view){
 		
 		super(new GridBagLayout());
 		
@@ -108,6 +109,12 @@ public class AddRequirementsPanel extends JPanel {
 		
 		createReqPanel.add(descArea, c);
 		JButton addReqButton = new JButton("Add Requirement");
+		addReqButton.addActionListener(new ActionListener() {
+			 public void actionPerformed(ActionEvent e) {
+				 view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
+			 }
+		});
+		
 		c.gridx = 0;
 		c.gridwidth = 2;
 		c.gridheight = 1;

@@ -52,7 +52,7 @@ public class GetGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-	    Game[] errorGame = {new Game(null, null, false)};
+	    Game[] errorGame = {new Game(null, null, null, false)};
 	    controller.receivedGames(errorGame);
 	}
 }

@@ -11,6 +11,7 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
@@ -27,6 +28,7 @@ import javax.swing.JTextField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.AddGameButtonPanel;
@@ -52,6 +54,8 @@ public class CreateGamePanel extends JPanel {
 	private JTextField descriptionTextField;
 	//TODO add an implemenation of the game
 	Game displayGame;
+	
+	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
 	
 	
 	/**
@@ -129,7 +133,7 @@ public class CreateGamePanel extends JPanel {
 		c.gridy = 3;
 		c.weighty = .5;
 		
-		add(new AddRequirementsPanel(), c);
+		add(new AddRequirementsPanel(this), c);
 		
 		c.gridwidth = 6;
 		c.gridheight = 1;
@@ -204,6 +208,11 @@ public class CreateGamePanel extends JPanel {
         frame.setVisible(true);
 	}
 	
+	public void addRequirement(Requirement newReq){
+		this.requirements.add(newReq);
+	}
+	
+	
 	/**
 	 * Getter for the Requirement Name text entry
 	 * @return nameArea
@@ -218,6 +227,10 @@ public class CreateGamePanel extends JPanel {
 	 */
 	public JTextArea getReqDescArea() {
 		return descArea;
+	}
+	
+	public ArrayList<Requirement> getRequirements(){
+		return this.requirements;
 	}
 
 }

@@ -2,12 +2,14 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
 
 /**
  * Basic Game class that contains the data to be store for a Game
@@ -28,6 +30,8 @@ public class Game extends AbstractModel{
 	private Date creationTime;
 	
 	private String creator;
+	
+	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
 	
 	private boolean complete;
 	
@@ -85,11 +89,12 @@ public class Game extends AbstractModel{
 	 * 
 	 * @author dstapply
 	 */
-	public Game(String name, String creator, boolean hasTimeLimit) {
+	public Game(String name, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit) {
 		this(); //Calls the default constructor
 		this.name = name;
 		this.creator = creator;
 		this.hasTimeLimit = hasTimeLimit;
+		this.requirements = requirements;
 		
 	}
 	
@@ -107,7 +112,7 @@ public class Game extends AbstractModel{
 	 */
 	@Deprecated
 	public Game(int id, String name, String creator, boolean hasTimeLimit){
-		this(name, creator, hasTimeLimit);
+		this(name, creator, null, hasTimeLimit);
 		this.id = id;
 	}
 	
