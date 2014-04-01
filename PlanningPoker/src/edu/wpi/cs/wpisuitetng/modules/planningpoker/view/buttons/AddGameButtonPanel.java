@@ -1,6 +1,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -19,6 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGa
  */
 
 public class AddGameButtonPanel extends ToolbarGroupView{
+	private final CreateGamePanel parentPanel;
 
 	
 	JPanel contentPanel = new JPanel();
@@ -32,15 +35,14 @@ public class AddGameButtonPanel extends ToolbarGroupView{
 		this.addGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		// the action listener for the Create Game Button
-		
-		addGameButton.addActionListener(new AddGameController(GameModel.getInstance(), panel) {
-		});
+		setupActionListeners();
 		
 		contentPanel.add(addGameButton);
 		contentPanel.setOpaque(false);
 		
 
 		this.add(contentPanel);
+		parentPanel = panel;
 	}
 	/**
 	 * Method getCreateGameButton.
@@ -48,6 +50,14 @@ public class AddGameButtonPanel extends ToolbarGroupView{
 	 * @return JButton */
 	public JButton getAddGameButton() {
 		return addGameButton;
+	}
+	
+	void setupActionListeners(){
+		addGameButton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				parentPanel.AddGamePressed();
+			}
+		});
 	}
 	
 }

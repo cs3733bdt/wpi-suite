@@ -3,6 +3,7 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
@@ -13,6 +14,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.AbstractButton;
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -24,7 +27,9 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
@@ -47,13 +52,23 @@ public class CreateGamePanel extends JPanel {
 	//THIS IS THE REQUIREMENT DESCRIPTION FIELD THAT WILL BE NEEDED FOR CONTROLLER
 	private JTextArea descArea = new JTextArea();
 	
+	/** Shows the names of the errors*/
+	JLabel errorField;
+	
+	/** Field Border Definitions*/
+	private final Border defaultBorder = (new JTextField()).getBorder();
+	private final Border errorBorder = BorderFactory
+			.createLineBorder(Color.RED);
+	/* End field Border Definitions*/
+	
+	
 	private boolean readyToClose = false;
 	private boolean readyToRemove = true; //The window starts off ready to remove because no changes have happened
 	
 	private JTextField nameTextField;
 	private JTextField descriptionTextField;
-	//TODO add an implemenation of the game
-	Game displayGame;
+	
+	Game currentGame;
 	
 	private JRadioButton cardsButton = new JRadioButton("Estimate With Cards");
 	
@@ -145,13 +160,13 @@ public class CreateGamePanel extends JPanel {
 		add(rightPanel, c);
 		
 		
-		JTextField errorLog = new JTextField("Any errors shown here.");
-		errorLog.setMinimumSize(new Dimension(150, 25));
+		errorField= new JLabel("Any errors shown here.");
+		errorField.setMinimumSize(new Dimension(150, 25));
 		c.gridx = 2;
 		c.gridwidth = 1;
 		c.gridy = 9;
 		c.insets = new Insets(0, 100, 0, 0);
-		add(errorLog, c);
+		add(errorField, c);
 		
 		c.gridx = 1;
 		c.gridwidth = 1;
@@ -197,18 +212,7 @@ public class CreateGamePanel extends JPanel {
 	}
 	
 	
-	public static void main(String args[]){
-		JFrame frame = new JFrame("GridBagLayoutDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        //Set up the content pane.
-        frame.add(new CreateGamePanel());
-        frame.setSize(400, 400);
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-	}
+	
 	
 	public void addRequirement(Requirement newReq){
 		this.requirements.add(newReq);
@@ -233,6 +237,134 @@ public class CreateGamePanel extends JPanel {
 	
 	public ArrayList<Requirement> getRequirements(){
 		return this.requirements;
+	}
+	
+	
+	public void AddGamePressed() {
+		if(this.validateField(true)){
+			this.addGame();
+			readyToClose = true;
+			ViewEventController.getInstance().removeTab(this);
+			System.out.println("Add Game Pressed Passed.");
+		} else {
+			System.out.println("Add Game Pressed Failed.");
+		}
+		
+	}
+
+	/**
+	 * Checks all fields to determine if they are prepared to be removed.
+	 * If a field is invalid the it warns the user with a notification and by highlighting
+	 * the offending box on the GUI.
+	 * @param warn Whether to warn the user via coloring texboxes and warning labels
+	 * @return true If all fields are valid and the window is ready to be removed
+	 */
+	private boolean validateField(boolean warn) {
+		boolean isNameValid = false;
+		boolean isDescriptionValid = false;
+		boolean areRequirementsSelected = false;
+		
+		//BEGIN NAME BOX VALIDATION
+		if(getBoxName().getText().length() >=100){
+			isNameValid = false;
+			getBoxName().setBorder(errorBorder);
+			//getErrorName().setForeground(Color.RED);
+			displayError("Name can be no more than 100 chars.");
+		} else if(getBoxName().getText().length() <= 0){
+			isNameValid = false;
+			if(warn){
+				//getErrorName().setText("** Name is REQUIRED");
+				getBoxName().setBorder(errorBorder);
+				//getErrorName().setForeground(Color.RED);
+			}
+			
+			displayError("Name is required");
+		} else {
+			if (warn){
+				//getErrorName().setText("");
+				getBoxName().setBorder(defaultBorder);
+			}
+			isNameValid = true;
+		}
+		//END NAME BOX VALIDATION
+		
+		//BEGIN DESCRIPTION BOX VALDATION
+		if(getBoxDescription().getText().length() <= 0){
+			isDescriptionValid = false;
+			if(warn){
+				//getErrorDescription().setText("** Description is REQUIRED");
+				getBoxDescription().setBorder(errorBorder);
+				//getErrorDescription().setForeground(Color.RED);
+			}
+			//TODO add a way to display error descriptions
+			displayError("Description is required");
+		} else {
+			if (warn){
+				//getErrorDescription().setText("");
+				getBoxDescription().setBorder(defaultBorder);
+			}
+			isDescriptionValid = true;
+		}
+		
+		//TODO check if a valid game(s) are selected here
+		areRequirementsSelected = true;
+		
+		
+		return (isNameValid && isDescriptionValid && areRequirementsSelected);
+	}
+	
+	/**
+	 * Adds the game to the model and to the server
+	 */
+	public void  addGame(){
+		String strName = this.getBoxName().getText();
+		String strDes = this.getBoxDescription().getText();
+		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
+		ArrayList<Requirement> requ = getRequirements();
+		
+		currentGame = new Game(strName, strDes, creator, requ, false);
+		
+		GameModel.getInstance().addGame(currentGame);
+		
+		ViewEventController.getInstance().refreshGameTable();
+		ViewEventController.getInstance().refreshGameTree();
+	}
+	
+
+	public JTextField getBoxName(){
+		return nameTextField;
+	}
+	
+	private JTextField getBoxDescription() {
+		return descriptionTextField;
+	}
+	
+	public JLabel getErrorName(){
+		//TODO add errors to the indivitdual fields
+		//WHEN FIXED UNCOMMENT THE LINES THAT USE THIS METHOD IN VALIDATE
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	public void displayError(String error){
+		errorField.setText(error);
+	}
+	
+	public static void main(String args[]){
+		JFrame frame = new JFrame("GridBagLayoutDemo");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        //Set up the content pane.
+        frame.add(new CreateGamePanel());
+        frame.setSize(400, 400);
+
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
 	}
 
 }
