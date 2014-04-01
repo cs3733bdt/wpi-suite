@@ -61,14 +61,20 @@ public class GameTree extends JScrollPane{
 		JTree historyTree = new JTree(history);
 		
 
-		int width = 175;
-		activeTree.setPreferredSize(new Dimension(width , 200));
-		historyTree.setPreferredSize(new Dimension(width, 200));
+		int width = 150;
+		activeTree.setPreferredSize(new Dimension(width , games.size()*21));
+		historyTree.setPreferredSize(new Dimension(width, games.size()*21));
+		
+		JScrollPane activeTreeScroll = new JScrollPane(activeTree);
+		activeTreeScroll.setPreferredSize(new Dimension(width + 25, 200));
+		JScrollPane historyTreeScroll = new JScrollPane(historyTree);
+		historyTreeScroll.setPreferredSize(new Dimension(width + 25, 200));
+		
 		viewPort = new JPanel();
-	    viewPort.add(activeTree);
-	    viewPort.add(historyTree);
+	    viewPort.add(activeTreeScroll);
+	    viewPort.add(historyTreeScroll);
 	    
-	    viewPort.setPreferredSize(new Dimension(176,400));
+	    viewPort.setPreferredSize(new Dimension(176,410));
 		
 	    this.setViewportView(viewPort);
 	    
