@@ -50,15 +50,6 @@ public class PlanningPoker implements IJanewayModule {
 
 	    // Add the tab to the list of tabs owned by this module
 	    tabs.add(tab1);
-	    
-	    int delay = 15000; //milliseconds
-	    ActionListener taskPerformer = new ActionListener() {
-	        public void actionPerformed(ActionEvent evt) {
-	            GetGameController.getInstance().retrieveGames();
-	            ViewEventController.getInstance().refreshGameTree();
-	        }
-	    };
-	    new Timer(delay, taskPerformer).start();
 	}
 	
 	/**
