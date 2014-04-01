@@ -69,7 +69,9 @@ public class AddGameController implements ActionListener {
 	public void actionPerformed(ActionEvent event){
 		newGameName = view.getNameText();
 		requirements = view.getRequirements();
+		view.setRequirements(new ArrayList<Requirement>());
 		System.out.println(newGameName);
+		System.out.println(requirements.toString());
 		
 		String currentUser = ConfigManager.getConfig().getUserName(); //Gets the currently active user
 		

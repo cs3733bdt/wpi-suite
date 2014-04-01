@@ -183,7 +183,6 @@ public class CreateGamePanel extends JPanel {
 	 * @return nameTextField
 	 */
 	public String getNameText(){
-		System.out.println(this.nameTextField.getText());
 		return this.nameTextField.getText();
 	}
 	
@@ -192,7 +191,6 @@ public class CreateGamePanel extends JPanel {
 	 * @return descriptionTextField
 	 */
 	public String getDescText(){
-		System.out.println(this.descriptionTextField.getText());
 		return this.descriptionTextField.getText();
 	}
 	
@@ -233,6 +231,10 @@ public class CreateGamePanel extends JPanel {
 	
 	public ArrayList<Requirement> getRequirements(){
 		return this.requirements;
+	}
+	
+	public void setRequirements(ArrayList<Requirement> newReqs){
+		this.requirements = newReqs;
 	}
 
 }
