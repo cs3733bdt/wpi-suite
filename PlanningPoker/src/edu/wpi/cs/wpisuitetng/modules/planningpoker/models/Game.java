@@ -51,6 +51,19 @@ public class Game extends AbstractModel{
 	 * 
 	 */
 	
+	/**
+	 * Copies all of the values from the given requirement to this requirement.
+	 * @param toCopyFrom the requirement to copy from
+	 */
+	public void copyFrom(Game toCopyFrom) {
+		this.complete = toCopyFrom.complete;
+		this.creationTime = toCopyFrom.creationTime;
+		this.creator = toCopyFrom.creator;
+		this.id = toCopyFrom.id;
+		this.identity = toCopyFrom.identity;
+		this.name = toCopyFrom.name;
+	}
+	
 	
 	
 	/**
@@ -146,6 +159,10 @@ public class Game extends AbstractModel{
 		return dateFormat.format(creationTime);
 	}
 	
+	/**
+	 * Converts the game into a string.
+	 * @return Returns the name of the game
+	 */
 	public String toString(){
 		return name;
 	}
@@ -206,5 +223,6 @@ public class Game extends AbstractModel{
 		}
 		return true;
 	}
+
 
 }

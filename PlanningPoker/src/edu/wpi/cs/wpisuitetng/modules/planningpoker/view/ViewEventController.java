@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.JoinGameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 
@@ -43,7 +44,7 @@ public class ViewEventController {
 	/**
 	 * Sets the main view to the given view.
 	
-	 * @param mainview The MainView
+	 * @param mainview The TabbedView
 	 */
 	public void setMainView(MainView mainview){
 		main = mainview;
@@ -65,10 +66,10 @@ public class ViewEventController {
 	 */
 	public void createGame() {
 		CreateGamePanel newGame = new CreateGamePanel();
-		main.addTab("New Game", null, newGame, "New Game");
+		main.getTabbedView().addTab("New Game", null, newGame, "New Game");
 		main.invalidate(); //force the tabbedpane to redraw.
 		main.repaint();
-		main.setSelectedComponent(newGame);
+		main.getTabbedView().setSelectedComponent(newGame);
 	}
 	
 	/**
@@ -77,10 +78,10 @@ public class ViewEventController {
 	public void joinGame(){
 		ActiveGamesPanel viewGame = new ActiveGamesPanel();
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
-		main.addTab("Active Game",  viewGame);
+		main.getTabbedView().addTab("Active Game",  viewGame);
 		main.invalidate();
 		main.repaint();
-		main.setSelectedComponent(viewGame);
+		main.getTabbedView().setSelectedComponent(viewGame);
 	}	
 	
 	/**
@@ -94,7 +95,7 @@ public class ViewEventController {
 			if(!((CreateGamePanel) comp).readyToRemove()) return;
 			this.listOfCreateGamePanels.remove(comp);
 		}
-		main.remove(comp);
+		main.getTabbedView().remove(comp);
 	}
 	
 	/**
@@ -102,11 +103,11 @@ public class ViewEventController {
 	 */
 	public void closeAllTabs() {
 
-		int tabCount = main.getTabCount();
+		int tabCount = main.getTabbedView().getTabCount();
 
 		for(int i = tabCount - 1; i >= 0; i--)
 		{
-			Component toBeRemoved = main.getComponentAt(i);
+			Component toBeRemoved = main.getTabbedView().getComponentAt(i);
 
 			if(toBeRemoved instanceof ActiveGamesPanel) continue;
 			
@@ -117,7 +118,7 @@ public class ViewEventController {
 				this.listOfCreateGamePanels.remove(toBeRemoved);
 			}
 
-			main.removeTabAt(i);
+			main.getTabbedView().removeTabAt(i);
 		}
 
 		main.repaint();
@@ -128,12 +129,12 @@ public class ViewEventController {
 	 * 
 	 */
 	public void closeOthers() {
-		int tabCount = main.getTabCount();
-		Component selected = main.getSelectedComponent();
+		int tabCount = main.getTabbedView().getTabCount();
+		Component selected = main.getTabbedView().getSelectedComponent();
 
 		for(int i = tabCount - 1; i >= 0; i--)
 		{
-			Component toBeRemoved = main.getComponentAt(i);
+			Component toBeRemoved = main.getTabbedView().getComponentAt(i);
 
 			if(toBeRemoved instanceof ActiveGamesPanel){continue;}
 			if(toBeRemoved == selected){
@@ -146,7 +147,7 @@ public class ViewEventController {
 				this.listOfCreateGamePanels.remove(toBeRemoved);
 			}
 
-			main.removeTabAt(i);
+			main.getTabbedView().removeTabAt(i);
 		}
 		main.repaint();
 

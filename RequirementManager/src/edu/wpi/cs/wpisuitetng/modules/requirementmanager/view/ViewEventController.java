@@ -57,7 +57,9 @@ public class ViewEventController {
 	/**
 	 * Default constructor for ViewEventController.  Is protected to prevent instantiation.
 	 */
-	private ViewEventController() {}
+	private ViewEventController() {
+		
+	}
 
 	/**
 	 * Returns the singleton instance of the vieweventcontroller.

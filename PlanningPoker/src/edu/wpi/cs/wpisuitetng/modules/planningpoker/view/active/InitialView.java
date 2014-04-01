@@ -19,22 +19,19 @@ import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
-public class InitialView extends JSplitPane {
+public class InitialView extends JPanel {
 	
 	public InitialView() {
 	
-		ActiveGamesTreePanel filterPanel = new ActiveGamesTreePanel();
 		
-		Container rightPanel = new Container();
-		rightPanel.setLayout(new GridBagLayout());
+		Container panel = new Container();
+		panel.setLayout(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
-		this.setRightComponent(rightPanel);
-		this.setLeftComponent(filterPanel);
-		this.setDividerLocation(180);
+		this.add(panel);
 		
 	}
 	
