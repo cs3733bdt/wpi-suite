@@ -10,6 +10,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels;
 
 
+import java.util.UUID;
+
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
@@ -23,12 +25,20 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 public class Requirement extends AbstractModel {
 	/** the ID of the requirement */
 	private int id;
+	
+	/** More secure version of identity. Guaranteed to be unique. This is used if
+	 * the Requirement was generated in the planning poker module
+	 */
+	private UUID identity;
 
 	/** the name of the requirement */
 	private String name;
 
 	/** a short description of the requirement */
 	private String description;
+	
+	/** If this requirement came from the requirement manager module*/
+	private boolean fromRequirementModule;
 
 	
 	
@@ -40,6 +50,7 @@ public class Requirement extends AbstractModel {
 	public Requirement() {
 		super();
 		name = description = "";
+		identity = UUID.randomUUID();
 		
 	}
 
@@ -76,6 +87,7 @@ public class Requirement extends AbstractModel {
 	 */
 	public void setId(int id) {
 		this.id = id;
+		
 	}
 
 	/**

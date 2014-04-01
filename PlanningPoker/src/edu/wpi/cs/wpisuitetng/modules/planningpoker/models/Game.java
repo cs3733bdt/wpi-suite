@@ -25,6 +25,8 @@ public class Game extends AbstractModel{
 	
 	private String name;
 	
+	private String description;
+	
 	private boolean hasTimeLimit;
 	
 	private Date creationTime;
@@ -59,6 +61,8 @@ public class Game extends AbstractModel{
 		this.id = toCopyFrom.id;
 		this.identity = toCopyFrom.identity;
 		this.name = toCopyFrom.name;
+		this.requirements = toCopyFrom.requirements;
+		this.description = toCopyFrom.description;
 	}
 	
 	
@@ -71,6 +75,7 @@ public class Game extends AbstractModel{
 	public Game(){
 		super();
 		name = "";
+		description = "";
 		creationTime = new Date();
 		hasTimeLimit = false;
 		complete = false;
@@ -86,9 +91,10 @@ public class Game extends AbstractModel{
 	 * 
 	 * @author dstapply
 	 */
-	public Game(String name, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit) {
+	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit) {
 		this(); //Calls the default constructor
 		this.name = name;
+		this.description = description;
 		this.creator = creator;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
@@ -109,7 +115,7 @@ public class Game extends AbstractModel{
 	 */
 	@Deprecated
 	public Game(int id, String name, String creator, boolean hasTimeLimit){
-		this(name, creator, null, hasTimeLimit);
+		this(name, "", creator, null, hasTimeLimit);
 		this.id = id;
 	}
 	
