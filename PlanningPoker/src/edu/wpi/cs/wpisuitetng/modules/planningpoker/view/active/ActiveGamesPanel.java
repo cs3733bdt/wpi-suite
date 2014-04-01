@@ -144,7 +144,7 @@ public class ActiveGamesPanel extends JPanel {
 		/*
 		 * Creates and adds the user story text area to the view.
 		 */
-		userStoryDesc.setText("As a BLANK, I would like to BLANK \nso that BLANK.");
+		userStoryDesc.setText("Requirement Description");
 		
 		//create a dummy JTextArea
 		JTextArea editingArea = new JTextArea();
