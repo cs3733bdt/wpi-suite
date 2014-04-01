@@ -6,6 +6,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
+@SuppressWarnings("serial")
 public class ActiveGamesTable extends JTable
 {
 	public DefaultTableModel tableModel = null;
