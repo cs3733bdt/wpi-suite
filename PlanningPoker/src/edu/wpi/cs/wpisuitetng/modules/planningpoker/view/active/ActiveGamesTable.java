@@ -30,4 +30,8 @@ public class ActiveGamesTable extends JTable
 		//TODO ALOT
 		
 	}
+	
+	public boolean isCellEditable(int row, int column){
+		return false;
+	}
 }
