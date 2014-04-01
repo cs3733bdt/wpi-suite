@@ -182,16 +182,32 @@ public class CreateGamePanel extends JPanel {
 	 * Getter for the Game Name text entry
 	 * @return nameTextField
 	 */
-	public String getNameText(){
+	public String getGameName(){
 		return this.nameTextField.getText();
+	}
+	
+	/**
+	 * Setter for the Game Name text entry
+	 * @parem newName
+	 */
+	public void setGameName(String newName){
+		this.nameTextField.setText(newName);
 	}
 	
 	/**
 	 * Getter for the Game Description text entry
 	 * @return descriptionTextField
 	 */
-	public String getDescText(){
+	public String getGameDescription(){
 		return this.descriptionTextField.getText();
+	}
+	
+	/**
+	 * Setter for the Game Description text entry
+	 * @parem newDescription
+	 */
+	public void setGameDescription(String newDescription){
+		this.descriptionTextField.setText(newDescription);
 	}
 	
 	
@@ -208,6 +224,10 @@ public class CreateGamePanel extends JPanel {
         frame.setVisible(true);
 	}
 	
+	/**
+	 * Adds Requirement to the requirements ArrayList
+	 * @parem newReq
+	 */
 	public void addRequirement(Requirement newReq){
 		this.requirements.add(newReq);
 	}
@@ -229,10 +249,18 @@ public class CreateGamePanel extends JPanel {
 		return descArea;
 	}
 	
+	/**
+	 * Getter for the Requirements ArrayList
+	 * @return ArrayList<Requirement> 
+	 */
 	public ArrayList<Requirement> getRequirements(){
 		return this.requirements;
 	}
 	
+	/**
+	 * Setter for the Requirements ArrayList
+	 * @parem newReqs
+	 */
 	public void setRequirements(ArrayList<Requirement> newReqs){
 		this.requirements = newReqs;
 	}

@@ -88,9 +88,10 @@ public class AddRequirementsPanel extends JPanel {
 		c.anchor = GridBagConstraints.CENTER;
 		createReqPanel.add(reqName, c);
 		
-		nameArea.setText("test name");
+		nameArea.setText("Requirement Name");
 		c.gridx = 1;
 		c.gridy = 1;
+		nameArea.setPreferredSize(new Dimension(75,25));
 		createReqPanel.add(nameArea, c);
 		
 		JLabel reqDesc = new JLabel("Description:");
@@ -99,19 +100,22 @@ public class AddRequirementsPanel extends JPanel {
 		c.anchor = GridBagConstraints.CENTER;
 		createReqPanel.add(reqDesc, c);
 		
-		descArea.setText("As a ______________ \nI would like to _______________________ \nso that ________________________________.");
+		descArea.setText("Requirement Description");
 		descArea.setMinimumSize(new Dimension(200, 80));
 		descArea.setMaximumSize(new Dimension(200, 80));
 		c.gridwidth = 2;
 		c.gridheight = 3;
 		c.gridx = 0;
 		c.gridy = 3;
-		
+		descArea.setPreferredSize(new Dimension(75,100));
 		createReqPanel.add(descArea, c);
+		
 		JButton addReqButton = new JButton("Add Requirement");
 		addReqButton.addActionListener(new ActionListener() {
 			 public void actionPerformed(ActionEvent e) {
 				 view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
+				 nameArea.setText("");
+				 descArea.setText("");
 			 }
 		});
 		

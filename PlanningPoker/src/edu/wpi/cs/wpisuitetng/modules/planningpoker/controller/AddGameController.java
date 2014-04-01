@@ -67,11 +67,9 @@ public class AddGameController implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent event){
-		newGameName = view.getNameText();
-		requirements = view.getRequirements();
-		view.setRequirements(new ArrayList<Requirement>());
-		System.out.println(newGameName);
-		System.out.println(requirements.toString());
+		processGameFields();
+		System.out.println("Game: " + newGameName);
+		System.out.println("Requirements: " + requirements.toString());
 		
 		String currentUser = ConfigManager.getConfig().getUserName(); //Gets the currently active user
 		
@@ -91,6 +89,19 @@ public class AddGameController implements ActionListener {
 	 */
 	public void addGameToModel(Game newGame) {
 		model.addGame(newGame);
+	}
+	
+	/**
+	 * Sets the local variables to what the user entered in the corresponding fields
+	 * Then resets the fields to blank so the user can enter more information
+	 * 
+	 */
+	public void processGameFields(){
+		newGameName = view.getGameName();
+		requirements = view.getRequirements();
+		view.setRequirements(new ArrayList<Requirement>());
+		view.setGameName("");
+		view.setGameDescription("");
 	}
 
 	/**
