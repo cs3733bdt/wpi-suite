@@ -11,12 +11,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.swing.AbstractListModel;
-import javax.swing.DefaultListModel;
-import javax.swing.ListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller.AddRequirementController;
 
@@ -30,7 +27,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller.AddReq
  *
  */
 @SuppressWarnings("serial")
-public class RequirementModel extends AbstractListModel{
+public class RequirementModel extends AbstractListModel<Requirement>{
 	
 	/**
 	 * The list in which all the requirements for a single project are contained

@@ -5,7 +5,7 @@ import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.JoinGameTree;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CreateGameButtonPanel;
 
 /**
@@ -21,7 +21,7 @@ public class GamesTreePanel extends JPanel {
 	public GamesTreePanel()
 	{
 		this.gamesPanel.setPreferredSize(new Dimension(200,600));		
-		this.gamesPanel.add(new JoinGameTree());
+		this.gamesPanel.add(new GameTree());
 		this.gamesPanel.add(new CreateGameButtonPanel());     
 		this.add(gamesPanel);
 	}

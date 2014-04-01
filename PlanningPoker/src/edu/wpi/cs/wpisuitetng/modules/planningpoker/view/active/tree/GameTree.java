@@ -1,9 +1,10 @@
 /**
- * @author TomPaolillo
+ * @author Tom Paolillo, Jonathan Leitschuh, Jeff Signore
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree;
 
 import java.awt.Dimension;
+import java.awt.Graphics;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -13,77 +14,31 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
-public class JoinGameTree extends JScrollPane{
+@SuppressWarnings("serial")
+public class GameTree extends JScrollPane{
 	private JPanel viewPort;
+	private boolean initialized = false; //Used to check if the GameModel should be generated from the server.
 	
-	public JoinGameTree(){
+	/**
+	 * Constructor for a GameTree
+	 */
+	public GameTree(){
 		this.setViewportView(viewPort);
 		ViewEventController.getInstance().setGameOverviewTree(this);
 		this.refresh();
 	}
 	
 	
+
 	/**
-	 * Takes in a root tree node and creates a hierarchy of nodes under it
-	 * @param active 
+	 * Regenerates the table's components whenever called.
+	 * Used when the list of games is updated or changed.
 	 */
-	private void createNodes(DefaultMutableTreeNode active, DefaultMutableTreeNode history) {
-	    DefaultMutableTreeNode game = null;
-	    DefaultMutableTreeNode requirement = null;
-	    
-	    // game 1
-	    game = new DefaultMutableTreeNode("Game 1");
-	    active.add(game);
-	    
-	    // requirements for game 1
-	    requirement = new DefaultMutableTreeNode("requirement 1");
-	    game.add(requirement);
-	    
-	    requirement = new DefaultMutableTreeNode("requirement 2");
-	    game.add(requirement);
-	    
-	    requirement = new DefaultMutableTreeNode("requirement 3");
-	    game.add(requirement);
-
-	    
-	    // game 2
-	    game = new DefaultMutableTreeNode("Game 2");
-	    active.add(game);
-
-	    // requirements for game 2
-	    requirement = new DefaultMutableTreeNode("requirement 1");
-	    game.add(requirement);
-
-	    requirement = new DefaultMutableTreeNode("requirement 2");
-	    game.add(requirement);
-	    
-	    
-	    // game 3
-	    game = new DefaultMutableTreeNode("Game 3");
-	    active.add(game);
-
-	    // requirements for game 3
-	    requirement = new DefaultMutableTreeNode("requirement 1");
-	    game.add(requirement);
-
-	    requirement = new DefaultMutableTreeNode("requirement 2");
-	    game.add(requirement);
-	    
-	    requirement = new DefaultMutableTreeNode("requirement 3");
-	    game.add(requirement);
-	    
-	    requirement = new DefaultMutableTreeNode("requirement 4");
-	    game.add(requirement);
-	    
-	    game = new DefaultMutableTreeNode("Game 20");
-	    history.add(game);
-	    
-	}
-	
 	public void refresh(){
 		DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the starting node
 		DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the starting node
@@ -123,14 +78,27 @@ public class JoinGameTree extends JScrollPane{
 		
 	}
 	
+	@Override
+	public void paintComponent(Graphics g){
+		if(!initialized){
+			try{
+				GetGameController.getInstance().retrieveGames();
+				initialized = true;
+			} catch (Exception e){
+				System.err.println("Problem instantiating the Game Model. " + e);
+			}
+		}
+		super.paintComponent(g);
+	}
+	
+	
 	/**
-	 * @param list the list of iterations to be sorted
+	 * @param list the list of games to be sorted
 	 * @return the same list sorted by start date
 	 */
 	public List<Game> sortGames(List<Game> list) {
 		
 		Collections.sort(list, new GameComparator());
-
 		return list;
 	}
 	
