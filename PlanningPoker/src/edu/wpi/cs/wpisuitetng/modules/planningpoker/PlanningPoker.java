@@ -1,16 +1,12 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.ImageIcon;
-import javax.swing.Timer;
 
 import edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule;
 import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
@@ -50,15 +46,6 @@ public class PlanningPoker implements IJanewayModule {
 
 	    // Add the tab to the list of tabs owned by this module
 	    tabs.add(tab1);
-	    
-	    int delay = 15000; //milliseconds
-	    ActionListener taskPerformer = new ActionListener() {
-	        public void actionPerformed(ActionEvent evt) {
-	            GetGameController.getInstance().retrieveGames();
-	            ViewEventController.getInstance().refreshGameTree();
-	        }
-	    };
-	    new Timer(delay, taskPerformer).start();
 	}
 	
 	/**

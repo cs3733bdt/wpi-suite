@@ -13,15 +13,14 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
-public class GameTree extends JScrollPane{
+public class JoinGameTree extends JScrollPane{
 	private JPanel viewPort;
 	
-	public GameTree(){
+	public JoinGameTree(){
 		this.setViewportView(viewPort);
 		ViewEventController.getInstance().setGameOverviewTree(this);
 		this.refresh();

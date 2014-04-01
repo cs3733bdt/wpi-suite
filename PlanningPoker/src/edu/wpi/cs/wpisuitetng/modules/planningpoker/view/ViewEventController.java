@@ -10,7 +10,7 @@ import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.JoinGameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 
 /**
@@ -21,7 +21,7 @@ public class ViewEventController {
 	private static ViewEventController instance = null;
 	private MainView main = null;
 	private ToolbarView toolbar = null;
-	private GameTree gameTree = null;
+	private JoinGameTree gameTree = null;
 	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
 	
 	/**
@@ -167,7 +167,7 @@ public class ViewEventController {
 		
 	}
 
-	public void setGameOverviewTree(GameTree gameTree) {
+	public void setGameOverviewTree(JoinGameTree gameTree) {
 		this.gameTree = gameTree;
 		
 	}
