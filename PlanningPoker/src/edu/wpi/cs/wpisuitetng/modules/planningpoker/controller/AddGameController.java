@@ -29,77 +29,35 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * 
  * ******This class should be modified after the planningpoker.models and .view
  * are finished.******
- *  * @author Andrew Busch
- * 
+ * @author Andrew Busch
  * @author tianchanggu
+ * @author Jonathan Leitschuh
  * 
  */
-public class AddGameController implements ActionListener {
-	private final GameModel model;
-	private final CreateGamePanel view;
-	private String newGameName;
-	private ArrayList<Requirement> requirements;
-
-	/**
-	 * Construct an AddGameController for the game model.
-	 * 
-	 * @param model
-	 *            the game model containing the name of game and the creator
-	 * @param view
-	 *            the view where the user created a new game
-	 */
-
-	public AddGameController(GameModel model, CreateGamePanel view) {
-		this.model = model;
-		this.view = view;
-		newGameName = "";
-		
-		// delete this line of comment after adding this.view=view
-		// and adding the parameter view in this constructor
+public class AddGameController {
+	private static AddGameController instance;
+	private AddGameRequestObserver observer;
+	
+	private AddGameController(){
+		observer = new AddGameRequestObserver(this);
 	}
-
-	/**
-	 * This method is called when the user click the create a new game button.
-	 * ******This method should be modified after the planningpoker.view is
-	 * created.******
-	 * 
-	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
-	 */
-	@Override
-	public void actionPerformed(ActionEvent event){
-		newGameName = view.getNameText();
-		requirements = view.getRequirements();
-		System.out.println(newGameName);
-		
-		String currentUser = ConfigManager.getConfig().getUserName(); //Gets the currently active user
-		
-		final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.PUT); // PUT == create
-		request.setBody(new Game(newGameName, currentUser, requirements, true).toJSON()); // put the new message in the body of the request
-		request.addObserver(new AddGameRequestObserver(this)); // add an observer to process the response
-		request.send(); // send the request
+	
+	public static AddGameController getInstance(){
+		if(instance == null){
+			instance = new AddGameController();
+		}
+		return instance;
 	}
-
+	
 	/**
-	 * When the name of a new game is received back from the server, add it to
-	 * the local model. ******Need to be modified after the relative method is
-	 * created in the model class******
-	 * 
-	 * @param newGame
-	 * 			Game to be added to the data model
+	 * This method assd a requirement to the server
+	 * @param newGame is the game to add to the server
 	 */
-	public void addGameToModel(Game newGame) {
-		model.addGame(newGame);
+	public void addGame(Game newGame){
+		final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.PUT);
+		request.setBody(newGame.toJSON());
+		request.addObserver(observer);
+		request.send();
 	}
-
-	/**
-	 * When the name of the game creator is received back from the server, add
-	 * it to the local model. ******Need to be modified after the relative
-	 * method is created in the model class******
-	 * 
-	 * @param creator
-	 */
-	public void addCreatorToModel(Game creator) {
-
-	}
-
+	
 }

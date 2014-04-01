@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.JComponent;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
@@ -74,8 +75,8 @@ public class ViewEventController {
 	/**
 	 * After clicking a game in the games list, the active games view will be displayed.
 	 */
-	public void joinGame(){
-		ActiveGamesPanel viewGame = new ActiveGamesPanel();
+	public void joinGame(Game game){
+		ActiveGamesPanel viewGame = new ActiveGamesPanel(game);
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 		main.getTabbedView().addTab("Active Game",  viewGame);
 		main.invalidate();
@@ -170,5 +171,6 @@ public class ViewEventController {
 		this.gameTree = gameTree;
 		
 	}
+
 
 }

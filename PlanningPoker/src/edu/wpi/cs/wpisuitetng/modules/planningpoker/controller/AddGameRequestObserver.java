@@ -43,11 +43,7 @@ public class AddGameRequestObserver implements RequestObserver{
 		// Parse the name of the game out of the response body
 		//******need to modified to parse the creator from the game model at the same time******
 		final Game name = Game.fromJSON(response.getBody());
-		//final Game creator = Game.fromJSON(response.getBody());
 		
-		// Pass the messages back to the controller
-		controller.addGameToModel(name);
-		//controller.addCreatorToModel(creator);
 		
 		System.out.println("The request to add a game has succeeded!");
 	}

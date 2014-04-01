@@ -2,6 +2,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -30,8 +31,11 @@ public class UpdateGameController {
 	}
 	
 	//Need model for game data
-	public void updateGame() {
-		//placeholder comment
+	public void updateGame(Game newGame) {
+		Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.POST);
+		request.setBody(newGame.toJSON());
+		request.addObserver(observer);
+		request.send();
 	}
 	
 	

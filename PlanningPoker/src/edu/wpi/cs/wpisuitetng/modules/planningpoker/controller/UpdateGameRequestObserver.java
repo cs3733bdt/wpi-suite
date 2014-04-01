@@ -12,7 +12,7 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  *
  */
 
-public class UpdateGameRequestObserver {
+public class UpdateGameRequestObserver implements RequestObserver{
 	
 	private final UpdateGameController controller;
 	

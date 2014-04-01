@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game;
@@ -64,11 +65,11 @@ public class GameModel extends AbstractListModel<Game>{
 	public void addGame(Game newGame) {
 		games.add(newGame);
 		try{
-			//AddGameController.getInstance().addGame(newGame);
+			AddGameController.getInstance().addGame(newGame);
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e){
-			
+			System.err.println("WARNING: FAILED TO ADD GAME TO SERVER: " + newGame.getName());
 		}
 		this.fireIntervalAdded(this, 0, 0);
 	}
