@@ -30,9 +30,9 @@ public class testEmailNotification {
 	public void setUp()
 	{
 		g = new Game(43, false);
-		u1 = new User("derp", "derp1", "derp12", "alfeey44@gmail.com", 1123);
-		u2 = new User("derp1", "derp2", "dofwef", "cs3733bdt@wpi.edu", 1291);
-		u3 = new User("de2rp1", "de2rp2", "dof2wef", "doruk.uzunoglu@gmail.com", 12911);
+		u1 = new User("testuser1", "user1", "pass", "paleondires@wpi.edu", 1123);
+		u2 = new User("testuser2", "user2", "pass", "cs3733bdt@wpi.edu", 1291);
+		u3 = new User("testuser3", "user3", "pass", "doruk.uzunoglu@gmail.com", 12911);
 		
 		team1 = new User[3];
 		team1[0] = u1;
@@ -52,8 +52,11 @@ public class testEmailNotification {
 		en.sendEmail(u1);
 	}
 
+	/**
+	 * Commented out to prevent spamming the alias.
+	 */
 	@Test
 	public void testSendEmails() {
-		en.sendEmails(g);
+		//en.sendEmails(g);
 	}
 }

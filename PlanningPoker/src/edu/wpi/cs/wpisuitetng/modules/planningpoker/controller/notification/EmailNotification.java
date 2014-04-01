@@ -8,11 +8,12 @@ import javax.mail.internet.*;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 
-/*
- * This class contains the methods used to notify users by email when a planning
- * poker session has started and/or ended.
- */
 
+/**
+ * This is a class that will send out email notifications
+ * whenever a game is successfully created.
+ *
+ */
 public class EmailNotification {
 	
 	private Game g;
@@ -21,7 +22,11 @@ public class EmailNotification {
 		this.g = g;
 	}
 	
-	public void sendEmails (Game g) 
+	/**
+	 * This method implements the sendEmail method to 
+	 * send email notifications to all the users on a team
+	 */
+	public void sendEmails () 
 	{
 		User[] users = g.getProject().getTeam();
 		
@@ -33,7 +38,7 @@ public class EmailNotification {
 	/**
 	 * This method uses the javaMail API library to send an email to the user
 	 * This code is inspired by http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
-	 * @param user
+	 * @param user The user to be emailed.
 	 */
 	public void sendEmail(User user) {
 		// Recipient's email ID needs to be mentioned.
