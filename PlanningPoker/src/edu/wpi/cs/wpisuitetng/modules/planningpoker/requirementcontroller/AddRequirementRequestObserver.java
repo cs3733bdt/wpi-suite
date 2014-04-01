@@ -37,7 +37,7 @@ public class AddRequirementRequestObserver implements RequestObserver {
 		// Parse the requirement out of the response body
 		final Requirement requirement = Requirement.fromJson(response.getBody());	
 		
-		System.out.println("The request to add a requirement successed.");
+		System.out.println("The request to add a requirement succeeded.");
 		
 	}
 

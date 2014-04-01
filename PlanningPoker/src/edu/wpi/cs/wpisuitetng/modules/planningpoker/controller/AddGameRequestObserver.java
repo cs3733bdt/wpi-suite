@@ -49,7 +49,7 @@ public class AddGameRequestObserver implements RequestObserver{
 		controller.addGameToModel(name);	
 		//controller.addCreatorToModel(creator);
 		
-		System.out.println("The request to add a game has sucseeded!");
+		System.out.println("The request to add a game has succeeded!");
 	}
 	
 	@Override

@@ -55,6 +55,10 @@ public class CreateGamePanel extends JPanel {
 	//TODO add an implemenation of the game
 	Game displayGame;
 	
+	private JRadioButton cardsButton = new JRadioButton("Estimate With Cards");
+	
+	private JRadioButton textEntryButton = new JRadioButton("Estimate With Text Entry");
+	
 	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
 	
 	
@@ -115,10 +119,8 @@ public class CreateGamePanel extends JPanel {
 		c.gridwidth = 6;
 		rightPanel.add(estimateTypePanel, c);
 		
-		JRadioButton cardsButton = new JRadioButton("Estimate With Cards");
-		estimateTypePanel.add(cardsButton);
 		
-		JRadioButton textEntryButton = new JRadioButton("Estimate With Text Entry");
+		estimateTypePanel.add(cardsButton);
 		estimateTypePanel.add(textEntryButton);
 		
 		ButtonGroup radioGroup = new ButtonGroup();
