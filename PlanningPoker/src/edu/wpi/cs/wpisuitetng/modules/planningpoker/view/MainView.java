@@ -7,9 +7,9 @@ import java.awt.GridBagLayout;
 import javax.swing.JSplitPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.GamesTreePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.InitialView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
 
+@SuppressWarnings("serial")
 public class MainView extends JSplitPane {
 	TabbedView tabView = new TabbedView();
 	GamesTreePanel filterPanel = new GamesTreePanel();

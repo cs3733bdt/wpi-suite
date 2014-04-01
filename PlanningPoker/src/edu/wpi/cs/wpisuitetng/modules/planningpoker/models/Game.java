@@ -35,9 +35,6 @@ public class Game extends AbstractModel{
 	
 	private boolean complete;
 	
-	//TODO find out how to implement existing module classes
-	//private List<Requirement> requirements;
-	
 	/*
 	 * dstapply
 	 * 

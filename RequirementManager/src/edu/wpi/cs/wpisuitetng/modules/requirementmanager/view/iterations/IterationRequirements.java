@@ -42,6 +42,7 @@ import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.requirements.ViewM
  * @author justinhess
  * @version $Revision: 1.0 $
  */
+@SuppressWarnings("serial")
 public class IterationRequirements extends JPanel implements RequirementSelectorListener{
 	private JButton removeButton;
 	private JTable requirementTable;
