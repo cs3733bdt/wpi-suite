@@ -15,6 +15,8 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
+
 /**
  * @author Jeffrey Signore
  * Sets up the panel for the active games screen, which has the list of all active games in which the user is playing.
@@ -42,7 +44,7 @@ public class ActiveGamesPanel extends JPanel {
 	 */
 	private JTextField estText = new JTextField();
 
-	public ActiveGamesPanel() {
+	public ActiveGamesPanel(Game game) {
 		
 		Container rightPanel = new Container();
 		rightPanel.setLayout(new GridBagLayout());
@@ -67,7 +69,7 @@ public class ActiveGamesPanel extends JPanel {
 		/*
 		 * the game name is determined by whichever game was clicked in the list.
 		 */
-		gameName.setText("Game 1");
+		gameName.setText(game.getName());
 		gameName.setEditable(false);
 		c.weightx = 0.75;
 		c.gridwidth = 8;
@@ -92,7 +94,7 @@ public class ActiveGamesPanel extends JPanel {
 		/*
 		 * the description is determined by whichever game was clicked in the list.
 		 */
-		gameDesc.setText("This is the very important and detailed description of the awesomely cool game.");
+		gameDesc.setText(game.getDescription());
 		gameDesc.setEditable(false);
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.weightx = 0.75;

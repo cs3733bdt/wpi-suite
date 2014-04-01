@@ -5,6 +5,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -12,7 +14,10 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
+import javax.swing.event.TreeSelectionEvent;
+import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.TreePath;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
@@ -20,8 +25,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 @SuppressWarnings("serial")
-public class GameTree extends JScrollPane{
+public class GameTree extends JScrollPane implements MouseListener, TreeSelectionListener{
 	private JPanel viewPort;
+	JTree activeTree;
+	JTree historyTree;
 	private boolean initialized = false; //Used to check if the GameModel should be generated from the server.
 	
 	/**
@@ -46,7 +53,7 @@ public class GameTree extends JScrollPane{
 		List<Game> games = sortGames(GameModel.getInstance().getGames()); //retrive the list of all of the games
 		System.out.println("Numb Games: " + games.size());
 		for (int i = 0; i<games.size(); i++){
-			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(games.get(i).toString());
+			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(games.get(i));
 			
 			//TODO add the subrequirements for that game to this dropdown
 			
@@ -57,8 +64,8 @@ public class GameTree extends JScrollPane{
 				history.add(newGameNode);
 			}
 		}
-		JTree activeTree = new JTree(active);
-		JTree historyTree = new JTree(history);
+		activeTree = new JTree(active);
+		historyTree = new JTree(history);
 		
 
 		int width = 175;
@@ -101,11 +108,87 @@ public class GameTree extends JScrollPane{
 		Collections.sort(list, new GameComparator());
 		return list;
 	}
+
+
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+		
+		System.out.println("Single Click Detected");
+		
+		if(e.getClickCount() == 2){
+			System.out.println("Double Click Detected");
+			TreePath treePath = activeTree.getPathForLocation(x, y);
+			JTree clicked = activeTree;
+			if(treePath == null){
+				System.out.println("Not on activeTree");
+				treePath = historyTree.getPathForLocation(x, y);
+				clicked = historyTree;
+			}
+			if(treePath != null){
+				System.out.println("Tree Path valid");
+				DefaultMutableTreeNode node = (DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
+				if(node != null) {
+					ViewEventController.getInstance().joinGame((Game)node.getUserObject());
+				}
+			}
+		}
+		
+		//TODO add functionality for right clicking possibly
+		
+	}
+
+
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+
+	@Override
+	public void valueChanged(TreeSelectionEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
 
+/**
+ * Used to sort games by their creation time.
+ * @author jonathanleitschuh
+ *
+ */
 class GameComparator implements Comparator<Game>{
 	public int compare(Game G1, Game G2){
-		return G1.getCreationTime().compareTo(G2.getCreationTime());
+		return -(G1.getCreationTime().compareTo(G2.getCreationTime()));
 	}
 }

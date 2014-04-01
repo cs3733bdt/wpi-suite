@@ -78,7 +78,7 @@ public class ViewEventController {
 	public void joinGame(Game game){
 		ActiveGamesPanel viewGame = new ActiveGamesPanel(game);
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
-		main.getTabbedView().addTab("Active Game",  viewGame);
+		main.getTabbedView().addTab(game.getName(),  viewGame);
 		main.invalidate();
 		main.repaint();
 		main.getTabbedView().setSelectedComponent(viewGame);

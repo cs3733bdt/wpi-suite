@@ -27,6 +27,7 @@ public class Game extends AbstractModel{
 	
 	private String description;
 	
+
 	private boolean hasTimeLimit;
 	
 	private Date creationTime;
@@ -146,6 +147,10 @@ public class Game extends AbstractModel{
 	
 	public boolean isComplete(){
 		return complete;
+	}
+	
+	public String getDescription() {
+		return description;
 	}
 	
 	
