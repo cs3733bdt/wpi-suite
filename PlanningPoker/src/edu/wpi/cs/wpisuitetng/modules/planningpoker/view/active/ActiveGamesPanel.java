@@ -249,25 +249,29 @@ public class ActiveGamesPanel extends JPanel {
 		rightPanel.add(but7, c);
 		
 		/*
-		 * Creates and adds the label for the estimate text entry option.
-		 */
-		JLabel estLabel = new JLabel("Estimate: ");
-		c.gridwidth = 2;
-		c.gridx = 4;
-		c.gridy = 5;
-		c.ipadx = 0;
-		c.ipady = 50;
-		rightPanel.add(estLabel, c);
-		
-		/*
 		 * The text area where the user types their estimate
 		 */
-		estText.setText("Type Here:");		
+		estText.setText("Estimate Here");
+		estText.setPreferredSize(new Dimension(75,40));
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.gridwidth = 1;
 		c.gridx = 5;
 		c.gridy = 5;
 		rightPanel.add(estText, c);
+		
+		if(game.doesUseCards()){
+			estText.setVisible(false);
+		}
+		else{
+			but0.setVisible(false);
+			but1.setVisible(false);
+			but2.setVisible(false);
+			but3.setVisible(false);
+			but4.setVisible(false);
+			but5.setVisible(false);
+			but6.setVisible(false);
+			but7.setVisible(false);
+		}
 		
 		/*
 		 * A blank panel for formatting purposes
