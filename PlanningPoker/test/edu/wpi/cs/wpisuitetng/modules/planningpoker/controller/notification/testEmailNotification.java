@@ -29,7 +29,7 @@ public class testEmailNotification {
 	@Before
 	public void setUp()
 	{
-		g = new Game(43, false);
+		g = new Game(43,"A test", "Steve",  false);
 		u1 = new User("testuser1", "user1", "pass", "paleondires@wpi.edu", 1123);
 		u2 = new User("testuser2", "user2", "pass", "cs3733bdt@wpi.edu", 1291);
 		u3 = new User("testuser3", "user3", "pass", "doruk.uzunoglu@gmail.com", 12911);
