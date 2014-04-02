@@ -18,6 +18,7 @@ import javax.swing.event.TreeSelectionEvent;
 import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
@@ -65,7 +66,14 @@ public class GameTree extends JScrollPane implements MouseListener, TreeSelectio
 			}
 		}
 		activeTree = new JTree(active);
+		activeTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		activeTree.setToggleClickCount(0);
+		activeTree.addMouseListener(this);
+		
 		historyTree = new JTree(history);
+		historyTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		historyTree.setToggleClickCount(0);
+		historyTree.addMouseListener(this);
 		
 
 		int width = 150;
