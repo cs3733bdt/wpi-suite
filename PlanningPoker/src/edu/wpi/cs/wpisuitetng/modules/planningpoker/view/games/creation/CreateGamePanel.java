@@ -6,6 +6,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
@@ -114,11 +115,22 @@ public class CreateGamePanel extends JPanel {
 		rightPanel.add(nameAndDescPanel, c);
 		
 		/**
+		 * Blank Panel for formatting purposes
+		 */
+		JPanel blankPanel0 = new JPanel();
+		blankPanel0.setMinimumSize(new Dimension(310, 10));
+		c.gridx = 0;
+		c.gridy = 0;
+		c.gridwidth = 2;
+		blankPanel0.setPreferredSize(new Dimension(310, 10));
+		nameAndDescPanel.add(blankPanel0, c);
+		
+		/**
 		 * Game name label
 		 */
 		JLabel gameName = new JLabel("Game Name:");
 		c.gridx = 0;
-		c.gridy = 0;
+		c.gridy = 1;
 		c.gridwidth = 1;
 		nameAndDescPanel.add(gameName, c);
 		
@@ -127,7 +139,7 @@ public class CreateGamePanel extends JPanel {
 		 */
 		nameTextField.setMinimumSize(new Dimension(175, 20));
 		c.gridx = 1;
-		c.gridy = 0;
+		c.gridy = 1;
 		c.gridwidth = 1;
 		nameTextField.setPreferredSize(new Dimension(75,25));
 		nameAndDescPanel.add(nameTextField, c);
@@ -138,7 +150,7 @@ public class CreateGamePanel extends JPanel {
 		JPanel blankPanel = new JPanel();
 		blankPanel.setMinimumSize(new Dimension(310, 25));
 		c.gridx = 0;
-		c.gridy = 1;
+		c.gridy = 2;
 		c.gridwidth = 2;
 		blankPanel.setPreferredSize(new Dimension(310, 25));
 		nameAndDescPanel.add(blankPanel, c);
@@ -148,7 +160,7 @@ public class CreateGamePanel extends JPanel {
 		 */
 		JLabel gameDesc = new JLabel("Game Description:");
 		c.gridx = 0;
-		c.gridy = 2;
+		c.gridy = 3;
 		c.gridwidth = 1;
 		nameAndDescPanel.add(gameDesc, c);
 		
@@ -161,7 +173,7 @@ public class CreateGamePanel extends JPanel {
 		 * Adding and configuring the description
 		 */
 		c.gridx = 1;
-		c.gridy = 2;
+		c.gridy = 3;
 		c.gridwidth = 1;
 		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		descPane.setMinimumSize(new Dimension(400, 100));
@@ -187,7 +199,7 @@ public class CreateGamePanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 6;
-		c.insets = new Insets(0, 100, 0, 0);
+		c.insets = new Insets(10, 100, 0, 0);
 		rightPanel.add(estimateTypePanel, c);
 		
 		cardsButton.setSelected(true);
@@ -217,20 +229,29 @@ public class CreateGamePanel extends JPanel {
 		c.gridy = 4;
 		c.weighty = .5;
 		
-		rightPanel.add(new AddRequirementsPanel(this), c);
+		rightPanel.add(new AddRequirementsPanel(this), c);		
 		
 		/**
 		 * label for displaying errors
 		 */
 		errorField= new JLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
+		errorField.setForeground(Color.RED);
 		c.gridx = 2;
 		c.gridwidth = 1;
 		c.gridheight = 1;
-		c.gridy = 9;
-		c.insets = new Insets(0, 100, 0, 0);
+		c.gridy = 10;
+		c.insets = new Insets(0, 175, 0, 0);
 		rightPanel.add(errorField, c);
 		
+		JPanel blankPanel4 = new JPanel();
+		c.gridx = 0;
+		c.gridy = 11;
+		c.gridwidth = 6;
+		blankPanel4.setPreferredSize(new Dimension(100, 10));
+		rightPanel.add(blankPanel4, c);
+		
+		c.gridheight = 1;
 		c.gridx = 1;
 		c.gridwidth = 2;
 		c.gridy = 9;
