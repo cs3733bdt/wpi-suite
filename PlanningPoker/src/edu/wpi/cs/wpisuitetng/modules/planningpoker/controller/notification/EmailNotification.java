@@ -79,10 +79,10 @@ public class EmailNotification {
 					to));
 
 			// Set Subject: header field
-			message.setSubject("Game Title TODO");
+			message.setSubject("Voting is Required for game: " + g.getName());
 
 			// Now set the actual message
-			message.setText("We did it! #martyrequirements #rekt #nailedit");
+			message.setText("Game Description: " + g.getDescription());
 
 			// Send message
 			Transport.send(message);

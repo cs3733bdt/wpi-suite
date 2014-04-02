@@ -10,6 +10,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
@@ -43,8 +44,8 @@ public class AddGameRequestObserver implements RequestObserver{
 		// Parse the name of the game out of the response body
 		//******need to modified to parse the creator from the game model at the same time******
 		final Game name = Game.fromJSON(response.getBody());
-		
-		
+		EmailNotification en = new EmailNotification(name);
+		en.sendEmails();
 		System.out.println("The request to add a game has succeeded!");
 	}
 	
