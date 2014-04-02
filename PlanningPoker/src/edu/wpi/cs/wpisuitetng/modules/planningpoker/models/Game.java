@@ -158,6 +158,10 @@ public class Game extends AbstractModel{
 		return description;
 	}
 	
+	public ArrayList<Requirement> getRequirements(){
+		return requirements;
+	}
+	
 	
 	/**
 	 * Gets the creating time and date of the game
