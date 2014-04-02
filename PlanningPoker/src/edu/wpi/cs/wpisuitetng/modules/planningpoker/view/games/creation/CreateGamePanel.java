@@ -167,6 +167,9 @@ public class CreateGamePanel extends JPanel {
 		descPane.setPreferredSize(new Dimension(400, 100));
 		nameAndDescPanel.add(descPane, c);
 		
+		/**
+		 * Blank Panel for formatting
+		 */
 		JPanel blankPanel2 = new JPanel();
 		blankPanel2.setMinimumSize(new Dimension(100, 25));
 		c.gridx = 0;
@@ -175,6 +178,9 @@ public class CreateGamePanel extends JPanel {
 		blankPanel2.setPreferredSize(new Dimension(100, 25));
 		rightPanel.add(blankPanel2, c);
 		
+		/**
+		 * Panel for estimate radio buttons 
+		 */
 		JPanel estimateTypePanel = new JPanel();
 		estimateTypePanel.setLayout(new BoxLayout(estimateTypePanel, BoxLayout.X_AXIS));
 		c.gridx = 0;
@@ -186,6 +192,9 @@ public class CreateGamePanel extends JPanel {
 		estimateTypePanel.add(cardsButton);
 		estimateTypePanel.add(textEntryButton);
 		
+		/**
+		 * Radio Buttongroup to make only 1 radio button selectable
+		 */
 		ButtonGroup radioGroup = new ButtonGroup();
         radioGroup.add(cardsButton);
         radioGroup.add(textEntryButton);
@@ -200,6 +209,9 @@ public class CreateGamePanel extends JPanel {
 		
 		rightPanel.add(new AddRequirementsPanel(this), c);
 		
+		/**
+		 * label for displaying errors
+		 */
 		errorField= new JLabel("Any errors shown here.");
 		errorField.setMinimumSize(new Dimension(150, 25));
 		c.gridx = 2;
@@ -215,6 +227,9 @@ public class CreateGamePanel extends JPanel {
 		c.insets = new Insets(0, 100, 0, 0);
 		rightPanel.add(new AddGameButtonPanel(this), c);	
 		
+		/**
+		 * initializes the scroll pane
+		 */
 		createGameScrollPane = new JScrollPane(rightPanel);
 		createGameScrollPane.setMinimumSize(new Dimension(800, 700));
 		
@@ -225,8 +240,6 @@ public class CreateGamePanel extends JPanel {
 		c.gridy = 0;
 		c.weighty = .5;
 		add(createGameScrollPane, c);
-		
-		
 		
 	}
 	

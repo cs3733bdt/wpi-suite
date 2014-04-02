@@ -55,7 +55,7 @@ public class AddRequirementsPanel extends JPanel {
 		reqPanel.add(createReqPanel, c);
 		
 		JPanel blankPanel = new JPanel();
-		blankPanel.setMinimumSize(new Dimension(310, 200));
+		blankPanel.setMinimumSize(new Dimension(100, 100));
 		c.gridx = 1;
 		c.gridy = 2;
 		c.gridwidth = 2;
