@@ -232,6 +232,7 @@ public class AddRequirementsPanel extends JPanel {
 		reqPanel.add(blankPanel3, c);
 		
 		this.add(reqPanel);
+
 		
 	}
 }
