@@ -59,5 +59,9 @@
 	<target name="dist" depends="war">
 		<copy file="build/WPISuite.war" todir="${dist}/core" overwrite="true"/>
 	</target>
+	
+	<record name="build.log" 
+	        loglevel="verbose" 
+	        append="false" />
 
 </project>
