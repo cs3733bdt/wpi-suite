@@ -129,6 +129,7 @@ public class CreateGamePanel extends JPanel {
 		c.gridx = 1;
 		c.gridy = 0;
 		c.gridwidth = 1;
+		nameTextField.setPreferredSize(new Dimension(75,25));
 		nameAndDescPanel.add(nameTextField, c);
 		
 		/**
@@ -186,8 +187,10 @@ public class CreateGamePanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 6;
-		c.insets = new Insets(0, 150, 0, 0);
+		c.insets = new Insets(0, 100, 0, 0);
 		rightPanel.add(estimateTypePanel, c);
+		
+		cardsButton.setSelected(true);
 		
 		estimateTypePanel.add(cardsButton);
 		estimateTypePanel.add(textEntryButton);
@@ -198,13 +201,20 @@ public class CreateGamePanel extends JPanel {
 		ButtonGroup radioGroup = new ButtonGroup();
         radioGroup.add(cardsButton);
         radioGroup.add(textEntryButton);
+        
+        JPanel blankPanel3 = new JPanel();
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 6;
+		blankPanel3.setPreferredSize(new Dimension(100, 25));
+		rightPanel.add(blankPanel2, c);
 		
         c.insets = new Insets(0, 0, 0 ,0);
 		c.ipadx = 0;
 		c.gridwidth = 6;
-		c.gridheight = 6;
+		c.gridheight = 5;
 		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 4;
 		c.weighty = .5;
 		
 		rightPanel.add(new AddRequirementsPanel(this), c);
@@ -222,9 +232,9 @@ public class CreateGamePanel extends JPanel {
 		rightPanel.add(errorField, c);
 		
 		c.gridx = 1;
-		c.gridwidth = 1;
+		c.gridwidth = 2;
 		c.gridy = 9;
-		c.insets = new Insets(0, 100, 0, 0);
+		c.insets = new Insets(0, 150, 0, 0);
 		rightPanel.add(new AddGameButtonPanel(this), c);	
 		
 		/**
@@ -235,12 +245,13 @@ public class CreateGamePanel extends JPanel {
 		
 		c.insets= new Insets(0, 0, 0, 0);
 		c.gridwidth = 6;
-		c.gridheight = 1;
+		c.gridheight = 2;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.weighty = .5;
 		add(createGameScrollPane, c);
 		
+
 	}
 	
 	/**
@@ -389,8 +400,9 @@ public class CreateGamePanel extends JPanel {
 		String strDes = this.getBoxDescription().getText();
 		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
 		ArrayList<Requirement> requ = getRequirements();
+		boolean usesCards = doesUseCards();
 		
-		currentGame = new Game(strName, strDes, creator, requ, false);
+		currentGame = new Game(strName, strDes, creator, requ, false, usesCards);
 		
 		GameModel.getInstance().addGame(currentGame);
 		
@@ -414,7 +426,9 @@ public class CreateGamePanel extends JPanel {
 	}
 	
 	
-	
+	public boolean doesUseCards(){
+		return cardsButton.isSelected();
+	}
 	
 	
 	

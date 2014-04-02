@@ -27,8 +27,9 @@ public class Game extends AbstractModel{
 	
 	private String description;
 	
-
 	private boolean hasTimeLimit;
+	
+	private boolean usesCards;
 	
 	private Date creationTime;
 	
@@ -92,14 +93,14 @@ public class Game extends AbstractModel{
 	 * 
 	 * @author dstapply
 	 */
-	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit) {
+	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards) {
 		this(); //Calls the default constructor
 		this.name = name;
 		this.description = description;
 		this.creator = creator;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
-		
+		this.usesCards = usesCards;
 	}
 	
 	/**
@@ -116,7 +117,7 @@ public class Game extends AbstractModel{
 	 */
 	@Deprecated
 	public Game(int id, String name, String creator, boolean hasTimeLimit){
-		this(name, "", creator, null, hasTimeLimit);
+		this(name, "", creator, null, hasTimeLimit, true);
 		this.id = id;
 	}
 	
@@ -149,8 +150,16 @@ public class Game extends AbstractModel{
 		return complete;
 	}
 	
+	public boolean doesUseCards(){
+		return usesCards;
+	}
+	
 	public String getDescription() {
 		return description;
+	}
+	
+	public ArrayList<Requirement> getRequirements(){
+		return requirements;
 	}
 	
 	

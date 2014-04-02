@@ -115,18 +115,9 @@ public class ActiveGamesPanel extends JPanel {
 		 * Adds temporary data into the table. 
 		 * DELETE THIS ONCE DATA IS SUCCESSFULLY IMPORTED FROM REQUIREMENT MANAGER!!!!!!!!!!!!
 		 */
-		table.tableModel.addRow(new Object[]{"Requirement1", "Description1"});
-		table.tableModel.addRow(new Object[]{"Requirement2", "Description2"});
-		table.tableModel.addRow(new Object[]{"Requirement3", "Description3"});
-		table.tableModel.addRow(new Object[]{"Requirement4", "Description4"});
-		table.tableModel.addRow(new Object[]{"Requirement5", "Description5"});
-		table.tableModel.addRow(new Object[]{"Requirement6", "Description6"});
-		table.tableModel.addRow(new Object[]{"Requirement7", "Description7"});
-		table.tableModel.addRow(new Object[]{"Requirement8", "Description8"});
-		table.tableModel.addRow(new Object[]{"Requirement9", "Description9"});
-		table.tableModel.addRow(new Object[]{"Requirement10", "Description10"});
-		table.tableModel.addRow(new Object[]{"Requirement11", "Description11"});
-		table.tableModel.addRow(new Object[]{"Requirement12", "Description12"});
+		for(int i = 0; i < game.getRequirements().size(); i++){
+			table.tableModel.addRow(new Object[]{game.getRequirements().get(i).getName(),game.getRequirements().get(i).getDescription()});
+		}
 		
 		/*
 		 * Puts the table within a scroll pane, and adds to the view.
@@ -249,25 +240,29 @@ public class ActiveGamesPanel extends JPanel {
 		rightPanel.add(but7, c);
 		
 		/*
-		 * Creates and adds the label for the estimate text entry option.
-		 */
-		JLabel estLabel = new JLabel("Estimate: ");
-		c.gridwidth = 2;
-		c.gridx = 4;
-		c.gridy = 5;
-		c.ipadx = 0;
-		c.ipady = 50;
-		rightPanel.add(estLabel, c);
-		
-		/*
 		 * The text area where the user types their estimate
 		 */
-		estText.setText("Type Here:");		
+		estText.setText("Estimate Here");
+		estText.setPreferredSize(new Dimension(75,40));
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.gridwidth = 1;
 		c.gridx = 5;
 		c.gridy = 5;
 		rightPanel.add(estText, c);
+		
+		if(game.doesUseCards()){
+			estText.setVisible(false);
+		}
+		else{
+			but0.setVisible(false);
+			but1.setVisible(false);
+			but2.setVisible(false);
+			but3.setVisible(false);
+			but4.setVisible(false);
+			but5.setVisible(false);
+			but6.setVisible(false);
+			but7.setVisible(false);
+		}
 		
 		/*
 		 * A blank panel for formatting purposes

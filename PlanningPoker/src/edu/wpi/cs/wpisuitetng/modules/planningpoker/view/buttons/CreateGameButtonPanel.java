@@ -43,7 +43,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		//35
-		this.setPreferredSize(new Dimension(110,55));
+		this.setPreferredSize(new Dimension(110,35));
 		this.createGameButton.setVerticalAlignment(SwingConstants.TOP);
 		this.createGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		this.joinGameButton.setVerticalAlignment(SwingConstants.BOTTOM);
@@ -65,14 +65,14 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// bring up an active game panel
-				ViewEventController.getInstance().joinGame(new Game("An awesome game with test Data", "This should be in the description area", "Steve", new ArrayList<Requirement>(), false));
+				ViewEventController.getInstance().joinGame(new Game("An awesome game with test Data", "This should be in the description area", "Steve", new ArrayList<Requirement>(), false, true));
 			}
 		});	
 			
 		contentPanel.add(createGameButton);
 		//contentPanel.setOpaque(false);
 		
-		contentPanel.add(joinGameButton);
+		//contentPanel.add(joinGameButton);
 		contentPanel.setOpaque(false);
 		
 		this.add(contentPanel);
