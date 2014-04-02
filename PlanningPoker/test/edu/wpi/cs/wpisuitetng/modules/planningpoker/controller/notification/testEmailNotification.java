@@ -3,15 +3,12 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
 
-import static org.junit.Assert.*;
-
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.EmailNotification;
 
 /**
  * @author alfeey44

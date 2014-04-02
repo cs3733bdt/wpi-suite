@@ -1,7 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 import java.awt.Dimension;
-import java.awt.event.MouseListener;
 
 import javax.swing.JPanel;
 

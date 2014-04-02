@@ -1,9 +1,9 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller;
 
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
 
 /**
  * This observer handles responses to requests for all requirements
