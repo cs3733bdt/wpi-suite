@@ -6,14 +6,19 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 
@@ -44,7 +49,7 @@ public class ActiveGamesPanel extends JPanel {
 	 */
 	private JTextField estText = new JTextField();
 
-	public ActiveGamesPanel(Game game) {
+	public ActiveGamesPanel(final Game game) {
 		
 		Container rightPanel = new Container();
 		rightPanel.setLayout(new GridBagLayout());
@@ -109,7 +114,7 @@ public class ActiveGamesPanel extends JPanel {
 		 */
 		String[] columnNames = {"Requirement", "Description"};
 		Object[][] data = {};
-		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
+		final ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
 		
 		/*
 		 * Adds temporary data into the table. 
@@ -118,6 +123,25 @@ public class ActiveGamesPanel extends JPanel {
 		for(int i = 0; i < game.getRequirements().size(); i++){
 			table.tableModel.addRow(new Object[]{game.getRequirements().get(i).getName(),game.getRequirements().get(i).getDescription()});
 		}
+		
+		
+		table.addMouseListener(new MouseAdapter() {
+		    @Override
+		    public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					JTable target = (JTable) e.getSource();
+					int row = target.getSelectedRow();
+					int column = target.getSelectedColumn();
+					String selected = (String) target.getValueAt(row, column);
+					for(int i = 0; i < game.getRequirements().size(); i ++){
+						if(selected.equals(game.getRequirements().get(i).getName()) || 
+								selected.equals(game.getRequirements().get(i).getDescription()) ){
+							userStoryDesc.setText(game.getRequirements().get(i).getDescription());
+						}
+					}
+				}
+			}
+		});
 		
 		/*
 		 * Puts the table within a scroll pane, and adds to the view.
