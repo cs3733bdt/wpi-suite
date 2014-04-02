@@ -183,6 +183,7 @@ public class CreateGamePanel extends JPanel {
 		c.insets = new Insets(0, 150, 0, 0);
 		rightPanel.add(estimateTypePanel, c);
 		
+		cardsButton.setSelected(true);
 		estimateTypePanel.add(cardsButton);
 		estimateTypePanel.add(textEntryButton);
 		
@@ -376,8 +377,9 @@ public class CreateGamePanel extends JPanel {
 		String strDes = this.getBoxDescription().getText();
 		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
 		ArrayList<Requirement> requ = getRequirements();
+		boolean usesCards = doesUseCards();
 		
-		currentGame = new Game(strName, strDes, creator, requ, false);
+		currentGame = new Game(strName, strDes, creator, requ, false, true);
 		
 		GameModel.getInstance().addGame(currentGame);
 		
@@ -401,7 +403,9 @@ public class CreateGamePanel extends JPanel {
 	}
 	
 	
-	
+	public boolean doesUseCards(){
+		return cardsButton.isSelected();
+	}
 	
 	
 	

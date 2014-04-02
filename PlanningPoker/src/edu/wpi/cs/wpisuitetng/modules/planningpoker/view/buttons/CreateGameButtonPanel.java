@@ -65,7 +65,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// bring up an active game panel
-				ViewEventController.getInstance().joinGame(new Game("An awesome game with test Data", "This should be in the description area", "Steve", new ArrayList<Requirement>(), false));
+				ViewEventController.getInstance().joinGame(new Game("An awesome game with test Data", "This should be in the description area", "Steve", new ArrayList<Requirement>(), false, true));
 			}
 		});	
 			
