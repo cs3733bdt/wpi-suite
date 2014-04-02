@@ -23,6 +23,7 @@ public class ViewEventController {
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
 	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
+	private ArrayList<ActiveGamesPanel> listOfActiveGamePanels = new ArrayList<ActiveGamesPanel>();
 	
 	/**
 	 * Default constructor for the ViewEventController. Is protected to prevent instantiation.
@@ -76,8 +77,18 @@ public class ViewEventController {
 	 * After clicking a game in the games list, the active games view will be displayed.
 	 */
 	public void joinGame(Game game){
+		for(ActiveGamesPanel gameSearch : listOfActiveGamePanels){
+			if(gameSearch.getGame().equals(game)){
+				main.getTabbedView().setSelectedComponent(gameSearch);
+				main.invalidate();
+				main.repaint();
+				return;
+			}
+		}
 		ActiveGamesPanel viewGame = new ActiveGamesPanel(game);
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
+		
+		listOfActiveGamePanels.add(viewGame);
 		main.getTabbedView().addTab(game.getName(),  viewGame);
 		main.invalidate();
 		main.repaint();
@@ -95,6 +106,10 @@ public class ViewEventController {
 			if(!((CreateGamePanel) comp).readyToRemove()) return;
 			this.listOfCreateGamePanels.remove(comp);
 		}
+		if (comp instanceof ActiveGamesPanel) {
+			if(!((ActiveGamesPanel) comp).readyToRemove()) return;
+			this.listOfActiveGamePanels.remove(comp);
+		}
 		main.getTabbedView().remove(comp);
 	}
 	
@@ -110,6 +125,10 @@ public class ViewEventController {
 			Component toBeRemoved = main.getTabbedView().getComponentAt(i);
 
 			if(toBeRemoved instanceof ActiveGamesPanel) continue;
+			{
+				if(!((ActiveGamesPanel)toBeRemoved).readyToRemove()) continue;
+				this.listOfActiveGamePanels.remove(toBeRemoved);
+			}
 			
 
 			if(toBeRemoved instanceof CreateGamePanel)

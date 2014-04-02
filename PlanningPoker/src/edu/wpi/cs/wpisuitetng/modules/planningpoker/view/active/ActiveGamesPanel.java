@@ -23,6 +23,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
  * When you click on a game, the bottom section of the screen will display more details about that specific game.
  */
 public class ActiveGamesPanel extends JPanel {
+	private Game active;
 	
 	/**
 	 * Set the gameName equal to the name of the game that was selected from the active games list
@@ -45,6 +46,7 @@ public class ActiveGamesPanel extends JPanel {
 	private JTextField estText = new JTextField();
 
 	public ActiveGamesPanel(Game game) {
+		active = game;
 		
 		Container rightPanel = new Container();
 		rightPanel.setLayout(new GridBagLayout());
@@ -303,5 +305,14 @@ public class ActiveGamesPanel extends JPanel {
 	
 	public void setUserStoryDesc(String newUserStoryDesc) {
 		userStoryDesc.setText(newUserStoryDesc);
+	}
+
+	public boolean readyToRemove() {
+		//TODO Make this validate
+		return true;
+	}
+	
+	public Game getGame(){
+		return active;
 	}
 }

@@ -222,7 +222,7 @@ public class CreateGamePanel extends JPanel {
 		/**
 		 * label for displaying errors
 		 */
-		errorField= new JLabel("Any errors shown here.");
+		errorField= new JLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		c.gridx = 2;
 		c.gridwidth = 1;
