@@ -32,7 +32,7 @@ public class ToolbarView extends DefaultToolbarView {
 	    this.setBorder(BorderFactory.createLineBorder(Color.blue, 2)); // add a border so you can see the panel
 	    Calendar today = Calendar.getInstance();
 	    if(today.get(Calendar.MONTH) == (Calendar.APRIL) && today.get(Calendar.DAY_OF_MONTH) == 1){
-			BlinkButton blink = new BlinkButton("Congratulations!   You won!");
+			BlinkButton blink = new BlinkButton("Congratulations!   You won!  Thanks for playing!");
 			blink.addActionListener(new ActionListener(){
 				@Override
 				public void actionPerformed(ActionEvent e) {

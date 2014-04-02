@@ -12,6 +12,9 @@
 		<fileset dir="${core-lib}">
 			<include name="gson-*.jar"/>
 		</fileset>
+		<fileset dir="${janeway-lib}">
+			<include name="javax.mail.jar"/>
+		</fileset>
 		<pathelement path="build"/>
 	</path>
 
