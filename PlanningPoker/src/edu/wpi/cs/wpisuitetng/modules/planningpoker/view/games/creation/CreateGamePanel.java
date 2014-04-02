@@ -191,6 +191,7 @@ public class CreateGamePanel extends JPanel {
 		rightPanel.add(estimateTypePanel, c);
 		
 		cardsButton.setSelected(true);
+		
 		estimateTypePanel.add(cardsButton);
 		estimateTypePanel.add(textEntryButton);
 		
@@ -400,7 +401,7 @@ public class CreateGamePanel extends JPanel {
 		ArrayList<Requirement> requ = getRequirements();
 		boolean usesCards = doesUseCards();
 		
-		currentGame = new Game(strName, strDes, creator, requ, false, true);
+		currentGame = new Game(strName, strDes, creator, requ, false, usesCards);
 		
 		GameModel.getInstance().addGame(currentGame);
 		
