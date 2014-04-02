@@ -75,8 +75,8 @@ public class GameTree extends JScrollPane implements MouseListener{
 		
 
 		int width = 150;
-		activeTree.setPreferredSize(new Dimension(width , games.size()*21));
-		historyTree.setPreferredSize(new Dimension(width, games.size()*21));
+		activeTree.setPreferredSize(new Dimension(width , 10 + games.size()*21));
+		historyTree.setPreferredSize(new Dimension(width, 10 + games.size()*21));
 		
 		JScrollPane activeTreeScroll = new JScrollPane(activeTree);
 		activeTreeScroll.setPreferredSize(new Dimension(width + 25, 200));
