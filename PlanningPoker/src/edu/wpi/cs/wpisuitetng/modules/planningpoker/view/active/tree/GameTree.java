@@ -14,10 +14,9 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
-import javax.swing.event.TreeSelectionEvent;
-import javax.swing.event.TreeSelectionListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
@@ -25,7 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 @SuppressWarnings("serial")
-public class GameTree extends JScrollPane implements MouseListener, TreeSelectionListener{
+public class GameTree extends JScrollPane implements MouseListener{
 	private JPanel viewPort;
 	JTree activeTree;
 	JTree historyTree;
@@ -65,7 +64,14 @@ public class GameTree extends JScrollPane implements MouseListener, TreeSelectio
 			}
 		}
 		activeTree = new JTree(active);
+		activeTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		activeTree.setToggleClickCount(0);
+		activeTree.addMouseListener(this);
+		
 		historyTree = new JTree(history);
+		historyTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		historyTree.setToggleClickCount(0);
+		historyTree.addMouseListener(this);
 		
 
 		int width = 150;
@@ -177,16 +183,8 @@ public class GameTree extends JScrollPane implements MouseListener, TreeSelectio
 		// TODO Auto-generated method stub
 		
 	}
-
-
-
-	@Override
-	public void valueChanged(TreeSelectionEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }
+
 
 /**
  * Used to sort games by their creation time.
