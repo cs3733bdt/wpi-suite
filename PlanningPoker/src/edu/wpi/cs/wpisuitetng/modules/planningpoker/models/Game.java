@@ -150,6 +150,10 @@ public class Game extends AbstractModel{
 		return complete;
 	}
 	
+	public boolean doesUseCards(){
+		return usesCards;
+	}
+	
 	public String getDescription() {
 		return description;
 	}
