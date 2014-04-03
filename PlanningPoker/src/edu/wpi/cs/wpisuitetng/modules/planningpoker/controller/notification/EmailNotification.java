@@ -23,6 +23,10 @@ public class EmailNotification {
 	
 	private Game g;
 	
+	/**
+	 * Constructs an email notification for a given game
+	 * @param g The game to notify users about.
+	 */
 	public EmailNotification(Game g) {
 		this.g = g;
 	}
@@ -35,8 +39,13 @@ public class EmailNotification {
 	{
 		User[] users = g.getProject().getTeam();
 		
-		for (int i = 0; i < users.length; i++) {
-			sendEmail(users[i]);
+		//Check to see if no users are attached to this project
+		if(users[0].getClass() != null){
+			for (int i = 0; i < users.length; i++) {
+				sendEmail(users[i]);
+			}
+		} else {
+			System.out.println("The list of users was empty. No Emails were sent.");
 		}
 	}
 	
