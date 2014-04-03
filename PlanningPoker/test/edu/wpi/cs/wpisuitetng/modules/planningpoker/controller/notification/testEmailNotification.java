@@ -3,12 +3,15 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
 
 /**
  * @author alfeey44
@@ -22,11 +25,13 @@ public class testEmailNotification {
 	String[] support1;
 	Project p;
 	EmailNotification en;
+	ArrayList<Requirement> reqs;
 	
 	@Before
 	public void setUp()
 	{
-		g = new Game(43,"A test", "Steve",  false);
+		reqs = new ArrayList<Requirement>();
+		g = new Game("Email Test Game", "Email Test Game Description", "Game Owner", reqs, false, false);
 		u1 = new User("testuser1", "user1", "pass", "paleondires@wpi.edu", 1123);
 		u2 = new User("testuser2", "user2", "pass", "cs3733bdt@wpi.edu", 1291);
 		u3 = new User("testuser3", "user3", "pass", "doruk.uzunoglu@gmail.com", 12911);

@@ -137,7 +137,6 @@ public class Game extends AbstractModel{
 		return identity;
 	}
 	
-	
 	/**
 	 * Gets the name of this game
 	 * @return the name of the game
@@ -161,7 +160,6 @@ public class Game extends AbstractModel{
 	public ArrayList<Requirement> getRequirements(){
 		return requirements;
 	}
-	
 	
 	/**
 	 * Gets the creating time and date of the game

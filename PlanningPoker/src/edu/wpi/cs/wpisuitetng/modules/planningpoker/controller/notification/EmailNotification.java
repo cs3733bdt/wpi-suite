@@ -33,10 +33,16 @@ public class EmailNotification {
 	 */
 	public void sendEmails () 
 	{
+		// Get the users that are expected to play the game
 		User[] users = g.getProject().getTeam();
 		
-		for (int i = 0; i < users.length; i++) {
-			sendEmail(users[i]);
+		// Make sure the team has users in it
+		if (users[0] != null) {
+			for (int i = 0; i < users.length; i++) {
+				sendEmail(users[i]);
+			}
+		} else {
+			System.out.println("Project: " + g.getProject().getName() + ", has no users in its team.");
 		}
 	}
 	
@@ -47,7 +53,15 @@ public class EmailNotification {
 	 */
 	public void sendEmail(User user) {
 		// Recipient's email ID needs to be mentioned.
-		String to = user.getEmail();
+		String to = "";
+		
+		//Check if user has an email in case user was created without one
+		// and print name of user
+		if (user.getEmail() != null) {
+			to = user.getEmail();
+		} else {
+			System.out.println("User: " + user.getName() + ", does not have an email stored.");
+		}
 
 		// Sender's email ID needs to be mentioned
 		final String username = "WPI.Suite.BDT.NoReply@gmail.com";
@@ -81,9 +95,15 @@ public class EmailNotification {
 			// Set Subject: header field
 			message.setSubject("Voting is Required for game: " + g.getName());
 
-			// Now set the actual message
-			message.setText("Game Description: " + g.getDescription() + "\n\n"
-					+ "Game Requirements: " + g.getRequirements());
+			// If the game doesn't have requirements, say that instead
+			// of printing null requirements.
+			// Then set the actual message.
+			if (!g.getRequirements().isEmpty()) {
+				message.setText("Game Description: " + g.getDescription() + "\n\n"
+						+ "Game Requirements: " + g.getRequirements());
+			} else {
+				message.setText("There are no current requirements.");
+			}
 
 			// Send message
 			Transport.send(message);
