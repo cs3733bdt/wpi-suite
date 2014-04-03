@@ -75,24 +75,38 @@ public class ViewEventController {
 	
 	/**
 	 * After clicking a game in the games list, the active games view will be displayed.
+	 * This also pulls an active game to focus on double click
 	 */
 	public void joinGame(Game game){
+		//Attempt to find the game in the active panels list
 		for(ActiveGamesPanel gameSearch : listOfActiveGamePanels){
-			if(gameSearch.getGame().equals(game)){
+			if(game.equals(gameSearch.getGame())){
 				main.getTabbedView().setSelectedComponent(gameSearch);
 				main.invalidate();
 				main.repaint();
-				return;
+				return; //The game has been found and made active. Done!
 			}
 		}
+		
+		//Game not found in the active game list
 		ActiveGamesPanel viewGame = new ActiveGamesPanel(game);
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 		
+		
+		//Makes the game name not be longer than 6 charaters
+		StringBuilder tabName = new StringBuilder();
+		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
+		tabName.append(game.getName().subSequence(0,subStringLength));
+		if(game.getName().length() > 6) tabName.append("...");
+		main.getTabbedView().addTab(tabName.toString(),  viewGame);
+		
+		
 		listOfActiveGamePanels.add(viewGame);
-		main.getTabbedView().addTab(game.getName(),  viewGame);
+		
+		main.getTabbedView().setSelectedComponent(viewGame);
 		main.invalidate();
 		main.repaint();
-		main.getTabbedView().setSelectedComponent(viewGame);
+		
 	}	
 	
 	/**
@@ -145,7 +159,7 @@ public class ViewEventController {
 	
 	/**
 	 * Closes all the tabs except for the one that was clicked.
-	 * 
+	 * Used in conjunction with the tab right click drop-down that allows users to close multiple tabs at once.
 	 */
 	public void closeOthers() {
 		int tabCount = main.getTabbedView().getTabCount();
@@ -179,13 +193,19 @@ public class ViewEventController {
 		
 	}
 
+	/**
+	 * Refreshes the tree model using data from the Game Model
+	 */
 	public void refreshGameTree() {
-		// TODO Auto-generated method stub
 		//This method will call a method that refreshes the the tree
 		this.gameTree.refresh();
 		
 	}
 
+	/**
+	 * Sets the game overview tree model
+	 * @param gameTree the game tree model
+	 */
 	public void setGameOverviewTree(GameTree gameTree) {
 		this.gameTree = gameTree;
 		
