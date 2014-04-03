@@ -75,10 +75,11 @@ public class ViewEventController {
 	
 	/**
 	 * After clicking a game in the games list, the active games view will be displayed.
+	 * This also pulls an active game to focus on double click
 	 */
 	public void joinGame(Game game){
 		for(ActiveGamesPanel gameSearch : listOfActiveGamePanels){
-			if(gameSearch.getGame().equals(game)){
+			if(game.equals(gameSearch.getGame())){
 				main.getTabbedView().setSelectedComponent(gameSearch);
 				main.invalidate();
 				main.repaint();
@@ -88,8 +89,14 @@ public class ViewEventController {
 		ActiveGamesPanel viewGame = new ActiveGamesPanel(game);
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 		
+		StringBuilder tabName = new StringBuilder();
+		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
+		tabName.append(game.getName().subSequence(0,subStringLength));
+		if(game.getName().length() > 6) tabName.append("...");
+		
 		listOfActiveGamePanels.add(viewGame);
-		main.getTabbedView().addTab(game.getName(),  viewGame);
+		
+		main.getTabbedView().addTab(tabName.toString(),  viewGame);
 		main.invalidate();
 		main.repaint();
 		main.getTabbedView().setSelectedComponent(viewGame);
