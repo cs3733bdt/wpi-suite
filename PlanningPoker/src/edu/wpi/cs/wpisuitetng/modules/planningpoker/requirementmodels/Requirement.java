@@ -113,6 +113,7 @@ public class Requirement extends AbstractModel {
 	public String getDescription() {
 		return description;
 	}
+	
 
 	/**
 	 * Setter for the description
@@ -204,7 +205,9 @@ public class Requirement extends AbstractModel {
 	 */
 	@Override
 	public String toString() {
-		return this.getName();
+		String n = "\nName: " + name + 
+				"\nDescription: " + description + '\n';
+		return n;
 	}
 
 

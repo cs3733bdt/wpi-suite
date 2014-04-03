@@ -82,7 +82,8 @@ public class EmailNotification {
 			message.setSubject("Voting is Required for game: " + g.getName());
 
 			// Now set the actual message
-			message.setText("Game Description: " + g.getDescription());
+			message.setText("Game Description: " + g.getDescription() + "\n\n"
+					+ "Game Requirements: " + g.getRequirements());
 
 			// Send message
 			Transport.send(message);
