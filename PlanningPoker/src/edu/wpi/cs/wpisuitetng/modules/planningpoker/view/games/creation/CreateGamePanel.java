@@ -237,7 +237,7 @@ public class CreateGamePanel extends JPanel {
 		c.weighty = .5;
 		AddRequirementsPanel addReqPan = new AddRequirementsPanel(this);
 		AddEndDatePanel addEndDatePan = new AddEndDatePanel(this);
-		//rightPanel.add(addReqPan, c);	
+		rightPanel.add(addReqPan, c);	
 		rightPanel.add(addEndDatePan, c);
 		
 		/**

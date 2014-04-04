@@ -50,17 +50,17 @@ public class AddEndDatePanel extends JPanel {
 		 */
 		pickEndDatePanel.setLayout(new GridBagLayout());
 		pickEndDatePanel.setBorder(defaultBorder);
-		c.insets = new Insets(0, 0, 0 ,0);
+		c.insets = new Insets(180, 100, 100, 100);
 		c.ipadx = 0;
-		c.gridwidth = 2;
+		c.gridwidth = 0;
 		c.gridx = 0;
-		c.gridy = 1;
+		c.gridy = 0;
 		pickEndDatePanel.setVisible(false);
 		endDatePanel.add(pickEndDatePanel, c);
 		
-		label.setText("Choose Date by selecting below.");
+		//label.setText("Choose Date by selecting below.");
 
-		view.add(label, c);
+		//view.add(label, c);
 		view.add(datePicker, c);
 		
 		this.add(endDatePanel);
