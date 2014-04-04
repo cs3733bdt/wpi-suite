@@ -26,6 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
  * Used to test the Game Manager's functionality
  * 
  * @author jonathanleitschuh
+ * @author phbaumann
  *
  */
 public class GameManagerTest {
@@ -57,13 +58,13 @@ public class GameManagerTest {
 		adminSession = new Session(admin, testProject, mockSsid);
 		
 		existingUser = new User("steve", "steve", "1234", "", 2);
-		game1 = new Game(1, "game 1", admin.getName(), false);
 		
-		game2 = new Game(2, "game 2", existingUser.getName(), true);
+		game1 = new Game("Game 1", "First", admin.getName(), null, false, false);
+		game2 = new Game("Game 2", "Second", "existingUser.getName()", null, true, false);
+		game3 = new Game("Game 3", "Third", "existingUser.getName()", null, false, false);
 		
 		defaultSession = new Session(existingUser, testProject,  mockSsid);
-		game3 = new Game(3, "game 3", existingUser.getName(), false);
-		
+
 		db = new MockData(new HashSet<Object>());
 		
 		db.save(game1, testProject);
