@@ -267,6 +267,18 @@ public class CreateGamePanel extends JPanel {
 
 	}
 	
+	public CreateGamePanel(Game game, boolean withError) {
+		this();
+		nameTextField.setText(game.getName());
+		descriptionTextField.setText(game.getDescription());
+		if(withError){
+			JOptionPane.showMessageDialog(null,
+					   	"\tYour connection to the server has been lost.\n"
+					+ 	"\tYour changes have been resored but no further changes to the server can be made.\n"
+					+ 	"\tPlease save your changes to a text file and restart Janeway.", "Network Error", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
 	/**
 	 * Checks to see if the panel has unsaved changes
 	 * @return whether the CreateGamePanel as a whole is ready to be removed.

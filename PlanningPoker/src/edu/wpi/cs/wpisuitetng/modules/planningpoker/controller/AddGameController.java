@@ -28,10 +28,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class AddGameController {
 	private static AddGameController instance;
-	private AddGameRequestObserver observer;
 	
 	private AddGameController(){
-		observer = new AddGameRequestObserver(this);
 	}
 	
 	public static AddGameController getInstance(){
@@ -48,7 +46,8 @@ public class AddGameController {
 	public void addGame(Game newGame){
 		final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.PUT);
 		request.setBody(newGame.toJSON());
-		request.addObserver(observer);
+		AddGameRequestObserver observer = new AddGameRequestObserver(this, newGame);
+		request.addObserver(observer) ;
 		request.send();
 	}
 	

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
@@ -71,6 +72,19 @@ public class ViewEventController {
 		main.invalidate(); //force the tabbedpane to redraw.
 		main.repaint();
 		main.getTabbedView().setSelectedComponent(newGame);
+	}
+	
+	/**
+	 * Creates a CreateGamePanel with an existing game.
+	 * At the moment this is used only when the database fails to add the object.
+	 * @param game
+	 */
+	public void updateGame(Game game, boolean serverError){
+		CreateGamePanel aGame = new CreateGamePanel(game, serverError);
+		main.getTabbedView().addTab("New Game", null, aGame, "New Game");
+		main.invalidate();
+		main.repaint();
+		main.getTabbedView().setSelectedComponent(aGame);
 	}
 	
 	/**

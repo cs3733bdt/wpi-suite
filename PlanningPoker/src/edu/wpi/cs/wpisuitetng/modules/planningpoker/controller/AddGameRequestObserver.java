@@ -12,6 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -26,8 +28,11 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 public class AddGameRequestObserver implements RequestObserver{
 	private final AddGameController controller;
 	
-	public AddGameRequestObserver(AddGameController controller){
+	private final Game theGame;
+	
+	public AddGameRequestObserver(AddGameController controller, Game theGame){
 		this.controller=controller;
+		this.theGame = theGame;
 	}
 	
 	/**
@@ -52,10 +57,17 @@ public class AddGameRequestObserver implements RequestObserver{
 	@Override
 	public void responseError(IRequest iReq) {
 		System.err.println("The request to add a Game failed. Response Error! " + iReq.getResponse().toString());
+		redisplayGame();
 	}
 
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
 		System.err.println("The request to add a Game failed.");
+		redisplayGame();
+	}
+	
+	private void redisplayGame(){
+		GameModel.getInstance().removeGameFromModel(theGame);
+		ViewEventController.getInstance().updateGame(theGame, true);
 	}
 }

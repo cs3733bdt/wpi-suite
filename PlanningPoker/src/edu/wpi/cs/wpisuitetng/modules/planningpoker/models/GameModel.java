@@ -19,7 +19,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  *
  */
 @SuppressWarnings({"serial"})
-public class GameModel extends AbstractListModel<Game>{
+public class GameModel extends AbstractListModel<Game> implements Observer{
 	
 	private static GameModel instance;
 	private int nextID;
@@ -86,6 +86,26 @@ public class GameModel extends AbstractListModel<Game>{
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {}
+	}
+	
+	/**
+	 * Removes a game from the model without removing the game from the database
+	 * This is used when a database add fails so that the model reflects the database properly
+	 * @param toRemove The game to remove from the model
+	 */
+	public void removeGameFromModel(Game toRemove){
+		int index = 0;
+		Iterator<Game> iterator = games.iterator();
+		while(iterator.hasNext()) {
+			Game game = iterator.next();
+			if(game.equals(toRemove)){
+				iterator.remove();
+				this.fireIntervalRemoved(this, index, index);
+			}
+			index ++;
+		}
+		
+
 	}
 
 	public void addGames(Game[] newGames) {
