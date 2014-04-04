@@ -222,6 +222,9 @@ public class CreateGamePanel extends JPanel {
 		blankPanel3.setPreferredSize(new Dimension(100, 25));
 		rightPanel.add(blankPanel2, c);
 		
+
+
+		
 		/**
 		 * Formats and add the AddRequirementPanel
 		 */
@@ -233,7 +236,9 @@ public class CreateGamePanel extends JPanel {
 		c.gridy = 4;
 		c.weighty = .5;
 		AddRequirementsPanel addReqPan = new AddRequirementsPanel(this);
-		rightPanel.add(addReqPan, c);	
+		AddEndDatePanel addEndDatePan = new AddEndDatePanel(this);
+		//rightPanel.add(addReqPan, c);	
+		rightPanel.add(addEndDatePan, c);
 		
 		/**
 		 * Formats and adds the AddReqImportReqPanel
