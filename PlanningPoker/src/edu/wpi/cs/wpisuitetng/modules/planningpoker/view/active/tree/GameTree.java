@@ -143,6 +143,7 @@ public class GameTree extends JScrollPane implements MouseListener{
 				System.out.println("Tree Path valid");
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
 				if(node != null) {
+					System.out.println("Setting view to game: " + ((Game)node.getUserObject()).toString());
 					ViewEventController.getInstance().joinGame((Game)node.getUserObject());
 				}
 			}
