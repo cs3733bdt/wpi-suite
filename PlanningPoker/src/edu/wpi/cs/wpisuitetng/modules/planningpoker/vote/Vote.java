@@ -10,11 +10,6 @@ public class Vote {
 		this.voteNumber = voteNumber;
 	}
 	
-	public Vote(){
-		this.username = null;
-		this.voteNumber = -1;
-	}
-
 	/**
 	 * getter method for username
 	 * @retur username
@@ -30,4 +25,7 @@ public class Vote {
 	public int getVoteNumber() {
 		return voteNumber;
 	}
+	
+	
+	
 }

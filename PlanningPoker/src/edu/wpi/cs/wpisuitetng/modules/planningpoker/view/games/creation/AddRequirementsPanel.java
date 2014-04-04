@@ -167,7 +167,7 @@ public class AddRequirementsPanel extends JPanel {
 		JButton submitAddReqButton = new JButton("Submit");
 		submitAddReqButton.addActionListener(new ActionListener() {
 			 public void actionPerformed(ActionEvent e) {
-				 view.addRequirement(new Requirement(nameArea.getText(), descArea.getText(), new ArrayList<Vote>()));
+				 view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
 				 table2.tableModel.addRow(new Object[]{nameArea.getText(), descArea.getText()});
 				 nameArea.setText("");
 				 descArea.setText("");

@@ -71,12 +71,11 @@ public class Requirement extends AbstractModel {
 	 */
 	// need to phase out supplying the ID
 	//We took out int id -- Jeff, Tom, Jordan
-	public Requirement(String name, String description, ArrayList<Vote> votes) {
+	public Requirement(String name, String description) {
 		this();
 		//this.id = id;
 		this.name = name;
 		this.description = description;
-		this.votes = votes;
 	}
 
 	/**
@@ -87,14 +86,6 @@ public class Requirement extends AbstractModel {
 		return id;
 	}
 
-	/**
-	 * Setter for the id
-	 * @param id the id to set         
-	 */
-	public void setId(int id) {
-		this.id = id;
-		
-	}
 
 	/**
 	 * getter for the name
@@ -139,11 +130,12 @@ public class Requirement extends AbstractModel {
 	}
 
 	/**
-	 * setter for the votes
+	 * adds a vote to the votes ArrayList
 	 * @param votes the votes to set          
 	 */
-	public void setVotes(ArrayList<Vote> votes) {
-		this.votes = votes;
+	public void addVote(Vote vote) {
+		this.votes.add(vote);
+		// TODO call update function here from observable 
 	}
 	
 	/**
