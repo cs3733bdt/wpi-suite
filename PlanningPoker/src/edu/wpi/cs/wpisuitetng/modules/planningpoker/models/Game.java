@@ -3,8 +3,11 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 import com.google.gson.Gson;
 
@@ -39,6 +42,9 @@ public class Game extends AbstractModel{
 	
 	private boolean complete;
 	
+	private Calendar endTime;
+
+	
 	/*
 	 * dstapply
 	 * 
@@ -65,6 +71,7 @@ public class Game extends AbstractModel{
 		this.name = toCopyFrom.name;
 		this.requirements = toCopyFrom.requirements;
 		this.description = toCopyFrom.description;
+		this.endTime = toCopyFrom.endTime;
 	}
 	
 	
@@ -104,6 +111,24 @@ public class Game extends AbstractModel{
 	}
 	
 	/**
+	 * Constructs a Game with given id, and end time
+	 * @param id the id number of the game
+	 * @param name the name of the game
+	 * @param hasTimeLimit checks if game has a time limit
+	 * @param endTime Calendar object containing the end time for the game
+	 */
+	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, Calendar endTime) {
+		this(); //Calls the default constructor
+		this.name = name;
+		this.description = description;
+		this.creator = creator;
+		this.hasTimeLimit = hasTimeLimit;
+		this.requirements = requirements;
+		this.usesCards = usesCards;
+		this.endTime = endTime;
+	}
+	
+	/**
 	 * Used for junit testing
 	 * Constructs a game from the provided characteristics
 	 * @param id
@@ -120,7 +145,7 @@ public class Game extends AbstractModel{
 		this(name, "", creator, null, hasTimeLimit, true);
 		this.id = id;
 	}
-	
+
 	/**
 	 * Gets the id for this game
 	 * @return the id of the game
