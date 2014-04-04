@@ -298,6 +298,13 @@ public class ActiveGamesPanel extends JPanel {
 		c.gridwidth = 1;
 		c.gridx = 5;
 		c.gridy = 5;
+		estText.addMouseListener(new MouseAdapter(){
+            @Override
+            public void mouseClicked(MouseEvent e){
+                estText.setText("");
+            }
+        });
+		
 		rightPanel.add(estText, c);
 
 		if (game.doesUseCards()) {
@@ -381,11 +388,17 @@ public class ActiveGamesPanel extends JPanel {
 	}
 
 	public void submitEstimatePressed() {
-		if (this.validateField(true)) {
+		if(getGame().doesUseCards()){
 			this.submitEstimate();
-			System.out.println("Submit Vote Pressed Passed.");
-		} else {
-			System.out.println("Submit Vote Pressed Failed.");
+			System.out.println("Submit Vote Pressed Passed");
+		}
+		else{
+			if (this.validateField(true)) {
+				this.submitEstimate();
+				System.out.println("Submit Vote Pressed Passed.");
+			} else {
+				System.out.println("Submit Vote Pressed Failed.");
+			}
 		}
 
 	}
@@ -440,7 +453,13 @@ public class ActiveGamesPanel extends JPanel {
 
 	public void submitEstimate() {
 		String currentUser = ConfigManager.getConfig().getUserName(); // Gets the currently active user
-		int voteNumber = Integer.parseInt(estText.getText());
+		int voteNumber;
+		if(getGame().doesUseCards()){
+			voteNumber = 1;
+		}
+		else{
+			voteNumber = Integer.parseInt(estText.getText());
+		}
 		Vote vote = new Vote(currentUser, voteNumber);
 
 		// I am currently working on updating a game's requirements to
