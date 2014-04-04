@@ -56,7 +56,7 @@ public class ActiveGamesPanel extends JPanel {
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
-		/*
+		/**
 		 * creates and adds the label "Name"
 		 */
 		JLabel nameLabel = new JLabel("Name: ");
@@ -69,11 +69,12 @@ public class ActiveGamesPanel extends JPanel {
 		rightPanel.add(nameLabel, c);
 		
 		
-		/*
+		/**
 		 * the game name is determined by whichever game was clicked in the list.
 		 */
 		gameName.setText(game.getName());
 		gameName.setEditable(false);
+		gameName.setLineWrap(true);
 		c.weightx = 0.75;
 		c.gridwidth = 8;
 		c.gridx = 1;
@@ -81,7 +82,7 @@ public class ActiveGamesPanel extends JPanel {
 		rightPanel.add(gameName, c);
 		
 		
-		/*
+		/**
 		 * creates and adds the label "Description"
 		 */
 		JLabel descLabel = new JLabel("Description: ");
@@ -94,11 +95,12 @@ public class ActiveGamesPanel extends JPanel {
 		rightPanel.add(descLabel, c);
 		
 		
-		/*
+		/**
 		 * the description is determined by whichever game was clicked in the list.
 		 */
 		gameDesc.setText(game.getDescription());
 		gameDesc.setEditable(false);
+		gameDesc.setLineWrap(true);
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.weightx = 0.75;
 		c.gridwidth = 8;
@@ -107,16 +109,15 @@ public class ActiveGamesPanel extends JPanel {
 		rightPanel.add(gameDesc, c);
 		
 		
-		/*
+		/**
 		 * Initializes the two columns for the table of requirements.
 		 */
 		String[] columnNames = {"Requirement", "Description"};
 		Object[][] data = {};
 		final ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
 		
-		/*
-		 * Adds temporary data into the table. 
-		 * DELETE THIS ONCE DATA IS SUCCESSFULLY IMPORTED FROM REQUIREMENT MANAGER!!!!!!!!!!!!
+		/**
+		 * Adds data to the table
 		 */
 		for(int i = 0; i < game.getRequirements().size(); i++){
 			table.tableModel.addRow(new Object[]{game.getRequirements().get(i).getName(),game.getRequirements().get(i).getDescription()});
@@ -141,7 +142,7 @@ public class ActiveGamesPanel extends JPanel {
 			}
 		});
 		
-		/*
+		/**
 		 * Puts the table within a scroll pane, and adds to the view.
 		 */
 		JScrollPane tablePanel = new JScrollPane(table);
@@ -154,7 +155,7 @@ public class ActiveGamesPanel extends JPanel {
 		rightPanel.add(tablePanel, c);
 	
 		
-		/*
+		/**
 		 * Creates and adds the user story text area to the view.
 		 */
 		userStoryDesc.setText("Requirement Description");
@@ -179,7 +180,7 @@ public class ActiveGamesPanel extends JPanel {
 		rightPanel.add(userStoryDesc, c);
 		
 		
-		/*
+		/**
 		 * Creates and adds the 1st card to the view.
 		 */
 		JButton but0 = new JButton("1");
@@ -191,7 +192,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipady = 75;
 		rightPanel.add(but0, c);
 		
-		/*
+		/**
 		 * Creates and adds the 2nd card to the view.
 		 */
 		JButton but1 = new JButton("1");
@@ -201,7 +202,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipady = 75;
 		rightPanel.add(but1, c);
 		
-		/*
+		/**
 		 * Creates and adds the 3rd card to the view.
 		 */
 		JButton but2 = new JButton("2");
@@ -211,7 +212,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipady = 75;
 		rightPanel.add(but2, c);
 		
-		/*
+		/**
 		 * Creates and adds the 4th card to the view.
 		 */
 		JButton but3 = new JButton("3");
@@ -221,7 +222,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipady = 75;
 		rightPanel.add(but3, c);
 		
-		/*
+		/**
 		 * Creates and adds the 5th card to the view.
 		 */
 		JButton but4 = new JButton("5");
@@ -231,7 +232,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipady = 75;
 		rightPanel.add(but4, c);
 		
-		/*
+		/**
 		 * Creates and adds the 6th card to the view.
 		 */
 		JButton but5 = new JButton("8");
@@ -241,7 +242,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipady = 75;
 		rightPanel.add(but5, c);
 		
-		/*
+		/**
 		 * Creates and adds the 7th card to the view.
 		 */
 		JButton but6 = new JButton("13");
@@ -251,7 +252,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipady = 75;
 		rightPanel.add(but6, c);
 		
-		/*
+		/**
 		 * Creates and adds the 8th card to the view.
 		 */
 		JButton but7 = new JButton("0?");
@@ -261,7 +262,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipady = 75;
 		rightPanel.add(but7, c);
 		
-		/*
+		/**
 		 * The text area where the user types their estimate
 		 */
 		estText.setText("Estimate Here");
@@ -286,7 +287,7 @@ public class ActiveGamesPanel extends JPanel {
 			but7.setVisible(false);
 		}
 		
-		/*
+		/**
 		 * A blank panel for formatting purposes
 		 */
 		JPanel invisPanel = new JPanel();
@@ -298,7 +299,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipady = 0;		
 		rightPanel.add(invisPanel, c);
 		
-		/*
+		/**
 		 * The submit button for when the user is ready to submit the estimate
 		 */
 		JButton submitEstimate = new JButton("Submit Estimate");
