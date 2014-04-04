@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -21,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
@@ -87,12 +89,12 @@ public class ActiveGamesPanel extends JPanel {
 		 * creates and adds the label "Name"
 		 */
 		JLabel nameLabel = new JLabel("Name: ");
-		c.weightx = 0.5;
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		//c.weightx = 0.5;
+		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.ipadx = 0;
-		c.ipady = 0;
+		//c.ipadx = 0;
+		//c.ipady = 0;
 		rightPanel.add(nameLabel, c);
 
 		/**
@@ -102,37 +104,55 @@ public class ActiveGamesPanel extends JPanel {
 		gameName.setText(game.getName());
 		gameName.setEditable(false);
 		gameName.setLineWrap(true);
-		c.weightx = 0.75;
-		c.gridwidth = 8;
+		//c.weightx = 0.75;
+		//c.gridwidth = 2;
 		c.gridx = 1;
 		c.gridy = 0;
 		rightPanel.add(gameName, c);
+		
+		/**
+		 * Blank Panel for formatting purposes
+		 */
+		JPanel blankPanel0 = new JPanel();
+		//blankPanel0.setMinimumSize(new Dimension(310, 10));
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 2;
+		blankPanel0.setPreferredSize(new Dimension(500, 10));
+		rightPanel.add(blankPanel0, c);
 
 		/**
 		 * creates and adds the label "Description"
 		 */
 		JLabel descLabel = new JLabel("Description: ");
 		c.gridwidth = 1;
-		c.weightx = 0.5;
+		//c.weightx = 0.5;
 		c.gridx = 0;
-		c.gridy = 1;
-		c.ipadx = 0;
-		c.ipady = 0;
+		c.gridy = 2;
+		//c.ipadx = 0;
+		//c.ipady = 0;
 		rightPanel.add(descLabel, c);
-
+		
 		/**
-		 * the description is determined by whichever game was clicked in the
-		 * list.
+		 * Creates a scroll pane for the game description
 		 */
+		JScrollPane descPane = new JScrollPane(gameDesc);	
+		/**
+		 * the description is determined by whichever game was clicked in the list
+		 */
+		//gameDesc.setMaximumSize(new Dimension(100,100));
 		gameDesc.setText(game.getDescription());
 		gameDesc.setEditable(false);
 		gameDesc.setLineWrap(true);
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.weightx = 0.75;
-		c.gridwidth = 8;
+		//c.weightx = 0.75;
+		c.gridwidth = 1;
 		c.gridx = 1;
-		c.gridy = 1;
-		rightPanel.add(gameDesc, c);
+		c.gridy = 2;
+		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		descPane.setMinimumSize(new Dimension(400, 80));
+		descPane.setPreferredSize(new Dimension(450, 80));
+		rightPanel.add(descPane, c);
 
 		/**
 		 * Initializes the two columns for the table of requirements.
@@ -170,17 +190,19 @@ public class ActiveGamesPanel extends JPanel {
 				}
 			}
 		});
-
+		
 		/**
 		 * Puts the table within a scroll pane, and adds to the view.
 		 */
 		JScrollPane tablePanel = new JScrollPane(table);
-		c.gridwidth = 8;
-		c.gridheight = 1;
+		c.gridwidth = 2;
+		//c.gridheight = 1;
 		c.weightx = 0.5;
-		c.gridx = 1;
-		c.gridy = 2;
-		c.ipady = -300;
+		c.gridx = 0;
+		c.gridy = 3;
+		//c.ipady = -300;
+		tablePanel.setPreferredSize(new Dimension(450, 100));
+		tablePanel.setMaximumSize(new Dimension(450, 100));	
 		rightPanel.add(tablePanel, c);
 
 		/**
@@ -198,105 +220,122 @@ public class ActiveGamesPanel extends JPanel {
 
 		// set the bigger font for userStoryDesc
 		Font bigFont = newFont;
+		
+		JScrollPane userStoryPane = new JScrollPane(userStoryDesc);
 		userStoryDesc.setFont(bigFont);
+		userStoryDesc.setLineWrap(true);
 		userStoryDesc.setEditable(false);
-		c.gridwidth = 8;
-		c.weightx = 0.75;
-		c.gridx = 1;
-		c.gridy = 3;
-		c.ipady = 50;
-		rightPanel.add(userStoryDesc, c);
-
+		c.gridwidth = 2;
+		//c.weightx = 0.75;
+		c.gridx = 0;
+		c.gridy = 4;
+		//c.ipady = 50;
+		userStoryPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		userStoryPane.setPreferredSize(new Dimension(400, 150));
+		userStoryPane.setMaximumSize(new Dimension(400, 150));
+		rightPanel.add(userStoryPane, c);
+		
+		/**
+		 * Creates a panel for all the cards
+		 */
+		JPanel cardPanel = new JPanel();
+		cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.X_AXIS));
+		c.gridx = 0;
+		c.gridy = 5;
+		c.gridwidth = 2;
+		cardPanel.setPreferredSize(new Dimension(425, 50));
+		rightPanel.add(cardPanel, c);
+		
 		/**
 		 * Creates and adds the 1st card to the view.
 		 */
 		JButton but0 = new JButton("1");
-		c.gridwidth = 1;
+		/*c.gridwidth = 1;
 		c.weightx = 0.5;
 		c.gridx = 1;
 		c.gridy = 4;
 		c.ipadx = 20;
-		c.ipady = 75;
-		rightPanel.add(but0, c);
+		c.ipady = 75;*/
+		cardPanel.add(but0);
 
 		/**
 		 * Creates and adds the 2nd card to the view.
 		 */
 		JButton but1 = new JButton("1");
-		c.gridx = 2;
+		/*c.gridx = 2;
 		c.gridy = 4;
 		c.ipadx = 20;
-		c.ipady = 75;
-		rightPanel.add(but1, c);
+		c.ipady = 75;*/
+		cardPanel.add(but1);
 
 		/**
 		 * Creates and adds the 3rd card to the view.
 		 */
 		JButton but2 = new JButton("2");
-		c.gridx = 3;
+		/*c.gridx = 3;
 		c.gridy = 4;
 		c.ipadx = 20;
-		c.ipady = 75;
-		rightPanel.add(but2, c);
+		c.ipady = 75;*/
+		cardPanel.add(but2);
 
 		/**
 		 * Creates and adds the 4th card to the view.
 		 */
 		JButton but3 = new JButton("3");
-		c.gridx = 4;
+		/*c.gridx = 4;
 		c.gridy = 4;
 		c.ipadx = 20;
-		c.ipady = 75;
-		rightPanel.add(but3, c);
+		c.ipady = 75;*/
+		cardPanel.add(but3);
 
 		/**
 		 * Creates and adds the 5th card to the view.
 		 */
 		JButton but4 = new JButton("5");
-		c.gridx = 5;
+		/*c.gridx = 5;
 		c.gridy = 4;
 		c.ipadx = 20;
-		c.ipady = 75;
-		rightPanel.add(but4, c);
+		c.ipady = 75;*/
+		cardPanel.add(but4);
 
 		/**
 		 * Creates and adds the 6th card to the view.
 		 */
 		JButton but5 = new JButton("8");
-		c.gridx = 6;
+		/*c.gridx = 6;
 		c.gridy = 4;
 		c.ipadx = 20;
-		c.ipady = 75;
-		rightPanel.add(but5, c);
+		c.ipady = 75;*/
+		cardPanel.add(but5);
 
 		/**
 		 * Creates and adds the 7th card to the view.
 		 */
 		JButton but6 = new JButton("13");
-		c.gridx = 7;
+		/*c.gridx = 7;
 		c.gridy = 4;
 		c.ipadx = 20;
-		c.ipady = 75;
-		rightPanel.add(but6, c);
+		c.ipady = 75;*/
+		cardPanel.add(but6);
 
 		/**
 		 * Creates and adds the 8th card to the view.
 		 */
 		JButton but7 = new JButton("0?");
-		c.gridx = 8;
+		/*c.gridx = 8;
 		c.gridy = 4;
 		c.ipadx = 20;
-		c.ipady = 75;
-		rightPanel.add(but7, c);
+		c.ipady = 75;*/
+		cardPanel.add(but7);
 
 		/**
 		 * The text area where the user types their estimate
 		 */
 		estText.setText("Estimate Here");
 		estText.setPreferredSize(new Dimension(75, 40));
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridwidth = 1;
-		c.gridx = 5;
+		//c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.gridwidth = 2;
+		c.gridx = 0;
 		c.gridy = 5;
 		estText.addMouseListener(new MouseAdapter(){
             @Override
@@ -324,13 +363,14 @@ public class ActiveGamesPanel extends JPanel {
 		 * A blank panel for formatting purposes
 		 */
 		JPanel invisPanel = new JPanel();
-		c.gridwidth = 1;
-		c.weightx = 0.5;
-		c.gridx = 9;
-		c.gridy = 4;
-		c.ipadx = 0;
-		c.ipady = 0;
-		rightPanel.add(invisPanel, c);
+		c.gridwidth = 2;
+		//c.weightx = 0.5;
+		c.gridx = 0;
+		c.gridy = 6;
+		//c.ipadx = 0;
+		//c.ipady = 0;
+		invisPanel.setPreferredSize(new Dimension(400, 25));
+		//rightPanel.add(invisPanel, c);
 
 		/**
 		 * The submit button for when the user is ready to submit the estimate
@@ -343,8 +383,8 @@ public class ActiveGamesPanel extends JPanel {
 		});
 
 		c.gridwidth = 2;
-		c.gridx = 4;
-		c.gridy = 6;
+		c.gridx = 0;
+		c.gridy = 7;
 		rightPanel.add(submitEstimate, c);
 
 		/**
@@ -353,9 +393,9 @@ public class ActiveGamesPanel extends JPanel {
 		errorField = new JLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
-		c.gridx = 5;
-		c.gridy = 12;
-		c.insets = new Insets(0, 175, 0, 0);
+		c.gridx = 0;
+		c.gridy = 8;
+		//c.insets = new Insets(0, 175, 0, 0);
 		rightPanel.add(errorField, c);
 
 		this.add(rightPanel);
