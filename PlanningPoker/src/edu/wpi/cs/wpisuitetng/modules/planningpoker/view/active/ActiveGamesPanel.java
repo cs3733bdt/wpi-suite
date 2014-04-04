@@ -1,13 +1,19 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -15,47 +21,68 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.Vote;
 
 /**
- * @author Jeffrey Signore
- * Sets up the panel for the active games screen, which has the list of all active games in which the user is playing.
- * When you click on a game, the bottom section of the screen will display more details about that specific game.
+ * @author Jeffrey Signore Sets up the panel for the active games screen, which
+ *         has the list of all active games in which the user is playing. When
+ *         you click on a game, the bottom section of the screen will display
+ *         more details about that specific game.
  */
 public class ActiveGamesPanel extends JPanel {
 	private Game active;
-	
+
 	/**
-	 * Set the gameName equal to the name of the game that was selected from the active games list
+	 * Set the gameName equal to the name of the game that was selected from the
+	 * active games list
 	 */
 	private JTextArea gameName = new JTextArea();
-	
+
 	/**
-	 * Set the gameDesc equal to the description of the game that was selected from the active games list
+	 * Set the gameDesc equal to the description of the game that was selected
+	 * from the active games list
 	 */
 	private JTextArea gameDesc = new JTextArea();
-	
+
 	/**
-	 * Set the userStoryDesc equal to the description of the requirement being selected in the table
+	 * Set the userStoryDesc equal to the description of the requirement being
+	 * selected in the table
 	 */
 	private JTextArea userStoryDesc = new JTextArea();
-	
+
 	/**
-	 * The estText is needed when the user inputs their estimate, since it must be added to the server
+	 * The estText is needed when the user inputs their estimate, since it must
+	 * be added to the server
 	 */
 	private JTextField estText = new JTextField();
 
+	/** Shows the names of the errors */
+	JLabel errorField = new JLabel();
+
+	/** Field Border Definitions */
+	private final Border defaultBorder = (new JTextField()).getBorder();
+	private final Border errorBorder = BorderFactory
+			.createLineBorder(Color.RED);
+
+	/* End field Border Definitions */
+
 	public ActiveGamesPanel(final Game game) {
 		active = game;
-		
+
 		Container rightPanel = new Container();
 		rightPanel.setLayout(new GridBagLayout());
-		
+
 		GridBagConstraints c = new GridBagConstraints();
-		
+
 		c.fill = GridBagConstraints.HORIZONTAL;
-		
+
 		/**
 		 * creates and adds the label "Name"
 		 */
@@ -67,10 +94,10 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipadx = 0;
 		c.ipady = 0;
 		rightPanel.add(nameLabel, c);
-		
-		
+
 		/**
-		 * the game name is determined by whichever game was clicked in the list.
+		 * the game name is determined by whichever game was clicked in the
+		 * list.
 		 */
 		gameName.setText(game.getName());
 		gameName.setEditable(false);
@@ -80,8 +107,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.gridx = 1;
 		c.gridy = 0;
 		rightPanel.add(gameName, c);
-		
-		
+
 		/**
 		 * creates and adds the label "Description"
 		 */
@@ -93,10 +119,10 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipadx = 0;
 		c.ipady = 0;
 		rightPanel.add(descLabel, c);
-		
-		
+
 		/**
-		 * the description is determined by whichever game was clicked in the list.
+		 * the description is determined by whichever game was clicked in the
+		 * list.
 		 */
 		gameDesc.setText(game.getDescription());
 		gameDesc.setEditable(false);
@@ -107,41 +133,44 @@ public class ActiveGamesPanel extends JPanel {
 		c.gridx = 1;
 		c.gridy = 1;
 		rightPanel.add(gameDesc, c);
-		
-		
+
 		/**
 		 * Initializes the two columns for the table of requirements.
 		 */
-		String[] columnNames = {"Requirement", "Description"};
+		String[] columnNames = { "Requirement", "Description" };
 		Object[][] data = {};
 		final ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
-		
+
 		/**
 		 * Adds data to the table
 		 */
-		for(int i = 0; i < game.getRequirements().size(); i++){
-			table.tableModel.addRow(new Object[]{game.getRequirements().get(i).getName(),game.getRequirements().get(i).getDescription()});
+		for (int i = 0; i < game.getRequirements().size(); i++) {
+			table.tableModel.addRow(new Object[] {
+					game.getRequirements().get(i).getName(),
+					game.getRequirements().get(i).getDescription() });
 		}
-		
-		
+
 		table.addMouseListener(new MouseAdapter() {
-		    @Override
-		    public void mouseClicked(MouseEvent e) {
+			@Override
+			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
 					JTable target = (JTable) e.getSource();
 					int row = target.getSelectedRow();
 					int column = target.getSelectedColumn();
 					String selected = (String) target.getValueAt(row, column);
-					for(int i = 0; i < game.getRequirements().size(); i ++){
-						if(selected.equals(game.getRequirements().get(i).getName()) || 
-								selected.equals(game.getRequirements().get(i).getDescription()) ){
-							userStoryDesc.setText(game.getRequirements().get(i).getDescription());
+					for (int i = 0; i < game.getRequirements().size(); i++) {
+						if (selected.equals(game.getRequirements().get(i)
+								.getName())
+								|| selected.equals(game.getRequirements()
+										.get(i).getDescription())) {
+							userStoryDesc.setText(game.getRequirements().get(i)
+									.getDescription());
 						}
 					}
 				}
 			}
 		});
-		
+
 		/**
 		 * Puts the table within a scroll pane, and adds to the view.
 		 */
@@ -153,33 +182,31 @@ public class ActiveGamesPanel extends JPanel {
 		c.gridy = 2;
 		c.ipady = -300;
 		rightPanel.add(tablePanel, c);
-	
-		
+
 		/**
 		 * Creates and adds the user story text area to the view.
 		 */
 		userStoryDesc.setText("Requirement Description");
-		
-		//create a dummy JTextArea
+
+		// create a dummy JTextArea
 		JTextArea editingArea = new JTextArea();
 		// get the current font
 		Font f = editingArea.getFont();
 
 		// create a new, smaller font from the current font
-		Font newFont = new Font(f.getFontName(), f.getStyle(), f.getSize()+5);
-		
-		//set the bigger font for userStoryDesc
+		Font newFont = new Font(f.getFontName(), f.getStyle(), f.getSize() + 5);
+
+		// set the bigger font for userStoryDesc
 		Font bigFont = newFont;
 		userStoryDesc.setFont(bigFont);
-		userStoryDesc.setEditable(false);		
+		userStoryDesc.setEditable(false);
 		c.gridwidth = 8;
 		c.weightx = 0.75;
 		c.gridx = 1;
 		c.gridy = 3;
 		c.ipady = 50;
 		rightPanel.add(userStoryDesc, c);
-		
-		
+
 		/**
 		 * Creates and adds the 1st card to the view.
 		 */
@@ -191,7 +218,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipadx = 20;
 		c.ipady = 75;
 		rightPanel.add(but0, c);
-		
+
 		/**
 		 * Creates and adds the 2nd card to the view.
 		 */
@@ -201,7 +228,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipadx = 20;
 		c.ipady = 75;
 		rightPanel.add(but1, c);
-		
+
 		/**
 		 * Creates and adds the 3rd card to the view.
 		 */
@@ -211,7 +238,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipadx = 20;
 		c.ipady = 75;
 		rightPanel.add(but2, c);
-		
+
 		/**
 		 * Creates and adds the 4th card to the view.
 		 */
@@ -221,7 +248,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipadx = 20;
 		c.ipady = 75;
 		rightPanel.add(but3, c);
-		
+
 		/**
 		 * Creates and adds the 5th card to the view.
 		 */
@@ -231,7 +258,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipadx = 20;
 		c.ipady = 75;
 		rightPanel.add(but4, c);
-		
+
 		/**
 		 * Creates and adds the 6th card to the view.
 		 */
@@ -241,7 +268,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipadx = 20;
 		c.ipady = 75;
 		rightPanel.add(but5, c);
-		
+
 		/**
 		 * Creates and adds the 7th card to the view.
 		 */
@@ -251,7 +278,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipadx = 20;
 		c.ipady = 75;
 		rightPanel.add(but6, c);
-		
+
 		/**
 		 * Creates and adds the 8th card to the view.
 		 */
@@ -261,22 +288,21 @@ public class ActiveGamesPanel extends JPanel {
 		c.ipadx = 20;
 		c.ipady = 75;
 		rightPanel.add(but7, c);
-		
+
 		/**
 		 * The text area where the user types their estimate
 		 */
 		estText.setText("Estimate Here");
-		estText.setPreferredSize(new Dimension(75,40));
+		estText.setPreferredSize(new Dimension(75, 40));
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.gridwidth = 1;
 		c.gridx = 5;
 		c.gridy = 5;
 		rightPanel.add(estText, c);
-		
-		if(game.doesUseCards()){
+
+		if (game.doesUseCards()) {
 			estText.setVisible(false);
-		}
-		else{
+		} else {
 			but0.setVisible(false);
 			but1.setVisible(false);
 			but2.setVisible(false);
@@ -286,7 +312,7 @@ public class ActiveGamesPanel extends JPanel {
 			but6.setVisible(false);
 			but7.setVisible(false);
 		}
-		
+
 		/**
 		 * A blank panel for formatting purposes
 		 */
@@ -296,44 +322,140 @@ public class ActiveGamesPanel extends JPanel {
 		c.gridx = 9;
 		c.gridy = 4;
 		c.ipadx = 0;
-		c.ipady = 0;		
+		c.ipady = 0;
 		rightPanel.add(invisPanel, c);
-		
+
 		/**
 		 * The submit button for when the user is ready to submit the estimate
 		 */
 		JButton submitEstimate = new JButton("Submit Estimate");
+		submitEstimate.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				submitEstimatePressed();
+			}
+		});
+
 		c.gridwidth = 2;
 		c.gridx = 4;
 		c.gridy = 6;
 		rightPanel.add(submitEstimate, c);
-		
+
+		/**
+		 * label for displaying errors
+		 */
+		errorField = new JLabel();
+		errorField.setMinimumSize(new Dimension(150, 25));
+		errorField.setForeground(Color.RED);
+		c.gridx = 5;
+		c.gridy = 12;
+		c.insets = new Insets(0, 175, 0, 0);
+		rightPanel.add(errorField, c);
+
 		this.add(rightPanel);
-		
+
 	}
-	
+
 	public JTextField getEstimateText() {
 		return estText;
 	}
-	
+
 	public void setGameName(String newGameName) {
 		gameName.setText(newGameName);
 	}
-	
+
 	public void setGameDesc(String newGameDesc) {
 		gameDesc.setText(newGameDesc);
 	}
-	
+
 	public void setUserStoryDesc(String newUserStoryDesc) {
 		userStoryDesc.setText(newUserStoryDesc);
 	}
 
 	public boolean readyToRemove() {
-		//TODO Make this validate
+		// TODO Make this validate
 		return true;
 	}
-	
-	public Game getGame(){
+
+	public Game getGame() {
 		return active;
 	}
+
+	public void submitEstimatePressed() {
+		if (this.validateField(true)) {
+			this.submitEstimate();
+			System.out.println("Submit Vote Pressed Passed.");
+		} else {
+			System.out.println("Submit Vote Pressed Failed.");
+		}
+
+	}
+
+	private boolean validateField(boolean warn) {
+		boolean isEstimateValid = false;
+		
+		// check to see if estimate is parsable to int
+		boolean parsable = true;
+		try{
+		Integer.parseInt(getEstimateText().getText());
+
+		}catch(NumberFormatException e){
+		parsable = false;
+		}
+		// end parsable check
+		
+				
+		//BEGIN ESTIMATE BOX VALDATION
+		if (getEstimateText().getText().length() <= 0) {
+			isEstimateValid = false;
+			if (warn) {
+				getEstimateText().setBorder(errorBorder);
+			}
+			displayError("An estimation is required before submission");
+		} else if(parsable == true){
+			if(Integer.parseInt(getEstimateText().getText()) < 0){
+				isEstimateValid = false;
+				if (warn) {
+					getEstimateText().setBorder(errorBorder);
+				}
+				displayError("An estimate must be at least 0");
+			}
+			else{ 
+				if(warn) {
+					getEstimateText().setBorder(defaultBorder);
+				}
+				isEstimateValid = true;
+			}
+		}
+		else{
+			isEstimateValid = false;
+			if (warn) {
+				getEstimateText().setBorder(errorBorder);
+			}
+			displayError("An estimation must contain only numbers");
+		}
+		
+		
+		return isEstimateValid;
+	}
+
+	public void submitEstimate() {
+		String currentUser = ConfigManager.getConfig().getUserName(); // Gets the currently active user
+		int voteNumber = Integer.parseInt(estText.getText());
+		Vote vote = new Vote(currentUser, voteNumber);
+
+		// I am currently working on updating a game's requirements to
+		// reflect the addition of the vote. Until then, I am printing out
+		// the fields of the vote to ensure the information is getting through
+		System.out.println("current user: " + vote.getUsername());
+		System.out.println("vote number: " + vote.getVoteNumber());
+		// these lines should be deleted when proper implementation is complete
+
+		ViewEventController.getInstance().refreshGameTable();
+		ViewEventController.getInstance().refreshGameTree();
+	}
+
+	public void displayError(String error) {
+		errorField.setText(error);
+	}
+
 }

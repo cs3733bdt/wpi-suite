@@ -10,11 +10,13 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels;
 
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.Vote;
 
 
 /**
@@ -39,6 +41,9 @@ public class Requirement extends AbstractModel {
 	
 	/** If this requirement came from the requirement manager module*/
 	private boolean fromRequirementModule;
+	
+	/** list of votes for this requirement */
+	private ArrayList<Vote> votes = new ArrayList<Vote>();
 
 	
 	
@@ -66,11 +71,12 @@ public class Requirement extends AbstractModel {
 	 */
 	// need to phase out supplying the ID
 	//We took out int id -- Jeff, Tom, Jordan
-	public Requirement(String name, String description) {
+	public Requirement(String name, String description, ArrayList<Vote> votes) {
 		this();
 		//this.id = id;
 		this.name = name;
 		this.description = description;
+		this.votes = votes;
 	}
 
 	/**
@@ -102,8 +108,8 @@ public class Requirement extends AbstractModel {
 	 * setter for the name
 	 * @param name the name to set          
 	 */
-	public void setName(String n) {
-		this.name=n;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
@@ -119,10 +125,27 @@ public class Requirement extends AbstractModel {
 	 * Setter for the description
 	 * @param description the description to set           
 	 */
-	public void setDescription(String desc) {
-		this.description=desc;
+	public void setDescription(String description) {
+		this.description=description;
 	}
 
+	
+	/**
+	 * getter for the votes
+	 * @return the votes 
+	 */
+	public ArrayList<Vote> getVotes() {
+		return votes;
+	}
+
+	/**
+	 * setter for the votes
+	 * @param votes the votes to set          
+	 */
+	public void setVotes(ArrayList<Vote> votes) {
+		this.votes = votes;
+	}
+	
 	/**
 	 * Method save.
 	 * @see edu.wpi.cs.wpisuitetng.modules.Model#save()

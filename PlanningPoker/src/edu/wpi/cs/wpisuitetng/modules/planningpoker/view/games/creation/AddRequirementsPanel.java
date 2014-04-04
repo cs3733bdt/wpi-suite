@@ -8,6 +8,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -21,6 +22,7 @@ import javax.swing.border.Border;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.Vote;
 
 public class AddRequirementsPanel extends JPanel {
 	
@@ -165,7 +167,7 @@ public class AddRequirementsPanel extends JPanel {
 		JButton submitAddReqButton = new JButton("Submit");
 		submitAddReqButton.addActionListener(new ActionListener() {
 			 public void actionPerformed(ActionEvent e) {
-				 view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
+				 view.addRequirement(new Requirement(nameArea.getText(), descArea.getText(), new ArrayList<Vote>()));
 				 table2.tableModel.addRow(new Object[]{nameArea.getText(), descArea.getText()});
 				 nameArea.setText("");
 				 descArea.setText("");
