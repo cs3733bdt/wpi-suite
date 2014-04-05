@@ -52,7 +52,7 @@ public class RetrieveRequirementRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		Requirement[] errorRequirement = { new Requirement("Error", "error desc", null) };
+		Requirement[] errorRequirement = { new Requirement("Error", "error desc") };
 		controller.receivedRequirements(errorRequirement);
 	}
 

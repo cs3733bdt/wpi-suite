@@ -30,4 +30,7 @@ public class Vote {
 	public int getVoteNumber() {
 		return voteNumber;
 	}
+	
+	
+	
 }

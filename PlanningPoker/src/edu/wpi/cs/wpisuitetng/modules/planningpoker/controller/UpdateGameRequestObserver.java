@@ -1,5 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -22,6 +23,8 @@ public class UpdateGameRequestObserver implements RequestObserver{
 	
 	public void responseSuccess(IRequest iReq) {
 		final ResponseModel response = iReq.getResponse();
+		
+		final Game game = Game.fromJSON(response.getBody());	
 	}
 	
 	public void responseError(IRequest iReq) {
