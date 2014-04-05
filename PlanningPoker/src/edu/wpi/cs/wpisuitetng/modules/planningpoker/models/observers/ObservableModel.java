@@ -83,7 +83,7 @@ public abstract class ObservableModel extends AbstractModel {
      * @param   o   an observer to be added.
      * @throws NullPointerException   if the parameter o is null.
      */
-    public synchronized void addObserver(CustomObserver o) {
+    public synchronized void addObserver(AbstractModelObserver o) {
         if (o == null)
             throw new NullPointerException();
         if (!obs.contains(o)) {
@@ -96,7 +96,7 @@ public abstract class ObservableModel extends AbstractModel {
      * Passing <CODE>null</CODE> to this method will have no effect.
      * @param   o   the observer to be deleted.
      */
-    public synchronized void deleteObserver(CustomObserver o) {
+    public synchronized void deleteObserver(AbstractModelObserver o) {
         obs.removeElement(o);
     }
 
@@ -161,7 +161,7 @@ public abstract class ObservableModel extends AbstractModel {
         }
 
         for (int i = arrLocal.length-1; i>=0; i--)
-            ((CustomObserver)arrLocal[i]).update(this, arg);
+            ((AbstractModelObserver)arrLocal[i]).update(this, arg);
     }
 
     /**
