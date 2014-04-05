@@ -20,6 +20,10 @@ import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
+ * Used in order to get the games off of the database.
+ * This is used to fill the GameModel from the database on build
+ * The first call of this method is inside of the GameTree on paint method
+ * This is done in order to prevent trying get the data before the network has been instantiated.
  * @author Andrew Busch
  *
  */
@@ -27,21 +31,22 @@ public class GetGameController implements ActionListener {
 	private GetGameRequestObserver observer;
 	private static GetGameController instance;
 
-	//private final GameModel model;
-	
+	/**
+	 * Gets the singleton instance of the GetGameController
+	 * @return the current instance of the GetGameController
+	 */
 	public static GetGameController getInstance(){
 		if (instance == null){
 			instance = new GetGameController();
 		}
 		return instance;
 	}
-	/*
-	public GetGameController(GameModel model) {
-		this.model = model;
-	}
-	*/
 	
-	public GetGameController() {
+	/**
+	 * The constructor for the GetGameController
+	 * Private in order to prevent multiple instantiations
+	 */
+	private GetGameController() {
 		observer = new GetGameRequestObserver(this);
 	}
 
