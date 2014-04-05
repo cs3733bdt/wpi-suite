@@ -43,7 +43,7 @@ public class EmailNotification {
 		//Check to see if no users are attached to this project
 		if(users[0] != null) {
 			for (int i = 0; i < users.length; i++) {
-				sendEmail(users[i]);
+					sendEmail(users[i]);
 			}
 		} else {
 			System.out.println("Project: " + g.getProject().getName() + ", has no users in its team.");
@@ -74,12 +74,17 @@ public class EmailNotification {
 
 		// Get system properties
 		Properties properties = new Properties();
-		properties.put("mail.smtp.auth", "true");
-		properties.put("mail.smtp.starttls.enable", "true");
 		properties.put("mail.smtp.host", "smtp.gmail.com");
 		properties.put("mail.smtp.port", "587");
-
-		Session session = Session.getInstance(properties,
+		properties.put("mail.smtp.auth", "true");
+		properties.put("mail.smtp.starttls.enable", "true");
+		
+		// Initialize session with null first to stop a nullPointerException
+		// getting thrown on some computers
+		Session session = Session.getInstance(properties, null);
+		
+		// Set session with authenticator
+		session = Session.getInstance(properties,
 				  new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication(username, password);
