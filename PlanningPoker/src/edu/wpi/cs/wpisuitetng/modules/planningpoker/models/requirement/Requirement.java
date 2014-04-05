@@ -87,15 +87,12 @@ public class Requirement extends ObservableModel {
 	public int getId() {
 		return id;
 	}
-
-	/**
-	 * Setter for the id
-	 * @param id the id to set         
-	 */
-	public void setId(int id) {
+	
+	public void setId(int id){
+		fromRequirementModule = true;
 		this.id = id;
-		
 	}
+
 
 	/**
 	 * getter for the name
@@ -106,28 +103,11 @@ public class Requirement extends ObservableModel {
 	}
 
 	/**
-	 * setter for the name
-	 * @param name the name to set          
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
 	 * Getter for the description
 	 * @return the description 
 	 */
 	public String getDescription() {
 		return description;
-	}
-	
-
-	/**
-	 * Setter for the description
-	 * @param description the description to set           
-	 */
-	public void setDescription(String description) {
-		this.description=description;
 	}
 
 	
@@ -139,13 +119,6 @@ public class Requirement extends ObservableModel {
 		return votes;
 	}
 
-	/**
-	 * setter for the votes
-	 * @param votes the votes to set          
-	 */
-	public void setVotes(ArrayList<Vote> votes) {
-		this.votes = votes;
-	}
 	
 	/**
 	 * Method save.
@@ -217,8 +190,24 @@ public class Requirement extends ObservableModel {
 	 */
 	@Override
 	public Boolean identify(Object o) {
-		// TODO Auto-generated method stub
-		return null;
+		if(o == null){
+			return false;
+		}
+		if(o.getClass() != this.getClass()){
+			return false;
+		}
+		Requirement comp = (Requirement)o;
+		
+		if(fromRequirementModule){
+			if(this.id != comp.id){
+				return false;
+			}
+		} else {
+			if(!this.identity.equals(comp.identity)){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	/**
