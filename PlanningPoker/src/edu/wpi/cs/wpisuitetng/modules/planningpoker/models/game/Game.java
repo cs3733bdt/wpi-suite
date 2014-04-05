@@ -20,6 +20,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requireme
  * 
  * @author jonathanleitschuh
  */
+
 public class Game extends ObservableModel implements CustomObserver{
 	
 	/** This is the best way to keep games unique so that you are not relying upon data that can change */
@@ -35,7 +36,7 @@ public class Game extends ObservableModel implements CustomObserver{
 	
 	private boolean usesCards;
 	
-	final private Date creationTime;
+	private Date creationTime;
 	
 	private String creator;
 	
@@ -87,15 +88,15 @@ public class Game extends ObservableModel implements CustomObserver{
 			needsUpdate = true;
 		}
 		
-//		if(!this.creationTime.equals(toCopyFrom.creationTime)){
-//			this.creationTime = toCopyFrom.creationTime;
-//			needsUpdate = true;
-//		}
+		if(!this.creationTime.equals(toCopyFrom.creationTime)){
+			this.creationTime = toCopyFrom.creationTime;
+			needsUpdate = true;
+		}
 		
-//		if(!this.creator.equals(toCopyFrom.creator)){
-//			this.creator = toCopyFrom.creator;
-//			needsUpdate = true;
-//		}
+		if(!this.creator.equals(toCopyFrom.creator)){
+			this.creator = toCopyFrom.creator;
+			needsUpdate = true;
+		}
 		
 		if(!this.requirements.equals(toCopyFrom.requirements)){
 			this.requirements = toCopyFrom.requirements;
@@ -133,6 +134,7 @@ public class Game extends ObservableModel implements CustomObserver{
 		super();
 		name = "";
 		description = "";
+		creator = "";
 		creationTime = new Date();
 		hasTimeLimit = false;
 		complete = false;
@@ -156,7 +158,7 @@ public class Game extends ObservableModel implements CustomObserver{
 		this.requirements = requirements;
 		this.usesCards = usesCards;
 	}
-	
+
 	/**
 	 * Used for junit testing
 	 * Constructs a game from the provided characteristics
@@ -183,6 +185,10 @@ public class Game extends ObservableModel implements CustomObserver{
 		return id;
 	}
 	
+	/**
+	 * Gets the universally unique identifier for this game
+	 * @return the uuid of the game
+	 */
 	public void setIdentifier(UUID identifier){
 		this.identity = identifier;
 	}
@@ -221,8 +227,8 @@ public class Game extends ObservableModel implements CustomObserver{
 	}
 	
 	/**
-	 * Returns the description of the game
-	 * @return
+	 * Gets the description of the game
+	 * @return the description of the game
 	 */
 	public String getDescription() {
 		return description;
@@ -236,6 +242,13 @@ public class Game extends ObservableModel implements CustomObserver{
 		return requirements;
 	}
 	
+	/**
+	 * Gets the username of the creator of the game
+	 * @return the list of requirements for the game
+	 */
+	public String getCreator() {
+		return creator;
+	}
 	
 	/**
 	 * Gets the creating time and date of the game
