@@ -37,7 +37,7 @@ public class Game extends ObservableModel implements CustomObserver{
 	
 	final private Date creationTime;
 	
-	final private String creator;
+	private String creator;
 	
 	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
 	

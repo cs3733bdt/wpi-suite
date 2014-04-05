@@ -10,6 +10,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="lib" path="/WPISuite-Interfaces/src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
 		<attributes>
 			<attribute name="owner.project.facets" value="java"/>
@@ -22,6 +23,5 @@
 	<classpathentry kind="lib" path="/DefectTracker/src"/>
 	<classpathentry kind="lib" path="/PostBoard/src"/>
 	<classpathentry kind="lib" path="/RequirementManager/src"/>
-	<classpathentry kind="lib" path="/WPISuite-Interfaces/src"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
