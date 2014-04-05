@@ -30,10 +30,9 @@ public class GameTest {
 	@Test
 	public void testJSONConversion() {
 		ArrayList<Requirement> reqList = new ArrayList<Requirement>();
-		ArrayList<Vote> voteList = new ArrayList<Vote>();
 		
 		Game object = new Game("Game A", "Test description", "Steve", reqList, true, false);
-		Requirement req = new Requirement("Test Requirement", "Test description", voteList);
+		Requirement req = new Requirement("Test Requirement", "Test description");
 		
 		reqList.add(req);
 		//Test existing object
