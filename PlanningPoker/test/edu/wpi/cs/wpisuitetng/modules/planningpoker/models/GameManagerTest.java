@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.HashSet;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -82,8 +83,8 @@ public class GameManagerTest {
 	@Test
 	public void testMakeEntity() throws WPISuiteException {
 		Game created = manager.makeEntity(defaultSession, game3.toJSON());
-		assertEquals("game 3", created.getName());
-		assertSame(db.retrieve(Game.class, "name", "game 3").get(0), created);
+		assertEquals("Game 3", created.getName());
+		assertSame(db.retrieve(Game.class, "name", "Game 3").get(0), created);
 	}
 	
 	/**
@@ -92,7 +93,7 @@ public class GameManagerTest {
 	 */
 	@Test
 	public void testGetEntity() throws NotFoundException {
-		Game[] gotten = manager.getEntity(defaultSession, "1");
+		Game[] gotten = manager.getEntity(defaultSession, game1.getIdentity().toString());
 		assertSame(game1, gotten[0]);
 		
 	}
@@ -115,9 +116,10 @@ public class GameManagerTest {
 	 */
 	@Test
 	public void testDelete() throws WPISuiteException{
-		assertSame(game1, db.retrieve(Game.class, "id", 1).get(0));
-		assertTrue(manager.deleteEntity(adminSession, "1"));
-		assertEquals(0, db.retrieve(Game.class, "id", 1).size());
+		UUID id = game1.getIdentity();
+		assertSame(game1, db.retrieve(Game.class, "identity", id).get(0));
+		assertTrue(manager.deleteEntity(adminSession, id.toString()));
+		assertEquals(0, db.retrieve(Game.class, "identity", id).size());
 	}
 	
 	/**
@@ -127,7 +129,7 @@ public class GameManagerTest {
 	 */
 	@Test(expected = NotFoundException.class)
 	public void testDeleteMissing() throws WPISuiteException{
-		manager.deleteEntity(adminSession, "-404");
+		manager.deleteEntity(adminSession, "404");
 		fail("The code should have thrown an exception");
 	}
 	

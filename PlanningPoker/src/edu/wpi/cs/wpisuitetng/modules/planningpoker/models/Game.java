@@ -133,7 +133,7 @@ public class Game extends AbstractModel{
 	 * Gets the Identifier for this game
 	 * @return the UUID for this class
 	 */
-	public UUID getIdentifier(){
+	public UUID getIdentity(){
 		return identity;
 	}
 	
