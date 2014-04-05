@@ -37,7 +37,7 @@
 <div class="subNav">
 <ul class="navList">
 <li>Prev Class</li>
-<li><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/GameEntityManager.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/GameEntityManager.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../../index.html?edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" target="_top">Frames</a></li>
@@ -79,7 +79,7 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">edu.wpi.cs.wpisuitetng.modules.planningpoker.models</div>
+<div class="subTitle">edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game</div>
 <h2 title="Class Game" class="title">Class Game</h2>
 </div>
 <div class="contentContainer">
@@ -93,7 +93,7 @@
 <li>edu.wpi.cs.wpisuitetng.modules.AbstractModel</li>
 <li>
 <ul class="inheritance">
-<li>edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game</li>
+<li>edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game</li>
 </ul>
 </li>
 </ul>
@@ -151,7 +151,7 @@ implements java.util.Observer</pre>
 <td class="colOne"><code><strong><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html#Game(java.lang.String, java.lang.String, java.lang.String, java.util.ArrayList, boolean, boolean)">Game</a></strong>(java.lang.String&nbsp;name,
     java.lang.String&nbsp;description,
     java.lang.String&nbsp;creator,
-    java.util.ArrayList&lt;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementmodels/Requirement.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels">Requirement</a>&gt;&nbsp;requirements,
+    java.util.ArrayList&lt;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementmodels/Requirement.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.requirement">Requirement</a>&gt;&nbsp;requirements,
     boolean&nbsp;hasTimeLimit,
     boolean&nbsp;usesCards)</code>
 <div class="block">Constructs a Game with given id</div>
@@ -174,7 +174,7 @@ implements java.util.Observer</pre>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html#copyFrom(edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game)">copyFrom</a></strong>(<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models">Game</a>&nbsp;toCopyFrom)</code>
+<td class="colLast"><code><strong><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html#copyFrom(edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game)">copyFrom</a></strong>(<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game">Game</a>&nbsp;toCopyFrom)</code>
 <div class="block">Copies all of the values from the given requirement to this requirement.</div>
 </td>
 </tr>
@@ -189,14 +189,14 @@ implements java.util.Observer</pre>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models">Game</a></code></td>
+<td class="colFirst"><code>static <a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game">Game</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html#fromJSON(java.lang.String)">fromJSON</a></strong>(java.lang.String&nbsp;json)</code>
 <div class="block">Returns an instance of Game constructed using the given
  Game encoded as a JSON string.</div>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>static <a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models">Game</a>[]</code></td>
+<td class="colFirst"><code>static <a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game">Game</a>[]</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html#fromJsonArray(java.lang.String)">fromJsonArray</a></strong>(java.lang.String&nbsp;json)</code>
 <div class="block">Returns an array of Game parsed from the given JSON-encoded
  string.</div>
@@ -233,7 +233,7 @@ implements java.util.Observer</pre>
 </td>
 </tr>
 <tr class="altColor">
-<td class="colFirst"><code>java.util.ArrayList&lt;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementmodels/Requirement.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels">Requirement</a>&gt;</code></td>
+<td class="colFirst"><code>java.util.ArrayList&lt;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementmodels/Requirement.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.requirement">Requirement</a>&gt;</code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html#getRequirements()">getRequirements</a></strong>()</code>
 <div class="block">Gets the list of requirements for this game</div>
 </td>
@@ -325,7 +325,7 @@ implements java.util.Observer</pre>
 <pre>public&nbsp;Game(java.lang.String&nbsp;name,
     java.lang.String&nbsp;description,
     java.lang.String&nbsp;creator,
-    java.util.ArrayList&lt;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementmodels/Requirement.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels">Requirement</a>&gt;&nbsp;requirements,
+    java.util.ArrayList&lt;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementmodels/Requirement.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.requirement">Requirement</a>&gt;&nbsp;requirements,
     boolean&nbsp;hasTimeLimit,
     boolean&nbsp;usesCards)</pre>
 <div class="block">Constructs a Game with given id</div>
@@ -357,13 +357,13 @@ public&nbsp;Game(int&nbsp;id,
 <!--   -->
 </a>
 <h3>Method Detail</h3>
-<a name="copyFrom(edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game)">
+<a name="copyFrom(edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game)">
 <!--   -->
 </a>
 <ul class="blockList">
 <li class="blockList">
 <h4>copyFrom</h4>
-<pre>public&nbsp;void&nbsp;copyFrom(<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models">Game</a>&nbsp;toCopyFrom)</pre>
+<pre>public&nbsp;void&nbsp;copyFrom(<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game">Game</a>&nbsp;toCopyFrom)</pre>
 <div class="block">Copies all of the values from the given requirement to this requirement.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>toCopyFrom</code> - the requirement to copy from</dd></dl>
 </li>
@@ -440,7 +440,7 @@ public&nbsp;Game(int&nbsp;id,
 <ul class="blockList">
 <li class="blockList">
 <h4>getRequirements</h4>
-<pre>public&nbsp;java.util.ArrayList&lt;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementmodels/Requirement.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels">Requirement</a>&gt;&nbsp;getRequirements()</pre>
+<pre>public&nbsp;java.util.ArrayList&lt;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementmodels/Requirement.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.requirement">Requirement</a>&gt;&nbsp;getRequirements()</pre>
 <div class="block">Gets the list of requirements for this game</div>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the list of requirements for the game</dd></dl>
 </li>
@@ -492,7 +492,7 @@ public&nbsp;Game(int&nbsp;id,
 <ul class="blockList">
 <li class="blockList">
 <h4>fromJSON</h4>
-<pre>public static&nbsp;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models">Game</a>&nbsp;fromJSON(java.lang.String&nbsp;json)</pre>
+<pre>public static&nbsp;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game">Game</a>&nbsp;fromJSON(java.lang.String&nbsp;json)</pre>
 <div class="block">Returns an instance of Game constructed using the given
  Game encoded as a JSON string.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>json</code> - the json-encoded Game to deserialize</dd>
@@ -505,7 +505,7 @@ public&nbsp;Game(int&nbsp;id,
 <ul class="blockList">
 <li class="blockList">
 <h4>fromJsonArray</h4>
-<pre>public static&nbsp;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models">Game</a>[]&nbsp;fromJsonArray(java.lang.String&nbsp;json)</pre>
+<pre>public static&nbsp;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game">Game</a>[]&nbsp;fromJsonArray(java.lang.String&nbsp;json)</pre>
 <div class="block">Returns an array of Game parsed from the given JSON-encoded
  string.</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>json</code> - a string containing a JSON-encoded array of Game</dd>
@@ -592,7 +592,7 @@ public&nbsp;Game(int&nbsp;id,
 <div class="subNav">
 <ul class="navList">
 <li>Prev Class</li>
-<li><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/GameEntityManager.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/models/GameEntityManager.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../../index.html?edu/wpi/cs/wpisuitetng/modules/planningpoker/models/Game.html" target="_top">Frames</a></li>

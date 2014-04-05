@@ -36,8 +36,8 @@
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/AddRequirementRequestObserver.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementRequestObserver.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/AddRequirementRequestObserver.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementRequestObserver.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../../index.html?edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementController.html" target="_top">Frames</a></li>
@@ -79,7 +79,7 @@
 <!-- ========= END OF TOP NAVBAR ========= -->
 <!-- ======== START OF CLASS DATA ======== -->
 <div class="header">
-<div class="subTitle">edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller</div>
+<div class="subTitle">edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement</div>
 <h2 title="Class RetrieveRequirementController" class="title">Class RetrieveRequirementController</h2>
 </div>
 <div class="contentContainer">
@@ -87,7 +87,7 @@
 <li>java.lang.Object</li>
 <li>
 <ul class="inheritance">
-<li>edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller.RetrieveRequirementController</li>
+<li>edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement.RetrieveRequirementController</li>
 </ul>
 </li>
 </ul>
@@ -133,12 +133,12 @@ implements java.awt.event.ActionListener</pre>
 </td>
 </tr>
 <tr class="rowColor">
-<td class="colFirst"><code>static <a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementController.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller">RetrieveRequirementController</a></code></td>
+<td class="colFirst"><code>static <a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementController.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement">RetrieveRequirementController</a></code></td>
 <td class="colLast"><code><strong><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementController.html#getInstance()">getInstance</a></strong>()</code>&nbsp;</td>
 </tr>
 <tr class="altColor">
 <td class="colFirst"><code>void</code></td>
-<td class="colLast"><code><strong><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementController.html#receivedRequirements(edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement[])">receivedRequirements</a></strong>(<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementmodels/Requirement.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels">Requirement</a>[]&nbsp;requirements)</code>
+<td class="colLast"><code><strong><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementController.html#receivedRequirements(edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.requirement.Requirement[])">receivedRequirements</a></strong>(<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementmodels/Requirement.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.requirement">Requirement</a>[]&nbsp;requirements)</code>
 <div class="block">Add the given requirements to the local model (they were received from the core).</div>
 </td>
 </tr>
@@ -176,7 +176,7 @@ implements java.awt.event.ActionListener</pre>
 <ul class="blockList">
 <li class="blockList">
 <h4>getInstance</h4>
-<pre>public static&nbsp;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementController.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller">RetrieveRequirementController</a>&nbsp;getInstance()</pre>
+<pre>public static&nbsp;<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementController.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement">RetrieveRequirementController</a>&nbsp;getInstance()</pre>
 <dl><dt><span class="strong">Returns:</span></dt><dd>the instance of the RetrieveRequirementsController or creates one if it does not
  exist.</dd></dl>
 </li>
@@ -206,13 +206,13 @@ implements java.awt.event.ActionListener</pre>
 <div class="block">Sends an HTTP request to retrieve all requirements</div>
 </li>
 </ul>
-<a name="receivedRequirements(edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement[])">
+<a name="receivedRequirements(edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.requirement.Requirement[])">
 <!--   -->
 </a>
 <ul class="blockListLast">
 <li class="blockList">
 <h4>receivedRequirements</h4>
-<pre>public&nbsp;void&nbsp;receivedRequirements(<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementmodels/Requirement.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels">Requirement</a>[]&nbsp;requirements)</pre>
+<pre>public&nbsp;void&nbsp;receivedRequirements(<a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementmodels/Requirement.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.requirement">Requirement</a>[]&nbsp;requirements)</pre>
 <div class="block">Add the given requirements to the local model (they were received from the core).
  This method is called by the RetrieveRequirementsRequestObserver</div>
 <dl><dt><span class="strong">Parameters:</span></dt><dd><code>requirements</code> - array of requirements received from the server</dd></dl>
@@ -244,8 +244,8 @@ implements java.awt.event.ActionListener</pre>
 </div>
 <div class="subNav">
 <ul class="navList">
-<li><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/AddRequirementRequestObserver.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller"><span class="strong">Prev Class</span></a></li>
-<li><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementRequestObserver.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller"><span class="strong">Next Class</span></a></li>
+<li><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/AddRequirementRequestObserver.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement"><span class="strong">Prev Class</span></a></li>
+<li><a href="../../../../../../../edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementRequestObserver.html" title="class in edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement"><span class="strong">Next Class</span></a></li>
 </ul>
 <ul class="navList">
 <li><a href="../../../../../../../index.html?edu/wpi/cs/wpisuitetng/modules/planningpoker/requirementcontroller/RetrieveRequirementController.html" target="_top">Frames</a></li>
