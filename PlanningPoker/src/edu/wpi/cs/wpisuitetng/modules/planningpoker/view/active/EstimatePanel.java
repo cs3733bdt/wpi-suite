@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -98,12 +97,23 @@ public class EstimatePanel extends JPanel{
 		overviewPanel.add(userStoryPane, c);
 
 		/**
+		 * Blank Panel for formatting purposes
+		 */
+		JPanel blankPanel0 = new JPanel();
+		//blankPanel0.setMinimumSize(new Dimension(310, 10));
+		c.gridx = 0;
+		c.gridy = 5;
+		c.gridwidth = 2;
+		blankPanel0.setPreferredSize(new Dimension(500, 10));
+		overviewPanel.add(blankPanel0, c);
+		
+		/**
 		 * Creates a panel for all the cards
 		 */
 		JPanel cardPanel = new JPanel();
 		cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.X_AXIS));
 		c.gridx = 0;
-		c.gridy = 5;
+		c.gridy = 6;
 		c.gridwidth = 2;
 		cardPanel.setPreferredSize(new Dimension(425, 50));
 		
@@ -167,7 +177,7 @@ public class EstimatePanel extends JPanel{
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.gridwidth = 2;
 		c.gridx = 0;
-		c.gridy = 5;
+		c.gridy = 6;
 		estText.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -203,7 +213,7 @@ public class EstimatePanel extends JPanel{
 
 		c.gridwidth = 2;
 		c.gridx = 0;
-		c.gridy = 7;
+		c.gridy = 8;
 		overviewPanel.add(submitEstimate, c);
 
 		/**
@@ -213,7 +223,7 @@ public class EstimatePanel extends JPanel{
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
 		c.gridx = 0;
-		c.gridy = 8;
+		c.gridy = 9;
 		overviewPanel.add(errorField, c);
 		
 		this.add(overviewPanel);
@@ -291,7 +301,6 @@ public class EstimatePanel extends JPanel{
 			}
 			displayError("An estimation must contain only numbers");
 		}
-		
 		
 		return isEstimateValid;
 	}

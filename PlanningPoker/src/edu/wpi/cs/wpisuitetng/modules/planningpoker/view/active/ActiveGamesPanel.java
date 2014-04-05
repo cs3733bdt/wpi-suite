@@ -1,6 +1,5 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -11,6 +10,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -54,17 +54,21 @@ public class ActiveGamesPanel extends JPanel {
 	/** Shows the names of the errors */
 	JLabel errorField = new JLabel();
 	
+	JPanel topHalfPanel = new JPanel();
+	
+	Container rightPanel = new Container();
+	
+	GridBagConstraints c = new GridBagConstraints();
+	
 	private boolean isEstimatePanelCreated = false;
 
 	public ActiveGamesPanel(final Game game) {
+		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 		active = game;
 		this.isEstimatePanelCreated = false;
-		
-		final Container rightPanel = new Container();
-		rightPanel.setLayout(new GridBagLayout());
-		rightPanel.setPreferredSize(new Dimension(700,300));
-
-		GridBagConstraints c = new GridBagConstraints();
+	
+		topHalfPanel.setLayout(new GridBagLayout());
+		//rightPanel.setPreferredSize(new Dimension(600,700));
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 
@@ -78,7 +82,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.gridy = 0;
 		//c.ipadx = 0;
 		//c.ipady = 0;
-		rightPanel.add(nameLabel, c);
+		topHalfPanel.add(nameLabel, c);
 
 		/**
 		 * the game name is determined by whichever game was clicked in the
@@ -91,7 +95,7 @@ public class ActiveGamesPanel extends JPanel {
 		//c.gridwidth = 2;
 		c.gridx = 1;
 		c.gridy = 0;
-		rightPanel.add(gameName, c);
+		topHalfPanel.add(gameName, c);
 		
 		/**
 		 * Blank Panel for formatting purposes
@@ -102,7 +106,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.gridy = 1;
 		c.gridwidth = 2;
 		blankPanel0.setPreferredSize(new Dimension(500, 10));
-		rightPanel.add(blankPanel0, c);
+		topHalfPanel.add(blankPanel0, c);
 
 		/**
 		 * creates and adds the label "Description"
@@ -114,7 +118,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.gridy = 2;
 		//c.ipadx = 0;
 		//c.ipady = 0;
-		rightPanel.add(descLabel, c);
+		topHalfPanel.add(descLabel, c);
 		
 		/**
 		 * Creates a scroll pane for the game description
@@ -135,7 +139,7 @@ public class ActiveGamesPanel extends JPanel {
 		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		descPane.setMinimumSize(new Dimension(400, 80));
 		descPane.setPreferredSize(new Dimension(450, 80));
-		rightPanel.add(descPane, c);
+		topHalfPanel.add(descPane, c);
 
 		/**
 		 * Initializes the two columns for the table of requirements.
@@ -190,9 +194,10 @@ public class ActiveGamesPanel extends JPanel {
 		//c.ipady = -300;
 		tablePanel.setPreferredSize(new Dimension(450, 100));
 		tablePanel.setMaximumSize(new Dimension(450, 100));	
-		rightPanel.add(tablePanel, c);
+		topHalfPanel.add(tablePanel, c);
 		
-	
+		rightPanel.add(topHalfPanel);
+		
 		this.add(rightPanel);
 	}
 
@@ -218,13 +223,18 @@ public class ActiveGamesPanel extends JPanel {
 	}
 	
 	public void updateEstimatePanel(Game game, Requirement requirement){
-		this.add(new EstimatePanel(game, requirement));
-		this.repaint();
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 4;
+		rightPanel.add(new EstimatePanel(game, requirement));
+		rightPanel.validate();
+		rightPanel.revalidate();
+		rightPanel.repaint();
 	}
 	
 	public void removeEstimatePanel(){
-		this.remove(1);
-		this.repaint();
+		rightPanel.remove(1);
+		rightPanel.repaint();
 	}
 
 }
