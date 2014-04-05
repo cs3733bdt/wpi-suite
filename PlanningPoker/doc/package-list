@@ -10,3 +10,4 @@ edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view.overview
+edu.wpi.cs.wpisuitetng.modules.planningpoker.vote
