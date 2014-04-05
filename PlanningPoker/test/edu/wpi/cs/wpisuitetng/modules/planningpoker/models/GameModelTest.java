@@ -65,7 +65,7 @@ public class GameModelTest {
 		assertEquals(returned3.getName(), "Game3");
 		
 		Game game4 = new Game("An updated game", "Overwriting an existing", "Steve", new ArrayList<Requirement>(), false, true);
-		game4.setIdentifier(game1.getIdentifier());
+		game4.setIdentifier(game1.getIdentity());
 		gameList[0] = game4;
 		model.addGames(gameList);
 		
