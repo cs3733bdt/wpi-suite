@@ -11,6 +11,8 @@ import java.util.UUID;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.CustomObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
 
 /**
@@ -18,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requiremen
  * 
  * @author jonathanleitschuh
  */
-public class Game extends AbstractModel implements Observer{
+public class Game extends ObservableModel implements CustomObserver{
 	
 	/** This is the best way to keep games unique so that you are not relying upon data that can change */
 	private UUID identity;
@@ -33,9 +35,9 @@ public class Game extends AbstractModel implements Observer{
 	
 	private boolean usesCards;
 	
-	private Date creationTime;
+	final private Date creationTime;
 	
-	private String creator;
+	final private String creator;
 	
 	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
 	
@@ -85,10 +87,10 @@ public class Game extends AbstractModel implements Observer{
 			needsUpdate = true;
 		}
 		
-		if(!this.creationTime.equals(toCopyFrom.creationTime)){
-			this.creationTime = toCopyFrom.creationTime;
-			needsUpdate = true;
-		}
+//		if(!this.creationTime.equals(toCopyFrom.creationTime)){
+//			this.creationTime = toCopyFrom.creationTime;
+//			needsUpdate = true;
+//		}
 		
 		if(!this.creator.equals(toCopyFrom.creator)){
 			this.creator = toCopyFrom.creator;
@@ -179,6 +181,10 @@ public class Game extends AbstractModel implements Observer{
 	 */
 	public int getId(){
 		return id;
+	}
+	
+	public void setIdentifier(UUID identifier){
+		this.identity = identifier;
 	}
 	
 	/**
@@ -310,7 +316,7 @@ public class Game extends AbstractModel implements Observer{
 
 
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(ObservableModel o, Object arg) {
 		if (o instanceof Requirement){
 			this.hasChanged();
 			this.notifyObservers(arg);

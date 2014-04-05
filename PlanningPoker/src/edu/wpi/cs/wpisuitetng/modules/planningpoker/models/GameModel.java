@@ -13,6 +13,8 @@ import javax.swing.AbstractListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGameController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.CustomObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game;
@@ -24,7 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  * @author dstapply jonathanleitschuh
  */
 @SuppressWarnings({"serial"})
-public class GameModel extends AbstractListModel<Game> implements Observer{
+public class GameModel extends AbstractListModel<Game> implements CustomObserver{
 	
 	/** Stores the singleton instance of this model */
 	private static GameModel instance;
@@ -76,12 +78,16 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 	 */
 	public void addGame(Game newGame) {
 		games.add(newGame);
-		try{ //Prevents a null pointer exception when the running tests (the JPanel's aren't instantiated)
+		try{ 
 			AddGameController.getInstance().addGame(newGame);
-			ViewEventController.getInstance().refreshGameTable();
-			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e){
 			System.err.println("WARNING: FAILED TO ADD GAME TO SERVER: " + newGame.getName());
+		}
+		try{ //Prevents a null pointer exception when the running tests (the JPanel's aren't instantiated)
+			ViewEventController.getInstance().refreshGameTable();
+			ViewEventController.getInstance().refreshGameTree();
+		} catch(Exception e){
+			System.err.println("No view output attached");
 		}
 		newGame.addObserver(this);
 		this.fireIntervalAdded(this, 0, 0);
@@ -101,7 +107,9 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 		try{ //Prevents a null pointer exception when the running tests (the JPanel's aren't instantiated)
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
-		} catch (Exception e) {}
+		} catch (Exception e) {
+			System.err.println("ViewEventController not fully initiallized");
+		}
 	}
 	
 	/**
@@ -143,6 +151,7 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 			for(Game modelGame : games){		//Iterates over the existing model
 				if(aGame.identify(modelGame)){	//Compares the UUID's of the two objects to see if they should be the same
 					found = true;				//This game has been found in the list
+					modelGame.copyFrom(aGame);
 				}
 			}
 			if(!found){							//If the game is not found then 
@@ -156,7 +165,7 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 			ViewEventController.getInstance().refreshGameTable();		//Currently serves no purpose
 			ViewEventController.getInstance().refreshGameTree();		//Refreshes the active table
 		} catch(Exception e) {
-			
+			System.err.println("ViewEventController not fully initiallized");
 		}
 	}
 	
@@ -181,9 +190,13 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
      *                 method.
      */
 	@Override
-	public void update(Observable o, Object arg) {
+	public void update(ObservableModel o, Object arg) {
 		if(o instanceof Game){
-			UpdateGameController.getInstance().updateGame((Game)o);
+			try{
+				UpdateGameController.getInstance().updateGame((Game)o);
+			} catch (Exception e){
+				System.err.println("The network has not been instantiated");
+			}
 		}
 		
 	}

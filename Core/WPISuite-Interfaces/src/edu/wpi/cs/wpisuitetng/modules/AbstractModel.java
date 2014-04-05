@@ -27,7 +27,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  * @author mpdelladonna
  *
  */
-public abstract class AbstractModel extends Observable implements Model {
+public abstract class AbstractModel implements Model {
 
 	private Map<User, Permission> permissionMap = new HashMap<User, Permission>(); // annotation for User serialization
 	private Project project;

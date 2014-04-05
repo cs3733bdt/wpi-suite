@@ -16,6 +16,7 @@ import java.util.UUID;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.Vote;
 
 
@@ -24,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.Vote;
  * @author tianchanggu & jmwetzel
  *
  */
-public class Requirement extends AbstractModel {
+public class Requirement extends ObservableModel {
 	/** the ID of the requirement */
 	private int id;
 	
