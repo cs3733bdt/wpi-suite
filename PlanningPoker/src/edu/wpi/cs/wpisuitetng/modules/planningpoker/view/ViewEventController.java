@@ -54,7 +54,6 @@ public class ViewEventController {
 	
 	/**
 	 * Sets the ToolBar view to the given toolbar
-	
 	 * @param tb The toolbar to be set as active.
 	 */
 	public void setToolBar(ToolbarView tb){

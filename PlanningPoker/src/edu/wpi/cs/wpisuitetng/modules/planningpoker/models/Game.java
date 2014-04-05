@@ -20,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requiremen
  */
 public class Game extends AbstractModel implements Observer{
 	
-	//This is the best way to keep games unique so that you are not relying upon data that can change
+	/** This is the best way to keep games unique so that you are not relying upon data that can change */
 	private UUID identity;
 	
 	private int id;
@@ -59,22 +59,65 @@ public class Game extends AbstractModel implements Observer{
 	 * @param toCopyFrom the requirement to copy from
 	 */
 	public void copyFrom(Game toCopyFrom) {
-		this.complete = toCopyFrom.complete;
-		this.creationTime = toCopyFrom.creationTime;
-		this.creator = toCopyFrom.creator;
-		this.id = toCopyFrom.id;
-		this.identity = toCopyFrom.identity;
-		this.name = toCopyFrom.name;
-		this.requirements = toCopyFrom.requirements;
-		for (Requirement req : this.requirements){ 
-			req.deleteObservers(); //Removes any previous observers on this class. This may be wrong and may break things
-			req.addObserver(this); //Adds this as an observer
+		boolean needsUpdate = false;
+		if(this.id != toCopyFrom.id){
+			this.id = toCopyFrom.id;
+			needsUpdate = true;
 		}
 		
-		this.description = toCopyFrom.description;
+		if(!this.name.equals(toCopyFrom.name)){
+			this.name = toCopyFrom.name;
+			needsUpdate = true;
+		}
 		
-		this.setChanged();
-		this.notifyObservers();
+		if(!this.description.equals(toCopyFrom.description)){
+			this.description = toCopyFrom.description;
+			needsUpdate = true;
+		}
+		
+		if(this.hasTimeLimit != toCopyFrom.hasTimeLimit){
+			this.hasTimeLimit = toCopyFrom.hasTimeLimit;
+			needsUpdate = true;
+		}
+		
+		if(this.usesCards != toCopyFrom.usesCards){
+			this.usesCards = toCopyFrom.usesCards;
+			needsUpdate = true;
+		}
+		
+		if(!this.creationTime.equals(toCopyFrom.creationTime)){
+			this.creationTime = toCopyFrom.creationTime;
+			needsUpdate = true;
+		}
+		
+		if(!this.creator.equals(toCopyFrom.creator)){
+			this.creator = toCopyFrom.creator;
+			needsUpdate = true;
+		}
+		
+		if(!this.requirements.equals(toCopyFrom.requirements)){
+			this.requirements = toCopyFrom.requirements;
+			for (Requirement req : this.requirements){ 
+				req.deleteObservers(); //Removes any previous observers on this class. This may be wrong and may break things
+				req.addObserver(this); //Adds this as an observer
+			}
+			needsUpdate = true;
+		}
+		
+		if(this.complete != toCopyFrom.complete){
+			this.complete = toCopyFrom.complete;
+			needsUpdate = true;
+		}
+		
+		if(!this.identity.equals(toCopyFrom.identity)){
+			this.identity = toCopyFrom.identity;
+			needsUpdate = false;
+		}
+		
+		if(needsUpdate){
+			this.setChanged();
+			this.notifyObservers();
+		}
 	}
 	
 	
@@ -101,7 +144,6 @@ public class Game extends AbstractModel implements Observer{
 	 * @param name the name of the game
 	 * @param hasTimeLimit checks if game has a time limit
 	 * 
-	 * @author dstapply
 	 */
 	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards) {
 		this(); //Calls the default constructor
@@ -156,18 +198,34 @@ public class Game extends AbstractModel implements Observer{
 		return name;
 	}
 	
+	/**
+	 * Is this this game completed
+	 * @return true if the game is complete
+	 */
 	public boolean isComplete(){
 		return complete;
 	}
 	
+	/**
+	 * Does this game use cards to estimate
+	 * @return true if this game uses cards
+	 */
 	public boolean doesUseCards(){
 		return usesCards;
 	}
 	
+	/**
+	 * Returns the description of the game
+	 * @return
+	 */
 	public String getDescription() {
 		return description;
 	}
 	
+	/**
+	 * Gets the list of requirements for this game
+	 * @return the list of requirements for the game
+	 */
 	public ArrayList<Requirement> getRequirements(){
 		return requirements;
 	}
@@ -176,8 +234,6 @@ public class Game extends AbstractModel implements Observer{
 	/**
 	 * Gets the creating time and date of the game
 	 * @return a Formated Date String
-	 * 
-	 * @author dstapply
 	 */
 	public String getCreationTime() {
 		// Format the date-time stamp

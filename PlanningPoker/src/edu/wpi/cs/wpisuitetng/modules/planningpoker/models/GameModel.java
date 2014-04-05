@@ -18,13 +18,18 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game;
 
 /**
- * @author dstapply
- *
+ * A singleton model for all for the Game data on the server.
+ * This Model should always reflect the data stored on the database and be updated whenever the model requires updating
+ * 
+ * @author dstapply jonathanleitschuh
  */
 @SuppressWarnings({"serial"})
 public class GameModel extends AbstractListModel<Game> implements Observer{
 	
+	/** Stores the singleton instance of this model */
 	private static GameModel instance;
+	
+	/** Stores the next ID */
 	private int nextID;
 	
 	/** List of available games */
@@ -39,6 +44,10 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 		nextID = 0;
 	}
 	
+	/**
+	 * Gets the current model of this class
+	 * @return The singleton instance of this object
+	 */
 	public static GameModel getInstance(){
 		if(instance == null){
 			instance = new GameModel();
@@ -67,7 +76,7 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 	 */
 	public void addGame(Game newGame) {
 		games.add(newGame);
-		try{
+		try{ //Prevents a null pointer exception when the running tests (the JPanel's aren't instantiated)
 			AddGameController.getInstance().addGame(newGame);
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
@@ -78,6 +87,9 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 		this.fireIntervalAdded(this, 0, 0);
 	}
 
+	/**
+	 * Empties the model of games and resets the model back to the default state.
+	 */
 	public void emptyModel() {
 		int oldSize = getSize();
 		Iterator<Game> iterator = games.iterator();
@@ -86,7 +98,7 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 			iterator.remove();
 		}
 		this.fireIntervalRemoved(this, 0, Math.max(oldSize -1, 0));	
-		try{
+		try{ //Prevents a null pointer exception when the running tests (the JPanel's aren't instantiated)
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {}
@@ -108,8 +120,6 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 			}
 			index ++;
 		}
-		
-
 	}
 
 	/**
@@ -118,26 +128,58 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 	 * @param newGames The games to be added to the model
 	 */
 	public void addGames(Game[] newGames) {
-		for (int i = 0; i < newGames.length; i++) {
-			newGames[i].addObserver(this);
-			this.games.add(newGames[i]);
-			if(newGames[i].getId() >= nextID) nextID = newGames[i].getId() + 1;
-		}
-		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
-		ViewEventController.getInstance().refreshGameTable();
-		ViewEventController.getInstance().refreshGameTree();
+		updateGames(newGames);
 	}
 	
+	/**
+	 * Updates the list of games in the model. If the there is any matching UUID's between the model and the list of
+	 * games the values for the games will be updated using the server's values.
+	 * @param allGames
+	 */
 	public void updateGames(Game[] allGames){
-		
+		int startingSize = getSize();
+		for(Game aGame : allGames){ 			//Iterates over the new model
+			boolean found = false;				//Has this Game been found in the list
+			for(Game modelGame : games){		//Iterates over the existing model
+				if(aGame.identify(modelGame)){	//Compares the UUID's of the two objects to see if they should be the same
+					found = true;				//This game has been found in the list
+				}
+			}
+			if(!found){							//If the game is not found then 
+				startingSize ++;				//This Game will be added to the model so increase the starting size
+				aGame.addObserver(this);		//Add an observer on this game
+				this.games.add(aGame);			//Adds this game to the list of games in this list
+			}
+		}
+		this.fireIntervalAdded(this, startingSize-1, getSize()-1); 	//Fires the event listeners on this list.
+		try{ //This is used to prevent the a null pointer exception when running test cases (the JPanel's aren't instantiated)
+			ViewEventController.getInstance().refreshGameTable();		//Currently serves no purpose
+			ViewEventController.getInstance().refreshGameTree();		//Refreshes the active table
+		} catch(Exception e) {
+			
+		}
 	}
 	
 	
 	
+	/**
+	 * Gets the list of games stored in the model
+	 * @return the list of games
+	 */
 	public List<Game> getGames() {
 		return games;
 	}
 
+	/**
+     * This method is called whenever any of the models game objects is changed. An
+     * application calls an <tt>Observable</tt> object's
+     * <code>notifyObservers</code> method to have all the object's
+     * observers notified of the change.
+     *
+     * @param   o     the observable object.
+     * @param   arg   an argument passed to the <code>notifyObservers</code>
+     *                 method.
+     */
 	@Override
 	public void update(Observable o, Object arg) {
 		if(o instanceof Game){
