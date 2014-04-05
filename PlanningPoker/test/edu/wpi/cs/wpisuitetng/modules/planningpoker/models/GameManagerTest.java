@@ -26,6 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
  * Used to test the Game Manager's functionality
  * 
  * @author jonathanleitschuh
+ * @author phbaumann
  *
  */
 public class GameManagerTest {
@@ -57,13 +58,13 @@ public class GameManagerTest {
 		adminSession = new Session(admin, testProject, mockSsid);
 		
 		existingUser = new User("steve", "steve", "1234", "", 2);
-		game1 = new Game(1, "game 1", admin.getName(), false);
 		
-		game2 = new Game(2, "game 2", existingUser.getName(), true);
+		game1 = new Game("Game 1", "First", admin.getName(), null, false, false);
+		game2 = new Game("Game 2", "Second", existingUser.getName(), null, true, false);
+		game3 = new Game("Game 3", "Third", existingUser.getName(), null, false, false);
 		
 		defaultSession = new Session(existingUser, testProject,  mockSsid);
-		game3 = new Game(3, "game 3", existingUser.getName(), false);
-		
+
 		db = new MockData(new HashSet<Object>());
 		
 		db.save(game1, testProject);
@@ -81,54 +82,11 @@ public class GameManagerTest {
 	@Test
 	public void testMakeEntity() throws WPISuiteException {
 		Game created = manager.makeEntity(defaultSession, game3.toJSON());
-		assertEquals("game 3", created.getName());
-		assertSame(db.retrieve(Game.class, "name", "game 3").get(0), created);
+		assertEquals("Game 3", created.getName());
+		assertSame(db.retrieve(Game.class, "name", "Game 3").get(0), created);
 	}
 	
-	/**
-	 * Ensures that a game can be retrived from the database
-	 * @throws NotFoundException
-	 */
-	@Test
-	public void testGetEntity() throws NotFoundException {
-		Game[] gotten = manager.getEntity(defaultSession, "1");
-		assertSame(game1, gotten[0]);
-		
-	}
-	
-	/**
-	 * Ensures a NotFoundException is thrown when trying to retrive an invalid requirement
-	 * 
-	 * @throws NotFoundException
-	 */
-	@Test(expected = NotFoundException.class)
-	public void testGetBadId() throws NotFoundException {
-		manager.getEntity(defaultSession, "-1");
-		fail("Should have thrown an exception");
-	}
-	
-	/**
-	 * Ensures that games can be deleted
-	 * 
-	 * @throws WPISuiteException
-	 */
-	@Test
-	public void testDelete() throws WPISuiteException{
-		assertSame(game1, db.retrieve(Game.class, "id", 1).get(0));
-		assertTrue(manager.deleteEntity(adminSession, "1"));
-		assertEquals(0, db.retrieve(Game.class, "id", 1).size());
-	}
-	
-	/**
-	 * Ensures that an exception is thrown when trying to delete an invalid game
-	 * 
-	 * @throws WPISuiteException
-	 */
-	@Test(expected = NotFoundException.class)
-	public void testDeleteMissing() throws WPISuiteException{
-		manager.deleteEntity(adminSession, "-404");
-		fail("The code should have thrown an exception");
-	}
+
 	
 	/**
 	 * Ensures an UnauthorizedException is thrown when trying to delete an entity while not authorized
