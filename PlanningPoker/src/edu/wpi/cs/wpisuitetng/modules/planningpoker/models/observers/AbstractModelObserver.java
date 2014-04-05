@@ -32,7 +32,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers;
  * @see     java.util.Observable
  * @since   JDK1.0
  */
-public interface CustomObserver {
+public interface AbstractModelObserver {
     /**
      * This method is called whenever the observed object is changed. An
      * application calls an <tt>Observable</tt> object's

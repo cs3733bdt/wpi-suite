@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.CustomObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 
 /**
@@ -20,8 +20,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requireme
  * 
  * @author jonathanleitschuh
  */
+<<<<<<< HEAD
 
 public class Game extends ObservableModel implements CustomObserver{
+=======
+public class Game extends ObservableModel implements AbstractModelObserver{
+>>>>>>> 6d5061607a31343a9e1ef9b6da528c4222900ec6
 	
 	/** This is the best way to keep games unique so that you are not relying upon data that can change */
 	private UUID identity;
