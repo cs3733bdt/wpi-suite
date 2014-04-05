@@ -6,10 +6,13 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.AbstractListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddGameController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game;
@@ -71,6 +74,7 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 		} catch (Exception e){
 			System.err.println("WARNING: FAILED TO ADD GAME TO SERVER: " + newGame.getName());
 		}
+		newGame.addObserver(this);
 		this.fireIntervalAdded(this, 0, 0);
 	}
 
@@ -108,8 +112,14 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 
 	}
 
+	/**
+	 * Adds all of the list of games to the model
+	 * Used by the database controller construct the game model initially.
+	 * @param newGames The games to be added to the model
+	 */
 	public void addGames(Game[] newGames) {
 		for (int i = 0; i < newGames.length; i++) {
+			newGames[i].addObserver(this);
 			this.games.add(newGames[i]);
 			if(newGames[i].getId() >= nextID) nextID = newGames[i].getId() + 1;
 		}
@@ -117,9 +127,23 @@ public class GameModel extends AbstractListModel<Game> implements Observer{
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 	}
-
+	
+	public void updateGames(Game[] allGames){
+		
+	}
+	
+	
+	
 	public List<Game> getGames() {
 		return games;
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if(o instanceof Game){
+			UpdateGameController.getInstance().updateGame((Game)o);
+		}
+		
 	}
 
 }

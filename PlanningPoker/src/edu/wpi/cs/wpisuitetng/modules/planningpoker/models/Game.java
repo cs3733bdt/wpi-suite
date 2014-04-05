@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Observable;
 import java.util.Observer;
 import java.util.UUID;
 
@@ -17,7 +18,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requiremen
  * 
  * @author jonathanleitschuh
  */
-public class Game extends AbstractModel{
+public class Game extends AbstractModel implements Observer{
 	
 	//This is the best way to keep games unique so that you are not relying upon data that can change
 	private UUID identity;
@@ -65,7 +66,15 @@ public class Game extends AbstractModel{
 		this.identity = toCopyFrom.identity;
 		this.name = toCopyFrom.name;
 		this.requirements = toCopyFrom.requirements;
+		for (Requirement req : this.requirements){ 
+			req.deleteObservers(); //Removes any previous observers on this class. This may be wrong and may break things
+			req.addObserver(this); //Adds this as an observer
+		}
+		
 		this.description = toCopyFrom.description;
+		
+		this.setChanged();
+		this.notifyObservers();
 	}
 	
 	
@@ -240,6 +249,16 @@ public class Game extends AbstractModel{
 			return false;
 		}
 		return true;
+	}
+
+
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if (o instanceof Requirement){
+			this.hasChanged();
+			this.notifyObservers(arg);
+		}
 	}
 
 
