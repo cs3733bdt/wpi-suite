@@ -8,28 +8,18 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
+import javax.swing.ScrollPaneConstants;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.Vote;
-
 /**
  * @author Jeffrey Signore Sets up the panel for the active games screen, which
  *         has the list of all active games in which the user is playing. When
@@ -72,6 +62,7 @@ public class ActiveGamesPanel extends JPanel {
 		
 		final Container rightPanel = new Container();
 		rightPanel.setLayout(new GridBagLayout());
+		rightPanel.setPreferredSize(new Dimension(700,300));
 
 		GridBagConstraints c = new GridBagConstraints();
 
@@ -81,12 +72,12 @@ public class ActiveGamesPanel extends JPanel {
 		 * creates and adds the label "Name"
 		 */
 		JLabel nameLabel = new JLabel("Name: ");
-		c.weightx = 0.5;
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		//c.weightx = 0.5;
+		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 0;
-		c.ipadx = 0;
-		c.ipady = 0;
+		//c.ipadx = 0;
+		//c.ipady = 0;
 		rightPanel.add(nameLabel, c);
 
 		/**
@@ -96,37 +87,55 @@ public class ActiveGamesPanel extends JPanel {
 		gameName.setText(game.getName());
 		gameName.setEditable(false);
 		gameName.setLineWrap(true);
-		c.weightx = 0.75;
-		c.gridwidth = 8;
+		//c.weightx = 0.75;
+		//c.gridwidth = 2;
 		c.gridx = 1;
 		c.gridy = 0;
 		rightPanel.add(gameName, c);
+		
+		/**
+		 * Blank Panel for formatting purposes
+		 */
+		JPanel blankPanel0 = new JPanel();
+		//blankPanel0.setMinimumSize(new Dimension(310, 10));
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 2;
+		blankPanel0.setPreferredSize(new Dimension(500, 10));
+		rightPanel.add(blankPanel0, c);
 
 		/**
 		 * creates and adds the label "Description"
 		 */
 		JLabel descLabel = new JLabel("Description: ");
 		c.gridwidth = 1;
-		c.weightx = 0.5;
+		//c.weightx = 0.5;
 		c.gridx = 0;
-		c.gridy = 1;
-		c.ipadx = 0;
-		c.ipady = 0;
+		c.gridy = 2;
+		//c.ipadx = 0;
+		//c.ipady = 0;
 		rightPanel.add(descLabel, c);
-
+		
 		/**
-		 * the description is determined by whichever game was clicked in the
-		 * list.
+		 * Creates a scroll pane for the game description
 		 */
+		JScrollPane descPane = new JScrollPane(gameDesc);	
+		/**
+		 * the description is determined by whichever game was clicked in the list
+		 */
+		//gameDesc.setMaximumSize(new Dimension(100,100));
 		gameDesc.setText(game.getDescription());
 		gameDesc.setEditable(false);
 		gameDesc.setLineWrap(true);
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.weightx = 0.75;
-		c.gridwidth = 8;
+		//c.weightx = 0.75;
+		c.gridwidth = 1;
 		c.gridx = 1;
-		c.gridy = 1;
-		rightPanel.add(gameDesc, c);
+		c.gridy = 2;
+		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		descPane.setMinimumSize(new Dimension(400, 80));
+		descPane.setPreferredSize(new Dimension(450, 80));
+		rightPanel.add(descPane, c);
 
 		/**
 		 * Initializes the two columns for the table of requirements.
@@ -168,19 +177,22 @@ public class ActiveGamesPanel extends JPanel {
 				}
 			}
 		});
-
+		
 		/**
 		 * Puts the table within a scroll pane, and adds to the view.
 		 */
 		JScrollPane tablePanel = new JScrollPane(table);
-		c.gridwidth = 8;
-		c.gridheight = 1;
+		c.gridwidth = 2;
+		//c.gridheight = 1;
 		c.weightx = 0.5;
-		c.gridx = 1;
-		c.gridy = 2;
-		c.ipady = -300;
+		c.gridx = 0;
+		c.gridy = 3;
+		//c.ipady = -300;
+		tablePanel.setPreferredSize(new Dimension(450, 100));
+		tablePanel.setMaximumSize(new Dimension(450, 100));	
 		rightPanel.add(tablePanel, c);
-
+		
+	
 		this.add(rightPanel);
 	}
 
@@ -207,10 +219,12 @@ public class ActiveGamesPanel extends JPanel {
 	
 	public void updateEstimatePanel(Game game, Requirement requirement){
 		this.add(new EstimatePanel(game, requirement));
+		this.repaint();
 	}
 	
 	public void removeEstimatePanel(){
 		this.remove(1);
+		this.repaint();
 	}
 
 }

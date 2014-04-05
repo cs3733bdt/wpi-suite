@@ -13,11 +13,14 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
@@ -67,8 +70,8 @@ public class EstimatePanel extends JPanel{
 		/**
 		 * Creates and adds the user story text area to the view.
 		 */
-		userStoryDesc.setText(activeRequirement.getDescription());
-		
+		userStoryDesc.setText(requirement.getDescription());
+
 		// create a dummy JTextArea
 		JTextArea editingArea = new JTextArea();
 		// get the current font
@@ -79,105 +82,91 @@ public class EstimatePanel extends JPanel{
 
 		// set the bigger font for userStoryDesc
 		Font bigFont = newFont;
+		
+		JScrollPane userStoryPane = new JScrollPane(userStoryDesc);
 		userStoryDesc.setFont(bigFont);
+		userStoryDesc.setLineWrap(true);
 		userStoryDesc.setEditable(false);
-		c.gridwidth = 8;
-		c.weightx = 0.75;
-		c.gridx = 1;
-		c.gridy = 3;
-		c.ipady = 50;
-		overviewPanel.add(userStoryDesc, c);
+		c.gridwidth = 2;
+		//c.weightx = 0.75;
+		c.gridx = 0;
+		c.gridy = 4;
+		//c.ipady = 50;
+		userStoryPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		userStoryPane.setPreferredSize(new Dimension(400, 150));
+		userStoryPane.setMaximumSize(new Dimension(400, 150));
+		overviewPanel.add(userStoryPane, c);
 
+		/**
+		 * Creates a panel for all the cards
+		 */
+		JPanel cardPanel = new JPanel();
+		cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.X_AXIS));
+		c.gridx = 0;
+		c.gridy = 5;
+		c.gridwidth = 2;
+		cardPanel.setPreferredSize(new Dimension(425, 50));
+		
+		
 		/**
 		 * Creates and adds the 1st card to the view.
 		 */
 		JButton but0 = new JButton("1");
-		c.gridwidth = 1;
-		c.weightx = 0.5;
-		c.gridx = 1;
-		c.gridy = 4;
-		c.ipadx = 20;
-		c.ipady = 75;
-		overviewPanel.add(but0, c);
+		cardPanel.add(but0);
 
 		/**
 		 * Creates and adds the 2nd card to the view.
 		 */
 		JButton but1 = new JButton("1");
-		c.gridx = 2;
-		c.gridy = 4;
-		c.ipadx = 20;
-		c.ipady = 75;
-		overviewPanel.add(but1, c);
+		cardPanel.add(but1);
 
 		/**
 		 * Creates and adds the 3rd card to the view.
 		 */
 		JButton but2 = new JButton("2");
-		c.gridx = 3;
-		c.gridy = 4;
-		c.ipadx = 20;
-		c.ipady = 75;
-		overviewPanel.add(but2, c);
+		cardPanel.add(but2);
 
 		/**
 		 * Creates and adds the 4th card to the view.
 		 */
 		JButton but3 = new JButton("3");
-		c.gridx = 4;
-		c.gridy = 4;
-		c.ipadx = 20;
-		c.ipady = 75;
-		overviewPanel.add(but3, c);
+		cardPanel.add(but3);
 
 		/**
 		 * Creates and adds the 5th card to the view.
 		 */
 		JButton but4 = new JButton("5");
-		c.gridx = 5;
-		c.gridy = 4;
-		c.ipadx = 20;
-		c.ipady = 75;
-		overviewPanel.add(but4, c);
+		cardPanel.add(but4);
 
 		/**
 		 * Creates and adds the 6th card to the view.
 		 */
 		JButton but5 = new JButton("8");
-		c.gridx = 6;
-		c.gridy = 4;
-		c.ipadx = 20;
-		c.ipady = 75;
-		overviewPanel.add(but5, c);
+		cardPanel.add(but5);
 
 		/**
 		 * Creates and adds the 7th card to the view.
 		 */
 		JButton but6 = new JButton("13");
-		c.gridx = 7;
-		c.gridy = 4;
-		c.ipadx = 20;
-		c.ipady = 75;
-		overviewPanel.add(but6, c);
+		cardPanel.add(but6);
 
 		/**
 		 * Creates and adds the 8th card to the view.
 		 */
 		JButton but7 = new JButton("0?");
-		c.gridx = 8;
-		c.gridy = 4;
-		c.ipadx = 20;
-		c.ipady = 75;
-		overviewPanel.add(but7, c);
+		cardPanel.add(but7);
 
+		overviewPanel.add(cardPanel, c);
+		
+		
 		/**
 		 * The text area where the user types their estimate
 		 */
 		estText.setText("Estimate Here");
-		estText.setPreferredSize(new Dimension(75, 40));
+		estText.setPreferredSize(new Dimension(100, 40));
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		c.gridwidth = 1;
-		c.gridx = 5;
+		c.gridwidth = 2;
+		c.gridx = 0;
 		c.gridy = 5;
 		estText.addMouseListener(new MouseAdapter() {
 			@Override
@@ -191,6 +180,7 @@ public class EstimatePanel extends JPanel{
 		if (game.doesUseCards()) {
 			estText.setVisible(false);
 		} else {
+			cardPanel.setVerifyInputWhenFocusTarget(false);
 			but0.setVisible(false);
 			but1.setVisible(false);
 			but2.setVisible(false);
@@ -200,18 +190,6 @@ public class EstimatePanel extends JPanel{
 			but6.setVisible(false);
 			but7.setVisible(false);
 		}
-
-		/**
-		 * A blank panel for formatting purposes
-		 */
-		JPanel invisPanel = new JPanel();
-		c.gridwidth = 1;
-		c.weightx = 0.5;
-		c.gridx = 9;
-		c.gridy = 4;
-		c.ipadx = 0;
-		c.ipady = 0;
-		overviewPanel.add(invisPanel, c);
 
 		/**
 		 * The submit button for when the user is ready to submit the estimate
@@ -224,8 +202,8 @@ public class EstimatePanel extends JPanel{
 		});
 
 		c.gridwidth = 2;
-		c.gridx = 4;
-		c.gridy = 6;
+		c.gridx = 0;
+		c.gridy = 7;
 		overviewPanel.add(submitEstimate, c);
 
 		/**
@@ -234,10 +212,11 @@ public class EstimatePanel extends JPanel{
 		errorField = new JLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
-		c.gridx = 5;
-		c.gridy = 12;
-		c.insets = new Insets(0, 175, 0, 0);
+		c.gridx = 0;
+		c.gridy = 8;
 		overviewPanel.add(errorField, c);
+		
+		this.add(overviewPanel);
 
 	}
 	
