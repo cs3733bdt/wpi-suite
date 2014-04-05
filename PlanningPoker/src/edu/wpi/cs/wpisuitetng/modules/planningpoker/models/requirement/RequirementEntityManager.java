@@ -7,7 +7,7 @@
  * 
  * Contributors: Team Rolling Thunder
  ******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
 
 import java.util.List;
 

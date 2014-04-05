@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game;
 
 import java.util.List;
 import java.util.UUID;

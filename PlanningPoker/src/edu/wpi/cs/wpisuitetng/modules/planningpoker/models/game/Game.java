@@ -1,4 +1,4 @@
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.CustomObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 
 /**
  * Basic Game class that contains the data to be store for a Game
@@ -92,10 +92,10 @@ public class Game extends ObservableModel implements CustomObserver{
 //			needsUpdate = true;
 //		}
 		
-		if(!this.creator.equals(toCopyFrom.creator)){
-			this.creator = toCopyFrom.creator;
-			needsUpdate = true;
-		}
+//		if(!this.creator.equals(toCopyFrom.creator)){
+//			this.creator = toCopyFrom.creator;
+//			needsUpdate = true;
+//		}
 		
 		if(!this.requirements.equals(toCopyFrom.requirements)){
 			this.requirements = toCopyFrom.requirements;

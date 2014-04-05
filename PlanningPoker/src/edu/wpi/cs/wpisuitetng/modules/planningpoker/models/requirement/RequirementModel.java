@@ -7,7 +7,7 @@
  * 
  * Contributors: Team Rolling Thunder
  ******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -15,7 +15,7 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller.AddRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement.AddRequirementController;
 
 
 //import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;

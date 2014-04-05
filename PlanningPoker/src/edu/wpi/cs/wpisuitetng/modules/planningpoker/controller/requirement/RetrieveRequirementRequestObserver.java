@@ -1,7 +1,7 @@
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementcontroller;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement;
 
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 

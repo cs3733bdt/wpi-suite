@@ -7,7 +7,7 @@
  * 
  * Contributors: Team Rolling Thunder
  ******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
 
 
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.Vote;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
 
 
 /**

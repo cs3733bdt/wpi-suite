@@ -1,4 +1,4 @@
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.vote;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote;
 
 public class Vote {
 
