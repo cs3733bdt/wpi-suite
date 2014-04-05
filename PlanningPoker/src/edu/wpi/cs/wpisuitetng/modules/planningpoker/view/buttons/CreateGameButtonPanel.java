@@ -10,11 +10,15 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -36,6 +40,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		 * Temporary join game button until tree has clickable functionality
 		 */
 		private JButton joinGameButton = new JButton("  Join Game  ");
+		private JButton createGameIcon = new JButton("Create Game2");
 		private final JPanel contentPanel = new JPanel();
 	
 	public CreateGameButtonPanel(){
@@ -43,11 +48,41 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
 		//35
-		this.setPreferredSize(new Dimension(110,35));
+		this.setPreferredSize(new Dimension(110,35)); //make these numbers bigger
+		
+		//added following code
+		
+		//CreateGameButtonPanel.this.createGameIcon.setPreferredSize(new Dimension(200, 200));
+		
+		this.createGameIcon.setHorizontalAlignment(SwingConstants.CENTER);
+	   try {
+	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));
+	        this.createGameIcon.setIcon(new ImageIcon(img));
+		    
+		} catch (IOException ex) {}
+		
+		//added above code
+		
 		this.createGameButton.setVerticalAlignment(SwingConstants.TOP);
 		this.createGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		this.joinGameButton.setVerticalAlignment(SwingConstants.BOTTOM);
 		this.joinGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+		
+		
+		
+		//added below code
+		// the action listener for the Create Game Icon
+		createGameIcon.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// bring up a create requirement pane if not in Multiple Requirement Editing Mode
+				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
+					ViewEventController.getInstance().createGame();
+			//	}
+			}
+		});		
+		//added above code
+		
 		
 		// the action listener for the Create Game Button
 		createGameButton.addActionListener(new ActionListener() {
@@ -70,6 +105,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		});	
 			
 		contentPanel.add(createGameButton);
+		contentPanel.add(createGameIcon);
 		//contentPanel.setOpaque(false);
 		
 		//contentPanel.add(joinGameButton);

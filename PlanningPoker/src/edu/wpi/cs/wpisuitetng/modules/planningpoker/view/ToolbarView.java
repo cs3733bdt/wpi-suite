@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CreateGameButtonPanel;
 
 /**
  * Sets up the upper toolbar of the PlanningPoker Window
@@ -23,10 +24,13 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
  */
 public class ToolbarView extends DefaultToolbarView {
 	
+	public CreateGameButtonPanel createGameButton = new CreateGameButtonPanel();
+	
 	/**
 	 * Creates and positions the buttons/other information in the tool bar
 	 */
 	public ToolbarView(){
+		this.addGroup(createGameButton);
 	    this.setBorder(BorderFactory.createLineBorder(Color.blue, 2)); // add a border so you can see the panel
 	    this.repaint();
 	    
