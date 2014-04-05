@@ -9,6 +9,7 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
 import java.util.HashSet;
+import java.util.UUID;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -89,6 +90,51 @@ public class GameManagerTest {
 	}
 	
 
+	/**
+	 * Ensures that a game can be retrived from the database
+	 * @throws NotFoundException
+	 */
+	@Test
+	public void testGetEntity() throws NotFoundException {
+		Game[] gotten = manager.getEntity(defaultSession, game1.getIdentity().toString());
+		assertSame(game1, gotten[0]);
+		
+	}
+	
+	/**
+	 * Ensures a NotFoundException is thrown when trying to retrive an invalid requirement
+	 * 
+	 * @throws NotFoundException
+	 */
+	@Test(expected = NotFoundException.class)
+	public void testGetBadId() throws NotFoundException {
+		manager.getEntity(defaultSession, "-1");
+		fail("Should have thrown an exception");
+	}
+	
+	/**
+	 * Ensures that games can be deleted
+	 * 
+	 * @throws WPISuiteException
+	 */
+	@Test
+	public void testDelete() throws WPISuiteException{
+		UUID id = game1.getIdentity();
+		assertSame(game1, db.retrieve(Game.class, "identity", id).get(0));
+		assertTrue(manager.deleteEntity(adminSession, id.toString()));
+		assertEquals(0, db.retrieve(Game.class, "identity", id).size());
+	}
+	
+	/**
+	 * Ensures that an exception is thrown when trying to delete an invalid game
+	 * 
+	 * @throws WPISuiteException
+	 */
+	@Test(expected = NotFoundException.class)
+	public void testDeleteMissing() throws WPISuiteException{
+		manager.deleteEntity(adminSession, "404");
+		fail("The code should have thrown an exception");
+	}
 	
 	/**
 	 * Ensures an UnauthorizedException is thrown when trying to delete an entity while not authorized

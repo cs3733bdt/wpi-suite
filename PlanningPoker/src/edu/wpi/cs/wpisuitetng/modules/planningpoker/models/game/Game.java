@@ -191,7 +191,7 @@ public class Game extends ObservableModel implements CustomObserver{
 	 * Gets the Identifier for this game
 	 * @return the UUID for this class
 	 */
-	public UUID getIdentifier(){
+	public UUID getIdentity(){
 		return identity;
 	}
 	

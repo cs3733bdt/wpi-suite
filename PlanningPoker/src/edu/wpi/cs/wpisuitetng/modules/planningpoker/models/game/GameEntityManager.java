@@ -55,7 +55,13 @@ public class GameEntityManager implements EntityManager<Game> {
 
 	@Override
 	public Game[] getEntity(Session s, String id) throws NotFoundException {
-		final UUID intId = UUID.fromString(id);
+		final UUID intId;
+		try{
+			intId = UUID.fromString(id);
+		} catch (IllegalArgumentException e){
+			throw new NotFoundException();
+		}
+		
 		if (id == "") {
 			throw new NotFoundException();
 		}
@@ -66,6 +72,7 @@ public class GameEntityManager implements EntityManager<Game> {
 		} catch (WPISuiteException e) {
 			e.printStackTrace();
 		}
+		
 		if (games.length < 1 || games[0] == null) {
 			throw new NotFoundException();
 		}
@@ -94,7 +101,7 @@ public class GameEntityManager implements EntityManager<Game> {
 		Game updatedGame = Game.fromJSON(content);
 
 		List<Model> oldGame = db.retrieve(Game.class, "identity",
-				updatedGame.getIdentifier(), s.getProject());
+				updatedGame.getIdentity(), s.getProject());
 		if (oldGame.size() < 1 || oldGame.get(0) == null) {
 			throw new BadRequestException("Requirement with ID does not exist.");
 		}
@@ -138,7 +145,11 @@ public class GameEntityManager implements EntityManager<Game> {
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
 		ensureRole(s, Role.ADMIN);
-		return (db.delete(getEntity(s, id)[0]) != null) ? true : false;
+		try{
+			return (db.delete(getEntity(s, id)[0]) != null) ? true : false;
+		} catch (IllegalArgumentException e){
+			throw new NotFoundException();
+		}
 	}
 
 	@Override
