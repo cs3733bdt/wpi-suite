@@ -19,7 +19,7 @@ public class ExportToCsv  {
 	{
 		
 		// Get the requested requirement
-		RequirementModel requestedReqModel = null;
+		RequirementModel requestedReqModel = RequirementModel.getInstance();
 		Requirement requestedReq = requestedReqModel.getRequirement(reqId);
 		  
 		
