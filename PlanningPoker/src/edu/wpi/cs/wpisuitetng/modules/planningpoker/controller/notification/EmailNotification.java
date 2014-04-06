@@ -10,6 +10,8 @@ import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
+import com.sun.mail.util.MailConnectException;
+
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 
@@ -43,7 +45,7 @@ public class EmailNotification {
 		//Check to see if no users are attached to this project
 		if(users[0] != null) {
 			for (int i = 0; i < users.length; i++) {
-					sendEmail(users[i]);
+				sendEmail(users[i]);
 			}
 		} else {
 			System.out.println("Project: " + g.getProject().getName() + ", has no users in its team.");
@@ -79,17 +81,32 @@ public class EmailNotification {
 		properties.put("mail.smtp.auth", "true");
 		properties.put("mail.smtp.starttls.enable", "true");
 		
-		// Initialize session with null first to stop a nullPointerException
-		// getting thrown on some computers
-		Session session = Session.getInstance(properties, null);
+		// Initialize session
+		Session session = null;
 		
-		// Set session with authenticator
-		session = Session.getInstance(properties,
-				  new javax.mail.Authenticator() {
-					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(username, password);
-					}
-				  });
+		try {
+			// Set session with authenticator
+			session = Session.getInstance(properties,
+					  new javax.mail.Authenticator() {
+						protected PasswordAuthentication getPasswordAuthentication() {
+							return new PasswordAuthentication(username, password);
+						}
+					  });
+		} catch(NullPointerException e) {
+			try {
+				// Waiting 5 seconds then trying again.
+				Thread.sleep(5000);
+				System.err.println("Session.getInstance threw a NullPointerException, trying again...");
+				session = Session.getInstance(properties,
+						  new javax.mail.Authenticator() {
+							protected PasswordAuthentication getPasswordAuthentication() {
+								return new PasswordAuthentication(username, password);
+							}
+						  });
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+		}
 
 		try {
 			// Create a default MimeMessage object.
@@ -114,10 +131,24 @@ public class EmailNotification {
 			} else {
 				message.setText("There are no current requirements.");
 			}
-
-			// Send message
-			Transport.send(message);
-			System.out.println("Sent message successfully....");
+			
+			try {
+				// Send message
+				Transport.send(message);
+				System.out.println("Sent message successfully....");
+			} catch(MailConnectException e) {
+				try {
+					// Waiting 5 seconds and retrying
+					Thread.sleep(5000);
+					System.err.println("Couldn't connect to host, trying again...");
+					Transport.send(message);
+					System.out.println("Sent message successfully....");
+				} catch (InterruptedException e1) {
+					System.err.println("Can't connect to host; either internet or host is down");
+					System.err.println("Users won't get emails for game: " + g.getName());
+					e1.printStackTrace();
+				}
+			}
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		}
