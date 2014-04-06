@@ -216,6 +216,16 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	/**
+	 * Change game status to complete
+	 * @return true if the game is complete
+	 */
+	
+	public boolean gameComplete(){
+		boolean complete = true;
+		return complete;
+	}
+	
+	/**
 	 * Does this game use cards to estimate
 	 * @return true if this game uses cards
 	 */
