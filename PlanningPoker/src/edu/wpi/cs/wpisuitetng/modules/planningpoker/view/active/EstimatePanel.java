@@ -263,11 +263,15 @@ public class EstimatePanel extends JPanel{
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(toggleButtonArray[7].isSelected()) {
-				System.out.println("button pressed");
+				for (int i = 0; i < (toggleButtonArray.length - 1); i++){
+					if (toggleButtonArray[i].isSelected()){
+						toggleButtonArray[i].doClick();
+					}
+				}
 			}
 			
 			else {
-				System.out.println("unpressed button");
+				//System.out.println("unpressed button");
 			}
 		}
 	});
