@@ -23,8 +23,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	/** This is the best way to keep games unique so that you are not relying upon data that can change */
 	private UUID identity;
 	
-	private int id;
-	
 	private String name;
 	
 	private String description;
@@ -60,10 +58,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void copyFrom(Game toCopyFrom) {
 		boolean needsUpdate = false;
-		if(this.id != toCopyFrom.id){
-			this.id = toCopyFrom.id;
-			needsUpdate = true;
-		}
 		
 		if(!this.name.equals(toCopyFrom.name)){
 			this.name = toCopyFrom.name;
@@ -120,8 +114,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		}
 	}
 	
-	
-	
 	/**
 	 * The basic constructor for a game
 	 * Sets all of the default values for a game class
@@ -140,10 +132,13 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	
 	
 	/**
-	 * Constructs a Game with given id
-	 * @param id the id number of the game
+	 * Constructs a Game without a creation time
 	 * @param name the name of the game
+	 * @param description the description of the game
+	 * @param creator the name of the user who created the game
 	 * @param hasTimeLimit checks if game has a time limit
+	 * @param requirements the list of requirements for the game
+	 * @param usesCards checks if the game uses cards or text entry
 	 * 
 	 */
 	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards) {
@@ -157,11 +152,19 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	/**
-	 * Gets the id for this game
-	 * @return the id of the game
+	 * Constructs a Game without a creation time
+	 * @param name the name of the game
+	 * @param description the description of the game
+	 * @param creator the name of the user who created the game
+	 * @param hasTimeLimit checks if game has a time limit
+	 * @param requirements the list of requirements for the game
+	 * @param usesCards checks if the game uses cards or text entry
+	 * @param creationTime the data and time a game is created on
+	 * 
 	 */
-	public int getId(){
-		return id;
+	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, Date creationTime) {
+		this(name, description, creator, requirements, hasTimeLimit, usesCards); //Calls the default constructor
+		this.creationTime = creationTime;
 	}
 	
 	/**
@@ -296,8 +299,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		}
 		return true;
 	}
-
-
 
 	@Override
 	public void update(ObservableModel o, Object arg) {

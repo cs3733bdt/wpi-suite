@@ -61,10 +61,9 @@ public class GameTest {
 	
 	@Test
 	public void testCopyContentsOfOneGameToAnother() {
-		ArrayList<Requirement> reqList = new ArrayList<Requirement>();
 		
 		// create two games, one with fields initialized, one without
-		Game game1 = new Game("Game A", "Test description", "Steve", reqList, true, false);
+		Game game1 = new Game("Game A", "Test description", "Steve", new ArrayList<Requirement>(), true, false);
 		Game game2 = new Game();
 		
 		// copy the fields from one game to another
@@ -90,12 +89,8 @@ public class GameTest {
 		Game game4 = new Game();
 		Requirement req1 = new Requirement();
 		
-		// Generate random UUID for game models
-		UUID testUUID = UUID.randomUUID();
-		
 		// Set game3 and game4 to have identical UUIDs
-		game3.setIdentifier(testUUID);
-		game4.setIdentifier(testUUID);
+		game4.setIdentifier(game3.getIdentity());
 		
 		// Ensures the games do, in fact, have the same UUID
 		assertEquals(game3.getIdentity(), game4.getIdentity());

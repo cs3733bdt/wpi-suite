@@ -32,7 +32,7 @@ public class GameModelTest {
 	@Test
 	public void testAddGame() {
 		GameModel model = GameModel.getInstance();
-		Game object = new Game("Test Game", "Test description", "Steve", new ArrayList<Requirement>(), true, false);
+		Game object = new Game("Test Game", "Test Description", "Steve", new ArrayList<Requirement>(), true, false);
 		
 		model.emptyModel();
 		assertEquals(model.getSize(), 0);
