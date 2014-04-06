@@ -32,14 +32,18 @@ public class GameModelTest {
 	@Test
 	public void testAddGame() {
 		GameModel model = GameModel.getInstance();
+		Game object = new Game("Test Game", "Test description", "Steve", new ArrayList<Requirement>(), true, false);
+		
 		model.emptyModel();
 		assertEquals(model.getSize(), 0);
-		Game object = new Game(4, "Test Game", "Steve", false);
+		
 		model.addGame(object);
 		assertEquals(model.getSize(), 1);
+		
 		Game objectReturned = model.getElementAt(0);
 		assertEquals(objectReturned.getName(), "Test Game");
-		assertEquals(objectReturned.getId(), 4);
+		assertEquals(objectReturned.getDescription(), "Test Description");
+		assertEquals(objectReturned.getCreator(), "Steve");
 	}
 	
 	@Test

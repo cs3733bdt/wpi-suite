@@ -155,24 +155,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this.requirements = requirements;
 		this.usesCards = usesCards;
 	}
-
-	/**
-	 * Used for junit testing
-	 * Constructs a game from the provided characteristics
-	 * @param id
-	 * 			The ID number of the requirement
-	 * @param name
-	 * 			The name of the game
-	 * @param creator
-	 * 			The creator of the game
-	 * @param hasTimeLimit
-	 * 			Whether or not this game has a time limit or not.
-	 */
-	@Deprecated
-	public Game(int id, String name, String creator, boolean hasTimeLimit){
-		this(name, "", creator, null, hasTimeLimit, true);
-		this.id = id;
-	}
 	
 	/**
 	 * Gets the id for this game
@@ -256,14 +238,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy hh:mm a");
 		
 		return dateFormat.format(creationTime);
-	}
-	
-	/**
-	 * Converts the game into a string.
-	 * @return Returns the name of the game
-	 */
-	public String toString(){
-		return name;
 	}
 
 	/**
