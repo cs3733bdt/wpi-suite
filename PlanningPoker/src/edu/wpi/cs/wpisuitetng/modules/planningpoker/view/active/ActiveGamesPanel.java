@@ -16,14 +16,17 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 /**
- * @author Jeffrey Signore Sets up the panel for the active games screen, which
+ * Sets up the panel for the active games screen, which
  *         has the list of all active games in which the user is playing. When
  *         you click on a game, the bottom section of the screen will display
  *         more details about that specific game.
+ * @author Jeffrey Signore
  */
-public class ActiveGamesPanel extends JPanel {
+public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
 	private Game active;
 
 	/**
@@ -60,6 +63,7 @@ public class ActiveGamesPanel extends JPanel {
 	private boolean isEstimatePanelCreated = false;
 
 	public ActiveGamesPanel(final Game game) {
+		game.addObserver(this); //Makes this the observer for the game
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 		active = game;
 		this.isEstimatePanelCreated = false;
@@ -232,6 +236,13 @@ public class ActiveGamesPanel extends JPanel {
 	public void removeEstimatePanel(){
 		rightPanel.remove(1);
 		rightPanel.repaint();
+	}
+
+	@Override
+	public void update(ObservableModel o, Object arg) {
+		if(o instanceof Game){
+			//TODO Handle an update to a model
+		}
 	}
 
 }
