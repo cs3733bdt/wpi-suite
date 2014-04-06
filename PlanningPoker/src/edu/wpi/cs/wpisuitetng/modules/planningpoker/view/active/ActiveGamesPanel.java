@@ -65,7 +65,6 @@ public class ActiveGamesPanel extends JPanel {
 		this.isEstimatePanelCreated = false;
 	
 		topHalfPanel.setLayout(new GridBagLayout());
-		//rightPanel.setPreferredSize(new Dimension(600,700));
 
 		c.fill = GridBagConstraints.HORIZONTAL;
 
@@ -73,12 +72,9 @@ public class ActiveGamesPanel extends JPanel {
 		 * creates and adds the label "Name"
 		 */
 		JLabel nameLabel = new JLabel("Name: ");
-		//c.weightx = 0.5;
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 0;
-		//c.ipadx = 0;
-		//c.ipady = 0;
 		topHalfPanel.add(nameLabel, c);
 
 		/**
@@ -88,8 +84,6 @@ public class ActiveGamesPanel extends JPanel {
 		gameName.setText(game.getName());
 		gameName.setEditable(false);
 		gameName.setLineWrap(true);
-		//c.weightx = 0.75;
-		//c.gridwidth = 2;
 		c.gridx = 1;
 		c.gridy = 0;
 		topHalfPanel.add(gameName, c);
@@ -98,7 +92,6 @@ public class ActiveGamesPanel extends JPanel {
 		 * Blank Panel for formatting purposes
 		 */
 		JPanel blankPanel0 = new JPanel();
-		//blankPanel0.setMinimumSize(new Dimension(310, 10));
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 2;
@@ -110,11 +103,8 @@ public class ActiveGamesPanel extends JPanel {
 		 */
 		JLabel descLabel = new JLabel("Description: ");
 		c.gridwidth = 1;
-		//c.weightx = 0.5;
 		c.gridx = 0;
 		c.gridy = 2;
-		//c.ipadx = 0;
-		//c.ipady = 0;
 		topHalfPanel.add(descLabel, c);
 		
 		/**
@@ -124,12 +114,10 @@ public class ActiveGamesPanel extends JPanel {
 		/**
 		 * the description is determined by whichever game was clicked in the list
 		 */
-		//gameDesc.setMaximumSize(new Dimension(100,100));
 		gameDesc.setText(game.getDescription());
 		gameDesc.setEditable(false);
 		gameDesc.setLineWrap(true);
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
-		//c.weightx = 0.75;
 		c.gridwidth = 1;
 		c.gridx = 1;
 		c.gridy = 2;
@@ -137,7 +125,18 @@ public class ActiveGamesPanel extends JPanel {
 		descPane.setMinimumSize(new Dimension(400, 80));
 		descPane.setPreferredSize(new Dimension(450, 80));
 		topHalfPanel.add(descPane, c);
-
+		
+		/**
+		 * Blank Panel for formatting purposes
+		 */
+		JPanel blankPanel1 = new JPanel();
+		c.gridx = 0;
+		c.gridy = 3;
+		c.gridwidth = 2;
+		blankPanel1.setPreferredSize(new Dimension(500, 10));
+		topHalfPanel.add(blankPanel1, c);
+		
+		
 		/**
 		 * Initializes the two columns for the table of requirements.
 		 */
@@ -184,11 +183,9 @@ public class ActiveGamesPanel extends JPanel {
 		 */
 		JScrollPane tablePanel = new JScrollPane(table);
 		c.gridwidth = 2;
-		//c.gridheight = 1;
 		c.weightx = 0.5;
 		c.gridx = 0;
-		c.gridy = 3;
-		//c.ipady = -300;
+		c.gridy = 4;
 		tablePanel.setPreferredSize(new Dimension(450, 100));
 		tablePanel.setMaximumSize(new Dimension(450, 100));	
 		topHalfPanel.add(tablePanel, c);
