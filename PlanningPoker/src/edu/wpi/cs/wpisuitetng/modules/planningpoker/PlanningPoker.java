@@ -31,7 +31,7 @@ public class PlanningPoker implements IJanewayModule {
 	    tabs = new ArrayList<JanewayTabModel>();
 
 	    // Create a JPanel to hold the toolbar for the tab
-	    ToolbarView toolbarPanel = new ToolbarView();
+	    ToolbarView toolbarPanel = new ToolbarView(true);
 
 	    // Create a JPanel to hold the main contents of the tab
 	    MainView mainPanel = new MainView();
