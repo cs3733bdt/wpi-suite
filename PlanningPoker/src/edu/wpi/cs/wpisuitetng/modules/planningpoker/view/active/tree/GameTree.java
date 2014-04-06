@@ -55,7 +55,7 @@ public class GameTree extends JScrollPane implements MouseListener{
 		List<Game> games = sortGames(GameModel.getInstance().getGames()); //retrive the list of all of the games
 		System.out.println("Numb Games: " + games.size());
 		for (int i = 0; i<games.size(); i++){
-			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(games.get(i).getName());
+			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(games.get(i));
 			
 			//TODO add the subrequirements for that game to this dropdown
 			

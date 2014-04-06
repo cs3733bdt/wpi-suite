@@ -252,6 +252,11 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		
 		return dateFormat.format(creationTime);
 	}
+	
+	@Override
+	public String toString(){
+		return name;
+	}
 
 	/**
 	 * Method toJSON.
