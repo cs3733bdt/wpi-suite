@@ -87,8 +87,6 @@ public class GetGameController implements ActionListener {
 	 * @param Games an array of Games received from the server
 	 */
 	public synchronized void receivedGames(Game[] games) {
-	    // Empty the local model to eliminate duplications
-	    GameModel.getInstance().emptyModel();
 
 	    // Make sure the response was not null
 	    if (games != null) {
