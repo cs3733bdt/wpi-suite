@@ -49,18 +49,21 @@ public class GameTree extends JScrollPane implements MouseListener{
 	 * Used when the list of games is updated or changed.
 	 */
 	public void refresh(){
+		DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode("Games");
+		DefaultMutableTreeNode inactive = new DefaultMutableTreeNode("Inactive");
+		boolean inactiveAdded = false;
 		DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the starting node
 		DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the starting node
 		
-		List<Game> games = sortGames(GameModel.getInstance().getGames()); //retrive the list of all of the games
-		System.out.println("Numb Games: " + games.size());
-		for (int i = 0; i<games.size(); i++){
-			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(games.get(i));
+		List<Game> gameList = sortGames(GameModel.getInstance().getGames()); //retrive the list of all of the games
+		System.out.println("Numb Games: " + gameList.size());
+		for (Game game: gameList){
+			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
-			//TODO add the subrequirements for that game to this dropdown
+			//if
 			
 			
-			if(!games.get(i).isComplete()){ //If the game is not complete then add it to the active game dropdown
+			if(!game.isComplete()){ //If the game is not complete then add it to the active game dropdown
 				active.add(newGameNode);
 			} else { //If the game is complete then put it in the history
 				history.add(newGameNode);
@@ -78,8 +81,8 @@ public class GameTree extends JScrollPane implements MouseListener{
 		
 
 		int width = 150;
-		activeTree.setPreferredSize(new Dimension(width , 10 + games.size()*21));
-		historyTree.setPreferredSize(new Dimension(width, 10 + games.size()*21));
+		activeTree.setPreferredSize(new Dimension(width , 10 + gameList.size()*21));
+		historyTree.setPreferredSize(new Dimension(width, 10 + gameList.size()*21));
 		
 		JScrollPane activeTreeScroll = new JScrollPane(activeTree);
 		activeTreeScroll.setPreferredSize(new Dimension(width + 25, 240));
