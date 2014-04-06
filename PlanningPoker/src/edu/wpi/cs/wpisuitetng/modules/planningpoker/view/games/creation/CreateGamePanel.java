@@ -11,6 +11,7 @@ import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -71,6 +72,8 @@ public class CreateGamePanel extends JPanel {
 	
 	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
 	
+	private AddEndDatePanel addEndDatePan;
+	private Date endDate;
 	
 	/**
 	 * Constructor for creating a game
@@ -220,7 +223,7 @@ public class CreateGamePanel extends JPanel {
 		c.gridy = 3;
 		c.gridwidth = 6;
 		blankPanel3.setPreferredSize(new Dimension(100, 25));
-		AddEndDatePanel addEndDatePan = new AddEndDatePanel(this);
+		addEndDatePan = new AddEndDatePanel(this);
 		rightPanel.add(blankPanel2, c);
 		blankPanel2.add(addEndDatePan, c);
 
@@ -457,8 +460,9 @@ public class CreateGamePanel extends JPanel {
 		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
 		ArrayList<Requirement> requ = getRequirements();
 		boolean usesCards = doesUseCards();
+		endDate = addEndDatePan.getEndDate();
 		
-		currentGame = new Game(strName, strDes, creator, requ, false, usesCards);
+		currentGame = new Game(strName, strDes, creator, requ, false, usesCards, endDate);
 		
 		GameModel.getInstance().addGame(currentGame);
 		

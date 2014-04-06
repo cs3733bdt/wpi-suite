@@ -17,4 +17,8 @@ public class AddEndDatePanel extends JPanel {
 	public AddEndDatePanel(final CreateGamePanel view){
 		this.add(datePicker);	
 	}
+	
+	public Date getEndDate(){
+		return datePicker.getDate();
+	}
 }

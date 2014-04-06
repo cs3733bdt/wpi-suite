@@ -42,7 +42,7 @@ public class Game extends AbstractModel{
 	
 	private boolean complete;
 	
-	private Calendar endTime;
+	private Date endTime;
 
 	
 	/*
@@ -115,9 +115,9 @@ public class Game extends AbstractModel{
 	 * @param id the id number of the game
 	 * @param name the name of the game
 	 * @param hasTimeLimit checks if game has a time limit
-	 * @param endTime Calendar object containing the end time for the game
+	 * @param endTime Date object containing the end time for the game
 	 */
-	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, Calendar endTime) {
+	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, Date endTime) {
 		this(); //Calls the default constructor
 		this.name = name;
 		this.description = description;
