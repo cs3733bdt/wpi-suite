@@ -195,13 +195,6 @@ public class GameManagerTest {
 		assertEquals(2, returnedGameList.length);
 	}
 	
-	@Test
-	public void testCheckActive(){
-		boolean complete1 = game1.isComplete();
-		boolean complete2 = game2.gameComplete();
-		assertFalse(complete1);
-		assertTrue(complete2);
-		
-	}
+
 
 }

@@ -74,5 +74,15 @@ public class GameTest {
 		assertEquals(game2.doesUseCards(), false);
 		
 	}
+	
+	@Test
+	public void testCheckActive(){
+		Game game1 = new Game("Game 1", "Description", "Frank", null, true, true);
+		boolean complete1 = game1.isComplete();
+		boolean complete2 = game1.gameComplete();
+		assertFalse(complete1);
+		assertTrue(complete2);
+		
+	}
 
 }
