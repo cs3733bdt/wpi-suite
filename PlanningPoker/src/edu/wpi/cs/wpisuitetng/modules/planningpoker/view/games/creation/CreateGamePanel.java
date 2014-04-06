@@ -401,6 +401,7 @@ public class CreateGamePanel extends JPanel {
 		boolean isNameValid = false;
 		boolean isDescriptionValid = false;
 		boolean areRequirementsSelected = false;
+		boolean isEndDateValid = false;
 		
 		//BEGIN NAME BOX VALIDATION
 		if(getBoxName().getText().length() >=100){
@@ -444,11 +445,20 @@ public class CreateGamePanel extends JPanel {
 			isDescriptionValid = true;
 		}
 		
+		
+		//END DATE DATE CHECKING
+		endDate = addEndDatePan.getEndDate();
+		if(endDate.compareTo(new Date()) >= 0) {
+			isEndDateValid = true;
+		} else {
+			isEndDateValid = false;
+		}
+		
 		//TODO check if a valid game(s) are selected here
 		areRequirementsSelected = true;
 		
 		
-		return (isNameValid && isDescriptionValid && areRequirementsSelected);
+		return (isNameValid && isDescriptionValid && areRequirementsSelected && isEndDateValid);
 	}
 	
 	/**
@@ -460,7 +470,6 @@ public class CreateGamePanel extends JPanel {
 		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
 		ArrayList<Requirement> requ = getRequirements();
 		boolean usesCards = doesUseCards();
-		endDate = addEndDatePan.getEndDate();
 		
 		currentGame = new Game(strName, strDes, creator, requ, false, usesCards, endDate);
 		
