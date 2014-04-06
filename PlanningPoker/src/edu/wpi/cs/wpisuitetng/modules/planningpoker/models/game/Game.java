@@ -103,7 +103,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			needsUpdate = true;
 		}
 		
-		if(!this.identity.equals(toCopyFrom.identity)){
+		if(this.identity.equals(toCopyFrom.identity)){
 			this.identity = toCopyFrom.identity;
 			needsUpdate = false;
 		}

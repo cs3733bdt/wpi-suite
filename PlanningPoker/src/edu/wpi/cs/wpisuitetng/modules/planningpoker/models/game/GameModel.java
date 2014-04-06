@@ -144,6 +144,8 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 	 */
 	public synchronized void updateGames(Game[] allGames){
 		boolean changes = false;
+		System.out.print("Updating the model");
+		
 		
 		int startingSize = getSize();
 		for(Game aGame : allGames){ 			//Iterates over the new model
@@ -163,12 +165,15 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 		}
 		this.fireIntervalAdded(this, startingSize-1, getSize()-1); 	//Fires the event listeners on this list.
 		if(changes){												//Only repaint game tree if the model has changed
+			System.out.println("\tChanges found");
 			try{ //This is used to prevent the a null pointer exception when running test cases (the JPanel's aren't instantiated)
 				ViewEventController.getInstance().refreshGameTable();		//Currently serves no purpose
 				ViewEventController.getInstance().refreshGameTree();		//Refreshes the active table
 			} catch(Exception e) {
 				System.err.println("ViewEventController not fully initiallized");
 			}
+		} else {
+			System.out.println("\tChanges not found");
 		}
 	}
 	
