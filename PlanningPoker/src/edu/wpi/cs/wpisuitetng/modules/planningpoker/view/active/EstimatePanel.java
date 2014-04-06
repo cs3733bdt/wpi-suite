@@ -124,7 +124,7 @@ public class EstimatePanel extends JPanel{
 		 * Creates and adds the 1st card to the view.
 		 * 
 		 */
-		final JToggleButton[] toggleButtonArray = new JToggleButton[7];
+		final JToggleButton[] toggleButtonArray = new JToggleButton[8];
 				//make function in every action listener that toggles off i don't know
 		
 		//initializes all the buttons and add them to the panel
@@ -143,57 +143,134 @@ public class EstimatePanel extends JPanel{
 		toggleButtonArray[0].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(toggleButtonArray[0].isSelected()) {
-					System.out.println("button pressed");
+				if(toggleButtonArray[0].isSelected()) { // if button is pressed
+					if (toggleButtonArray[7].isSelected()) { 
+						toggleButtonArray[7].doClick();
+					}
 				}
-				
 				else {
-					System.out.println("unpressed button");
+					//System.out.println("unpressed button");
 				}
 			}
 		});
 		
-//		/**
-//		 * Creates and adds the 2nd card to the view.
-//		 */
-//		final JToggleButton but1 = new JToggleButton(cardArray[1]);
-//		cardPanel.add(but1);
-//
-//		/**
-//		 * Creates and adds the 3rd card to the view.
-//		 */
-//		final JToggleButton but2 = new JToggleButton(cardArray[2]);
-//		cardPanel.add(but2);
-//
-//		/**
-//		 * Creates and adds the 4th card to the view.
-//		 */
-//		final JToggleButton but3 = new JToggleButton(cardArray[3]);
-//		cardPanel.add(but3);
-//
-//		/**
-//		 * Creates and adds the 5th card to the view.
-//		 */
-//		final JToggleButton but4 = new JToggleButton(cardArray[4]);
-//		cardPanel.add(but4);
-//
-//		/**
-//		 * Creates and adds the 6th card to the view.
-//		 */
-//		final JToggleButton but5 = new JToggleButton(cardArray[5]);
-//		cardPanel.add(but5);
-//
-//		/**
-//		 * Creates and adds the 7th card to the view.
-//		 */
-//		final JToggleButton but6 = new JToggleButton(cardArray[6]);
-//		cardPanel.add(but6);
-//
-//		/**
-//		 * Creates and adds the 8th card to the view.
-//		 */
-//		final JToggleButton but7 = new JToggleButton(cardArray[7]);
-//		cardPanel.add(but7);
+		/**
+		 * Action Listener for toggle button 1
+		 */
+		toggleButtonArray[1].addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(toggleButtonArray[1].isSelected()) { // if button is pressed
+					if (toggleButtonArray[7].isSelected()) { 
+						toggleButtonArray[7].doClick();
+					}
+				}
+				else {
+					//System.out.println("unpressed button");
+				}
+			}
+		});
+		
+		/**
+		 * Action Listener for toggle button 2
+		 */
+		toggleButtonArray[2].addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(toggleButtonArray[2].isSelected()) { // if button is pressed
+					if (toggleButtonArray[7].isSelected()) { 
+						toggleButtonArray[7].doClick();
+					}
+				}
+				else {
+					//System.out.println("unpressed button");
+				}
+			}
+		});
+		
+		/**
+		 * Action Listener for toggle button 3
+		 */
+		toggleButtonArray[3].addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(toggleButtonArray[3].isSelected()) { // if button is pressed
+					if (toggleButtonArray[7].isSelected()) { 
+						toggleButtonArray[7].doClick();
+					}
+				}
+				else {
+					//System.out.println("unpressed button");
+				}
+			}
+		});
+		
+		/**
+		 * Action Listener for toggle button 4
+		 */
+		toggleButtonArray[4].addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(toggleButtonArray[4].isSelected()) { // if button is pressed
+					if (toggleButtonArray[7].isSelected()) { 
+						toggleButtonArray[7].doClick();
+					}
+				}
+				else {
+					//System.out.println("unpressed button");
+				}
+			}
+		});
+		
+		/**
+		 * Action Listener for toggle button 5
+		 */
+		toggleButtonArray[5].addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(toggleButtonArray[5].isSelected()) { // if button is pressed
+					if (toggleButtonArray[7].isSelected()) { 
+						toggleButtonArray[7].doClick();
+					}
+				}
+				else {
+					//System.out.println("unpressed button");
+				}
+			}
+		});
+		
+		/**
+		 * Action Listener for toggle button 6
+		 */
+		toggleButtonArray[6].addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(toggleButtonArray[6].isSelected()) { // if button is pressed
+					if (toggleButtonArray[7].isSelected()) { 
+						toggleButtonArray[7].doClick();
+					}
+				}
+				else {
+					//System.out.println("unpressed button");
+				}
+			}
+		});
+		
+		/**
+		 * Action Listener for toggle button 7
+		 */
+		toggleButtonArray[7].addActionListener(new ActionListener() {
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			if(toggleButtonArray[7].isSelected()) {
+				System.out.println("button pressed");
+			}
+			
+			else {
+				System.out.println("unpressed button");
+			}
+		}
+	});
 
 
 		overviewPanel.add(cardPanel, c);
