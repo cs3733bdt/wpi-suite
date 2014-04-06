@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.Session;
@@ -78,6 +79,7 @@ public class NewPieChartPanelTest {
 		RequirementModel.getInstance().addRequirement(req2);
 	}
 
+	@Ignore
 	@Test
 	public void creationOfStatusPieChartTabTest() {
 		ToolbarView tb = new ToolbarView(true);

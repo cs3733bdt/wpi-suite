@@ -279,7 +279,7 @@ public class NewRequirementPanelTest {
 		assertEquals(RequirementType.SCENARIO,testNew.getDisplayRequirement().getType());
 		assertEquals("Backlog",testNew.getDisplayRequirement().getIteration());
 		assertEquals(RequirementStatus.NEW,testNew.getDisplayRequirement().getStatus());
-		assertEquals(RequirementPriority.MEDIUM,testNew.getDisplayRequirement().getPriority());
+		assertEquals(RequirementPriority.BLANK,testNew.getDisplayRequirement().getPriority());
 		assertEquals(0,testNew.getDisplayRequirement().getEstimate());
 		
 		
