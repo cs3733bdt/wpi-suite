@@ -21,6 +21,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
+import javax.swing.JToggleButton;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
@@ -117,53 +118,71 @@ public class EstimatePanel extends JPanel{
 		c.gridwidth = 2;
 		cardPanel.setPreferredSize(new Dimension(425, 50));
 		
-		
+		//this is the array containing the default deck
+		String cardArray[] = new String[] { "1", "1", "2", "3", "5", "8", "13", "0?" };
 		/**
 		 * Creates and adds the 1st card to the view.
 		 */
-		JButton but0 = new JButton("1");
-		cardPanel.add(but0);
+		final JToggleButton but0 = new JToggleButton("1");
+		cardPanel.add(but0); 
 
+		/**
+		 * Action Listener for toggle button 0 
+		 */
+		
+		but0.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(but0.isSelected()) {
+					System.out.println("button pressed");
+				}
+				
+				else {
+					System.out.println("unpressed button");
+				}
+			}
+		});
+		
 		/**
 		 * Creates and adds the 2nd card to the view.
 		 */
-		JButton but1 = new JButton("1");
+		final JToggleButton but1 = new JToggleButton("1");
 		cardPanel.add(but1);
 
 		/**
 		 * Creates and adds the 3rd card to the view.
 		 */
-		JButton but2 = new JButton("2");
+		final JToggleButton but2 = new JToggleButton("2");
 		cardPanel.add(but2);
 
 		/**
 		 * Creates and adds the 4th card to the view.
 		 */
-		JButton but3 = new JButton("3");
+		final JToggleButton but3 = new JToggleButton("3");
 		cardPanel.add(but3);
 
 		/**
 		 * Creates and adds the 5th card to the view.
 		 */
-		JButton but4 = new JButton("5");
+		final JToggleButton but4 = new JToggleButton("5");
 		cardPanel.add(but4);
 
 		/**
 		 * Creates and adds the 6th card to the view.
 		 */
-		JButton but5 = new JButton("8");
+		final JToggleButton but5 = new JToggleButton("8");
 		cardPanel.add(but5);
 
 		/**
 		 * Creates and adds the 7th card to the view.
 		 */
-		JButton but6 = new JButton("13");
+		final JToggleButton but6 = new JToggleButton("13");
 		cardPanel.add(but6);
 
 		/**
 		 * Creates and adds the 8th card to the view.
 		 */
-		JButton but7 = new JButton("0?");
+		final JToggleButton but7 = new JToggleButton("0?");
 		cardPanel.add(but7);
 
 		overviewPanel.add(cardPanel, c);
