@@ -128,7 +128,7 @@ public class GameTree extends JScrollPane implements MouseListener{
 		int x = e.getX();
 		int y = e.getY();
 		
-		System.out.println("Single Click Detected");
+		//System.out.println("Single Click Detected");
 		
 		if(e.getClickCount() == 2){
 			System.out.println("Double Click Detected");
@@ -137,14 +137,16 @@ public class GameTree extends JScrollPane implements MouseListener{
 			if(treePath == null){
 				System.out.println("Not on activeTree");
 				treePath = historyTree.getPathForLocation(x, y);
-				clicked = historyTree;
+				clicked = historyTree; 
 			}
 			if(treePath != null){
 				System.out.println("Tree Path valid");
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
 				if(node != null) {
-					System.out.println("Setting view to game: " + ((Game)node.getUserObject()).toString());
-					ViewEventController.getInstance().joinGame((Game)node.getUserObject());
+					if(node.getUserObject() instanceof Game){ 		//Make sure that this is actually a game
+						System.out.println("Setting view to game: " + ((Game)node.getUserObject()).toString());
+						ViewEventController.getInstance().joinGame((Game)node.getUserObject());
+					}
 				}
 			}
 		}

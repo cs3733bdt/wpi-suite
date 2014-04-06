@@ -6,6 +6,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
 import java.util.HashSet;
@@ -151,7 +152,7 @@ public class GameManagerTest {
 	 */
 	@Test(expected=UnauthorizedException.class)
 	public void testDeleteNotAllowed() throws WPISuiteException{
-		manager.deleteEntity(defaultSession, Integer.toString(game1.getId()));
+		manager.deleteEntity(defaultSession, game1.getIdentity().toString());
 		fail("This should have thrown an Unauthorized access exception");
 	}
 	
@@ -194,6 +195,6 @@ public class GameManagerTest {
 		assertEquals(2, returnedGameList.length);
 	}
 	
-	
+
 
 }
