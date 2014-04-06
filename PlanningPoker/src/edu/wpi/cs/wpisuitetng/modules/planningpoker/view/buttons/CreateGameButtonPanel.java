@@ -10,11 +10,15 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
 import java.awt.Dimension;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -31,65 +35,52 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 public class CreateGameButtonPanel extends ToolbarGroupView{
 	
 	// initialize the main view toolbar buttons
-		private JButton createGameButton = new JButton("Create Game");
+		private JButton createGameIcon = new JButton("Create Game");
 		/*
 		 * Temporary join game button until tree has clickable functionality
 		 */
-		private JButton joinGameButton = new JButton("  Join Game  ");
+		
 		private final JPanel contentPanel = new JPanel();
 	
 	public CreateGameButtonPanel(){
 		super("");
 		
-		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
-		//35
-		this.setPreferredSize(new Dimension(110,35));
-		this.createGameButton.setVerticalAlignment(SwingConstants.TOP);
-		this.createGameButton.setHorizontalAlignment(SwingConstants.CENTER);
-		this.joinGameButton.setVerticalAlignment(SwingConstants.BOTTOM);
-		this.joinGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
-		// the action listener for the Create Game Button
-		createGameButton.addActionListener(new ActionListener() {
+		this.setPreferredSize(new Dimension(175,50)); 
+		
+		
+		this.createGameIcon.setHorizontalAlignment(SwingConstants.CENTER);
+	   try {
+	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));
+	        this.createGameIcon.setIcon(new ImageIcon(img));
+		    
+		} catch (IOException ex) {}		
+		
+		// the action listener for the Create Game Icon
+		createGameIcon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// bring up a create game panel
+				// bring up a create requirement pane if not in Multiple Requirement Editing Mode
+				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
 					ViewEventController.getInstance().createGame();
+			//	}
 			}
 		});		
 		
-		/*
-		 * The action listener for the Join Game Button
-		 */
-		joinGameButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// bring up an active game panel
-				ViewEventController.getInstance().joinGame(new Game("An awesome game with test Data", "This should be in the description area", "Steve", new ArrayList<Requirement>(), false, true));
-			}
-		});	
-			
-		contentPanel.add(createGameButton);
+		contentPanel.add(createGameIcon);
 		//contentPanel.setOpaque(false);
 		
-		//contentPanel.add(joinGameButton);
 		contentPanel.setOpaque(false);
 		
 		this.add(contentPanel);
 	}
 	/**
-	 * Method getCreateGameButton.
+	 * Method getCreateGameIcon.
 	
 	 * @return JButton */
-	public JButton getCreateGameButton() {
-		return createGameButton;
-	}
-	
-	/*
-	 * Method getJoinGameButton
-	 */
-	public JButton getJoinGameButton() {
-		return joinGameButton;
+	public JButton getCreateGameIcon() {
+		return createGameIcon;
 	}
 	
 }

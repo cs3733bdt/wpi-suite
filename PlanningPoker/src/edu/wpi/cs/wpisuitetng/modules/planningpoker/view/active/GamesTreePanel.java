@@ -21,7 +21,6 @@ public class GamesTreePanel extends JPanel {
 	{
 		this.gamesPanel.setPreferredSize(new Dimension(200,600));		
 		this.gamesPanel.add(new GameTree());
-		this.gamesPanel.add(new CreateGameButtonPanel());     
 		this.add(gamesPanel);
 	}
 }
