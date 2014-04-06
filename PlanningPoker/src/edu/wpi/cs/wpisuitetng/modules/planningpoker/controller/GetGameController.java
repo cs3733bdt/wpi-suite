@@ -13,6 +13,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Timer;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -30,6 +32,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 public class GetGameController implements ActionListener {
 	private GetGameRequestObserver observer;
 	private static GetGameController instance;
+	private Timer timer;
+	private boolean isRunning = false;
 
 	/**
 	 * Gets the singleton instance of the GetGameController
@@ -54,7 +58,7 @@ public class GetGameController implements ActionListener {
 	 * @see java.awt.event.ActionListener#actionPerformed(java.awt.event.ActionEvent)
 	 */
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public synchronized void actionPerformed(ActionEvent e) {
 	    // Send a request to the core to save this Game
 	    final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.GET); // GET == read
 	    request.addObserver(new GetGameRequestObserver(this)); // add an observer to process the response
@@ -64,7 +68,13 @@ public class GetGameController implements ActionListener {
 	/**
 	 * Sends an HTTP request to retrieve all requirements
 	 */
-	public void retrieveGames() {
+	public synchronized void retrieveGames() {
+		if(!isRunning){
+			timer = new Timer(5000, this);
+			timer.setInitialDelay(10000);
+			timer.setCoalesce(true);
+			isRunning = true;
+		}
 		final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.GET); // GET == read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
@@ -76,13 +86,12 @@ public class GetGameController implements ActionListener {
 	 * 
 	 * @param Games an array of Games received from the server
 	 */
-	public void receivedGames(Game[] games) {
+	public synchronized void receivedGames(Game[] games) {
 	    // Empty the local model to eliminate duplications
 	    GameModel.getInstance().emptyModel();
 
 	    // Make sure the response was not null
 	    if (games != null) {
-
 	        // add the Games to the local model
 	        GameModel.getInstance().updateGames(games);
 	    }
