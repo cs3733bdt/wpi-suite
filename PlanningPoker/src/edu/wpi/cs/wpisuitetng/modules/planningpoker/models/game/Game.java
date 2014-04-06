@@ -149,6 +149,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
 		this.usesCards = usesCards;
+
 	}
 	
 	/**
@@ -205,9 +206,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @return true if the game is complete
 	 */
 	
-	public boolean gameComplete(){
-		boolean complete = true;
-		return complete;
+	public void setComplete(){
+		this.complete = true;
 	}
 	
 	/**
