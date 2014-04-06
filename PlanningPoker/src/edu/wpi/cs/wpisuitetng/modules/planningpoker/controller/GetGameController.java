@@ -61,7 +61,7 @@ public class GetGameController implements ActionListener {
 	public synchronized void actionPerformed(ActionEvent e) {
 	    // Send a request to the core to save this Game
 	    final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.GET); // GET == read
-	    request.addObserver(new GetGameRequestObserver(this)); // add an observer to process the response
+	    request.addObserver(observer); // add an observer to process the response
 	    request.send(); // send the request
 	}
 	
@@ -70,9 +70,10 @@ public class GetGameController implements ActionListener {
 	 */
 	public synchronized void retrieveGames() {
 		if(!isRunning){
-			timer = new Timer(5000, this);
-			timer.setInitialDelay(10000);
+			timer = new Timer(10000, this);
+			timer.setInitialDelay(15000);
 			timer.setCoalesce(true);
+			timer.start();
 			isRunning = true;
 		}
 		final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.GET); // GET == read
