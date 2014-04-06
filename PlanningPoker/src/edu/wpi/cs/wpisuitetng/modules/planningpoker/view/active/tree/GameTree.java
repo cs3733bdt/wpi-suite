@@ -5,12 +5,15 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -79,15 +82,18 @@ public class GameTree extends JScrollPane implements MouseListener{
 		historyTree.setPreferredSize(new Dimension(width, 10 + games.size()*21));
 		
 		JScrollPane activeTreeScroll = new JScrollPane(activeTree);
-		activeTreeScroll.setPreferredSize(new Dimension(width + 25, 200));
+		activeTreeScroll.setPreferredSize(new Dimension(width + 25, 240));
 		JScrollPane historyTreeScroll = new JScrollPane(historyTree);
-		historyTreeScroll.setPreferredSize(new Dimension(width + 25, 200));
+		historyTreeScroll.setPreferredSize(new Dimension(width + 25, 240));
 		
 		viewPort = new JPanel();
+		
+		viewPort.setLayout(new BoxLayout(viewPort, BoxLayout.Y_AXIS));
+		
 	    viewPort.add(activeTreeScroll);
 	    viewPort.add(historyTreeScroll);
 	    
-	    viewPort.setPreferredSize(new Dimension(176,410));
+	    viewPort.setPreferredSize(new Dimension(176,590));
 		
 	    this.setViewportView(viewPort);
 	    

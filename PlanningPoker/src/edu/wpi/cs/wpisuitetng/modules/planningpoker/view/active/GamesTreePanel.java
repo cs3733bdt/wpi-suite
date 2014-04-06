@@ -2,6 +2,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 import java.awt.Dimension;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
@@ -19,7 +20,7 @@ public class GamesTreePanel extends JPanel {
 	 */
 	public GamesTreePanel()
 	{
-		this.gamesPanel.setPreferredSize(new Dimension(200,600));		
+		this.gamesPanel.setLayout(new BoxLayout(gamesPanel, BoxLayout.Y_AXIS));		
 		this.gamesPanel.add(new GameTree());
 		this.add(gamesPanel);
 	}

@@ -230,14 +230,26 @@ public class EstimatePanel extends JPanel{
 
 	}
 	
+	/**
+	 * getter for the EstimateText text field
+	 * @return estText
+	 */
 	public JTextField getEstimateText() {
 		return estText;
 	}
 	
+	/**
+	 * getter for the game field
+	 * @return activeGame
+	 */
 	public Game getGame() {
 		return activeGame;
 	}
 	
+	/**
+	 * getter for the requirement field
+	 * @return activeRequirement
+	 */
 	public Requirement getRequirement(){
 		return activeRequirement;
 	}
@@ -315,7 +327,7 @@ public class EstimatePanel extends JPanel{
 			voteNumber = Integer.parseInt(estText.getText());
 		}
 		Vote vote = new Vote(currentUser, voteNumber);
-		
+		getRequirement().addVote(vote);
 		
 
 		// I am currently working on updating a game's requirements to
