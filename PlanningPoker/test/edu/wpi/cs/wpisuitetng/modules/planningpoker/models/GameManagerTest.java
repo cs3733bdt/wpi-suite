@@ -152,7 +152,7 @@ public class GameManagerTest {
 	 */
 	@Test(expected=UnauthorizedException.class)
 	public void testDeleteNotAllowed() throws WPISuiteException{
-		manager.deleteEntity(defaultSession, Integer.toString(game1.getId()));
+		manager.deleteEntity(defaultSession, game1.getIdentity().toString());
 		fail("This should have thrown an Unauthorized access exception");
 	}
 	
