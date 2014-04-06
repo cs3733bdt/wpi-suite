@@ -6,13 +6,17 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -22,6 +26,8 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 import javax.swing.JToggleButton;
+
+import com.sun.java.swing.plaf.motif.MotifBorders.ToggleButtonBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
@@ -57,6 +63,14 @@ public class EstimatePanel extends JPanel{
 
 	/* End field Border Definitions */
 	
+	//initializes the sum
+	int sum = 0;
+	
+	//initializes the card Array
+	String cardArray[] = new String[8];
+	
+	//initializes the JToggleButton
+	final JToggleButton[] toggleButtonArray = new JToggleButton[8];
 	
 	public EstimatePanel(Game game, Requirement requirement){ //add a deck of cards as a parameter
 		this.activeGame = game;
@@ -119,13 +133,11 @@ public class EstimatePanel extends JPanel{
 		cardPanel.setPreferredSize(new Dimension(425, 50));
 		
 		//this is the array containing the default deck
-		String cardArray[] = new String[] { "1", "1", "2", "3", "5", "8", "13", "0?" };
+		cardArray = new String[] { "1", "1", "2", "3", "5", "8", "13", "0?" };
 		/**
 		 * Creates and adds the 1st card to the view.
 		 * 
 		 */
-		final JToggleButton[] toggleButtonArray = new JToggleButton[8];
-				//make function in every action listener that toggles off i don't know
 		
 		//initializes all the buttons and add them to the panel
 		for (int i = 0; i < toggleButtonArray.length; i++) {
@@ -133,7 +145,11 @@ public class EstimatePanel extends JPanel{
 			cardPanel.add(toggleButtonArray[i]);
 		}
 		
-		
+		//add image to first button. uncomment when button are of proper size.
+//		try {
+//		    Image img = ImageIO.read(getClass().getResource("card_back.png"));
+//		    toggleButtonArray[0].setIcon(new ImageIcon(img));   
+//		} catch (IOException ex) {}
 		
 
 		/**
@@ -147,9 +163,12 @@ public class EstimatePanel extends JPanel{
 					if (toggleButtonArray[7].isSelected()) { 
 						toggleButtonArray[7].doClick();
 					}
+					addToCardSum(Integer.parseInt(cardArray[0]));
+					System.out.println(sum);
 				}
 				else {
-					//System.out.println("unpressed button");
+					decToCardSum(Integer.parseInt(cardArray[0]));
+					System.out.println(sum);
 				}
 			}
 		});
@@ -164,9 +183,12 @@ public class EstimatePanel extends JPanel{
 					if (toggleButtonArray[7].isSelected()) { 
 						toggleButtonArray[7].doClick();
 					}
+					addToCardSum(Integer.parseInt(cardArray[1]));
+					System.out.println(sum);
 				}
 				else {
-					//System.out.println("unpressed button");
+					decToCardSum(Integer.parseInt(cardArray[1]));
+					System.out.println(sum);
 				}
 			}
 		});
@@ -181,9 +203,12 @@ public class EstimatePanel extends JPanel{
 					if (toggleButtonArray[7].isSelected()) { 
 						toggleButtonArray[7].doClick();
 					}
+					addToCardSum(Integer.parseInt(cardArray[2]));
+					System.out.println(sum);
 				}
 				else {
-					//System.out.println("unpressed button");
+					decToCardSum(Integer.parseInt(cardArray[2]));
+					System.out.println(sum);
 				}
 			}
 		});
@@ -198,9 +223,12 @@ public class EstimatePanel extends JPanel{
 					if (toggleButtonArray[7].isSelected()) { 
 						toggleButtonArray[7].doClick();
 					}
+					addToCardSum(Integer.parseInt(cardArray[3]));
+					System.out.println(sum);
 				}
 				else {
-					//System.out.println("unpressed button");
+					decToCardSum(Integer.parseInt(cardArray[3]));
+					System.out.println(sum);
 				}
 			}
 		});
@@ -215,9 +243,12 @@ public class EstimatePanel extends JPanel{
 					if (toggleButtonArray[7].isSelected()) { 
 						toggleButtonArray[7].doClick();
 					}
+					addToCardSum(Integer.parseInt(cardArray[4]));
+					System.out.println(sum);
 				}
 				else {
-					//System.out.println("unpressed button");
+					decToCardSum(Integer.parseInt(cardArray[4]));
+					System.out.println(sum);
 				}
 			}
 		});
@@ -232,9 +263,12 @@ public class EstimatePanel extends JPanel{
 					if (toggleButtonArray[7].isSelected()) { 
 						toggleButtonArray[7].doClick();
 					}
+					addToCardSum(Integer.parseInt(cardArray[5]));
+					System.out.println(sum);
 				}
 				else {
-					//System.out.println("unpressed button");
+					decToCardSum(Integer.parseInt(cardArray[5]));
+					System.out.println(sum);
 				}
 			}
 		});
@@ -249,9 +283,12 @@ public class EstimatePanel extends JPanel{
 					if (toggleButtonArray[7].isSelected()) { 
 						toggleButtonArray[7].doClick();
 					}
+					addToCardSum(Integer.parseInt(cardArray[6]));
+					System.out.println(sum);
 				}
 				else {
-					//System.out.println("unpressed button");
+					decToCardSum(Integer.parseInt(cardArray[6]));
+					System.out.println(sum);
 				}
 			}
 		});
@@ -268,6 +305,7 @@ public class EstimatePanel extends JPanel{
 						toggleButtonArray[i].doClick();
 					}
 				}
+				sum = 0;
 			}
 			
 			else {
@@ -276,9 +314,7 @@ public class EstimatePanel extends JPanel{
 		}
 	});
 
-
 		overviewPanel.add(cardPanel, c);
-		
 		
 		/**
 		 * The text area where the user types their estimate
@@ -334,6 +370,17 @@ public class EstimatePanel extends JPanel{
 		
 		this.add(overviewPanel);
 
+	}
+	
+	//Get the sum of all the cards and return it
+	public int addToCardSum(int cardValue) {
+		sum += cardValue;
+		return sum;
+	}
+	
+	public int decToCardSum(int cardValue) {
+		sum -= cardValue;
+		return sum;
 	}
 	
 	public JTextField getEstimateText() {
