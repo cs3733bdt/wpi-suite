@@ -6,8 +6,6 @@ import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CreateGameButtonPanel;
-
 /**
  * @author TomPaolillo
  *

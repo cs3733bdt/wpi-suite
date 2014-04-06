@@ -372,6 +372,7 @@ public class EstimatePanel extends JPanel{
 		// the fields of the vote to ensure the information is getting through
 		System.out.println("current user: " + vote.getUsername());
 		System.out.println("vote number: " + vote.getVoteNumber());
+		System.out.println("all votes:" + getRequirement().getVotes());
 		// these lines should be deleted when proper implementation is complete
 
 		ViewEventController.getInstance().refreshGameTable();

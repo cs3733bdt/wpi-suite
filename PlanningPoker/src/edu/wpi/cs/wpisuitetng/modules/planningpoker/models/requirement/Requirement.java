@@ -123,7 +123,8 @@ public class Requirement extends ObservableModel {
 	 */
 	public void addVote(Vote vote) {
 		this.votes.add(vote);
-		// TODO call update function here from observable 
+		this.setChanged();
+		this.notifyObservers(vote);
 	}
 	
 	/**
