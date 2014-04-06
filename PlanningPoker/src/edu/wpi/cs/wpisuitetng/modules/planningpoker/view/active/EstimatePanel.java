@@ -6,12 +6,14 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -56,6 +58,8 @@ public class EstimatePanel extends JPanel{
 
 	/* End field Border Definitions */
 	
+	JTextArea counter = new JTextArea();
+	
 	
 	public EstimatePanel(Game game, Requirement requirement){
 		this.activeGame = game;
@@ -87,20 +91,17 @@ public class EstimatePanel extends JPanel{
 		userStoryDesc.setLineWrap(true);
 		userStoryDesc.setEditable(false);
 		c.gridwidth = 2;
-		//c.weightx = 0.75;
 		c.gridx = 0;
 		c.gridy = 4;
-		//c.ipady = 50;
 		userStoryPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		userStoryPane.setPreferredSize(new Dimension(400, 150));
-		userStoryPane.setMaximumSize(new Dimension(400, 150));
+		userStoryPane.setPreferredSize(new Dimension(500, 150));
+		userStoryPane.setMaximumSize(new Dimension(500, 150));
 		overviewPanel.add(userStoryPane, c);
 
 		/**
 		 * Blank Panel for formatting purposes
 		 */
 		JPanel blankPanel0 = new JPanel();
-		//blankPanel0.setMinimumSize(new Dimension(310, 10));
 		c.gridx = 0;
 		c.gridy = 5;
 		c.gridwidth = 2;
@@ -112,11 +113,17 @@ public class EstimatePanel extends JPanel{
 		 */
 		JPanel cardPanel = new JPanel();
 		cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.X_AXIS));
+		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 6;
 		c.gridwidth = 2;
-		cardPanel.setPreferredSize(new Dimension(425, 50));
+		cardPanel.setPreferredSize(new Dimension(500, 50));		
+		overviewPanel.add(cardPanel, c);
 		
+		/**
+		 * Formatting purposes
+		 */
+		cardPanel.add(Box.createRigidArea(new Dimension(75,0)));
 		
 		/**
 		 * Creates and adds the 1st card to the view.
@@ -165,16 +172,13 @@ public class EstimatePanel extends JPanel{
 		 */
 		JButton but7 = new JButton("0?");
 		cardPanel.add(but7);
-
-		overviewPanel.add(cardPanel, c);
-		
 		
 		/**
 		 * The text area where the user types their estimate
 		 */
 		estText.setText("Estimate Here");
-		estText.setPreferredSize(new Dimension(100, 40));
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		estText.setPreferredSize(new Dimension(100, 50));
+		c.anchor = GridBagConstraints.CENTER;
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 6;
@@ -184,13 +188,46 @@ public class EstimatePanel extends JPanel{
 				estText.setText("");
 			}
 		});
-
+		
 		overviewPanel.add(estText, c);
+		
+		overviewPanel.validate();
+		overviewPanel.revalidate();
+		overviewPanel.invalidate();
+		overviewPanel.repaint();
+		
+		/**
+		 * The label for the counter
+		 */
+		JLabel counterLabel = new JLabel("Your current estimate total: ");
+		c.anchor = GridBagConstraints.LINE_END;
+		c.insets = new Insets(0, 77, 0, 0);
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 7;
+		overviewPanel.add(counterLabel, c);
+		
+		/**
+		 * Formats and adds the counter for the card estimates
+		 */
+		counter.setText("0");
+		counter.setPreferredSize(new Dimension(25, 25));
+		counter.setLineWrap(true);
+		counter.setEditable(false);
+		c.insets = new Insets(0, 0, 0, 0);
+		c.anchor = GridBagConstraints.CENTER;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 7;
+		
+		overviewPanel.add(counter, c);
 
 		if (game.doesUseCards()) {
 			estText.setVisible(false);
 		} else {
 			cardPanel.setVerifyInputWhenFocusTarget(false);
+			counter.setVisible(false);
+			counterLabel.setVisible(false);
 			but0.setVisible(false);
 			but1.setVisible(false);
 			but2.setVisible(false);
