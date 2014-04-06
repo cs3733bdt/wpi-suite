@@ -58,7 +58,7 @@ public class EstimatePanel extends JPanel{
 	/* End field Border Definitions */
 	
 	
-	public EstimatePanel(Game game, Requirement requirement){
+	public EstimatePanel(Game game, Requirement requirement){ //add a deck of cards as a parameter
 		this.activeGame = game;
 		this.activeRequirement = requirement;
 		
@@ -122,18 +122,28 @@ public class EstimatePanel extends JPanel{
 		String cardArray[] = new String[] { "1", "1", "2", "3", "5", "8", "13", "0?" };
 		/**
 		 * Creates and adds the 1st card to the view.
+		 * 
 		 */
-		final JToggleButton but0 = new JToggleButton("1");
-		cardPanel.add(but0); 
+		final JToggleButton[] toggleButtonArray = new JToggleButton[7];
+				//make function in every action listener that toggles off i don't know
+		
+		//initializes all the buttons and add them to the panel
+		for (int i = 0; i < toggleButtonArray.length; i++) {
+			toggleButtonArray[i] = new JToggleButton(cardArray[i]);
+			cardPanel.add(toggleButtonArray[i]);
+		}
+		
+		
+		
 
 		/**
 		 * Action Listener for toggle button 0 
 		 */
 		
-		but0.addActionListener(new ActionListener() {
+		toggleButtonArray[0].addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(but0.isSelected()) {
+				if(toggleButtonArray[0].isSelected()) {
 					System.out.println("button pressed");
 				}
 				
@@ -143,47 +153,48 @@ public class EstimatePanel extends JPanel{
 			}
 		});
 		
-		/**
-		 * Creates and adds the 2nd card to the view.
-		 */
-		final JToggleButton but1 = new JToggleButton("1");
-		cardPanel.add(but1);
+//		/**
+//		 * Creates and adds the 2nd card to the view.
+//		 */
+//		final JToggleButton but1 = new JToggleButton(cardArray[1]);
+//		cardPanel.add(but1);
+//
+//		/**
+//		 * Creates and adds the 3rd card to the view.
+//		 */
+//		final JToggleButton but2 = new JToggleButton(cardArray[2]);
+//		cardPanel.add(but2);
+//
+//		/**
+//		 * Creates and adds the 4th card to the view.
+//		 */
+//		final JToggleButton but3 = new JToggleButton(cardArray[3]);
+//		cardPanel.add(but3);
+//
+//		/**
+//		 * Creates and adds the 5th card to the view.
+//		 */
+//		final JToggleButton but4 = new JToggleButton(cardArray[4]);
+//		cardPanel.add(but4);
+//
+//		/**
+//		 * Creates and adds the 6th card to the view.
+//		 */
+//		final JToggleButton but5 = new JToggleButton(cardArray[5]);
+//		cardPanel.add(but5);
+//
+//		/**
+//		 * Creates and adds the 7th card to the view.
+//		 */
+//		final JToggleButton but6 = new JToggleButton(cardArray[6]);
+//		cardPanel.add(but6);
+//
+//		/**
+//		 * Creates and adds the 8th card to the view.
+//		 */
+//		final JToggleButton but7 = new JToggleButton(cardArray[7]);
+//		cardPanel.add(but7);
 
-		/**
-		 * Creates and adds the 3rd card to the view.
-		 */
-		final JToggleButton but2 = new JToggleButton("2");
-		cardPanel.add(but2);
-
-		/**
-		 * Creates and adds the 4th card to the view.
-		 */
-		final JToggleButton but3 = new JToggleButton("3");
-		cardPanel.add(but3);
-
-		/**
-		 * Creates and adds the 5th card to the view.
-		 */
-		final JToggleButton but4 = new JToggleButton("5");
-		cardPanel.add(but4);
-
-		/**
-		 * Creates and adds the 6th card to the view.
-		 */
-		final JToggleButton but5 = new JToggleButton("8");
-		cardPanel.add(but5);
-
-		/**
-		 * Creates and adds the 7th card to the view.
-		 */
-		final JToggleButton but6 = new JToggleButton("13");
-		cardPanel.add(but6);
-
-		/**
-		 * Creates and adds the 8th card to the view.
-		 */
-		final JToggleButton but7 = new JToggleButton("0?");
-		cardPanel.add(but7);
 
 		overviewPanel.add(cardPanel, c);
 		
@@ -210,14 +221,9 @@ public class EstimatePanel extends JPanel{
 			estText.setVisible(false);
 		} else {
 			cardPanel.setVerifyInputWhenFocusTarget(false);
-			but0.setVisible(false);
-			but1.setVisible(false);
-			but2.setVisible(false);
-			but3.setVisible(false);
-			but4.setVisible(false);
-			but5.setVisible(false);
-			but6.setVisible(false);
-			but7.setVisible(false);
+			for (int i = 0; i < toggleButtonArray.length; i++) {
+				toggleButtonArray[i].setVisible(false);
+			}
 		}
 
 		/**
