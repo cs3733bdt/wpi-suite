@@ -51,7 +51,6 @@ public class EstimatePanel extends JPanel{
 	 * selected in the table
 	 */
 	private JTextArea userStoryDesc = new JTextArea();
-
 	/**
 	 * The estText is needed when the user inputs their estimate, since it must
 	 * be added to the server
@@ -76,6 +75,8 @@ public class EstimatePanel extends JPanel{
 	private ArrayList<String> deck = new ArrayList<String>();
 	JTextArea counter = new JTextArea();
 	
+	//Label and accumlated sum
+	JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
 	
 	//initializes the JToggleButton
 	private ArrayList<JToggleButton> JToggleButtonList = new ArrayList<JToggleButton>();
@@ -229,7 +230,7 @@ public class EstimatePanel extends JPanel{
 		/**
 		 * The label for the counter
 		 */
-		JLabel counterLabel = new JLabel("Your current estimate total: ");
+		counterLabel = new JLabel("Your current estimate total: " + 0);
 		c.anchor = GridBagConstraints.LINE_END;
 		c.insets = new Insets(0, 77, 0, 0);
 		c.gridx = 0;
@@ -240,16 +241,16 @@ public class EstimatePanel extends JPanel{
 		/**
 		 * Formats and adds the counter for the card estimates
 		 */
-		counter.setText("0");
-		counter.setPreferredSize(new Dimension(25, 25));
-		counter.setLineWrap(true);
-		counter.setEditable(false);
-		c.insets = new Insets(0, 0, 0, 0);
-		c.anchor = GridBagConstraints.CENTER;
-		c.gridwidth = 2;
-		c.gridx = 0;
-		c.gridy = 7;
-		
+//		counter.setText("0");
+//		counter.setPreferredSize(new Dimension(25, 25));
+//		counter.setLineWrap(true);
+//		counter.setEditable(false);
+//		c.insets = new Insets(0, 0, 0, 0);
+//		c.anchor = GridBagConstraints.CENTER;
+//		c.gridwidth = 2;
+//		c.gridx = 0;
+//		c.gridy = 7;
+//		
 		overviewPanel.add(counter, c);
 
 		if (game.doesUseCards()) {
@@ -296,11 +297,13 @@ public class EstimatePanel extends JPanel{
 	//Get the sum of all the cards and return it
 	public void addToCardSum(int cardValue) {
 		sum += cardValue;
+		counterLabel.setText("Your current estimate total: " + sum);
 		System.out.println(sum);
 	}
 	
 	public void decToCardSum(int cardValue) {
 		sum -= cardValue;
+		counterLabel.setText("Your current estimate total: " + sum);
 		System.out.println(sum);
 	}
 	
@@ -320,6 +323,7 @@ public class EstimatePanel extends JPanel{
 				sum += Integer.parseInt(deck.get(i));   
 			}
 		}
+		counter.setText(Integer.toString(sum));
 		System.out.println("Sum:" + sum);
 		return sum;
 	}
