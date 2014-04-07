@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.UUID;
 
 import com.google.gson.Gson;
@@ -55,45 +56,85 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	/**
 	 * Copies all of the values from the given requirement to this requirement.
 	 * @param toCopyFrom the requirement to copy from
+	 * @returns true if any modifications are made to the class
 	 */
-	public void copyFrom(Game toCopyFrom) {
-		boolean needsUpdate = false;
+	public boolean copyFrom(Game toCopyFrom) {
+		boolean needsUpdate = false;		//Triggers if there was a change to to the UUID
+		boolean wasChanged = false;			//True if there were any changes made
 		
 		if(!this.name.equals(toCopyFrom.name)){
 			this.name = toCopyFrom.name;
 			needsUpdate = true;
+			wasChanged = true;
 		}
 		
 		if(!this.description.equals(toCopyFrom.description)){
 			this.description = toCopyFrom.description;
 			needsUpdate = true;
+			wasChanged = true;
 		}
 		
 		if(this.hasTimeLimit != toCopyFrom.hasTimeLimit){
 			this.hasTimeLimit = toCopyFrom.hasTimeLimit;
 			needsUpdate = true;
+			wasChanged = true;
 		}
 		
 		if(this.usesCards != toCopyFrom.usesCards){
 			this.usesCards = toCopyFrom.usesCards;
 			needsUpdate = true;
+			wasChanged = true;
 		}
 		
 		if(!this.creationTime.equals(toCopyFrom.creationTime)){
 			this.creationTime = toCopyFrom.creationTime;
 			needsUpdate = true;
+			wasChanged = true;
 		}
 		
 		if(!this.creator.equals(toCopyFrom.creator)){
 			this.creator = toCopyFrom.creator;
 			needsUpdate = true;
+			wasChanged = true;
 		}
 		
 		if(!this.requirements.equals(toCopyFrom.requirements)){
-			this.requirements = toCopyFrom.requirements;
-			for (Requirement req : this.requirements){ 
-				req.deleteObservers(); //Removes any previous observers on this class. This may be wrong and may break things
-				req.addObserver(this); //Adds this as an observer
+			boolean changes = false;										//Are there changes?
+			Iterator<Requirement> existingReq = this.requirements.iterator();
+			while(existingReq.hasNext()){
+				boolean found = false;
+				Requirement comp = existingReq.next();
+				for(Requirement serverReq : toCopyFrom.requirements){
+					if(serverReq.identify(comp)){
+						found = true;
+					}
+				}
+				if(!found){
+					existingReq.remove();
+					changes = true;
+				}
+			}
+			
+											
+			for(Requirement serverReq: toCopyFrom.requirements){	//Iterate over the new requirements
+				boolean found = false;								//Has the requirement been found in the list?
+				for(Requirement req : this.requirements){			//Iterate over the existing requirements list
+					if(serverReq.identify(req)){					//If this requirement is found
+						found = true;								//This requirement has been found
+						if(req.copyFrom(serverReq)){				//So copy the data over. If there are changes then make thoes changes
+							changes = true;
+						}
+					}
+				}
+				if(!found){											//If this requirement does not exist in the list
+					changes = true;									//Indicates that this game has changes
+					serverReq.addObserver(this);					//Adds an this game as an observer for this game
+					this.requirements.add(serverReq);				//Adds this requirement to the list of server requirements
+				}
+			}
+			
+			if(changes){											
+				wasChanged = true;
 			}
 			needsUpdate = true;
 		}
@@ -101,17 +142,21 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		if(this.complete != toCopyFrom.complete){
 			this.complete = toCopyFrom.complete;
 			needsUpdate = true;
+			wasChanged = true;
 		}
 		
 		if(this.identity.equals(toCopyFrom.identity)){
-			this.identity = toCopyFrom.identity;
 			needsUpdate = false;
+		} else {
+			this.identity = toCopyFrom.identity;
+			needsUpdate = true;
 		}
 		
 		if(needsUpdate){
 			this.setChanged();
 			this.notifyObservers();
 		}
+		return wasChanged;
 	}
 	
 	/**
@@ -136,8 +181,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @param name the name of the game
 	 * @param description the description of the game
 	 * @param creator the name of the user who created the game
-	 * @param hasTimeLimit checks if game has a time limit
 	 * @param requirements the list of requirements for the game
+	 * @param hasTimeLimit checks if game has a time limit
 	 * @param usesCards checks if the game uses cards or text entry
 	 * 
 	 */
@@ -228,9 +273,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	
 	/**
 	 * Gets the list of requirements for this game
+	 * *WARNING* ADDING ELEMENTS TO THIS ARRAY WILL MAKE THEM UNTRACKABLE TO THE GAME AND PREVENT THEM FROM BEING ADDED TO THE SERVER
 	 * @return the list of requirements for the game
 	 */
-	public ArrayList<Requirement> getRequirements(){
+	final public ArrayList<Requirement> getRequirements(){
 		return requirements;
 	}
 	
