@@ -71,6 +71,7 @@ public class GameTest {
 		
 		// copy the fields from one game to another
 		assertTrue(game2.copyFrom(game1));
+		assertFalse(game2.copyFrom(game1)); //Second time no changes should be detected
 		
 		// test that fields correctly copied from one game to another
 		assertEquals(game2.getName(), "Game A");
