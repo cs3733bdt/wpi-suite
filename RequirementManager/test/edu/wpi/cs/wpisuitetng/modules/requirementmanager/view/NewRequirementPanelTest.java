@@ -290,7 +290,7 @@ public class NewRequirementPanelTest {
 
 		// check more results
 		assertEquals(RequirementType.EPIC,testNew.getDisplayRequirement().getType());
-		assertEquals(RequirementPriority.LOW,testNew.getDisplayRequirement().getPriority());
+		assertEquals(RequirementPriority.BLANK,testNew.getDisplayRequirement().getPriority());
 		
 		// add different fields
 		testNew.getInfoPanel().getDropdownType().setSelectedItem(RequirementType.NONFUNCTIONAL);

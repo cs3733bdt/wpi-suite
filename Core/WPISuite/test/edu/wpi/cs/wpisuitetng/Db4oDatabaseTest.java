@@ -44,6 +44,7 @@ public class Db4oDatabaseTest {
 	@Test
 	public void testDelete() throws WPISuiteException{
 		Data db = DataStore.getDataStore();
+		db.deleteAll(new User("", "", "", "", 0));
 		User[] arr = new User[1];
 		User firstUser = new User("Ryan", "rchamer", "password", "email@email.com", 0);
 		db.save(firstUser);
