@@ -191,7 +191,7 @@ public class EstimatePanel extends JPanel{
 		
 		//creates action listeners for all other buttons
 		for (int i = 0;  i < JToggleButtonList.size(); i++ ) { 
-			JToggleButtonList.get(i).addActionListener(new CardActionListener(i, sum, deck, JToggleButtonList, this));
+			JToggleButtonList.get(i).addActionListener(new CardActionListener(i, deck, JToggleButtonList, this));
 		}
 		
 		overviewPanel.add(cardPanel, c);

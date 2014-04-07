@@ -11,16 +11,13 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
 public class CardActionListener implements ActionListener {
 	int index;
 	int size;
-	int sum;
 	EstimatePanel panel;
-//	ArrayList<Integer> memoryArray = new ArrayList<Integer>();
 	ArrayList<String> deck;
 	ArrayList<JToggleButton> JToggleButtonList;
 	
-	public CardActionListener(int index, int passedSum, ArrayList<String> deckUsed, ArrayList<JToggleButton> JToggleButtonListUsed, EstimatePanel passedPanel) {
+	public CardActionListener(int index, ArrayList<String> deckUsed, ArrayList<JToggleButton> JToggleButtonListUsed, EstimatePanel passedPanel) {
 		this.index = index;
 		this.size = JToggleButtonListUsed.size();
-		this.sum = passedSum;
 		this.deck = deckUsed;
 		this.panel = passedPanel;
 		this.JToggleButtonList = JToggleButtonListUsed;
@@ -67,13 +64,5 @@ public class CardActionListener implements ActionListener {
 	
 	public void decToCardSum(int cardValue) {
 		panel.decToCardSum(cardValue);
-	}
-	
-//	public void clearMemoryArray() {
-//		
-//	}
-
-
-	
-	
+	}	
 }

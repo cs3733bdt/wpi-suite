@@ -142,7 +142,7 @@ public class ActiveGamesPanel extends JPanel {
 		/**
 		 * Initializes the two columns for the table of requirements.
 		 */
-		String[] columnNames = { "Requirement", "Description" };
+		String[] columnNames = { "Requirement", "Description", "Estimate"};
 		Object[][] data = {};
 		final ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
 
