@@ -156,7 +156,7 @@ public class EstimatePanel extends JPanel{
 		}
 		//This branch will be run if a custom deck is to be used
 		else {
-			deck = customDeck;
+			deck = customDeck; //the customDeck must contain 7 elements
 		}
 		
 		//initializes all the buttons and add them to the panel
@@ -167,6 +167,22 @@ public class EstimatePanel extends JPanel{
 		JToggleButtonList.add(new JToggleButton("0?")); //"I don't know" button hardcoded
 		cardPanel.add(JToggleButtonList.get(deck.size()));
 		
+		//adds the button to clear all entered estimates
+		JButton clearButton = new JButton("Clr");
+		cardPanel.add(clearButton); 
+		
+		//action Listener for the clear button 
+		clearButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				for (int i = 0; i < (JToggleButtonList.size() - 1); i++){
+					if (JToggleButtonList.get(i).isSelected()){
+						JToggleButtonList.get(i).doClick();
+					}
+				}
+				sum = 0;
+			}
+		});	
 		
 		//add image to first button. uncomment when button are of proper size.
 //		try {
