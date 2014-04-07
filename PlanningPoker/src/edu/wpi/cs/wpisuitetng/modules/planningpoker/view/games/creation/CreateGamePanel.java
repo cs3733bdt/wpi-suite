@@ -392,6 +392,18 @@ public class CreateGamePanel extends JPanel {
 		}
 		
 	}
+	
+	public void LaunchGamePressed() {
+		if(this.validateField(true)){
+			this.launchGame();
+			readyToClose = true;
+			ViewEventController.getInstance().removeTab(this);
+			System.out.println("Launch Game Pressed Passed.");
+		} else {
+			System.out.println("Launch Game Pressed Failed.");
+		}
+		
+	}
 
 	/**
 	 * Checks all fields to determine if they are prepared to be removed.
@@ -455,7 +467,7 @@ public class CreateGamePanel extends JPanel {
 	}
 	
 	/**
-	 * Adds the game to the model and to the server
+	 * Adds the game to the model and to the server and sets it to inactive
 	 */
 	public void  addGame(){
 		String strName = this.getBoxName().getText();
@@ -464,13 +476,32 @@ public class CreateGamePanel extends JPanel {
 		ArrayList<Requirement> requ = getRequirements();
 		boolean usesCards = doesUseCards();
 		
-		currentGame = new Game(strName, strDes, creator, requ, false, usesCards);
+		currentGame = new Game(strName, strDes, creator, requ, false, usesCards, false);
 		
 		GameModel.getInstance().addGame(currentGame);
 		
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 	}
+	
+	/**
+	 * Adds the game to the model and to the server and sets it to active
+	 */
+	public void  launchGame(){
+		String strName = this.getBoxName().getText();
+		String strDes = this.getBoxDescription().getText();
+		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
+		ArrayList<Requirement> requ = getRequirements();
+		boolean usesCards = doesUseCards();
+		
+		currentGame = new Game(strName, strDes, creator, requ, false, usesCards, true);
+		
+		GameModel.getInstance().addGame(currentGame);
+		
+		ViewEventController.getInstance().refreshGameTable();
+		ViewEventController.getInstance().refreshGameTree();
+	}
+	
 	
 
 	public JTextField getBoxName(){

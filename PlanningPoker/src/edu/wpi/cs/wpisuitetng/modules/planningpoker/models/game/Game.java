@@ -40,6 +40,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	
 	private boolean complete;
 	
+	private boolean active;
+	
 	/*
 	 * dstapply
 	 * 
@@ -186,7 +188,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @param usesCards checks if the game uses cards or text entry
 	 * 
 	 */
-	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards) {
+	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, boolean active) {
 		this(); //Calls the default constructor
 		this.name = name;
 		this.description = description;
@@ -194,23 +196,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
 		this.usesCards = usesCards;
+		this.active = active;
 
-	}
-	
-	/**
-	 * Constructs a Game without a creation time
-	 * @param name the name of the game
-	 * @param description the description of the game
-	 * @param creator the name of the user who created the game
-	 * @param hasTimeLimit checks if game has a time limit
-	 * @param requirements the list of requirements for the game
-	 * @param usesCards checks if the game uses cards or text entry
-	 * @param creationTime the data and time a game is created on
-	 * 
-	 */
-	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, Date creationTime) {
-		this(name, description, creator, requirements, hasTimeLimit, usesCards); //Calls the default constructor
-		this.creationTime = creationTime;
 	}
 	
 	/**
@@ -297,6 +284,14 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy hh:mm a");
 		
 		return dateFormat.format(creationTime);
+	}
+	
+	/**
+	 * Gets the active boolean
+	 * @return true if game is active, false otherwise
+	 */
+	public boolean isActive(){
+		return this.active;
 	}
 	
 	@Override

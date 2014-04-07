@@ -73,6 +73,18 @@ public class ViewEventController {
 	}
 	
 	/**
+	 * Creates an EditGamePanel instance, adds a tab representing 
+	 * that panel, and switches to that new panel
+	 */
+	public void editGame() {
+		CreateGamePanel newGame = new CreateGamePanel();
+		main.getTabbedView().addTab("Edit Game", null, newGame, "Edit Game");
+		main.invalidate(); //force the tabbedpane to redraw.
+		main.repaint();
+		main.getTabbedView().setSelectedComponent(newGame);
+	}
+	
+	/**
 	 * Creates a CreateGamePanel with an existing game.
 	 * At the moment this is used only when the database fails to add the object.
 	 * @param game
