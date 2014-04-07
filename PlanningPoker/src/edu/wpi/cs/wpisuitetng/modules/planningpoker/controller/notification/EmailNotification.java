@@ -24,7 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 public class EmailNotification {
 	
 	// Game to get users from to send emails to
-	private Game g;
+	private final Game g;
 	// Sender Email Information
 	private final String username = "WPI.Suite.BDT.NoReply@gmail.com";
 	private final String password = "bobbydroptables";

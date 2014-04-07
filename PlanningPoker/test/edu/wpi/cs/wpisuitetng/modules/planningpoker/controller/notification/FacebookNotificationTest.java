@@ -51,11 +51,19 @@ public class FacebookNotificationTest {
 		client = new FacebookNotification(g);
 	}
 	
+	/**
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testSendFacebookNotification() throws Exception {
-		client.sendFacebookNotification(client.login(), u2);
+		//client.sendFacebookNotification(client.login(), u2);
 	}
 
+	/**
+	 * 
+	 * @throws Exception
+	 */
 	@Test
 	public void testSendFacebookNotifications() throws Exception {
 		//client.sendFacebookNotifications();

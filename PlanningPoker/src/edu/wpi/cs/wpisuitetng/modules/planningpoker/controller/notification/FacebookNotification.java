@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
 
 /**
@@ -20,7 +18,10 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 
 public class FacebookNotification {
-	private Game g;
+	
+	// Game to get users to send facebook notifications to.
+	private final Game g;
+	// Authentication information
 	private final String XMPP_HOST = "chat.facebook.com";
 	private final int XMPP_PORT = 5222;
 	private final String username = "wpi.suite.bdt.noreply@gmail.com";
@@ -30,6 +31,11 @@ public class FacebookNotification {
 		this.g = g;
 	}
 
+	/**
+	 * Creates a connection with the Facebook Servers.
+	 * @return the connection
+	 * @throws XMPPException
+	 */
 	public XMPPConnection login() throws XMPPException {
 		SASLAuthentication.registerSASLMechanism("DIGEST-MD5", SASLDigestMD5Mechanism.class);
 		SASLAuthentication.supportSASLMechanism("DIGEST-MD5", 0);
@@ -42,6 +48,10 @@ public class FacebookNotification {
 		return connection;
 	}
 	
+	/**
+	 * Sends facebook notifications to all users involved
+	 * in the game's project team.
+	 */
 	public void sendFacebookNotifications() {
 		User[] users = g.getProject().getTeam();
 		
@@ -64,6 +74,11 @@ public class FacebookNotification {
 		}
 	}
 	
+	/**
+	 * Sends a facebook notification to the user
+	 * @param connection to allow the notification to be sent
+	 * @param user the user to get the notification
+	 */
 	public void sendFacebookNotification(XMPPConnection connection, User user) {
 		Chat chat = connection.getChatManager().createChat("dalton.tapply", null);
 		Message message = new Message("dalton.tapply", Message.Type.chat);
