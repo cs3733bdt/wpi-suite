@@ -106,7 +106,7 @@ public class Request extends RequestModel {
 	 * 
 	 * @throws IllegalStateException	If the Request is being sent.
 	 */
-	public void send() throws IllegalStateException {
+	public synchronized void send() throws IllegalStateException {
 		// check to see if the request has already been sent
 		if (running) {
 			throw new IllegalStateException("Request is being sent.");

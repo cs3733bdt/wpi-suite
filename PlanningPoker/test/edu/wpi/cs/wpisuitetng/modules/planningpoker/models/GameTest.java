@@ -64,10 +64,14 @@ public class GameTest {
 		
 		// create two games, one with fields initialized, one without
 		Game game1 = new Game("Game A", "Test description", "Steve", new ArrayList<Requirement>(), true, false);
-		Game game2 = new Game();
+		ArrayList<Requirement> removeList = new ArrayList<Requirement>();
+		removeList.add(new Requirement("Requirement", "Description"));
+		Game game2 = new Game("Game B", "A Description to be removed", "Creator Overwritten", removeList, false, true);
+		
 		
 		// copy the fields from one game to another
-		game2.copyFrom(game1);
+		assertTrue(game2.copyFrom(game1));
+		assertFalse(game2.copyFrom(game1)); //Second time no changes should be detected
 		
 		// test that fields correctly copied from one game to another
 		assertEquals(game2.getName(), "Game A");
@@ -76,6 +80,14 @@ public class GameTest {
 		assertTrue(game2.getRequirements().isEmpty());
 		assertEquals(game2.isComplete(), false);
 		assertEquals(game2.doesUseCards(), false);
+		
+		ArrayList<Requirement> keepList = new ArrayList<Requirement>();
+		keepList.add(new Requirement("Requirement One", "Description One"));
+		game1 = new Game(game1.getName(), game1.getDescription(), game1.getCreator(), keepList, true, game1.doesUseCards());
+		
+		assertTrue(game2.copyFrom(game1));
+		
+		assertEquals(1, game2.getRequirements().size());
 		
 		
 	}

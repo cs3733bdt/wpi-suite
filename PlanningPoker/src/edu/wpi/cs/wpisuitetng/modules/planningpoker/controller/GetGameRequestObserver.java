@@ -20,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class GetGameRequestObserver implements RequestObserver {
 
-	public GetGameController controller;
+	private GetGameController controller;
 	
 	public GetGameRequestObserver(GetGameController controller) {
 		this.controller = controller;
