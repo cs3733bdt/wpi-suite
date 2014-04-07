@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -15,6 +16,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -72,6 +74,8 @@ public class EstimatePanel extends JPanel{
 	
 	//initializes the card Array
 	private ArrayList<String> deck = new ArrayList<String>();
+	JTextArea counter = new JTextArea();
+	
 	
 	//initializes the JToggleButton
 	private ArrayList<JToggleButton> JToggleButtonList = new ArrayList<JToggleButton>();
@@ -112,20 +116,17 @@ public class EstimatePanel extends JPanel{
 		userStoryDesc.setLineWrap(true);
 		userStoryDesc.setEditable(false);
 		c.gridwidth = 2;
-		//c.weightx = 0.75;
 		c.gridx = 0;
 		c.gridy = 4;
-		//c.ipady = 50;
 		userStoryPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		userStoryPane.setPreferredSize(new Dimension(400, 150));
-		userStoryPane.setMaximumSize(new Dimension(400, 150));
+		userStoryPane.setPreferredSize(new Dimension(500, 150));
+		userStoryPane.setMaximumSize(new Dimension(500, 150));
 		overviewPanel.add(userStoryPane, c);
 
 		/**
 		 * Blank Panel for formatting purposes
 		 */
 		JPanel blankPanel0 = new JPanel();
-		//blankPanel0.setMinimumSize(new Dimension(310, 10));
 		c.gridx = 0;
 		c.gridy = 5;
 		c.gridwidth = 2;
@@ -137,11 +138,17 @@ public class EstimatePanel extends JPanel{
 		 */
 		JPanel cardPanel = new JPanel();
 		cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.X_AXIS));
+		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 6;
 		c.gridwidth = 2;
-		cardPanel.setPreferredSize(new Dimension(425, 50));
+		cardPanel.setPreferredSize(new Dimension(500, 50));		
+		overviewPanel.add(cardPanel, c);
 		
+		/**
+		 * Formatting purposes
+		 */
+		cardPanel.add(Box.createRigidArea(new Dimension(75,0)));
 		
 		//This branch will be run if the default deck is to be used
 		if (customDeck.size() == 0) {
@@ -200,8 +207,8 @@ public class EstimatePanel extends JPanel{
 		 * The text area where the user types their estimate
 		 */
 		estText.setText("Estimate Here");
-		estText.setPreferredSize(new Dimension(100, 40));
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		estText.setPreferredSize(new Dimension(100, 50));
+		c.anchor = GridBagConstraints.CENTER;
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 6;
@@ -211,8 +218,39 @@ public class EstimatePanel extends JPanel{
 				estText.setText("");
 			}
 		});
-
+		
 		overviewPanel.add(estText, c);
+		
+		overviewPanel.validate();
+		overviewPanel.revalidate();
+		overviewPanel.invalidate();
+		overviewPanel.repaint();
+		
+		/**
+		 * The label for the counter
+		 */
+		JLabel counterLabel = new JLabel("Your current estimate total: ");
+		c.anchor = GridBagConstraints.LINE_END;
+		c.insets = new Insets(0, 77, 0, 0);
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 7;
+		overviewPanel.add(counterLabel, c);
+		
+		/**
+		 * Formats and adds the counter for the card estimates
+		 */
+		counter.setText("0");
+		counter.setPreferredSize(new Dimension(25, 25));
+		counter.setLineWrap(true);
+		counter.setEditable(false);
+		c.insets = new Insets(0, 0, 0, 0);
+		c.anchor = GridBagConstraints.CENTER;
+		c.gridwidth = 2;
+		c.gridx = 0;
+		c.gridy = 7;
+		
+		overviewPanel.add(counter, c);
 
 		if (game.doesUseCards()) {
 			estText.setVisible(false);
@@ -222,6 +260,8 @@ public class EstimatePanel extends JPanel{
 				JToggleButtonList.get(i).setVisible(false);
 			}
 			clearButton.setVisible(false);
+			counter.setVisible(false);
+			counterLabel.setVisible(false);
 		}
 
 		/**
@@ -264,6 +304,10 @@ public class EstimatePanel extends JPanel{
 		System.out.println(sum);
 	}
 	
+	/**
+	 * getter for the EstimateText text field
+	 * @return estText
+	 */
 	public JTextField getEstimateText() {
 		return estText;
 	}
@@ -280,10 +324,18 @@ public class EstimatePanel extends JPanel{
 		return sum;
 	}
 	
+	/**
+	 * getter for the game field
+	 * @return activeGame
+	 */
 	public Game getGame() {
 		return activeGame;
 	}
 	
+	/**
+	 * getter for the requirement field
+	 * @return activeRequirement
+	 */
 	public Requirement getRequirement(){
 		return activeRequirement;
 	}
@@ -376,7 +428,7 @@ public class EstimatePanel extends JPanel{
 			voteNumber = Integer.parseInt(estText.getText());
 		}
 		Vote vote = new Vote(currentUser, voteNumber);
-		
+		getRequirement().addVote(vote);
 		
 
 		// I am currently working on updating a game's requirements to
@@ -384,6 +436,7 @@ public class EstimatePanel extends JPanel{
 		// the fields of the vote to ensure the information is getting through
 		System.out.println("current user: " + vote.getUsername());
 		System.out.println("vote number: " + vote.getVoteNumber());
+		System.out.println("number of votes:" + getRequirement().getVotes().size());
 		// these lines should be deleted when proper implementation is complete
 
 		ViewEventController.getInstance().refreshGameTable();

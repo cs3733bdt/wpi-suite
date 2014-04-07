@@ -5,12 +5,15 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
@@ -46,18 +49,21 @@ public class GameTree extends JScrollPane implements MouseListener{
 	 * Used when the list of games is updated or changed.
 	 */
 	public void refresh(){
+		DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode("Games");
+		DefaultMutableTreeNode inactive = new DefaultMutableTreeNode("Inactive");
+		boolean inactiveAdded = false;
 		DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the starting node
 		DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the starting node
 		
-		List<Game> games = sortGames(GameModel.getInstance().getGames()); //retrive the list of all of the games
-		System.out.println("Numb Games: " + games.size());
-		for (int i = 0; i<games.size(); i++){
-			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(games.get(i));
+		List<Game> gameList = sortGames(GameModel.getInstance().getGames()); //retrive the list of all of the games
+		System.out.println("Numb Games: " + gameList.size());
+		for (Game game: gameList){
+			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
-			//TODO add the subrequirements for that game to this dropdown
+			//if
 			
 			
-			if(!games.get(i).isComplete()){ //If the game is not complete then add it to the active game dropdown
+			if(!game.isComplete()){ //If the game is not complete then add it to the active game dropdown
 				active.add(newGameNode);
 			} else { //If the game is complete then put it in the history
 				history.add(newGameNode);
@@ -75,19 +81,22 @@ public class GameTree extends JScrollPane implements MouseListener{
 		
 
 		int width = 150;
-		activeTree.setPreferredSize(new Dimension(width , 10 + games.size()*21));
-		historyTree.setPreferredSize(new Dimension(width, 10 + games.size()*21));
+		activeTree.setPreferredSize(new Dimension(width , 10 + gameList.size()*21));
+		historyTree.setPreferredSize(new Dimension(width, 10 + gameList.size()*21));
 		
 		JScrollPane activeTreeScroll = new JScrollPane(activeTree);
-		activeTreeScroll.setPreferredSize(new Dimension(width + 25, 200));
+		activeTreeScroll.setPreferredSize(new Dimension(width + 25, 240));
 		JScrollPane historyTreeScroll = new JScrollPane(historyTree);
-		historyTreeScroll.setPreferredSize(new Dimension(width + 25, 200));
+		historyTreeScroll.setPreferredSize(new Dimension(width + 25, 240));
 		
 		viewPort = new JPanel();
+		
+		viewPort.setLayout(new BoxLayout(viewPort, BoxLayout.Y_AXIS));
+		
 	    viewPort.add(activeTreeScroll);
 	    viewPort.add(historyTreeScroll);
 	    
-	    viewPort.setPreferredSize(new Dimension(176,410));
+	    viewPort.setPreferredSize(new Dimension(176,590));
 		
 	    this.setViewportView(viewPort);
 	    
@@ -128,7 +137,7 @@ public class GameTree extends JScrollPane implements MouseListener{
 		int x = e.getX();
 		int y = e.getY();
 		
-		System.out.println("Single Click Detected");
+		//System.out.println("Single Click Detected");
 		
 		if(e.getClickCount() == 2){
 			System.out.println("Double Click Detected");
@@ -137,14 +146,16 @@ public class GameTree extends JScrollPane implements MouseListener{
 			if(treePath == null){
 				System.out.println("Not on activeTree");
 				treePath = historyTree.getPathForLocation(x, y);
-				clicked = historyTree;
+				clicked = historyTree; 
 			}
 			if(treePath != null){
 				System.out.println("Tree Path valid");
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
 				if(node != null) {
-					System.out.println("Setting view to game: " + ((Game)node.getUserObject()).toString());
-					ViewEventController.getInstance().joinGame((Game)node.getUserObject());
+					if(node.getUserObject() instanceof Game){ 		//Make sure that this is actually a game
+						System.out.println("Setting view to game: " + ((Game)node.getUserObject()).toString());
+						ViewEventController.getInstance().joinGame((Game)node.getUserObject());
+					}
 				}
 			}
 		}

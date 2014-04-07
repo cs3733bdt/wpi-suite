@@ -17,7 +17,7 @@ public class Vote {
 
 	/**
 	 * getter method for username
-	 * @retur username
+	 * @return username
 	 */
 	public String getUsername() {
 		return username;

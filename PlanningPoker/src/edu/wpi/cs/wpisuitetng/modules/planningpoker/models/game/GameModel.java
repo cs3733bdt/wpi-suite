@@ -74,7 +74,7 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 	 * @param newGame
 	 * 			game to be added to the games ArrayList
 	 */
-	public void addGame(Game newGame) {
+	public synchronized void addGame(Game newGame) {
 		games.add(newGame);
 		try{ 
 			AddGameController.getInstance().addGame(newGame);
@@ -94,7 +94,7 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 	/**
 	 * Empties the model of games and resets the model back to the default state.
 	 */
-	public void emptyModel() {
+	public synchronized void emptyModel() {
 		int oldSize = getSize();
 		Iterator<Game> iterator = games.iterator();
 		while (iterator.hasNext()) {
@@ -133,7 +133,7 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 	 * Used by the database controller construct the game model initially.
 	 * @param newGames The games to be added to the model
 	 */
-	public void addGames(Game[] newGames) {
+	public synchronized void addGames(Game[] newGames) {
 		updateGames(newGames);
 	}
 	
@@ -142,7 +142,11 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 	 * games the values for the games will be updated using the server's values.
 	 * @param allGames
 	 */
-	public void updateGames(Game[] allGames){
+	public synchronized void updateGames(Game[] allGames){
+		boolean changes = false;
+		System.out.print("Updating the model");
+		
+		
 		int startingSize = getSize();
 		for(Game aGame : allGames){ 			//Iterates over the new model
 			boolean found = false;				//Has this Game been found in the list
@@ -153,17 +157,23 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 				}
 			}
 			if(!found){							//If the game is not found then 
+				changes = true;					//There were changes to the model
 				startingSize ++;				//This Game will be added to the model so increase the starting size
 				aGame.addObserver(this);		//Add an observer on this game
 				this.games.add(aGame);			//Adds this game to the list of games in this list
 			}
 		}
 		this.fireIntervalAdded(this, startingSize-1, getSize()-1); 	//Fires the event listeners on this list.
-		try{ //This is used to prevent the a null pointer exception when running test cases (the JPanel's aren't instantiated)
-			ViewEventController.getInstance().refreshGameTable();		//Currently serves no purpose
-			ViewEventController.getInstance().refreshGameTree();		//Refreshes the active table
-		} catch(Exception e) {
-			System.err.println("ViewEventController not fully initiallized");
+		if(changes){												//Only repaint game tree if the model has changed
+			System.out.println("\tChanges found");
+			try{ //This is used to prevent the a null pointer exception when running test cases (the JPanel's aren't instantiated)
+				ViewEventController.getInstance().refreshGameTable();		//Currently serves no purpose
+				ViewEventController.getInstance().refreshGameTree();		//Refreshes the active table
+			} catch(Exception e) {
+				System.err.println("ViewEventController not fully initiallized");
+			}
+		} else {
+			System.out.println("\tChanges not found");
 		}
 	}
 	

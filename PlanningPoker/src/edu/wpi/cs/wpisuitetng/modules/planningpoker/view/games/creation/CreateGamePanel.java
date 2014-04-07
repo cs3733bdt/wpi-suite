@@ -62,7 +62,7 @@ public class CreateGamePanel extends JPanel {
 	private JTextField nameTextField;
 	private JTextArea descriptionTextField;
 	
-	Game currentGame;
+	private Game currentGame;
 	
 	private JRadioButton cardsButton = new JRadioButton("Estimate With Cards");
 	

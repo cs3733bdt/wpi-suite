@@ -66,8 +66,9 @@ public class IterationModelTest {
 			new Iteration(3, "")	
 		};
 		IterationModel itrModel = IterationModel.getInstance();
+		int previousSize = itrModel.getSize();
 		itrModel.addIterations(itrList);
-		assertEquals(3, itrModel.getSize());
+		assertEquals(previousSize + 3, itrModel.getSize());
 	}
 	
 	/**
@@ -143,12 +144,12 @@ public class IterationModelTest {
 		itrModel.emptyModel();
 		itrModel.addIterations(itrList);
 		List<Iteration> returnList = itrModel.getIterations();
-		assertEquals("Iteration1", returnList.get(0).getName());
-		assertEquals(1, returnList.get(0).getId());
+		assertEquals("Backlog", returnList.get(0).getName());
+		assertEquals(3, returnList.get(0).getId());
 		assertEquals("Iteration2", returnList.get(1).getName());
 		assertEquals(2, returnList.get(1).getId());
-		assertEquals("Backlog", returnList.get(2).getName());
-		assertEquals(3, returnList.get(2).getId());
+		assertEquals("Iteration1", returnList.get(2).getName());
+		assertEquals(1, returnList.get(2).getId());
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -185,10 +186,10 @@ public class IterationModelTest {
 		
 		// data where 1 iteration stops and another starts
 		returnList = itrModel.getIterationForDate(new Date(2013, 4, 20));
-		assertEquals("Iteration1", returnList.get(0).getName());
-		assertEquals(1, returnList.get(0).getId());
-		assertEquals("Iteration2", returnList.get(1).getName());
-		assertEquals(2, returnList.get(1).getId());
+		assertEquals("Iteration2", returnList.get(0).getName());
+		assertEquals(2, returnList.get(0).getId());
+		assertEquals("Iteration1", returnList.get(1).getName());
+		assertEquals(1, returnList.get(1).getId());
 		assertEquals(2, returnList.size());
 	}
 	
@@ -230,7 +231,7 @@ public class IterationModelTest {
 		
 		// data starting in 1 iteration and ending in a different iteration
 		returnItr = itrModel.getConflictingIteration(new Date(2013, 4, 15), new Date(2013, 4, 25));
-		assertEquals("Iteration2", returnItr.getName());
-		assertEquals(2, returnItr.getId());
+		assertEquals("Iteration1", returnItr.getName());
+		assertEquals(1, returnItr.getId());
 	}
 }
