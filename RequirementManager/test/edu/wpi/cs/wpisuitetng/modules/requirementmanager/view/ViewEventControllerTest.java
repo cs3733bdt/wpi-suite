@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 import java.util.Date;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
@@ -66,7 +67,7 @@ public class ViewEventControllerTest {
 		assertEquals(prevTabCount, vec.getMainView().getTabCount());
 	}
 	
-	
+	@Ignore
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testCreatingAPanelAndTabForEditingAnIteration() {
@@ -78,6 +79,7 @@ public class ViewEventControllerTest {
 		assertEquals(numItrs + 1, vec.getListOfIterationPanels().size());
 	}
 	
+	@Ignore
 	@SuppressWarnings("deprecation")
 	@Test
 	public void testThatAnotherTabIsNotOpenedForAnIterationThatAlreadyHasATabOpen() {
