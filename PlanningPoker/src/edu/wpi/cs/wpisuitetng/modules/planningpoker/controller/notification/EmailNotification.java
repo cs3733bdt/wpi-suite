@@ -23,7 +23,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
  */
 public class EmailNotification {
 	
+	// Game to get users from to send emails to
 	private Game g;
+	// Sender Email Information
+	private final String username = "WPI.Suite.BDT.NoReply@gmail.com";
+	private final String password = "bobbydroptables";
 	
 	/**
 	 * Constructs an email notification for a given game
@@ -33,47 +37,7 @@ public class EmailNotification {
 		this.g = g;
 	}
 	
-	/**
-	 * This method implements the sendEmail method to 
-	 * send email notifications to all the users on a team
-	 */
-	public void sendEmails () 
-	{
-		// Get the users that are expected to play the game
-		User[] users = g.getProject().getTeam();
-		
-		//Check to see if no users are attached to this project
-		if(users[0] != null) {
-			for (int i = 0; i < users.length; i++) {
-				sendEmail(users[i]);
-			}
-		} else {
-			System.out.println("Project: " + g.getProject().getName() + ", has no users in its team.");
-			System.out.println("No Emails were sent.");
-		}
-	}
-	
-	/**
-	 * This method uses the javaMail API library to send an email to the user
-	 * This code is inspired by http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
-	 * @param user The user to be emailed.
-	 */
-	public void sendEmail(User user) {
-		// Recipient's email ID needs to be mentioned.
-		String to = "";
-		
-		//Check if user has an email in case user was created without one
-		// and print name of user
-		if (user.getEmail() != null) {
-			to = user.getEmail();
-		} else {
-			System.out.println("User: " + user.getName() + ", does not have an email stored.");
-		}
-
-		// Sender's email ID needs to be mentioned
-		final String username = "WPI.Suite.BDT.NoReply@gmail.com";
-		final String password = "bobbydroptables";
-
+	public Session login() {
 		// Get system properties
 		Properties properties = new Properties();
 		properties.put("mail.smtp.host", "smtp.gmail.com");
@@ -106,6 +70,46 @@ public class EmailNotification {
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
+		}
+		
+		return session;
+	}
+	
+	/**
+	 * This method implements the sendEmail method to 
+	 * send email notifications to all the users on a team
+	 */
+	public void sendEmails() 
+	{
+		// Get the users that are expected to play the game
+		User[] users = g.getProject().getTeam();
+		
+		//Check to see if no users are attached to this project
+		if(users[0] != null) {
+			for (int i = 0; i < users.length; i++) {
+				sendEmail(login(), users[i]);
+			}
+		} else {
+			System.out.println("Project: " + g.getProject().getName() + ", has no users in its team.");
+			System.out.println("No Emails were sent.");
+		}
+	}
+	
+	/**
+	 * This method uses the javaMail API library to send an email to the user
+	 * This code is inspired by http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
+	 * @param user The user to be emailed.
+	 */
+	public void sendEmail(Session session, User user) {
+		// Recipient's email ID needs to be mentioned.
+		String to = "";
+		
+		//Check if user has an email in case user was created without one
+		// and print name of user
+		if (user.getEmail() != null) {
+			to = user.getEmail();
+		} else {
+			System.out.println("User: " + user.getName() + ", does not have an email stored.");
 		}
 
 		try {

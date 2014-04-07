@@ -51,7 +51,7 @@ public class testEmailNotification {
 	
 	@Test
 	public void testSendEmail() {
-		en.sendEmail(u1);
+		en.sendEmail(en.login(), u1);
 	}
 
 	/**
