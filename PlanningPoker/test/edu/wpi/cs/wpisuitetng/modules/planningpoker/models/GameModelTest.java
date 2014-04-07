@@ -3,7 +3,7 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -74,6 +74,53 @@ public class GameModelTest {
 		model.addGames(gameList);
 		
 		assertEquals(model.getElementAt(0).getName(), "An updated game");
+		model.emptyModel();
+		assertEquals(0, model.getSize());
+	}
+	
+	@Test
+	public void testUpdateGameListWithAllFields(){
+		GameModel model = GameModel.getInstance();
+		
+		ArrayList<Requirement> reqs = new ArrayList<Requirement>();
+		reqs.add(new Requirement("Requirement", "Description"));
+		Game game1 = new Game("Game", "With a name", "Steve", reqs, false, true);
+		Game game2 = new Game("Game2", "With a name2", "Steve2", new ArrayList<Requirement>(), true, true);
+		Game game3 = new Game("Game3", "With a name3", "Steve3", new ArrayList<Requirement>(), true, true);
+		
+		
+		Game gameList[] = new Game[3];
+		gameList[0] = game1;
+		gameList[1] = game2;
+		gameList[2] = game3;
+		
+		model.addGames(gameList);
+		
+		
+		ArrayList<Requirement> reqs2 = new ArrayList<Requirement>();
+		reqs2.add(new Requirement("RequirementChanged", "DescriptionChanged"));
+		Game game1Changed = new Game("Game1 Changed", "DescriptionChanged", "DifferentName", reqs2, true, false);
+		game1Changed.setIdentifier(game1.getIdentity()); //Makes this game 'the equivalent' to the other game
+		
+		model.updateGames(gameList);
+		
+		assertEquals(3, model.getSize());
+		gameList[0] = game1Changed;
+		
+		//Check to make sure that changes are not reflected in the model
+		assertEquals("Steve", model.getElementAt(0).getCreator());
+		assertEquals("Game", model.getElementAt(0).getName());
+		
+		//Changes should now be reflected after updateing the model
+		model.updateGames(gameList);
+		
+		assertEquals(3, model.getSize());
+		
+		assertEquals("Game1 Changed", model.getElementAt(0).getName());
+		assertEquals("DifferentName", model.getElementAt(0).getCreator());
+		assertEquals("RequirementChanged", model.getElementAt(0).getRequirements().get(0).getName());
+		//assertEquals("DescriptionChanged", model.getElementAt(0));
+		
 	}
 
 }
