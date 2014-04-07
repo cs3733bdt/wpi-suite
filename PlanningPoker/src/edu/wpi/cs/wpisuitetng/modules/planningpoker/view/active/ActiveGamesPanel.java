@@ -198,7 +198,7 @@ public class ActiveGamesPanel extends JPanel {
 		
 		this.add(rightPanel);
 	}
-
+	
 	public void setGameName(String newGameName) {
 		gameName.setText(newGameName);
 	}
@@ -224,7 +224,8 @@ public class ActiveGamesPanel extends JPanel {
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 4;
-		rightPanel.add(new EstimatePanel(game, requirement, new ArrayList<String>()));
+		ArrayList<String> deck = new ArrayList<String>(); //this line makes it so the default deck is selected
+		rightPanel.add(new EstimatePanel(game, requirement, deck));
 		rightPanel.validate();
 		rightPanel.revalidate();
 		rightPanel.repaint();

@@ -38,6 +38,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CardActionListener;
 
 public class EstimatePanel extends JPanel{
 	Game activeGame;
@@ -161,8 +162,6 @@ public class EstimatePanel extends JPanel{
 		else {
 			deck = customDeck; //the customDeck must contain 7 elements
 		}
-		int boolArraySize = deck.size();
-		
 		//initializes all the buttons and add them to the panel
 		for (int i = 0; i < deck.size(); i++) {
 			JToggleButtonList.add(new JToggleButton(deck.get(i)));
@@ -189,185 +188,10 @@ public class EstimatePanel extends JPanel{
 			}
 		});	
 		
-		//add image to first button. uncomment when button are of proper size.
-//		try {
-//		    Image img = ImageIO.read(getClass().getResource("card_back.png"));
-//		    toggleButtonArray[0].setIcon(new ImageIcon(img));   
-//		} catch (IOException ex) {}
-		
-
-		/**
-		 * Action Listener for toggle button 0 
-		 */
-		
-		JToggleButtonList.get(0).addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(JToggleButtonList.get(0).isSelected()) { // if button is pressed
-					if (JToggleButtonList.get(7).isSelected()) { 
-						JToggleButtonList.get(7).doClick();
-					}
-					addToCardSum(Integer.parseInt(deck.get(0)));
-					System.out.println(sum);
-				}
-				else {
-					decToCardSum(Integer.parseInt(deck.get(0)));
-					System.out.println(sum);
-				}
-			}
-		});
-		
-		/**
-		 * Action Listener for toggle button 1
-		 */
-		JToggleButtonList.get(1).addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(JToggleButtonList.get(1).isSelected()) { // if button is pressed
-					if (JToggleButtonList.get(7).isSelected()) { 
-						JToggleButtonList.get(7).doClick();
-					}
-					addToCardSum(Integer.parseInt(deck.get(1)));
-					System.out.println(sum);
-				}
-				else {
-					decToCardSum(Integer.parseInt(deck.get(1)));
-					System.out.println(sum);
-				}
-			}
-		});
-		
-		/**
-		 * Action Listener for toggle button 2
-		 */
-		JToggleButtonList.get(2).addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(JToggleButtonList.get(2).isSelected()) { // if button is pressed
-					if (JToggleButtonList.get(7).isSelected()) { 
-						JToggleButtonList.get(7).doClick();
-					}
-					addToCardSum(Integer.parseInt(deck.get(2)));
-					System.out.println(sum);
-				}
-				else {
-					decToCardSum(Integer.parseInt(deck.get(2)));
-					System.out.println(sum);
-				}
-			}
-		});
-		
-		/**
-		 * Action Listener for toggle button 3
-		 */
-		JToggleButtonList.get(3).addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(JToggleButtonList.get(3).isSelected()) { // if button is pressed
-					if (JToggleButtonList.get(7).isSelected()) { 
-						JToggleButtonList.get(7).doClick();
-					}
-					addToCardSum(Integer.parseInt(deck.get(3)));
-					System.out.println(sum);
-				}
-				else {
-					decToCardSum(Integer.parseInt(deck.get(3)));
-					System.out.println(sum);
-				}
-			}
-		});
-		
-		/**
-		 * Action Listener for toggle button 4
-		 */
-		JToggleButtonList.get(4).addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(JToggleButtonList.get(4).isSelected()) { // if button is pressed
-					if (JToggleButtonList.get(7).isSelected()) { 
-						JToggleButtonList.get(7).doClick();
-					}
-					addToCardSum(Integer.parseInt(deck.get(4)));
-					System.out.println(sum);
-				}
-				else {
-					decToCardSum(Integer.parseInt(deck.get(4)));
-					System.out.println(sum);
-				}
-			}
-		});
-		
-		/**
-		 * Action Listener for toggle button 5
-		 */
-		JToggleButtonList.get(5).addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(JToggleButtonList.get(5).isSelected()) { // if button is pressed
-					if (JToggleButtonList.get(7).isSelected()) { 
-						JToggleButtonList.get(7).doClick();
-					}
-					addToCardSum(Integer.parseInt(deck.get(5)));
-					System.out.println(sum);
-				}
-				else {
-					decToCardSum(Integer.parseInt(deck.get(5)));
-					System.out.println(sum);
-				}
-			}
-		});
-		
-		/**
-		 * Action Listener for toggle button 6
-		 */
-		JToggleButtonList.get(6).addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if(JToggleButtonList.get(6).isSelected()) { // if button is pressed
-					if (JToggleButtonList.get(7).isSelected()) { 
-						JToggleButtonList.get(7).doClick();
-					}
-					addToCardSum(Integer.parseInt(deck.get(5)));
-					System.out.println(sum);
-				}
-				else {
-					decToCardSum(Integer.parseInt(deck.get(5)));
-					System.out.println(sum);
-				}
-			}
-		});
-		
-		/**
-		 * Action Listener for toggle button 7
-		 */
-		//Initialize array of booleans to keep track of buttons
-//		int[] boolArray = new int[deck.size()];
-//		for (int i = 0; i < deck.size(); i++ ) {
-//			boolArray[i] = 0;
-//		}
-		
-		JToggleButtonList.get(7).addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(JToggleButtonList.get(7).isSelected()) {
-				for (int i = 0; i < (deck.size()); i++){
-					if (JToggleButtonList.get(i).isSelected()){
-						memoryArray.add(i);
-						JToggleButtonList.get(i).doClick();
-					}
-				}
-				sum = 0;
-			}
-			
-			else {
-				for (int i = 0; i < memoryArray.size(); i++) {
-					JToggleButtonList.get(memoryArray.get(i)).doClick();
-				}
-				memoryArray.clear();
-			}
+		for (int i = 0;  i < JToggleButtonList.size(); i++ ) { 
+			JToggleButtonList.get(i).addActionListener(new CardActionListener(i, sum, deck, JToggleButtonList, this));
 		}
-	});
-
+		
 		overviewPanel.add(cardPanel, c);
 		
 		/**
@@ -395,6 +219,7 @@ public class EstimatePanel extends JPanel{
 			for (int i = 0; i < JToggleButtonList.size(); i++) {
 				JToggleButtonList.get(i).setVisible(false);
 			}
+			clearButton.setVisible(false);
 		}
 
 		/**
@@ -427,21 +252,28 @@ public class EstimatePanel extends JPanel{
 	}
 	
 	//Get the sum of all the cards and return it
-	public int addToCardSum(int cardValue) {
+	public void addToCardSum(int cardValue) {
 		sum += cardValue;
-		return sum;
+		System.out.println(sum);
 	}
 	
-	public int decToCardSum(int cardValue) {
+	public void decToCardSum(int cardValue) {
 		sum -= cardValue;
-		return sum;
+		System.out.println(sum);
 	}
 	
 	public JTextField getEstimateText() {
 		return estText;
 	}
 	
-	public int getSum() {
+	public int updateSum() {
+		sum = 0;
+		for (int i = 0; i < deck.size(); i++) {
+			if (JToggleButtonList.get(i).isSelected()){
+				sum += Integer.parseInt(deck.get(i));   
+			}
+		}
+		System.out.println("Sum:" + sum);
 		return sum;
 	}
 	

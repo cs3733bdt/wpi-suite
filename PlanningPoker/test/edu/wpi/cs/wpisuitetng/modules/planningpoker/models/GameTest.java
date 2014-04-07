@@ -14,6 +14,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -74,5 +75,19 @@ public class GameTest {
 		assertEquals(game2.doesUseCards(), false);
 		
 	}
+	
+	@Test
+	public void testUpdateGamePanel() {
+		ArrayList<Requirement> reqList = new ArrayList<Requirement>();
+		Game game1 = new Game("Game A", "Test description", "Steve", reqList, true, false);
+	
+		Requirement req = new Requirement("Test Requirement", "Test description");
+		reqList.add(req);
+		
+		ActiveGamesPanel ActivePanel = new ActiveGamesPanel(game1);
+		ActivePanel.updateEstimatePanel(game1, req);
+		assertEquals(ActivePanel.getGame().getRequirements().size(),1);		
+	}
+	
 
 }
