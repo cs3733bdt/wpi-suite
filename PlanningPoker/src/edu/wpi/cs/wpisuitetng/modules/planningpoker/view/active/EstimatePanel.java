@@ -75,6 +75,9 @@ public class EstimatePanel extends JPanel{
 	//initializes the JToggleButton
 	ArrayList<JToggleButton> JToggleButtonList = new ArrayList<JToggleButton>();
 	
+	//initialized array to remember what buttons were pressed if "0?" button is pressed
+	ArrayList<Integer> memoryArray = new ArrayList<Integer>();
+	
 	/*
 	 * If the ArrayList passed in is empty it will use the default deck
 	 */
@@ -158,6 +161,7 @@ public class EstimatePanel extends JPanel{
 		else {
 			deck = customDeck; //the customDeck must contain 7 elements
 		}
+		int boolArraySize = deck.size();
 		
 		//initializes all the buttons and add them to the panel
 		for (int i = 0; i < deck.size(); i++) {
@@ -175,7 +179,8 @@ public class EstimatePanel extends JPanel{
 		clearButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				for (int i = 0; i < (JToggleButtonList.size() - 1); i++){
+				memoryArray.clear();
+				for (int i = 0; i < (JToggleButtonList.size()); i++){
 					if (JToggleButtonList.get(i).isSelected()){
 						JToggleButtonList.get(i).doClick();
 					}
@@ -335,12 +340,19 @@ public class EstimatePanel extends JPanel{
 		/**
 		 * Action Listener for toggle button 7
 		 */
+		//Initialize array of booleans to keep track of buttons
+//		int[] boolArray = new int[deck.size()];
+//		for (int i = 0; i < deck.size(); i++ ) {
+//			boolArray[i] = 0;
+//		}
+		
 		JToggleButtonList.get(7).addActionListener(new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			if(JToggleButtonList.get(7).isSelected()) {
-				for (int i = 0; i < (JToggleButtonList.size() - 1); i++){
+				for (int i = 0; i < (deck.size()); i++){
 					if (JToggleButtonList.get(i).isSelected()){
+						memoryArray.add(i);
 						JToggleButtonList.get(i).doClick();
 					}
 				}
@@ -348,7 +360,10 @@ public class EstimatePanel extends JPanel{
 			}
 			
 			else {
-				//System.out.println("unpressed button");
+				for (int i = 0; i < memoryArray.size(); i++) {
+					JToggleButtonList.get(memoryArray.get(i)).doClick();
+				}
+				memoryArray.clear();
 			}
 		}
 	});
