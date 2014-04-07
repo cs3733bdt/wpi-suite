@@ -33,21 +33,22 @@ public class CardActionListener implements ActionListener {
 			if(JToggleButtonList.get(index).isSelected()) {
 				for (int i = 0; i < (deck.size()); i++){
 					if (JToggleButtonList.get(i).isSelected()){
-//						memoryArray.add(i);
+						panel.memoryArrayAddElt(i);
 						JToggleButtonList.get(i).doClick();
 					}
 				}
 			}
-//			else {
-//				for (int i = 0; i < memoryArray.size(); i++) {
-//					JToggleButtonList.get(memoryArray.get(i)).doClick();
-//				}
-//				memoryArray.clear();	
-//			}
+			else {
+				for (int i = 0; i < panel.memoryArrayGetSize(); i++) {
+					JToggleButtonList.get(panel.memoryArrayGetElt(i)).doClick();
+				}
+				panel.memoryArrayClear();	
+			}
 		}
 		else { //otherwise, if it is a button other than the I don't know button
 			if(JToggleButtonList.get(index).isSelected()) { // if button is pressed
 				if (JToggleButtonList.get(size - 1).isSelected()) { 
+					panel.memoryArrayClear();
 					JToggleButtonList.get(size - 1).doClick();
 				}
 				addToCardSum(Integer.parseInt(deck.get(index)));

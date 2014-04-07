@@ -68,16 +68,16 @@ public class EstimatePanel extends JPanel{
 	/* End field Border Definitions */
 	
 	//initializes the sum
-	int sum = 0;
+	private int sum = 0;
 	
 	//initializes the card Array
-	ArrayList<String> deck = new ArrayList<String>();
+	private ArrayList<String> deck = new ArrayList<String>();
 	
 	//initializes the JToggleButton
-	ArrayList<JToggleButton> JToggleButtonList = new ArrayList<JToggleButton>();
+	private ArrayList<JToggleButton> JToggleButtonList = new ArrayList<JToggleButton>();
 	
 	//initialized array to remember what buttons were pressed if "0?" button is pressed
-	ArrayList<Integer> memoryArray = new ArrayList<Integer>();
+	private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
 	
 	/*
 	 * If the ArrayList passed in is empty it will use the default deck
@@ -150,6 +150,7 @@ public class EstimatePanel extends JPanel{
 			int secondnum = 1;
 			int currnum;
 			deck.add(Integer.toString(secondnum));
+			//Default value is 6.
 			int Fibcount = 6; //if this is 6, the highest number generated will be 13
 			for (int i = 0; i < Fibcount; i++) {
 				currnum = firstnum + secondnum;
@@ -160,7 +161,7 @@ public class EstimatePanel extends JPanel{
 		}
 		//This branch will be run if a custom deck is to be used
 		else {
-			deck = customDeck; //the customDeck must contain 7 elements
+			deck = customDeck; 
 		}
 		//initializes all the buttons and add them to the panel
 		for (int i = 0; i < deck.size(); i++) {
@@ -188,6 +189,7 @@ public class EstimatePanel extends JPanel{
 			}
 		});	
 		
+		//creates action listeners for all other buttons
 		for (int i = 0;  i < JToggleButtonList.size(); i++ ) { 
 			JToggleButtonList.get(i).addActionListener(new CardActionListener(i, sum, deck, JToggleButtonList, this));
 		}
@@ -266,6 +268,7 @@ public class EstimatePanel extends JPanel{
 		return estText;
 	}
 	
+	//This is equivalent to a getter for sum. 
 	public int updateSum() {
 		sum = 0;
 		for (int i = 0; i < deck.size(); i++) {
@@ -285,7 +288,22 @@ public class EstimatePanel extends JPanel{
 		return activeRequirement;
 	}
 	
+	public void memoryArrayAddElt(int elt) {
+		memoryArray.add(elt);
+	}
 	
+	public int memoryArrayGetSize() {
+		return memoryArray.size();
+	}
+	
+	public void memoryArrayClear() {
+		memoryArray.clear();
+	}
+	
+	public int memoryArrayGetElt(int elt) {
+		return memoryArray.get(elt);
+	}
+		
 	public void submitEstimatePressed() {
 		if(getGame().doesUseCards()){
 			this.submitEstimate();
