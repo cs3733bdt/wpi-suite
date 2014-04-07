@@ -27,6 +27,10 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 import javax.swing.JToggleButton;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import com.sun.java.swing.plaf.motif.MotifBorders.ToggleButtonBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
@@ -53,7 +57,6 @@ public class EstimatePanel extends JPanel{
 
 	/** Shows the names of the errors */
 	JLabel errorField = new JLabel();
-
 	
 	Container overviewPanel = new Container();
 	/** Field Border Definitions */
@@ -68,9 +71,12 @@ public class EstimatePanel extends JPanel{
 	
 	//initializes the card Array
 	String cardArray[] = new String[8];
+	List<String> deck = new ArrayList<String>();
 	
 	//initializes the JToggleButton
 	final JToggleButton[] toggleButtonArray = new JToggleButton[8];
+	ArrayList<JToggleButton> JToggleButtonList = new ArrayList<JToggleButton>();
+
 	
 	public EstimatePanel(Game game, Requirement requirement){ //add a deck of cards as a parameter
 		this.activeGame = game;
@@ -134,15 +140,39 @@ public class EstimatePanel extends JPanel{
 		
 		//this is the array containing the default deck
 		cardArray = new String[] { "1", "1", "2", "3", "5", "8", "13", "0?" };
+		
+		//if ( == null) {
+		//generate fibonachi sequence
+		int firstnum = 0;
+		int secondnum = 1;
+		int currnum;
+		deck.add(Integer.toString(secondnum));
+		int Fibcount = 6; //if this is 7, the highest number generated will be 13
+		for (int i = 0; i < Fibcount; i++) {
+			currnum = firstnum + secondnum;
+			deck.add("" + currnum + "");
+			firstnum = secondnum;
+			secondnum = currnum; 
+		}
+		Fibcount++; //account for the fact the first element is added outside for loop
+		System.out.println("\n Element number "+ Fibcount + ": " + deck.get(6));
+		//}
+		//else {
+			//add other non-default deck
+		//}
 		/**
 		 * Creates and adds the 1st card to the view.
 		 * 
 		 */
+		//variable names for transition to variable size decks
+		//ArrayList<String> deck
+		//JToggleButtonList
 		
 		//initializes all the buttons and add them to the panel
 		for (int i = 0; i < toggleButtonArray.length; i++) {
 			toggleButtonArray[i] = new JToggleButton(cardArray[i]);
-			cardPanel.add(toggleButtonArray[i]);
+			JToggleButtonList.add(new JToggleButton(cardArray[i]));
+			cardPanel.add(JToggleButtonList.get(i));
 		}
 		
 		//add image to first button. uncomment when button are of proper size.
@@ -156,12 +186,12 @@ public class EstimatePanel extends JPanel{
 		 * Action Listener for toggle button 0 
 		 */
 		
-		toggleButtonArray[0].addActionListener(new ActionListener() {
+		JToggleButtonList.get(0).addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(toggleButtonArray[0].isSelected()) { // if button is pressed
-					if (toggleButtonArray[7].isSelected()) { 
-						toggleButtonArray[7].doClick();
+				if(JToggleButtonList.get(0).isSelected()) { // if button is pressed
+					if (JToggleButtonList.get(7).isSelected()) { 
+						JToggleButtonList.get(7).doClick();
 					}
 					addToCardSum(Integer.parseInt(cardArray[0]));
 					System.out.println(sum);
@@ -176,12 +206,12 @@ public class EstimatePanel extends JPanel{
 		/**
 		 * Action Listener for toggle button 1
 		 */
-		toggleButtonArray[1].addActionListener(new ActionListener() {
+		JToggleButtonList.get(1).addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(toggleButtonArray[1].isSelected()) { // if button is pressed
-					if (toggleButtonArray[7].isSelected()) { 
-						toggleButtonArray[7].doClick();
+				if(JToggleButtonList.get(1).isSelected()) { // if button is pressed
+					if (JToggleButtonList.get(7).isSelected()) { 
+						JToggleButtonList.get(7).doClick();
 					}
 					addToCardSum(Integer.parseInt(cardArray[1]));
 					System.out.println(sum);
@@ -196,12 +226,12 @@ public class EstimatePanel extends JPanel{
 		/**
 		 * Action Listener for toggle button 2
 		 */
-		toggleButtonArray[2].addActionListener(new ActionListener() {
+		JToggleButtonList.get(2).addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(toggleButtonArray[2].isSelected()) { // if button is pressed
-					if (toggleButtonArray[7].isSelected()) { 
-						toggleButtonArray[7].doClick();
+				if(JToggleButtonList.get(2).isSelected()) { // if button is pressed
+					if (JToggleButtonList.get(7).isSelected()) { 
+						JToggleButtonList.get(7).doClick();
 					}
 					addToCardSum(Integer.parseInt(cardArray[2]));
 					System.out.println(sum);
@@ -216,12 +246,12 @@ public class EstimatePanel extends JPanel{
 		/**
 		 * Action Listener for toggle button 3
 		 */
-		toggleButtonArray[3].addActionListener(new ActionListener() {
+		JToggleButtonList.get(3).addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(toggleButtonArray[3].isSelected()) { // if button is pressed
-					if (toggleButtonArray[7].isSelected()) { 
-						toggleButtonArray[7].doClick();
+				if(JToggleButtonList.get(3).isSelected()) { // if button is pressed
+					if (JToggleButtonList.get(7).isSelected()) { 
+						JToggleButtonList.get(7).doClick();
 					}
 					addToCardSum(Integer.parseInt(cardArray[3]));
 					System.out.println(sum);
@@ -236,12 +266,12 @@ public class EstimatePanel extends JPanel{
 		/**
 		 * Action Listener for toggle button 4
 		 */
-		toggleButtonArray[4].addActionListener(new ActionListener() {
+		JToggleButtonList.get(4).addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(toggleButtonArray[4].isSelected()) { // if button is pressed
-					if (toggleButtonArray[7].isSelected()) { 
-						toggleButtonArray[7].doClick();
+				if(JToggleButtonList.get(4).isSelected()) { // if button is pressed
+					if (JToggleButtonList.get(7).isSelected()) { 
+						JToggleButtonList.get(7).doClick();
 					}
 					addToCardSum(Integer.parseInt(cardArray[4]));
 					System.out.println(sum);
@@ -256,12 +286,12 @@ public class EstimatePanel extends JPanel{
 		/**
 		 * Action Listener for toggle button 5
 		 */
-		toggleButtonArray[5].addActionListener(new ActionListener() {
+		JToggleButtonList.get(5).addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(toggleButtonArray[5].isSelected()) { // if button is pressed
-					if (toggleButtonArray[7].isSelected()) { 
-						toggleButtonArray[7].doClick();
+				if(JToggleButtonList.get(5).isSelected()) { // if button is pressed
+					if (JToggleButtonList.get(7).isSelected()) { 
+						JToggleButtonList.get(7).doClick();
 					}
 					addToCardSum(Integer.parseInt(cardArray[5]));
 					System.out.println(sum);
@@ -276,12 +306,12 @@ public class EstimatePanel extends JPanel{
 		/**
 		 * Action Listener for toggle button 6
 		 */
-		toggleButtonArray[6].addActionListener(new ActionListener() {
+		JToggleButtonList.get(6).addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(toggleButtonArray[6].isSelected()) { // if button is pressed
-					if (toggleButtonArray[7].isSelected()) { 
-						toggleButtonArray[7].doClick();
+				if(JToggleButtonList.get(6).isSelected()) { // if button is pressed
+					if (JToggleButtonList.get(7).isSelected()) { 
+						JToggleButtonList.get(7).doClick();
 					}
 					addToCardSum(Integer.parseInt(cardArray[6]));
 					System.out.println(sum);
@@ -296,13 +326,13 @@ public class EstimatePanel extends JPanel{
 		/**
 		 * Action Listener for toggle button 7
 		 */
-		toggleButtonArray[7].addActionListener(new ActionListener() {
+		JToggleButtonList.get(7).addActionListener(new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			if(toggleButtonArray[7].isSelected()) {
-				for (int i = 0; i < (toggleButtonArray.length - 1); i++){
-					if (toggleButtonArray[i].isSelected()){
-						toggleButtonArray[i].doClick();
+			if(JToggleButtonList.get(7).isSelected()) {
+				for (int i = 0; i < (JToggleButtonList.size() - 1); i++){
+					if (JToggleButtonList.get(i).isSelected()){
+						JToggleButtonList.get(i).doClick();
 					}
 				}
 				sum = 0;
@@ -338,8 +368,8 @@ public class EstimatePanel extends JPanel{
 			estText.setVisible(false);
 		} else {
 			cardPanel.setVerifyInputWhenFocusTarget(false);
-			for (int i = 0; i < toggleButtonArray.length; i++) {
-				toggleButtonArray[i].setVisible(false);
+			for (int i = 0; i < JToggleButtonList.size(); i++) {
+				JToggleButtonList.get(i).setVisible(false);
 			}
 		}
 
@@ -385,6 +415,10 @@ public class EstimatePanel extends JPanel{
 	
 	public JTextField getEstimateText() {
 		return estText;
+	}
+	
+	public int getSum() {
+		return sum;
 	}
 	
 	public Game getGame() {
