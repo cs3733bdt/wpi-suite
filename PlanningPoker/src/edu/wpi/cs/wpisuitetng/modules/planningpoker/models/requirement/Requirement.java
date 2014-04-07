@@ -86,6 +86,14 @@ public class Requirement extends ObservableModel {
 		return id;
 	}
 	
+	public UUID getIdentity(){
+		return identity;
+	}
+	
+	/**
+	 * 
+	 * @param id
+	 */
 	public void setId(int id){
 		fromRequirementModule = true;
 		this.id = id;
@@ -219,8 +227,6 @@ public class Requirement extends ObservableModel {
 
 	/**
 	 * Method toString.
-	
-	
 	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toString() * @see edu.wpi.cs.wpisuitetng.modules.Model#toString()
 	 */
 	@Override
@@ -228,6 +234,10 @@ public class Requirement extends ObservableModel {
 		String n = "\nName: " + name + 
 				"\nDescription: " + description + '\n';
 		return n;
+	}
+	
+	public int getVoteCount(){
+		return votes.size();
 	}
 
 
@@ -237,8 +247,20 @@ public class Requirement extends ObservableModel {
 	 * @param toCopyFrom
 	 *            the requirement to copy from.
 	 */
-	public void copyFrom(Requirement toCopyFrom) {
-		this.description = toCopyFrom.description;
-		this.name = toCopyFrom.name;
+	public boolean copyFrom(Requirement toCopyFrom) {
+		boolean wasChanged = false;
+		if(!this.description.equals(toCopyFrom.description)){
+			this.description = toCopyFrom.description;
+			wasChanged = true;
+		}
+		if(!this.name.equals(toCopyFrom.name)){
+			this.name = toCopyFrom.name;
+			wasChanged = true;
+		}
+		if(!this.votes.equals(toCopyFrom.votes)){
+			this.votes = toCopyFrom.votes;
+			wasChanged = true;
+		}
+		return wasChanged; //TODO THIS IS A PLACE HOLDER! THIS MUST CHECK TO MAKE SURE THAT CHANGES ARE ACTUALLY MADE
 	}
 }
