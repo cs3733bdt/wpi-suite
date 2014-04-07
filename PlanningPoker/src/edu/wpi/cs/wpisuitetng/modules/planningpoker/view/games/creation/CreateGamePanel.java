@@ -185,7 +185,7 @@ public class CreateGamePanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 6;
-		c.insets = new Insets(10, 100, 0, 0);
+		c.insets = new Insets(0, 100, 10, 0);
 		rightPanel.add(estimateTypePanel, c);
 		
 		/**
