@@ -31,6 +31,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.AddGameButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
  * Used to create a new Planning Poker game using the input of a user
@@ -47,7 +49,7 @@ public class CreateGamePanel extends JPanel {
 	private JTextArea descArea = new JTextArea();
 	
 	/** Shows the names of the errors*/
-	JLabel errorField;
+	private ErrorLabel errorField;
 	
 	/** Field Border Definitions*/
 	private final Border defaultBorder = (new JTextField()).getBorder();
@@ -59,7 +61,7 @@ public class CreateGamePanel extends JPanel {
 	private boolean readyToClose = false;
 	private boolean readyToRemove = true; //The window starts off ready to remove because no changes have happened
 	
-	private JTextField nameTextField;
+	private NameJTextField nameTextField;
 	private JTextArea descriptionTextField;
 	
 	private Game currentGame;
@@ -77,7 +79,7 @@ public class CreateGamePanel extends JPanel {
 	public CreateGamePanel(){
 		super(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		nameTextField = new JTextField(30);	
+		nameTextField = new NameJTextField(30);	
 		descriptionTextField = new JTextArea();
 		descriptionTextField.setLineWrap(true);
 		
@@ -257,7 +259,7 @@ public class CreateGamePanel extends JPanel {
 		/**
 		 * label for displaying errors
 		 */
-		errorField= new JLabel();
+		errorField= new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
 		c.gridx = 2;
@@ -381,14 +383,20 @@ public class CreateGamePanel extends JPanel {
 	}
 	
 	
-	public void AddGamePressed() {
+	/**
+	 * Triggered when the add game button is pressed using the mouse listener
+	 * @return true when a game is sucsessfully added
+	 */
+	public boolean AddGamePressed() {
 		if(this.validateField(true)){
 			this.addGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 			System.out.println("Add Game Pressed Passed.");
+			return true;
 		} else {
 			System.out.println("Add Game Pressed Failed.");
+			return false;
 		}
 		
 	}
@@ -405,29 +413,7 @@ public class CreateGamePanel extends JPanel {
 		boolean isDescriptionValid = false;
 		boolean areRequirementsSelected = false;
 		
-		//BEGIN NAME BOX VALIDATION
-		if(getBoxName().getText().length() >=100){
-			isNameValid = false;
-			getBoxName().setBorder(errorBorder);
-			//getErrorName().setForeground(Color.RED);
-			displayError("Name can be no more than 100 chars.");
-		} else if(getBoxName().getText().length() <= 0){
-			isNameValid = false;
-			if(warn){
-				//getErrorName().setText("** Name is REQUIRED");
-				getBoxName().setBorder(errorBorder);
-				//getErrorName().setForeground(Color.RED);
-			}
-			
-			displayError("Name is required");
-		} else {
-			if (warn){
-				//getErrorName().setText("");
-				getBoxName().setBorder(defaultBorder);
-			}
-			isNameValid = true;
-		}
-		//END NAME BOX VALIDATION
+		isNameValid = getBoxName().verifyField(errorField);
 		
 		//BEGIN DESCRIPTION BOX VALDATION
 		if(getBoxDescription().getText().length() <= 0){
@@ -464,16 +450,23 @@ public class CreateGamePanel extends JPanel {
 		ArrayList<Requirement> requ = getRequirements();
 		boolean usesCards = doesUseCards();
 		
-		currentGame = new Game(strName, strDes, creator, requ, false, usesCards);
-		
-		GameModel.getInstance().addGame(currentGame);
+		//Updates an existing game
+		Game newGame = new Game(strName, strDes, creator, requ, false, usesCards);
+		if(currentGame == null){
+			currentGame = newGame;
+			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
+		} else{
+			newGame.setIdentifier(currentGame.getIdentity()); 	//Copies the UUID over to the new game
+			currentGame.copyFrom(newGame);						//Copies the entirety of this game into the other game
+		}
 		
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
+		
 	}
 	
 
-	public JTextField getBoxName(){
+	public NameJTextField getBoxName(){
 		return nameTextField;
 	}
 	
