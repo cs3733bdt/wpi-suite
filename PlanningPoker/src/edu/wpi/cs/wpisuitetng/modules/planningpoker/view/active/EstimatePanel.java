@@ -70,15 +70,15 @@ public class EstimatePanel extends JPanel{
 	int sum = 0;
 	
 	//initializes the card Array
-	String cardArray[] = new String[8];
 	ArrayList<String> deck = new ArrayList<String>();
 	
 	//initializes the JToggleButton
-	final JToggleButton[] toggleButtonArray = new JToggleButton[8];
 	ArrayList<JToggleButton> JToggleButtonList = new ArrayList<JToggleButton>();
 	
-	
-	public EstimatePanel(Game game, Requirement requirement){ //add a deck of cards as a parameter
+	/*
+	 * If the ArrayList passed in is empty it will use the default deck
+	 */
+	public EstimatePanel(Game game, Requirement requirement, ArrayList<String> customDeck){ //add a deck of cards as a parameter
 		this.activeGame = game;
 		this.activeRequirement = requirement;
 		
@@ -138,36 +138,26 @@ public class EstimatePanel extends JPanel{
 		c.gridwidth = 2;
 		cardPanel.setPreferredSize(new Dimension(425, 50));
 		
-		//this is the array containing the default deck
-		cardArray = new String[] { "1", "1", "2", "3", "5", "8", "13", "0?" };
 		
-		
-		//if (customDeck.size() == 0) {
-		//generate fibonachi sequence
-		int firstnum = 0;
-		int secondnum = 1;
-		int currnum;
-		deck.add(Integer.toString(secondnum));
-		int Fibcount = 6; //if this is 6, the highest number generated will be 13
-		for (int i = 0; i < Fibcount; i++) {
-			currnum = firstnum + secondnum;
-			deck.add("" + currnum + "");
-			firstnum = secondnum;
-			secondnum = currnum; 
+		//This branch will be run if the default deck is to be used
+		if (customDeck.size() == 0) {
+			//generate fibonachi sequence
+			int firstnum = 0;
+			int secondnum = 1;
+			int currnum;
+			deck.add(Integer.toString(secondnum));
+			int Fibcount = 6; //if this is 6, the highest number generated will be 13
+			for (int i = 0; i < Fibcount; i++) {
+				currnum = firstnum + secondnum;
+				deck.add("" + currnum + "");
+				firstnum = secondnum;
+				secondnum = currnum; 
+			}
 		}
-		Fibcount++; //account for the fact the first element is added outside for loop
-		System.out.println("\n Element number "+ Fibcount + ": " + deck.get(6));
-		//}
-		//else {
-			//add other non-default deck
-		//}
-		/**
-		 * Creates and adds the 1st card to the view.
-		 * 
-		 */
-		//variable names for transition to variable size decks
-		//ArrayList<String> deck
-		//JToggleButtonList
+		//This branch will be run if a custom deck is to be used
+		else {
+			deck = customDeck;
+		}
 		
 		//initializes all the buttons and add them to the panel
 		for (int i = 0; i < deck.size(); i++) {

@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -223,7 +224,7 @@ public class ActiveGamesPanel extends JPanel {
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 4;
-		rightPanel.add(new EstimatePanel(game, requirement));
+		rightPanel.add(new EstimatePanel(game, requirement, new ArrayList<String>()));
 		rightPanel.validate();
 		rightPanel.revalidate();
 		rightPanel.repaint();
