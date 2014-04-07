@@ -30,7 +30,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.AddGameButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.LaunchGameButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveGameButtonPanel;
 
 /**
  * Used to create a new Planning Poker game using the input of a user
@@ -237,8 +238,9 @@ public class CreateGamePanel extends JPanel {
 		/**
 		 * Formats and adds the AddReqImportReqPanel
 		 */
-		c.insets = new Insets(0, 5, 0 ,0);
-		c.gridwidth = 10;
+		c.insets = new Insets(0, 150, 0 ,0);
+		c.gridwidth = 2;
+		c.gridx = 0;
 		c.gridy = 9;
 		c.gridheight = 1;
 		rightPanel.add(new AddReqImportReqPanel(addReqPan), c);
@@ -278,14 +280,26 @@ public class CreateGamePanel extends JPanel {
 		rightPanel.add(blankPanel4, c);
 		
 		/**
-		 * Formats and adds the AddGameButtonPanel
+		 * Formats and adds the SaveGameButtonPanel
+		 */
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 11;
+		c.insets = new Insets(0, 150, 0, 0);
+		rightPanel.add(new SaveGameButtonPanel(this), c);	
+		
+		
+		/**
+		 * Formats and adds the LaunchGameButtonPanel
 		 */
 		c.gridheight = 1;
 		c.gridx = 1;
-		c.gridwidth = 2;
+		c.gridwidth = 1;
 		c.gridy = 11;
 		c.insets = new Insets(0, 150, 0, 0);
-		rightPanel.add(new AddGameButtonPanel(this), c);	
+		rightPanel.add(new LaunchGameButtonPanel(this), c);	
+		
 		
 		/**
 		 * initializes and adds the scroll pane
@@ -381,9 +395,9 @@ public class CreateGamePanel extends JPanel {
 	}
 	
 	
-	public void AddGamePressed() {
+	public void SaveGamePressed() {
 		if(this.validateField(true)){
-			this.addGame();
+			this.saveGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 			System.out.println("Add Game Pressed Passed.");
@@ -469,7 +483,7 @@ public class CreateGamePanel extends JPanel {
 	/**
 	 * Adds the game to the model and to the server and sets it to inactive
 	 */
-	public void  addGame(){
+	public void  saveGame(){
 		String strName = this.getBoxName().getText();
 		String strDes = this.getBoxDescription().getText();
 		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
