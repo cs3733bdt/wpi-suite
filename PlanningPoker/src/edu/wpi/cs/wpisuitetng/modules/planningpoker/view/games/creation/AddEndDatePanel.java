@@ -4,6 +4,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import java.util.Date;
@@ -23,8 +24,10 @@ public class AddEndDatePanel extends JPanel {
 	private final JComboBox hourSelection = new JComboBox(hourArray);
 	private final JComboBox minuteSelection = new JComboBox(minuteArray);
 	private final JComboBox AmPmSelection = new JComboBox(AmPmArray);
+	private final JLabel endDateSelection = new JLabel("Select End Date:");
 	
 	public AddEndDatePanel(final CreateGamePanel view){
+		this.add(endDateSelection);
 		this.add(datePicker);
 		this.add(hourSelection);
 		this.add(minuteSelection);

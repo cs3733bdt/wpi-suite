@@ -176,16 +176,6 @@ public class CreateGamePanel extends JPanel {
 		descPane.setPreferredSize(new Dimension(400, 80));
 		nameAndDescPanel.add(descPane, c);
 		
-		/**
-		 * Blank Panel for formatting
-		 */
-		JPanel blankPanel2 = new JPanel();
-		blankPanel2.setMinimumSize(new Dimension(100, 25));
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 6;
-		blankPanel2.setPreferredSize(new Dimension(100, 25));
-		rightPanel.add(blankPanel2, c);
 		
 		/**
 		 * Panel for estimate radio buttons 
@@ -218,11 +208,14 @@ public class CreateGamePanel extends JPanel {
         /**
 		 * Blank Panel for formatting
 		 */
-        JPanel blankPanel3 = new JPanel();
+		JPanel blankPanel2 = new JPanel();
+		blankPanel2.setMinimumSize(new Dimension(100, 25));
+		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
-		c.gridy = 3;
+		c.gridy = 1;
 		c.gridwidth = 6;
-		blankPanel3.setPreferredSize(new Dimension(100, 25));
+		c.insets = new Insets(10, 0, 0, 0);
+		blankPanel2.setPreferredSize(new Dimension(100, 50));
 		addEndDatePan = new AddEndDatePanel(this);
 		rightPanel.add(blankPanel2, c);
 		blankPanel2.add(addEndDatePan, c);
