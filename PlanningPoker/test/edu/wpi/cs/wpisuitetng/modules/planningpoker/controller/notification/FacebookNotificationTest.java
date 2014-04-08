@@ -51,13 +51,18 @@ public class FacebookNotificationTest {
 		client = new FacebookNotification(g);
 	}
 	
+	@Test
+	public void testGetUserId() {
+		System.out.println(client.getUserId("dalton.tapply"));
+	}
+	
 	/**
 	 * 
 	 * @throws Exception
 	 */
 	@Test
 	public void testSendFacebookNotification() throws Exception {
-		//client.sendFacebookNotification(client.login(), u2);
+		client.sendFacebookNotification(client.login(), u2);
 	}
 
 	/**

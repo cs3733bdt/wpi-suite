@@ -16,6 +16,7 @@
 			<include name="miglayout-4.0-swing.jar"/>
 			<include name="swingx-all-1.6.4.jar"/>
 			<include name="smack-3.4.1-0cec571.jar" />
+			<include name="restfb-1.6.14.jar" />
 		</fileset>
 	</path>
 	<path id="test-classpath">
@@ -68,6 +69,7 @@
             <zipfileset src="./lib/jfreechart-1.0.14.jar"/>
 			<zipfileset src="./lib/javax.mail.jar"/>
 			<zipfileset src="./lib/smack-3.4.1-0cec571.jar" />
+			<zipfileset src="./lib/restfb-1.6.14.jar" />
 			<zipfileset src="${core-lib}/gson-2.2.2.jar" />
 			<zipfileset src="${core-lib}/commons-codec-1.7.jar" />
 		</jar>

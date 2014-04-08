@@ -16,6 +16,7 @@
 		<fileset dir="${janeway-lib}">
 			<include name="javax.mail.jar"/>
 			<include name="smack-3.4.1-0cec571.jar" />
+			<include name="restfb-1.6.14.jar" />
 		</fileset>
 		<pathelement path="build"/>
 	</path>
@@ -41,6 +42,7 @@
 			<fileset dir="build"/>
 			<zipfileset src="./lib/javax.mail.jar"/>
 			<zipfileset src="./lib/smack-3.4.1-0cec571.jar" />
+			<zipfileset src="restfb-1.6.14.jar" />
 			<fileset file="manifest.txt"/>
 		</jar>
 	</target>
