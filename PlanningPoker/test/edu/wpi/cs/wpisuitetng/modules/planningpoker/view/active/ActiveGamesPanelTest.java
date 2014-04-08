@@ -1,7 +1,5 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
-import static org.junit.Assert.*;
-
 import java.util.ArrayList;
 
 import org.junit.Before;
