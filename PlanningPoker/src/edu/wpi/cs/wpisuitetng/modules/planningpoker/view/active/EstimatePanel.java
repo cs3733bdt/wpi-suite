@@ -137,18 +137,18 @@ public class EstimatePanel extends JPanel{
 		 * Creates a panel for all the cards
 		 */
 		JPanel cardPanel = new JPanel();
-		cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.X_AXIS));
-		c.anchor = GridBagConstraints.CENTER;
+		//cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.X_AXIS));
+		//c.anchor = GridBagConstraints.PAGE_START;
 		c.gridx = 0;
 		c.gridy = 6;
 		c.gridwidth = 2;
-		cardPanel.setPreferredSize(new Dimension(500, 50));		//change from 500,50
+		cardPanel.setPreferredSize(new Dimension(650, 50));		//change from 500,50
 		overviewPanel.add(cardPanel, c);
 		
 		/**
 		 * Formatting purposes
 		 */
-		cardPanel.add(Box.createRigidArea(new Dimension(75,0)));
+		//cardPanel.add(Box.createRigidArea(new Dimension(75,0)));
 		
 		//This branch will be run if the default deck is to be used
 		if (customDeck.size() == 0) {
@@ -216,7 +216,7 @@ public class EstimatePanel extends JPanel{
 			JToggleButtonList.get(i).addActionListener(new CardActionListener(i, deck, JToggleButtonList, this));
 		}
 		
-		overviewPanel.add(cardPanel, c);
+		//overviewPanel.add(cardPanel, c);
 		
 		/**
 		 * The text area where the user types their estimate
