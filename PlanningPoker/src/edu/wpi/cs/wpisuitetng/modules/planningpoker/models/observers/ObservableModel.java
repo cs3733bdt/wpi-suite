@@ -91,7 +91,7 @@ public abstract class ObservableModel extends AbstractModel {
         if (o == null)
             throw new NullPointerException();
         if(o instanceof JPanel){
-        	if(panelObs.contains(o)){
+        	if(!panelObs.contains(o)){
         		panelObs.addElement((JPanel)o);
         	}
         }

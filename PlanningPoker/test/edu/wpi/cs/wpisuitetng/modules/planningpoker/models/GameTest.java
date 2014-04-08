@@ -122,8 +122,8 @@ public class GameTest {
 	
 	@Test
 	public void testCheckActive(){
-		Game game1 = new Game("Game 1", "Description", "Frank", null, true, true);
-		Game game2 = new Game("Game 2", "Other Description", "Alex", null, false, false);
+		Game game1 = new Game("Game 1", "Description", "Frank", new ArrayList<Requirement>(), true, true);
+		Game game2 = new Game("Game 2", "Other Description", "Alex", new ArrayList<Requirement>(), false, false);
 		game2.setComplete();
 		boolean complete1 = game1.isComplete();
 		boolean complete2 = game2.isComplete();
