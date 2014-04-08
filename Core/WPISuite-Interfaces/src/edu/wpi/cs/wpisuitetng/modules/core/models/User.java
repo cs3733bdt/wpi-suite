@@ -29,6 +29,7 @@ public class User extends AbstractModel
 	private String username;
 	private int idNum;
 	private String email;
+	private String facebookUsername;
 	private Role role;
 	
 	transient private String password; // excluded from serialization, still stored.
@@ -40,13 +41,14 @@ public class User extends AbstractModel
 	 * @param idNum	User's ID number
 	 * @param email User's email address
 	 */
-	public User(String name, String username, String password, String email, int idNum)
+	public User(String name, String username, String password, String email, String facebookUsername, int idNum)
 	{
 		this.name = name;
 		this.username = username;
 		this.password = password;
 		this.idNum = idNum;
 		this.email = email;
+		this.facebookUsername = facebookUsername;
 		this.role = Role.USER;
 	}
 	
@@ -73,6 +75,10 @@ public class User extends AbstractModel
 				}
 				
 				if(this.email != null && !this.email.equals(((User)other).email)) {
+					return false;
+				}
+				
+				if(this.facebookUsername != null && !this.facebookUsername.equals(((User)other).facebookUsername)) {
 					return false;
 				}
 				
@@ -131,6 +137,10 @@ public class User extends AbstractModel
 	public String getEmail()
 	{
 		return email;
+	}
+	
+	public String getFacebookUsername(){
+		return facebookUsername;
 	}
 	
 	/* database interaction */
@@ -237,6 +247,11 @@ public class User extends AbstractModel
 	
 	public User setEmail(String newEmail) {
 		this.email = newEmail;
+		return this;
+	}
+	
+	public User setFacebookUsername(String newFacebookUsername){
+		this.facebookUsername = newFacebookUsername;
 		return this;
 	}
 	

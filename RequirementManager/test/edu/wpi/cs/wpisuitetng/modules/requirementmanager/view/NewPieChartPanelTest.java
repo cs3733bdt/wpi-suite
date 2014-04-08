@@ -60,8 +60,8 @@ public class NewPieChartPanelTest {
 		vec.setOverviewTable(new OverviewTable(exData, exData[0]));
 		vec.setToolBar(new ToolbarView(true));
 		
-		bob = new User("bob", "bob", "1234", "email@email.com", 27);
-		sue = new User("sue", "sue", "4321", "email@email.com", 26);
+		bob = new User("bob", "bob", "1234", "email@email.com", "fbTest", 27);
+		sue = new User("sue", "sue", "4321", "email@email.com", "fbTest", 26);
 	
 		req1 = new Requirement(1,  "reqName", "The description");
 		req2 = new Requirement(2, "anotherReq", "another description");
