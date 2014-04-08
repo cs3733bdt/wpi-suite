@@ -62,10 +62,17 @@ public class EstimatePanel extends JPanel{
 	
 	
 	public EstimatePanel(Game game, Requirement requirement){
+		super(new GridBagLayout());
+
+		this.setMinimumSize(new Dimension(580, 200));
+		this.repaint();
+		this.invalidate();
+		this.revalidate();
+		
 		this.activeGame = game;
 		this.activeRequirement = requirement;
 		
-		this.overviewPanel =  new Container();
+		//this.overviewPanel =  new Container();
 		overviewPanel.setLayout(new GridBagLayout());
 
 		GridBagConstraints c = new GridBagConstraints();
@@ -90,22 +97,27 @@ public class EstimatePanel extends JPanel{
 		userStoryDesc.setFont(bigFont);
 		userStoryDesc.setLineWrap(true);
 		userStoryDesc.setEditable(false);
+		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 4;
+		c.weightx = 1;
+		c.weighty = 1;
 		userStoryPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		userStoryPane.setPreferredSize(new Dimension(500, 150));
-		userStoryPane.setMaximumSize(new Dimension(500, 150));
+		userStoryPane.setMinimumSize(new Dimension(580, 150));
+		userStoryPane.setPreferredSize(new Dimension(580, 150));
 		overviewPanel.add(userStoryPane, c);
 
 		/**
 		 * Blank Panel for formatting purposes
 		 */
 		JPanel blankPanel0 = new JPanel();
+		c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 5;
 		c.gridwidth = 2;
-		blankPanel0.setPreferredSize(new Dimension(500, 10));
+		blankPanel0.setMinimumSize(new Dimension(450, 10));
+		blankPanel0.setPreferredSize(new Dimension(450, 10));
 		overviewPanel.add(blankPanel0, c);
 		
 		/**
@@ -114,16 +126,18 @@ public class EstimatePanel extends JPanel{
 		JPanel cardPanel = new JPanel();
 		cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.X_AXIS));
 		c.anchor = GridBagConstraints.CENTER;
+		c.weightx = 1;
 		c.gridx = 0;
 		c.gridy = 6;
 		c.gridwidth = 2;
-		cardPanel.setPreferredSize(new Dimension(500, 50));		
+		cardPanel.setMinimumSize(new Dimension(575, 50));	
+		cardPanel.setPreferredSize(new Dimension(575, 50));		
 		overviewPanel.add(cardPanel, c);
 		
 		/**
 		 * Formatting purposes
 		 */
-		cardPanel.add(Box.createRigidArea(new Dimension(75,0)));
+		cardPanel.add(Box.createRigidArea(new Dimension(100,0)));
 		
 		/**
 		 * Creates and adds the 1st card to the view.
@@ -177,8 +191,10 @@ public class EstimatePanel extends JPanel{
 		 * The text area where the user types their estimate
 		 */
 		estText.setText("Estimate Here");
+		estText.setMinimumSize(new Dimension(100, 50));
 		estText.setPreferredSize(new Dimension(100, 50));
 		c.anchor = GridBagConstraints.CENTER;
+		c.weightx = 1;
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 6;
@@ -191,17 +207,13 @@ public class EstimatePanel extends JPanel{
 		
 		overviewPanel.add(estText, c);
 		
-		overviewPanel.validate();
-		overviewPanel.revalidate();
-		overviewPanel.invalidate();
-		overviewPanel.repaint();
-		
 		/**
 		 * The label for the counter
 		 */
 		JLabel counterLabel = new JLabel("Your current estimate total: ");
-		c.anchor = GridBagConstraints.LINE_END;
-		c.insets = new Insets(0, 77, 0, 0);
+		c.anchor = GridBagConstraints.CENTER;
+		c.insets = new Insets(0, 75, 0, 0);
+		c.weightx = 0;
 		c.gridx = 0;
 		c.gridwidth = 1;
 		c.gridy = 7;
@@ -211,11 +223,14 @@ public class EstimatePanel extends JPanel{
 		 * Formats and adds the counter for the card estimates
 		 */
 		counter.setText("0");
-		counter.setPreferredSize(new Dimension(25, 25));
+		counter.setBorder(defaultBorder);
+		counter.setMinimumSize(new Dimension(35, 20));
+		counter.setPreferredSize(new Dimension(35, 20));
 		counter.setLineWrap(true);
 		counter.setEditable(false);
 		c.insets = new Insets(0, 0, 0, 0);
 		c.anchor = GridBagConstraints.CENTER;
+		c.weightx = 0;
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 7;
@@ -237,7 +252,19 @@ public class EstimatePanel extends JPanel{
 			but6.setVisible(false);
 			but7.setVisible(false);
 		}
-
+		
+		/**
+		 * Blank Panel for formatting purposes
+		 */
+		JPanel blankPanel1 = new JPanel();
+		c.weightx = 0;
+		c.gridx = 0;
+		c.gridy = 8;
+		c.gridwidth = 2;
+		blankPanel1.setMinimumSize(new Dimension(450, 15));
+		blankPanel1.setPreferredSize(new Dimension(450, 15));
+		overviewPanel.add(blankPanel1, c);
+		
 		/**
 		 * The submit button for when the user is ready to submit the estimate
 		 */
@@ -247,10 +274,11 @@ public class EstimatePanel extends JPanel{
 				submitEstimatePressed();
 			}
 		});
-
+		
+		c.weightx = 0;
 		c.gridwidth = 2;
 		c.gridx = 0;
-		c.gridy = 8;
+		c.gridy = 9;
 		overviewPanel.add(submitEstimate, c);
 
 		/**
@@ -258,12 +286,25 @@ public class EstimatePanel extends JPanel{
 		 */
 		errorField = new JLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
+		errorField.setPreferredSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
+		c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 9;
 		overviewPanel.add(errorField, c);
 		
-		this.add(overviewPanel);
+		c.insets= new Insets(0, 0, 0, 0);
+		c.gridwidth = 10;
+		c.gridheight = 2;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 1;
+		this.add(overviewPanel, c);
+		
+		this.setMinimumSize(new Dimension(580, 200));
+		this.repaint();
+		this.invalidate();
+		this.revalidate();
 
 	}
 	

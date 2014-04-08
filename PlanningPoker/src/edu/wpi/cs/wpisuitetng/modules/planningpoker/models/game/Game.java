@@ -201,7 +201,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	/**
-	 * Constructs a Game without a creation time
+	 * Constructs a Game with a creation time
 	 * @param name the name of the game
 	 * @param description the description of the game
 	 * @param creator the name of the user who created the game
@@ -248,7 +248,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	public boolean isComplete(){
 		return complete;
 	}
-	
+
 	/**
 	 * Change game status to complete
 	 * @return true if the game is complete
@@ -289,6 +289,14 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public String getCreator() {
 		return creator;
+	}
+	
+	/**
+	 * Get the number of all users
+	 * @return the number of all users
+	 */
+	public int getUsers(){
+		return this.getProject().getTeam().length;
 	}
 	
 	/**
