@@ -132,7 +132,7 @@ function phoneNumberChange()
 	var user = new Object();
 	user.username = document.getElementById("phonechangeusername").value;
 	user.phoneNumber = document.getElementById("phoneNumber").value;
-	user.carrier = document.getElementById("carrierselector").options[document.getElementById("carrierselector").selectedIndex].value;
+	user.carrier = document.getElementById("carrierSelector").options[document.getElementById("carrierSelector").selectedIndex].value;
 	
 	var juser = JSON.stringify(user);
 	if(user.username == "")
