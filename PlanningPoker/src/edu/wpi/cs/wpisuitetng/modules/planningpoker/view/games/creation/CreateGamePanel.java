@@ -246,7 +246,7 @@ public class CreateGamePanel extends JPanel {
 		c.weighty = .5;
 		addReqPan = new AddRequirementsPanel(this);
 		c.weightx = 1;
-		AddRequirementsPanel addReqPan = new AddRequirementsPanel(this);
+		addReqPan = new AddRequirementsPanel(this);
 		rightPanel.add(addReqPan, c);	
 		
 		/**
