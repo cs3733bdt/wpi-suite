@@ -81,6 +81,8 @@ public class GameModelTest {
 	@Test
 	public void testUpdateGameListWithAllFields(){
 		GameModel model = GameModel.getInstance();
+		model.emptyModel();
+		assertEquals(0, model.getSize());
 		
 		ArrayList<Requirement> reqs = new ArrayList<Requirement>();
 		reqs.add(new Requirement("Requirement", "Description"));

@@ -475,11 +475,11 @@ public class CreateGamePanel extends JPanel {
 
 		//Updates an existing game
 		if(currentGame == null){
-			Game newGame = new Game(strName, strDes, creator, requ, false, usesCards, false);
+			Game newGame = new Game(strName, strDes, creator, requ, false, usesCards);
 			currentGame = newGame;
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
 		} else{
-			Game newGame = new Game(strName, strDes, creator, requ, false, usesCards, false);
+			Game newGame = new Game(strName, strDes, creator, requ, false, usesCards);
 			newGame.setIdentifier(currentGame.getIdentity()); 	//Copies the UUID over to the new game
 			currentGame.copyFrom(newGame);
 			currentGame.hasChanged();
@@ -502,11 +502,11 @@ public class CreateGamePanel extends JPanel {
 		boolean usesCards = doesUseCards();
 		
 		if(currentGame == null){
-			Game newGame = new Game(strName, strDes, creator, requ, false, usesCards, true);
+			Game newGame = new Game(strName, strDes, creator, requ, false, usesCards);
 			currentGame = newGame;
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
 		} else{
-			Game newGame = new Game(strName, strDes, creator, requ, false, usesCards, true);
+			Game newGame = new Game(strName, strDes, creator, requ, false, usesCards);
 			newGame.setIdentifier(currentGame.getIdentity()); 	//Copies the UUID over to the new game
 			currentGame.copyFrom(newGame);						//Copies the entirety of this game into the other game
 		}

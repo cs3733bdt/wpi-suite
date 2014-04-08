@@ -188,7 +188,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @param usesCards checks if the game uses cards or text entry
 	 * 
 	 */
-	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, boolean active) {
+	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards) {
 		this(); //Calls the default constructor
 		this.name = name;
 		this.description = description;
@@ -196,7 +196,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
 		this.usesCards = usesCards;
-		this.active = active;
 
 	}
 	
