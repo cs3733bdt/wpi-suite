@@ -193,6 +193,9 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this.creator = creator;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
+		for(Requirement req : this.requirements){
+			req.addObserver(this);
+		}
 		this.usesCards = usesCards;
 
 	}
