@@ -1,7 +1,5 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
-import java.awt.Dimension;
-
 import javax.swing.BoxLayout;
 import javax.swing.JPanel;
 

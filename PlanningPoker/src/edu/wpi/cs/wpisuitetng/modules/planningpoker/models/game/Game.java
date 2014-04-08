@@ -188,16 +188,34 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @param usesCards checks if the game uses cards or text entry
 	 * 
 	 */
-	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, boolean active) {
+	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards) {
 		this(); //Calls the default constructor
 		this.name = name;
 		this.description = description;
 		this.creator = creator;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
+		for(Requirement req : this.requirements){
+			req.addObserver(this);
+		}
 		this.usesCards = usesCards;
-		this.active = active;
 
+	}
+	
+	/**
+	 * Constructs a Game with a creation time
+	 * @param name the name of the game
+	 * @param description the description of the game
+	 * @param creator the name of the user who created the game
+	 * @param hasTimeLimit checks if game has a time limit
+	 * @param requirements the list of requirements for the game
+	 * @param usesCards checks if the game uses cards or text entry
+	 * @param creationTime the data and time a game is created on
+	 * 
+	 */
+	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, Date creationTime) {
+		this(name, description, creator, requirements, hasTimeLimit, usesCards); //Calls the default constructor
+		this.creationTime = creationTime;
 	}
 	
 	/**
@@ -232,7 +250,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	public boolean isComplete(){
 		return complete;
 	}
-	
+
 	/**
 	 * Change game status to complete
 	 * @return true if the game is complete
@@ -273,6 +291,14 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public String getCreator() {
 		return creator;
+	}
+	
+	/**
+	 * Get the number of all users
+	 * @return the number of all users
+	 */
+	public int getUsers(){
+		return this.getProject().getTeam().length;
 	}
 	
 	/**
