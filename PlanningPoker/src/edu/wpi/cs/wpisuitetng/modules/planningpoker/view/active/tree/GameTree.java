@@ -147,7 +147,12 @@ public class GameTree extends JScrollPane implements MouseListener{
 				if(node != null) {
 					if(node.getUserObject() instanceof Game){ 		//Make sure that this is actually a game
 						System.out.println("Setting view to game: " + ((Game)node.getUserObject()).toString());
-						ViewEventController.getInstance().joinGame((Game)node.getUserObject());
+						if(((Game)node.getUserObject()).isActive()){
+							ViewEventController.getInstance().joinGame((Game)node.getUserObject());
+						}
+						else{
+							ViewEventController.getInstance().editGame((Game)node.getUserObject());
+						}
 					}
 				}
 			}

@@ -32,6 +32,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requireme
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.LaunchGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveGameButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveGameButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
  * Used to create a new Planning Poker game using the input of a user
@@ -39,16 +42,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveGameButtonP
  * @author jonathanleitschuh
  *
  */
-public class CreateGamePanel extends JPanel {
-	
-	//THIS IS THE REQUIREMENT NAME FIELD THAT WILL BE NEEDED FOR CONTROLLER
-	private JTextArea nameArea = new JTextArea();
-	
-	//THIS IS THE REQUIREMENT DESCRIPTION FIELD THAT WILL BE NEEDED FOR CONTROLLER
-	private JTextArea descArea = new JTextArea();
-	
+public class CreateGamePanel extends JPanel {	
 	/** Shows the names of the errors*/
-	JLabel errorField;
+	private ErrorLabel errorField;
 	
 	/** Field Border Definitions*/
 	private final Border defaultBorder = (new JTextField()).getBorder();
@@ -60,7 +56,7 @@ public class CreateGamePanel extends JPanel {
 	private boolean readyToClose = false;
 	private boolean readyToRemove = true; //The window starts off ready to remove because no changes have happened
 	
-	private JTextField nameTextField;
+	private NameJTextField nameTextField;
 	private JTextArea descriptionTextField;
 	
 	private Game currentGame;
@@ -71,14 +67,25 @@ public class CreateGamePanel extends JPanel {
 	
 	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
 	
+	private AddRequirementsPanel addReqPan; 
 	
 	/**
 	 * Constructor for creating a game
 	 */
 	public CreateGamePanel(){
 		super(new GridBagLayout());
+		build();
+	}
+	
+	public CreateGamePanel(Game game){
+		super(new GridBagLayout());
+		build();
+		this.currentGame = game; 
+	}
+	
+	public void build(){
 		GridBagConstraints c = new GridBagConstraints();
-		nameTextField = new JTextField(30);	
+		nameTextField = new NameJTextField(30);	
 		descriptionTextField = new JTextArea();
 		descriptionTextField.setLineWrap(true);
 		
@@ -232,7 +239,7 @@ public class CreateGamePanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 4;
 		c.weighty = .5;
-		AddRequirementsPanel addReqPan = new AddRequirementsPanel(this);
+		addReqPan = new AddRequirementsPanel(this);
 		rightPanel.add(addReqPan, c);	
 		
 		/**
@@ -259,7 +266,7 @@ public class CreateGamePanel extends JPanel {
 		/**
 		 * label for displaying errors
 		 */
-		errorField= new JLabel();
+		errorField= new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
 		c.gridx = 2;
@@ -366,55 +373,43 @@ public class CreateGamePanel extends JPanel {
 		return this.descriptionTextField.getText();
 	}
 	
-	
-	
-	
 	public void addRequirement(Requirement newReq){
 		this.requirements.add(newReq);
 	}
-	
-	
-	/**
-	 * Getter for the Requirement Name text entry
-	 * @return nameArea
-	 */
-	public JTextArea getReqNameArea() {
-		return nameArea;
-	}
-	
-	/**
-	 * Getter for the Requirement Description text entry
-	 * @return descArea
-	 */
-	public JTextArea getReqDescArea() {
-		return descArea;
-	}
-	
+		
 	public ArrayList<Requirement> getRequirements(){
 		return this.requirements;
 	}
 	
 	
-	public void SaveGamePressed() {
+	/**
+	 * Triggered when the add game button is pressed using the mouse listener
+	 * @return true when a game is sucsessfully added
+	 */
+	public boolean SaveGamePressed() {
 		if(this.validateField(true)){
 			this.saveGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 			System.out.println("Add Game Pressed Passed.");
+			return true;
 		} else {
 			System.out.println("Add Game Pressed Failed.");
+			return false;
 		}
 		
 	}
 	
-	public void LaunchGamePressed() {
+	public boolean LaunchGamePressed() {
 		if(this.validateField(true)){
 			this.launchGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 			System.out.println("Launch Game Pressed Passed.");
+			return true;
 		} else {
 			System.out.println("Launch Game Pressed Failed.");
+			return false;
 		}
 		
 	}
@@ -431,29 +426,7 @@ public class CreateGamePanel extends JPanel {
 		boolean isDescriptionValid = false;
 		boolean areRequirementsSelected = false;
 		
-		//BEGIN NAME BOX VALIDATION
-		if(getBoxName().getText().length() >=100){
-			isNameValid = false;
-			getBoxName().setBorder(errorBorder);
-			//getErrorName().setForeground(Color.RED);
-			displayError("Name can be no more than 100 chars.");
-		} else if(getBoxName().getText().length() <= 0){
-			isNameValid = false;
-			if(warn){
-				//getErrorName().setText("** Name is REQUIRED");
-				getBoxName().setBorder(errorBorder);
-				//getErrorName().setForeground(Color.RED);
-			}
-			
-			displayError("Name is required");
-		} else {
-			if (warn){
-				//getErrorName().setText("");
-				getBoxName().setBorder(defaultBorder);
-			}
-			isNameValid = true;
-		}
-		//END NAME BOX VALIDATION
+		isNameValid = getBoxName().verifyField(errorField);
 		
 		//BEGIN DESCRIPTION BOX VALDATION
 		if(getBoxDescription().getText().length() <= 0){
@@ -488,14 +461,24 @@ public class CreateGamePanel extends JPanel {
 		String strDes = this.getBoxDescription().getText();
 		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
 		ArrayList<Requirement> requ = getRequirements();
-		boolean usesCards = doesUseCards();
-		
-		currentGame = new Game(strName, strDes, creator, requ, false, usesCards, false);
-		
-		GameModel.getInstance().addGame(currentGame);
+		boolean usesCards = doesUseCards();		
+
+		//Updates an existing game
+		if(currentGame == null){
+			Game newGame = new Game(strName, strDes, creator, requ, false, usesCards, false);
+			currentGame = newGame;
+			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
+		} else{
+			Game newGame = new Game(strName, strDes, creator, requ, false, usesCards, false);
+			newGame.setIdentifier(currentGame.getIdentity()); 	//Copies the UUID over to the new game
+			currentGame.copyFrom(newGame);
+			currentGame.hasChanged();
+			currentGame.notifyObservers();
+		}
 		
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
+		
 	}
 	
 	/**
@@ -508,22 +491,34 @@ public class CreateGamePanel extends JPanel {
 		ArrayList<Requirement> requ = getRequirements();
 		boolean usesCards = doesUseCards();
 		
-		currentGame = new Game(strName, strDes, creator, requ, false, usesCards, true);
-		
-		GameModel.getInstance().addGame(currentGame);
+		if(currentGame == null){
+			Game newGame = new Game(strName, strDes, creator, requ, false, usesCards, true);
+			currentGame = newGame;
+			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
+		} else{
+			Game newGame = new Game(strName, strDes, creator, requ, false, usesCards, true);
+			newGame.setIdentifier(currentGame.getIdentity()); 	//Copies the UUID over to the new game
+			currentGame.copyFrom(newGame);						//Copies the entirety of this game into the other game
+		}
 		
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 	}
 	
-	
-
-	public JTextField getBoxName(){
+	public NameJTextField getBoxName(){
 		return nameTextField;
 	}
 	
-	private JTextArea getBoxDescription() {
+	public void setBoxName(String newName){
+		this.nameTextField.setText(newName);
+	}
+	
+	public JTextArea getBoxDescription() {
 		return descriptionTextField;
+	}
+	
+	public void setBoxDescription(String newDescription){
+		this.descriptionTextField.setText(newDescription);
 	}
 	
 	public JLabel getErrorName(){
@@ -532,15 +527,31 @@ public class CreateGamePanel extends JPanel {
 		return null;
 	}
 	
+	public AddRequirementsPanel getAddReqPan(){
+		return this.addReqPan;
+	}
 	
 	public boolean doesUseCards(){
 		return cardsButton.isSelected();
 	}
 	
-	
-	
 	public void displayError(String error){
 		errorField.setText(error);
+	}
+	
+	public Game getGame(){
+		return this.currentGame;
+	}
+	
+	public void setUsesCards(boolean usesCards){
+		if(usesCards){
+			this.cardsButton.setSelected(true);
+			this.textEntryButton.setSelected(false);
+		}
+		else{
+			this.cardsButton.setSelected(false);
+			this.textEntryButton.setSelected(true);
+		}
 	}
 	
 	public static void main(String args[]){
