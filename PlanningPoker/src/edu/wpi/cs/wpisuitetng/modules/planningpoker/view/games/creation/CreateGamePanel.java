@@ -8,6 +8,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -175,7 +176,6 @@ public class CreateGamePanel extends JScrollPane {
 		 * Adding and configuring the description
 		 */
 		c.weightx = 1;
-		c.weighty = 1;
 		c.gridx = 1;
 		c.gridy = 3;
 		c.gridwidth = 1;
@@ -243,8 +243,8 @@ public class CreateGamePanel extends JScrollPane {
 		 * Formats and adds the AddReqImportReqPanel
 		 */
 		c.gridwidth = 6;
-		c.gridy = 5;
 		c.gridx = 0;
+		c.gridy = 5;
 		// c.gridheight = 1;
 		// c.weightx = 1;
 		rightPanel.add(new AddReqImportReqPanel(addReqPan), c);
@@ -254,15 +254,15 @@ public class CreateGamePanel extends JScrollPane {
 		 */
 		JPanel blankPanel5 = new JPanel();
 		c.gridx = 0;
-		c.gridy = 6;
 		c.gridwidth = 6;
 		// c.gridheight = 1;
 		c.weightx = 0;
 		blankPanel5.setMinimumSize(new Dimension(100, 25));
 		rightPanel.add(blankPanel5, c);
-
+		
 		/**
-		 * Formats and adds the AddGameButtonPanel
+		 * ADS THE SAVE GAME PANEL
+		 * 
 		 */
 		// c.gridheight = 1;
 		c.gridx = 1;
@@ -306,6 +306,7 @@ public class CreateGamePanel extends JScrollPane {
 		 * c.gridwidth = 6; c.gridheight = 2; c.gridx = 0; c.gridy = 0;
 		 * c.weightx = 1; //this.add(rightPanel, c);
 		 */
+		
 
 		this.getViewport().add(rightPanel);
 	}
