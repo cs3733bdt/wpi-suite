@@ -128,7 +128,8 @@ public class AddRequirementsPanel extends JPanel {
 		 */
 		c.gridx = 1;
 		c.gridy = 1;
-		nameArea.setPreferredSize(new Dimension(75, 25));
+		//nameArea.setPreferredSize(new Dimension(75, 25));
+		nameArea.setMinimumSize(new Dimension(75, 25));
 		createReqPanel.add(nameArea, c);
 		
 		/**
