@@ -40,7 +40,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CardActionListener;
 
 public class EstimatePanel extends JPanel{
 	Game activeGame;
@@ -143,7 +142,7 @@ public class EstimatePanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 6;
 		c.gridwidth = 2;
-		cardPanel.setPreferredSize(new Dimension(500, 50));		
+		cardPanel.setPreferredSize(new Dimension(500, 50));		//change from 500,50
 		overviewPanel.add(cardPanel, c);
 		
 		/**
@@ -172,11 +171,21 @@ public class EstimatePanel extends JPanel{
 			deck = customDeck; 
 		}
 		//initializes all the buttons and add them to the panel
-		for (int i = 0; i < deck.size(); i++) {
-			JToggleButtonList.add(new JToggleButton(deck.get(i)));
-			cardPanel.add(JToggleButtonList.get(i));
-		}
-		JToggleButtonList.add(new JToggleButton("0?")); //"I don't know" button hardcoded
+		 try {
+			 Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
+			 Image backImg =  ImageIO.read(getClass().getResource("card_back.png"));
+
+			 for (int i = 0; i < deck.size(); i++) {
+				 this.JToggleButtonList.add(new JToggleButton(deck.get(i)));
+				 
+				 this.JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+			//	 this.JToggleButtonList.get(i).setDisabledIcon(new ImageIcon(backImg));
+				 cardPanel.add(JToggleButtonList.get(i));
+			 }
+		 } catch (IOException ex) {}
+		 
+		//"I don't know" button hardcoded
+		JToggleButtonList.add(new JToggleButton("0?")); 
 		cardPanel.add(JToggleButtonList.get(deck.size()));
 		
 		//adds the button to clear all entered estimates
@@ -188,12 +197,17 @@ public class EstimatePanel extends JPanel{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				memoryArray.clear();
-				for (int i = 0; i < (JToggleButtonList.size()); i++){
-					if (JToggleButtonList.get(i).isSelected()){
-						JToggleButtonList.get(i).doClick();
+				try {
+					Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
+					Image backImg =  ImageIO.read(getClass().getResource("card_back.png"));
+					for (int i = 0; i < (JToggleButtonList.size()); i++){
+						if (JToggleButtonList.get(i).isSelected()){
+							JToggleButtonList.get(i).doClick();
+							JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+						}
 					}
-				}
-				sum = 0;
+					sum = 0;
+				} catch (IOException ex) {}
 			}
 		});	
 		
@@ -277,7 +291,8 @@ public class EstimatePanel extends JPanel{
 
 		c.gridwidth = 2;
 		c.gridx = 0;
-		c.gridy = 8;
+		c.gridy = 8; //changed 8 to 9
+	    //c.insets = new Insets(50, 0, 0, 0); ///uncomment to make submit estimate 
 		overviewPanel.add(submitEstimate, c);
 
 		/**
@@ -286,6 +301,7 @@ public class EstimatePanel extends JPanel{
 		errorField = new JLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
+		c.insets = new Insets(0, 0, 0, 0);
 		c.gridx = 0;
 		c.gridy = 9;
 		overviewPanel.add(errorField, c);
