@@ -34,8 +34,8 @@ public class SaveGameButtonPanel extends ToolbarGroupView{
 		this.saveGameButton.setPreferredSize(new Dimension(150, 50));
 		//this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		this.setPreferredSize(new Dimension(200,50));
-		this.addGameButton.setHorizontalAlignment(SwingConstants.CENTER);
-		this.addGameButton.setPreferredSize(new Dimension(125, 25));
+		this.saveGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+		this.saveGameButton.setPreferredSize(new Dimension(125, 25));
 		
 		// the action listener for the Create Game Button
 		setupActionListeners();

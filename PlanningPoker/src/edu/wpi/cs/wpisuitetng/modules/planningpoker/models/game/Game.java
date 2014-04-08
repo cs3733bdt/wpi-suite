@@ -320,6 +320,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return this.active;
 	}
 	
+	public void setActive(boolean newActive){
+		this.active = newActive;
+	}
+	
 	@Override
 	public String toString(){
 		return name;

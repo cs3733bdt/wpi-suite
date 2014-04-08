@@ -29,6 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.LaunchGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
@@ -42,13 +43,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * 
  */
 public class CreateGamePanel extends JScrollPane {
-
-	// THIS IS THE REQUIREMENT NAME FIELD THAT WILL BE NEEDED FOR CONTROLLER
-	private JTextArea nameArea = new JTextArea();
-
-	// THIS IS THE REQUIREMENT DESCRIPTION FIELD THAT WILL BE NEEDED FOR
-	// CONTROLLER
-	private JTextArea descArea = new JTextArea();
 
 	/** Shows the names of the errors */
 	private ErrorLabel errorField;
@@ -76,11 +70,18 @@ public class CreateGamePanel extends JScrollPane {
 
 	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
 
+	AddRequirementsPanel addReqPan;
+	
 	/**
 	 * Constructor for creating a game
 	 */
 	public CreateGamePanel() {
 		build();
+	}
+	
+	public CreateGamePanel(Game game){
+		build();
+		this.currentGame = game;
 	}
 
 	private void build() {
@@ -236,7 +237,7 @@ public class CreateGamePanel extends JScrollPane {
 		c.gridx = 0;
 		c.gridy = 4;
 		// c.weightx = 1;
-		AddRequirementsPanel addReqPan = new AddRequirementsPanel(this);
+		addReqPan = new AddRequirementsPanel(this);
 		rightPanel.add(addReqPan, c);
 
 		/**
@@ -261,16 +262,25 @@ public class CreateGamePanel extends JScrollPane {
 		rightPanel.add(blankPanel5, c);
 		
 		/**
-		 * ADS THE SAVE GAME PANEL
-		 * 
+		 * Formats and adds the SaveGameButtonPanel
 		 */
-		// c.gridheight = 1;
+		c.gridheight = 1;
+		c.gridx = 0;
+		c.gridwidth = 1;
+		c.gridy = 11;
+		c.insets = new Insets(0, 150, 0, 0);
+		rightPanel.add(new SaveGameButtonPanel(this), c);	
+		
+		
+		/**
+		 * Formats and adds the LaunchGameButtonPanel
+		 */
+		c.gridheight = 1;
 		c.gridx = 1;
-		c.gridwidth = 2;
-		c.gridy = 7;
-		// c.insets = new Insets(0, 150, 0, 0);
-		c.weightx = 1;
-		rightPanel.add(new SaveGameButtonPanel(this), c);
+		c.gridwidth = 1;
+		c.gridy = 11;
+		c.insets = new Insets(0, 150, 0, 0);
+		rightPanel.add(new LaunchGameButtonPanel(this), c);
 
 		/**
 		 * Panel to add error label
@@ -373,36 +383,19 @@ public class CreateGamePanel extends JScrollPane {
 		this.requirements.add(newReq);
 	}
 
-	/**
-	 * Getter for the Requirement Name text entry
-	 * 
-	 * @return nameArea
-	 */
-	public JTextArea getReqNameArea() {
-		return nameArea;
-	}
-
-	/**
-	 * Getter for the Requirement Description text entry
-	 * 
-	 * @return descArea
-	 */
-	public JTextArea getReqDescArea() {
-		return descArea;
-	}
-
 	public ArrayList<Requirement> getRequirements() {
 		return this.requirements;
 	}
 
+
+	
 	/**
-	 * Triggered when the add game button is pressed using the mouse listener
-	 * 
+	 * Triggered when the save game button is pressed using the mouse listener
 	 * @return true when a game is sucsessfully added
 	 */
-	public boolean AddGamePressed() {
-		if (this.validateField(true)) {
-			this.addGame();
+	public boolean SaveGamePressed() {
+		if(this.validateField(true)){
+			this.saveGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 			System.out.println("Add Game Pressed Passed.");
@@ -411,117 +404,176 @@ public class CreateGamePanel extends JScrollPane {
 			System.out.println("Add Game Pressed Failed.");
 			return false;
 		}
-
+		
+	}
+	
+	public boolean LaunchGamePressed() {
+		if(this.validateField(true)){
+			this.launchGame();
+			readyToClose = true;
+			ViewEventController.getInstance().removeTab(this);
+			System.out.println("Launch Game Pressed Passed.");
+			return true;
+		} else {
+			System.out.println("Launch Game Pressed Failed.");
+			return false;
+		}
+		
 	}
 
 	/**
-	 * Checks all fields to determine if they are prepared to be removed. If a
-	 * field is invalid the it warns the user with a notification and by
-	 * highlighting the offending box on the GUI.
-	 * 
-	 * @param warn
-	 *            Whether to warn the user via coloring texboxes and warning
-	 *            labels
-	 * @return true If all fields are valid and the window is ready to be
-	 *         removed
+	 * Checks all fields to determine if they are prepared to be removed.
+	 * If a field is invalid the it warns the user with a notification and by highlighting
+	 * the offending box on the GUI.
+	 * @param warn Whether to warn the user via coloring texboxes and warning labels
+	 * @return true If all fields are valid and the window is ready to be removed
 	 */
 	private boolean validateField(boolean warn) {
 		boolean isNameValid = false;
 		boolean isDescriptionValid = false;
 		boolean areRequirementsSelected = false;
-
+		
 		isNameValid = getBoxName().verifyField(errorField);
-
-		// BEGIN DESCRIPTION BOX VALDATION
-		if (getBoxDescription().getText().length() <= 0) {
+		
+		//BEGIN DESCRIPTION BOX VALDATION
+		if(getBoxDescription().getText().length() <= 0){
 			isDescriptionValid = false;
-			if (warn) {
-				// getErrorDescription().setText("** Description is REQUIRED");
+			if(warn){
+				//getErrorDescription().setText("** Description is REQUIRED");
 				getBoxDescription().setBorder(errorBorder);
-				// getErrorDescription().setForeground(Color.RED);
+				//getErrorDescription().setForeground(Color.RED);
 			}
-			// TODO add a way to display error descriptions
+			//TODO add a way to display error descriptions
 			displayError("Description is required");
 		} else {
-			if (warn) {
-				// getErrorDescription().setText("");
+			if (warn){
+				//getErrorDescription().setText("");
 				getBoxDescription().setBorder(defaultBorder);
 			}
 			isDescriptionValid = true;
 		}
-
-		// TODO check if a valid game(s) are selected here
+		
+		//TODO check if a valid game(s) are selected here
 		areRequirementsSelected = true;
-
+		
+		
 		return (isNameValid && isDescriptionValid && areRequirementsSelected);
 	}
-
+	
 	/**
-	 * Adds the game to the model and to the server
+	 * Adds the game to the model and to the server and sets it to inactive
 	 */
-	public void addGame() {
+	public void  saveGame(){
 		String strName = this.getBoxName().getText();
 		String strDes = this.getBoxDescription().getText();
-		String creator = ConfigManager.getConfig().getUserName(); // Gets the
-																	// currently
-																	// active
-																	// user
+		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
 		ArrayList<Requirement> requ = getRequirements();
-		boolean usesCards = doesUseCards();
+		boolean usesCards = doesUseCards();		
 
-		// Updates an existing game
-		Game newGame = new Game(strName, strDes, creator, requ, false,
-				usesCards);
-		if (currentGame == null) {
+		Game newGame = new Game(strName, strDes, creator, requ, false, usesCards);
+		newGame.setActive(false);
+		
+		//Updates an existing game
+		if(currentGame == null){
 			currentGame = newGame;
-			GameModel.getInstance().addGame(currentGame); // New Game gets added
-															// to the server
-		} else {
-			newGame.setIdentifier(currentGame.getIdentity()); // Copies the UUID
-																// over to the
-																// new game
-			currentGame.copyFrom(newGame); // Copies the entirety of this game
-											// into the other game
+			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
+		} else{
+			newGame.setIdentifier(currentGame.getIdentity()); 	//Copies the UUID over to the new game
+			currentGame.copyFrom(newGame);
+			currentGame.hasChanged();
+			currentGame.notifyObservers();
 		}
-
+		
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
-
+		
+	}
+	
+	/**
+	 * Adds the game to the model and to the server and sets it to active
+	 */
+	public void  launchGame(){
+		String strName = this.getBoxName().getText();
+		String strDes = this.getBoxDescription().getText();
+		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
+		ArrayList<Requirement> requ = getRequirements();
+		boolean usesCards = doesUseCards();
+		
+		Game newGame = new Game(strName, strDes, creator, requ, false, usesCards);
+		newGame.setActive(true);
+		
+		if(currentGame == null){
+			currentGame = newGame;
+			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
+		} else{
+			newGame.setIdentifier(currentGame.getIdentity()); 	//Copies the UUID over to the new game
+			currentGame.copyFrom(newGame);						//Copies the entirety of this game into the other game
+		}
+		
+		ViewEventController.getInstance().refreshGameTable();
+		ViewEventController.getInstance().refreshGameTree();
 	}
 
-	public NameJTextField getBoxName() {
+	public NameJTextField getBoxName(){
 		return nameTextField;
 	}
-
-	private JTextArea getBoxDescription() {
+	
+	public void setBoxName(String newName){
+		this.nameTextField.setText(newName);
+	}
+	
+	public JTextArea getBoxDescription() {
 		return descriptionTextField;
 	}
-
-	public JLabel getErrorName() {
-		// TODO add errors to the indivitdual fields
-		// WHEN FIXED UNCOMMENT THE LINES THAT USE THIS METHOD IN VALIDATE
+	
+	public void setBoxDescription(String newDescription){
+		this.descriptionTextField.setText(newDescription);
+	}
+	
+	public JLabel getErrorName(){
+		//TODO add errors to the indivitdual fields
+		//WHEN FIXED UNCOMMENT THE LINES THAT USE THIS METHOD IN VALIDATE
 		return null;
 	}
-
-	public boolean doesUseCards() {
+	
+	public AddRequirementsPanel getAddReqPan(){
+		return this.addReqPan;
+	}
+	
+	public boolean doesUseCards(){
 		return cardsButton.isSelected();
 	}
-
-	public void displayError(String error) {
+	
+	public void displayError(String error){
 		errorField.setText(error);
 	}
-
-	public static void main(String args[]) {
+	
+	public Game getGame(){
+		return this.currentGame;
+	}
+	
+	public void setUsesCards(boolean usesCards){
+		if(usesCards){
+			this.cardsButton.setSelected(true);
+			this.textEntryButton.setSelected(false);
+		}
+		else{
+			this.cardsButton.setSelected(false);
+			this.textEntryButton.setSelected(true);
+		}
+	}
+	
+	public static void main(String args[]){
 		JFrame frame = new JFrame("GridBagLayoutDemo");
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		// Set up the content pane.
-		frame.add(new JScrollPane(new CreateGamePanel()));
-		frame.setSize(400, 400);
+        //Set up the content pane.
+        frame.add(new CreateGamePanel());
+        frame.setSize(400, 400);
 
-		// Display the window.
-		frame.pack();
-		frame.setVisible(true);
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
 	}
 
 }
