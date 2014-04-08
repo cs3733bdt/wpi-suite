@@ -51,7 +51,7 @@ public class PermissionTest {
 			}
 			
 		};
-		u = new User("ted", "tdude", "nothing", "email@email.com", 1);
+		u = new User("ted", "tdude", "nothing", "email@email.com", "fbTest", 1);
 	}
 
 	@Test

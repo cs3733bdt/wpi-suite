@@ -49,14 +49,14 @@ public class GameManagerTest {
 	 */
 	@Before
 	public void setUp() throws Exception {
-		User admin = new User("admin", "admin", "1234", "", 27);
+		User admin = new User("admin", "admin", "1234", "", "fbTest", 27);
 		admin.setRole(Role.ADMIN);
 		testProject = new Project("test", "1");
 		otherProject = new Project("other", "2");
 		mockSsid = "abc123";
 		adminSession = new Session(admin, testProject, mockSsid);
 		
-		existingUser = new User("steve", "steve", "1234", "", 2);
+		existingUser = new User("steve", "steve", "1234", "", "fbTest", 2);
 		game1 = new Game(1, "game 1", admin.getName(), false);
 		
 		game2 = new Game(2, "game 2", existingUser.getName(), true);

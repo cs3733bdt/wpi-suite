@@ -34,9 +34,9 @@ public class FacebookNotificationTest {
 	{
 		reqs = new ArrayList<Requirement>();
 		g = new Game("Email Test Game", "Email Test Game Description", "Game Owner", reqs, false, false);
-		u1 = new User("testuser1", "user1", "pass", "paleondires@wpi.edu", 1123);
-		u2 = new User("testuser2", "user2", "pass", "alfeey44@gmail.com", 1291);
-		u3 = new User("testuser3", "user3", "pass", "doruk.uzunoglu@gmail.com", 12911);
+		u1 = new User("testuser1", "user1", "pass", "paleondires@wpi.edu", "fbTest", 1123);
+		u2 = new User("testuser2", "user2", "pass", "alfeey44@gmail.com", "fbTest", 1291);
+		u3 = new User("testuser3", "user3", "pass", "doruk.uzunoglu@gmail.com", "fbTest", 12911);
 		
 		team1 = new User[3];
 		team1[0] = u1;
