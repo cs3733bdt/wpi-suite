@@ -166,11 +166,16 @@ public class EstimatePanel extends JPanel{
 				secondnum = currnum; 
 			}
 		}
+		
 		//This branch will be run if a custom deck is to be used
 		else {
 			deck = customDeck; 
 		}
-		//initializes all the buttons and add them to the panel, as well as adding images
+		
+		/*
+		 * initializes all the buttons and add them to the panel, as well as adding images.
+		 * the exception is required for getting image IO
+		 */
 		 try {
 			 Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
 			 Image backImg =  ImageIO.read(getClass().getResource("card_back.png"));
@@ -186,7 +191,7 @@ public class EstimatePanel extends JPanel{
 		 
 		//add ToolTips
 		 for (int i = 0; i < deck.size(); i++) {
-			 this.JToggleButtonList.get(i).setToolTipText("Add " + deck.get(i) + " to the sum");
+			 this.JToggleButtonList.get(i).setToolTipText("Add " + deck.get(i) + " to the total");
 		 }
 		 
 		 
@@ -226,8 +231,6 @@ public class EstimatePanel extends JPanel{
 		for (int i = 0;  i < JToggleButtonList.size(); i++ ) { 
 			JToggleButtonList.get(i).addActionListener(new CardActionListener(i, deck, JToggleButtonList, this));
 		}
-		
-		//overviewPanel.add(cardPanel, c);
 		
 		/**
 		 * The text area where the user types their estimate
@@ -321,19 +324,33 @@ public class EstimatePanel extends JPanel{
 
 	}
 	
-	//Get the sum of all the cards and return it
+	/*
+	 * Increase total sum by amount entered
+	 */
 	public void addToCardSum(int cardValue) {
 		sum += cardValue;
 		counterLabel.setText("Your current estimate total: " + sum);
 		System.out.println(sum);
 	}
 	
+	/*
+	 * Decrease total sum by amount entered
+	 */
 	public void decToCardSum(int cardValue) {
 		sum -= cardValue;
 		counterLabel.setText("Your current estimate total: " + sum);
 		System.out.println(sum);
 	}
 	
+	/*
+	 * Clicks all the buttons. Used for testing
+	 */
+	public void doClicks() {
+		for (int i = 0; i < JToggleButtonList.size(); i++) {
+			JToggleButtonList.get(i).doClick();
+		}
+	}
+
 	/**
 	 * getter for the EstimateText text field
 	 * @return estText
@@ -355,6 +372,17 @@ public class EstimatePanel extends JPanel{
 		return sum;
 	}
 	
+	/*
+	 * Returns the sum of all the cards
+	 */
+	public int getMaxSum() {
+		int sum = 0;
+		for (int i = 0; i < deck.size(); i++) {
+			sum += Integer.parseInt(deck.get(i));
+		}
+		return sum;
+	}
+	
 	/**
 	 * getter for the game field
 	 * @return activeGame
@@ -371,18 +399,30 @@ public class EstimatePanel extends JPanel{
 		return activeRequirement;
 	}
 	
+	/*
+	 * adds an element to the array of buttons to be remembered when the "0?" button is unpress
+	 */
 	public void memoryArrayAddElt(int elt) {
 		memoryArray.add(elt);
 	}
 	
+	/*
+	 * getter for size of the memory array
+	 */
 	public int memoryArrayGetSize() {
 		return memoryArray.size();
 	}
 	
+	/*
+	 * clears memory array; use after the values stored in the array are restored
+	 */
 	public void memoryArrayClear() {
 		memoryArray.clear();
 	}
 	
+	/*
+	 * adds index of the button to be remembered to the memory array
+	 */
 	public int memoryArrayGetElt(int elt) {
 		return memoryArray.get(elt);
 	}
