@@ -24,7 +24,6 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 
 public class User extends AbstractModel
 {
-
 	private String name;
 	private String username;
 	private int idNum;
@@ -52,8 +51,8 @@ public class User extends AbstractModel
 		this.email = email;
 		this.facebookUsername = facebookUsername;
 		this.role = Role.USER;
-		phoneNumber=null;
-		carrier=null;
+		this.phoneNumber = null;
+		this.carrier = null;
 	}
 	
 	@Override
@@ -87,6 +86,10 @@ public class User extends AbstractModel
 				}
 				
 				if(this.phoneNumber != null && !this.phoneNumber.equals(((User)other).phoneNumber)) {
+					return false;
+				}
+				
+				if(this.carrier != null && !this.carrier.equals(((User)other).carrier)) {
 					return false;
 				}
 				

@@ -219,7 +219,7 @@ Password:<input type="password" id="loginpassword"></input><br>
 Username:<input type="text" id="phonechangeusername"></input><br>
 Phone Number:<input type="text" id="phoneNumber"></input><br>
 Carrier:<select id="carrierSelector"><option value="VERIZON">Verizon</option>
-									<option value="AT&T">AT&T</option>
+									<option value="ATT">AT&T</option>
 									<option value="SPRINT">Sprint</option>
 									<option value="USCELLULAR">U.S. Cellular</option>
 									<option value="TMOBILE">T-Mobile</option></select>

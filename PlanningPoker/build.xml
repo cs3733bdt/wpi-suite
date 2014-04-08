@@ -42,7 +42,7 @@
 			<fileset dir="build"/>
 			<zipfileset src="./lib/javax.mail.jar"/>
 			<zipfileset src="./lib/smack-3.4.1-0cec571.jar" />
-			<zipfileset src="restfb-1.6.14.jar" />
+			<zipfileset src="./lib/restfb-1.6.14.jar" />
 			<fileset file="manifest.txt"/>
 		</jar>
 	</target>

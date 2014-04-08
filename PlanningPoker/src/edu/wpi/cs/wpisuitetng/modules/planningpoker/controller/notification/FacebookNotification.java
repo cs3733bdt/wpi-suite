@@ -29,8 +29,7 @@ public class FacebookNotification {
 	private final int XMPP_PORT = 5222;
 	private final String username = "wpi.suite.bdt.noreply@gmail.com";
 	private final String password = "bobbytablesfb";
-	private final String ACCESS_TOKEN = "CAACEdEose0cBAK50ftArXl15NAUnvNi3CqyS5xTWzunsG6uFCELImQFpGNqIZCBCspATzaZAi5nCZCZBESLlRgvBmJDoH3FOUVgMvPZC3uJ59R0zfX2VI2kIpkN5ha5BcwmJ8yndF6xKPtTaloU26PJZChNGaodKJ39BZBv4d4ZBo1VMJWap1IDYJB8OeYQPWNPDmSbhCCXz3AZDZD";
-
+	
 	public FacebookNotification(Game g) {
 		this.g = g;
 	}
@@ -70,8 +69,12 @@ public class FacebookNotification {
 				e.printStackTrace();
 			}
 			
-			for (int i = 0; i < users.length; i++)
-				sendFacebookNotification(connection, users[i]);
+			for (int i = 0; i < users.length; i++) {
+				if (users[i].getFacebookUsername() != null)
+					sendFacebookNotification(connection, users[i]);
+				else
+					System.err.println(users[i].getName() + " doesn't have a facebook Username Stored.");
+			}
 			
 		} else {
 			System.err.println("There are no users on the team of Project: " + g.getProject().getName());
@@ -84,19 +87,21 @@ public class FacebookNotification {
 	 * @param user the user to get the notification
 	 */
 	public void sendFacebookNotification(XMPPConnection connection, User user) {
-		String uid = "100000454218856";//getUserId(user.getFBUsername());
+		String uid = getUserId(user.getFacebookUsername());
 		
-		Chat chat = connection.getChatManager().createChat("-" + uid + "@chat.facebook.com", null);
-		Message message = new Message("-" + uid + "@chat.facebook.com", Message.Type.chat);
-		
-
-		message.setBody("Voting is required for game: " + g.getName());
-		
-		try {
-			chat.sendMessage(message);
-		} catch (XMPPException e) {
-			System.err.println("Failed to send Facebook Notification.");
-			e.printStackTrace();
+		if (uid != null) {
+			Chat chat = connection.getChatManager().createChat("-" + uid + "@chat.facebook.com", null);
+			Message message = new Message("-" + uid + "@chat.facebook.com", Message.Type.chat);
+	
+			message.setBody("Voting is required for game: " + g.getName());
+			
+			try {
+				chat.sendMessage(message);
+				System.out.println("Sent facebook message successfully");
+			} catch (XMPPException e) {
+				System.err.println("Failed to send Facebook Notification.");
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -106,7 +111,7 @@ public class FacebookNotification {
 	 * @return the user's UserId
 	 */
 	public String getUserId(String username) {
-		FacebookClient  facebookClient = new DefaultFacebookClient();
+		FacebookClient facebookClient = new DefaultFacebookClient();
 		com.restfb.types.User fbUser = facebookClient.fetchObject(username, com.restfb.types.User.class);
 		
 		return fbUser.getId();

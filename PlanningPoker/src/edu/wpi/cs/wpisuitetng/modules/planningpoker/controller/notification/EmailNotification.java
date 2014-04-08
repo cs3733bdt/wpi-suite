@@ -139,14 +139,14 @@ public class EmailNotification {
 			try {
 				// Send message
 				Transport.send(message);
-				System.out.println("Sent message successfully....");
+				System.out.println("Sent email successfully....");
 			} catch(MailConnectException e) {
 				try {
 					// Waiting 5 seconds and retrying
 					Thread.sleep(5000);
 					System.err.println("Couldn't connect to host, trying again...");
 					Transport.send(message);
-					System.out.println("Sent message successfully....");
+					System.out.println("Sent email successfully....");
 				} catch (InterruptedException e1) {
 					System.err.println("Can't connect to host; either internet or host is down");
 					System.err.println("Users won't get emails for game: " + g.getName());

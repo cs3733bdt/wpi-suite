@@ -35,7 +35,7 @@ public class FacebookNotificationTest {
 		reqs = new ArrayList<Requirement>();
 		g = new Game("Email Test Game", "Email Test Game Description", "Game Owner", reqs, false, false);
 		u1 = new User("testuser1", "user1", "pass", "paleondires@wpi.edu", "fbTest", 1123);
-		u2 = new User("testuser2", "user2", "pass", "alfeey44@gmail.com", "fbTest", 1291);
+		u2 = new User("testuser2", "user2", "pass", "alfeey44@gmail.com", "dalton.tapply", 1291);
 		u3 = new User("testuser3", "user3", "pass", "doruk.uzunoglu@gmail.com", "fbTest", 12911);
 		
 		team1 = new User[3];
@@ -53,7 +53,7 @@ public class FacebookNotificationTest {
 	
 	@Test
 	public void testGetUserId() {
-		System.out.println(client.getUserId("dalton.tapply"));
+		assertEquals("100000454218856", client.getUserId(u2.getFacebookUsername()));
 	}
 	
 	/**
@@ -62,7 +62,7 @@ public class FacebookNotificationTest {
 	 */
 	@Test
 	public void testSendFacebookNotification() throws Exception {
-		client.sendFacebookNotification(client.login(), u2);
+		//client.sendFacebookNotification(client.login(), u2);
 	}
 
 	/**
