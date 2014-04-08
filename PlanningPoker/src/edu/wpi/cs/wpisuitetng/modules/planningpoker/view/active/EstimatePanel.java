@@ -170,7 +170,7 @@ public class EstimatePanel extends JPanel{
 		else {
 			deck = customDeck; 
 		}
-		//initializes all the buttons and add them to the panel
+		//initializes all the buttons and add them to the panel, as well as adding images
 		 try {
 			 Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
 			 Image backImg =  ImageIO.read(getClass().getResource("card_back.png"));
@@ -179,18 +179,28 @@ public class EstimatePanel extends JPanel{
 				 this.JToggleButtonList.add(new JToggleButton(deck.get(i)));
 				 
 				 this.JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
-			//	 this.JToggleButtonList.get(i).setDisabledIcon(new ImageIcon(backImg));
+				 this.JToggleButtonList.get(i).setDisabledIcon(new ImageIcon(backImg));
 				 cardPanel.add(JToggleButtonList.get(i));
 			 }
 		 } catch (IOException ex) {}
 		 
+		//add ToolTips
+		 for (int i = 0; i < deck.size(); i++) {
+			 this.JToggleButtonList.get(i).setToolTipText("Add " + deck.get(i) + " to the sum");
+		 }
+		 
+		 
+		 
 		//"I don't know" button hardcoded
-		JToggleButtonList.add(new JToggleButton("0?")); 
+		JToggleButtonList.add(new JToggleButton("0?"));
+		JToggleButtonList.get(deck.size()).setToolTipText("I don't know what to estimate");
 		cardPanel.add(JToggleButtonList.get(deck.size()));
 		
 		//adds the button to clear all entered estimates
 		JButton clearButton = new JButton("Clr");
+		clearButton.setToolTipText("Clear all Estimates");
 		cardPanel.add(clearButton); 
+		System.out.println(clearButton.getToolTipText());
 		
 		//action Listener for the clear button 
 		clearButton.addActionListener(new ActionListener() {
@@ -210,6 +220,7 @@ public class EstimatePanel extends JPanel{
 				} catch (IOException ex) {}
 			}
 		});	
+		
 		
 		//creates action listeners for all other buttons
 		for (int i = 0;  i < JToggleButtonList.size(); i++ ) { 
