@@ -137,6 +137,34 @@ public class UserTest {
 	}
 	
 	@Test
+	public void testSetFacebookUsername()
+	{
+		String newFacebookUser = "newUser";
+		
+		assertTrue(u3.getFacebookUsername().equals("fbTest"));
+		
+		u3.setFacebookUsername(newFacebookUser);		
+		assertTrue(u3.getFacebookUsername().equals(newFacebookUser));
+	}
+	
+	@Test
+	public void testSetPhoneNumber()
+	{
+		String newPhoneNumber = "1111111111";
+		
+		u3.setPhoneNumber(newPhoneNumber);
+		assertTrue(u3.getPhoneNumber().equals(newPhoneNumber));
+	}
+	
+	@Test
+	public void testSetCarrier()
+	{
+		u3.setCarrier(Carrier.VERIZON);
+		assertTrue(u3.getCarrier().equals(Carrier.VERIZON));
+		
+	}
+	
+	@Test
 	public void testSerialize()
 	{
 		String serialized = u3.toJSON();
@@ -152,5 +180,6 @@ public class UserTest {
 		assertTrue(serialized.contains("name"));
 		assertTrue(serialized.contains("Q"));
 		assertTrue(serialized.contains("email@email.email"));
+		assertTrue(serialized.contains("fbTest"));
 	}
 }
