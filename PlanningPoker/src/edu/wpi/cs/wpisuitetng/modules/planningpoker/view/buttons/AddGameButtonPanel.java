@@ -28,10 +28,10 @@ public class AddGameButtonPanel extends ToolbarGroupView{
 	public AddGameButtonPanel(CreateGamePanel panel){
 		super("");
 		
-		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		//this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		this.setPreferredSize(new Dimension(200,50));
 		this.addGameButton.setHorizontalAlignment(SwingConstants.CENTER);
-		this.addGameButton.setPreferredSize(new Dimension(200, 50));
+		this.addGameButton.setPreferredSize(new Dimension(125, 25));
 		
 		// the action listener for the Create Game Button
 		setupActionListeners();

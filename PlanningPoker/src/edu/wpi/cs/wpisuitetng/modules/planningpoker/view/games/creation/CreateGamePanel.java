@@ -40,7 +40,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * @author jonathanleitschuh
  *
  */
-public class CreateGamePanel extends JPanel {
+public class CreateGamePanel extends JScrollPane {
 	
 	//THIS IS THE REQUIREMENT NAME FIELD THAT WILL BE NEEDED FOR CONTROLLER
 	private JTextArea nameArea = new JTextArea();
@@ -77,7 +77,7 @@ public class CreateGamePanel extends JPanel {
 	 * Constructor for creating a game
 	 */
 	public CreateGamePanel(){
-		super(new GridBagLayout());
+		//super(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		nameTextField = new NameJTextField(30);	
 		descriptionTextField = new JTextArea();
@@ -86,7 +86,7 @@ public class CreateGamePanel extends JPanel {
 		/**
 		 * The ScrollPane that contains everything
 		 */
-		JScrollPane createGameScrollPane;
+		//JScrollPane createGameScrollPane;
 		
 		/**
 		 * The Container that contains everything, which goes in the ScrollPane
@@ -102,7 +102,7 @@ public class CreateGamePanel extends JPanel {
 		 */
 		JPanel nameAndDescPanel = new JPanel();
 		nameAndDescPanel.setLayout(new GridBagLayout());
-		c.weighty = .5;
+		c.weighty = 1;
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 6;
@@ -115,6 +115,7 @@ public class CreateGamePanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 2;
+		c.weighty = 0;
 		blankPanel0.setPreferredSize(new Dimension(310, 10));
 		nameAndDescPanel.add(blankPanel0, c);
 		
@@ -135,14 +136,14 @@ public class CreateGamePanel extends JPanel {
 		c.gridx = 1;
 		c.gridy = 1;
 		c.gridwidth = 1;
-		nameTextField.setPreferredSize(new Dimension(450,25));
+		nameTextField.setPreferredSize(new Dimension(440,25));
 		nameAndDescPanel.add(nameTextField, c);
 		
 		/**
 		 * Blank Panel for formatting purposes
 		 */
 		JPanel blankPanel = new JPanel();
-		blankPanel.setPreferredSize(new Dimension(450,25));
+		blankPanel.setPreferredSize(new Dimension(440,25));
 		c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 2;
@@ -168,36 +169,28 @@ public class CreateGamePanel extends JPanel {
 		 * Adding and configuring the description
 		 */
 		c.weightx = 1;
+		c.weighty = 1;
 		c.gridx = 1;
 		c.gridy = 3;
 		c.gridwidth = 1;
 		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		descPane.setPreferredSize(new Dimension(450,80));
+		descPane.setMinimumSize(new Dimension(440,80));
+		descPane.setPreferredSize(new Dimension(440,80));
 		nameAndDescPanel.add(descPane, c);
-		
-		/**
-		 * Blank Panel for formatting
-		 */
-		JPanel blankPanel2 = new JPanel();
-		c.weightx = 0;
-		c.gridx = 0;
-		c.gridy = 1;
-		c.gridwidth = 6;
-		blankPanel2.setPreferredSize(new Dimension(100, 25));
-		rightPanel.add(blankPanel2, c);
 		
 		/**
 		 * Panel for estimate radio buttons 
 		 */
 		JPanel estimateTypePanel = new JPanel();
-		estimateTypePanel.setLayout(new BoxLayout(estimateTypePanel, BoxLayout.X_AXIS));
+		//estimateTypePanel.setLayout(new BoxLayout(estimateTypePanel, BoxLayout.X_AXIS));
 		c.anchor = GridBagConstraints.CENTER;
-		c.weightx = 0;
+		//c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 2;
 		c.gridwidth = 6;
+		c.weighty = 0;
 		//c.insets = new Insets(10, 100, 0, 0);
-		estimateTypePanel.setPreferredSize(new Dimension(125,25));
+		//estimateTypePanel.setPreferredSize(new Dimension(125,25));
 		rightPanel.add(estimateTypePanel, c);
 		
 		/**
@@ -220,35 +213,33 @@ public class CreateGamePanel extends JPanel {
         /**
 		 * Blank Panel for formatting
 		 */
-        JPanel blankPanel3 = new JPanel();
-		c.gridx = 0;
-		c.gridy = 3;
-		c.gridwidth = 6;
+		JPanel blankPanel2 = new JPanel();
 		c.weightx = 0;
-		blankPanel3.setMinimumSize(new Dimension(100, 25));
+		c.gridx = 0;
+		c.gridy = 1;
+		c.gridwidth = 6;
+		blankPanel2.setPreferredSize(new Dimension(100, 25));
 		rightPanel.add(blankPanel2, c);
 		
 		/**
 		 * Formats and add the AddRequirementPanel
 		 */
-        c.insets = new Insets(0, 0, 0 ,0);
-		c.ipadx = 0;
 		c.gridwidth = 6;
-		c.gridheight = 5;
+		//c.gridheight = 5;
 		c.gridx = 0;
 		c.gridy = 4;
-		c.weightx = 1;
+		//c.weightx = 1;
 		AddRequirementsPanel addReqPan = new AddRequirementsPanel(this);
 		rightPanel.add(addReqPan, c);	
 		
 		/**
 		 * Formats and adds the AddReqImportReqPanel
 		 */
-		c.insets = new Insets(0, 5, 0 ,0);
-		c.gridwidth = 10;
-		c.gridy = 9;
-		c.gridheight = 1;
-		c.weightx = 1;
+		c.gridwidth = 6;
+		c.gridy = 5;
+		c.gridx = 0;
+		//c.gridheight = 1;
+		//c.weightx = 1;
 		rightPanel.add(new AddReqImportReqPanel(addReqPan), c);
 		
 		/**
@@ -256,12 +247,34 @@ public class CreateGamePanel extends JPanel {
 		 */
 		JPanel blankPanel5 = new JPanel();
 		c.gridx = 0;
-		c.gridy = 10;
+		c.gridy = 6;
 		c.gridwidth = 6;
-		c.gridheight = 1;
+		//c.gridheight = 1;
 		c.weightx = 0;
 		blankPanel5.setMinimumSize(new Dimension(100, 25));
 		rightPanel.add(blankPanel5, c);
+		
+		/**
+		 * Formats and adds the AddGameButtonPanel
+		 */
+		//c.gridheight = 1;
+		c.gridx = 1;
+		c.gridwidth = 2;
+		c.gridy = 7;
+		//c.insets = new Insets(0, 150, 0, 0);
+		c.weightx = 1;
+		rightPanel.add(new AddGameButtonPanel(this), c);	
+		
+		/**
+		 * Panel to add error label
+		 */
+		JPanel errorPanel = new JPanel();
+		c.gridx = 0;
+		c.gridy = 8;
+		c.gridwidth = 6;
+		c.weightx = 1;
+		errorPanel.setMinimumSize(new Dimension(440, 50));
+		rightPanel.add(errorPanel, c);
 		
 		/**
 		 * label for displaying errors
@@ -269,40 +282,19 @@ public class CreateGamePanel extends JPanel {
 		errorField= new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
+		/*c.anchor = GridBagConstraints.CENTER;
 		c.weightx = 1;
-		c.gridx = 2;
-		c.gridwidth = 1;
-		c.gridheight = 1;
-		c.gridy = 12;
-		c.insets = new Insets(0, 175, 0, 0);
-		rightPanel.add(errorField, c);
-		
-		/**
-		 * Blank Panel for formatting
-		 */
-		JPanel blankPanel4 = new JPanel();
 		c.gridx = 0;
-		c.gridy = 13;
-		c.gridwidth = 6;
-		c.weightx = 0;
-		blankPanel4.setMinimumSize(new Dimension(100, 10));
-		rightPanel.add(blankPanel4, c);
-		
-		/**
-		 * Formats and adds the AddGameButtonPanel
-		 */
-		c.gridheight = 1;
-		c.gridx = 1;
 		c.gridwidth = 2;
-		c.gridy = 11;
-		c.insets = new Insets(0, 150, 0, 0);
-		c.weightx = 1;
-		rightPanel.add(new AddGameButtonPanel(this), c);	
+		//c.gridheight = 1;
+		c.gridy = 8;
+		c.insets = new Insets(0, 0, 10, 0);*/
+		errorPanel.add(errorField);
 		
 		/**
 		 * initializes and adds the scroll pane
 		 */
-		createGameScrollPane = new JScrollPane(rightPanel);
+		/*createGameScrollPane = new JScrollPane(rightPanel);
 		createGameScrollPane.setMinimumSize(new Dimension(600, 550));
 		createGameScrollPane.repaint();
 		c.insets= new Insets(0, 0, 0, 0);
@@ -311,7 +303,9 @@ public class CreateGamePanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 0;
 		c.weightx = 1;
-		this.add(createGameScrollPane, c);
+		//this.add(rightPanel, c);*/
+		
+		this.getViewport().add(rightPanel);
 		
 	}
 	
@@ -505,7 +499,7 @@ public class CreateGamePanel extends JPanel {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Set up the content pane.
-        frame.add(new CreateGamePanel());
+        frame.add(new JScrollPane(new CreateGamePanel()));
         frame.setSize(400, 400);
 
         //Display the window.

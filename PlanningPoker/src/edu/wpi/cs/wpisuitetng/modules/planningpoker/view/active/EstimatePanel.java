@@ -212,12 +212,12 @@ public class EstimatePanel extends JPanel{
 		 */
 		JLabel counterLabel = new JLabel("Your current estimate total: ");
 		c.anchor = GridBagConstraints.CENTER;
-		c.insets = new Insets(0, 75, 0, 0);
+		c.insets = new Insets(0, 100, 0, 0);
 		c.weightx = 0;
 		c.gridx = 0;
 		c.gridwidth = 1;
 		c.gridy = 7;
-		overviewPanel.add(counterLabel, c);
+		//overviewPanel.add(counterLabel, c);
 		
 		/**
 		 * Formats and adds the counter for the card estimates
@@ -235,7 +235,7 @@ public class EstimatePanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 7;
 		
-		overviewPanel.add(counter, c);
+		//overviewPanel.add(counter, c);
 
 		if (game.doesUseCards()) {
 			estText.setVisible(false);
