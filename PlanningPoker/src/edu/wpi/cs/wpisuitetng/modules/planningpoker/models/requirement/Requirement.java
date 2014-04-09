@@ -46,6 +46,8 @@ public class Requirement extends ObservableModel {
 	/** list of votes for this requirement */
 	private ArrayList<Vote> votes = new ArrayList<Vote>();
 
+	/** boolean for whether the requirement has been voted on by all users */
+	private boolean complete = false;
 	
 	
 	/**
@@ -165,6 +167,12 @@ public class Requirement extends ObservableModel {
 	public void save() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public void setComplete() {
+		this.complete = true;
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 	/**
