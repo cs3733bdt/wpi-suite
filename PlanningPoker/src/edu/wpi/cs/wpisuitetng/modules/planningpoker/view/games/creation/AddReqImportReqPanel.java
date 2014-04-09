@@ -25,7 +25,8 @@ public class AddReqImportReqPanel extends JPanel {
 		 */
 		addReq = new JButton("Add Requirement");
 		addReq.addActionListener(new ActionListener() {
-			 public void actionPerformed(ActionEvent e) {
+			 @Override
+			public void actionPerformed(ActionEvent e) {
 				 /*view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
 				 nameArea.setText("");
 				 descArea.setText("");*/
@@ -37,7 +38,8 @@ public class AddReqImportReqPanel extends JPanel {
 		
 		importReq = new JButton("Import Requirement");
 		importReq.addActionListener(new ActionListener() {
-			 public void actionPerformed(ActionEvent e) {
+			 @Override
+			public void actionPerformed(ActionEvent e) {
 				 /*view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
 				 nameArea.setText("");
 				 descArea.setText("");*/

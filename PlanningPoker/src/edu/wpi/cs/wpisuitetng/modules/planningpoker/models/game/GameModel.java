@@ -184,6 +184,7 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 		}
 	}
 	
+	@Override
 	public String toString(){
 		return ("You got the singleton of the Game Model");
 	}

@@ -164,7 +164,8 @@ public class AddRequirementsPanel extends JPanel {
 		 */
 		JButton submitAddReqButton = new JButton("Submit");
 		submitAddReqButton.addActionListener(new ActionListener() {
-			 public void actionPerformed(ActionEvent e) {
+			 @Override
+			public void actionPerformed(ActionEvent e) {
 				 view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
 				 addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
 				 nameArea.setText("");
@@ -179,6 +180,7 @@ public class AddRequirementsPanel extends JPanel {
 		 */
 		JButton cancelRequirementButton = new JButton("Cancel");
 		cancelRequirementButton.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				nameArea.setText("");
 				descArea.setText("");
@@ -261,7 +263,8 @@ public class AddRequirementsPanel extends JPanel {
 		 */
 		JButton submitImportReqButton = new JButton("Submit");
 		submitImportReqButton.addActionListener(new ActionListener() {
-			 public void actionPerformed(ActionEvent e) {
+			 @Override
+			public void actionPerformed(ActionEvent e) {
 				 /*view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
 				 nameArea.setText("");
 				 descArea.setText("");*/

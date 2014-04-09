@@ -77,6 +77,7 @@ public class testEmailNotification {
 		// Set session with authenticator
 		session = Session.getInstance(properties,
 				  new javax.mail.Authenticator() {
+					@Override
 					protected PasswordAuthentication getPasswordAuthentication() {
 						return new PasswordAuthentication("WPI.Suite.BDT.NoReply@gmail.com", "bobbydroptables");
 					}
