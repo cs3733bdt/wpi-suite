@@ -405,7 +405,7 @@ public class EstimatePanel extends JPanel{
 			voteNumber = Integer.parseInt(estText.getText());
 		}
 		Vote vote = new Vote(currentUser, voteNumber);
-		getRequirement().addVote(vote);
+		getRequirement().addVote(vote, activeGame);
 		
 
 		// I am currently working on updating a game's requirements to
