@@ -88,7 +88,10 @@ public class GetGameController implements ActionListener {
 	 * @param Games an array of Games received from the server
 	 */
 	public synchronized void receivedGames(Game[] games) {
-
+		System.out.println("The size of the list returned from the server is: " + games.length);
+		for(Game game : games){
+			System.out.println("\t" + game.getName() + " " + game.getIdentity());
+		}
 	    // Make sure the response was not null
 	    if (games != null) {
 	        // add the Games to the local model

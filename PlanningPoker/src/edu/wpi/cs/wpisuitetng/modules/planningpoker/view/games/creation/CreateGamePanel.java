@@ -85,6 +85,7 @@ public class CreateGamePanel extends JScrollPane {
 	public CreateGamePanel(Game game){
 		build();
 		this.currentGame = game;
+		requirements = game.getRequirements();
 	}
 
 	private void build() {

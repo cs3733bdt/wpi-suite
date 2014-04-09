@@ -9,9 +9,7 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
-import edu.wpi.cs.wpisuitetng.janeway.Janeway;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.janeway.gui.container.JanewayFrame;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
@@ -140,7 +138,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 						if(req.copyFrom(serverReq)){				//So copy the data over. If there are changes then make thoes changes
 							changes = true;
 						}
-						req.addObserver(this);
 					}
 				}
 				if(!found){											//If this requirement does not exist in the list
