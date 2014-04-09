@@ -15,10 +15,13 @@ import javax.mail.internet.MimeMessage;
 
 import com.sun.mail.util.MailConnectException;
 
+import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 
 /**
+ * Sends text message to a user via email
+ * 
  * @author doruk
  *
  */
@@ -99,10 +102,29 @@ public class SmsNotification {
 		
 		public String appendCarrier(User user)
 		{
-			String numberWithCarrier = "";
-			
-			numberWithCarrier = user.getPhoneNumber();
-			numberWithCarrier.concat("@txt.att.net");
+			String numberWithCarrier = user.getPhoneNumber();
+			Carrier c = user.getCarrier();
+			switch(c){
+			case ATT:
+				numberWithCarrier= numberWithCarrier +"@txt.att.net";
+				break;
+			case VERIZON:
+				numberWithCarrier= numberWithCarrier +"@vtext.com";
+				break;
+			case TMOBILE:
+				numberWithCarrier= numberWithCarrier +"@tmomail.net";
+				break;
+			case SPRINT:
+				numberWithCarrier= numberWithCarrier +"@page.nextel.com";
+				break;
+			case USCELLULAR:
+				numberWithCarrier.concat("@email.uscc.net");
+				break;
+			default:
+				System.out.print("No carrier.");
+				numberWithCarrier = null;
+				break;
+			}
 			return numberWithCarrier;
 		}
 		
@@ -118,7 +140,7 @@ public class SmsNotification {
 			//Check if user has a phone number in case user was created without one
 			// and print name of user
 			if (user.getPhoneNumber() != null) {
-				to = user.getPhoneNumber();
+				to = this.appendCarrier(user);
 			} else {
 				System.out.println("User: " + user.getName() + ", does not have a phone number stored.");
 			}
