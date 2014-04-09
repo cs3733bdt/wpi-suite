@@ -88,9 +88,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		 if(deflated.has("carrier")  && !deflated.get("carrier").getAsString().equals(""))
 		 {
 			 Carrier c = Carrier.valueOf(deflated.get("carrier").getAsString());
-			 System.out.print("Carrier: " + c.toString());
 			 inflated.setCarrier(c);
-			 System.out.print("Carrier in User: " + inflated.getCarrier().toString());
 			 
 		 }
 		 else
@@ -101,11 +99,9 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		 if(deflated.has("phoneNumber")  && !deflated.get("phoneNumber").getAsString().equals(""))
 		 {
 			 String newPhoneNumber = String.valueOf(deflated.get("phoneNumber").getAsString());
-			 System.out.print("Phone Number: " + newPhoneNumber);
 			 inflated.setPhoneNumber(newPhoneNumber);
-			 System.out.print("Phone Number in User: " + inflated.getPhoneNumber());
-			 
 		 }
+		 
 		 else
 		 {
 			 inflated.setPhoneNumber(null);
