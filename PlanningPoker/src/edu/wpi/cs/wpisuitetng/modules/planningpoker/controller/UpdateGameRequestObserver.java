@@ -21,17 +21,20 @@ public class UpdateGameRequestObserver implements RequestObserver{
 		this.controller = controller;
 	}
 	
+	@Override
 	public void responseSuccess(IRequest iReq) {
 		final ResponseModel response = iReq.getResponse();
 		
 		final Game game = Game.fromJSON(response.getBody());	
 	}
 	
+	@Override
 	public void responseError(IRequest iReq) {
 		System.err.println(iReq.getResponse().getStatusMessage());
 		System.err.println("The request to update a game failed.");
 	}
 	
+	@Override
 	public void fail(IRequest iReq, Exception exception) {
 		System.err.println("The request to update a game failed.");
 	}

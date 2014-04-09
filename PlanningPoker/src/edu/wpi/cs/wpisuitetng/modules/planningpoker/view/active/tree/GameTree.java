@@ -199,6 +199,7 @@ public class GameTree extends JScrollPane implements MouseListener{
  *
  */
 class GameComparator implements Comparator<Game>{
+	@Override
 	public int compare(Game G1, Game G2){
 		return -(G1.getCreationTime().compareTo(G2.getCreationTime()));
 	}

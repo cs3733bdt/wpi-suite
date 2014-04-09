@@ -130,6 +130,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	
 	 * @return the number of requirements in the project * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize()
 	 */
+	@Override
 	public int getSize() {
 		return requirements.size();
 	}
@@ -156,6 +157,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	
 	 * @return the requirement associated with the provided index * @see javax.swing.ListModel#getElementAt(int) * @see javax.swing.ListModel#getElementAt(int) * @see javax.swing.ListModel#getElementAt(int)
 	 */
+	@Override
 	public Requirement getElementAt(int index) {
 		return requirements.get(requirements.size() - 1 - index);
 	}
