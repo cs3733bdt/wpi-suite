@@ -257,47 +257,54 @@ public class CreateGamePanel extends JScrollPane {
 		// c.gridheight = 1;
 		// c.weightx = 1;
 		rightPanel.add(new AddReqImportReqPanel(addReqPan), c);
-
-		/**
-		 * Blank Panel for formatting
-		 */
-		JPanel blankPanel5 = new JPanel();
-		c.gridx = 0;
-		c.gridwidth = 6;
-		// c.gridheight = 1;
-		c.weightx = 0;
-		blankPanel5.setMinimumSize(new Dimension(100, 25));
-		rightPanel.add(blankPanel5, c);
 		
 		/**
 		 * Formats and adds the SaveGameButtonPanel
 		 */
-		c.gridheight = 1;
+		//c.gridheight = 1;
+		c.weightx = 1;
+		c.weighty = 1;
 		c.gridx = 0;
-		c.gridwidth = 1;
-		c.gridy = 11;
-		c.insets = new Insets(0, 150, 0, 0);
+		c.gridwidth = 6;
+		c.gridy = 6;
+		c.insets = new Insets(0, 0, 0, 350);
 		rightPanel.add(new SaveGameButtonPanel(this), c);	
 		
 		
 		/**
 		 * Formats and adds the LaunchGameButtonPanel
 		 */
-		c.gridheight = 1;
-		c.gridx = 1;
-		c.gridwidth = 1;
-		c.gridy = 11;
-		c.insets = new Insets(0, 150, 0, 0);
+		//c.gridheight = 1;
+		c.weightx = 1;
+		c.weighty = 1;
+		c.gridx = 0;
+		c.gridwidth = 6;
+		c.gridy = 6;
+		c.insets = new Insets(0, 350, 0, 0);
 		rightPanel.add(new LaunchGameButtonPanel(this), c);
+		
+		/**
+		 * Blank Panel for formatting
+		 */
+		JPanel blankPanel5 = new JPanel();
+		c.gridx = 0;
+		c.gridwidth = 6;
+		c.gridy = 7;
+		// c.gridheight = 1;
+		c.weightx = 0;
+		c.insets = new Insets(0,0,0,0);
+		blankPanel5.setMinimumSize(new Dimension(100, 15));
+		rightPanel.add(blankPanel5, c);
 
 		/**
 		 * Panel to add error label
 		 */
 		JPanel errorPanel = new JPanel();
+		c.weightx = 0;
+		c.weighty = 0;
 		c.gridx = 0;
 		c.gridy = 8;
 		c.gridwidth = 6;
-		c.weightx = 1;
 		errorPanel.setMinimumSize(new Dimension(440, 50));
 		rightPanel.add(errorPanel, c);
 
@@ -305,6 +312,7 @@ public class CreateGamePanel extends JScrollPane {
 		 * label for displaying errors
 		 */
 		errorField = new ErrorLabel();
+		errorField.setText("Test");
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
 		/*

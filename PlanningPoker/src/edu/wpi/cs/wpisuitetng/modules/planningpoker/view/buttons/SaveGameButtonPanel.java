@@ -18,7 +18,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGa
  *
  */
 
-public class SaveGameButtonPanel extends ToolbarGroupView{
+public class SaveGameButtonPanel extends JPanel{
 	private final CreateGamePanel parentPanel;
 
 	
@@ -26,25 +26,27 @@ public class SaveGameButtonPanel extends ToolbarGroupView{
 	JButton saveGameButton = new JButton("Save Game");	
 	
 	public SaveGameButtonPanel(CreateGamePanel panel){
-		super("");
+		//super("");
 		
-		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		/*this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		this.setPreferredSize(new Dimension(150,50));
 		this.saveGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		this.saveGameButton.setPreferredSize(new Dimension(150, 50));
 		//this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		this.setPreferredSize(new Dimension(200,50));
 		this.saveGameButton.setHorizontalAlignment(SwingConstants.CENTER);
-		this.saveGameButton.setPreferredSize(new Dimension(125, 25));
+		this.saveGameButton.setPreferredSize(new Dimension(125, 25));*/
 		
 		// the action listener for the Create Game Button
 		setupActionListeners();
 		
-		contentPanel.add(saveGameButton);
-		contentPanel.setOpaque(false);
+		//contentPanel.add(saveGameButton);
+		//contentPanel.setOpaque(false);
 		
 
-		this.add(contentPanel);
+		//this.add(contentPanel);
+		this.add(saveGameButton);
+		saveGameButton.setVisible(true);
 		parentPanel = panel;
 	}
 	/**
