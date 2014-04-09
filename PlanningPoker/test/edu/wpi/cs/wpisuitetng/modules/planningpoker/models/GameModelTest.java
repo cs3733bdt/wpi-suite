@@ -130,7 +130,7 @@ public class GameModelTest {
 		reqs2.add(req2);
 		
 		assertEquals(2, reqs2.size());
-		assertEquals(4, req2.getVoteCount());
+		assertEquals(3, req2.getVoteCount());
 		
 		Game game1Changed = new Game("Game1 Changed", "DescriptionChanged", "DifferentName", reqs2, true, false);
 		game1Changed.setIdentifier(game1.getIdentity()); //Makes this game 'the equivalent' to the other game
