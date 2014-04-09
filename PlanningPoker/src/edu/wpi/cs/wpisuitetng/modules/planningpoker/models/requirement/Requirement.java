@@ -145,9 +145,12 @@ public class Requirement extends ObservableModel {
 			}
 		}
 		this.votes.add(vote);
-		
-		if(votes.size() == this.getProject().getTeam().length) {
-			//this.setComplete();
+		if(this.getProject() != null){
+			if(votes.size() == this.getProject().getTeam().length) {
+				//this.setComplete();
+			}
+		} else {
+			System.err.println("THE PROJECT IN THE REQUIREMENT WAS NULL: ADD VOTE METHOD");
 		}
 		
 		this.setChanged();

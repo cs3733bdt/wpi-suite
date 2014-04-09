@@ -200,6 +200,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this.requirements = requirements;
 		for(Requirement req : this.requirements){
 			req.addObserver(this);
+			req.setProject(this.getProject());
 		}
 		this.usesCards = usesCards;
 
@@ -399,7 +400,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			this.notifyObservers(arg);
 		}
 		System.out.println("Game: " + this.getName() + " has " + this.countObservers() + " observers");
-		System.out.println("\t");
+		System.out.println("\t" + this.getObservers()[0].toString());
 	}
 
 
