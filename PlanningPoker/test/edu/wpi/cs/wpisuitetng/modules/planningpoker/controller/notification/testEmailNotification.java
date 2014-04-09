@@ -20,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requireme
 public class testEmailNotification {
 
 	Game g;
-	User u1, u2, u3;
+	User u1, u2, u3, u4;
 	User[] team1;
 	String[] support1;
 	Project p;
@@ -33,11 +33,13 @@ public class testEmailNotification {
 		u1 = new User("testuser1", "user1", "pass", "paleondires@wpi.edu", 1123);
 		u2 = new User("testuser2", "user2", "pass", "cs3733bdt@wpi.edu", 1291);
 		u3 = new User("testuser3", "user3", "pass", "doruk.uzunoglu@gmail.com", 12911);
-		
-		team1 = new User[3];
+		u4 = new User("testuser3", "user3", "pass", "abbusch@wpi.edu", 12411);
+
+		team1 = new User[4];
 		team1[0] = u1;
 		team1[1] = u2;
 		team1[2] = u3;
+		team1[3] = u4;
 		support1 = new String[3];
 		support1[0] = "defecttracker";
 		support1[1] = "postboard";
