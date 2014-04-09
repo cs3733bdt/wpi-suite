@@ -121,10 +121,10 @@ public class SMSNotification {
 				numberWithCarrier= numberWithCarrier +"@tmomail.net";
 				break;
 			case SPRINT:
-				numberWithCarrier= numberWithCarrier +"@page.nextel.com";
+				numberWithCarrier= numberWithCarrier +"@messaging.sprintpcs.com";
 				break;
 			case USCELLULAR:
-				numberWithCarrier.concat("@email.uscc.net");
+				numberWithCarrier= numberWithCarrier + "@email.uscc.net";
 				break;
 			default:
 				System.out.print("No carrier.");
