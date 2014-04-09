@@ -3,11 +3,13 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.LayoutManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -124,7 +126,7 @@ public class EstimatePanel extends JPanel{
 		userStoryDesc.setFont(bigFont);
 		userStoryDesc.setLineWrap(true);
 		userStoryDesc.setEditable(false);
-		c.anchor = GridBagConstraints.FIRST_LINE_START;
+		c.anchor = GridBagConstraints.CENTER;
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 4;
@@ -158,6 +160,12 @@ public class EstimatePanel extends JPanel{
 		c.gridwidth = 2;
 		cardPanel.setPreferredSize(new Dimension(800, 100));		//change from 500,50
 
+		 /*
+		  * set layout to Flowlayout. 
+		  */
+		 FlowLayout experimentLayout = new FlowLayout();
+		 cardPanel.setLayout(experimentLayout);
+		 
 		overviewPanel.add(cardPanel, c);
 		
 		/**
@@ -208,7 +216,6 @@ public class EstimatePanel extends JPanel{
 			 JToggleButtonList.get(i).setHorizontalTextPosition(SwingConstants.CENTER);
 			 JToggleButtonList.get(i).setVerticalAlignment(SwingConstants.CENTER);
 		 }
-		 
 		 
 		 
 		//"I don't know" button hardcoded
