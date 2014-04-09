@@ -181,7 +181,6 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 				System.err.println("ViewEventController not fully initiallized");
 			}
 		} else {
-			System.out.println("\tChanges not found");
 		}
 	}
 	
