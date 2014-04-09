@@ -147,56 +147,53 @@ public class SMSNotification {
 			// and print name of user
 			if (user.getPhoneNumber() != null) {
 				to = this.appendCarrier(user);
+				
+				try {
+					// Create a default MimeMessage object.
+					MimeMessage message = new MimeMessage(session);
+
+					// Set From: header field of the header.
+					message.setFrom(new InternetAddress(username));
+
+					// Set To: header field of the header.
+					message.addRecipient(Message.RecipientType.TO, new InternetAddress(
+							to));
+
+					// Set Subject: header field
+					message.setSubject("Voting is Required for game: " + g.getName());
+
+					// If the game doesn't have requirements, say that instead
+					// of printing null requirements.
+					// Then set the actual message.
+					if (!g.getRequirements().isEmpty()) {
+						message.setText("Game Description: " + g.getDescription() + "\n\n"
+								+ "Game Requirements: " + g.getRequirements());
+					} else {
+						message.setText("There are no current requirements.");
+					}
+					
+					try {
+						// Send message
+						Transport.send(message);
+						System.out.println("Sent message successfully....");
+					} catch(MailConnectException e) {
+						try {
+							// Waiting 5 seconds and retrying
+							Thread.sleep(5000);
+							System.err.println("Couldn't connect to host, trying again...");
+							Transport.send(message);
+							System.out.println("Sent message successfully....");
+						} catch (InterruptedException e1) {
+							System.err.println("Can't connect to host; either internet or host is down");
+							System.err.println("Users won't get messages for game: " + g.getName());
+							e1.printStackTrace();
+						}
+					}
+				} catch (MessagingException mex) {
+					mex.printStackTrace();
+				}
 			} else {
 				System.out.println("User: " + user.getName() + ", does not have a phone number stored.");
 			}
-
-			try {
-				// Create a default MimeMessage object.
-				MimeMessage message = new MimeMessage(session);
-
-				// Set From: header field of the header.
-				message.setFrom(new InternetAddress(username));
-
-				// Set To: header field of the header.
-				message.addRecipient(Message.RecipientType.TO, new InternetAddress(
-						to));
-
-				// Set Subject: header field
-				message.setSubject("Voting is Required for game: " + g.getName());
-
-				// If the game doesn't have requirements, say that instead
-				// of printing null requirements.
-				// Then set the actual message.
-				if (!g.getRequirements().isEmpty()) {
-					message.setText("Game Description: " + g.getDescription() + "\n\n"
-							+ "Game Requirements: " + g.getRequirements());
-				} else {
-					message.setText("There are no current requirements.");
-				}
-				
-				try {
-					// Send message
-					Transport.send(message);
-					System.out.println("Sent message successfully....");
-				} catch(MailConnectException e) {
-					try {
-						// Waiting 5 seconds and retrying
-						Thread.sleep(5000);
-						System.err.println("Couldn't connect to host, trying again...");
-						Transport.send(message);
-						System.out.println("Sent message successfully....");
-					} catch (InterruptedException e1) {
-						System.err.println("Can't connect to host; either internet or host is down");
-						System.err.println("Users won't get messages for game: " + g.getName());
-						e1.printStackTrace();
-					}
-				}
-			} catch (MessagingException mex) {
-				mex.printStackTrace();
-			}
 		}
-	
-	
-
 }
