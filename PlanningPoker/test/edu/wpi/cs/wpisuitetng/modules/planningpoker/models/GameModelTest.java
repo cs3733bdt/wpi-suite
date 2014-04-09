@@ -108,6 +108,7 @@ public class GameModelTest {
 		gameList[2] = game3;
 		
 		//FINISHED CONSTRUCTING DATA PRIOR TO PUSHING TO SERVER
+		//IMITATES A INITIAL 'DATA' FROM THE SERVER
 		
 		
 		
@@ -137,6 +138,8 @@ public class GameModelTest {
 		assertEquals(4, game1Changed.getRequirements().get(1).getVoteCount());
 		
 		model.updateGames(gameList); //Post the array to the model
+		//MIMIC THE 'BUILD' FROM THE SERVER
+		
 		
 		assertEquals(3, model.getSize());
 		gameList[0] = game1Changed;			//Changes game1 to game1changed
@@ -150,6 +153,7 @@ public class GameModelTest {
 		assertEquals(3, reqFromGame.getVoteCount());
 		
 		model.updateGames(gameList);  //CHANGES TO THE MODEL
+		//MIMICS CHANGES COMING FROM THE SERVER
 		
 		assertEquals(3, model.getSize());
 		
@@ -169,6 +173,8 @@ public class GameModelTest {
 		assertEquals("Description With New Votes", fromModel2.getDescription());
 		assertEquals(4, fromModel2.getVoteCount());
 		
+		fromModel2.addVote(new Vote("Sally", 10));
+		model.getElementAt(0).getRequirements().get(0).addVote(new Vote("Annie", 10));
 		
 		model.emptyModel();
 		assertEquals(0, model.getSize());

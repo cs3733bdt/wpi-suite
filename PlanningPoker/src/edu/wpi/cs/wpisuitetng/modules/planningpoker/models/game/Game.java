@@ -102,6 +102,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		
 		if(!this.requirements.equals(toCopyFrom.requirements)){
 			boolean changes = false;										//Are there changes?
+			
+			//REMOVES REQUIREMENTS THAT HAVE BEEN REMOVED FROM THIS GAME
 			Iterator<Requirement> existingReq = this.requirements.iterator();
 			while(existingReq.hasNext()){
 				boolean found = false;
@@ -116,6 +118,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 					changes = true;
 				}
 			}
+			//END REMOVE REQUIREMENTS
 			
 											
 			for(Requirement serverReq: toCopyFrom.requirements){	//Iterate over the new requirements
@@ -392,6 +395,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			this.hasChanged();
 			this.notifyObservers(arg);
 		}
+		System.out.println("Game: " + this.getName() + " has " + this.countObservers() + " observers");
+		System.out.println("\t");
 	}
 
 
