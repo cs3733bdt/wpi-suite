@@ -23,7 +23,11 @@ public class RequirementTest {
 	Requirement req2Dupe;
 	Requirement req3Dupe;
 	
+	Vote vote1;
+	
 	ArrayList<Requirement> reqList;
+	ArrayList<Requirement> emptyList;
+	ArrayList<Vote> req1Votes;
 	
 	Game game1;
 	Game game2;
@@ -38,6 +42,11 @@ public class RequirementTest {
 		req2.setId(2);
 		req3 = new Requirement("Req3", "Desc3");
 		
+		vote1 = new Vote ("Steve", 7);		
+		req1Votes = new ArrayList<Vote>();
+		req1Votes.add(vote1);
+		req1.addVote(vote1);
+		
 		req2Dupe = new Requirement("Req2 Dupe", "DescDupe2");
 		req2Dupe.setId(req2.getId());
 		
@@ -45,12 +54,13 @@ public class RequirementTest {
 		req3Dupe.setId(req3.getId());
 		
 		reqList = new ArrayList<Requirement>();
+		emptyList = new ArrayList<Requirement>();
 		reqList.add(req1);
 		reqList.add(req2);
 		
 		User Jeremy =  new User("Jeremy", "Jim", "", "generic.email", 14);
 		
-		game1 = new Game("Game 1", "Description", "Jeremy", null, false, false);
+		game1 = new Game("Game 1", "Description", "Jeremy", emptyList, false, false);
 		game2 = new Game("Game 2", "New Desc", "Steve", reqList, false, false);
 		
 		project1 = new Project("project 1", "7");		
@@ -93,8 +103,13 @@ public class RequirementTest {
 	
 	@Test
 	public void testGetRequirements(){
-		assertEquals(game1.getRequirements(), null);
+		assertEquals(game1.getRequirements(), emptyList);
 		assertEquals(game2.getRequirements(), reqList);
+	}
+	
+	@Test
+	public void testGetVotes(){
+		assertEquals(req1.getVotes(), req1Votes);
 	}
 
 }
