@@ -64,15 +64,14 @@ public class GameManagerTest {
 				new NetworkConfiguration("http://wpisuitetng"));
 		
 		//Set up the data
-		User admin = new User("admin", "admin", "1234", "", 27);
+		User admin = new User("admin", "admin", "1234", "", "fbTest", 27);
 		admin.setRole(Role.ADMIN);
 		testProject = new Project("test", "1");
 		otherProject = new Project("other", "2");
 		mockSsid = "abc123";
 		adminSession = new Session(admin, testProject, mockSsid);
-		
-		existingUser = new User("steve", "steve", "1234", "", 2);
-		
+
+		existingUser = new User("steve", "steve", "1234", "", "fbTest", 2);
 		
 		game1 = new Game("Game 1", "First", admin.getName(), new ArrayList<Requirement>(), false, false);
 		game2 = new Game("Game 2", "Second", existingUser.getName(), new ArrayList<Requirement>(), true, false);
@@ -100,7 +99,6 @@ public class GameManagerTest {
 		assertEquals("Game 3", created.getName());
 		assertSame(db.retrieve(Game.class, "name", "Game 3").get(0), created);
 	}
-	
 
 	/**
 	 * Ensures that a game can be retrived from the database
@@ -196,7 +194,4 @@ public class GameManagerTest {
 		Game returnedGameList [] = manager.getAll(defaultSession);
 		assertEquals(2, returnedGameList.length);
 	}
-	
-
-
 }
