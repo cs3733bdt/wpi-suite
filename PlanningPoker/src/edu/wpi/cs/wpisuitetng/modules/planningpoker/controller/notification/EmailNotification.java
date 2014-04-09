@@ -131,7 +131,8 @@ public class EmailNotification {
 			// Then set the actual message.
 			if (!g.getRequirements().isEmpty()) {
 				message.setText("Game Description: " + g.getDescription() + "\n\n"
-						+ "Game Requirements: " + g.getRequirements());
+						+ "\nGame Ending : " + g.getEndDate().toString()
+						+ "\nGame Requirements: " + g.getRequirements());
 			} else {
 				message.setText("There are no current requirements.");
 			}
