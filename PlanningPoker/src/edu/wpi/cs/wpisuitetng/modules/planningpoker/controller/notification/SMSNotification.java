@@ -131,6 +131,7 @@ public class SMSNotification {
 				numberWithCarrier = null;
 				break;
 			}
+			
 			return numberWithCarrier;
 		}
 		
@@ -143,7 +144,7 @@ public class SMSNotification {
 			// Recipient's SMS ID needs to be mentioned.
 			String to = "";
 			
-			//Check if user has a phone number in case user was created without one
+			// Check if user has a phone number in case user was created without one
 			// and print name of user
 			if (user.getPhoneNumber() != null) {
 				to = this.appendCarrier(user);
