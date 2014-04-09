@@ -173,7 +173,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		/**
 		 * Initializes the two columns for the table of requirements.
 		 */
-		String[] columnNames = { "Requirement", "Description", "Complete?"};
+		String[] columnNames = { "Requirement", "Description", "Complete"};
 		Object[][] data = {};
 		final ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
 
@@ -183,7 +183,8 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		for (int i = 0; i < game.getRequirements().size(); i++) {
 			table.tableModel.addRow(new Object[] {
 					game.getRequirements().get(i).getName(),
-					game.getRequirements().get(i).getDescription() });
+					game.getRequirements().get(i).getDescription(),
+					game.getRequirements().get(i).displayComplete() });
 		}
 		
 		table.addMouseListener(new MouseAdapter() {
