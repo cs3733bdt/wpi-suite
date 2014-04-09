@@ -266,12 +266,11 @@ public class EstimatePanel extends JPanel{
 		counterLabel = new JLabel("Your current estimate total: " + 0);
 		//c.anchor = GridBagConstraints.LINE_END;
 		c.insets = new Insets(0, 77, 0, 0);
-//=======
-//		JLabel counterLabel = new JLabel("Your current estimate total: ");
+
+		//		JLabel counterLabel = new JLabel("Your current estimate total: ");
 //		c.anchor = GridBagConstraints.CENTER;
 //		c.insets = new Insets(0, 100, 0, 0);
 //		c.weightx = 0;
-//>>>>>>> f53da534bfeb1c0681040c9f8ea2f693b3b45c35
 		c.gridx = 0;
 		c.gridwidth = 1;
 		c.gridy = 7;
