@@ -12,7 +12,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.FacebookNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.SmsNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.SMSNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
@@ -51,9 +51,9 @@ public class AddGameRequestObserver implements RequestObserver{
 		EmailNotification en = new EmailNotification(name);
 		en.sendEmails();
 		
-		//Send Text messages to users on game creation success.
-		SmsNotification sms = new SmsNotification(name);
-		sms.sendSmsMessages();
+		// Send Text messages to users on game creation success.
+		SMSNotification sms = new SMSNotification(name);
+		sms.sendSMSMessages();
 		
 		// Send Facebook notifications to users with stored facebook usernames.
 		FacebookNotification fbn = new FacebookNotification(name);
