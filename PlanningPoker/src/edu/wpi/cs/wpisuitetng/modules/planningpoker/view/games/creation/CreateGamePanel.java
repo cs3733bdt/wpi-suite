@@ -10,6 +10,7 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -60,6 +61,7 @@ public class CreateGamePanel extends JScrollPane {
 
 	private NameJTextField nameTextField;
 	private JTextArea descriptionTextField;
+	private AddEndDatePanel endDateField;
 
 	private Game currentGame;
 
@@ -69,6 +71,8 @@ public class CreateGamePanel extends JScrollPane {
 			"Estimate With Text Entry");
 
 	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
+	
+	private Date endDate;
 
 	AddRequirementsPanel addReqPan;
 	
@@ -90,6 +94,7 @@ public class CreateGamePanel extends JScrollPane {
 		nameTextField = new NameJTextField(30);
 		descriptionTextField = new JTextArea();
 		descriptionTextField.setLineWrap(true);
+		endDateField = new AddEndDatePanel(this);
 
 		/**
 		 * The ScrollPane that contains everything
@@ -222,12 +227,16 @@ public class CreateGamePanel extends JScrollPane {
 		 * Blank Panel for formatting
 		 */
 		JPanel blankPanel2 = new JPanel();
-		c.weightx = 0;
+		blankPanel2.setMinimumSize(new Dimension(100,25));
+		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 6;
-		blankPanel2.setPreferredSize(new Dimension(100, 25));
+		c.insets = new Insets(10,0,0,0);
+		blankPanel2.setPreferredSize(new Dimension(100, 50));
+		endDateField = new AddEndDatePanel(this);
 		rightPanel.add(blankPanel2, c);
+		blankPanel2.add(endDateField,c);
 
 		/**
 		 * Formats and add the AddRequirementPanel
@@ -432,6 +441,7 @@ public class CreateGamePanel extends JScrollPane {
 		boolean isNameValid = false;
 		boolean isDescriptionValid = false;
 		boolean areRequirementsSelected = false;
+		boolean isEndDateValid = false;
 		
 		isNameValid = getBoxName().verifyField(errorField);
 		
@@ -456,14 +466,25 @@ public class CreateGamePanel extends JScrollPane {
 		//TODO check if a valid game(s) are selected here
 		areRequirementsSelected = true;
 		
-		
-		return (isNameValid && isDescriptionValid && areRequirementsSelected);
+		//BEGIN END DATE VALIDATION
+		if(endDate.compareTo(new Date()) >= 0) {
+			isEndDateValid = true;
+		} else {
+			isEndDateValid = false;
+			if (warn){
+				getBoxDescription().setBorder(errorBorder);
+			}
+			displayError("End Date is before right now");
+		}
+
+		return (isNameValid && isDescriptionValid && areRequirementsSelected && isEndDateValid);
 	}
 	
 	/**
 	 * Adds the game to the model and to the server and sets it to inactive
+	 * @param endDate 
 	 */
-	public void  saveGame(){
+	public void  saveGame(Date endDate){
 		String strName = this.getBoxName().getText();
 		String strDes = this.getBoxDescription().getText();
 		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
@@ -471,6 +492,8 @@ public class CreateGamePanel extends JScrollPane {
 		boolean usesCards = doesUseCards();		
 
 		Game newGame = new Game(strName, strDes, creator, requ, false, usesCards);
+		endDate = endDateField.getEndDate();
+		newGame.setEndDate(endDate);
 		newGame.setActive(false);
 		
 		//Updates an existing game

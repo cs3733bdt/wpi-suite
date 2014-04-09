@@ -42,6 +42,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	
 	private boolean active;
 	
+	private Date endDate;
+	
 	/*
 	 * dstapply
 	 * 
@@ -400,6 +402,14 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		}
 		System.out.println("Game: " + this.getName() + " has " + this.countObservers() + " observers");
 		System.out.println("\t");
+	}
+
+	public Date getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
 	}
 
 
