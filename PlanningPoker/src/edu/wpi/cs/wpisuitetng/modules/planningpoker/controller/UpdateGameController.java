@@ -32,6 +32,7 @@ public class UpdateGameController {
 	
 	//Need model for game data
 	public void updateGame(Game newGame) {
+		System.out.println("Updating " + newGame.getName() + " to server");
 		Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.POST);
 		request.setBody(newGame.toJSON());
 		request.addObserver(observer);

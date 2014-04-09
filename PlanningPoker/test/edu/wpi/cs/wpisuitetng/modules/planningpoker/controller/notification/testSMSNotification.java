@@ -34,7 +34,7 @@ public class testSMSNotification {
 	public void setUp()
 	{
 		reqs = new ArrayList<Requirement>();
-		g = new Game("Email Test Game", "Email Test Game Description", "Game Owner", reqs, false, false);
+		g = new Game("Email Test Game", "Email Test Game Description", reqs, false, false);
 		u1 = new User("testuser1", "user1", "pass", "paleondires@wpi.edu", "peter.leondires", 1123);
 		u1.setCarrier(Carrier.VERIZON);
 		u1.setPhoneNumber("1234567890");

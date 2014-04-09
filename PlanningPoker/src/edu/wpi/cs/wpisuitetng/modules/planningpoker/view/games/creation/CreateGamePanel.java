@@ -85,6 +85,7 @@ public class CreateGamePanel extends JScrollPane {
 	public CreateGamePanel(Game game){
 		build();
 		this.currentGame = game;
+		requirements = game.getRequirements();
 	}
 
 	private void build() {
@@ -469,8 +470,13 @@ public class CreateGamePanel extends JScrollPane {
 			isDescriptionValid = true;
 		}
 		
-		//TODO check if a valid game(s) are selected here
-		areRequirementsSelected = true;
+		if(this.requirements.size() == 0){
+			displayError("You must have at least one requirement.");
+			areRequirementsSelected = false;
+		} else{
+			areRequirementsSelected = true;
+		}
+		
 		
 		//BEGIN END DATE VALIDATION
 		endDate = endDateField.getEndDate();
