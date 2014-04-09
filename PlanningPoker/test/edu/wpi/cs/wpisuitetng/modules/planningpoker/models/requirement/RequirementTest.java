@@ -7,6 +7,9 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.Session;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
 
 public class RequirementTest {
@@ -16,6 +19,10 @@ public class RequirementTest {
 	
 	Requirement req2Dupe;
 	Requirement req3Dupe;
+	
+	Session session1;
+	Project project1;
+
 
 	@Before
 	public void setUp() throws Exception {
@@ -29,6 +36,12 @@ public class RequirementTest {
 		
 		req3Dupe = new Requirement("Req3 Dupe", "DescDupe2");
 		req3Dupe.setId(req3.getId());
+		
+		User Jeremy =  new User("Jeremy", "Jim", "", "generic.email", 14);
+		
+		project1 = new Project("project 1", "7");
+		
+		session1 = new Session(Jeremy, project1, "");
 	}
 
 	@Test
