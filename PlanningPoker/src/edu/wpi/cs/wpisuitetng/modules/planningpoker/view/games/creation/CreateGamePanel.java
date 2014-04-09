@@ -484,7 +484,7 @@ public class CreateGamePanel extends JScrollPane {
 	 * Adds the game to the model and to the server and sets it to inactive
 	 * @param endDate 
 	 */
-	public void  saveGame(Date endDate){
+	public void  saveGame(){
 		String strName = this.getBoxName().getText();
 		String strDes = this.getBoxDescription().getText();
 		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
