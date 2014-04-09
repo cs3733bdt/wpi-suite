@@ -137,7 +137,7 @@ public class GameModelTest {
 		game1Changed.setComplete();
 		
 		assertEquals("Requirement With New Votes", game1Changed.getRequirements().get(1).getName());
-		assertEquals(4, game1Changed.getRequirements().get(1).getVoteCount());
+		assertEquals(3, game1Changed.getRequirements().get(1).getVoteCount());
 		
 		model.updateGames(gameList); //Post the array to the model
 		//MIMIC THE 'BUILD' FROM THE SERVER
@@ -173,7 +173,7 @@ public class GameModelTest {
 		Requirement fromModel2 = model.getElementAt(0).getRequirements().get(0);
 		assertEquals("Requirement With New Votes", fromModel2.getName());
 		assertEquals("Description With New Votes", fromModel2.getDescription());
-		assertEquals(4, fromModel2.getVoteCount());
+		assertEquals(3, fromModel2.getVoteCount());
 		
 		fromModel2.addVote(new Vote("Sally", 10));
 		model.getElementAt(0).getRequirements().get(0).addVote(new Vote("Annie", 10));
