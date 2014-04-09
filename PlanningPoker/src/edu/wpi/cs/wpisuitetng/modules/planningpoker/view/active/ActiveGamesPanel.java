@@ -332,7 +332,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 				"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
 				
         //Set up the content pane.
-        frame.add(new ActiveGamesPanel(new Game("name", "desc", "creator", reqs, false, true)));
+        frame.add(new ActiveGamesPanel(new Game("name", "desc", reqs, false, true)));
         frame.setSize(400, 400);
 
         //Display the window.

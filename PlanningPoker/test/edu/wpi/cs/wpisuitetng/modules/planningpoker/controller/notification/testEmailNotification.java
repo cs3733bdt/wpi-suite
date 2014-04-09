@@ -39,7 +39,7 @@ public class testEmailNotification {
 	{
 		team1 = new User[4];
 		reqs = new ArrayList<Requirement>();
-		g = new Game("Game A", "Test description", "Steve", reqs, true, false);
+		g = new Game("Game A", "Test description", reqs, true, false);
 		u1 = new User("testuser1", "user1", "pass", "paleondires@wpi.edu", "peter.leondires", 1123);
 		u2 = new User("testuser2", "user2", "pass", "cs3733bdt@wpi.edu", "fbTest", 1291);
 		u3 = new User("testuser3", "user3", "pass", "doruk.uzunoglu@gmail.com", "fbTest", 12911);

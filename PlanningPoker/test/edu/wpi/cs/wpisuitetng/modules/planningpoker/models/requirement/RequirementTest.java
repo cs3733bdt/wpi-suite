@@ -61,8 +61,8 @@ public class RequirementTest {
 		
 		User Jeremy =  new User("Jeremy", "Jim", "", "generic.email", "fbtest", 14);
 		
-		game1 = new Game("Game 1", "Description", "Jeremy", emptyList, false, false);
-		game2 = new Game("Game 2", "New Desc", "Steve", reqList, false, false);
+		game1 = new Game("Game 1", "Description",  emptyList, false, false);
+		game2 = new Game("Game 2", "New Desc", reqList, false, false);
 		
 		project1 = new Project("project 1", "7");		
 		session1 = new Session(Jeremy, project1, "");

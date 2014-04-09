@@ -9,6 +9,9 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.wpisuitetng.janeway.Janeway;
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.janeway.gui.container.JanewayFrame;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
@@ -137,6 +140,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 						if(req.copyFrom(serverReq)){				//So copy the data over. If there are changes then make thoes changes
 							changes = true;
 						}
+						req.addObserver(this);
 					}
 				}
 				if(!found){											//If this requirement does not exist in the list
@@ -181,7 +185,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		super();
 		name = "";
 		description = "";
-		creator = "";
+		creator = ConfigManager.getConfig().getUserName();;
 		creationTime = new Date();
 		endDate = new Date();
 		hasTimeLimit = false;
@@ -194,17 +198,15 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * Constructs a Game without a creation time
 	 * @param name the name of the game
 	 * @param description the description of the game
-	 * @param creator the name of the user who created the game
 	 * @param requirements the list of requirements for the game
 	 * @param hasTimeLimit checks if game has a time limit
 	 * @param usesCards checks if the game uses cards or text entry
 	 * 
 	 */
-	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards) {
+	public Game(String name, String description, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards) {
 		this(); //Calls the default constructor
 		this.name = name;
 		this.description = description;
-		this.creator = creator;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
 		for(Requirement req : this.requirements){
@@ -226,8 +228,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @param creationTime the data and time a game is created on
 	 * 
 	 */
-	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, Date creationTime) {
-		this(name, description, creator, requirements, hasTimeLimit, usesCards); //Calls the default constructor
+	public Game(String name, String description, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, Date creationTime) {
+		this(name, description, requirements, hasTimeLimit, usesCards); //Calls the default constructor
 		this.creationTime = creationTime;
 	}
 	

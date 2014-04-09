@@ -73,9 +73,9 @@ public class GameManagerTest {
 
 		existingUser = new User("steve", "steve", "1234", "", "fbTest", 2);
 		
-		game1 = new Game("Game 1", "First", admin.getName(), new ArrayList<Requirement>(), false, false);
-		game2 = new Game("Game 2", "Second", existingUser.getName(), new ArrayList<Requirement>(), true, false);
-		game3 = new Game("Game 3", "Third", existingUser.getName(), new ArrayList<Requirement>(), false, false);
+		game1 = new Game("Game 1", "First", new ArrayList<Requirement>(), false, false);
+		game2 = new Game("Game 2", "Second", new ArrayList<Requirement>(), true, false);
+		game3 = new Game("Game 3", "Third", new ArrayList<Requirement>(), false, false);
 		
 		defaultSession = new Session(existingUser, testProject,  mockSsid);
 

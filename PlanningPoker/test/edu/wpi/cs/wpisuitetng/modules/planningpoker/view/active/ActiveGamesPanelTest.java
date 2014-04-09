@@ -14,7 +14,7 @@ public class ActiveGamesPanelTest {
 
 	@Before
 	public void setUp() throws Exception {
-		gameView = new Game("A Game", "A Description", "Steve", new ArrayList<Requirement>(), true, false);
+		gameView = new Game("A Game", "A Description", new ArrayList<Requirement>(), true, false);
 		panel = new ActiveGamesPanel(gameView);
 	}
 
