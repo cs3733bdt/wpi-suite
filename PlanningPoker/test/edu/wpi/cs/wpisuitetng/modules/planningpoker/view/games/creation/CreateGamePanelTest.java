@@ -1,11 +1,10 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;

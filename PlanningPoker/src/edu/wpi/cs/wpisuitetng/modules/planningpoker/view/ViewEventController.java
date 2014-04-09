@@ -73,6 +73,43 @@ public class ViewEventController {
 	}
 	
 	/**
+	 * Creates an EditGamePanel instance, adds a tab representing 
+	 * that panel, and switches to that new panel
+	 */
+	public void editGame(Game game) {
+		CreateGamePanel newGame = new CreateGamePanel(game);
+		newGame.setBoxName(game.getName());
+		newGame.setBoxDescription(game.getDescription());
+		for(int i = 0; i < game.getRequirements().size(); i++){
+			newGame.getAddReqPan().addRequirement(game.getRequirements().get(i));
+		}
+		newGame.setUsesCards(game.doesUseCards());
+		
+		for(CreateGamePanel gameSearch : listOfCreateGamePanels){
+			if(game.equals(gameSearch.getGame())){
+				main.getTabbedView().setSelectedComponent(gameSearch);
+				main.invalidate();
+				main.repaint();
+				return;
+			}
+		}
+		
+		// Makes the game name not be longer than 6 charaters
+		StringBuilder tabName = new StringBuilder();
+		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
+		tabName.append(game.getName().subSequence(0, subStringLength));
+		if (game.getName().length() > 6)
+			tabName.append("...");
+		main.getTabbedView().addTab(tabName.toString(), newGame);
+
+		listOfCreateGamePanels.add(newGame);
+
+		main.getTabbedView().setSelectedComponent(newGame);
+		main.invalidate();
+		main.repaint();
+	}
+	
+	/**
 	 * Creates a CreateGamePanel with an existing game.
 	 * At the moment this is used only when the database fails to add the object.
 	 * @param game

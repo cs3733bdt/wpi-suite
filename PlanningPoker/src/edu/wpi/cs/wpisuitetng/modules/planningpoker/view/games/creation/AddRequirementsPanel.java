@@ -128,7 +128,8 @@ public class AddRequirementsPanel extends JPanel {
 		 */
 		c.gridx = 1;
 		c.gridy = 1;
-		nameArea.setPreferredSize(new Dimension(75, 25));
+		//nameArea.setPreferredSize(new Dimension(75, 25));
+		nameArea.setMinimumSize(new Dimension(75, 25));
 		createReqPanel.add(nameArea, c);
 		
 		/**
@@ -165,7 +166,7 @@ public class AddRequirementsPanel extends JPanel {
 		submitAddReqButton.addActionListener(new ActionListener() {
 			 public void actionPerformed(ActionEvent e) {
 				 view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
-				 table2.tableModel.addRow(new Object[]{nameArea.getText(), descArea.getText()});
+				 addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
 				 nameArea.setText("");
 				 descArea.setText("");
 				 createReqPanel.setVisible(false);
@@ -360,4 +361,7 @@ public class AddRequirementsPanel extends JPanel {
 		return currentReqsPanel;
 	}
 
+	public void addRequirement(Requirement requirement){
+		table2.tableModel.addRow(new Object[]{requirement.getName(), requirement.getDescription()});
+	}
 }

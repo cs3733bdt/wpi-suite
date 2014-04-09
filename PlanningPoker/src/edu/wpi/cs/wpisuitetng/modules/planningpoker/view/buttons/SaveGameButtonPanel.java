@@ -18,25 +18,29 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGa
  *
  */
 
-public class AddGameButtonPanel extends ToolbarGroupView{
+public class SaveGameButtonPanel extends ToolbarGroupView{
 	private final CreateGamePanel parentPanel;
 
 	
 	JPanel contentPanel = new JPanel();
-	JButton addGameButton = new JButton("Add Game");	
+	JButton saveGameButton = new JButton("Save Game");	
 	
-	public AddGameButtonPanel(CreateGamePanel panel){
+	public SaveGameButtonPanel(CreateGamePanel panel){
 		super("");
 		
 		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		this.setPreferredSize(new Dimension(150,50));
+		this.saveGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+		this.saveGameButton.setPreferredSize(new Dimension(150, 50));
+		//this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		this.setPreferredSize(new Dimension(200,50));
-		this.addGameButton.setHorizontalAlignment(SwingConstants.CENTER);
-		this.addGameButton.setPreferredSize(new Dimension(200, 50));
+		this.saveGameButton.setHorizontalAlignment(SwingConstants.CENTER);
+		this.saveGameButton.setPreferredSize(new Dimension(125, 25));
 		
 		// the action listener for the Create Game Button
 		setupActionListeners();
 		
-		contentPanel.add(addGameButton);
+		contentPanel.add(saveGameButton);
 		contentPanel.setOpaque(false);
 		
 
@@ -44,17 +48,17 @@ public class AddGameButtonPanel extends ToolbarGroupView{
 		parentPanel = panel;
 	}
 	/**
-	 * Method getCreateGameButton.
+	 * Method getSaveGameButton.
 	
 	 * @return JButton */
-	public JButton getAddGameButton() {
-		return addGameButton;
+	public JButton getSaveGameButton() {
+		return saveGameButton;
 	}
 	
 	void setupActionListeners(){
-		addGameButton.addActionListener(new ActionListener(){
+		saveGameButton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
-				parentPanel.AddGamePressed();
+				parentPanel.SaveGamePressed();
 			}
 		});
 	}

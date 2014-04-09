@@ -37,14 +37,12 @@ public class CardActionListener implements ActionListener {
 							 if (JToggleButtonList.get(i).isSelected()){
 								 panel.memoryArrayAddElt(i);
 								 JToggleButtonList.get(i).doClick();
-								 JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
 							 }
 						 }
 					 }
 					 else { //if the IDK button is toggled off
 						 for (int i = 0; i < panel.memoryArrayGetSize(); i++) {
 							 JToggleButtonList.get(panel.memoryArrayGetElt(i)).doClick();
-							 JToggleButtonList.get(panel.memoryArrayGetElt(i)).setIcon(new ImageIcon(backImg));
 						 }
 						 panel.memoryArrayClear();	
 					 }

@@ -4,22 +4,29 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.UUID;
 
 import javax.swing.BoxLayout;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 /**
  * Sets up the panel for the active games screen, which
  *         has the list of all active games in which the user is playing. When
@@ -27,7 +34,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requireme
  *         more details about that specific game.
  * @author Jeffrey Signore
  */
-public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
+public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserver{
+	private final Border defaultBorder = (new JTextField()).getBorder();
+	
 	private Game active;
 
 	/**
@@ -57,13 +66,24 @@ public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
 	
 	JPanel topHalfPanel = new JPanel();
 	
+	JPanel middleHalfPanel = new JPanel();
+	
 	Container rightPanel = new Container();
 	
 	GridBagConstraints c = new GridBagConstraints();
 	
 	private boolean isEstimatePanelCreated = false;
+	
+	/**
+	 * Creates a scrollPane to contain everything
+	 */
+	//private JScrollPane activeGameScrollPane;
+	
+	private JPanel blankPanel2;
 
 	public ActiveGamesPanel(final Game game) {
+		//super(new GridBagLayout());
+	
 		game.addObserver(this); //Makes this the observer for the game
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 		active = game;
@@ -80,6 +100,8 @@ public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
 		c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 0;
+		c.weightx = 0;
+		c.weighty = 1;
 		topHalfPanel.add(nameLabel, c);
 
 		/**
@@ -89,8 +111,12 @@ public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
 		gameName.setText(game.getName());
 		gameName.setEditable(false);
 		gameName.setLineWrap(true);
+		gameName.setPreferredSize(new Dimension(450, 20));
+		gameName.setBorder(defaultBorder);
 		c.gridx = 1;
 		c.gridy = 0;
+		c.weightx = 1;
+		c.weighty = 1;
 		topHalfPanel.add(gameName, c);
 		
 		/**
@@ -100,8 +126,10 @@ public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 2;
-		blankPanel0.setPreferredSize(new Dimension(500, 10));
-		topHalfPanel.add(blankPanel0, c);
+		c.weightx = 0;
+		c.weighty = 1;
+		blankPanel0.setPreferredSize(new Dimension(515, 10));
+		topHalfPanel.add(blankPanel0, c); 
 
 		/**
 		 * creates and adds the label "Description"
@@ -110,6 +138,8 @@ public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 2;
+		c.weightx = 0;
+		c.weighty = 1;
 		topHalfPanel.add(descLabel, c);
 		
 		/**
@@ -126,8 +156,9 @@ public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
 		c.gridwidth = 1;
 		c.gridx = 1;
 		c.gridy = 2;
+		c.weightx = 1;
+		c.weighty = 1;
 		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		descPane.setMinimumSize(new Dimension(400, 80));
 		descPane.setPreferredSize(new Dimension(450, 80));
 		topHalfPanel.add(descPane, c);
 		
@@ -138,14 +169,15 @@ public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
 		c.gridx = 0;
 		c.gridy = 3;
 		c.gridwidth = 2;
+		c.weightx = 0;
+		c.weighty = 1;
 		blankPanel1.setPreferredSize(new Dimension(500, 10));
 		topHalfPanel.add(blankPanel1, c);
-		
 		
 		/**
 		 * Initializes the two columns for the table of requirements.
 		 */
-		String[] columnNames = { "Requirement", "Description", "Estimate"};
+		String[] columnNames = { "Requirement", "Description", "Complete?"};
 		Object[][] data = {};
 		final ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
 
@@ -157,7 +189,7 @@ public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
 					game.getRequirements().get(i).getName(),
 					game.getRequirements().get(i).getDescription() });
 		}
-
+		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -188,16 +220,40 @@ public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
 		 */
 		JScrollPane tablePanel = new JScrollPane(table);
 		c.gridwidth = 2;
-		c.weightx = 0.5;
+		c.weightx = 1;
 		c.gridx = 0;
 		c.gridy = 4;
+		c.weighty = 1;
 		tablePanel.setPreferredSize(new Dimension(450, 100));
-		tablePanel.setMaximumSize(new Dimension(450, 100));	
 		topHalfPanel.add(tablePanel, c);
+		
+		/**
+		 * Blank Panel for formatting purposes
+		 */
+		blankPanel2 = new JPanel();
+		c.gridx = 0;
+		c.gridy = 5;
+		c.gridwidth = 2;
+		c.weightx = 0;
+		c.weighty = 0;
+		blankPanel2.setPreferredSize(new Dimension(500, 300));
+		topHalfPanel.add(blankPanel2, c);
 		
 		rightPanel.add(topHalfPanel);
 		
-		this.add(rightPanel);
+		/*activeGameScrollPane = new JScrollPane(rightPanel);
+		activeGameScrollPane.setMinimumSize(new Dimension(600, 550));
+		activeGameScrollPane.repaint();
+		c.insets= new Insets(0, 0, 0, 0);
+		c.gridwidth = 6;
+		c.gridheight = 2;
+		c.gridx = 0;
+		c.gridy = 0;
+		c.weightx = 1;
+		c.weighty = 1;
+		//this.add(activeGameScrollPane, c);*/
+		
+		this.getViewport().add(rightPanel);
 	}
 	
 	public void setGameName(String newGameName) {
@@ -222,19 +278,22 @@ public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
 	}
 	
 	public void updateEstimatePanel(Game game, Requirement requirement){
-		c.gridwidth = 2;
-		c.gridx = 0;
-		c.gridy = 4;
+		blankPanel2.setVisible(false);
 		ArrayList<String> deck = new ArrayList<String>(); //this line makes it so the default deck is selected
 		rightPanel.add(new EstimatePanel(game, requirement, deck));
-		rightPanel.validate();
 		rightPanel.revalidate();
-		rightPanel.repaint();
+		this.revalidate();
+		//activeGameScrollPane.repaint();
+		//this.repaint();
 	}
 	
 	public void removeEstimatePanel(){
+		blankPanel2.setVisible(false);
 		rightPanel.remove(1);
 		rightPanel.repaint();
+		//activeGameScrollPane.repaint();
+		this.revalidate();
+		//this.repaint();
 	}
 
 	@Override
@@ -242,6 +301,24 @@ public class ActiveGamesPanel extends JPanel implements AbstractModelObserver{
 		if(o instanceof Game){
 			//TODO Handle an update to a model
 		}
+	}
+	
+	public static void main(String args[]){
+		JFrame frame = new JFrame("GridBagLayoutDemo");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
+        
+        ArrayList<Requirement> reqs = new ArrayList<Requirement>();
+        reqs.add(new Requirement("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+				"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
+				
+        //Set up the content pane.
+        frame.add(new ActiveGamesPanel(new Game("name", "desc", "creator", reqs, false, true)));
+        frame.setSize(400, 400);
+
+        //Display the window.
+        frame.pack();
+        frame.setVisible(true);
 	}
 
 }

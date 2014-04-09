@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -19,7 +18,7 @@ public class AddReqImportReqPanel extends JPanel {
 		
 	public AddReqImportReqPanel(final AddRequirementsPanel view2){
 		
-		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		//this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		/**
 		 * Initializes Add Requirement button and sets its action listener
@@ -52,7 +51,7 @@ public class AddReqImportReqPanel extends JPanel {
 		 */
 		this.add(addReq);
 		this.add(Box.createRigidArea(new Dimension(220, 0)));
-		this.add(importReq);
+		//this.add(importReq);
 		
 	}
 	

@@ -40,6 +40,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	
 	private boolean complete;
 	
+	private boolean active;
+	
 	/*
 	 * dstapply
 	 * 
@@ -193,12 +195,15 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this.creator = creator;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
+		for(Requirement req : this.requirements){
+			req.addObserver(this);
+		}
 		this.usesCards = usesCards;
 
 	}
 	
 	/**
-	 * Constructs a Game without a creation time
+	 * Constructs a Game with a creation time
 	 * @param name the name of the game
 	 * @param description the description of the game
 	 * @param creator the name of the user who created the game
@@ -245,7 +250,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	public boolean isComplete(){
 		return complete;
 	}
-	
+
 	/**
 	 * Change game status to complete
 	 * @return true if the game is complete
@@ -289,6 +294,14 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	/**
+	 * Get the number of all users
+	 * @return the number of all users
+	 */
+	public int getUsers(){
+		return this.getProject().getTeam().length;
+	}
+	
+	/**
 	 * Gets the creating time and date of the game
 	 * @return a Formated Date String
 	 */
@@ -297,6 +310,18 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy hh:mm a");
 		
 		return dateFormat.format(creationTime);
+	}
+	
+	/**
+	 * Gets the active boolean
+	 * @return true if game is active, false otherwise
+	 */
+	public boolean isActive(){
+		return this.active;
+	}
+	
+	public void setActive(boolean newActive){
+		this.active = newActive;
 	}
 	
 	@Override
