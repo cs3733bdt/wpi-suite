@@ -177,7 +177,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		/**
 		 * Initializes the two columns for the table of requirements.
 		 */
-		String[] columnNames = { "Requirement", "Description" };
+		String[] columnNames = { "Requirement", "Description", "Complete?"};
 		Object[][] data = {};
 		final ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
 
@@ -255,7 +255,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		
 		this.getViewport().add(rightPanel);
 	}
-
+	
 	public void setGameName(String newGameName) {
 		gameName.setText(newGameName);
 	}
@@ -279,10 +279,9 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 	
 	public void updateEstimatePanel(Game game, Requirement requirement){
 		blankPanel2.setVisible(false);
-		rightPanel.add(new EstimatePanel(game, requirement));
-		//rightPanel.validate();
+		ArrayList<String> deck = new ArrayList<String>(); //this line makes it so the default deck is selected
+		rightPanel.add(new EstimatePanel(game, requirement, deck));
 		rightPanel.revalidate();
-		//rightPanel.repaint();
 		this.revalidate();
 		//activeGameScrollPane.repaint();
 		//this.repaint();
