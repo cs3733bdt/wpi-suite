@@ -4,6 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,7 +23,10 @@ public class RequirementTest {
 	Requirement req2Dupe;
 	Requirement req3Dupe;
 	
+	ArrayList<Requirement> reqList;
+	
 	Game game1;
+	Game game2;
 	Project project1;
 	Session session1;
 
@@ -39,10 +44,16 @@ public class RequirementTest {
 		req3Dupe = new Requirement("Req3 Dupe", "DescDupe2");
 		req3Dupe.setId(req3.getId());
 		
+		reqList = new ArrayList<Requirement>();
+		reqList.add(req1);
+		reqList.add(req2);
+		
 		User Jeremy =  new User("Jeremy", "Jim", "", "generic.email", 14);
 		
-		project1 = new Project("project 1", "7");
-		game1 = new Game("Game 1", "Description", "Jeremy", null, false, false);		
+		game1 = new Game("Game 1", "Description", "Jeremy", null, false, false);
+		game2 = new Game("Game 2", "New Desc", "Steve", reqList, false, false);
+		
+		project1 = new Project("project 1", "7");		
 		session1 = new Session(Jeremy, project1, "");
 	}
 
@@ -83,6 +94,7 @@ public class RequirementTest {
 	@Test
 	public void testGetRequirements(){
 		assertEquals(game1.getRequirements(), null);
+		assertEquals(game2.getRequirements(), reqList);
 	}
 
 }
