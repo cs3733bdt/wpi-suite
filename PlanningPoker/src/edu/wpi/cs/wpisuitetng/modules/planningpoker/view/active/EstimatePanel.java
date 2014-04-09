@@ -114,6 +114,8 @@ public class EstimatePanel extends JPanel{
 		// set the bigger font for userStoryDesc
 		Font bigFont = newFont;
 		
+		final Font largeFont = new Font("Serif",Font.BOLD,20);
+		
 		JScrollPane userStoryPane = new JScrollPane(userStoryDesc);
 		userStoryDesc.setFont(bigFont);
 		userStoryDesc.setLineWrap(true);
@@ -260,6 +262,7 @@ public class EstimatePanel extends JPanel{
 		estText.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				estText.setFont(largeFont);
 				estText.setText("");
 			}
 		});

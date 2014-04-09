@@ -4,11 +4,14 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -19,6 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
@@ -70,6 +74,8 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 	
 	private boolean isEstimatePanelCreated = false;
 	
+	JButton endGameButton;
+	
 	/**
 	 * Creates a scrollPane to contain everything
 	 */
@@ -114,6 +120,24 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		c.weightx = 1;
 		c.weighty = 1;
 		topHalfPanel.add(gameName, c);
+		
+		endGameButton = new JButton("End Game");
+		endGameButton.setMaximumSize(new Dimension(100,50));
+		endGameButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				endGameButtonPressed();
+			}
+		});
+		c.gridx = 2;
+		c.gridy = 0;
+		c.weightx = 0;
+		c.weighty = 1;
+		topHalfPanel.add(endGameButton, c);
+		endGameButton.setVisible(false);
+		if(game.getCreator() == ConfigManager.getConfig().getUserName()){
+			endGameButton.setVisible(true);
+		}
 		
 		/**
 		 * Blank Panel for formatting purposes
@@ -176,6 +200,11 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		String[] columnNames = { "Requirement", "Description", "Complete"};
 		Object[][] data = {};
 		final ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
+		table.getColumnModel().getColumn(0).setMinWidth(300);
+		table.getColumnModel().getColumn(1).setMinWidth(300);
+		table.getColumnModel().getColumn(2).setMinWidth(50);
+		table.getColumnModel().getColumn(2).setMaxWidth(75);
+		
 
 		/**
 		 * Adds data to the table
@@ -237,19 +266,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		topHalfPanel.add(blankPanel2, c);
 		
 		rightPanel.add(topHalfPanel);
-		
-		/*activeGameScrollPane = new JScrollPane(rightPanel);
-		activeGameScrollPane.setMinimumSize(new Dimension(600, 550));
-		activeGameScrollPane.repaint();
-		c.insets= new Insets(0, 0, 0, 0);
-		c.gridwidth = 6;
-		c.gridheight = 2;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.weightx = 1;
-		c.weighty = 1;
-		//this.add(activeGameScrollPane, c);*/
-		
+	
 		this.getViewport().add(rightPanel);
 	}
 	
@@ -298,6 +315,11 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		if(o instanceof Game){
 			//TODO Handle an update to a model
 		}
+	}
+	
+	public void endGameButtonPressed(){
+		active.setComplete();
+		active.notifyObservers();
 	}
 	
 	public static void main(String args[]){
