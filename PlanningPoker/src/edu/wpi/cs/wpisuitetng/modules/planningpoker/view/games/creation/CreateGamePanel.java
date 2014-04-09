@@ -307,6 +307,7 @@ public class CreateGamePanel extends JScrollPane {
 		errorField = new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
+		c.anchor = GridBagConstraints.CENTER;
 		/*
 		 * c.anchor = GridBagConstraints.CENTER; c.weightx = 1; c.gridx = 0;
 		 * c.gridwidth = 2; //c.gridheight = 1; c.gridy = 8; c.insets = new
