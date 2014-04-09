@@ -52,6 +52,7 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		 String name = null;
 		 String password = null;
 		 String email = null;
+		 String facebookUsername = null;
 		 
 		 if(deflated.has("idNum") && !deflated.get("idNum").getAsString().equals(""))
 		 {
@@ -77,7 +78,38 @@ public class UserDeserializer implements JsonDeserializer<User> {
 			 email = deflated.get("email").getAsString();
 		 }
 		 
-		 User inflated = new User(name, username, password, email, idNum);
+		 if(deflated.has("facebookUsername") && !deflated.get("facebookUsername").getAsString().equals(""))
+		 {
+			 facebookUsername = deflated.get("facebookUsername").getAsString();
+		 }
+		 
+		 User inflated = new User(name, username, password, email, facebookUsername, idNum);
+		 
+		 if(deflated.has("carrier")  && !deflated.get("carrier").getAsString().equals(""))
+		 {
+			 Carrier c = Carrier.valueOf(deflated.get("carrier").getAsString());
+			 System.out.print("Carrier: " + c.toString());
+			 inflated.setCarrier(c);
+			 System.out.print("Carrier in User: " + inflated.getCarrier().toString());
+			 
+		 }
+		 else
+		 {
+			 inflated.setCarrier(null);
+		 }
+		 
+		 if(deflated.has("phoneNumber")  && !deflated.get("phoneNumber").getAsString().equals(""))
+		 {
+			 String newPhoneNumber = String.valueOf(deflated.get("phoneNumber").getAsString());
+			 System.out.print("Phone Number: " + newPhoneNumber);
+			 inflated.setPhoneNumber(newPhoneNumber);
+			 System.out.print("Phone Number in User: " + inflated.getPhoneNumber());
+			 
+		 }
+		 else
+		 {
+			 inflated.setPhoneNumber(null);
+		 }
 		 
 		 if(deflated.has("role")  && !deflated.get("role").getAsString().equals(""))
 		 {

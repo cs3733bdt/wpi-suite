@@ -14,6 +14,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.Emai
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.FacebookNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.SMSNotification;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -49,8 +51,19 @@ public class AddGameRequestObserver implements RequestObserver{
 		// Parse the name of the game out of the response body
 		//******need to modified to parse the creator from the game model at the same time******
 		final Game name = Game.fromJSON(response.getBody());
+		
+		// Email Team Users on game creation Success
 		EmailNotification en = new EmailNotification(name);
 		en.sendEmails();
+		
+		// Send Text messages to users on game creation success.
+		SMSNotification sms = new SMSNotification(name);
+		sms.sendSMSMessages();
+		
+		// Send Facebook notifications to users with stored facebook usernames.
+		FacebookNotification fbn = new FacebookNotification(name);
+		fbn.sendFacebookNotifications();
+		
 		System.out.println("The request to add a game has succeeded!");
 	}
 	
