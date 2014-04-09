@@ -472,10 +472,10 @@ public class CreateGamePanel extends JScrollPane {
 			isEndDateValid = true;
 		} else {
 			isEndDateValid = false;
-			/*if (warn){
+			if (warn){
 				getBoxDescription().setBorder(errorBorder);
 			}
-			displayError("End Date is before right now");*/
+			displayError("End Date is before right now");
 		}
 
 		return (isNameValid && isDescriptionValid && areRequirementsSelected && isEndDateValid);
