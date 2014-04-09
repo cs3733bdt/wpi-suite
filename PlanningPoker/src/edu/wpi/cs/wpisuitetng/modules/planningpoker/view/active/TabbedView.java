@@ -73,6 +73,7 @@ public class TabbedView extends JTabbedPane {
 				if(e.isPopupTrigger()) popup.show(e.getComponent(), e.getX(), e.getY());
 			}
 
+			@Override
 			public void mouseReleased(MouseEvent e) {
 				if(dragging) {
 					int tabNumber = getUI().tabForCoordinate(TabbedView.this, e.getX(), e.getY());

@@ -7,12 +7,12 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
  */
 
 import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.sasl.SASLDigestMD5Mechanism;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.sasl.SASLDigestMD5Mechanism;
 
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
@@ -93,7 +93,8 @@ public class FacebookNotification {
 			Chat chat = connection.getChatManager().createChat("-" + uid + "@chat.facebook.com", null);
 			Message message = new Message("-" + uid + "@chat.facebook.com", Message.Type.chat);
 	
-			message.setBody("Voting is required for game: " + g.getName());
+			message.setBody("Voting is required for game: " + g.getName()
+					+ "\nGame Ending : " + g.getEndDate().toString());
 			
 			try {
 				chat.sendMessage(message);
