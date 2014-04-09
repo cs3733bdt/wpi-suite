@@ -472,10 +472,10 @@ public class CreateGamePanel extends JScrollPane {
 			isEndDateValid = true;
 		} else {
 			isEndDateValid = false;
-			/*if (warn){
+			if (warn){
 				getBoxDescription().setBorder(errorBorder);
 			}
-			displayError("End Date is before right now");*/
+			displayError("End Date is before right now");
 		}
 
 		return (isNameValid && isDescriptionValid && areRequirementsSelected && isEndDateValid);
@@ -485,29 +485,13 @@ public class CreateGamePanel extends JScrollPane {
 	 * Adds the game to the model and to the server and sets it to inactive
 	 * @param endDate 
 	 */
-	public void  saveGame(){
-		String strName = this.getBoxName().getText();
-		String strDes = this.getBoxDescription().getText();
-		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
-		ArrayList<Requirement> requ = getRequirements();
-		boolean usesCards = doesUseCards();		
-
-		Game newGame = new Game(strName, strDes, creator, requ, false, usesCards);
-		endDate = endDateField.getEndDate();
-		newGame.setEndDate(endDate);
-		newGame.setActive(false);
-		
-		//Updates an existing game
+	public void  saveGame(){	
 		if(currentGame == null){
-			currentGame = newGame;
+			setCurrentGame(false);
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
 		} else{
-			newGame.setIdentifier(currentGame.getIdentity()); 	//Copies the UUID over to the new game
-			currentGame.copyFrom(newGame);
-			currentGame.hasChanged();
-			currentGame.notifyObservers();
+			setCurrentGame(false);
 		}
-		
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 		
@@ -517,23 +501,12 @@ public class CreateGamePanel extends JScrollPane {
 	 * Adds the game to the model and to the server and sets it to active
 	 */
 	public void  launchGame(){
-		String strName = this.getBoxName().getText();
-		String strDes = this.getBoxDescription().getText();
-		String creator = ConfigManager.getConfig().getUserName(); //Gets the currently active user
-		ArrayList<Requirement> requ = getRequirements();
-		boolean usesCards = doesUseCards();
-		
-		Game newGame = new Game(strName, strDes, creator, requ, false, usesCards);
-		newGame.setActive(true);
-		
 		if(currentGame == null){
-			currentGame = newGame;
+			setCurrentGame(true);
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
 		} else{
-			newGame.setIdentifier(currentGame.getIdentity()); 	//Copies the UUID over to the new game
-			currentGame.copyFrom(newGame);						//Copies the entirety of this game into the other game
+			setCurrentGame(true);
 		}
-		
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 	}
@@ -587,6 +560,12 @@ public class CreateGamePanel extends JScrollPane {
 		}
 	}
 	
+	
+	public AddEndDatePanel getEndDateField(){
+		return endDateField;
+	}
+	
+	
 	public static void main(String args[]){
 		JFrame frame = new JFrame("GridBagLayoutDemo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -598,6 +577,16 @@ public class CreateGamePanel extends JScrollPane {
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+	}
+	
+	private void setCurrentGame(boolean active){
+		currentGame.setName(this.getBoxName().getText());
+		currentGame.setDescription(this.getBoxDescription().getText());
+		currentGame.setActive(active);
+		currentGame.setUsesCards(doesUseCards());
+		currentGame.setRequirements(getRequirements());
+		currentGame.setEndDate(endDateField.getEndDate());
+		currentGame.notifyObservers();
 	}
 
 }

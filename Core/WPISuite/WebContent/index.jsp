@@ -15,9 +15,10 @@ String[] coreuser = {
 		"name",
 		"password",
 		"idNum",
-		"email"
+		"email",
+		"facebookUsername"
 };
-int coreuserlength = 5;
+int coreuserlength = 6;
 
 String coreprojecttitle = "CoreProject";
 String coreprojectpath = "core/project";
@@ -113,6 +114,37 @@ function login()
 	xml.send();             
 }
 
+function phoneNumberChange()
+{
+	//create new XHR
+	var xml = new XMLHttpRequest();
+	//define behavior for when the response is recieved
+	xml.onreadystatechange = function()
+	{
+		if(xml.readyState == 4)//wait until response is available
+		{
+			document.getElementById("phonechangeresponse").innerHTML = xml.statusText;
+		}
+		
+	};
+	
+	
+	var user = new Object();
+	user.username = document.getElementById("phonechangeusername").value;
+	user.phoneNumber = document.getElementById("phoneNumber").value;
+	user.carrier = document.getElementById("carrierSelector").options[document.getElementById("carrierSelector").selectedIndex].value;
+	
+	var juser = JSON.stringify(user);
+	if(user.username == "")
+	{return;}
+	
+	//setup reuqest to POST to /core/user
+	xml.open('POST','API/core/user/'+user.username,false);
+	//send the request
+	xml.send(juser); 
+
+}
+
 function roleChange()
 {
 	//create new XHR
@@ -183,6 +215,16 @@ Password:<input type="password" id="loginpassword"></input><br>
 <input type="button" value="Submit" onclick="login()"><span id="loginresponsespan"></span>
 
 <%= createModelField(coreusertitle, coreuserpath, coreuser, coreuserlength) %>
+<h4>Add Phone Number:</h4>
+Username:<input type="text" id="phonechangeusername"></input><br>
+Phone Number:<input type="text" id="phoneNumber"></input><br>
+Carrier:<select id="carrierSelector"><option value="VERIZON">Verizon</option>
+									<option value="ATT">AT&T</option>
+									<option value="SPRINT">Sprint</option>
+									<option value="USCELLULAR">U.S. Cellular</option>
+									<option value="TMOBILE">T-Mobile</option></select>
+<input type="button" value="Submit" onclick="phoneNumberChange()"><span id="changephoneresponse"></span>
+
 <h4>Role Change:</h4>
 Username:<input type="text" id="rolechangeusername"></input><br>
 Role:<select id="roleselector"><option value="USER">User</option><option value="ADMIN">Admin</option></select>

@@ -59,7 +59,7 @@ public class RequirementTest {
 		reqList.add(req1);
 		reqList.add(req2);
 		
-		User Jeremy =  new User("Jeremy", "Jim", "", "generic.email", 14);
+		User Jeremy =  new User("Jeremy", "Jim", "", "generic.email", "fbtest", 14);
 		
 		game1 = new Game("Game 1", "Description", "Jeremy", emptyList, false, false);
 		game2 = new Game("Game 2", "New Desc", "Steve", reqList, false, false);

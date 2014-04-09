@@ -57,11 +57,11 @@ public class UserManagerTest {
 	{
 		test = new UserManager(MockDataStore.getMockDataStore());
 		testWithRealDB = new UserManager(DataStore.getDataStore());
-		temp = new User("test","test","test", "email@email.com",0);
-		secondUser = new User ("Sam", "sammy","trouty", "email@email.com", 1);
-		conflict = new User("steve", "steve",null, "email@email.com", 0);
+		temp = new User("test","test","test", "email@email.com", "fbTest",0);
+		secondUser = new User ("Sam", "sammy","trouty", "email@email.com", "fbTest", 1);
+		conflict = new User("steve", "steve",null, "email@email.com", "fbTest", 0);
 		tempSession = new Session(temp, mockSsid);
-		admin = new User("adam","adam","password", "email@email.com", 4);
+		admin = new User("adam","adam","password", "email@email.com", "fbTest", 4);
 		admin.setRole(Role.ADMIN);
 		adminSession = new Session(admin, mockSsid);
 		json = new Gson();
