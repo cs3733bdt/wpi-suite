@@ -7,12 +7,12 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
  */
 
 import org.jivesoftware.smack.Chat;
-import org.jivesoftware.smack.packet.Message;
-import org.jivesoftware.smack.sasl.SASLDigestMD5Mechanism;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.SASLAuthentication;
 import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
+import org.jivesoftware.smack.packet.Message;
+import org.jivesoftware.smack.sasl.SASLDigestMD5Mechanism;
 
 import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;

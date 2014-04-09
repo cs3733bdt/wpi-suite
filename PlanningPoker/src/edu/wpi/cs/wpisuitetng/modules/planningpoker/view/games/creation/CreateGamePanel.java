@@ -25,7 +25,6 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
@@ -487,6 +486,7 @@ public class CreateGamePanel extends JScrollPane {
 	 */
 	public void  saveGame(){	
 		if(currentGame == null){
+			currentGame = new Game();
 			setCurrentGame(false);
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
 		} else{
@@ -502,6 +502,7 @@ public class CreateGamePanel extends JScrollPane {
 	 */
 	public void  launchGame(){
 		if(currentGame == null){
+			currentGame = new Game();
 			setCurrentGame(true);
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
 		} else{

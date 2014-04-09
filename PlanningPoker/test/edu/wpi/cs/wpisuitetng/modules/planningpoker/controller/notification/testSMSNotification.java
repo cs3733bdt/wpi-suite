@@ -3,12 +3,12 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
 
+import static org.junit.Assert.assertEquals;
+
 import java.util.ArrayList;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
 import org.junit.Before;
+import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;

@@ -3,8 +3,7 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
 
-import java.util.ArrayList;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 import java.util.Properties;
@@ -17,7 +16,6 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 
