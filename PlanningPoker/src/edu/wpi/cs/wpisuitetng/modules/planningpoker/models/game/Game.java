@@ -443,9 +443,13 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	public Date getEndDate() {
 		return endDate;
 	}
+	
 
 	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+		if(this.endDate != endDate){
+			this.endDate = endDate;
+			this.setChanged();
+		}
 	}
 
 

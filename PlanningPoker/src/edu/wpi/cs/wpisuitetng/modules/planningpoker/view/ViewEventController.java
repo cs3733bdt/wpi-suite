@@ -5,6 +5,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.swing.JComponent;
 
@@ -84,6 +86,15 @@ public class ViewEventController {
 			newGame.getAddReqPan().addRequirement(game.getRequirements().get(i));
 		}
 		newGame.setUsesCards(game.doesUseCards());
+		/*
+		Calendar dateMaker = new GregorianCalendar();
+		dateMaker.setTime(game.getEndDate());
+		int hour = dateMaker.get(Calendar.HOUR);
+		int minute = dateMaker.get(Calendar.MINUTE);
+		int AM_PM = dateMaker.get(Calendar.AM_PM);
+		
+		newGame.getEndDateField().setDateAndTime(game.getEndDate(), hour, minute, AM_PM);;
+		*/
 		
 		for(CreateGamePanel gameSearch : listOfCreateGamePanels){
 			if(game.equals(gameSearch.getGame())){
