@@ -275,6 +275,15 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	/**
+	 * Get the number of all users
+	 * @return the number of all users
+	 */
+	public int getUsers(){
+		return this.getProject().getTeam().length;
+	}
+	
+
+	/**
 	 * Gets the creating time and date of the game
 	 * @return a Formated Date String
 	 */
