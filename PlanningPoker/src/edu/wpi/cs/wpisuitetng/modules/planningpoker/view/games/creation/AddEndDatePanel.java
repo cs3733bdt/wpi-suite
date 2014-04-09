@@ -3,13 +3,13 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import org.jdesktop.swingx.JXDatePicker;
 

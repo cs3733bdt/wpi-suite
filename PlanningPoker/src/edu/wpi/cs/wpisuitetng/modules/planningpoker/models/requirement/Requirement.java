@@ -15,7 +15,6 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
 
