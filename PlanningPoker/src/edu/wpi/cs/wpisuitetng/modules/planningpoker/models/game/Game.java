@@ -9,6 +9,7 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
@@ -204,9 +205,9 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this(); //Calls the default constructor
 		this.name = name;
 		this.description = description;
-		this.creator = creator;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
+		this.creator = ConfigManager.getInstance().getConfig().getUserName();
 		for(Requirement req : this.requirements){
 			req.addObserver(this);
 			req.setProject(this.getProject());

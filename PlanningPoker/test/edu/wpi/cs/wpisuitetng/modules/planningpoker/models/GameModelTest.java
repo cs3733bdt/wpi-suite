@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
@@ -45,7 +46,7 @@ public class GameModelTest {
 		Game objectReturned = model.getElementAt(0);
 		assertEquals(objectReturned.getName(), "Test Game");
 		assertEquals(objectReturned.getDescription(), "Test Description");
-		assertEquals(objectReturned.getCreator(), "Steve");
+		assertEquals(objectReturned.getCreator(), ConfigManager.getInstance().getConfig().getUserName());
 	}
 	
 	@Test
@@ -149,7 +150,7 @@ public class GameModelTest {
 		//SHOULD BE NO CHANGES TO THE MODEL AT THIS POINT!
 		assertEquals(3, model.getSize());
 		assertEquals(1, model.getElementAt(0).getRequirements().size());
-		assertEquals("Steve", model.getElementAt(0).getCreator());
+		assertEquals(ConfigManager.getInstance().getConfig().getUserName(), model.getElementAt(0).getCreator());
 		assertEquals("Game", model.getElementAt(0).getName());
 		Requirement reqFromGame = model.getElementAt(0).getRequirements().get(0);
 		assertEquals(3, reqFromGame.getVoteCount());
@@ -160,7 +161,7 @@ public class GameModelTest {
 		assertEquals(3, model.getSize());
 		
 		assertEquals("Game1 Changed", model.getElementAt(0).getName());
-		assertEquals("DifferentName", model.getElementAt(0).getCreator());
+		assertEquals(ConfigManager.getInstance().getConfig().getUserName(), model.getElementAt(0).getCreator());
 		assertTrue(model.getElementAt(0).isComplete());
 		
 		

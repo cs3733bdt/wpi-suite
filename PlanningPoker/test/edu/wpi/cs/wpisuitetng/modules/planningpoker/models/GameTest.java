@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
@@ -39,7 +40,7 @@ public class GameTest {
 		//Test existing object
 		assertEquals(object.getName(), "Game A");
 		assertEquals(object.getDescription(), "Test description");
-		assertEquals(object.getCreator(), "Steve");
+		assertEquals(object.getCreator(), ConfigManager.getInstance().getConfig().getUserName());
 		assertFalse(object.getRequirements().isEmpty());
 		assertEquals(object.getRequirements().get(0), req);
 		assertEquals(object.isComplete(), false);
@@ -50,7 +51,7 @@ public class GameTest {
 		
 		assertEquals(newObject.getName(), "Game A");
 		assertEquals(newObject.getDescription(), "Test description");
-		assertEquals(newObject.getCreator(), "Steve");
+		assertEquals(newObject.getCreator(), ConfigManager.getInstance().getConfig().getUserName());
 		assertFalse(newObject.getRequirements().isEmpty());
 		assertEquals(newObject.getRequirements().get(0).getName(), req.getName());
 		assertEquals(newObject.getRequirements().get(0).getDescription(), req.getDescription());
@@ -76,7 +77,7 @@ public class GameTest {
 		// test that fields correctly copied from one game to another
 		assertEquals(game2.getName(), "Game A");
 		assertEquals(game2.getDescription(), "Test description");
-		assertEquals(game2.getCreator(), "Steve");
+		assertEquals(game2.getCreator(), ConfigManager.getInstance().getConfig().getUserName());
 		assertTrue(game2.getRequirements().isEmpty());
 		assertEquals(game2.isComplete(), false);
 		assertEquals(game2.doesUseCards(), false);
