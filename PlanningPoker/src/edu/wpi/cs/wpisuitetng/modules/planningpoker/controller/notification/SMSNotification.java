@@ -164,8 +164,8 @@ public class SMSNotification {
 
 					//Sets message text. Doesn't include requirements to keep text message
 					//a reasonable size
-						message.setText("Voting is Required for game: " + g.getName() + '\n' + 
-								"Game Description: " + g.getDescription());
+						message.setText("Voting is Required for game: " + g.getName() +
+								"\nGame Ending : " + g.getEndDate().toString());
 					
 					try {
 						// Send message

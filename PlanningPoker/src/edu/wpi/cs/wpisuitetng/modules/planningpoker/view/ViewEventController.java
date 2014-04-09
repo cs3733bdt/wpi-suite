@@ -191,22 +191,30 @@ public class ViewEventController {
 	public void closeAllTabs() {
 
 		int tabCount = main.getTabbedView().getTabCount();
+		
+		System.out.println("THE TAB COUNT IS:" + tabCount);
 
-		for(int i = tabCount - 1; i >= 0; i--)
+		for(int i = tabCount - 1; i > 0; i--)
 		{
 			Component toBeRemoved = main.getTabbedView().getComponentAt(i);
+			
+			System.out.println(toBeRemoved.getClass().getName());
 
-			if(toBeRemoved instanceof ActiveGamesPanel) continue;
+			if(toBeRemoved instanceof ActiveGamesPanel)
 			{
+				System.out.println("WE GOT HERE 1");
 				if(!((ActiveGamesPanel)toBeRemoved).readyToRemove()) continue;
 				this.listOfActiveGamePanels.remove(toBeRemoved);
+				System.out.println("WE GOT HERE 2");
 			}
 			
 
 			if(toBeRemoved instanceof CreateGamePanel)
 			{
+				System.out.println("WE GOT HERE 3");
 				if(!((CreateGamePanel)toBeRemoved).readyToRemove()) continue;
 				this.listOfCreateGamePanels.remove(toBeRemoved);
+				System.out.println("WE GOT HERE 4");
 			}
 
 			main.getTabbedView().removeTabAt(i);
