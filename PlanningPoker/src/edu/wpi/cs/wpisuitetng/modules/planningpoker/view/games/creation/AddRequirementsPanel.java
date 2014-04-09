@@ -174,11 +174,25 @@ public class AddRequirementsPanel extends JPanel {
 				 currentReqsPanel.setVisible(true);
 			 }
 		});
+		/*
+		 * Format and Create Cancel Button
+		 */
+		JButton cancelRequirementButton = new JButton("Cancel");
+		cancelRequirementButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				nameArea.setText("");
+				descArea.setText("");
+				createReqPanel.setVisible(false);
+				importReqPanel.setVisible(false);
+				currentReqsPanel.setVisible(true);
+			}
+		});
+		cancelRequirementButton.setPreferredSize(new Dimension(150, 25));
 		
 		/**
 		 * Formats and adds the button
 		 */
-		c.insets = new Insets(0, 175, 0, 175);
+		c.insets = new Insets(0, 0, 0, 300); //originally 0, 175, 0, 175
 		c.gridx = 0;
 		c.gridwidth = 2;
 		c.gridheight = 1;
@@ -186,6 +200,14 @@ public class AddRequirementsPanel extends JPanel {
 		c.ipady = 0;
 		submitAddReqButton.setPreferredSize(new Dimension(150, 25));
 		createReqPanel.add(submitAddReqButton, c);
+		
+		c.insets = new Insets(0, 300, 0, 0);
+		c.gridx = 0;
+		c.gridwidth = 2;
+		c.gridheight = 1;
+		c.gridy = 6;
+		c.ipady = 0;
+		createReqPanel.add(cancelRequirementButton, c);
 		
 		/**
 		 * Creates and adds the import requirement label

@@ -2,6 +2,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
@@ -112,4 +113,8 @@ public class RequirementTest {
 		assertEquals(req1.getVotes(), req1Votes);
 	}
 
+	@Test
+	public void testGetInstance(){
+		assertNotNull(RequirementModel.getInstance());
+	}
 }
