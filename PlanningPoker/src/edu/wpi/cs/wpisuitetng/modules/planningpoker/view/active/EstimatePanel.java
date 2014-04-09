@@ -327,6 +327,7 @@ public class EstimatePanel extends JPanel{
 		 */
 		JButton submitEstimate = new JButton("Submit Estimate");
 		submitEstimate.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				submitEstimatePressed();
 			}

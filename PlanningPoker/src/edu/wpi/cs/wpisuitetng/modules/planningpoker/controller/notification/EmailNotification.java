@@ -52,6 +52,7 @@ public class EmailNotification {
 			// Set session with authenticator
 			session = Session.getInstance(properties,
 					  new javax.mail.Authenticator() {
+						@Override
 						protected PasswordAuthentication getPasswordAuthentication() {
 							return new PasswordAuthentication(username, password);
 						}
@@ -63,6 +64,7 @@ public class EmailNotification {
 				System.err.println("Session.getInstance threw a NullPointerException, trying again...");
 				session = Session.getInstance(properties,
 						  new javax.mail.Authenticator() {
+							@Override
 							protected PasswordAuthentication getPasswordAuthentication() {
 								return new PasswordAuthentication(username, password);
 							}
