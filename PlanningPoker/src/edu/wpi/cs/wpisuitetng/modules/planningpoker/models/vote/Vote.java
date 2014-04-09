@@ -31,6 +31,10 @@ public class Vote {
 		return voteNumber;
 	}
 	
+	public void setVoteNumber(int newVote) {
+		this.voteNumber = newVote;
+	}
+	
 	
 	
 }

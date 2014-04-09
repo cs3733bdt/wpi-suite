@@ -27,8 +27,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers;
 
 import java.util.Vector;
 
-import javax.swing.JPanel;
-
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 
 /**
@@ -67,15 +65,13 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
  */
 public abstract class ObservableModel extends AbstractModel {
 	//These datatypes were made transient so that they are not parsed by the gson converter
-    private boolean changed = false;
-    private Vector<AbstractModelObserver> obs;
-    private transient Vector<JPanel> panelObs;
+    private transient boolean changed = false;
+    private transient Vector<AbstractModelObserver> obs;
 
     /** Construct an Observable with zero Observers. */
 
     public ObservableModel() {
         obs = new Vector<AbstractModelObserver>();
-        panelObs = new Vector<JPanel>();
     }
 
     /**
@@ -90,11 +86,6 @@ public abstract class ObservableModel extends AbstractModel {
     public synchronized void addObserver(AbstractModelObserver o) {
         if (o == null)
             throw new NullPointerException();
-        if(o instanceof JPanel){
-        	if(!panelObs.contains(o)){
-        		panelObs.addElement((JPanel)o);
-        	}
-        }
         if (!obs.contains(o)) {
             obs.addElement(o);
         }
@@ -106,11 +97,7 @@ public abstract class ObservableModel extends AbstractModel {
      * @param   o   the observer to be deleted.
      */
     public synchronized void deleteObserver(AbstractModelObserver o) {
-    	if(o instanceof JPanel){
-    		panelObs.removeElement(o);
-    	} else{
     		obs.removeElement(o);
-    	}
     }
 
     /**
@@ -153,7 +140,6 @@ public abstract class ObservableModel extends AbstractModel {
          * current Observers.
          */
         Object[] arrLocal;
-        Object[] panelLocal;
 
         synchronized (this) {
             /* We don't want the Observer doing callbacks into
@@ -171,15 +157,11 @@ public abstract class ObservableModel extends AbstractModel {
             if (!changed)
                 return;
             arrLocal = obs.toArray();
-            panelLocal = panelObs.toArray();
             clearChanged();
         }
 
         for (int i = arrLocal.length-1; i>=0; i--)
             ((AbstractModelObserver)arrLocal[i]).update(this, arg);
-        
-        for(int i = panelLocal.length-1; i>=0; i--)
-        	((AbstractModelObserver)panelLocal[i]).update(this, arg);
     }
 
     /**
@@ -187,7 +169,6 @@ public abstract class ObservableModel extends AbstractModel {
      */
     public synchronized void deleteObservers() {
         obs.removeAllElements();
-        panelObs.removeAllElements();
     }
 
     /**
@@ -232,6 +213,6 @@ public abstract class ObservableModel extends AbstractModel {
      * @return  the number of observers of this object.
      */
     public synchronized int countObservers() {
-        return obs.size() + panelObs.size();
+        return obs.size();
     }
 }

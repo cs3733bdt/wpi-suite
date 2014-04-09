@@ -6,8 +6,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-import javax.swing.JToggleButton;
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +13,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
 import edu.wpi.cs.wpisuitetng.network.Network;

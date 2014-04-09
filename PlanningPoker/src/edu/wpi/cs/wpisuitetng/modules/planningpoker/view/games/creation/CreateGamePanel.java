@@ -475,6 +475,7 @@ public class CreateGamePanel extends JScrollPane {
 		
 		//Updates an existing game
 		if(currentGame == null){
+			newGame.setIdentifier(currentGame.getIdentity());
 			currentGame = newGame;
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
 		} else{
@@ -503,6 +504,7 @@ public class CreateGamePanel extends JScrollPane {
 		newGame.setActive(true);
 		
 		if(currentGame == null){
+			newGame.setIdentifier(currentGame.getIdentity());
 			currentGame = newGame;
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
 		} else{

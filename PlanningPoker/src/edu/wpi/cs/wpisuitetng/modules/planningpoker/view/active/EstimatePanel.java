@@ -15,11 +15,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -27,16 +26,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
-import javax.swing.JToggleButton;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import com.sun.java.swing.plaf.motif.MotifBorders.ToggleButtonBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
@@ -353,14 +346,14 @@ public class EstimatePanel extends JPanel{
 		 */
 		errorField = new JLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
-		errorField.setPreferredSize(new Dimension(150, 25));
+		errorField.setPreferredSize(new Dimension(300, 25));
 		errorField.setForeground(Color.RED);
 		/*
 		 * remove if problems
 		 */
 		c.weightx = 0;
 		c.gridx = 0;
-		c.gridy = 9;
+		c.gridy = 10;
 		overviewPanel.add(errorField, c);
 		
 		c.insets= new Insets(0, 0, 0, 0);
@@ -555,7 +548,7 @@ public class EstimatePanel extends JPanel{
 		Vote vote = new Vote(currentUser, voteNumber);
 		getRequirement().addVote(vote);
 		
-
+		
 		// I am currently working on updating a game's requirements to
 		// reflect the addition of the vote. Until then, I am printing out
 		// the fields of the vote to ensure the information is getting through
@@ -566,6 +559,9 @@ public class EstimatePanel extends JPanel{
 
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
+		
+		getEstimateText().setBorder(defaultBorder);
+		displayError("   Vote Successful!");
 	}
 
 	public void displayError(String error) {

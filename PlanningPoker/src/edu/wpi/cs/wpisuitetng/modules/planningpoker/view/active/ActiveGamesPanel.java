@@ -4,12 +4,9 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.Insets;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.UUID;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -26,7 +23,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 /**
  * Sets up the panel for the active games screen, which
  *         has the list of all active games in which the user is playing. When

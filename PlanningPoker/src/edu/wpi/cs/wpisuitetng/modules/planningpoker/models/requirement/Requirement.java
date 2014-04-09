@@ -15,6 +15,7 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
 
@@ -45,6 +46,8 @@ public class Requirement extends ObservableModel {
 	/** list of votes for this requirement */
 	private ArrayList<Vote> votes = new ArrayList<Vote>();
 
+	/** boolean for whether the requirement has been voted on by all users */
+	private boolean complete = false;
 	
 	
 	/**
@@ -135,7 +138,20 @@ public class Requirement extends ObservableModel {
 	 * @param votes the votes to set          
 	 */
 	public void addVote(Vote vote) {
+		for(int i = 0; i < votes.size(); i++) {
+			if(vote.getUsername().equals(votes.get(i).getUsername())) {
+				votes.get(i).setVoteNumber(vote.getVoteNumber());
+				this.setChanged();
+				this.notifyObservers(votes.get(i));
+				return;
+			}
+		}
 		this.votes.add(vote);
+		
+		if(votes.size() == this.getProject().getTeam().length) {
+			this.setComplete();
+		}
+		
 		this.setChanged();
 		this.notifyObservers(vote);
 	}
@@ -148,6 +164,12 @@ public class Requirement extends ObservableModel {
 	public void save() {
 		// TODO Auto-generated method stub
 
+	}
+	
+	public void setComplete() {
+		this.complete = true;
+		this.setChanged();
+		this.notifyObservers();
 	}
 
 	/**
