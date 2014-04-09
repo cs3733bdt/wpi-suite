@@ -93,6 +93,10 @@ public class UserDeserializer implements JsonDeserializer<User> {
 			 System.out.print("Carrier in User: " + inflated.getCarrier().toString());
 			 
 		 }
+		 else
+		 {
+			 inflated.setCarrier(null);
+		 }
 		 
 		 if(deflated.has("phoneNumber")  && !deflated.get("phoneNumber").getAsString().equals(""))
 		 {
@@ -101,6 +105,10 @@ public class UserDeserializer implements JsonDeserializer<User> {
 			 inflated.setPhoneNumber(newPhoneNumber);
 			 System.out.print("Phone Number in User: " + inflated.getPhoneNumber());
 			 
+		 }
+		 else
+		 {
+			 inflated.setPhoneNumber(null);
 		 }
 		 
 		 if(deflated.has("role")  && !deflated.get("role").getAsString().equals(""))
