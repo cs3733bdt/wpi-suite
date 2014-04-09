@@ -20,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requiremen
  * @author doruk
  *
  */
-public class testSmsNotification {
+public class testSMSNotification {
 	
 	Game g;
 	User u1, u2, u3;

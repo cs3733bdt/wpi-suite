@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
  * @author doruk
  *
  */
-public class SmsNotification {
+public class SMSNotification {
 	
 		// Game to get users from to send SMS messages to
 		private final Game g;
@@ -35,10 +35,10 @@ public class SmsNotification {
 		
 		
 		/**
-		 * Constructs an Sms notification for a given game
+		 * Constructs an SMS notification for a given game
 		 * @param g The game to notify users about.
 		 */
-		public SmsNotification(Game g) {
+		public SMSNotification(Game g) {
 			this.g = g;
 		}
 		
@@ -84,7 +84,7 @@ public class SmsNotification {
 		 * This method implements the sendEmail method to 
 		 * send email notifications to all the users on a team
 		 */
-		public void sendSmsMessages() 
+		public void sendSMSMessages() 
 		{
 			// Get the users that are expected to play the game
 			User[] users = g.getProject().getTeam();
@@ -92,7 +92,7 @@ public class SmsNotification {
 			//Check to see if no users are attached to this project
 			if(users[0] != null) {
 				for (int i = 0; i < users.length; i++) {
-					sendSms(login(), users[i]);
+					sendSMS(login(), users[i]);
 				}
 			} else {
 				System.out.println("Project: " + g.getProject().getName() + ", has no users in its team.");
@@ -100,6 +100,12 @@ public class SmsNotification {
 			}
 		}
 		
+		/**
+		 * Appends the carrier to the end of the phone number
+		 * which is needed to be sent.
+		 * @param user
+		 * @return
+		 */
 		public String appendCarrier(User user)
 		{
 			String numberWithCarrier = user.getPhoneNumber();
@@ -133,7 +139,7 @@ public class SmsNotification {
 		 * This code is inspired by http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
 		 * @param user The user to be messaged.
 		 */
-		public void sendSms(Session session, User user) {
+		public void sendSMS(Session session, User user) {
 			// Recipient's SMS ID needs to be mentioned.
 			String to = "";
 			
@@ -182,7 +188,7 @@ public class SmsNotification {
 						System.out.println("Sent message successfully....");
 					} catch (InterruptedException e1) {
 						System.err.println("Can't connect to host; either internet or host is down");
-						System.err.println("Users won't get emails for game: " + g.getName());
+						System.err.println("Users won't get messages for game: " + g.getName());
 						e1.printStackTrace();
 					}
 				}
