@@ -114,6 +114,8 @@ public class EstimatePanel extends JPanel{
 		// set the bigger font for userStoryDesc
 		Font bigFont = newFont;
 		
+		final Font largeFont = new Font("Serif",Font.BOLD,20);
+		
 		JScrollPane userStoryPane = new JScrollPane(userStoryDesc);
 		userStoryDesc.setFont(bigFont);
 		userStoryDesc.setLineWrap(true);
@@ -262,6 +264,7 @@ public class EstimatePanel extends JPanel{
 		estText.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				estText.setFont(largeFont);
 				estText.setText("");
 			}
 		});
@@ -275,30 +278,10 @@ public class EstimatePanel extends JPanel{
 		//c.anchor = GridBagConstraints.LINE_END;
 		c.insets = new Insets(0, 77, 0, 0);
 
-		//		JLabel counterLabel = new JLabel("Your current estimate total: ");
-//		c.anchor = GridBagConstraints.CENTER;
-//		c.insets = new Insets(0, 100, 0, 0);
-//		c.weightx = 0;
 		c.gridx = 0;
 		c.gridwidth = 1;
 		c.gridy = 7;
 		overviewPanel.add(counterLabel, c);
-		
-		/**
-		 * Formats and adds the counter for the card estimates
-		 */
-//		counter.setText("0");
-//		counter.setPreferredSize(new Dimension(25, 25));
-//		counter.setLineWrap(true);
-//		counter.setEditable(false);
-//		c.insets = new Insets(0, 0, 0, 0);
-//		c.anchor = GridBagConstraints.CENTER;
-//		c.gridwidth = 2;
-//		c.gridx = 0;
-//		c.gridy = 7;
-//		
-		//overviewPanel.add(counter, c);
-
 
 		if (game.doesUseCards()) {
 			estText.setVisible(false);
@@ -541,7 +524,7 @@ public class EstimatePanel extends JPanel{
 		String currentUser = ConfigManager.getConfig().getUserName(); // Gets the currently active user
 		int voteNumber;
 		if(getGame().doesUseCards()){
-			voteNumber = 1;
+			voteNumber = sum;
 		}
 		else{
 			voteNumber = Integer.parseInt(estText.getText());
@@ -549,15 +532,8 @@ public class EstimatePanel extends JPanel{
 		Vote vote = new Vote(currentUser, voteNumber);
 		getRequirement().addVote(vote);
 		
+		System.out.println("You voted: " + vote.getVoteNumber());
 		
-		// I am currently working on updating a game's requirements to
-		// reflect the addition of the vote. Until then, I am printing out
-		// the fields of the vote to ensure the information is getting through
-		System.out.println("current user: " + vote.getUsername());
-		System.out.println("vote number: " + vote.getVoteNumber());
-		System.out.println("number of votes:" + getRequirement().getVotes().size());
-		// these lines should be deleted when proper implementation is complete
-
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 		

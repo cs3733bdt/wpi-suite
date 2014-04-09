@@ -148,7 +148,7 @@ public class Requirement extends ObservableModel {
 		this.votes.add(vote);
 		if(this.getProject() != null){
 			if(votes.size() == this.getProject().getTeam().length) {
-				//this.setComplete();
+				this.setComplete();
 			}
 		} else {
 			System.err.println("THE PROJECT IN THE REQUIREMENT WAS NULL: ADD VOTE METHOD");
@@ -174,6 +174,14 @@ public class Requirement extends ObservableModel {
 		this.notifyObservers();
 	}
 
+	public String displayComplete(){
+		if(this.complete){
+			return "*";
+		}
+		else{
+			return Integer.toString(this.getVotes().size());
+		}
+	}
 	/**
 	 * Method delete.
 	 * @see edu.wpi.cs.wpisuitetng.modules.Model#delete()
