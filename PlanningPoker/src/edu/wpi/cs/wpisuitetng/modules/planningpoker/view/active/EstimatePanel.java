@@ -286,11 +286,11 @@ public class EstimatePanel extends JPanel{
 		 */
 		errorField = new JLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
-		errorField.setPreferredSize(new Dimension(150, 25));
+		errorField.setPreferredSize(new Dimension(300, 25));
 		errorField.setForeground(Color.RED);
 		c.weightx = 0;
 		c.gridx = 0;
-		c.gridy = 9;
+		c.gridy = 10;
 		overviewPanel.add(errorField, c);
 		
 		c.insets= new Insets(0, 0, 0, 0);
@@ -407,7 +407,7 @@ public class EstimatePanel extends JPanel{
 		Vote vote = new Vote(currentUser, voteNumber);
 		getRequirement().addVote(vote);
 		
-
+		
 		// I am currently working on updating a game's requirements to
 		// reflect the addition of the vote. Until then, I am printing out
 		// the fields of the vote to ensure the information is getting through
@@ -418,6 +418,9 @@ public class EstimatePanel extends JPanel{
 
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
+		
+		getEstimateText().setBorder(defaultBorder);
+		displayError("   Vote Successful!");
 	}
 
 	public void displayError(String error) {
