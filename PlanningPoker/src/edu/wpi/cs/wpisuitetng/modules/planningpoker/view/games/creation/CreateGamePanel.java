@@ -276,7 +276,7 @@ public class CreateGamePanel extends JScrollPane {
 		c.gridx = 0;
 		c.gridwidth = 1;
 		c.gridy = 11;
-		c.insets = new Insets(0, 150, 0, 0);
+		c.insets = new Insets(0, 360, 0, 0);
 		rightPanel.add(new SaveGameButtonPanel(this), c);	
 		
 		
@@ -287,7 +287,7 @@ public class CreateGamePanel extends JScrollPane {
 		c.gridx = 1;
 		c.gridwidth = 1;
 		c.gridy = 11;
-		c.insets = new Insets(0, 150, 0, 0);
+		c.insets = new Insets(0, 100, 0, 200);
 		rightPanel.add(new LaunchGameButtonPanel(this), c);
 
 		/**
@@ -307,6 +307,7 @@ public class CreateGamePanel extends JScrollPane {
 		errorField = new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
+		c.anchor = GridBagConstraints.CENTER;
 		/*
 		 * c.anchor = GridBagConstraints.CENTER; c.weightx = 1; c.gridx = 0;
 		 * c.gridwidth = 2; //c.gridheight = 1; c.gridy = 8; c.insets = new
