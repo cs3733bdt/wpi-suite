@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.Game;
  * @author doruk
  *
  */
-public class SmsNotification {
+public class SMSNotification {
 	
 		// Game to get users from to send SMS messages to
 		private final Game g;
@@ -35,10 +35,10 @@ public class SmsNotification {
 		
 		
 		/**
-		 * Constructs an Sms notification for a given game
+		 * Constructs an SMS notification for a given game
 		 * @param g The game to notify users about.
 		 */
-		public SmsNotification(Game g) {
+		public SMSNotification(Game g) {
 			this.g = g;
 		}
 		
@@ -84,7 +84,7 @@ public class SmsNotification {
 		 * This method implements the sendEmail method to 
 		 * send email notifications to all the users on a team
 		 */
-		public void sendSmsMessages() 
+		public void sendSMSMessages() 
 		{
 			// Get the users that are expected to play the game
 			User[] users = g.getProject().getTeam();
@@ -92,7 +92,7 @@ public class SmsNotification {
 			//Check to see if no users are attached to this project
 			if(users[0] != null) {
 				for (int i = 0; i < users.length; i++) {
-					sendSms(login(), users[i]);
+					sendSMS(login(), users[i]);
 				}
 			} else {
 				System.out.println("Project: " + g.getProject().getName() + ", has no users in its team.");
@@ -100,6 +100,12 @@ public class SmsNotification {
 			}
 		}
 		
+		/**
+		 * Appends the carrier to the end of the phone number
+		 * which is needed to be sent.
+		 * @param user
+		 * @return
+		 */
 		public String appendCarrier(User user)
 		{
 			String numberWithCarrier = user.getPhoneNumber();
@@ -133,7 +139,7 @@ public class SmsNotification {
 		 * This code is inspired by http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
 		 * @param user The user to be messaged.
 		 */
-		public void sendSms(Session session, User user) {
+		public void sendSMS(Session session, User user) {
 			// Recipient's SMS ID needs to be mentioned.
 			String to = "";
 			
@@ -141,56 +147,53 @@ public class SmsNotification {
 			// and print name of user
 			if (user.getPhoneNumber() != null) {
 				to = this.appendCarrier(user);
+				
+				try {
+					// Create a default MimeMessage object.
+					MimeMessage message = new MimeMessage(session);
+
+					// Set From: header field of the header.
+					message.setFrom(new InternetAddress(username));
+
+					// Set To: header field of the header.
+					message.addRecipient(Message.RecipientType.TO, new InternetAddress(
+							to));
+
+					// Set Subject: header field
+					message.setSubject("Voting is Required for game: " + g.getName());
+
+					// If the game doesn't have requirements, say that instead
+					// of printing null requirements.
+					// Then set the actual message.
+					if (!g.getRequirements().isEmpty()) {
+						message.setText("Game Description: " + g.getDescription() + "\n\n"
+								+ "Game Requirements: " + g.getRequirements());
+					} else {
+						message.setText("There are no current requirements.");
+					}
+					
+					try {
+						// Send message
+						Transport.send(message);
+						System.out.println("Sent message successfully....");
+					} catch(MailConnectException e) {
+						try {
+							// Waiting 5 seconds and retrying
+							Thread.sleep(5000);
+							System.err.println("Couldn't connect to host, trying again...");
+							Transport.send(message);
+							System.out.println("Sent message successfully....");
+						} catch (InterruptedException e1) {
+							System.err.println("Can't connect to host; either internet or host is down");
+							System.err.println("Users won't get messages for game: " + g.getName());
+							e1.printStackTrace();
+						}
+					}
+				} catch (MessagingException mex) {
+					mex.printStackTrace();
+				}
 			} else {
 				System.out.println("User: " + user.getName() + ", does not have a phone number stored.");
 			}
-
-			try {
-				// Create a default MimeMessage object.
-				MimeMessage message = new MimeMessage(session);
-
-				// Set From: header field of the header.
-				message.setFrom(new InternetAddress(username));
-
-				// Set To: header field of the header.
-				message.addRecipient(Message.RecipientType.TO, new InternetAddress(
-						to));
-
-				// Set Subject: header field
-				message.setSubject("Voting is Required for game: " + g.getName());
-
-				// If the game doesn't have requirements, say that instead
-				// of printing null requirements.
-				// Then set the actual message.
-				if (!g.getRequirements().isEmpty()) {
-					message.setText("Game Description: " + g.getDescription() + "\n\n"
-							+ "Game Requirements: " + g.getRequirements());
-				} else {
-					message.setText("There are no current requirements.");
-				}
-				
-				try {
-					// Send message
-					Transport.send(message);
-					System.out.println("Sent message successfully....");
-				} catch(MailConnectException e) {
-					try {
-						// Waiting 5 seconds and retrying
-						Thread.sleep(5000);
-						System.err.println("Couldn't connect to host, trying again...");
-						Transport.send(message);
-						System.out.println("Sent message successfully....");
-					} catch (InterruptedException e1) {
-						System.err.println("Can't connect to host; either internet or host is down");
-						System.err.println("Users won't get emails for game: " + g.getName());
-						e1.printStackTrace();
-					}
-				}
-			} catch (MessagingException mex) {
-				mex.printStackTrace();
-			}
 		}
-	
-	
-
 }

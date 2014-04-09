@@ -20,14 +20,14 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirementmodels.Requiremen
  * @author doruk
  *
  */
-public class testSmsNotification {
+public class testSMSNotification {
 	
 	Game g;
 	User u1, u2, u3;
 	User[] team1;
 	String[] support1;
 	Project p;
-	SmsNotification sms;
+	SMSNotification sms;
 	ArrayList<Requirement> reqs;
 	
 	@Before
@@ -48,7 +48,7 @@ public class testSmsNotification {
 		
 		p = new Project("testemailproject", "proj3", u1, team1, support1);
 		g.setProject(p);
-		sms = new SmsNotification(g);
+		sms = new SMSNotification(g);
 	}
 	
 	@Test
@@ -63,7 +63,7 @@ public class testSmsNotification {
 	{
 		u1.setPhoneNumber("6033402721");
 		u1.setCarrier(Carrier.VERIZON);
-		sms.sendSms(sms.login(), u1);
+		sms.sendSMS(sms.login(), u1);
 	}
 	
 	@Test
@@ -71,7 +71,7 @@ public class testSmsNotification {
 	{
 		u1.setPhoneNumber("6033402721");
 		u1.setCarrier(Carrier.TMOBILE);
-		sms.sendSms(sms.login(), u1);
+		sms.sendSMS(sms.login(), u1);
 	}
 	
 	@Test
@@ -79,7 +79,7 @@ public class testSmsNotification {
 	{
 		u1.setPhoneNumber("6033402721");
 		u1.setCarrier(Carrier.SPRINT);
-		sms.sendSms(sms.login(), u1);
+		sms.sendSMS(sms.login(), u1);
 	}
 	
 	@Test
@@ -87,7 +87,7 @@ public class testSmsNotification {
 	{
 		u1.setPhoneNumber("6033402721");
 		u1.setCarrier(Carrier.ATT);
-		sms.sendSms(sms.login(), u1);
+		sms.sendSMS(sms.login(), u1);
 	}
 	
 	@Test
@@ -95,7 +95,7 @@ public class testSmsNotification {
 	{
 		u1.setPhoneNumber("6033402721");
 		u1.setCarrier(Carrier.USCELLULAR);
-		sms.sendSms(sms.login(), u1);
+		sms.sendSMS(sms.login(), u1);
 	}
 
 }
