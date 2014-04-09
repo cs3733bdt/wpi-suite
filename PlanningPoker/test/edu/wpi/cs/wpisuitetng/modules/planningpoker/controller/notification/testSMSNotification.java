@@ -61,41 +61,56 @@ public class testSMSNotification {
 	@Test
 	public void testSendSMSVerizon()
 	{
-		u1.setPhoneNumber("6033402721");
-		u1.setCarrier(Carrier.VERIZON);
-		sms.sendSMS(sms.login(), u1);
+		/**
+		 *  Commented out to prevent spam. Works as of 4/8/14
+		 *  u1.setPhoneNumber("");
+		 *  u1.setCarrier(Carrier.VERIZON);
+		 *  sms.sendSMS(sms.login(), u1);
+		 */
 	}
 	
 	@Test
 	public void testSendSMSTMOBILE()
 	{
-		u1.setPhoneNumber("6033402721");
-		u1.setCarrier(Carrier.TMOBILE);
-		sms.sendSMS(sms.login(), u1);
+		/**
+		 *  Commented out to prevent spam. Works as of 4/8/14
+		 *  u1.setPhoneNumber("");
+		 *  u1.setCarrier(Carrier.TMOBILE);
+		 *  sms.sendSMS(sms.login(), u1);
+		 */
 	}
 	
 	@Test
 	public void testSendSMSSPRINT()
 	{
-		u1.setPhoneNumber("6033402721");
-		u1.setCarrier(Carrier.SPRINT);
-		sms.sendSMS(sms.login(), u1);
+		/**
+		 *  Commented out to prevent spam. Works as of 4/8/14
+		 *  u1.setPhoneNumber("");
+		 *  u1.setCarrier(Carrier.SPRINT);
+		 *  sms.sendSMS(sms.login(), u1);
+		 */
 	}
 	
 	@Test
 	public void testSendSMSATT()
 	{
-		u1.setPhoneNumber("6033402721");
-		u1.setCarrier(Carrier.ATT);
-		sms.sendSMS(sms.login(), u1);
+		/**
+		 *  Commented out to prevent spam. Works as of 4/8/14
+		 *  u1.setPhoneNumber("");
+		 *  u1.setCarrier(Carrier.ATT);
+		 *  sms.sendSMS(sms.login(), u1);
+		 */
 	}
 	
 	@Test
 	public void testSendSMSUSCellular()
 	{
-		u1.setPhoneNumber("6033402721");
-		u1.setCarrier(Carrier.USCELLULAR);
-		sms.sendSMS(sms.login(), u1);
+		/**
+		 *  Commented out to prevent spam. Works as of 4/8/14
+		 *  u1.setPhoneNumber("");
+		 *  u1.setCarrier(Carrier.USCELLULAR);
+		 *  sms.sendSMS(sms.login(), u1);
+		 */
 	}
 
 }

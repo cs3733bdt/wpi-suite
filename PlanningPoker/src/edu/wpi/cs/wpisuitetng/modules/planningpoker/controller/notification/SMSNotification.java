@@ -157,25 +157,17 @@ public class SMSNotification {
 
 					// Set To: header field of the header.
 					message.addRecipient(Message.RecipientType.TO, new InternetAddress(
-							to));
+							to));					
 
-					// Set Subject: header field
-					message.setSubject("Voting is Required for game: " + g.getName());
-
-					// If the game doesn't have requirements, say that instead
-					// of printing null requirements.
-					// Then set the actual message.
-					if (!g.getRequirements().isEmpty()) {
-						message.setText("Game Description: " + g.getDescription() + "\n\n"
-								+ "Game Requirements: " + g.getRequirements());
-					} else {
-						message.setText("There are no current requirements.");
-					}
+					//Sets message text. Doesn't include requirements to keep text message
+					//a reasonable size
+						message.setText("Voting is Required for game: " + g.getName() + '\n' + 
+								"Game Description: " + g.getDescription());
 					
 					try {
 						// Send message
 						Transport.send(message);
-						System.out.println("Sent message successfully....");
+						System.out.println("Sent text message successfully....");
 					} catch(MailConnectException e) {
 						try {
 							// Waiting 5 seconds and retrying
