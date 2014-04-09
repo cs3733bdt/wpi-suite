@@ -15,6 +15,7 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
 
@@ -129,10 +130,21 @@ public class Requirement extends ObservableModel {
 	 * adds a vote to the votes ArrayList
 	 * @param votes the votes to set          
 	 */
-	public void addVote(Vote vote) {
+	public void addVote(Vote vote, Game game) {
+		for(int i = 0; i < votes.size(); i++) {
+			if(vote.getUsername().equals(votes.get(i).getUsername())) {
+				votes.get(i).setVoteNumber(vote.getVoteNumber());
+				this.setChanged();
+				this.notifyObservers(votes.get(i));
+				return;
+			}
+		}
 		this.votes.add(vote);
 		this.setChanged();
 		this.notifyObservers(vote);
+		if(votes.size() == game.getUsers()) {
+			game.setComplete();
+		}
 	}
 	
 	/**
