@@ -187,7 +187,7 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 	}
 	
 	public String toString(){
-		return "You got the singleton of the Game Model";
+		return ("You got the singleton of the Game Model");
 	}
 	
 	/**

@@ -216,7 +216,7 @@ public abstract class ObservableModel extends AbstractModel {
         return obs.size();
     }
     
-    protected synchronized AbstractModelObserver[] getObservers(){
-    	return (AbstractModelObserver[]) obs.toArray();
+    protected synchronized AbstractModelObserver getObserver(int i){
+    	return obs.get(i);
     }
 }
