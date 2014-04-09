@@ -144,7 +144,6 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 	 */
 	public synchronized void updateGames(Game[] allGames){
 		boolean changes = false;
-		System.out.print("Updating the model");
 		
 		
 		int startingSize = getSize();
@@ -167,14 +166,14 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 				//aGame.deleteObservers();
 				aGame.addObserver(this);		//Add an observer on this game
 				this.games.add(aGame);			//Adds this game to the list of games in this list
-				System.out.println("NEW GAME FOUND BEING ADDED TO MODEL: " + aGame.getName());
+				System.out.print("Updating the model");
+				System.out.println("\tNEW GAME FOUND BEING ADDED TO MODEL: " + aGame.getName());
 			}
 		}
 		this.fireIntervalAdded(this, startingSize-1, getSize()-1); 	//Fires the event listeners on this list.
 		
 		
 		if(changes){												//Only repaint game tree if the model has changed
-			System.out.println("\tChanges found");
 			try{ //This is used to prevent the a null pointer exception when running test cases (the JPanel's aren't instantiated)
 				ViewEventController.getInstance().refreshGameTable();		//Currently serves no purpose
 				ViewEventController.getInstance().refreshGameTree();		//Refreshes the active table
@@ -214,6 +213,7 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 		if(o instanceof Game){
 			try{
 				UpdateGameController.getInstance().updateGame((Game)o);
+				System.out.println("A game is being updated: " + ((Game)o).getName());
 			} catch (Exception e){
 				System.err.println("The network has not been instantiated");
 			}

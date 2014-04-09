@@ -102,6 +102,12 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			wasChanged = true;
 		}
 		
+		if(!this.endDate.equals(toCopyFrom.endDate)){
+			this.endDate = toCopyFrom.endDate;
+			needsUpdate = true;
+			wasChanged = true;
+		}
+		
 		if(!this.requirements.equals(toCopyFrom.requirements)){
 			boolean changes = false;										//Are there changes?
 			
@@ -177,6 +183,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		description = "";
 		creator = "";
 		creationTime = new Date();
+		endDate = new Date();
 		hasTimeLimit = false;
 		complete = false;
 		identity = UUID.randomUUID();
