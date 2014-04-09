@@ -4,9 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import java.util.ArrayList;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.Session;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
 
 public class RequirementTest {
@@ -16,6 +22,14 @@ public class RequirementTest {
 	
 	Requirement req2Dupe;
 	Requirement req3Dupe;
+	
+	ArrayList<Requirement> reqList;
+	
+	Game game1;
+	Game game2;
+	Project project1;
+	Session session1;
+
 
 	@Before
 	public void setUp() throws Exception {
@@ -29,6 +43,18 @@ public class RequirementTest {
 		
 		req3Dupe = new Requirement("Req3 Dupe", "DescDupe2");
 		req3Dupe.setId(req3.getId());
+		
+		reqList = new ArrayList<Requirement>();
+		reqList.add(req1);
+		reqList.add(req2);
+		
+		User Jeremy =  new User("Jeremy", "Jim", "", "generic.email", 14);
+		
+		game1 = new Game("Game 1", "Description", "Jeremy", null, false, false);
+		game2 = new Game("Game 2", "New Desc", "Steve", reqList, false, false);
+		
+		project1 = new Project("project 1", "7");		
+		session1 = new Session(Jeremy, project1, "");
 	}
 
 	@Test
@@ -63,6 +89,12 @@ public class RequirementTest {
 		assertEquals(copyTo.getName(), req1.getName());
 		assertEquals(copyTo.getDescription(), req1.getDescription());
 		assertEquals(copyTo.getVoteCount(), req1.getVoteCount());
+	}
+	
+	@Test
+	public void testGetRequirements(){
+		assertEquals(game1.getRequirements(), null);
+		assertEquals(game2.getRequirements(), reqList);
 	}
 
 }

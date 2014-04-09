@@ -37,8 +37,9 @@ public class User extends AbstractModel
 	 * The primary constructor for a User
 	 * @param name	User's full name
 	 * @param username	User's username (nickname)
-	 * @param idNum	User's ID number
+	 * @param password User's password
 	 * @param email User's email address
+	 * @param idNum	User's ID number
 	 */
 	public User(String name, String username, String password, String email, int idNum)
 	{
