@@ -24,6 +24,7 @@ public class RequirementTest {
 	Requirement req3Dupe;
 	
 	ArrayList<Requirement> reqList;
+	ArrayList<Requirement> emptyList;
 	
 	Game game1;
 	Game game2;
@@ -45,12 +46,13 @@ public class RequirementTest {
 		req3Dupe.setId(req3.getId());
 		
 		reqList = new ArrayList<Requirement>();
+		emptyList = new ArrayList<Requirement>();
 		reqList.add(req1);
 		reqList.add(req2);
 		
 		User Jeremy =  new User("Jeremy", "Jim", "", "generic.email", 14);
 		
-		game1 = new Game("Game 1", "Description", "Jeremy", null, false, false);
+		game1 = new Game("Game 1", "Description", "Jeremy", emptyList, false, false);
 		game2 = new Game("Game 2", "New Desc", "Steve", reqList, false, false);
 		
 		project1 = new Project("project 1", "7");		
@@ -93,7 +95,7 @@ public class RequirementTest {
 	
 	@Test
 	public void testGetRequirements(){
-		assertEquals(game1.getRequirements(), null);
+		assertEquals(game1.getRequirements(), emptyList);
 		assertEquals(game2.getRequirements(), reqList);
 	}
 
