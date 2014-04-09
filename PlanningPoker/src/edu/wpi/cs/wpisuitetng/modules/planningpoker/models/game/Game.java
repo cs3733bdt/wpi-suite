@@ -247,6 +247,13 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return name;
 	}
 	
+	public void setName(String newName){
+		if(this.name != newName){
+			this.name = newName;
+			this.setChanged();
+		}
+	}
+	
 	/**
 	 * Is this this game completed
 	 * @return true if the game is complete
@@ -259,9 +266,11 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * Change game status to complete
 	 * @return true if the game is complete
 	 */
-	
 	public void setComplete(){
-		this.complete = true;
+		if(this.complete != true){
+			this.complete = true;
+			this.setChanged();
+		}
 	}
 	
 	/**
@@ -272,12 +281,26 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return usesCards;
 	}
 	
+	public void setUsesCards(boolean newUsesCards){
+		if(this.usesCards != newUsesCards){
+			this.usesCards = newUsesCards;
+			this.setChanged();
+		}
+	}
+	
 	/**
 	 * Gets the description of the game
 	 * @return the description of the game
 	 */
 	public String getDescription() {
 		return description;
+	}
+	
+	public void setDescription(String newDescription){
+		if(this.description != newDescription){
+			this.description = newDescription;
+			this.setChanged();
+		}
 	}
 	
 	/**
@@ -287,6 +310,13 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	final public ArrayList<Requirement> getRequirements(){
 		return requirements;
+	}
+	
+	public void setRequirements(ArrayList<Requirement> newReqs){
+		if(this.requirements != newReqs){
+			this.requirements = newReqs;
+			this.setChanged();
+		}
 	}
 	
 	/**
@@ -328,7 +358,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setActive(boolean newActive){
-		this.active = newActive;
+		if(this.active != newActive){
+			this.active = newActive;
+			this.setChanged();
+		}
 	}
 	
 	@Override

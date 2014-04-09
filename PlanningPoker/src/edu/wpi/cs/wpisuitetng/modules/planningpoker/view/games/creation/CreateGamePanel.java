@@ -479,9 +479,11 @@ public class CreateGamePanel extends JScrollPane {
 			currentGame = newGame;
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
 		} else{
-			newGame.setIdentifier(currentGame.getIdentity()); 	//Copies the UUID over to the new game
-			currentGame.copyFrom(newGame);
-			currentGame.hasChanged();
+			currentGame.setName(strName);
+			currentGame.setDescription(strDes);
+			currentGame.setActive(false);
+			currentGame.setUsesCards(usesCards);
+			currentGame.setRequirements(requ);
 			currentGame.notifyObservers();
 		}
 		
@@ -508,8 +510,12 @@ public class CreateGamePanel extends JScrollPane {
 			currentGame = newGame;
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
 		} else{
-			newGame.setIdentifier(currentGame.getIdentity()); 	//Copies the UUID over to the new game
-			currentGame.copyFrom(newGame);						//Copies the entirety of this game into the other game
+			currentGame.setName(strName);
+			currentGame.setDescription(strDes);
+			currentGame.setActive(true);
+			currentGame.setUsesCards(usesCards);
+			currentGame.setRequirements(requ);
+			currentGame.notifyObservers();//Copies the entirety of this game into the other game
 		}
 		
 		ViewEventController.getInstance().refreshGameTable();
