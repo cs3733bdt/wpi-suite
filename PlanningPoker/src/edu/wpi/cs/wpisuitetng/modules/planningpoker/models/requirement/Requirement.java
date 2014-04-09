@@ -135,7 +135,7 @@ public class Requirement extends ObservableModel {
 	 * adds a vote to the votes ArrayList
 	 * @param votes the votes to set          
 	 */
-	public void addVote(Vote vote, Game game) {
+	public void addVote(Vote vote) {
 		for(int i = 0; i < votes.size(); i++) {
 			if(vote.getUsername().equals(votes.get(i).getUsername())) {
 				votes.get(i).setVoteNumber(vote.getVoteNumber());
@@ -145,11 +145,13 @@ public class Requirement extends ObservableModel {
 			}
 		}
 		this.votes.add(vote);
+		
+		if(votes.size() == this.getProject().getTeam().length) {
+			//this.setComplete();
+		}
+		
 		this.setChanged();
 		this.notifyObservers(vote);
-		if(votes.size() == game.getUsers()) {
-			game.setComplete();
-		}
 	}
 	
 	/**

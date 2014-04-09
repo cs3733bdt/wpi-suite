@@ -27,8 +27,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers;
 
 import java.util.Vector;
 
-import javax.swing.JPanel;
-
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 
 /**
