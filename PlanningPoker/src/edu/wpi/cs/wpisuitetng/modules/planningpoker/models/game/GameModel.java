@@ -217,6 +217,8 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 			} catch (Exception e){
 				System.err.println("The network has not been instantiated");
 			}
+		} else {
+			System.err.println("GAME MODEL ATTEMPTED TO UPDATE SOMETHING NOT A GAME");
 		}
 		
 	}

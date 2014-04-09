@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
@@ -34,7 +35,7 @@ public class GameModelTest {
 	@Test
 	public void testAddGame() {
 		GameModel model = GameModel.getInstance();
-		Game object = new Game("Test Game", "Test Description", "Steve", new ArrayList<Requirement>(), true, false);
+		Game object = new Game("Test Game", "Test Description", new ArrayList<Requirement>(), true, false);
 		
 		model.emptyModel();
 		assertEquals(model.getSize(), 0);
@@ -45,7 +46,7 @@ public class GameModelTest {
 		Game objectReturned = model.getElementAt(0);
 		assertEquals(objectReturned.getName(), "Test Game");
 		assertEquals(objectReturned.getDescription(), "Test Description");
-		assertEquals(objectReturned.getCreator(), "Steve");
+		assertEquals(objectReturned.getCreator(), ConfigManager.getInstance().getConfig().getUserName());
 	}
 	
 	@Test
@@ -53,9 +54,9 @@ public class GameModelTest {
 		GameModel model = GameModel.getInstance();
 		model.emptyModel();
 		assertEquals(0, model.getSize());
-		Game game1 = new Game("Game", "With a name", "Steve", new ArrayList<Requirement>(), false, true);
-		Game game2 = new Game("Game2", "With a name2", "Steve2", new ArrayList<Requirement>(), true, true);
-		Game game3 = new Game("Game3", "With a name3", "Steve3", new ArrayList<Requirement>(), false, false);
+		Game game1 = new Game("Game", "With a name", new ArrayList<Requirement>(), false, true);
+		Game game2 = new Game("Game2", "With a name2", new ArrayList<Requirement>(), true, true);
+		Game game3 = new Game("Game3", "With a name3", new ArrayList<Requirement>(), false, false);
 		Game gameList[] = new Game[3];
 		gameList[0] = game1;
 		gameList[1] = game2;
@@ -70,7 +71,7 @@ public class GameModelTest {
 		assertEquals(returned2.getName(), "Game2");
 		assertEquals(returned3.getName(), "Game3");
 		
-		Game game4 = new Game("An updated game", "Overwriting an existing", "Steve", new ArrayList<Requirement>(), false, true);
+		Game game4 = new Game("An updated game", "Overwriting an existing", new ArrayList<Requirement>(), false, true);
 		game4.setIdentifier(game1.getIdentity());
 		gameList[0] = game4;
 		model.addGames(gameList);
@@ -97,11 +98,11 @@ public class GameModelTest {
 		req.addVote(new Vote("Erin", 10));
 		
 		reqs.add(req);
-		Game game1 = new Game("Game", "With a name", "Steve", reqs, false, true);
+		Game game1 = new Game("Game", "With a name", reqs, false, true);
 		assertEquals(3, req.getVoteCount());
 		
-		Game game2 = new Game("Game2", "With a name2", "Steve2", new ArrayList<Requirement>(), true, true);
-		Game game3 = new Game("Game3", "With a name3", "Steve3", new ArrayList<Requirement>(), true, false);
+		Game game2 = new Game("Game2", "With a name2", new ArrayList<Requirement>(), true, true);
+		Game game3 = new Game("Game3", "With a name3", new ArrayList<Requirement>(), true, false);
 		
 		
 		Game gameList[] = new Game[3];
@@ -132,7 +133,7 @@ public class GameModelTest {
 		assertEquals(2, reqs2.size());
 		assertEquals(3, req2.getVoteCount());
 		
-		Game game1Changed = new Game("Game1 Changed", "DescriptionChanged", "DifferentName", reqs2, true, false);
+		Game game1Changed = new Game("Game1 Changed", "DescriptionChanged", reqs2, true, false);
 		game1Changed.setIdentifier(game1.getIdentity()); //Makes this game 'the equivalent' to the other game
 		game1Changed.setComplete();
 		
@@ -149,7 +150,7 @@ public class GameModelTest {
 		//SHOULD BE NO CHANGES TO THE MODEL AT THIS POINT!
 		assertEquals(3, model.getSize());
 		assertEquals(1, model.getElementAt(0).getRequirements().size());
-		assertEquals("Steve", model.getElementAt(0).getCreator());
+		assertEquals(ConfigManager.getInstance().getConfig().getUserName(), model.getElementAt(0).getCreator());
 		assertEquals("Game", model.getElementAt(0).getName());
 		Requirement reqFromGame = model.getElementAt(0).getRequirements().get(0);
 		assertEquals(3, reqFromGame.getVoteCount());
@@ -160,7 +161,7 @@ public class GameModelTest {
 		assertEquals(3, model.getSize());
 		
 		assertEquals("Game1 Changed", model.getElementAt(0).getName());
-		assertEquals("DifferentName", model.getElementAt(0).getCreator());
+		assertEquals(ConfigManager.getInstance().getConfig().getUserName(), model.getElementAt(0).getCreator());
 		assertTrue(model.getElementAt(0).isComplete());
 		
 		

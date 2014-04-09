@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
@@ -32,14 +33,14 @@ public class GameTest {
 	public void testJSONConversion() {
 		ArrayList<Requirement> reqList = new ArrayList<Requirement>();
 		
-		Game object = new Game("Game A", "Test description", "Steve", reqList, true, false);
+		Game object = new Game("Game A", "Test description", reqList, true, false);
 		Requirement req = new Requirement("Test Requirement", "Test description");
 		
 		reqList.add(req);
 		//Test existing object
 		assertEquals(object.getName(), "Game A");
 		assertEquals(object.getDescription(), "Test description");
-		assertEquals(object.getCreator(), "Steve");
+		assertEquals(object.getCreator(), ConfigManager.getConfig().getUserName());
 		assertFalse(object.getRequirements().isEmpty());
 		assertEquals(object.getRequirements().get(0), req);
 		assertEquals(object.isComplete(), false);
@@ -50,7 +51,7 @@ public class GameTest {
 		
 		assertEquals(newObject.getName(), "Game A");
 		assertEquals(newObject.getDescription(), "Test description");
-		assertEquals(newObject.getCreator(), "Steve");
+		assertEquals(newObject.getCreator(), ConfigManager.getInstance().getConfig().getUserName());
 		assertFalse(newObject.getRequirements().isEmpty());
 		assertEquals(newObject.getRequirements().get(0).getName(), req.getName());
 		assertEquals(newObject.getRequirements().get(0).getDescription(), req.getDescription());
@@ -63,10 +64,10 @@ public class GameTest {
 	public void testCopyContentsOfOneGameToAnother() {
 		
 		// create two games, one with fields initialized, one without
-		Game game1 = new Game("Game A", "Test description", "Steve", new ArrayList<Requirement>(), true, false);
+		Game game1 = new Game("Game A", "Test description", new ArrayList<Requirement>(), true, false);
 		ArrayList<Requirement> removeList = new ArrayList<Requirement>();
 		removeList.add(new Requirement("Requirement", "Description"));
-		Game game2 = new Game("Game B", "A Description to be removed", "Creator Overwritten", removeList, false, true);
+		Game game2 = new Game("Game B", "A Description to be removed", removeList, false, true);
 		
 		
 		// copy the fields from one game to another
@@ -76,14 +77,14 @@ public class GameTest {
 		// test that fields correctly copied from one game to another
 		assertEquals(game2.getName(), "Game A");
 		assertEquals(game2.getDescription(), "Test description");
-		assertEquals(game2.getCreator(), "Steve");
+		assertEquals(game2.getCreator(), ConfigManager.getInstance().getConfig().getUserName());
 		assertTrue(game2.getRequirements().isEmpty());
 		assertEquals(game2.isComplete(), false);
 		assertEquals(game2.doesUseCards(), false);
 		
 		ArrayList<Requirement> keepList = new ArrayList<Requirement>();
 		keepList.add(new Requirement("Requirement One", "Description One"));
-		game1 = new Game(game1.getName(), game1.getDescription(), game1.getCreator(), keepList, true, game1.doesUseCards());
+		game1 = new Game(game1.getName(), game1.getDescription(), keepList, true, game1.doesUseCards());
 		
 		assertTrue(game2.copyFrom(game1));
 		
@@ -122,8 +123,8 @@ public class GameTest {
 	
 	@Test
 	public void testCheckActive(){
-		Game game1 = new Game("Game 1", "Description", "Frank", new ArrayList<Requirement>(), true, true);
-		Game game2 = new Game("Game 2", "Other Description", "Alex", new ArrayList<Requirement>(), false, false);
+		Game game1 = new Game("Game 1", "Description", new ArrayList<Requirement>(), true, true);
+		Game game2 = new Game("Game 2", "Other Description", new ArrayList<Requirement>(), false, false);
 		game2.setComplete();
 		boolean complete1 = game1.isComplete();
 		boolean complete2 = game2.isComplete();
@@ -143,7 +144,7 @@ public class GameTest {
 			maxSumCheck += i;
 		}
 		
-		Game game1 = new Game("Game A", "Test description", "Steve", reqList, true, false);
+		Game game1 = new Game("Game A", "Test description", reqList, true, false);
 	
 		Requirement req = new Requirement("Test Requirement", "Test description");
 		reqList.add(req);

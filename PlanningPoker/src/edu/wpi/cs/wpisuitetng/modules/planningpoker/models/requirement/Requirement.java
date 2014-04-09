@@ -138,11 +138,11 @@ public class Requirement extends ObservableModel {
 	 */
 	public void addVote(Vote vote) {
 		for(int i = 0; i < votes.size(); i++) {
-			if(vote.getUsername().equals(votes.get(i).getUsername())) {
-				votes.get(i).setVoteNumber(vote.getVoteNumber());
-				this.setChanged();
-				this.notifyObservers(votes.get(i));
-				return;
+			if(vote.getUsername().equals(votes.get(i).getUsername())) {		//Check to see if this person has voted
+				votes.get(i).setVoteNumber(vote.getVoteNumber());			//If they have update their vote to the new number
+				this.setChanged();											//Says that the requirement has changed
+				this.notifyObservers(votes.get(i));							//Run update in the game class
+				return;														//Exit this class
 			}
 		}
 		this.votes.add(vote);
