@@ -121,6 +121,7 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 		while(iterator.hasNext()) {
 			Game game = iterator.next();
 			if(game.equals(toRemove)){
+				game.deleteObservers();
 				iterator.remove();
 				this.fireIntervalRemoved(this, index, index);
 			}

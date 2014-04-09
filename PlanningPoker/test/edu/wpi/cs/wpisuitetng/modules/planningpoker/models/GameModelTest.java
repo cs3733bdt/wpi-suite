@@ -3,8 +3,7 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.util.ArrayList;
 
@@ -178,6 +177,11 @@ public class GameModelTest {
 		
 		fromModel2.addVote(new Vote("Sally", 10));
 		model.getElementAt(0).getRequirements().get(0).addVote(new Vote("Annie", 10));
+		
+		model.getElementAt(1).setDescription("A Description");
+		assertTrue(model.getElementAt(1).hasChanged());
+		model.getElementAt(1).notifyObservers();
+		assertFalse(model.getElementAt(1).hasChanged());
 		
 		model.emptyModel();
 		assertEquals(0, model.getSize());

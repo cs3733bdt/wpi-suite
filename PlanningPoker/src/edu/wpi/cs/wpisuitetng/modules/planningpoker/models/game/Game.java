@@ -137,6 +137,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 						found = true;								//This requirement has been found
 						if(req.copyFrom(serverReq)){				//So copy the data over. If there are changes then make thoes changes
 							changes = true;
+							req.addObserver(this);
 						}
 					}
 				}
@@ -182,7 +183,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		super();
 		name = "";
 		description = "";
-		creator = ConfigManager.getConfig().getUserName();;
+		creator = "";
 		creationTime = new Date();
 		endDate = new Date();
 		hasTimeLimit = false;
@@ -206,6 +207,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this.description = description;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
+		this.creator = ConfigManager.getInstance().getConfig().getUserName();
 		for(Requirement req : this.requirements){
 			req.addObserver(this);
 			req.setProject(this.getProject());
@@ -323,6 +325,9 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	public void setRequirements(ArrayList<Requirement> newReqs){
 		if(this.requirements != newReqs){
 			this.requirements = newReqs;
+			for(Requirement req : this.requirements){
+				req.addObserver(this);
+			}
 			this.setChanged();
 		}
 	}
