@@ -312,7 +312,6 @@ public class CreateGamePanel extends JScrollPane {
 		 * label for displaying errors
 		 */
 		errorField = new ErrorLabel();
-		errorField.setText("Test");
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
 		/*
