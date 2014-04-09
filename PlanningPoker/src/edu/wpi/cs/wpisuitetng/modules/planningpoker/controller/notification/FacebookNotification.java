@@ -93,7 +93,8 @@ public class FacebookNotification {
 			Chat chat = connection.getChatManager().createChat("-" + uid + "@chat.facebook.com", null);
 			Message message = new Message("-" + uid + "@chat.facebook.com", Message.Type.chat);
 	
-			message.setBody("Voting is required for game: " + g.getName());
+			message.setBody("Voting is required for game: " + g.getName()
+					+ "\nGame Ending : " + g.getEndDate().toString());
 			
 			try {
 				chat.sendMessage(message);

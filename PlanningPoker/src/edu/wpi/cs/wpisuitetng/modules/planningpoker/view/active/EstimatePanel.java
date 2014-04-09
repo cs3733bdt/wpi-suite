@@ -228,12 +228,14 @@ public class EstimatePanel extends JPanel{
 				memoryArray.clear();
 				try {
 					Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
-					Image backImg =  ImageIO.read(getClass().getResource("card_back.png"));
-					for (int i = 0; i < (JToggleButtonList.size()); i++){
+					for (int i = 0; i < (deck.size()); i++){
 						if (JToggleButtonList.get(i).isSelected()){
 							JToggleButtonList.get(i).doClick();
 							JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
 						}
+					}
+					if (JToggleButtonList.get(deck.size()).isSelected()) {
+						JToggleButtonList.get(deck.size()).doClick();
 					}
 					sum = 0;
 				} catch (IOException ex) {}
