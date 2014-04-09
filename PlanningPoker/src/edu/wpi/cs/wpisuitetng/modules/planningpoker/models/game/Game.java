@@ -102,6 +102,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		
 		if(!this.requirements.equals(toCopyFrom.requirements)){
 			boolean changes = false;										//Are there changes?
+			
+			//REMOVES REQUIREMENTS THAT HAVE BEEN REMOVED FROM THIS GAME
 			Iterator<Requirement> existingReq = this.requirements.iterator();
 			while(existingReq.hasNext()){
 				boolean found = false;
@@ -116,6 +118,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 					changes = true;
 				}
 			}
+			//END REMOVE REQUIREMENTS
 			
 											
 			for(Requirement serverReq: toCopyFrom.requirements){	//Iterate over the new requirements
@@ -195,8 +198,27 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this.creator = creator;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
+		for(Requirement req : this.requirements){
+			req.addObserver(this);
+		}
 		this.usesCards = usesCards;
 
+	}
+	
+	/**
+	 * Constructs a Game with a creation time
+	 * @param name the name of the game
+	 * @param description the description of the game
+	 * @param creator the name of the user who created the game
+	 * @param hasTimeLimit checks if game has a time limit
+	 * @param requirements the list of requirements for the game
+	 * @param usesCards checks if the game uses cards or text entry
+	 * @param creationTime the data and time a game is created on
+	 * 
+	 */
+	public Game(String name, String description, String creator, ArrayList<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, Date creationTime) {
+		this(name, description, creator, requirements, hasTimeLimit, usesCards); //Calls the default constructor
+		this.creationTime = creationTime;
 	}
 	
 	/**
@@ -231,7 +253,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	public boolean isComplete(){
 		return complete;
 	}
-	
+
 	/**
 	 * Change game status to complete
 	 * @return true if the game is complete
@@ -283,6 +305,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 
+
+
 	/**
 	 * Gets the creating time and date of the game
 	 * @return a Formated Date String
@@ -300,6 +324,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public boolean isActive(){
 		return this.active;
+	}
+	
+	public void setActive(boolean newActive){
+		this.active = newActive;
 	}
 	
 	@Override
@@ -370,6 +398,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			this.hasChanged();
 			this.notifyObservers(arg);
 		}
+		System.out.println("Game: " + this.getName() + " has " + this.countObservers() + " observers");
+		System.out.println("\t");
 	}
 
 

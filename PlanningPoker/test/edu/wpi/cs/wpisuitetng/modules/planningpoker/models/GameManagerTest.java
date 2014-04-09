@@ -8,6 +8,7 @@ import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.UUID;
 
@@ -25,6 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -71,9 +73,10 @@ public class GameManagerTest {
 		
 		existingUser = new User("steve", "steve", "1234", "", 2);
 		
-		game1 = new Game("Game 1", "First", admin.getName(), null, false, false);
-		game2 = new Game("Game 2", "Second", existingUser.getName(), null, true, false);
-		game3 = new Game("Game 3", "Third", existingUser.getName(), null, false, false);
+		
+		game1 = new Game("Game 1", "First", admin.getName(), new ArrayList<Requirement>(), false, false);
+		game2 = new Game("Game 2", "Second", existingUser.getName(), new ArrayList<Requirement>(), true, false);
+		game3 = new Game("Game 3", "Third", existingUser.getName(), new ArrayList<Requirement>(), false, false);
 		
 		defaultSession = new Session(existingUser, testProject,  mockSsid);
 

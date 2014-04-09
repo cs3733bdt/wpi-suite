@@ -99,6 +99,11 @@ public class Requirement extends ObservableModel {
 		fromRequirementModule = true;
 		this.id = id;
 	}
+	
+	public void setIdentity(UUID identity){
+		fromRequirementModule = false;
+		this.identity = identity;
+	}
 
 
 	/**

@@ -77,7 +77,7 @@ public class GameTree extends JScrollPane implements MouseListener{
 		gameTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		gameTree.setToggleClickCount(0);
 		gameTree.addMouseListener(this);
-
+		
 		int width = 150;
 		gameTree.setPreferredSize(new Dimension(width , 10 + gameList.size()*21));
 		

@@ -150,20 +150,29 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
 		int startingSize = getSize();
 		for(Game aGame : allGames){ 			//Iterates over the new model
 			boolean found = false;				//Has this Game been found in the list
+			//GAME EXIST IN THE MODEL
 			for(Game modelGame : games){		//Iterates over the existing model
 				if(aGame.identify(modelGame)){	//Compares the UUID's of the two objects to see if they should be the same
 					found = true;				//This game has been found in the list
+					//aGame.deleteObservers();
+					aGame.addObserver(this);
 					modelGame.copyFrom(aGame);
 				}
 			}
+			
+			//GAME DOES NOT EXIST YET ADD TO MODEL
 			if(!found){							//If the game is not found then 
 				changes = true;					//There were changes to the model
 				startingSize ++;				//This Game will be added to the model so increase the starting size
+				//aGame.deleteObservers();
 				aGame.addObserver(this);		//Add an observer on this game
 				this.games.add(aGame);			//Adds this game to the list of games in this list
+				System.out.println("NEW GAME FOUND BEING ADDED TO MODEL: " + aGame.getName());
 			}
 		}
 		this.fireIntervalAdded(this, startingSize-1, getSize()-1); 	//Fires the event listeners on this list.
+		
+		
 		if(changes){												//Only repaint game tree if the model has changed
 			System.out.println("\tChanges found");
 			try{ //This is used to prevent the a null pointer exception when running test cases (the JPanel's aren't instantiated)
@@ -199,6 +208,7 @@ public class GameModel extends AbstractListModel<Game> implements AbstractModelO
      */
 	@Override
 	public void update(ObservableModel o, Object arg) {
+		System.out.println("I'm here with: " + o.toString());
 		if(o instanceof Game){
 			try{
 				UpdateGameController.getInstance().updateGame((Game)o);
