@@ -18,6 +18,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
@@ -61,7 +62,7 @@ public class GameTree extends JScrollPane implements MouseListener{
 				if(game.isActive()){
 					active.add(newGameNode);
 				}
-				else{
+				else if(game.isCreator(ConfigManager.getConfig().getUserName())){
 					inactive.add(newGameNode);
 				}
 			} else { //If the game is complete then put it in the history
