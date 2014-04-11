@@ -475,6 +475,20 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			this.setChanged();
 		}
 	}
+	
+	/**
+	 * Checks if the user is the creator of the current game
+	 * @param user user to check
+	 * @return returns true if the user being checked is the creator, returns false otherwise
+	 */
+	public boolean isCreator(String user) {
+		if(this.creator.equals(user)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
 
 
 }
