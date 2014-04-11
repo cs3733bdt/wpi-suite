@@ -38,8 +38,6 @@ public class GameTree extends JScrollPane implements MouseListener{
 		ViewEventController.getInstance().setGameOverviewTree(this);
 		this.refresh();
 	}
-	
-	
 
 	/**
 	 * Regenerates the table's components whenever called.
