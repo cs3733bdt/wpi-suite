@@ -199,7 +199,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		identity = UUID.randomUUID();
 	}
 	
-	
 	/**
 	 * Constructs a Game without a creation time
 	 * @param name the name of the game
@@ -255,7 +254,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	public UUID getIdentity(){
 		return identity;
 	}
-	
 	
 	/**
 	 * Gets the name of this game
@@ -349,6 +347,17 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	/**
+	 * Sets the creator of the game.
+	 * @param creator the creator's username
+	 */
+	public void setCreator(String creator) {
+		if(this.creator != creator){
+			this.creator = creator;
+			this.setChanged();
+		}
+	}
+	
+	/**
 	 * Get the number of all users
 	 * @return the number of all users
 	 */
@@ -356,9 +365,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return this.getProject().getTeam().length;
 	}
 	
-
-
-
 	/**
 	 * Gets the creating time and date of the game
 	 * @return a Formated Date String
@@ -463,7 +469,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return endDate;
 	}
 	
-
 	public void setEndDate(Date endDate) {
 		if(this.endDate != endDate){
 			this.endDate = endDate;
