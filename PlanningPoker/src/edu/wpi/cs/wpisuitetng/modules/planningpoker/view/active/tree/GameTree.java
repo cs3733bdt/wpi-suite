@@ -46,7 +46,7 @@ public class GameTree extends JScrollPane implements MouseListener{
 	 */
 	public void refresh(){
 		DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode("Games");
-		DefaultMutableTreeNode inactive = new DefaultMutableTreeNode("Inactive");
+		DefaultMutableTreeNode inactive = new DefaultMutableTreeNode("Pending Games");
 		boolean inactiveAdded = false;
 		DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the starting node
 		DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the starting node
