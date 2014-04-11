@@ -5,6 +5,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 import javax.swing.JComponent;
 
@@ -74,7 +76,7 @@ public class ViewEventController {
 	
 	/**
 	 * Creates an EditGamePanel instance, adds a tab representing 
-	 * that panel, and switches to that new panel
+	 * that panel, and switches to that new panel 
 	 */
 	public void editGame(Game game) {
 		CreateGamePanel newGame = new CreateGamePanel(game);
@@ -84,16 +86,34 @@ public class ViewEventController {
 			newGame.getAddReqPan().addRequirement(game.getRequirements().get(i));
 		}
 		newGame.setUsesCards(game.doesUseCards());
-		/*
+		
 		Calendar dateMaker = new GregorianCalendar();
 		dateMaker.setTime(game.getEndDate());
-		int hour = dateMaker.get(Calendar.HOUR);
-		int minute = dateMaker.get(Calendar.MINUTE);
-		int AM_PM = dateMaker.get(Calendar.AM_PM);
+		String hour = Integer.toString(dateMaker.get(Calendar.HOUR));
+		if(hour.equals("0")){
+			hour = "12";
+		}
+		String minute = Integer.toString(dateMaker.get(Calendar.MINUTE));
+		int AM_PM_Int = dateMaker.get(Calendar.AM_PM);
 		
-		newGame.getEndDateField().setDateAndTime(game.getEndDate(), hour, minute, AM_PM);;
-		*/
+		String AM_PM = "If this doesn't change, something is wrong";
 		
+		if(AM_PM_Int == 0){
+			AM_PM = "AM";
+		}
+		if(AM_PM_Int == 1){
+			AM_PM = "PM";
+		}
+		
+		System.out.println(hour);
+		System.out.println(minute);
+		System.out.println(AM_PM_Int);
+		System.out.println(AM_PM);
+		
+		
+		//newGame.getEndDateField().setDateAndTime(game.getEndDate(), hour, minute, AM_PM);;
+		newGame.getEndDateField().setDateAndTime(hour, minute, AM_PM);
+			
 		for(CreateGamePanel gameSearch : listOfCreateGamePanels){
 			if(game.equals(gameSearch.getGame())){
 				main.getTabbedView().setSelectedComponent(gameSearch);
