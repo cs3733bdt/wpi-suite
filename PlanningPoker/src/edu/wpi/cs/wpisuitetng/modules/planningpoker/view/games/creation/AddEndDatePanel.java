@@ -89,6 +89,7 @@ public class AddEndDatePanel extends JPanel {
 		default: break;
 		}
 		
+		System.out.println("AM_PM string: " + Calendar.AM_PM);
 		return hours;
 	}
 	
@@ -113,13 +114,5 @@ public class AddEndDatePanel extends JPanel {
 		setHour(oldHour);
 		setMinute(oldMinute);
 		setAMPM(oldAMPM);		
-	}
-	
-	public void setDateAndTime(String oldHour, String oldMinute, String oldAMPM){
-		setHour(oldHour);
-		setMinute(oldMinute);
-		setAMPM(oldAMPM);
-		
-		
-	}
+	}	
 }

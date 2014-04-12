@@ -93,26 +93,31 @@ public class ViewEventController {
 		if(hour.equals("0")){
 			hour = "12";
 		}
-		String minute = Integer.toString(dateMaker.get(Calendar.MINUTE));
-		int AM_PM_Int = dateMaker.get(Calendar.AM_PM);
-		
+		String minute = Integer.toString(dateMaker.get(Calendar.MINUTE));		
 		String AM_PM = "If this doesn't change, something is wrong";
 		
-		if(AM_PM_Int == 0){
-			AM_PM = "AM";
+		if(dateMaker.get(Calendar.AM_PM) == Calendar.AM){
+			if(hour.equals("12")){
+				AM_PM = "PM";
+			}
+			else{
+				AM_PM = "AM";
+			}
 		}
-		if(AM_PM_Int == 1){
-			AM_PM = "PM";
+		if(dateMaker.get(Calendar.AM_PM) == Calendar.PM){
+			if(hour.equals("12")){
+				AM_PM = "AM";
+			}
+			else{
+				AM_PM = "PM";
+			}
 		}
 		
-		System.out.println(hour);
-		System.out.println(minute);
-		System.out.println(AM_PM_Int);
-		System.out.println(AM_PM);
-		
-		
-		//newGame.getEndDateField().setDateAndTime(game.getEndDate(), hour, minute, AM_PM);;
-		newGame.getEndDateField().setDateAndTime(hour, minute, AM_PM);
+		if(hour.equals("12")){
+			dateMaker.set(Calendar.DAY_OF_YEAR, dateMaker.get(Calendar.DAY_OF_YEAR) - 1);
+		}
+			
+		newGame.getEndDateField().setDateAndTime(dateMaker.getTime(), hour, minute, AM_PM);;
 			
 		for(CreateGamePanel gameSearch : listOfCreateGamePanels){
 			if(game.equals(gameSearch.getGame())){

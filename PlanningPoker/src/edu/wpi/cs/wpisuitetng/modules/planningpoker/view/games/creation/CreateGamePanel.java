@@ -10,7 +10,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -480,14 +482,14 @@ public class CreateGamePanel extends JScrollPane {
 		
 		//BEGIN END DATE VALIDATION
 		endDate = endDateField.getEndDate();
+		Calendar dateMaker = new GregorianCalendar();
+		dateMaker.setTime(endDate);
+		
 		if(endDate.compareTo(new Date()) >= 0) {
 			isEndDateValid = true;
 		} else {
 			isEndDateValid = false;
-			if (warn){
-				getBoxDescription().setBorder(errorBorder);
-			}
-			displayError("End Date is before right now");
+			displayError("End Date must be set later than the current date");
 		}
 
 		return (isNameValid && isDescriptionValid && areRequirementsSelected && isEndDateValid);
