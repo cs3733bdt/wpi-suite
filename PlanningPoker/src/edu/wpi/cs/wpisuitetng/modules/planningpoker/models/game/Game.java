@@ -27,25 +27,25 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	
 	/** This is the best way to keep games unique so that you are not relying upon data that can change */
 	private UUID identity;
-	
+	/** The name of the game */
 	private String name;
-	
+	/** The description of the game */
 	private String description;
-	
+	/** True if the game does of a time limit, false otherwise */
 	private boolean hasTimeLimit;
-	
+	/** True if the game uses cards, false if it uses text input */
 	private boolean usesCards;
-	
+	/** The date and time of the game creation */
 	private Date creationTime;
-	
+	/** The username of the game creator */
 	private String creator;
-	
+	/** The list of requirements that need to be estimated */
 	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
-	
+	/** True if the game is complete, false otherwise */
 	private boolean complete;
-	
+	/** True if the game is active and people can vote, false if people can't vote */
 	private boolean active;
-	
+	/** The date and time that the game ended/completed */
 	private Date endDate;
 	
 	/*
