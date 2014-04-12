@@ -6,6 +6,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JComponent;
@@ -113,12 +114,12 @@ public class ViewEventController {
 			}
 		}
 		
-		if(hour.equals("12")){
+		if(hour.equals("12") && dateMaker.get(Calendar.AM_PM) == Calendar.AM){
 			dateMaker.set(Calendar.DAY_OF_YEAR, dateMaker.get(Calendar.DAY_OF_YEAR) - 1);
 		}
 			
-		newGame.getEndDateField().setDateAndTime(dateMaker.getTime(), hour, minute, AM_PM);;
-			
+		newGame.getEndDateField().setDateAndTime(dateMaker.getTime(), hour, minute, AM_PM);;		
+		
 		for(CreateGamePanel gameSearch : listOfCreateGamePanels){
 			if(game.equals(gameSearch.getGame())){
 				main.getTabbedView().setSelectedComponent(gameSearch);

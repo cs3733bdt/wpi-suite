@@ -483,14 +483,32 @@ public class CreateGamePanel extends JScrollPane {
 		
 		//BEGIN END DATE VALIDATION
 		endDate = endDateField.getEndDate();
-		Calendar dateMaker = new GregorianCalendar();
-		dateMaker.setTime(endDate);
+		Calendar endCalendar = new GregorianCalendar();
+		Calendar currentCalendar = new GregorianCalendar();
+		endCalendar.setTime(endDate);
+		currentCalendar.setTime(new Date());
 		
-		if(endDate.compareTo(new Date()) >= 0) {
+		if((currentCalendar.get(Calendar.DAY_OF_YEAR) == endCalendar.get(Calendar.DAY_OF_YEAR))
+			&& (currentCalendar.get(Calendar.YEAR) == endCalendar.get(Calendar.YEAR)) 
+			&& (endCalendar.get(Calendar.HOUR) == 0)){
+			if(endCalendar.get(Calendar.AM_PM) == Calendar.AM 
+					&& currentCalendar.get(Calendar.HOUR) >= 0){
+				isEndDateValid = false;
+				displayError("End Date and time must be set later than the current date");
+			}
+			if(endCalendar.get(Calendar.AM_PM) == Calendar.PM 
+					&& currentCalendar.get(Calendar.AM_PM) == Calendar.PM 
+					&& currentCalendar.get(Calendar.HOUR) >= 0){
+				isEndDateValid = false;
+				displayError("End Date and time must be set later than the current date");
+			}
+		}
+		
+		else if(endDate.compareTo(new Date()) >= 0) {
 			isEndDateValid = true;
 		} else {
 			isEndDateValid = false;
-			displayError("End Date must be set later than the current date");
+			displayError("End Date and time must be set later than the current date");
 		}
 
 		return (isNameValid && isDescriptionValid && areRequirementsSelected && isEndDateValid);
