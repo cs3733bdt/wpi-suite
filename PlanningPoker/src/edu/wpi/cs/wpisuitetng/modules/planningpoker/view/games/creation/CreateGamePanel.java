@@ -27,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
@@ -602,6 +603,7 @@ public class CreateGamePanel extends JScrollPane {
 		currentGame.setUsesCards(doesUseCards());
 		currentGame.setRequirements(getRequirements());
 		currentGame.setEndDate(endDateField.getEndDate());
+		currentGame.setCreator(ConfigManager.getConfig().getUserName());
 		currentGame.notifyObservers();
 	}
 
