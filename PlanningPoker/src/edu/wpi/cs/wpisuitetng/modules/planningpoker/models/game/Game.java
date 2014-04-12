@@ -504,5 +504,27 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	private void delayChange(){
 		while(GameModel.getInstance().serverUpdating()){}
 	}
-
+	
+	
+	/**
+	 * hasChanged in the super class does not check if the 
+	 * requirements has been changed. This method is to check
+	 * whether if the requirements are also changed.
+	 * @return
+	 * 
+	 */
+	@Override
+	public synchronized boolean hasChanged()
+	{
+		if(super.hasChanged())
+			return true;
+		
+		for(Requirement requirement: requirements)
+		{
+			if(requirement.hasChanged())
+				return true;
+			
+		}
+		return false;
+	}
 }
