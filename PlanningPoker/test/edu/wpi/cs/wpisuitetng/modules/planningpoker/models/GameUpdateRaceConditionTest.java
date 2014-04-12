@@ -2,7 +2,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 
 import java.util.ArrayList;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.Session;
@@ -17,29 +16,36 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
 public class GameUpdateRaceConditionTest {
 	
 	Requirement req1;
+	
 	Vote vote1, vote2, vote3, vote4, vote5, vote6, vote7, vote8, vote9, vote10, vote11, vote12,
 	vote13, vote14, vote15, vote16, vote17, vote18, vote19, vote20, vote21, vote22, vote23, vote24,
 	vote25, vote26, vote27, vote28, vote29, vote30;
+	
 	ArrayList<Requirement> reqList;
+	
 	final GameModel model = GameModel.getInstance();
+	
 	Game game1, game2, game3, game4, game5, game6, game7, game8, game9, game10,
 	game11, game12, game13, game14, game15, game16, game17, game18, game19, game20;
-	Project project1;
+	
+	Project project200;
+	
 	Session session1;
+
 	
 	public class AddVotesThread extends Thread {
 		public void run()
 		{
 			req1.addVote(vote1);
 			req1.addVote(vote2);
-			req1.addVote(vote3);
-			req1.addVote(vote4);
+			req1.addVote(vote3);		
+			req1.addVote(vote4);	
 			req1.addVote(vote5);
 			req1.addVote(vote6);
 			req1.addVote(vote7);
 			req1.addVote(vote8);
 			req1.addVote(vote9);
-			req1.addVote(vote10);
+			req1.addVote(vote10);	
 			req1.addVote(vote11);
 			req1.addVote(vote12);
 			req1.addVote(vote13);
@@ -49,7 +55,7 @@ public class GameUpdateRaceConditionTest {
 			req1.addVote(vote17);
 			req1.addVote(vote18);
 			req1.addVote(vote19);
-			req1.addVote(vote20);
+			req1.addVote(vote20);	
 			req1.addVote(vote21);
 			req1.addVote(vote22);
 			req1.addVote(vote23);
@@ -68,6 +74,7 @@ public class GameUpdateRaceConditionTest {
 	public class UpdateGameThread extends Thread {
 		public void run()
 		{
+
 			model.addGame(game1);
 			model.addGame(game2);
 			model.addGame(game3);
@@ -88,83 +95,24 @@ public class GameUpdateRaceConditionTest {
 			model.addGame(game18);
 			model.addGame(game19);
 			model.addGame(game20);
-			
 		}
 	}
+	
+	
 	@Test
 	public void testRaceConditionVoteAndUpdate()
 	{
-		MockData mockDB = new MockData(null);
 		req1 = new Requirement("Req1", "Desc1");
-		project1 = new Project("project 1", "7");	
-		
+		project200 = new Project("project 1", "200");	
+		req1.setProject(project200);
 		reqList = new ArrayList<Requirement>();		
-		req1.setProject(project1);
 		reqList.add(req1);
 		User Jeremy =  new User("Jeremy", "Jim", "", "generic.email", "fbtest", 144);
-		User user1 =  new User("user1", "user1", "", "generic.email", "fbtest", 1);
-		User user2 =  new User("user2", "user2", "", "generic.email", "fbtest", 2);
-		User user3 =  new User("user3", "user3", "", "generic.email", "fbtest", 3);
-		User user4 =  new User("user4", "user4", "", "generic.email", "fbtest", 4);
-		User user5 =  new User("user5", "user5", "", "generic.email", "fbtest", 5);
-		User user6 =  new User("user6", "user6", "", "generic.email", "fbtest", 6);
-		User user7 =  new User("user7", "user7", "", "generic.email", "fbtest", 7);
-		User user8 =  new User("user8", "user8", "", "generic.email", "fbtest", 8);
-		User user9 =  new User("user9", "user9", "", "generic.email", "fbtest", 9);
-		User user10 =  new User("user10", "user10", "", "generic.email", "fbtest", 10);
-		User user11 =  new User("user11", "user11", "", "generic.email", "fbtest", 11);
-		User user12 =  new User("user12", "user12", "", "generic.email", "fbtest", 12);
-		User user13 =  new User("user13", "user13", "", "generic.email", "fbtest", 13);
-		User user14 =  new User("user14", "user14", "", "generic.email", "fbtest", 14);
-		User user15 =  new User("user15", "user15", "", "generic.email", "fbtest", 15);
-		User user16 =  new User("user16", "user16", "", "generic.email", "fbtest", 16);
-		User user17 =  new User("user17", "user17", "", "generic.email", "fbtest", 17);
-		User user18 =  new User("user18", "user18", "", "generic.email", "fbtest", 18);
-		User user19 =  new User("user19", "user19", "", "generic.email", "fbtest", 19);
-		User user20 =  new User("user20", "user20", "", "generic.email", "fbtest", 20);
-		User user21 =  new User("user21", "user21", "", "generic.email", "fbtest", 21);
-		User user22 =  new User("user22", "user22", "", "generic.email", "fbtest", 22);
-		User user23 =  new User("user23", "user23", "", "generic.email", "fbtest", 23);
-		User user24 =  new User("user24", "user24", "", "generic.email", "fbtest", 24);
-		User user25 =  new User("user25", "user25", "", "generic.email", "fbtest", 25);
-		User user26 =  new User("user26", "user26", "", "generic.email", "fbtest", 26);
-		User user27 =  new User("user27", "user27", "", "generic.email", "fbtest", 27);
-		User user28 =  new User("user28", "user28", "", "generic.email", "fbtest", 28);
-		User user29 =  new User("user29", "user29", "", "generic.email", "fbtest", 29);
-		User user30 =  new User("user30", "user30", "", "generic.email", "fbtest", 30);
-		project1.addTeamMember(user1);
-		project1.addTeamMember(user2);
-		project1.addTeamMember(user3);
-		project1.addTeamMember(user4);
-		project1.addTeamMember(user5);
-		project1.addTeamMember(user6);
-		project1.addTeamMember(user7);
-		project1.addTeamMember(user8);
-		project1.addTeamMember(user9);
-		project1.addTeamMember(user10);
-		project1.addTeamMember(user11);
-		project1.addTeamMember(user12);
-		project1.addTeamMember(user13);
-		project1.addTeamMember(user14);
-		project1.addTeamMember(user15);
-		project1.addTeamMember(user16);
-		project1.addTeamMember(user17);
-		project1.addTeamMember(user18);
-		project1.addTeamMember(user19);
-		project1.addTeamMember(user20);
-		project1.addTeamMember(user21);
-		project1.addTeamMember(user22);
-		project1.addTeamMember(user23);
-		project1.addTeamMember(user24);
-		project1.addTeamMember(user25);
-		project1.addTeamMember(user26);
-		project1.addTeamMember(user27);
-		project1.addTeamMember(user28);
-		project1.addTeamMember(user29);
-		project1.addTeamMember(user30);
+			
+		session1 = new Session(Jeremy, project200, "");
 		
-		session1 = new Session(Jeremy, project1, "");
 		game1 = new Game("Game 1", "Description",  reqList, false, false);
+		game1.setProject(project200);
 		game2 = new Game("Game2", "With a name2", new ArrayList<Requirement>(), true, true);
 		game3 = new Game("Game3", "With a name3", new ArrayList<Requirement>(), false, false);
 		game4 = new Game("Game4", "With a name4", new ArrayList<Requirement>(), true, true);
@@ -184,6 +132,7 @@ public class GameUpdateRaceConditionTest {
 		game18 = new Game("Game18", "With a name18", new ArrayList<Requirement>(), true, true);
 		game19 = new Game("Game19", "With a name19", new ArrayList<Requirement>(), false, false);
 		game20 = new Game("Game20", "With a name20", new ArrayList<Requirement>(), true, true);
+	
 		vote1 = new Vote("user1", 5);
 		vote2 = new Vote("user2", 5);
 		vote3 = new Vote("user3", 5);
@@ -214,9 +163,9 @@ public class GameUpdateRaceConditionTest {
 		vote28 = new Vote("user28", 5);
 		vote29 = new Vote("user29", 5);
 		vote30 = new Vote("user30", 5);
-		
 
-		(new AddVotesThread()).start();;
-		//updateGameThread.start();
+		(new AddVotesThread()).start();
+		(new UpdateGameThread()).start();
+		System.out.println(model.getElementAt(0).getName());
 	}
 }
