@@ -1,6 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -11,6 +12,8 @@ import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -35,10 +38,18 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.CardButtons.ActiveCardsPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.CardButtons.CardActionListener;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.CardButtons.CardActionListenerRefactor;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.CardButtons.CardButton;
 
 public class EstimatePanel extends JPanel{
 	Game activeGame;
-	Requirement activeRequirement;
+	Requirement activeRequirement;	
+	
+	private ArrayList<String> deck = new ArrayList<String>();
+
+	ActiveCardsPanel cardsPanel;
 	
 	/**
 	 * Set the userStoryDesc equal to the description of the requirement being
@@ -62,22 +73,24 @@ public class EstimatePanel extends JPanel{
 
 	/* End field Border Definitions */
 	
-	//initializes the sum
-	private int sum = 0;
-	
+//	//initializes the sum
+//	private int sum = 0;
+//	
 	//initializes the card Array
-	private ArrayList<String> deck = new ArrayList<String>();
-	JTextArea counter = new JTextArea();
+	
+	JTextArea counter = new JTextArea(); //COMMENTING THIS OUT SHOULD DO NOTHING.
+	                                     //IF IT DOES SOMEBODY ELSE CALLS IT SOMEWHERE
 	
 	//Label and accumlated sum
 	JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
-	
-	//initializes the JToggleButton
-	private ArrayList<JToggleButton> JToggleButtonList = new ArrayList<JToggleButton>();
-	
-	//initialized array to remember what buttons were pressed if "0?" button is pressed
-	private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
-	
+	private int sum = 0;
+//	
+//	//initializes the JToggleButton
+    private ArrayList<CardButton> JToggleButtonList = new ArrayList<CardButton>();
+//	
+//	//initialized array to remember what buttons were pressed if "0?" button is pressed
+//	private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
+//	
 	/*
 	 * If the ArrayList passed in is empty it will use the default deck
 	 */
@@ -143,25 +156,7 @@ public class EstimatePanel extends JPanel{
 		blankPanel0.setPreferredSize(new Dimension(450, 10));
 		overviewPanel.add(blankPanel0, c);
 		
-		/**
-		 * Creates a panel for all the cards
-		 */
-		JPanel cardPanel = new JPanel();
-		//cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.X_AXIS));
-		c.anchor = GridBagConstraints.CENTER;
-		c.gridx = 0;
-		c.gridy = 6;
-		c.gridwidth = 2;
-		cardPanel.setPreferredSize(new Dimension(800, 100));		//change from 500,50
 
-		 /*
-		  * set layout to Flowlayout. 
-		  */
-		 FlowLayout experimentLayout = new FlowLayout();
-		 cardPanel.setLayout(experimentLayout);
-		 
-		overviewPanel.add(cardPanel, c);
-		
 		/**
 		 * Formatting purposes
 		 */
@@ -189,67 +184,86 @@ public class EstimatePanel extends JPanel{
 			deck = customDeck; 
 		}
 		
-		/*
-		 * initializes all the buttons and add them to the panel, as well as adding images.
-		 * the exception is required for getting image IO
+		/**
+		 * Creates a panel for all the cards
 		 */
-		 try {
-			 Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
-			 Image backImg =  ImageIO.read(getClass().getResource("card_back.png"));
-
-			 for (int i = 0; i < deck.size(); i++) {
-				 this.JToggleButtonList.add(new JToggleButton(deck.get(i)));
-				 this.JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
-				 cardPanel.add(JToggleButtonList.get(i));
-			 }
-		 } catch (IOException ex) {}
-		 
-		//add ToolTips
-		 for (int i = 0; i < deck.size(); i++) {
-			 this.JToggleButtonList.get(i).setToolTipText("Add " + deck.get(i) + " to the total");
-			 JToggleButtonList.get(i).setHorizontalTextPosition(SwingConstants.CENTER);
-			 JToggleButtonList.get(i).setVerticalAlignment(SwingConstants.CENTER);
-		 }
-		 
-		 
-		//"I don't know" button hardcoded
-		JToggleButtonList.add(new JToggleButton("0?"));
-		JToggleButtonList.get(deck.size()).setToolTipText("I don't know what to estimate");
-		cardPanel.add(JToggleButtonList.get(deck.size()));
+		//cardPanel.setLayout(new BoxLayout(cardPanel, BoxLayout.X_AXIS));
+		c.anchor = GridBagConstraints.CENTER;
+		c.gridx = 0;
+		c.gridy = 6;
+		c.gridwidth = 2;
+		cardsPanel = new ActiveCardsPanel(customDeck, this);
+		overviewPanel.add(cardsPanel, c);
+		this.JToggleButtonList = cardsPanel.getCardButtonArray();
 		
-		//adds the button to clear all entered estimates
-		JButton clearButton = new JButton("Clr");
-		clearButton.setToolTipText("Clear all Estimates");
-		cardPanel.add(clearButton); 
-		System.out.println(clearButton.getToolTipText());
-		
-		//action Listener for the clear button 
-		clearButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				memoryArray.clear();
-				try {
-					Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
-					for (int i = 0; i < (deck.size()); i++){
-						if (JToggleButtonList.get(i).isSelected()){
-							JToggleButtonList.get(i).doClick();
-							JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
-						}
-					}
-					if (JToggleButtonList.get(deck.size()).isSelected()) {
-						JToggleButtonList.get(deck.size()).doClick();
-					}
-					sum = 0;
-				} catch (IOException ex) {}
-			}
-		});	
-		
-		
-		//creates action listeners for all other buttons
-		for (int i = 0;  i < JToggleButtonList.size(); i++ ) { 
-			JToggleButtonList.get(i).addActionListener(new CardActionListener(i, deck, JToggleButtonList, this));
-		}
-		
+//		
+//		for (int i = 0; i < deck.size(); i++) {
+//			this.JToggleButtonList.add(new CardButton(i, customDeck, this));
+//		}
+//		
+//		/*
+//		 * initializes all the buttons and add them to the panel, as well as adding images.
+//		 * the exception is required for getting image IO
+//		 */
+////		 try {
+////			 Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
+////			 Image backImg =  ImageIO.read(getClass().getResource("card_back.png"));
+////
+////			 for (int i = 0; i < deck.size(); i++) {
+////				 this.JToggleButtonList.add(new JToggleButton(deck.get(i)));
+////				 this.JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+////				 cardPanel.add(JToggleButtonList.get(i));
+////			 }
+////		 } catch (IOException ex) {}
+//		 
+////		//add ToolTips
+////		 for (int i = 0; i < deck.size(); i++) {
+////			 this.JToggleButtonList.get(i).setToolTipText("Add " + deck.get(i) + " to the total");
+////			 JToggleButtonList.get(i).setHorizontalTextPosition(SwingConstants.CENTER);
+////			 JToggleButtonList.get(i).setVerticalAlignment(SwingConstants.CENTER);
+////		 }
+//		 
+//		 
+//		//"I don't know" button hardcoded
+//		JToggleButtonList.add(new JToggleButton("0?"));
+//		JToggleButtonList.get(deck.size()).setToolTipText("I don't know what to estimate");
+//		cardPanel.add(JToggleButtonList.get(deck.size()));
+//		
+//		//adds the button to clear all entered estimates
+//		JButton clearButton = new JButton("Clr");
+//		clearButton.setToolTipText("Clear all Estimates");
+//		cardPanel.add(clearButton); 
+//		System.out.println(clearButton.getToolTipText());
+//		
+//		//action Listener for the clear button 
+//		clearButton.addActionListener(new ActionListener() {
+//			@Override
+//			public void actionPerformed(ActionEvent e) {
+//				memoryArray.clear();
+//				try {
+//					Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
+//					for (int i = 0; i < (deck.size()); i++){
+//						if (JToggleButtonList.get(i).isSelected()){
+//							JToggleButtonList.get(i).doClick();
+//							JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+//						}
+//					}
+//					if (JToggleButtonList.get(deck.size()).isSelected()) {
+//						JToggleButtonList.get(deck.size()).doClick();
+//					}
+//					sum = 0;
+//				} catch (IOException ex) {}
+//			}
+//		});	
+//		
+//		/*
+//		 * CHANGED LINE 260
+//		 */
+////		//creates action listeners for all other buttons
+////		for (int i = 0;  i < JToggleButtonList.size(); i++ ) { 
+////		//	JToggleButtonList.get(i).addActionListener(new CardActionListenerRefactor(i, deck, JToggleButtonList.get(i), this));
+////		}
+//		
 		/**
 		 * The text area where the user types their estimate
 		 */
@@ -286,11 +300,10 @@ public class EstimatePanel extends JPanel{
 		if (game.doesUseCards()) {
 			estText.setVisible(false);
 		} else {
-			cardPanel.setVerifyInputWhenFocusTarget(false);
+			cardsPanel.setVerifyInputWhenFocusTarget(false);
 			for (int i = 0; i < JToggleButtonList.size(); i++) {
 				JToggleButtonList.get(i).setVisible(false);
 			}
-			clearButton.setVisible(false);
 			counter.setVisible(false);
 			counterLabel.setVisible(false);
 		}
@@ -317,6 +330,15 @@ public class EstimatePanel extends JPanel{
 				submitEstimatePressed();
 			}
 		});
+		
+//		final Component myComponent = overviewPanel;
+//		myComponent.addComponentListener(new ComponentAdapter() {
+//		    @Override
+//		    public void componentResized(ComponentEvent e)
+//		    {
+//		        myComponent.repaint();
+//		    }
+//		});
 		
 		c.weightx = 0;
 		c.gridwidth = 2;
@@ -358,16 +380,15 @@ public class EstimatePanel extends JPanel{
 	/*
 	 * Increase total sum by amount entered
 	 */
-	public void addToCardSum(int cardValue) {
+	public void updateAddToCardSum(int cardValue) {
 		sum += cardValue;
 		counterLabel.setText("Your current estimate total: " + sum);
-		System.out.println(sum);
 	}
 	
 	/*
 	 * Decrease total sum by amount entered
 	 */
-	public void decToCardSum(int cardValue) {
+	public void updateDecToCardSum(int cardValue) {
 		sum -= cardValue;
 		counterLabel.setText("Your current estimate total: " + sum);
 		System.out.println(sum);
@@ -390,17 +411,22 @@ public class EstimatePanel extends JPanel{
 		return estText;
 	}
 	
-	//This is equivalent to a getter for sum. 
-	public int updateSum() {
-		sum = 0;
-		for (int i = 0; i < deck.size(); i++) {
-			if (JToggleButtonList.get(i).isSelected()){
-				sum += Integer.parseInt(deck.get(i));   
-			}
-		}
-		counter.setText(Integer.toString(sum));
-		System.out.println("Sum:" + sum);
-		return sum;
+//	//This is equivalent to a getter for sum. 
+//	public int updateSum() {
+//		sum = 0;
+//		for (int i = 0; i < deck.size(); i++) {
+//			if (JToggleButtonList.get(i).isSelected()){
+//				sum += Integer.parseInt(deck.get(i));   
+//			}
+//		}
+//		counter.setText(Integer.toString(sum));
+//		System.out.println("Sum:" + sum);
+//		return sum;
+//	}
+	
+	public void updateSum() {
+		sum = cardsPanel.getSum();
+		counterLabel.setText("Your current estimate total: " + sum);
 	}
 	
 	/*
@@ -412,6 +438,10 @@ public class EstimatePanel extends JPanel{
 			sum += Integer.parseInt(deck.get(i));
 		}
 		return sum;
+	}
+	
+	public ArrayList<CardButton> getCardButtonArray() {
+		return new ArrayList<CardButton>();
 	}
 	
 	/**
@@ -430,33 +460,33 @@ public class EstimatePanel extends JPanel{
 		return activeRequirement;
 	}
 	
-	/*
-	 * adds an element to the array of buttons to be remembered when the "0?" button is unpress
-	 */
-	public void memoryArrayAddElt(int elt) {
-		memoryArray.add(elt);
-	}
-	
-	/*
-	 * getter for size of the memory array
-	 */
-	public int memoryArrayGetSize() {
-		return memoryArray.size();
-	}
-	
-	/*
-	 * clears memory array; use after the values stored in the array are restored
-	 */
-	public void memoryArrayClear() {
-		memoryArray.clear();
-	}
-	
-	/*
-	 * adds index of the button to be remembered to the memory array
-	 */
-	public int memoryArrayGetElt(int elt) {
-		return memoryArray.get(elt);
-	}
+//	/*
+//	 * adds an element to the array of buttons to be remembered when the "0?" button is unpress
+//	 */
+//	public void memoryArrayAddElt(int elt) {
+//		memoryArray.add(elt);
+//	}
+//	
+//	/*
+//	 * getter for size of the memory array
+//	 */
+//	public int memoryArrayGetSize() {
+//		return memoryArray.size();
+//	}
+//	
+//	/*
+//	 * clears memory array; use after the values stored in the array are restored
+//	 */
+//	public void memoryArrayClear() {
+//		memoryArray.clear();
+//	}
+//	
+//	/*
+//	 * adds index of the button to be remembered to the memory array
+//	 */
+//	public int memoryArrayGetElt(int elt) {
+//		return memoryArray.get(elt);
+//	}
 		
 	public void submitEstimatePressed() {
 		if(getGame().doesUseCards()){
@@ -524,7 +554,7 @@ public class EstimatePanel extends JPanel{
 		String currentUser = ConfigManager.getConfig().getUserName(); // Gets the currently active user
 		int voteNumber;
 		if(getGame().doesUseCards()){
-			voteNumber = sum;
+			voteNumber = cardsPanel.getSum();
 		}
 		else{
 			voteNumber = Integer.parseInt(estText.getText());

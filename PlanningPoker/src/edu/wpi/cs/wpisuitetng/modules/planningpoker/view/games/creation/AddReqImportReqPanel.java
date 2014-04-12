@@ -1,8 +1,11 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -48,6 +51,17 @@ public class AddReqImportReqPanel extends JPanel {
 				 view2.getCurrentReqsPanel().setVisible(false);
 			 }
 		});
+		
+		final Component myComponent = this;
+		this.addComponentListener(new ComponentAdapter() {
+		    @Override
+		    public void componentResized(ComponentEvent e)
+		    {
+		        myComponent.repaint();
+		    }
+		});
+		
+		
 		/**
 		 * adds both buttons to the panel
 		 */

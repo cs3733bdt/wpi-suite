@@ -1,4 +1,4 @@
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.CardButtons;
 
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
 
 public class CardActionListener implements ActionListener {
 	int index;
