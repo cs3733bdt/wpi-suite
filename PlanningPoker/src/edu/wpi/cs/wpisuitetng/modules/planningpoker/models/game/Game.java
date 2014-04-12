@@ -237,6 +237,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @return the uuid of the game
 	 */
 	public void setIdentifier(UUID identifier){
+		this.delayChange();
 		this.identity = identifier;
 	}
 	
@@ -258,6 +259,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setName(String newName){
+		this.delayChange();
 		if(this.name != newName){
 			this.name = newName;
 			this.setChanged();
@@ -277,6 +279,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @return true if the game is complete
 	 */
 	public void setComplete(){
+		this.delayChange();
 		if(this.complete != true){
 			this.complete = true;
 			this.setChanged();
@@ -292,6 +295,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setUsesCards(boolean newUsesCards){
+		this.delayChange();
 		if(this.usesCards != newUsesCards){
 			this.usesCards = newUsesCards;
 			this.setChanged();
@@ -307,6 +311,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setDescription(String newDescription){
+		this.delayChange();
 		if(this.description != newDescription){
 			this.description = newDescription;
 			this.setChanged();
@@ -323,6 +328,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setRequirements(ArrayList<Requirement> newReqs){
+		this.delayChange();
 		if(this.requirements != newReqs){
 			this.requirements = newReqs;
 			for(Requirement req : this.requirements){
@@ -371,6 +377,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setActive(boolean newActive){
+		this.delayChange();
 		if(this.active != newActive){
 			this.active = newActive;
 			this.setChanged();
@@ -463,5 +470,12 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		}
 	}
 
+	/**
+	 * hold the code while the game model is updating
+	 * prevent race-time condition for fields setting/overriding
+	 */
+	private void delayChange(){
+		while(GameModel.getInstance().serverUpdating()){}
+	}
 
 }

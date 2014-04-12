@@ -15,6 +15,7 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
 
@@ -97,11 +98,13 @@ public class Requirement extends ObservableModel {
 	 * @param id
 	 */
 	public void setId(int id){
+		this.delayChange();
 		fromRequirementModule = true;
 		this.id = id;
 	}
 	
 	public void setIdentity(UUID identity){
+		this.delayChange();
 		fromRequirementModule = false;
 		this.identity = identity;
 	}
@@ -137,6 +140,7 @@ public class Requirement extends ObservableModel {
 	 * @param votes the votes to set          
 	 */
 	public void addVote(Vote vote) {
+		this.delayChange();
 		for(int i = 0; i < votes.size(); i++) {
 			if(vote.getUsername().equals(votes.get(i).getUsername())) {		//Check to see if this person has voted
 				votes.get(i).setVoteNumber(vote.getVoteNumber());			//If they have update their vote to the new number
@@ -169,6 +173,7 @@ public class Requirement extends ObservableModel {
 	}
 	
 	public void setComplete() {
+		this.delayChange();
 		this.complete = true;
 		this.setChanged();
 		this.notifyObservers();
@@ -299,5 +304,13 @@ public class Requirement extends ObservableModel {
 			wasChanged = true;
 		}
 		return wasChanged; //TODO THIS IS A PLACE HOLDER! THIS MUST CHECK TO MAKE SURE THAT CHANGES ARE ACTUALLY MADE
+	}
+	
+	/**
+	 * hold the code while the game model is updating
+	 * prevent race-time condition for fields setting/overriding
+	 */
+	private void delayChange(){
+		while(GameModel.getInstance().serverUpdating()){}
 	}
 }
