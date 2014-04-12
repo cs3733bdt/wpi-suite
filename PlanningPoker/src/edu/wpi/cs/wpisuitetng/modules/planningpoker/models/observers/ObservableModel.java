@@ -157,11 +157,12 @@ public abstract class ObservableModel extends AbstractModel {
             if (!changed)
                 return;
             arrLocal = obs.toArray();
-            clearChanged();
         }
 
         for (int i = arrLocal.length-1; i>=0; i--)
             ((AbstractModelObserver)arrLocal[i]).update(this, arg);
+        
+        clearChanged();
     }
 
     /**
