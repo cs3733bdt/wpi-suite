@@ -10,6 +10,9 @@ import java.util.UUID;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.EmailNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.FacebookNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.SMSNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
@@ -526,5 +529,25 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			
 		}
 		return false;
+	}
+
+	/**
+	 * Sends notifications via email, facebook, and text message
+	 * to the team associated with this game.
+	 */
+	public void sendNotifications() {
+		
+		// Notify all team users via email
+		EmailNotification en = new EmailNotification(this);
+		en.sendEmails();
+		
+		// Notify all team users via text message
+		SMSNotification sms = new SMSNotification(this);
+		sms.sendSMSMessages();
+				
+		// Notify all team users via facebook message
+		FacebookNotification fbn = new FacebookNotification(this);
+		fbn.sendFacebookNotifications();
+		
 	}
 }
