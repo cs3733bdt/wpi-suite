@@ -135,8 +135,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		c.weighty = 1;
 		topHalfPanel.add(endGameButton, c);
 		endGameButton.setVisible(false);
-		//if(game.getCreator().equalsIgnoreCase((ConfigManager.getConfig().getUserName()))){
-		if(true){
+		if(active.isCreator(ConfigManager.getConfig().getUserName())){
 			endGameButton.setVisible(true);
 		}
 		
