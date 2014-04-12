@@ -96,20 +96,26 @@ public class AddEndDatePanel extends JPanel {
 		datePicker.setDate(oldDate);
 	}
 	
-	private void setHour(int oldHour){
+	private void setHour(String oldHour){
 		hourSelection.setSelectedItem(oldHour);
 	}
 	
-	private void setMinute(int oldMinute){
+	private void setMinute(String oldMinute){
 		minuteSelection.setSelectedItem(oldMinute);
 	}
 	
-	private void setAMPM(int oldAMPM){
+	private void setAMPM(String oldAMPM){
 		AmPmSelection.setSelectedItem(oldAMPM);
 	}
 	
-	public void setDateAndTime(Date oldDate, int oldHour, int oldMinute, int oldAMPM){
+	public void setDateAndTime(Date oldDate, String oldHour, String oldMinute, String oldAMPM){
 		setDate(oldDate);
+		setHour(oldHour);
+		setMinute(oldMinute);
+		setAMPM(oldAMPM);		
+	}
+	
+	public void setDateAndTime(String oldHour, String oldMinute, String oldAMPM){
 		setHour(oldHour);
 		setMinute(oldMinute);
 		setAMPM(oldAMPM);

@@ -1,6 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
 import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -18,7 +19,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGa
  *
  */
 
-public class LaunchGameButtonPanel extends ToolbarGroupView{
+public class LaunchGameButtonPanel extends JPanel{
 	private final CreateGamePanel parentPanel;
 
 	
@@ -26,21 +27,25 @@ public class LaunchGameButtonPanel extends ToolbarGroupView{
 	JButton launchGameButton = new JButton("Launch Game");	
 	
 	public LaunchGameButtonPanel(CreateGamePanel panel){
-		super("");
+		//super("");
+		super(new GridBagLayout());
 		
-		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		/*this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		this.setPreferredSize(new Dimension(150,50));
 		this.launchGameButton.setHorizontalAlignment(SwingConstants.CENTER);
 		this.launchGameButton.setPreferredSize(new Dimension(150, 50));
+		*/
 		
 		// the action listener for the Create Game Button
 		setupActionListeners();
 		
-		contentPanel.add(launchGameButton);
-		contentPanel.setOpaque(false);
+		//contentPanel.add(launchGameButton);
+		//contentPanel.setOpaque(false);
 		
 
-		this.add(contentPanel);
+		//this.add(contentPanel);
+		this.add(launchGameButton);
+		launchGameButton.setVisible(true);
 		parentPanel = panel;
 	}
 	/**

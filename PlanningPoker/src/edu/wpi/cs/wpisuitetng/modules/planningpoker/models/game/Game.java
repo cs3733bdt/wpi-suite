@@ -59,8 +59,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	
 	/**
-	 * Copies all of the values from the given requirement to this requirement.
-	 * @param toCopyFrom the requirement to copy from
+	 * Copies all of the values from the given Game to this Game.
+	 * @param toCopyFrom the Game to copy from
 	 * @returns true if any modifications are made to the class
 	 */
 	public boolean copyFrom(Game toCopyFrom) {
@@ -105,6 +105,12 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		
 		if(!this.endDate.equals(toCopyFrom.endDate)){
 			this.endDate = toCopyFrom.endDate;
+			needsUpdate = true;
+			wasChanged = true;
+		}
+		
+		if(this.active != toCopyFrom.active) {
+			this.active = toCopyFrom.active;
 			needsUpdate = true;
 			wasChanged = true;
 		}
@@ -171,6 +177,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			this.setChanged();
 			this.notifyObservers();
 		}
+		
+		
 		return wasChanged;
 	}
 	
