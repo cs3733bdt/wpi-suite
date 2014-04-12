@@ -50,19 +50,10 @@ public class AddGameRequestObserver implements RequestObserver{
 		
 		// Parse the name of the game out of the response body
 		//******need to modified to parse the creator from the game model at the same time******
-		final Game name = Game.fromJSON(response.getBody());
+		final Game game = Game.fromJSON(response.getBody());
 		
-		// Email Team Users on game creation Success
-		EmailNotification en = new EmailNotification(name);
-		en.sendEmails();
-		
-		// Send Text messages to users on game creation success.
-		SMSNotification sms = new SMSNotification(name);
-		sms.sendSMSMessages();
-		
-		// Send Facebook notifications to users with stored facebook usernames.
-		FacebookNotification fbn = new FacebookNotification(name);
-		fbn.sendFacebookNotifications();
+		//Send out email, text, and facebook notifications for game creation
+		game.sendNotifications();
 		
 		System.out.println("The request to add a game has succeeded!");
 	}

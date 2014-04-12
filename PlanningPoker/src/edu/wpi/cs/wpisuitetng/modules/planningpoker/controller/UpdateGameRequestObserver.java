@@ -26,6 +26,11 @@ public class UpdateGameRequestObserver implements RequestObserver{
 		final ResponseModel response = iReq.getResponse();
 		
 		final Game game = Game.fromJSON(response.getBody());	
+		
+		//Send out email, text, and facebook notifications for game creation
+		game.sendNotifications();
+		
+		System.out.println("The request to update a game has succeeded!");
 	}
 	
 	@Override
