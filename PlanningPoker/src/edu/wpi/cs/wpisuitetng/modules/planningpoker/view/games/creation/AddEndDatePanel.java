@@ -45,11 +45,12 @@ public class AddEndDatePanel extends JPanel {
 		dateMaker.setTime(endDate);
 		dateMaker.set(Calendar.HOUR, getHours());
 		dateMaker.set(Calendar.MINUTE, getMinutes());
+			
+		if(getHours() == 12){
+			dateMaker.set(Calendar.DAY_OF_YEAR, dateMaker.get(Calendar.DAY_OF_YEAR) - 1);
+		}
 		
 		endDate = dateMaker.getTime();
-		
-		System.out.println(endDate.toString());
-		
 		return endDate;
 	}
 	

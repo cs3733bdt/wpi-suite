@@ -488,19 +488,41 @@ public class CreateGamePanel extends JScrollPane {
 		endCalendar.setTime(endDate);
 		currentCalendar.setTime(new Date());
 		
+		// Unless the dates are the same and the hour is set to 12, use built in compareTo 
 		if((currentCalendar.get(Calendar.DAY_OF_YEAR) == endCalendar.get(Calendar.DAY_OF_YEAR))
 			&& (currentCalendar.get(Calendar.YEAR) == endCalendar.get(Calendar.YEAR)) 
 			&& (endCalendar.get(Calendar.HOUR) == 0)){
+			
+			// If endDate hour is set to 12 AM and currentDate hour is later, show error  
 			if(endCalendar.get(Calendar.AM_PM) == Calendar.AM 
-					&& currentCalendar.get(Calendar.HOUR) >= 0){
+					&& currentCalendar.get(Calendar.HOUR) > 0){
 				isEndDateValid = false;
 				displayError("End Date and time must be set later than the current date");
 			}
+			// if endDate hour is set to 12 PM and currentDate hour is later, show error
 			if(endCalendar.get(Calendar.AM_PM) == Calendar.PM 
 					&& currentCalendar.get(Calendar.AM_PM) == Calendar.PM 
-					&& currentCalendar.get(Calendar.HOUR) >= 0){
+					&& currentCalendar.get(Calendar.HOUR) > 0){
 				isEndDateValid = false;
 				displayError("End Date and time must be set later than the current date");
+			}
+			// if endDate hour and currentDate hour are both set to 12 and either
+			// AM or PM, compares the minutes for error
+			if(endCalendar.get(Calendar.AM_PM) == currentCalendar.get(Calendar.AM_PM) 
+					&& currentCalendar.get(Calendar.HOUR) == 0){
+				if(endCalendar.get(Calendar.MINUTE) <= currentCalendar.get(Calendar.MINUTE)){
+					isEndDateValid = false;
+					displayError("End Date and time must be set later than the current date");
+				}
+			}
+			// if endDate hour and currentDate hour are both set to 12 and have
+			// differing AM and PM values, show error when endDate is AM 
+			if(endCalendar.get(Calendar.AM_PM) != currentCalendar.get(Calendar.AM_PM) 
+					&& currentCalendar.get(Calendar.HOUR) == 0){
+				if(endCalendar.get(Calendar.AM_PM) == Calendar.AM){
+					isEndDateValid = false;
+					displayError("End Date and time must be set later than the current date");
+				}
 			}
 		}
 		

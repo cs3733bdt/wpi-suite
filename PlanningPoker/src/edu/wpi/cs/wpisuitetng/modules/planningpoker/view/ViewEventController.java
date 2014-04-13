@@ -118,8 +118,7 @@ public class ViewEventController {
 			dateMaker.set(Calendar.DAY_OF_YEAR, dateMaker.get(Calendar.DAY_OF_YEAR) - 1);
 		}
 			
-		newGame.getEndDateField().setDateAndTime(dateMaker.getTime(), hour, minute, AM_PM);;		
-		
+		newGame.getEndDateField().setDateAndTime(dateMaker.getTime(), hour, minute, AM_PM);;				
 		for(CreateGamePanel gameSearch : listOfCreateGamePanels){
 			if(game.equals(gameSearch.getGame())){
 				main.getTabbedView().setSelectedComponent(gameSearch);
