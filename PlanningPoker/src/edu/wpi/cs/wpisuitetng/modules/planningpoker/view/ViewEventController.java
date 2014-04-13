@@ -245,19 +245,15 @@ public class ViewEventController {
 
 			if(toBeRemoved instanceof ActiveGamesPanel)
 			{
-				System.out.println("WE GOT HERE 1");
 				if(!((ActiveGamesPanel)toBeRemoved).readyToRemove()) continue;
 				this.listOfActiveGamePanels.remove(toBeRemoved);
-				System.out.println("WE GOT HERE 2");
 			}
 			
 
 			if(toBeRemoved instanceof CreateGamePanel)
 			{
-				System.out.println("WE GOT HERE 3");
 				if(!((CreateGamePanel)toBeRemoved).readyToRemove()) continue;
 				this.listOfCreateGamePanels.remove(toBeRemoved);
-				System.out.println("WE GOT HERE 4");
 			}
 
 			main.getTabbedView().removeTabAt(i);
