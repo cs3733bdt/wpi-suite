@@ -10,7 +10,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -94,6 +96,7 @@ public class CreateGamePanel extends JScrollPane {
 		GridBagConstraints c = new GridBagConstraints();
 		nameTextField = new NameJTextField(30);
 		descriptionTextField = new JTextArea();
+		descriptionTextField.setBorder(defaultBorder);
 		descriptionTextField.setLineWrap(true);
 		endDateField = new AddEndDatePanel(this);
 
@@ -187,7 +190,7 @@ public class CreateGamePanel extends JScrollPane {
 		c.gridy = 3;
 		c.gridwidth = 1;
 		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		descPane.setMinimumSize(new Dimension(440, 80));
+		//descPane.setMinimumSize(new Dimension(440, 80));
 		descPane.setPreferredSize(new Dimension(440, 80));
 		nameAndDescPanel.add(descPane, c);
 
@@ -197,7 +200,7 @@ public class CreateGamePanel extends JScrollPane {
 		JPanel estimateTypePanel = new JPanel();
 		// estimateTypePanel.setLayout(new BoxLayout(estimateTypePanel,
 		// BoxLayout.X_AXIS));
-		c.anchor = GridBagConstraints.CENTER;
+		//c.anchor = GridBagConstraints.CENTER;
 		// c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 2;
@@ -228,12 +231,12 @@ public class CreateGamePanel extends JScrollPane {
 		 * Blank Panel for formatting
 		 */
 		JPanel blankPanel2 = new JPanel();
-		blankPanel2.setMinimumSize(new Dimension(100,25));
-		c.anchor = GridBagConstraints.CENTER;
+		//blankPanel2.setMinimumSize(new Dimension(100,25));
+		//c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 6;
-		c.insets = new Insets(10,0,0,0);
+		//c.insets = new Insets(10,0,0,0);
 		blankPanel2.setPreferredSize(new Dimension(100, 50));
 		endDateField = new AddEndDatePanel(this);
 		rightPanel.add(blankPanel2, c);
@@ -481,14 +484,16 @@ public class CreateGamePanel extends JScrollPane {
 		
 		//BEGIN END DATE VALIDATION
 		endDate = endDateField.getEndDate();
+		Calendar endCalendar = new GregorianCalendar();
+		Calendar currentCalendar = new GregorianCalendar();
+		endCalendar.setTime(endDate);
+		currentCalendar.setTime(new Date());
+		
 		if(endDate.compareTo(new Date()) >= 0) {
 			isEndDateValid = true;
 		} else {
 			isEndDateValid = false;
-			if (warn){
-				getBoxDescription().setBorder(errorBorder);
-			}
-			displayError("End Date is before right now");
+			displayError("End Date and time must be set later than the current date");
 		}
 
 		return (isNameValid && isDescriptionValid && areRequirementsSelected && isEndDateValid);
@@ -508,7 +513,6 @@ public class CreateGamePanel extends JScrollPane {
 		}
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
-		
 	}
 	
 	/**

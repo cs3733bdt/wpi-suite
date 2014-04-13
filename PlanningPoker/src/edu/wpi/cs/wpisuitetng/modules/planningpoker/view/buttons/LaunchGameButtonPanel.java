@@ -28,7 +28,7 @@ public class LaunchGameButtonPanel extends JPanel{
 	
 	public LaunchGameButtonPanel(CreateGamePanel panel){
 		//super("");
-		super(new GridBagLayout());
+		//super(new GridBagLayout());
 		
 		/*this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		this.setPreferredSize(new Dimension(150,50));

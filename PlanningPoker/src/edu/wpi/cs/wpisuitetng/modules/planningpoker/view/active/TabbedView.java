@@ -42,7 +42,8 @@ public class TabbedView extends JTabbedPane {
 	public TabbedView(){
 		
 		this.addTab("Overview", initView);
-	    this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
+	    //this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
+		this.setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
 	    
 	    closeAll.addActionListener(new ActionListener()
 		{

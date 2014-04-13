@@ -46,7 +46,6 @@ public class GameTree extends JScrollPane implements MouseListener{
 	public void refresh(){
 		DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode("Games");
 		DefaultMutableTreeNode inactive = new DefaultMutableTreeNode("Pending Games");
-		boolean inactiveAdded = false;
 		DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the starting node
 		DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the starting node
 		
@@ -135,7 +134,7 @@ public class GameTree extends JScrollPane implements MouseListener{
 			TreePath treePath = gameTree.getPathForLocation(x, y);
 			JTree clicked = gameTree;
 			if(treePath == null){
-				System.out.println("Not on activeTree");
+				System.out.println("Not on gameTree");
 			}
 			if(treePath != null){
 				System.out.println("Tree Path valid");
@@ -143,11 +142,14 @@ public class GameTree extends JScrollPane implements MouseListener{
 				if(node != null) {
 					if(node.getUserObject() instanceof Game){ 		//Make sure that this is actually a game
 						System.out.println("Setting view to game: " + ((Game)node.getUserObject()).toString());
-						if(((Game)node.getUserObject()).isActive()){
+						if(((Game)node.getUserObject()).isActive() && (!((Game)node.getUserObject()).isComplete())){
 							ViewEventController.getInstance().joinGame((Game)node.getUserObject());
 						}
-						else{
+						else if(!((Game)node.getUserObject()).isComplete()){
 							ViewEventController.getInstance().editGame((Game)node.getUserObject());
+						}
+						else{
+							ViewEventController.getInstance().viewEndGame((Game)node.getUserObject());
 						}
 					}
 				}
