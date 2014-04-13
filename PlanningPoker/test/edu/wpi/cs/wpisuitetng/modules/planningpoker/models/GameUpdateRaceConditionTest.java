@@ -1,5 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 
+import static org.junit.Assert.*;
+
 import java.util.ArrayList;
 
 import org.junit.Test;
@@ -13,7 +15,18 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
 
+/**
+ * This test checks whether if adding votes can be successfully done while the game model
+ * is updating. The test runs three threads simultaneously. One thread is used to add votes to
+ * a requirement, one thread is used to add games to the model and the other is used to retrieve
+ * games from the model. The tests check whether if the correct number of votes and games can be 
+ * retrieved from the game model.
+ * @author doruk
+ *
+ */
 public class GameUpdateRaceConditionTest {
+	
+	public int j;
 	
 	Requirement req1;
 	
@@ -31,70 +44,75 @@ public class GameUpdateRaceConditionTest {
 	Project project200;
 	
 	Session session1;
-
 	
+	boolean isFinishedVotes = false;
+	boolean isFinishedUpdate = false;
+	
+	Game gameList[] = new Game[20];
+	
+
+	/**
+	 * This thread is used to add votes to req1 from game1.
+	 * @author doruk
+	 *
+	 */
 	public class AddVotesThread extends Thread {
 		public void run()
 		{
-			req1.addVote(vote1);
-			req1.addVote(vote2);
-			req1.addVote(vote3);		
-			req1.addVote(vote4);	
-			req1.addVote(vote5);
-			req1.addVote(vote6);
-			req1.addVote(vote7);
-			req1.addVote(vote8);
-			req1.addVote(vote9);
-			req1.addVote(vote10);	
-			req1.addVote(vote11);
-			req1.addVote(vote12);
-			req1.addVote(vote13);
-			req1.addVote(vote14);
-			req1.addVote(vote15);
-			req1.addVote(vote16);
-			req1.addVote(vote17);
-			req1.addVote(vote18);
-			req1.addVote(vote19);
-			req1.addVote(vote20);	
-			req1.addVote(vote21);
-			req1.addVote(vote22);
-			req1.addVote(vote23);
-			req1.addVote(vote24);
-			req1.addVote(vote25);
-			req1.addVote(vote26);
-			req1.addVote(vote27);
-			req1.addVote(vote28);
-			req1.addVote(vote29);
-			req1.addVote(vote30);
+			Requirement reqModel1 = model.getGames().get(0).getRequirements().get(0);
+			reqModel1.addVote(vote1);
+			reqModel1.addVote(vote2);
+			reqModel1.addVote(vote3);		
+			reqModel1.addVote(vote4);	
+			reqModel1.addVote(vote5);
+			reqModel1.addVote(vote6);
+			reqModel1.addVote(vote7);
+			reqModel1.addVote(vote8);
+			reqModel1.addVote(vote9);
+			reqModel1.addVote(vote10);	
+			reqModel1.addVote(vote11);
+			reqModel1.addVote(vote12);
+			reqModel1.addVote(vote13);
+			reqModel1.addVote(vote14);
+			reqModel1.addVote(vote15);
+			reqModel1.addVote(vote16);
+			reqModel1.addVote(vote17);
+			reqModel1.addVote(vote18);
+			reqModel1.addVote(vote19);
+			reqModel1.addVote(vote20);	
+			reqModel1.addVote(vote21);
+			reqModel1.addVote(vote22);
+			reqModel1.addVote(vote23);
+			reqModel1.addVote(vote24);
+			reqModel1.addVote(vote25);
+			reqModel1.addVote(vote26);
+			reqModel1.addVote(vote27);
+			reqModel1.addVote(vote28);
+			reqModel1.addVote(vote29);
+			reqModel1.addVote(vote30);
+			isFinishedVotes = true;
 			
-			System.out.println(game1.getRequirements().get(0).getVoteCount());
 		}
 	}
 	
+	/**
+	 * This thread mimics the server by retrieving the games from the model
+	 * and updating the games in the game model.
+	 * @author doruk
+	 *
+	 */
 	public class UpdateGameThread extends Thread {
 		public void run()
 		{
-
-			model.addGame(game1);
-			model.addGame(game2);
-			model.addGame(game3);
-			model.addGame(game4);
-			model.addGame(game5);
-			model.addGame(game6);
-			model.addGame(game7);
-			model.addGame(game8);
-			model.addGame(game9);
-			model.addGame(game10);
-			model.addGame(game11);
-			model.addGame(game12);
-			model.addGame(game13);
-			model.addGame(game14);
-			model.addGame(game15);
-			model.addGame(game16);
-			model.addGame(game17);
-			model.addGame(game18);
-			model.addGame(game19);
-			model.addGame(game20);
+			Game gamesFromModel[];
+			for(int i=0; i < 10; i++) 
+			{
+				j = i;
+				gamesFromModel = model.getGames().toArray(new Game[0]);
+				model.updateGames(gamesFromModel);
+				
+			}
+			isFinishedUpdate = true;
 		}
 	}
 	
@@ -111,7 +129,7 @@ public class GameUpdateRaceConditionTest {
 			
 		session1 = new Session(Jeremy, project200, "");
 		
-		game1 = new Game("Game 1", "Description",  reqList, false, false);
+		game1 = new Game("Game1", "Description",  reqList, false, false);
 		game1.setProject(project200);
 		game2 = new Game("Game2", "With a name2", new ArrayList<Requirement>(), true, true);
 		game3 = new Game("Game3", "With a name3", new ArrayList<Requirement>(), false, false);
@@ -132,6 +150,27 @@ public class GameUpdateRaceConditionTest {
 		game18 = new Game("Game18", "With a name18", new ArrayList<Requirement>(), true, true);
 		game19 = new Game("Game19", "With a name19", new ArrayList<Requirement>(), false, false);
 		game20 = new Game("Game20", "With a name20", new ArrayList<Requirement>(), true, true);
+		gameList[0] = game1;
+		gameList[1] = game2;
+		gameList[2] = game3;
+		gameList[3] = game4;
+		gameList[4] = game5;
+		gameList[5] = game6;
+		gameList[6] = game7;
+		gameList[7] = game8;
+		gameList[8] = game9;
+		gameList[9] = game10;
+		gameList[10] = game11;
+		gameList[11] = game12;
+		gameList[12] = game13;
+		gameList[13] = game14;
+		gameList[14] = game15;
+		gameList[15] = game16;
+		gameList[16] = game17;
+		gameList[17] = game18;
+		gameList[18] = game19;
+		gameList[19] = game20;
+		
 	
 		vote1 = new Vote("user1", 5);
 		vote2 = new Vote("user2", 5);
@@ -163,9 +202,20 @@ public class GameUpdateRaceConditionTest {
 		vote28 = new Vote("user28", 5);
 		vote29 = new Vote("user29", 5);
 		vote30 = new Vote("user30", 5);
-
+		
+		// Run the three threads
+		model.addGames(gameList);
 		(new AddVotesThread()).start();
 		(new UpdateGameThread()).start();
-		System.out.println(model.getElementAt(0).getName());
+		
+		// Wait until at least one thread finishes running
+		while(isFinishedUpdate == false || isFinishedVotes == false){}
+		
+		// Checks if correct number of votes were added to the game model
+		assertEquals(30, model.getGames().get(0).getRequirements().get(0).getVotes().size());
+		
+		// Checks if correct number of names were added to the game model
+		assertEquals(20, model.getGames().size());
+		
 	}
 }
