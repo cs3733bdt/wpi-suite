@@ -96,6 +96,7 @@ public class CreateGamePanel extends JScrollPane {
 		GridBagConstraints c = new GridBagConstraints();
 		nameTextField = new NameJTextField(30);
 		descriptionTextField = new JTextArea();
+		descriptionTextField.setBorder(defaultBorder);
 		descriptionTextField.setLineWrap(true);
 		endDateField = new AddEndDatePanel(this);
 
@@ -189,7 +190,7 @@ public class CreateGamePanel extends JScrollPane {
 		c.gridy = 3;
 		c.gridwidth = 1;
 		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		descPane.setMinimumSize(new Dimension(440, 80));
+		//descPane.setMinimumSize(new Dimension(440, 80));
 		descPane.setPreferredSize(new Dimension(440, 80));
 		nameAndDescPanel.add(descPane, c);
 
@@ -199,7 +200,7 @@ public class CreateGamePanel extends JScrollPane {
 		JPanel estimateTypePanel = new JPanel();
 		// estimateTypePanel.setLayout(new BoxLayout(estimateTypePanel,
 		// BoxLayout.X_AXIS));
-		c.anchor = GridBagConstraints.CENTER;
+		//c.anchor = GridBagConstraints.CENTER;
 		// c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 2;
@@ -230,12 +231,12 @@ public class CreateGamePanel extends JScrollPane {
 		 * Blank Panel for formatting
 		 */
 		JPanel blankPanel2 = new JPanel();
-		blankPanel2.setMinimumSize(new Dimension(100,25));
-		c.anchor = GridBagConstraints.CENTER;
+		//blankPanel2.setMinimumSize(new Dimension(100,25));
+		//c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 6;
-		c.insets = new Insets(10,0,0,0);
+		//c.insets = new Insets(10,0,0,0);
 		blankPanel2.setPreferredSize(new Dimension(100, 50));
 		endDateField = new AddEndDatePanel(this);
 		rightPanel.add(blankPanel2, c);
@@ -488,61 +489,6 @@ public class CreateGamePanel extends JScrollPane {
 		endCalendar.setTime(endDate);
 		currentCalendar.setTime(new Date());
 		
-		/**
-		// Unless the dates are the same and the hour is set to 12, use built in compareTo 
-		if((currentCalendar.get(Calendar.DAY_OF_YEAR) == endCalendar.get(Calendar.DAY_OF_YEAR))
-			&& (currentCalendar.get(Calendar.YEAR) == endCalendar.get(Calendar.YEAR)) 
-			&& (endCalendar.get(Calendar.HOUR) == 0)){
-			
-			// If endDate hour is set to 12 AM and currentDate hour is later, show error  
-			if(endCalendar.get(Calendar.AM_PM) == Calendar.AM){ 
-				System.out.println("11111111111111111111111111111111111111111");
-				if(currentCalendar.get(Calendar.HOUR) > 0){
-					isEndDateValid = false;
-					displayError("End Date and time must be set later than the current date");
-				}
-			}
-			// if endDate hour is set to 12 PM and currentDate hour is later, show error
-			if(endCalendar.get(Calendar.AM_PM) == Calendar.PM){ 
-				System.out.println("222222222222222222222222222222");
-				if(currentCalendar.get(Calendar.AM_PM) == Calendar.PM){ 
-					if(currentCalendar.get(Calendar.HOUR) > 0){
-						isEndDateValid = false;
-						displayError("End Date and time must be set later than the current date");
-					}
-				}
-				else{
-					isEndDateValid = true;
-				}
-			}
-			// if endDate hour and currentDate hour are both set to 12 and either
-			// AM or PM, compares the minutes for error
-			if(endCalendar.get(Calendar.AM_PM) == currentCalendar.get(Calendar.AM_PM) 
-					&& currentCalendar.get(Calendar.HOUR) == 0){
-				System.out.println("33333333333333333333333333333333333");
-				if(endCalendar.get(Calendar.MINUTE) <= currentCalendar.get(Calendar.MINUTE)){
-					isEndDateValid = false;
-					displayError("End Date and time must be set later than the current date");
-				}
-				else{
-					isEndDateValid = true;
-				}
-			}
-			// if endDate hour and currentDate hour are both set to 12 and have
-			// differing AM and PM values, show error when endDate is AM 
-			if(endCalendar.get(Calendar.AM_PM) != currentCalendar.get(Calendar.AM_PM) 
-					&& currentCalendar.get(Calendar.HOUR) == 0){
-				System.out.println("44444444444444444444444444444444444");
-				if(endCalendar.get(Calendar.AM_PM) == Calendar.AM){
-					isEndDateValid = false;
-					displayError("End Date and time must be set later than the current date");
-				}
-				if(endCalendar.get(Calendar.AM_PM) == Calendar.PM){
-					isEndDateValid = true;
-				}
-			}
-		}
-		**/
 		if(endDate.compareTo(new Date()) >= 0) {
 			isEndDateValid = true;
 		} else {
