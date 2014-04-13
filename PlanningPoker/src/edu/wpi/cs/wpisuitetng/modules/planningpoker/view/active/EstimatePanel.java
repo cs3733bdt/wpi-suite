@@ -437,6 +437,7 @@ public class EstimatePanel extends JPanel{
 		ViewEventController.getInstance().refreshGameTree();
 		
 		getEstimateText().setBorder(defaultBorder);
+		errorField.setForeground(Color.BLUE);
 		displayError("   Vote Successful!");
 	}
 

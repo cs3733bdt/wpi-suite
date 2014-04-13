@@ -44,12 +44,7 @@ public class AddEndDatePanel extends JPanel {
 		endDate = datePicker.getDate();
 		dateMaker.setTime(endDate);
 		dateMaker.set(Calendar.HOUR, getHours());
-		dateMaker.set(Calendar.MINUTE, getMinutes());
-			
-		if(getHours() == 12){
-			dateMaker.set(Calendar.DAY_OF_YEAR, dateMaker.get(Calendar.DAY_OF_YEAR) - 1);
-		}
-		
+		dateMaker.set(Calendar.MINUTE, getMinutes());		
 		endDate = dateMaker.getTime();
 		return endDate;
 	}
@@ -70,16 +65,15 @@ public class AddEndDatePanel extends JPanel {
 		default: minutes = 0;
 				 break;
 		}
-		System.out.println(index);
-
 		return minutes;
 	}
 	
 	private int getHours() {
+		int index;
 		int hours;
 		int isAMPM;
 		
-		hours = hourSelection.getSelectedIndex()+1;
+		index = hourSelection.getSelectedIndex();
 		isAMPM = AmPmSelection.getSelectedIndex();
 		
 		switch(isAMPM){
@@ -90,7 +84,48 @@ public class AddEndDatePanel extends JPanel {
 		default: break;
 		}
 		
-		System.out.println("AM_PM string: " + Calendar.AM_PM);
+		switch (index) {
+		case 0:
+			hours = 1;
+			break;
+		case 1:
+			hours = 2;
+			break;
+		case 2:
+			hours = 3;
+			break;
+		case 3:
+			hours = 4;
+			break;
+		case 4:
+			hours = 5;
+			break;
+		case 5:
+			hours = 6;
+			break;
+		case 6:
+			hours = 7;
+			break;
+		case 7:
+			hours = 8;
+			break;
+		case 8:
+			hours = 9;
+			break;
+		case 9:
+			hours = 10;
+			break;
+		case 10:
+			hours = 11;
+			break;
+		case 11:
+			hours = 0;
+			break;
+		default:
+			hours = 1;
+			break;
+		}
+		
 		return hours;
 	}
 	
@@ -99,7 +134,12 @@ public class AddEndDatePanel extends JPanel {
 	}
 	
 	private void setHour(String oldHour){
-		hourSelection.setSelectedItem(oldHour);
+		if(oldHour.equals("0")){
+			hourSelection.setSelectedIndex(11);
+		}
+		else{
+			hourSelection.setSelectedItem(oldHour);
+		}
 	}
 	
 	private void setMinute(String oldMinute){

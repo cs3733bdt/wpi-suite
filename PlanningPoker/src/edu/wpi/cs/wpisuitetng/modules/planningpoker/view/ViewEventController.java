@@ -91,34 +91,18 @@ public class ViewEventController {
 		Calendar dateMaker = new GregorianCalendar();
 		dateMaker.setTime(game.getEndDate());
 		String hour = Integer.toString(dateMaker.get(Calendar.HOUR));
-		if(hour.equals("0")){
-			hour = "12";
-		}
 		String minute = Integer.toString(dateMaker.get(Calendar.MINUTE));		
 		String AM_PM = "If this doesn't change, something is wrong";
 		
 		if(dateMaker.get(Calendar.AM_PM) == Calendar.AM){
-			if(hour.equals("12")){
-				AM_PM = "PM";
-			}
-			else{
-				AM_PM = "AM";
-			}
+			AM_PM = "AM";
 		}
 		if(dateMaker.get(Calendar.AM_PM) == Calendar.PM){
-			if(hour.equals("12")){
-				AM_PM = "AM";
-			}
-			else{
-				AM_PM = "PM";
-			}
+			AM_PM = "PM";
 		}
 		
-		if(hour.equals("12") && dateMaker.get(Calendar.AM_PM) == Calendar.AM){
-			dateMaker.set(Calendar.DAY_OF_YEAR, dateMaker.get(Calendar.DAY_OF_YEAR) - 1);
-		}
-			
-		newGame.getEndDateField().setDateAndTime(dateMaker.getTime(), hour, minute, AM_PM);;				
+		newGame.getEndDateField().setDateAndTime(dateMaker.getTime(), hour, minute, AM_PM);				
+		
 		for(CreateGamePanel gameSearch : listOfCreateGamePanels){
 			if(game.equals(gameSearch.getGame())){
 				main.getTabbedView().setSelectedComponent(gameSearch);
