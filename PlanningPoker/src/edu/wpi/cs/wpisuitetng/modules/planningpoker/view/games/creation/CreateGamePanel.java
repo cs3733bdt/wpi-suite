@@ -10,7 +10,9 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -25,6 +27,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
@@ -480,14 +483,71 @@ public class CreateGamePanel extends JScrollPane {
 		
 		//BEGIN END DATE VALIDATION
 		endDate = endDateField.getEndDate();
+		Calendar endCalendar = new GregorianCalendar();
+		Calendar currentCalendar = new GregorianCalendar();
+		endCalendar.setTime(endDate);
+		currentCalendar.setTime(new Date());
+		
+		/**
+		// Unless the dates are the same and the hour is set to 12, use built in compareTo 
+		if((currentCalendar.get(Calendar.DAY_OF_YEAR) == endCalendar.get(Calendar.DAY_OF_YEAR))
+			&& (currentCalendar.get(Calendar.YEAR) == endCalendar.get(Calendar.YEAR)) 
+			&& (endCalendar.get(Calendar.HOUR) == 0)){
+			
+			// If endDate hour is set to 12 AM and currentDate hour is later, show error  
+			if(endCalendar.get(Calendar.AM_PM) == Calendar.AM){ 
+				System.out.println("11111111111111111111111111111111111111111");
+				if(currentCalendar.get(Calendar.HOUR) > 0){
+					isEndDateValid = false;
+					displayError("End Date and time must be set later than the current date");
+				}
+			}
+			// if endDate hour is set to 12 PM and currentDate hour is later, show error
+			if(endCalendar.get(Calendar.AM_PM) == Calendar.PM){ 
+				System.out.println("222222222222222222222222222222");
+				if(currentCalendar.get(Calendar.AM_PM) == Calendar.PM){ 
+					if(currentCalendar.get(Calendar.HOUR) > 0){
+						isEndDateValid = false;
+						displayError("End Date and time must be set later than the current date");
+					}
+				}
+				else{
+					isEndDateValid = true;
+				}
+			}
+			// if endDate hour and currentDate hour are both set to 12 and either
+			// AM or PM, compares the minutes for error
+			if(endCalendar.get(Calendar.AM_PM) == currentCalendar.get(Calendar.AM_PM) 
+					&& currentCalendar.get(Calendar.HOUR) == 0){
+				System.out.println("33333333333333333333333333333333333");
+				if(endCalendar.get(Calendar.MINUTE) <= currentCalendar.get(Calendar.MINUTE)){
+					isEndDateValid = false;
+					displayError("End Date and time must be set later than the current date");
+				}
+				else{
+					isEndDateValid = true;
+				}
+			}
+			// if endDate hour and currentDate hour are both set to 12 and have
+			// differing AM and PM values, show error when endDate is AM 
+			if(endCalendar.get(Calendar.AM_PM) != currentCalendar.get(Calendar.AM_PM) 
+					&& currentCalendar.get(Calendar.HOUR) == 0){
+				System.out.println("44444444444444444444444444444444444");
+				if(endCalendar.get(Calendar.AM_PM) == Calendar.AM){
+					isEndDateValid = false;
+					displayError("End Date and time must be set later than the current date");
+				}
+				if(endCalendar.get(Calendar.AM_PM) == Calendar.PM){
+					isEndDateValid = true;
+				}
+			}
+		}
+		**/
 		if(endDate.compareTo(new Date()) >= 0) {
 			isEndDateValid = true;
 		} else {
 			isEndDateValid = false;
-			if (warn){
-				getBoxDescription().setBorder(errorBorder);
-			}
-			displayError("End Date is before right now");
+			displayError("End Date and time must be set later than the current date");
 		}
 
 		return (isNameValid && isDescriptionValid && areRequirementsSelected && isEndDateValid);
@@ -600,6 +660,7 @@ public class CreateGamePanel extends JScrollPane {
 		currentGame.setUsesCards(doesUseCards());
 		currentGame.setRequirements(getRequirements());
 		currentGame.setEndDate(endDateField.getEndDate());
+		currentGame.setCreator(ConfigManager.getConfig().getUserName());
 		currentGame.notifyObservers();
 	}
 

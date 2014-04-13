@@ -10,6 +10,9 @@ import java.util.UUID;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.EmailNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.FacebookNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.SMSNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
@@ -199,7 +202,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		identity = UUID.randomUUID();
 	}
 	
-	
 	/**
 	 * Constructs a Game without a creation time
 	 * @param name the name of the game
@@ -256,7 +258,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	public UUID getIdentity(){
 		return identity;
 	}
-	
 	
 	/**
 	 * Gets the name of this game
@@ -355,6 +356,17 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	/**
+	 * Sets the creator of the game.
+	 * @param creator the creator's username
+	 */
+	public void setCreator(String creator) {
+		if(this.creator != creator){
+			this.creator = creator;
+			this.setChanged();
+		}
+	}
+	
+	/**
 	 * Get the number of all users
 	 * @return the number of all users
 	 */
@@ -362,9 +374,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return this.getProject().getTeam().length;
 	}
 	
-
-
-
 	/**
 	 * Gets the creating time and date of the game
 	 * @return a Formated Date String
@@ -470,11 +479,24 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return endDate;
 	}
 	
-
 	public void setEndDate(Date endDate) {
 		if(this.endDate != endDate){
 			this.endDate = endDate;
 			this.setChanged();
+		}
+	}
+	
+	/**
+	 * Checks if the user is the creator of the current game
+	 * @param user user to check
+	 * @return returns true if the user being checked is the creator, returns false otherwise
+	 */
+	public boolean isCreator(String user) {
+		if(this.creator.equals(user)) {
+			return true;
+		}
+		else {
+			return false;
 		}
 	}
 
@@ -485,5 +507,47 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	private void delayChange(){
 		while(GameModel.getInstance().serverUpdating()){}
 	}
+	
+	
+	/**
+	 * hasChanged in the super class does not check if the 
+	 * requirements has been changed. This method is to check
+	 * whether if the requirements are also changed.
+	 * @return
+	 * 
+	 */
+	@Override
+	public synchronized boolean hasChanged()
+	{
+		if(super.hasChanged())
+			return true;
+		
+		for(Requirement requirement: requirements)
+		{
+			if(requirement.hasChanged())
+				return true;
+			
+		}
+		return false;
+	}
 
+	/**
+	 * Sends notifications via email, facebook, and text message
+	 * to the team associated with this game.
+	 */
+	public void sendNotifications() {
+		
+		// Notify all team users via email
+		EmailNotification en = new EmailNotification(this);
+		en.sendEmails();
+		
+		// Notify all team users via text message
+		SMSNotification sms = new SMSNotification(this);
+		sms.sendSMSMessages();
+				
+		// Notify all team users via facebook message
+		FacebookNotification fbn = new FacebookNotification(this);
+		fbn.sendFacebookNotifications();
+		
+	}
 }
