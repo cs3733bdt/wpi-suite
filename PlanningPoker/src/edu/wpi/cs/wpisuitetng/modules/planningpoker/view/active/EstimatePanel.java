@@ -176,11 +176,23 @@ public class EstimatePanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 6;
 		c.gridwidth = 2;
+		
 		cardsPanel = new ActiveCardsPanel(deck, this);
-		overviewPanel.add(cardsPanel, c);
-		this.JToggleButtonList = cardsPanel.getCardButtonArray();
-		System.out.println("Estimate Panel output: card button item 3:" + JToggleButtonList.get(2));
-		/**
+		
+		//added below
+		if (this.getGame().doesUseCards()) {
+			JScrollPane cardPane = new JScrollPane(cardsPanel);
+			cardPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			cardPane.setPreferredSize(new Dimension(850, 110));
+			overviewPanel.add(cardPane,c);
+		}
+		else {
+			overviewPanel.add(cardsPanel, c);
+		}
+		
+		//added above
+		
+		this.JToggleButtonList = cardsPanel.getCardButtonArray();/**
 		 * The text area where the user types their estimate
 		 */
 		estText.setText("Estimate Here");
