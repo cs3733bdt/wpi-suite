@@ -186,7 +186,7 @@ public class CreateGamePanel extends JScrollPane {
 		c.gridy = 3;
 		c.gridwidth = 1;
 		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		descPane.setMinimumSize(new Dimension(440, 80));
+		//descPane.setMinimumSize(new Dimension(440, 80));
 		descPane.setPreferredSize(new Dimension(440, 80));
 		nameAndDescPanel.add(descPane, c);
 
@@ -196,7 +196,7 @@ public class CreateGamePanel extends JScrollPane {
 		JPanel estimateTypePanel = new JPanel();
 		// estimateTypePanel.setLayout(new BoxLayout(estimateTypePanel,
 		// BoxLayout.X_AXIS));
-		c.anchor = GridBagConstraints.CENTER;
+		//c.anchor = GridBagConstraints.CENTER;
 		// c.weightx = 0;
 		c.gridx = 0;
 		c.gridy = 2;
@@ -227,12 +227,12 @@ public class CreateGamePanel extends JScrollPane {
 		 * Blank Panel for formatting
 		 */
 		JPanel blankPanel2 = new JPanel();
-		blankPanel2.setMinimumSize(new Dimension(100,25));
-		c.anchor = GridBagConstraints.CENTER;
+		//blankPanel2.setMinimumSize(new Dimension(100,25));
+		//c.anchor = GridBagConstraints.CENTER;
 		c.gridx = 0;
 		c.gridy = 1;
 		c.gridwidth = 6;
-		c.insets = new Insets(10,0,0,0);
+		//c.insets = new Insets(10,0,0,0);
 		blankPanel2.setPreferredSize(new Dimension(100, 50));
 		endDateField = new AddEndDatePanel(this);
 		rightPanel.add(blankPanel2, c);
