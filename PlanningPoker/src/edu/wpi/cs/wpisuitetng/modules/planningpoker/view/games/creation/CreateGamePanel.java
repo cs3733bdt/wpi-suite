@@ -567,7 +567,6 @@ public class CreateGamePanel extends JScrollPane {
 		}
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
-		
 	}
 	
 	/**
