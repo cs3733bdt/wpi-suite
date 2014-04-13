@@ -32,10 +32,6 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 		this.panel = passedPanel;
 		this.deck = passedDeck;
 		
-		//Testing code for scrollpane
-		for (int i = 0; i < 200; i++) {
-			deck.add("" + i + "");
-		}
 		this.setPreferredSize(new Dimension(800, (68 * (Math.round(deck.size() / 11)) ) ) ); //800,100
 		for (int i = 0; i < (deck.size()); i++) {
 			this.JToggleButtonList.add(new CardButton(i, deck, this, panel));
