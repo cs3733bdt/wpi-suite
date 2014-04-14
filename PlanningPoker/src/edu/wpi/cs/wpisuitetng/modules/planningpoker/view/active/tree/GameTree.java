@@ -16,6 +16,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree;
 
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Collections;
@@ -36,16 +38,21 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 @SuppressWarnings("serial")
-public class GameTree extends JScrollPane implements MouseListener{
-	private JPanel viewPort;
-	JTree gameTree;
+public class GameTree extends JPanel implements MouseListener{
 	private boolean initialized = false; //Used to check if the GameModel should be generated from the server.
+	JTree gameTree;
+	JScrollPane gameTreeScroll;
+	DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode("Games");
+	DefaultMutableTreeNode inactive = new DefaultMutableTreeNode("Pending Games");
+	DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the starting node
+	DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the starting node
+	JPanel viewPanel = new JPanel();
 	
 	/**
 	 * Constructor for a GameTree
 	 */
 	public GameTree(){
-		this.setViewportView(viewPort);
+		super(new GridBagLayout());
 		ViewEventController.getInstance().setGameOverviewTree(this);
 		this.refresh();
 	}
@@ -55,10 +62,9 @@ public class GameTree extends JScrollPane implements MouseListener{
 	 * Used when the list of games is updated or changed.
 	 */
 	public void refresh(){
-		DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode("Games");
-		DefaultMutableTreeNode inactive = new DefaultMutableTreeNode("Pending Games");
-		DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the starting node
-		DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the starting node
+		active.removeAllChildren();
+		inactive.removeAllChildren();
+		history.removeAllChildren();
 		
 		List<Game> gameList = sortGames(GameModel.getInstance().getGames()); //retrive the list of all of the games
 		System.out.println("Numb Games: " + gameList.size());
@@ -81,27 +87,32 @@ public class GameTree extends JScrollPane implements MouseListener{
 		gameNode.add(inactive);
 		gameNode.add(active);
 		gameNode.add(history);
-		
 		gameTree = new JTree(gameNode);
+		
 		gameTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		gameTree.setToggleClickCount(0);
 		gameTree.addMouseListener(this);
 		
 		gameTree.setPreferredSize(new Dimension(250 , 10 + gameList.size()*21));
 		
-		JScrollPane gameTreeScroll = new JScrollPane(gameTree);
+		viewPanel.setLayout(new GridBagLayout());
+		GridBagConstraints c = new GridBagConstraints();
+		
+		c.anchor = GridBagConstraints.CENTER; 
+		gameTreeScroll = new JScrollPane(gameTree);
 		gameTreeScroll.setPreferredSize(new Dimension(150 + 25, 590));
 		
-		viewPort = new JPanel();
-		
-	    viewPort.add(gameTreeScroll);
-	    
-	    viewPort.setPreferredSize(new Dimension(176,590));
-		
-	    this.setViewportView(viewPort);
-	    
+		if(viewPanel.getComponentCount() != 0){
+			viewPanel.remove(0);
+		}
+	    viewPanel.add(gameTreeScroll, c);
+	    viewPanel.setPreferredSize(new Dimension(176,590));
+	   
+	    this.add(viewPanel);
 	    ViewEventController.getInstance().setGameOverviewTree(this);
+	    viewPanel.repaint();
 	    this.repaint();
+	    this.validate();
 	    System.out.println("Finished refresshing the tree");
 		
 	}
