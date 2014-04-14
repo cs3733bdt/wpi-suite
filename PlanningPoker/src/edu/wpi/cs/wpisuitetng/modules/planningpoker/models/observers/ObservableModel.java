@@ -1,3 +1,4 @@
+// $codepro.audit.disable transientFieldInNonSerializable
 /*******************************************************************************
  * Copyright (c) 2014 -- WPI Suite
  *
@@ -51,8 +52,8 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
  */
 public abstract class ObservableModel extends AbstractModel {
 	//These datatypes were made transient so that they are not parsed by the gson converter
-    private transient boolean changed = false;
-    private transient Vector<AbstractModelObserver> obs;
+    private transient boolean changed = false; // $codepro.audit.disable transientFieldInNonSerializable
+    private transient Vector<AbstractModelObserver> obs; // $codepro.audit.disable transientFieldInNonSerializable
 
     /** Construct an Observable with zero Observers. */
 

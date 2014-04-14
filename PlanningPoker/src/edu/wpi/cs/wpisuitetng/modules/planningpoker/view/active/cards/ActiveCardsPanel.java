@@ -71,7 +71,9 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 						JToggleButtonList.get(deck.size()-1).doClick();
 					}
 					sum = 0;
-				} catch (IOException ex) {}
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
 			}
 		});	
 		

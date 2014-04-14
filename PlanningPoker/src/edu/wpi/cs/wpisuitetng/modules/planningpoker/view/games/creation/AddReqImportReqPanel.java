@@ -11,11 +11,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 

@@ -36,7 +36,7 @@ public class MockRequest extends Request {
 	
 	 * @throws IllegalStateException */
 	@Override
-	public void send() throws IllegalStateException {
+	public synchronized void send() throws IllegalStateException {
 		// don't actually send
 		sent = true;
 	}
