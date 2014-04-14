@@ -283,7 +283,6 @@ public class EstimatePanel extends JPanel{
 		errorField = new JLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setPreferredSize(new Dimension(300, 25));
-		errorField.setForeground(Color.RED);
 		/*
 		 * remove if problems
 		 */
@@ -460,12 +459,17 @@ public class EstimatePanel extends JPanel{
 		ViewEventController.getInstance().refreshGameTree();
 		
 		getEstimateText().setBorder(defaultBorder);
-		errorField.setForeground(Color.BLUE);
-		displayError("   Vote Successful!");
+		displaySuccess("   Vote Successful!");
 	}
 
-	public void displayError(String error) {
-		errorField.setText(error);
+	public void displayError(String errorString) {
+		errorField.setForeground(Color.RED);
+		errorField.setText(errorString);
+	}
+	
+	public void displaySuccess(String successString){
+		errorField.setForeground(Color.BLUE);
+		errorField.setText(successString);
 	}
 	
 }

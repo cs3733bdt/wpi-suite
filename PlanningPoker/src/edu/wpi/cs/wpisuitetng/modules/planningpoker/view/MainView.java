@@ -17,13 +17,13 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JSplitPane;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.GamesTreePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 
 @SuppressWarnings("serial")
 public class MainView extends JSplitPane {
 	TabbedView tabView = new TabbedView();
-	GamesTreePanel filterPanel = new GamesTreePanel();
+	GameTree filterPanel = new GameTree();
 	
 	public MainView() {
 		
