@@ -1,12 +1,19 @@
-/**
- * 
- */
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
 import javax.swing.JComponent;
@@ -15,6 +22,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
 
 /**
  * @author jonathanleitschuh
@@ -27,6 +35,7 @@ public class ViewEventController {
 	private GameTree gameTree = null;
 	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
 	private ArrayList<ActiveGamesPanel> listOfActiveGamePanels = new ArrayList<ActiveGamesPanel>();
+	private ArrayList<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
 	
 	/**
 	 * Default constructor for the ViewEventController. Is protected to prevent instantiation.
@@ -174,7 +183,42 @@ public class ViewEventController {
 		main.invalidate();
 		main.repaint();
 		
-	}	
+	}
+	
+	/**
+	 * TODO: add documentation for this funciton
+	 */
+	public void viewEndGame(Game game){
+		//Attempt to find the game in the active panels list
+		for(EndGamePanel gameSearch : listOfEndGamePanels){
+			if(game.equals(gameSearch.getGame())){
+				main.getTabbedView().setSelectedComponent(gameSearch);
+				main.invalidate();
+				main.repaint();
+				return; //The game has been found and made active. Done!
+			}
+		}
+		
+		//Game not found in the active game list
+		EndGamePanel viewGame = new EndGamePanel(game);
+		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
+		
+		
+		//Makes the game name not be longer than 6 charaters
+		StringBuilder tabName = new StringBuilder();
+		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
+		tabName.append(game.getName().subSequence(0,subStringLength));
+		if(game.getName().length() > 6) tabName.append("...");
+		main.getTabbedView().addTab(tabName.toString(),  viewGame);
+		
+		
+		listOfEndGamePanels.add(viewGame);
+		
+		main.getTabbedView().setSelectedComponent(viewGame);
+		main.invalidate();
+		main.repaint();
+		
+	}
 	
 	/**
 	 * Removes the tab for the given JComponent
@@ -211,19 +255,15 @@ public class ViewEventController {
 
 			if(toBeRemoved instanceof ActiveGamesPanel)
 			{
-				System.out.println("WE GOT HERE 1");
 				if(!((ActiveGamesPanel)toBeRemoved).readyToRemove()) continue;
 				this.listOfActiveGamePanels.remove(toBeRemoved);
-				System.out.println("WE GOT HERE 2");
 			}
 			
 
 			if(toBeRemoved instanceof CreateGamePanel)
 			{
-				System.out.println("WE GOT HERE 3");
 				if(!((CreateGamePanel)toBeRemoved).readyToRemove()) continue;
 				this.listOfCreateGamePanels.remove(toBeRemoved);
-				System.out.println("WE GOT HERE 4");
 			}
 
 			main.getTabbedView().removeTabAt(i);

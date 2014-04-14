@@ -51,7 +51,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 		//Anchor AddReqPanel top to the top of the container
 		layout.putConstraint(SpringLayout.NORTH, reqPanel,
 				5,
-				SpringLayout.TOP, rightView);
+				SpringLayout.NORTH, rightView);
 
 		//Anchor the AddReqPanel's right side to the right side of the container
 		layout.putConstraint(SpringLayout.EAST, reqPanel, 

@@ -18,15 +18,16 @@ public class NewCreateGamePanel extends JSplitPane {
 	NewRightHalfCreateGamePanel rightHalf = new NewRightHalfCreateGamePanel(this);
 	
 	public NewCreateGamePanel() {
+
 		this.setRightComponent(rightHalf);
 		rightHalf.setMinimumSize(new Dimension(500, 400));
 		this.setLeftComponent(leftHalf);
-		this.setDividerLocation(400);
+		this.setDividerLocation(700);
 		
 	}
 	
 	public static void main(String args[]){
-		JFrame frame = new JFrame("GridBagLayoutDemo");
+		JFrame frame = new JFrame("Demo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Set up the content pane.
@@ -41,9 +42,5 @@ public class NewCreateGamePanel extends JSplitPane {
 	public void addRequirement(Requirement requirement) {
 		//this.requirements.add(requirement);
 	}
-	
-	
-	
-	
 	
 }

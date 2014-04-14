@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 /*import java.awt.Container;
@@ -6,14 +17,17 @@ import java.awt.GridBagLayout;*/
 
 import javax.swing.JSplitPane;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.GamesTreePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 
 @SuppressWarnings("serial")
 public class MainView extends JSplitPane {
 	TabbedView tabView = new TabbedView();
-	GamesTreePanel filterPanel = new GamesTreePanel();
+	GameTree filterPanel = new GameTree();
 	
+	/**
+	 * constructs a MainView
+	 */
 	public MainView() {
 		
 		
@@ -30,6 +44,9 @@ public class MainView extends JSplitPane {
 		
 	}
 	
+	/**
+	 * @return current TabbedView
+	 */
 	public TabbedView getTabbedView(){
 		return tabView;
 	}

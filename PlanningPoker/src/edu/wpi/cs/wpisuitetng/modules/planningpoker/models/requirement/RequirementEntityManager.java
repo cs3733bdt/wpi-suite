@@ -1,12 +1,14 @@
 /*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
+ * Copyright (c) 2014 -- WPI Suite
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Team Rolling Thunder
- ******************************************************************************/
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
 
 import java.util.List;
@@ -69,7 +71,8 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	
 	
 	 * @return the requirement matching the given id * @throws NotFoundException * @throws NotFoundException * @throws NotFoundException
-	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String) */
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String)
+	 */
 	@Override
 	public Requirement[] getEntity(Session s, String id) throws NotFoundException {
 		final int intId = Integer.parseInt(id);
@@ -116,7 +119,8 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	 * @param session the session
 	 * @param role the role being verified
 	
-	 * @throws WPISuiteException user isn't authorized for the given role */
+	 * @throws WPISuiteException user isn't authorized for the given role
+	 */
 	private void ensureRole(Session session, Role role) throws WPISuiteException {
 		User user = (User) db.retrieve(User.class, "username", session.getUsername()).get(0);
 		if(!user.getRole().equals(role)) {
@@ -133,7 +137,8 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	
 	
 	 * @return true if the deletion was successful * @throws WPISuiteException * @throws WPISuiteException * @throws WPISuiteException
-	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String) */
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String)
+	 */
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
 		ensureRole(s, Role.ADMIN);
@@ -160,7 +165,8 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	
 	
 	 * @return number of requirements stored * @throws WPISuiteException * @throws WPISuiteException * @throws WPISuiteException
-	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count() */
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count()
+	 */
 	@Override
 	public int Count() throws WPISuiteException {
 		return db.retrieveAll(new Requirement()).size();
