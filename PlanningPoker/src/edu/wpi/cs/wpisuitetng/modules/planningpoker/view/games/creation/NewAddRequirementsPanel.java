@@ -158,7 +158,7 @@ public class NewAddRequirementsPanel extends JPanel {
 		c.gridy = 3;
 		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		//descPane.setMinimumSize(new Dimension(500, 100));
-		descPane.setPreferredSize(new Dimension(500, 105));
+		//descPane.setPreferredSize(new Dimension(500, 105));
 		createReqPanel.add(descPane, c);
 		
 		/**
@@ -191,7 +191,7 @@ public class NewAddRequirementsPanel extends JPanel {
 				currentReqsPanel.setVisible(true);
 			}
 		});
-		cancelRequirementButton.setPreferredSize(new Dimension(150, 25));
+//		//cancelRequirementButton.setPreferredSize(new Dimension(150, 25));
 		
 		/**
 		 * Formats and adds the button
@@ -202,7 +202,7 @@ public class NewAddRequirementsPanel extends JPanel {
 		c.gridheight = 1;
 		c.gridy = 6;
 		c.ipady = 0;
-		submitAddReqButton.setPreferredSize(new Dimension(150, 25));
+//		submitAddReqButton.setPreferredSize(new Dimension(150, 25));
 		createReqPanel.add(submitAddReqButton, c);
 		
 		c.insets = new Insets(0, 300, 0, 0);
@@ -256,8 +256,8 @@ public class NewAddRequirementsPanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 3;
 		tablePanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		tablePanel.setMinimumSize(new Dimension(500, 100));
-		tablePanel.setPreferredSize(new Dimension(500, 141));
+//		tablePanel.setMinimumSize(new Dimension(500, 100));
+//		tablePanel.setPreferredSize(new Dimension(500, 141));
 		importReqPanel.add(tablePanel, c);
 		
 		/**
@@ -285,8 +285,8 @@ public class NewAddRequirementsPanel extends JPanel {
 		c.gridheight = 1;
 		c.gridy = 6;
 		c.ipady = 0;
-		submitImportReqButton.setPreferredSize(new Dimension(150, 25));
-		importReqPanel.add(submitImportReqButton, c);
+//		submitImportReqButton.setPreferredSize(new Dimension(150, 25));
+		//importReqPanel.add(submitImportReqButton, c);
 		
 		/**
 		 * Creates and adds a label for the Current Requirements
@@ -333,8 +333,8 @@ public class NewAddRequirementsPanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 3;
 		tablePanel2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		tablePanel2.setMinimumSize(new Dimension(500, 100));
-		tablePanel2.setPreferredSize(new Dimension(500, 166));
+//		tablePanel2.setMinimumSize(new Dimension(500, 100));
+//		tablePanel2.setPreferredSize(new Dimension(500, 166));
 		currentReqsPanel.add(tablePanel2, c);
 		
 		/**
@@ -366,7 +366,7 @@ public class NewAddRequirementsPanel extends JPanel {
 		 * Blank panel for formatting
 		 */
 		JPanel blankPanel3 = new JPanel();
-		blankPanel3.setMinimumSize(new Dimension(400, 25));
+//		blankPanel3.setMinimumSize(new Dimension(400, 25));
 		c.gridx = 0;
 		c.gridy = 8;
 		c.gridwidth = 8;

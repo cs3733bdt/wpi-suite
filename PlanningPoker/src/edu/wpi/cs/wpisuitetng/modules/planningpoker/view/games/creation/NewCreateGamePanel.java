@@ -1,5 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
+import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
@@ -17,6 +19,7 @@ public class NewCreateGamePanel extends JSplitPane {
 	
 	public NewCreateGamePanel() {
 		this.setRightComponent(rightHalf);
+		rightHalf.setMinimumSize(new Dimension(500, 400));
 		this.setLeftComponent(leftHalf);
 		this.setDividerLocation(400);
 		
@@ -28,7 +31,7 @@ public class NewCreateGamePanel extends JSplitPane {
 
         //Set up the content pane.
         frame.add(new NewCreateGamePanel());
-        frame.setSize(400, 400);
+        frame.setMinimumSize(new Dimension(1000, 600));
 
         //Display the window.
         frame.pack();
