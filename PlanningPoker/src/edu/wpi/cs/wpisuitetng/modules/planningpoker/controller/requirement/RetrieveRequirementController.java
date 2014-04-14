@@ -41,9 +41,9 @@ public class RetrieveRequirementController implements ActionListener {
 	}
 	
 	/**
-	
 	 * @return the instance of the RetrieveRequirementsController or creates one if it does not
-	 * exist. */
+	 * exist.
+	 */
 	public static RetrieveRequirementController getInstance()
 	{
 		if(instance == null)
@@ -59,7 +59,8 @@ public class RetrieveRequirementController implements ActionListener {
 	 * update button is pressed
 	 * @param e ActionEvent
 	
-	 * @see java.awt.event.ActionListener#actionPerformed(ActionEvent) */
+	 * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Send a request to the core to save this requirement

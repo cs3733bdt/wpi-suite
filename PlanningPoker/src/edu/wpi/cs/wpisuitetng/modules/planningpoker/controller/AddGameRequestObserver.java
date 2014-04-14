@@ -29,6 +29,11 @@ public class AddGameRequestObserver implements RequestObserver{
 	
 	private final Game theGame;
 	
+	/**
+	 * constructs an AddGameRequestObserver with a controller and a game to observe
+	 * @param controller the controller acting on the game
+	 * @param theGame the game being sent through
+	 */
 	public AddGameRequestObserver(AddGameController controller, Game theGame){
 		this.controller=controller;
 		this.theGame = theGame;

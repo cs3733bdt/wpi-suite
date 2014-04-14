@@ -28,10 +28,17 @@ public class UpdateGameRequestObserver implements RequestObserver{
 	
 	private final UpdateGameController controller;
 	
+	/**
+	 * Constructs an observer for updating games controller
+	 * @param controller updateGameController to be observed
+	 */
 	public UpdateGameRequestObserver(UpdateGameController controller) {
 		this.controller = controller;
 	}
 	
+	/**
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		final ResponseModel response = iReq.getResponse();
@@ -44,12 +51,18 @@ public class UpdateGameRequestObserver implements RequestObserver{
 		System.out.println("The request to update a game has succeeded!");
 	}
 	
+	/**
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
+	 */
 	@Override
 	public void responseError(IRequest iReq) {
 		System.err.println(iReq.getResponse().getStatusMessage());
 		System.err.println("The request to update a game failed.");
 	}
 	
+	/**
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
+	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
 		System.err.println("The request to update a game failed.");

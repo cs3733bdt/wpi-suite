@@ -32,6 +32,9 @@ public class AddGameController {
 	private AddGameController(){
 	}
 	
+	/**
+	 * @return returns a new instance of an AddGameController
+	 */
 	public static AddGameController getInstance(){
 		if(instance == null){
 			instance = new AddGameController();
