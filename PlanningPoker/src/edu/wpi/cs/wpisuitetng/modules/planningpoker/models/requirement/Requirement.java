@@ -141,7 +141,7 @@ public class Requirement extends ObservableModel {
 	 * @param votes the votes to set          
 	 */
 	public void addVote(Vote vote) {
-		this.delayChange();
+		this.delayChange();		//Holds the code here until the server is finished re-populating the model
 		for(int i = 0; i < votes.size(); i++) {
 			if(vote.getUsername().equals(votes.get(i).getUsername())) {		//Check to see if this person has voted
 				votes.get(i).setVoteNumber(vote.getVoteNumber());			//If they have update their vote to the new number

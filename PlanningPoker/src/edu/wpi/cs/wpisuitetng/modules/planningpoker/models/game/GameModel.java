@@ -172,8 +172,8 @@ public class GameModel extends AbstractListModel<Game> implements
 	 */
 	public synchronized void updateGames(Game[] allGames) {
 		boolean changes = false;
-		if (!this.isUpdating()) {
 
+		if (!this.isUpdating()) {
 			serverUpdating = true;
 
 			int startingSize = getSize();
@@ -201,8 +201,8 @@ public class GameModel extends AbstractListModel<Game> implements
 									// increase the starting size
 					// aGame.deleteObservers();
 					aGame.addObserver(this); // Add an observer on this game
-					this.games.add(aGame); // Adds this game to the list of
-											// games in this list
+					games.add(aGame); // Adds this game to the list of games in
+										// this list
 					System.out.print("Updating the model");
 					System.out
 							.println("\tNEW GAME FOUND BEING ADDED TO MODEL: "

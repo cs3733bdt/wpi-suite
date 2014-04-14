@@ -60,6 +60,7 @@ public class GameUpdateRaceConditionTest {
 		public void run()
 		{
 			Requirement reqModel1 = model.getGames().get(0).getRequirements().get(0);
+			while(!updateStarted){}
 			reqModel1.addVote(vote1);
 			reqModel1.addVote(vote2);
 			reqModel1.addVote(vote3);		
@@ -95,6 +96,7 @@ public class GameUpdateRaceConditionTest {
 		}
 	}
 	
+	boolean updateStarted = false;
 	/**
 	 * This thread mimics the server by retrieving the games from the model
 	 * and updating the games in the game model.
@@ -105,10 +107,16 @@ public class GameUpdateRaceConditionTest {
 		public void run()
 		{
 			Game gamesFromModel[];
-			for(int i=0; i < 10; i++) 
+			updateStarted = true;
+			for(int i=0; i < 20; i++) 
 			{
 				j = i;
 				gamesFromModel = model.getGames().toArray(new Game[0]);
+//				try {
+//					Thread.sleep(1);
+//				} catch (InterruptedException e) {
+//					e.printStackTrace();
+//				}
 				model.updateGames(gamesFromModel);
 				
 			}
@@ -122,7 +130,7 @@ public class GameUpdateRaceConditionTest {
 	{
 		req1 = new Requirement("Req1", "Desc1");
 		project200 = new Project("project 1", "200");	
-		req1.setProject(project200);
+		//req1.setProject(project200);
 		reqList = new ArrayList<Requirement>();		
 		reqList.add(req1);
 		User Jeremy =  new User("Jeremy", "Jim", "", "generic.email", "fbtest", 144);
@@ -209,7 +217,15 @@ public class GameUpdateRaceConditionTest {
 		(new UpdateGameThread()).start();
 		
 		// Wait until at least one thread finishes running
-		while(isFinishedUpdate == false || isFinishedVotes == false){}
+		while(isFinishedUpdate == false || isFinishedVotes == false){
+			//System.out.println("isFinishedUpdate: " + isFinishedUpdate + " " + j + " , isFinishedVotes: " + isFinishedVotes);
+			try {
+				Thread.sleep(1);					//If this is not here then we hit an infinite loop
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 		
 		// Checks if correct number of votes were added to the game model
 		assertEquals(30, model.getGames().get(0).getRequirements().get(0).getVotes().size());
