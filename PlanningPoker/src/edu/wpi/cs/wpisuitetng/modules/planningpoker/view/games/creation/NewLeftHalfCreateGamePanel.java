@@ -85,8 +85,6 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane {
         
         
 		this.getViewport().add(leftView);			//Sets the view of the scrollpane to be the entire container which has everything contained within it
-		JLabel nameLabel = new JLabel("Name * ");
-		JLabel descLabel = new JLabel("Description * ");
 		
 	}
 	
