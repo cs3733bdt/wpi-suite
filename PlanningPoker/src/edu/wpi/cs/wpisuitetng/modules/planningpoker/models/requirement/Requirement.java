@@ -1,12 +1,13 @@
 /*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
+ * Copyright (c) 2014 -- WPI Suite
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Team Rolling Thunder
- ******************************************************************************/
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
 
 
@@ -56,7 +57,6 @@ public class Requirement extends ObservableModel {
 	 * 
 	 */
 	public Requirement() {
-		super();
 		name = description = "";
 		identity = UUID.randomUUID();
 		
@@ -89,13 +89,16 @@ public class Requirement extends ObservableModel {
 		return id;
 	}
 	
+	/**
+	 * @return UUID of the requirement
+	 */
 	public UUID getIdentity(){
 		return identity;
 	}
 	
 	/**
-	 * 
-	 * @param id
+	 * sets the id of the requirement
+	 * @param id value to set the id to
 	 */
 	public void setId(int id){
 		this.delayChange();
@@ -103,6 +106,10 @@ public class Requirement extends ObservableModel {
 		this.id = id;
 	}
 	
+	/**
+	 * sets the identity of the requirement
+	 * @param identity value to set the identity to
+	 */
 	public void setIdentity(UUID identity){
 		this.delayChange();
 		fromRequirementModule = false;
@@ -140,7 +147,7 @@ public class Requirement extends ObservableModel {
 	 * @param votes the votes to set          
 	 */
 	public void addVote(Vote vote) {
-		this.delayChange();
+		this.delayChange();		//Holds the code here until the server is finished re-populating the model
 		for(int i = 0; i < votes.size(); i++) {
 			if(vote.getUsername().equals(votes.get(i).getUsername())) {		//Check to see if this person has voted
 				votes.get(i).setVoteNumber(vote.getVoteNumber());			//If they have update their vote to the new number
@@ -172,6 +179,9 @@ public class Requirement extends ObservableModel {
 
 	}
 	
+	/**
+	 * sets the requirement to completed
+	 */
 	public void setComplete() {
 		this.delayChange();
 		this.complete = true;
@@ -179,6 +189,10 @@ public class Requirement extends ObservableModel {
 		this.notifyObservers();
 	}
 
+	/**
+	 * displays that the progress of the requirement
+	 * @return the number of votes, or a star if the game is complete
+	 */
 	public String displayComplete(){
 		if(this.complete){
 			return "*";
@@ -278,6 +292,9 @@ public class Requirement extends ObservableModel {
 		return n;
 	}
 	
+	/**
+	 * @return the number of votes submitted
+	 */
 	public int getVoteCount(){
 		return votes.size();
 	}
@@ -311,6 +328,6 @@ public class Requirement extends ObservableModel {
 	 * prevent race-time condition for fields setting/overriding
 	 */
 	private void delayChange(){
-		while(GameModel.getInstance().serverUpdating()){}
+		while(GameModel.getInstance().serverUpdating()){} // $codepro.audit.disable emptyWhileStatement
 	}
 }

@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards;
 
 import java.awt.Dimension;
@@ -31,7 +42,8 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	public ActiveCardsPanel(ArrayList<String> passedDeck, EstimatePanel passedPanel) {
 		this.panel = passedPanel;
 		this.deck = passedDeck;
-		this.setPreferredSize(new Dimension(800, 100));
+		
+		this.setPreferredSize(new Dimension(800, (68 * (Math.round(deck.size() / 11)) ) ) ); //800,100
 		for (int i = 0; i < (deck.size()); i++) {
 			this.JToggleButtonList.add(new CardButton(i, deck, this, panel));
 		}//idk button is part of array
@@ -59,7 +71,9 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 						JToggleButtonList.get(deck.size()-1).doClick();
 					}
 					sum = 0;
-				} catch (IOException ex) {}
+				} catch (IOException ex) {
+					ex.printStackTrace();
+				}
 			}
 		});	
 		
@@ -143,7 +157,7 @@ public int memoryArrayGetElt(int elt) {
 }
 
 @Override
-public boolean verifyField(IErrorView warningField) {
+public boolean validateField(IErrorView warningField) {
 	return false;
 }
 

@@ -1,12 +1,14 @@
 /*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
+ * Copyright (c) 2014 -- WPI Suite
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Team Rolling Thunder
- ******************************************************************************/
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
 
 import java.util.ArrayList;
@@ -48,7 +50,8 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	
 	/**
 	
-	 * @return the instance of the requirement model singleton. */
+	 * @return the instance of the requirement model singleton.
+	 */
 	public static RequirementModel getInstance()
 	{
 		if(instance == null)
@@ -75,7 +78,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 			*/
 		}
 		catch(Exception e){
-			
+			e.printStackTrace();
 		}
 	}
 	
@@ -84,7 +87,8 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * 
 	 * @param id The ID number of the requirement to be returned
 	
-	 * @return the requirement for the id or null if the requirement is not found */
+	 * @return the requirement for the id or null if the requirement is not found
+	 */
 	public Requirement getRequirement(int id)
 	{
 		Requirement temp = null;
@@ -111,13 +115,6 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 				break;
 			}
 		}
-		try {
-			/*
-			ViewEventController.getInstance().refreshTable();
-			ViewEventController.getInstance().refreshTree();
-			*/
-		}
-		catch(Exception e) {}
 	}
 
 	/**
@@ -140,7 +137,8 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * Provides the next ID number that should be used for a new requirement that is created.
 	 * 
 	
-	 * @return the next open id number */
+	 * @return the next open id number
+	 */
 	public int getNextID()
 	{
 		
@@ -178,13 +176,6 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 			iterator.remove();
 		}
 		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));
-		try{
-			/*
-			ViewEventController.getInstance().refreshTable();
-			ViewEventController.getInstance().refreshTree();
-			*/
-		}
-		catch (Exception e) {}
 	}
 	
 	/**
@@ -207,7 +198,8 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	/**
 	 * Returns the list of the requirements
 	
-	 * @return the requirements held within the requirementmodel. */
+	 * @return the requirements held within the requirementmodel.
+	 */
 	public List<Requirement> getRequirements() {
 		return requirements;
 	}

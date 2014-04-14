@@ -28,7 +28,6 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 	Icon iterationIcon;
 
 	public CustomTreeCellRenderer() {
-		super();
 		//requirementIcon = new RequirementIcon();
 		//iterationIcon = new IterationIcon();
 	}

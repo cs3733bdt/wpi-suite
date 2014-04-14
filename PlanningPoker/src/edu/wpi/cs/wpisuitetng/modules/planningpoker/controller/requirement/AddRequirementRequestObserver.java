@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
@@ -45,8 +56,9 @@ public class AddRequirementRequestObserver implements RequestObserver {
 	 * Takes an action if the response results in an error.
 	 * Specifically, outputs that the request failed.
 	 * @param iReq IRequest
-	
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(IRequest) */
+
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(IRequest)
+	 */
 	@Override
 	public void responseError(IRequest iReq) {
 		System.err.println("The request to add a requirement failed.");
@@ -58,7 +70,8 @@ public class AddRequirementRequestObserver implements RequestObserver {
 	 * @param iReq IRequest
 	 * @param exception Exception
 	
-	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(IRequest, Exception) */
+	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(IRequest, Exception)
+	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
 		System.err.println("The request to add a requirement failed.");

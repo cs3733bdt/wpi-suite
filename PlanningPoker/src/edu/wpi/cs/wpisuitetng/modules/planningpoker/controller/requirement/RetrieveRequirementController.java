@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement;
 
 import java.awt.event.ActionEvent;
@@ -30,9 +41,9 @@ public class RetrieveRequirementController implements ActionListener {
 	}
 	
 	/**
-	
 	 * @return the instance of the RetrieveRequirementsController or creates one if it does not
-	 * exist. */
+	 * exist.
+	 */
 	public static RetrieveRequirementController getInstance()
 	{
 		if(instance == null)
@@ -48,7 +59,8 @@ public class RetrieveRequirementController implements ActionListener {
 	 * update button is pressed
 	 * @param e ActionEvent
 	
-	 * @see java.awt.event.ActionListener#actionPerformed(ActionEvent) */
+	 * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Send a request to the core to save this requirement

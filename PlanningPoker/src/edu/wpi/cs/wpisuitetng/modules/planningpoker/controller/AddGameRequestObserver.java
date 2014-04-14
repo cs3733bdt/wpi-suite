@@ -10,9 +10,6 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.EmailNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.FacebookNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.SMSNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
@@ -29,9 +26,13 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  */
 public class AddGameRequestObserver implements RequestObserver{
 	private final AddGameController controller;
-	
 	private final Game theGame;
 	
+	/**
+	 * constructs an AddGameRequestObserver with a controller and a game to observe
+	 * @param controller the controller acting on the game
+	 * @param theGame the game being sent through
+	 */
 	public AddGameRequestObserver(AddGameController controller, Game theGame){
 		this.controller=controller;
 		this.theGame = theGame;
@@ -50,10 +51,20 @@ public class AddGameRequestObserver implements RequestObserver{
 		
 		// Parse the name of the game out of the response body
 		//******need to modified to parse the creator from the game model at the same time******
-		final Game game = Game.fromJSON(response.getBody());
+		Game game = Game.fromJSON(response.getBody());
 		
-		//Send out email, text, and facebook notifications for game creation
-		game.sendNotifications();
+		if (!game.isNotifiedOfCreation() && game.isActive()) {
+			// Send out email, text, and facebook notifications for game creation
+			game.sendNotifications();
+			game.setNotifiedOfCreation(true);
+			//GameModel.getInstance().update(game, true);
+		} else if (!game.isNotifiedOfCompletion() && game.isComplete()) {
+			// Send out email, text, and facebook notifications for game completion
+			// TODO make a different method for sending completion text
+			game.sendNotifications();
+			game.setNotifiedOfCompletion(true);
+			//GameModel.getInstance().update(game, true);
+		}
 		
 		System.out.println("The request to add a game has succeeded!");
 	}

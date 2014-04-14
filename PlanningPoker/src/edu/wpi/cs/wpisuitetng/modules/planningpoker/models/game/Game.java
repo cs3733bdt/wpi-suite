@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game;
 
 import java.text.DateFormat;
@@ -9,7 +20,6 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.FacebookNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.SMSNotification;
@@ -27,39 +37,30 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	
 	/** This is the best way to keep games unique so that you are not relying upon data that can change */
 	private UUID identity;
-	
+	/** The name of the game */
 	private String name;
-	
+	/** The description of the game */
 	private String description;
-	
+	/** True if the game does of a time limit */
 	private boolean hasTimeLimit;
-	
+	/** True if the game uses cards, false if it uses text input */
 	private boolean usesCards;
-	
+	/** The date and time of the game creation */
 	private Date creationTime;
-	
+	/** The username of the game creator */
 	private String creator;
-	
+	/** The list of requirements that need to be estimated */
 	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
-	
+	/** True if the game is complete, false otherwise */
 	private boolean complete;
-	
+	/** True if the game is active and people can vote, false if people can't vote */
 	private boolean active;
-	
+	/** The date and time that the game ended/completed */
 	private Date endDate;
-	
-	/*
-	 * dstapply
-	 * 
-	 * We probably want to keep track of:
-	 * 	game creator
-	 * 	list of game players
-	 * 	moderator
-	 * 	list of estimates players can choose
-	 * 	player-estimate pairs
-	 * 	active?
-	 * 
-	 */
+	/** True if the users of the game have been notified of game creation */
+	private boolean notifiedOfCreation;
+	/** True if the users of the game have been notified of game complete */
+	private boolean notifiedOfCompletion;
 	
 	/**
 	 * Copies all of the values from the given Game to this Game.
@@ -169,6 +170,18 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			wasChanged = true;
 		}
 		
+		if(this.notifiedOfCreation != toCopyFrom.notifiedOfCreation) {
+			this.notifiedOfCreation = toCopyFrom.notifiedOfCreation;
+			needsUpdate = true;
+			wasChanged = true;
+		}
+		
+		if(this.notifiedOfCompletion != toCopyFrom.notifiedOfCompletion) {
+			this.notifiedOfCompletion = toCopyFrom.notifiedOfCompletion;
+			needsUpdate = true;
+			wasChanged = true;
+		}
+		
 		if(this.identity.equals(toCopyFrom.identity)){
 			needsUpdate = false;
 		} else {
@@ -191,7 +204,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * 
 	 */
 	public Game(){
-		super();
 		name = "";
 		description = "";
 		creator = "";
@@ -199,6 +211,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		endDate = new Date();
 		hasTimeLimit = false;
 		complete = false;
+		notifiedOfCreation = false;
+		notifiedOfCompletion = false;
 		identity = UUID.randomUUID();
 	}
 	
@@ -217,7 +231,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this.description = description;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
-		this.creator = ConfigManager.getInstance().getConfig().getUserName();
 		for(Requirement req : this.requirements){
 			req.addObserver(this);
 			req.setProject(this.getProject());
@@ -248,6 +261,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setIdentifier(UUID identifier){
 		this.delayChange();
+		this.setChanged();
 		this.identity = identifier;
 	}
 	
@@ -268,10 +282,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setName(String newName){
-		this.delayChange();
-		if(this.name != newName){
-			this.name = newName;
+		if(!this.name.equals(newName)){
 			this.setChanged();
+			this.delayChange();
+			this.name = newName;
 		}
 	}
 	
@@ -288,10 +302,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @return true if the game is complete
 	 */
 	public void setComplete(){
-		this.delayChange();
-		if(this.complete != true){
-			this.complete = true;
+		if(!complete ){
 			this.setChanged();
+			this.delayChange();
+			this.complete = true;
 		}
 	}
 	
@@ -303,11 +317,15 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return usesCards;
 	}
 	
+	/**
+	 * displays a given set of cards
+	 * @param newUsesCards cards to be displayed
+	 */
 	public void setUsesCards(boolean newUsesCards){
-		this.delayChange();
 		if(this.usesCards != newUsesCards){
-			this.usesCards = newUsesCards;
 			this.setChanged();
+			this.delayChange();
+			this.usesCards = newUsesCards;
 		}
 	}
 	
@@ -319,11 +337,15 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return description;
 	}
 	
+	/**
+	 * sets the description box to a certain value to be displayed
+	 * @param newDescription new value for the description boxS
+	 */
 	public void setDescription(String newDescription){
-		this.delayChange();
-		if(this.description != newDescription){
-			this.description = newDescription;
+		if(!this.description.equals(newDescription)){
 			this.setChanged();
+			this.delayChange();
+			this.description = newDescription;
 		}
 	}
 	
@@ -337,13 +359,13 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setRequirements(ArrayList<Requirement> newReqs){
-		this.delayChange();
 		if(this.requirements != newReqs){
+			this.setChanged();
+			this.delayChange();
 			this.requirements = newReqs;
 			for(Requirement req : this.requirements){
 				req.addObserver(this);
 			}
-			this.setChanged();
 		}
 	}
 	
@@ -360,9 +382,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @param creator the creator's username
 	 */
 	public void setCreator(String creator) {
-		if(this.creator != creator){
-			this.creator = creator;
+		if(!this.creator.equals(creator)){
 			this.setChanged();
+			this.delayChange();
+			this.creator = creator;
 		}
 	}
 	
@@ -393,11 +416,15 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return this.active;
 	}
 	
+	/**
+	 * sets whether the game is active
+	 * @param newActive true if the game is active, false if it is inactive
+	 */
 	public void setActive(boolean newActive){
-		this.delayChange();
 		if(this.active != newActive){
-			this.active = newActive;
 			this.setChanged();
+			this.delayChange();
+			this.active = newActive;
 		}
 	}
 	
@@ -481,8 +508,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	
 	public void setEndDate(Date endDate) {
 		if(this.endDate != endDate){
-			this.endDate = endDate;
 			this.setChanged();
+			this.endDate = endDate;
 		}
 	}
 	
@@ -492,11 +519,46 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @return returns true if the user being checked is the creator, returns false otherwise
 	 */
 	public boolean isCreator(String user) {
-		if(this.creator.equals(user)) {
-			return true;
+		return this.creator.equals(user);
+	}
+	
+	/**
+	 * Checks if users have been notified after game creation
+	 * @return True if users have been notified after game creation
+	 */
+	public boolean isNotifiedOfCreation() {
+		return notifiedOfCreation;
+	}
+
+	/**
+	 * Sets notifiedOfCreation to value of param
+	 * @param notifiedOfCreation value set
+	 */
+	public void setNotifiedOfCreation(boolean notifiedOfCreation) {
+		if (this.notifiedOfCreation != notifiedOfCreation) {
+			this.notifiedOfCreation = notifiedOfCreation;
+			this.setChanged();
+			this.delayChange();
 		}
-		else {
-			return false;
+	}
+
+	/**
+	 * Checks if the users have been notified of a game completion
+	 * @return True if the users have been notified of the game completion
+	 */
+	public boolean isNotifiedOfCompletion() {
+		return notifiedOfCompletion;
+	}
+
+	/**
+	 * Sets notifiedOfCompletion to value of param
+	 * @param notifiedOfCompletion value set
+	 */
+	public void setNotifiedOfCompletion(boolean notifiedOfCompletion) {
+		if (this.notifiedOfCompletion != notifiedOfCompletion) {
+			this.notifiedOfCompletion = notifiedOfCompletion;
+			this.setChanged();
+			this.delayChange();
 		}
 	}
 
@@ -505,7 +567,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * prevent race-time condition for fields setting/overriding
 	 */
 	private void delayChange(){
-		while(GameModel.getInstance().serverUpdating()){}
+		while(GameModel.getInstance().serverUpdating()){} // $codepro.audit.disable emptyWhileStatement
 	}
 	
 	
@@ -526,7 +588,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		{
 			if(requirement.hasChanged())
 				return true;
-			
 		}
 		return false;
 	}
