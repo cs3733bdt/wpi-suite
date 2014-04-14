@@ -1,12 +1,13 @@
 /*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
+ * Copyright (c) 2014 -- WPI Suite
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Team Rolling Thunder
- ******************************************************************************/
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
 
 
@@ -140,7 +141,7 @@ public class Requirement extends ObservableModel {
 	 * @param votes the votes to set          
 	 */
 	public void addVote(Vote vote) {
-		this.delayChange();
+		this.delayChange();		//Holds the code here until the server is finished re-populating the model
 		for(int i = 0; i < votes.size(); i++) {
 			if(vote.getUsername().equals(votes.get(i).getUsername())) {		//Check to see if this person has voted
 				votes.get(i).setVoteNumber(vote.getVoteNumber());			//If they have update their vote to the new number
@@ -311,6 +312,6 @@ public class Requirement extends ObservableModel {
 	 * prevent race-time condition for fields setting/overriding
 	 */
 	private void delayChange(){
-		while(GameModel.getInstance().serverUpdating()){}
+		while(GameModel.getInstance().serverUpdating()){} // $codepro.audit.disable emptyWhileStatement
 	}
 }

@@ -1,27 +1,14 @@
-/*
- * Copyright (c) 1994, 2004, Oracle and/or its affiliates. All rights reserved.
- * ORACLE PROPRIETARY/CONFIDENTIAL. Use is subject to license terms.
+// $codepro.audit.disable transientFieldInNonSerializable
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
  *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
  *
- * This class was modified to be used with the Planning Poker Module for WPISuite
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- *
- */
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers;
 
@@ -65,8 +52,8 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
  */
 public abstract class ObservableModel extends AbstractModel {
 	//These datatypes were made transient so that they are not parsed by the gson converter
-    private transient boolean changed = false;
-    private transient Vector<AbstractModelObserver> obs;
+    private transient boolean changed = false; // $codepro.audit.disable transientFieldInNonSerializable
+    private transient Vector<AbstractModelObserver> obs; // $codepro.audit.disable transientFieldInNonSerializable
 
     /** Construct an Observable with zero Observers. */
 

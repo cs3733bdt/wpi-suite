@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game;
 
 import java.text.DateFormat;
@@ -9,7 +20,6 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.FacebookNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.SMSNotification;
@@ -252,6 +262,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setIdentifier(UUID identifier){
 		this.delayChange();
+		this.setChanged();
 		this.identity = identifier;
 	}
 	
@@ -272,10 +283,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setName(String newName){
-		this.delayChange();
-		if(this.name != newName){
-			this.name = newName;
+		if(!this.name.equals(newName)){
 			this.setChanged();
+			this.delayChange();
+			this.name = newName;
 		}
 	}
 	
@@ -292,10 +303,11 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @return true if the game is complete
 	 */
 	public void setComplete(){
-		this.delayChange();
-		if(this.complete != true){
-			this.complete = true;
+		
+		if(!complete ){
 			this.setChanged();
+			this.delayChange();
+			this.complete = true;
 		}
 	}
 	
@@ -308,10 +320,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setUsesCards(boolean newUsesCards){
-		this.delayChange();
 		if(this.usesCards != newUsesCards){
-			this.usesCards = newUsesCards;
 			this.setChanged();
+			this.delayChange();
+			this.usesCards = newUsesCards;
 		}
 	}
 	
@@ -324,10 +336,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setDescription(String newDescription){
-		this.delayChange();
-		if(this.description != newDescription){
-			this.description = newDescription;
+		if(!this.description.equals(newDescription)){
 			this.setChanged();
+			this.delayChange();
+			this.description = newDescription;
 		}
 	}
 	
@@ -341,13 +353,13 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setRequirements(ArrayList<Requirement> newReqs){
-		this.delayChange();
 		if(this.requirements != newReqs){
+			this.setChanged();
+			this.delayChange();
 			this.requirements = newReqs;
 			for(Requirement req : this.requirements){
 				req.addObserver(this);
 			}
-			this.setChanged();
 		}
 	}
 	
@@ -364,9 +376,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @param creator the creator's username
 	 */
 	public void setCreator(String creator) {
-		if(this.creator != creator){
-			this.creator = creator;
+		if(!this.creator.equals(creator)){
 			this.setChanged();
+			this.delayChange();
+			this.creator = creator;
 		}
 	}
 	
@@ -398,10 +411,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setActive(boolean newActive){
-		this.delayChange();
 		if(this.active != newActive){
-			this.active = newActive;
 			this.setChanged();
+			this.delayChange();
+			this.active = newActive;
 		}
 	}
 	
@@ -485,8 +498,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	
 	public void setEndDate(Date endDate) {
 		if(this.endDate != endDate){
-			this.endDate = endDate;
 			this.setChanged();
+			this.endDate = endDate;
 		}
 	}
 	
@@ -496,12 +509,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @return returns true if the user being checked is the creator, returns false otherwise
 	 */
 	public boolean isCreator(String user) {
-		if(this.creator.equals(user)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return this.creator.equals(user);
 	}
 	
 	/**
@@ -547,7 +555,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * prevent race-time condition for fields setting/overriding
 	 */
 	private void delayChange(){
-		while(GameModel.getInstance().serverUpdating()){}
+		while(GameModel.getInstance().serverUpdating()){} // $codepro.audit.disable emptyWhileStatement
 	}
 	
 	

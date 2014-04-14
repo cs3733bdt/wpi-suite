@@ -52,7 +52,6 @@ public class GetGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-	    Game[] errorGame = {new Game()};
-	    controller.receivedGames(errorGame);
+	    System.err.println("Failed to get games.");
 	}
 }

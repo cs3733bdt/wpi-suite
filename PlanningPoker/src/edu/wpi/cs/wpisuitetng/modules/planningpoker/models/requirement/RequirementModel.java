@@ -1,12 +1,14 @@
 /*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
+ * Copyright (c) 2014 -- WPI Suite
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Team Rolling Thunder
- ******************************************************************************/
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
 
 import java.util.ArrayList;
@@ -75,7 +77,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 			*/
 		}
 		catch(Exception e){
-			
+			e.printStackTrace();
 		}
 	}
 	
@@ -111,13 +113,6 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 				break;
 			}
 		}
-		try {
-			/*
-			ViewEventController.getInstance().refreshTable();
-			ViewEventController.getInstance().refreshTree();
-			*/
-		}
-		catch(Exception e) {}
 	}
 
 	/**
@@ -178,13 +173,6 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 			iterator.remove();
 		}
 		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));
-		try{
-			/*
-			ViewEventController.getInstance().refreshTable();
-			ViewEventController.getInstance().refreshTree();
-			*/
-		}
-		catch (Exception e) {}
 	}
 	
 	/**

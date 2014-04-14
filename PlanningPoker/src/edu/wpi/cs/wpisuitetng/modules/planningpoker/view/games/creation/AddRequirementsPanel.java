@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
 import java.awt.Container;
@@ -55,8 +66,8 @@ public class AddRequirementsPanel extends JPanel {
 		 */
 		createReqPanel.setLayout(new GridBagLayout());
 		createReqPanel.setBorder(defaultBorder);
-		c.insets = new Insets(0, 0, 0 ,0);
-		c.ipadx = 0;
+		//c.insets = new Insets(0, 0, 0 ,0);
+		//c.ipadx = 0;
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 2;
@@ -68,8 +79,8 @@ public class AddRequirementsPanel extends JPanel {
 		 */
 		importReqPanel.setLayout(new GridBagLayout());
 		importReqPanel.setBorder(defaultBorder);
-		c.insets = new Insets(0, 0, 0 ,0);
-		c.ipadx = 0;
+		//c.insets = new Insets(0, 0, 0 ,0);
+		//c.ipadx = 0;
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 2;
@@ -78,12 +89,11 @@ public class AddRequirementsPanel extends JPanel {
 		
 		/**
 		 * panel for viewing the current requirements added to the game
-		 * CURRENTLY UNADDED BY COMMENTED LINE
 		 */
 		currentReqsPanel.setLayout(new GridBagLayout());
 		currentReqsPanel.setBorder(defaultBorder);
-		c.insets = new Insets(0, 0, 0 ,0);
-		c.ipadx = 0;
+		//c.insets = new Insets(0, 0, 0 ,0);
+		//c.ipadx = 0;
 		c.gridwidth = 2;
 		c.gridx = 0;
 		c.gridy = 2;
@@ -110,7 +120,7 @@ public class AddRequirementsPanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 0;
 		c.gridwidth = 2;
-		c.anchor = GridBagConstraints.CENTER;
+		//c.anchor = GridBagConstraints.CENTER;
 		createReqPanel.add(createReq, c);
 		
 		/**
@@ -120,7 +130,7 @@ public class AddRequirementsPanel extends JPanel {
 		c.gridwidth = 1;
 		c.gridx = 0;
 		c.gridy = 1;
-		c.anchor = GridBagConstraints.CENTER;
+		//c.anchor = GridBagConstraints.CENTER;
 		createReqPanel.add(reqName, c);
 		
 		/**
@@ -129,7 +139,7 @@ public class AddRequirementsPanel extends JPanel {
 		c.gridx = 1;
 		c.gridy = 1;
 		//nameArea.setPreferredSize(new Dimension(75, 25));
-		nameArea.setMinimumSize(new Dimension(75, 25));
+		//nameArea.setMinimumSize(new Dimension(75, 25));
 		createReqPanel.add(nameArea, c);
 		
 		/**
@@ -155,8 +165,8 @@ public class AddRequirementsPanel extends JPanel {
 		c.gridx = 0;
 		c.gridy = 3;
 		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		descPane.setMinimumSize(new Dimension(500, 100));
-		descPane.setPreferredSize(new Dimension(500, 100));
+		//descPane.setMinimumSize(new Dimension(500, 100));
+		descPane.setPreferredSize(new Dimension(500, 105));
 		createReqPanel.add(descPane, c);
 		
 		/**

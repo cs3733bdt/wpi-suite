@@ -1,9 +1,16 @@
-/**
- * 
- */
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
@@ -11,7 +18,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
@@ -19,6 +25,7 @@ import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ClosableTabComponent;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 
 /**
  * This class sets the main view when the user goes to the PlanningPoker tab 
@@ -29,7 +36,7 @@ public class TabbedView extends JTabbedPane {
 	private boolean dragging = false;
 	private Image tabImage = null;
 	private int draggedTabIndex = 0;
-	private GamesTreePanel gamesList = new GamesTreePanel();
+	private GameTree gamesList = new GameTree();
 	private InitialView initView = new InitialView();
 	
 	private final JPopupMenu popup = new JPopupMenu();
@@ -42,7 +49,8 @@ public class TabbedView extends JTabbedPane {
 	public TabbedView(){
 		
 		this.addTab("Overview", initView);
-	    this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
+	    //this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
+		this.setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
 	    
 	    closeAll.addActionListener(new ActionListener()
 		{

@@ -9,20 +9,17 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
-import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,19 +30,14 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 /**
- * Sets up the panel for the active games screen, which
- *         has the list of all active games in which the user is playing. When
- *         you click on a game, the bottom section of the screen will display
- *         more details about that specific game.
- * @author Jeffrey Signore
+ * @author TomPaolillo
  */
-public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserver{
+public class EndGamePanel extends JScrollPane implements AbstractModelObserver{
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
 	private Game active;
@@ -85,8 +77,6 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 	
 	private boolean isEstimatePanelCreated = false;
 	
-	JButton endGameButton;
-	
 	/**
 	 * Creates a scrollPane to contain everything
 	 */
@@ -94,7 +84,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 	
 	private JPanel blankPanel2;
 
-	public ActiveGamesPanel(final Game game) {
+	public EndGamePanel(final Game game) {
 		//super(new GridBagLayout());
 	
 		game.addObserver(this); //Makes this the observer for the game
@@ -131,24 +121,6 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		c.weightx = 1;
 		c.weighty = 1;
 		topHalfPanel.add(gameName, c);
-		
-		endGameButton = new JButton("End Game");
-		endGameButton.setMaximumSize(new Dimension(100,50));
-		endGameButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				endGameButtonPressed();
-			}
-		});
-		c.gridx = 2;
-		c.gridy = 0;
-		c.weightx = 0;
-		c.weighty = 1;
-		topHalfPanel.add(endGameButton, c);
-		endGameButton.setVisible(false);
-		if(active.isCreator(ConfigManager.getConfig().getUserName())){
-			endGameButton.setVisible(true);
-		}
 		
 		/**
 		 * Blank Panel for formatting purposes
@@ -210,7 +182,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		 */
 		String[] columnNames = { "Requirement", "Description", "Complete"};
 		Object[][] data = {};
-		final ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
+		final EndGameTable table = new EndGameTable(data, columnNames);
 		table.getColumnModel().getColumn(0).setMinWidth(300);
 		table.getColumnModel().getColumn(1).setMinWidth(300);
 		table.getColumnModel().getColumn(2).setMinWidth(50);
@@ -239,11 +211,11 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 						if (selected.equals(game.getRequirements().get(i).getName())
 								|| selected.equals(game.getRequirements().get(i).getDescription())) {
 							if(isEstimatePanelCreated){
-								removeEstimatePanel();
-								updateEstimatePanel(game, game.getRequirements().get(i));
+								removeStatisticsPanel();
+								updateStatisticsPanel(game, game.getRequirements().get(i));
 							}
 							else{
-								updateEstimatePanel(game, game.getRequirements().get(i));
+								updateStatisticsPanel(game, game.getRequirements().get(i));
 								isEstimatePanelCreated = true;
 							}
 						}
@@ -302,17 +274,14 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		return active;
 	}
 	
-	public void updateEstimatePanel(Game game, Requirement requirement){
+	public void updateStatisticsPanel(Game game, Requirement requirement){
 		blankPanel2.setVisible(false);
-		ArrayList<String> deck = new ArrayList<String>(); //this line makes it so the default deck is selected
-		rightPanel.add(new EstimatePanel(game, requirement, deck));
+		rightPanel.add(new StatisticsPanel(game, requirement));
 		rightPanel.revalidate();
 		this.revalidate();
-		//activeGameScrollPane.repaint();
-		//this.repaint();
 	}
 	
-	public void removeEstimatePanel(){
+	public void removeStatisticsPanel(){
 		blankPanel2.setVisible(false);
 		rightPanel.remove(1);
 		rightPanel.repaint();
@@ -343,7 +312,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 				"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
 				
         //Set up the content pane.
-        frame.add(new ActiveGamesPanel(new Game("name", "desc", reqs, false, true)));
+        frame.add(new EndGamePanel(new Game("name", "desc", reqs, false, true)));
         frame.setSize(400, 400);
 
         //Display the window.
