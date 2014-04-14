@@ -40,6 +40,10 @@ public class FacebookNotification {
 	private final String username = "wpi.suite.bdt.noreply@gmail.com";
 	private final String password = "bobbytablesfb";
 	
+	/**
+	 * Constructs an Facebook notification for a given game
+	 * @param g The game to notify users about.
+	 */
 	public FacebookNotification(Game g) {
 		this.g = g;
 	}

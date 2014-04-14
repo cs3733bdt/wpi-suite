@@ -50,7 +50,8 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	
 	/**
 	
-	 * @return the instance of the requirement model singleton. */
+	 * @return the instance of the requirement model singleton.
+	 */
 	public static RequirementModel getInstance()
 	{
 		if(instance == null)
@@ -86,7 +87,8 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * 
 	 * @param id The ID number of the requirement to be returned
 	
-	 * @return the requirement for the id or null if the requirement is not found */
+	 * @return the requirement for the id or null if the requirement is not found
+	 */
 	public Requirement getRequirement(int id)
 	{
 		Requirement temp = null;
@@ -135,7 +137,8 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * Provides the next ID number that should be used for a new requirement that is created.
 	 * 
 	
-	 * @return the next open id number */
+	 * @return the next open id number
+	 */
 	public int getNextID()
 	{
 		
@@ -195,7 +198,8 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	/**
 	 * Returns the list of the requirements
 	
-	 * @return the requirements held within the requirementmodel. */
+	 * @return the requirements held within the requirementmodel.
+	 */
 	public List<Requirement> getRequirements() {
 		return requirements;
 	}

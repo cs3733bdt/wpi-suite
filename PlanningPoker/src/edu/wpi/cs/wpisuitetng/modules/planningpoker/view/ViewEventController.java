@@ -185,6 +185,9 @@ public class ViewEventController {
 		
 	}
 	
+	/**
+	 * TODO: add documentation for this funciton
+	 */
 	public void viewEndGame(Game game){
 		//Attempt to find the game in the active panels list
 		for(EndGamePanel gameSearch : listOfEndGamePanels){

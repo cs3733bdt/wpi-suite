@@ -50,6 +50,10 @@ public class SMSNotification {
 			this.g = g;
 		}
 		
+		/**
+		 * Creates a connection with SMS servers
+		 * @return connection created
+		 */
 		public Session login() {
 			// Get system properties
 			Properties properties = new Properties();

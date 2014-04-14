@@ -317,6 +317,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return usesCards;
 	}
 	
+	/**
+	 * displays a given set of cards
+	 * @param newUsesCards cards to be displayed
+	 */
 	public void setUsesCards(boolean newUsesCards){
 		if(this.usesCards != newUsesCards){
 			this.setChanged();
@@ -333,6 +337,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return description;
 	}
 	
+	/**
+	 * sets the description box to a certain value to be displayed
+	 * @param newDescription new value for the description boxS
+	 */
 	public void setDescription(String newDescription){
 		if(!this.description.equals(newDescription)){
 			this.setChanged();
@@ -408,6 +416,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return this.active;
 	}
 	
+	/**
+	 * sets whether the game is active
+	 * @param newActive true if the game is active, false if it is inactive
+	 */
 	public void setActive(boolean newActive){
 		if(this.active != newActive){
 			this.setChanged();
