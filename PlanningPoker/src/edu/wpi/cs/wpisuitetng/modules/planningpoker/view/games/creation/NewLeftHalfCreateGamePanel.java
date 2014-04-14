@@ -19,5 +19,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane {
 		
 		JLabel nameLabel = new JLabel("Name * ");
 		JLabel descLabel = new JLabel("Description * ");
+		
+		
 	}
 }
