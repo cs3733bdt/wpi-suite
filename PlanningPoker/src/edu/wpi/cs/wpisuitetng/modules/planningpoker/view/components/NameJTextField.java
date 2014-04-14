@@ -32,11 +32,10 @@ public class NameJTextField extends JTextField implements IDataField {
 	}
 
 	public NameJTextField() {
-		super();
 	}
 
 	@Override
-	public boolean verifyField(IErrorView errorField) {
+	public boolean validateField(IErrorView errorField) {
 		boolean isNameValid = false;
 		
 		if (this.getText().length() >= 100) {

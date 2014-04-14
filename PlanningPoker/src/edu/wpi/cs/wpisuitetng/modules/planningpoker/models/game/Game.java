@@ -204,7 +204,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * 
 	 */
 	public Game(){
-		super();
 		name = "";
 		description = "";
 		creator = "";

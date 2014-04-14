@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 
 public class ErrorLabel extends JLabel implements IErrorView {
 	public ErrorLabel(){
-		super();
 	}
 
 }

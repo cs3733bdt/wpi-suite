@@ -462,7 +462,7 @@ public class CreateGamePanel extends JScrollPane {
 		boolean areRequirementsSelected = false;
 		boolean isEndDateValid = false;
 		
-		isNameValid = getBoxName().verifyField(errorField);
+		isNameValid = getBoxName().validateField(errorField);
 		
 		//BEGIN DESCRIPTION BOX VALDATION
 		if(getBoxDescription().getText().length() <= 0){
