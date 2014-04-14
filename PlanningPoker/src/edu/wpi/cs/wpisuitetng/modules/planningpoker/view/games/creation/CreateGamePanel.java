@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
 import java.awt.Color;
@@ -451,7 +462,7 @@ public class CreateGamePanel extends JScrollPane {
 		boolean areRequirementsSelected = false;
 		boolean isEndDateValid = false;
 		
-		isNameValid = getBoxName().verifyField(errorField);
+		isNameValid = getBoxName().validateField(errorField);
 		
 		//BEGIN DESCRIPTION BOX VALDATION
 		if(getBoxDescription().getText().length() <= 0){
@@ -510,7 +521,6 @@ public class CreateGamePanel extends JScrollPane {
 		}
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
-		
 	}
 	
 	/**

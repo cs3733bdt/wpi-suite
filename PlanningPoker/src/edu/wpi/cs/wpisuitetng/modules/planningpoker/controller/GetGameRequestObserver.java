@@ -22,6 +22,10 @@ public class GetGameRequestObserver implements RequestObserver {
 
 	private GetGameController controller;
 	
+	/**
+	 * Constructs an observer for requesting games
+	 * @param controller getGameController to be observed
+	 */
 	public GetGameRequestObserver(GetGameController controller) {
 		this.controller = controller;
 	}
@@ -46,13 +50,12 @@ public class GetGameRequestObserver implements RequestObserver {
 	}
 
 	/**
-	 * Put an error message in the PostBoardPanel if the request fails.
+	 * Put an error message in the PlanningPoker panel if the request fails.
 	 * 
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-	    Game[] errorGame = {new Game()};
-	    controller.receivedGames(errorGame);
+	    System.err.println("Failed to get games.");
 	}
 }

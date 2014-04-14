@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 import java.awt.Color;
@@ -176,11 +187,23 @@ public class EstimatePanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 6;
 		c.gridwidth = 2;
+		
 		cardsPanel = new ActiveCardsPanel(deck, this);
-		overviewPanel.add(cardsPanel, c);
-		this.JToggleButtonList = cardsPanel.getCardButtonArray();
-		System.out.println("Estimate Panel output: card button item 3:" + JToggleButtonList.get(2));
-		/**
+		
+		//added below
+		if (this.getGame().doesUseCards()) {
+			JScrollPane cardPane = new JScrollPane(cardsPanel);
+			cardPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			cardPane.setPreferredSize(new Dimension(850, 110));
+			overviewPanel.add(cardPane,c);
+		}
+		else {
+			overviewPanel.add(cardsPanel, c);
+		}
+		
+		//added above
+		
+		this.JToggleButtonList = cardsPanel.getCardButtonArray();/**
 		 * The text area where the user types their estimate
 		 */
 		estText.setText("Estimate Here");
@@ -260,7 +283,6 @@ public class EstimatePanel extends JPanel{
 		errorField = new JLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setPreferredSize(new Dimension(300, 25));
-		errorField.setForeground(Color.RED);
 		/*
 		 * remove if problems
 		 */
@@ -393,7 +415,7 @@ public class EstimatePanel extends JPanel{
 				getEstimateText().setBorder(errorBorder);
 			}
 			displayError("An estimation is required before submission");
-		} else if(parsable == true){
+		} else if(parsable){
 			if(Integer.parseInt(getEstimateText().getText()) < 0){
 				isEstimateValid = false;
 				if (warn) {
@@ -437,12 +459,17 @@ public class EstimatePanel extends JPanel{
 		ViewEventController.getInstance().refreshGameTree();
 		
 		getEstimateText().setBorder(defaultBorder);
-		errorField.setForeground(Color.BLUE);
-		displayError("   Vote Successful!");
+		displaySuccess("   Vote Successful!");
 	}
 
-	public void displayError(String error) {
-		errorField.setText(error);
+	public void displayError(String errorString) {
+		errorField.setForeground(Color.RED);
+		errorField.setText(errorString);
+	}
+	
+	public void displaySuccess(String successString){
+		errorField.setForeground(Color.BLUE);
+		errorField.setText(successString);
 	}
 	
 }

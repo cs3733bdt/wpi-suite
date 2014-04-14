@@ -9,7 +9,9 @@ edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement
 edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active
+edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons
+edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation
-edu.wpi.cs.wpisuitetng.modules.planningpoker.view.overview
+edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end

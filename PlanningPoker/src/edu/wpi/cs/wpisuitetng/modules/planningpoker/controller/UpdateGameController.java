@@ -1,4 +1,13 @@
-
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
@@ -23,6 +32,9 @@ public class UpdateGameController {
 		observer = new UpdateGameRequestObserver(this);
 	}
 	
+	/**
+	 * @return a new instance of an UpdateGameController
+	 */
 	public static UpdateGameController getInstance() {
 		if(instance == null) {
 			instance = new UpdateGameController();
@@ -30,7 +42,11 @@ public class UpdateGameController {
 		return instance;
 	}
 	
-	//Need model for game data
+	/**
+	 * updates a game with the same UUID on server
+	 * @param newGame Game to be updated
+	 * TODO: Need model for game data
+	 */
 	public void updateGame(Game newGame) {
 		System.out.println("Updating " + newGame.getName() + " to server");
 		Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.POST);
