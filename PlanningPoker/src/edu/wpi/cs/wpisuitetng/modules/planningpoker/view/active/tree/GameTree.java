@@ -87,11 +87,10 @@ public class GameTree extends JScrollPane implements MouseListener{
 		gameTree.setToggleClickCount(0);
 		gameTree.addMouseListener(this);
 		
-		int width = 150;
-		gameTree.setPreferredSize(new Dimension(width , 10 + gameList.size()*21));
+		gameTree.setPreferredSize(new Dimension(250 , 10 + gameList.size()*21));
 		
 		JScrollPane gameTreeScroll = new JScrollPane(gameTree);
-		gameTreeScroll.setPreferredSize(new Dimension(width + 25, 590));
+		gameTreeScroll.setPreferredSize(new Dimension(150 + 25, 590));
 		
 		viewPort = new JPanel();
 		
@@ -131,7 +130,9 @@ public class GameTree extends JScrollPane implements MouseListener{
 		return list;
 	}
 
-
+	public JTree getGameTree(){
+		return this.gameTree;
+	}
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -202,7 +203,9 @@ public class GameTree extends JScrollPane implements MouseListener{
 		// TODO Auto-generated method stub
 		
 	}
+	
 }
+
 
 
 /**
