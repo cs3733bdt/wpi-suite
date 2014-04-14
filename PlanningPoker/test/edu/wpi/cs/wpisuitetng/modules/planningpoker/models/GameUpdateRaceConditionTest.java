@@ -1,6 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
 
@@ -10,10 +10,9 @@ import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
 
 /**
  * This test checks whether if adding votes can be successfully done while the game model
@@ -60,7 +59,7 @@ public class GameUpdateRaceConditionTest {
 		public void run()
 		{
 			Requirement reqModel1 = model.getGames().get(0).getRequirements().get(0);
-			while(!updateStarted){}
+			while(!updateStarted){} // $codepro.audit.disable emptyWhileStatement
 			reqModel1.addVote(vote1);
 			reqModel1.addVote(vote2);
 			reqModel1.addVote(vote3);		
@@ -217,7 +216,7 @@ public class GameUpdateRaceConditionTest {
 		(new UpdateGameThread()).start();
 		
 		// Wait until at least one thread finishes running
-		while(isFinishedUpdate == false || isFinishedVotes == false){
+		while(!isFinishedUpdate || !isFinishedVotes){
 			//System.out.println("isFinishedUpdate: " + isFinishedUpdate + " " + j + " , isFinishedVotes: " + isFinishedVotes);
 			try {
 				Thread.sleep(1);					//If this is not here then we hit an infinite loop

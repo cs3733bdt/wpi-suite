@@ -43,7 +43,9 @@ public class CardButton extends JToggleButton implements Accessible {
 			try {
 				Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
 				this.setIcon(new ImageIcon(frontImg));
-			} catch (IOException ex) {}
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
 			//Set the Button's tooltiptext and position it correctly
 			this.setText(deck.get(cardNum));
 			this.setToolTipText("Add " + buttonNum + " to the total");

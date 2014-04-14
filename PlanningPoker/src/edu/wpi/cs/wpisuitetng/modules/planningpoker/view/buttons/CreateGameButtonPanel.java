@@ -52,7 +52,9 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));
 	        this.createGameIcon.setIcon(new ImageIcon(img));
 		    
-		} catch (IOException ex) {}		
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}		
 		
 		// the action listener for the Create Game Icon
 		createGameIcon.addActionListener(new ActionListener() {

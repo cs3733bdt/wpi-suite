@@ -210,7 +210,7 @@ public class EndGamePanel extends JScrollPane implements AbstractModelObserver{
 					for (int i = 0; i < game.getRequirements().size(); i++) {
 						if (selected.equals(game.getRequirements().get(i).getName())
 								|| selected.equals(game.getRequirements().get(i).getDescription())) {
-							if(isEstimatePanelCreated == true){
+							if(isEstimatePanelCreated){
 								removeStatisticsPanel();
 								updateStatisticsPanel(game, game.getRequirements().get(i));
 							}

@@ -70,7 +70,7 @@ public class GameEntityManager implements EntityManager<Game> {
 			throw new NotFoundException();
 		}
 		
-		if (id == "") {
+		if (id.equals("")) {
 			throw new NotFoundException();
 		}
 		Game[] games = null;

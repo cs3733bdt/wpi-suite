@@ -82,7 +82,9 @@ public class CardActionListenerRefactor implements ActionListener {
 					decToCardSum(Integer.parseInt(deck.get(index)));
 				}
 			}	
-		} catch (IOException ex) {}
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
 	}
 
 	public void addToCardSum(int cardValue) {

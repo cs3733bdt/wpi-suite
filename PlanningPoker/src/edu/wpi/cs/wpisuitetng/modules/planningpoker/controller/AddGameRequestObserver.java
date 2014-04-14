@@ -10,9 +10,6 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.EmailNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.FacebookNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.SMSNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;

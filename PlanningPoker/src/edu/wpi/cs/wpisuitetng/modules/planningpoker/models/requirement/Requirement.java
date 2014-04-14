@@ -312,6 +312,6 @@ public class Requirement extends ObservableModel {
 	 * prevent race-time condition for fields setting/overriding
 	 */
 	private void delayChange(){
-		while(GameModel.getInstance().serverUpdating()){}
+		while(GameModel.getInstance().serverUpdating()){} // $codepro.audit.disable emptyWhileStatement
 	}
 }

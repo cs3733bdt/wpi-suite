@@ -280,7 +280,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setName(String newName){
-		if(this.name != newName){
+		if(!this.name.equals(newName)){
 			this.setChanged();
 			this.delayChange();
 			this.name = newName;
@@ -301,7 +301,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setComplete(){
 		
-		if(this.complete != true){
+		if(!complete ){
 			this.setChanged();
 			this.delayChange();
 			this.complete = true;
@@ -333,7 +333,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	public void setDescription(String newDescription){
-		if(this.description != newDescription){
+		if(!this.description.equals(newDescription)){
 			this.setChanged();
 			this.delayChange();
 			this.description = newDescription;
@@ -373,7 +373,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @param creator the creator's username
 	 */
 	public void setCreator(String creator) {
-		if(this.creator != creator){
+		if(!this.creator.equals(creator)){
 			this.setChanged();
 			this.delayChange();
 			this.creator = creator;
@@ -506,12 +506,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @return returns true if the user being checked is the creator, returns false otherwise
 	 */
 	public boolean isCreator(String user) {
-		if(this.creator.equals(user)) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return this.creator.equals(user);
 	}
 
 	/**
@@ -519,7 +514,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * prevent race-time condition for fields setting/overriding
 	 */
 	private void delayChange(){
-		while(GameModel.getInstance().serverUpdating()){}
+		while(GameModel.getInstance().serverUpdating()){} // $codepro.audit.disable emptyWhileStatement
 	}
 	
 	

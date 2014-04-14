@@ -238,7 +238,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 					for (int i = 0; i < game.getRequirements().size(); i++) {
 						if (selected.equals(game.getRequirements().get(i).getName())
 								|| selected.equals(game.getRequirements().get(i).getDescription())) {
-							if(isEstimatePanelCreated == true){
+							if(isEstimatePanelCreated){
 								removeEstimatePanel();
 								updateEstimatePanel(game, game.getRequirements().get(i));
 							}

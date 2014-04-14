@@ -415,7 +415,7 @@ public class EstimatePanel extends JPanel{
 				getEstimateText().setBorder(errorBorder);
 			}
 			displayError("An estimation is required before submission");
-		} else if(parsable == true){
+		} else if(parsable){
 			if(Integer.parseInt(getEstimateText().getText()) < 0){
 				isEstimateValid = false;
 				if (warn) {
