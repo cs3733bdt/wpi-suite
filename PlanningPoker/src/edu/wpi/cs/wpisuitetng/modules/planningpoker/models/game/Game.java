@@ -31,7 +31,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	private String name;
 	/** The description of the game */
 	private String description;
-	/** True if the game does of a time limit, false otherwise */
+	/** True if the game does of a time limit */
 	private boolean hasTimeLimit;
 	/** True if the game uses cards, false if it uses text input */
 	private boolean usesCards;
@@ -47,19 +47,10 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	private boolean active;
 	/** The date and time that the game ended/completed */
 	private Date endDate;
-	
-	/*
-	 * dstapply
-	 * 
-	 * We probably want to keep track of:
-	 * 	game creator
-	 * 	list of game players
-	 * 	moderator
-	 * 	list of estimates players can choose
-	 * 	player-estimate pairs
-	 * 	active?
-	 * 
-	 */
+	/** True if the users of the game have been notified of game creation */
+	private boolean notifiedOfCreation;
+	/** True if the users of the game have been notified of game complete */
+	private boolean notifiedOfCompletion;
 	
 	/**
 	 * Copies all of the values from the given Game to this Game.
@@ -169,6 +160,18 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			wasChanged = true;
 		}
 		
+		if(this.notifiedOfCreation != toCopyFrom.notifiedOfCreation) {
+			this.notifiedOfCreation = toCopyFrom.notifiedOfCreation;
+			needsUpdate = true;
+			wasChanged = true;
+		}
+		
+		if(this.notifiedOfCompletion != toCopyFrom.notifiedOfCompletion) {
+			this.notifiedOfCompletion = toCopyFrom.notifiedOfCompletion;
+			needsUpdate = true;
+			wasChanged = true;
+		}
+		
 		if(this.identity.equals(toCopyFrom.identity)){
 			needsUpdate = false;
 		} else {
@@ -199,6 +202,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		endDate = new Date();
 		hasTimeLimit = false;
 		complete = false;
+		notifiedOfCreation = false;
+		notifiedOfCompletion = false;
 		identity = UUID.randomUUID();
 	}
 	
@@ -217,7 +222,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this.description = description;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
-		this.creator = ConfigManager.getInstance().getConfig().getUserName();
 		for(Requirement req : this.requirements){
 			req.addObserver(this);
 			req.setProject(this.getProject());
@@ -499,6 +503,44 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			return false;
 		}
 	}
+	
+	/**
+	 * Checks if users have been notified after game creation
+	 * @return True if users have been notified after game creation
+	 */
+	public boolean isNotifiedOfCreation() {
+		return notifiedOfCreation;
+	}
+
+	/**
+	 * Sets notifiedOfCreation to value of param
+	 * @param notifiedOfCreation value set
+	 */
+	public void setNotifiedOfCreation(boolean notifiedOfCreation) {
+		if (this.notifiedOfCreation != notifiedOfCreation) {
+			this.notifiedOfCreation = notifiedOfCreation;
+			this.setChanged();
+		}
+	}
+
+	/**
+	 * Checks if the users have been notified of a game completion
+	 * @return True if the users have been notified of the game completion
+	 */
+	public boolean isNotifiedOfCompletion() {
+		return notifiedOfCompletion;
+	}
+
+	/**
+	 * Sets notifiedOfCompletion to value of param
+	 * @param notifiedOfCompletion value set
+	 */
+	public void setNotifiedOfCompletion(boolean notifiedOfCompletion) {
+		if (this.notifiedOfCompletion != notifiedOfCompletion) {
+			this.notifiedOfCompletion = notifiedOfCompletion;
+			this.setChanged();
+		}
+	}
 
 	/**
 	 * hold the code while the game model is updating
@@ -526,7 +568,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		{
 			if(requirement.hasChanged())
 				return true;
-			
 		}
 		return false;
 	}

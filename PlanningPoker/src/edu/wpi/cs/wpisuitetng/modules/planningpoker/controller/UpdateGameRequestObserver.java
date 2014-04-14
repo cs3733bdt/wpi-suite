@@ -1,6 +1,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -25,10 +26,24 @@ public class UpdateGameRequestObserver implements RequestObserver{
 	public void responseSuccess(IRequest iReq) {
 		final ResponseModel response = iReq.getResponse();
 		
-		final Game game = Game.fromJSON(response.getBody());	
+		Game game = Game.fromJSON(response.getBody());
 		
-		//Send out email, text, and facebook notifications for game creation
-		game.sendNotifications();
+		System.out.println("Game name: " + game.getName());
+		
+		if (!game.isNotifiedOfCreation() && game.isActive()) {
+			// Send out email, text, and facebook notifications for game creation
+			game.sendNotifications();
+			System.out.println("Before NotifiedOfCreation: " + game.isNotifiedOfCreation());
+			game.setNotifiedOfCreation(true);
+			GameModel.getInstance().update(game, true);
+			System.out.println("After NotifiedOfCreation: " + game.isNotifiedOfCreation());
+		} else if (!game.isNotifiedOfCompletion() && game.isComplete()) {
+			// Send out email, text, and facebook notifications for game completion
+			// TODO make a different method for sending completion text
+			game.sendNotifications();
+			game.setNotifiedOfCompletion(true);
+			GameModel.getInstance().update(game, true);
+		}
 		
 		System.out.println("The request to update a game has succeeded!");
 	}
