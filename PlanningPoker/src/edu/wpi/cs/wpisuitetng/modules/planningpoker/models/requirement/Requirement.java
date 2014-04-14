@@ -293,6 +293,9 @@ public class Requirement extends ObservableModel {
 		return n;
 	}
 	
+	/**
+	 * @return the number of votes submitted
+	 */
 	public int getVoteCount(){
 		return votes.size();
 	}
