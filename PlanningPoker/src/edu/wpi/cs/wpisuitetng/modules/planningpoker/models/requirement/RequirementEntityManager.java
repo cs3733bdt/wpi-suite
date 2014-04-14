@@ -71,7 +71,8 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	
 	
 	 * @return the requirement matching the given id * @throws NotFoundException * @throws NotFoundException * @throws NotFoundException
-	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String) */
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String)
+	 */
 	@Override
 	public Requirement[] getEntity(Session s, String id) throws NotFoundException {
 		final int intId = Integer.parseInt(id);
@@ -118,7 +119,8 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	 * @param session the session
 	 * @param role the role being verified
 	
-	 * @throws WPISuiteException user isn't authorized for the given role */
+	 * @throws WPISuiteException user isn't authorized for the given role
+	 */
 	private void ensureRole(Session session, Role role) throws WPISuiteException {
 		User user = (User) db.retrieve(User.class, "username", session.getUsername()).get(0);
 		if(!user.getRole().equals(role)) {
@@ -135,7 +137,8 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	
 	
 	 * @return true if the deletion was successful * @throws WPISuiteException * @throws WPISuiteException * @throws WPISuiteException
-	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String) */
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String)
+	 */
 	@Override
 	public boolean deleteEntity(Session s, String id) throws WPISuiteException {
 		ensureRole(s, Role.ADMIN);
@@ -162,7 +165,8 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	
 	
 	 * @return number of requirements stored * @throws WPISuiteException * @throws WPISuiteException * @throws WPISuiteException
-	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count() */
+	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count()
+	 */
 	@Override
 	public int Count() throws WPISuiteException {
 		return db.retrieveAll(new Requirement()).size();

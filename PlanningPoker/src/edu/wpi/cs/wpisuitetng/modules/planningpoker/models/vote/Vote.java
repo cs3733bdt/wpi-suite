@@ -10,7 +10,11 @@
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote;
-
+ 
+/**
+ * TODO: add documentation here
+ *
+ */
 public class Vote {
 
 	private final String username;
@@ -42,6 +46,10 @@ public class Vote {
 		return voteNumber;
 	}
 	
+	/**
+	 * set the number of votes to a given value
+	 * @param newVote value to set the number of votes to
+	 */
 	public void setVoteNumber(int newVote) {
 		this.voteNumber = newVote;
 	}

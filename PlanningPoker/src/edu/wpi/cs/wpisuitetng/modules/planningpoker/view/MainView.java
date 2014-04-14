@@ -25,6 +25,9 @@ public class MainView extends JSplitPane {
 	TabbedView tabView = new TabbedView();
 	GameTree filterPanel = new GameTree();
 	
+	/**
+	 * constructs a MainView
+	 */
 	public MainView() {
 		
 		
@@ -41,6 +44,9 @@ public class MainView extends JSplitPane {
 		
 	}
 	
+	/**
+	 * @return current TabbedView
+	 */
 	public TabbedView getTabbedView(){
 		return tabView;
 	}

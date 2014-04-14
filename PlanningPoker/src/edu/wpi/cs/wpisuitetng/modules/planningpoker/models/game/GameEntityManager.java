@@ -31,6 +31,8 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  * Most of the code is referenced and refactored directly from the Requirement
  * Entity Manager module
  * 
+ * TODO: add documentation
+ * 
  * @author dstapply
  * 
  */

@@ -57,7 +57,6 @@ public class Requirement extends ObservableModel {
 	 * 
 	 */
 	public Requirement() {
-		super();
 		name = description = "";
 		identity = UUID.randomUUID();
 		
@@ -90,13 +89,16 @@ public class Requirement extends ObservableModel {
 		return id;
 	}
 	
+	/**
+	 * @return UUID of the requirement
+	 */
 	public UUID getIdentity(){
 		return identity;
 	}
 	
 	/**
-	 * 
-	 * @param id
+	 * sets the id of the requirement
+	 * @param id value to set the id to
 	 */
 	public void setId(int id){
 		this.delayChange();
@@ -104,6 +106,10 @@ public class Requirement extends ObservableModel {
 		this.id = id;
 	}
 	
+	/**
+	 * sets the identity of the requirement
+	 * @param identity value to set the identity to
+	 */
 	public void setIdentity(UUID identity){
 		this.delayChange();
 		fromRequirementModule = false;
@@ -173,6 +179,9 @@ public class Requirement extends ObservableModel {
 
 	}
 	
+	/**
+	 * sets the requirement to completed
+	 */
 	public void setComplete() {
 		this.delayChange();
 		this.complete = true;
@@ -180,6 +189,10 @@ public class Requirement extends ObservableModel {
 		this.notifyObservers();
 	}
 
+	/**
+	 * displays that the progress of the requirement
+	 * @return the number of votes, or a star if the game is complete
+	 */
 	public String displayComplete(){
 		if(this.complete){
 			return "*";
@@ -279,6 +292,9 @@ public class Requirement extends ObservableModel {
 		return n;
 	}
 	
+	/**
+	 * @return the number of votes submitted
+	 */
 	public int getVoteCount(){
 		return votes.size();
 	}

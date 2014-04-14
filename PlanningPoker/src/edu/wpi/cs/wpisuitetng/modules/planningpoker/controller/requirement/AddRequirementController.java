@@ -30,17 +30,14 @@ public class AddRequirementController{
 	
 	/**
 	 * Construct an AddRequirementController for the given model, view pair
-	
-	
 	 */
 	private AddRequirementController() {
 		observer = new AddRequirementRequestObserver(this);
 	}
 	
 	/**
-	
-	 * @return the instance of the AddRequirementController or creates one if it does not
-	 * exist. */
+	 * @return the instance of the AddRequirementController or creates one if it does not exist.
+	 */
 	public static AddRequirementController getInstance()
 	{
 		if(instance == null)

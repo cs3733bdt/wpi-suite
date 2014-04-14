@@ -48,6 +48,10 @@ public class EmailNotification {
 		this.g = g;
 	}
 	
+	/**
+	 * TODO: fill out this documentation
+	 * @return
+	 */
 	public Session login() {
 		// Get system properties
 		Properties properties = new Properties();

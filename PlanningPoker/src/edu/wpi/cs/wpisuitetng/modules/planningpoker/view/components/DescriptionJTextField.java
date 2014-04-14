@@ -17,47 +17,38 @@ import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-public class NameJTextField extends JTextField implements IDataField {
+public class DescriptionJTextField extends JTextField implements IDataField {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
-	
 
-	public NameJTextField(String text) {
+	public DescriptionJTextField(String text) {
 		super(text);
 	}
 
-	public NameJTextField(int size) {
+	public DescriptionJTextField(int size) {
 		super(size);
 	}
 
-	public NameJTextField() {
+	public DescriptionJTextField() {
 	}
 
 	@Override
 	public boolean validateField(IErrorView errorField) {
-		boolean isNameValid = false;
-		
-		if (this.getText().length() >= 100) {
-			isNameValid = false;
-			this.setBorder(errorBorder);
-			// getErrorName().setForeground(Color.RED);
-			if(errorField != null) errorField.setText("Name can be no more than 100 chars.");
-		} else if (this.getText().length() <= 0) {
-			isNameValid = false;
-			if (errorField != null) {
-				// getErrorName().setText("** Name is REQUIRED");
-				this.setBorder(errorBorder);
-				// getErrorName().setForeground(Color.RED);
-			}
-
-			if(errorField != null) errorField.setText("Name is required");
+		boolean isDescriptionValid = false;
+		if (getText().length() <= 0) {
+			isDescriptionValid = false;
+			// getErrorDescription().setText("** Description is REQUIRED");
+			setBorder(errorBorder);
+			// getErrorDescription().setForeground(Color.RED);
+			// TODO add a way to display error descriptions
+			errorField.setText("Description is required");
 		} else {
-			// getErrorName().setText("");
-			this.setBorder(defaultBorder);
-			isNameValid = true;
+			// getErrorDescription().setText("");
+			setBorder(defaultBorder);
+			isDescriptionValid = true;
 		}
-		return isNameValid;
+		return isDescriptionValid;
 	}
 
 }
