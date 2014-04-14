@@ -303,7 +303,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @return true if the game is complete
 	 */
 	public void setComplete(){
-		
 		if(!complete ){
 			this.setChanged();
 			this.delayChange();
@@ -528,6 +527,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		if (this.notifiedOfCreation != notifiedOfCreation) {
 			this.notifiedOfCreation = notifiedOfCreation;
 			this.setChanged();
+			this.delayChange();
 		}
 	}
 
@@ -547,6 +547,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		if (this.notifiedOfCompletion != notifiedOfCompletion) {
 			this.notifiedOfCompletion = notifiedOfCompletion;
 			this.setChanged();
+			this.delayChange();
 		}
 	}
 
