@@ -525,9 +525,9 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setNotifiedOfCreation(boolean notifiedOfCreation) {
 		if (this.notifiedOfCreation != notifiedOfCreation) {
-			this.notifiedOfCreation = notifiedOfCreation;
 			this.setChanged();
 			this.delayChange();
+			this.notifiedOfCreation = notifiedOfCreation;
 		}
 	}
 
@@ -545,9 +545,9 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setNotifiedOfCompletion(boolean notifiedOfCompletion) {
 		if (this.notifiedOfCompletion != notifiedOfCompletion) {
-			this.notifiedOfCompletion = notifiedOfCompletion;
 			this.setChanged();
 			this.delayChange();
+			this.notifiedOfCompletion = notifiedOfCompletion;
 		}
 	}
 
