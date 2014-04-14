@@ -158,8 +158,6 @@ public class GameTest {
 		
 		assertEquals(ActivePanel.getGame().getRequirements().size(),1);
 		
-		
-		
 	}
 	
 
