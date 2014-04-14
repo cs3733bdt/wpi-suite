@@ -22,10 +22,12 @@ import javax.swing.JPanel;
 import org.jdesktop.swingx.JXDatePicker;
 
 /**
- *
+ * This is where the graphical elements and calculation are done for 
+ * allowing users to select an end date for their Planning Poker games
+ * @author BDT
  */
 public class AddEndDatePanel extends JPanel {
-	
+
 	Calendar dateMaker;
 	Date endDate;
 	
@@ -34,11 +36,16 @@ public class AddEndDatePanel extends JPanel {
 		{"1","2","3","4","5","6","7","8","9","10","11","12"} ;
 	private final String[] minuteArray = {"00","15","30","45"};
 	private final String[] AmPmArray = {"AM","PM"};
-	private final JComboBox hourSelection = new JComboBox(hourArray);
-	private final JComboBox minuteSelection = new JComboBox(minuteArray);
-	private final JComboBox AmPmSelection = new JComboBox(AmPmArray);
+	private final JComboBox<String> hourSelection = new JComboBox<>(hourArray);
+	private final JComboBox<String> minuteSelection = new JComboBox<>(minuteArray);
+	private final JComboBox<String> AmPmSelection = new JComboBox<>(AmPmArray);
 	private final JLabel endDateSelection = new JLabel("Select End Date:");
 	
+	/**
+	 * Only constructor for AddEndDatePanel
+	 * Creates graphical elements required for creation of an end date
+	 * @param view
+	 */
 	public AddEndDatePanel(final CreateGamePanel view){
 		this.add(endDateSelection);
 		this.add(datePicker);
@@ -48,6 +55,9 @@ public class AddEndDatePanel extends JPanel {
 		dateMaker = new GregorianCalendar();
 	}
 	
+	/**
+	 * @return Date the end date selected in the DatePicker and drop down menus
+	 */
 	public Date getEndDate(){
 		endDate = datePicker.getDate();
 		dateMaker.setTime(endDate);
@@ -158,6 +168,13 @@ public class AddEndDatePanel extends JPanel {
 		AmPmSelection.setSelectedItem(oldAMPM);
 	}
 	
+	/**
+	 * Sets the defaults for the graphical elements displayed for the end date
+	 * @param oldDate Date to be displayed for the DatePicker
+	 * @param oldHour String to set the hour drop down menu
+	 * @param oldMinute String to set the minute drop down menu
+	 * @param oldAMPM String to set the AMPM drop down menu
+	 */
 	public void setDateAndTime(Date oldDate, String oldHour, String oldMinute, String oldAMPM){
 		setDate(oldDate);
 		setHour(oldHour);
