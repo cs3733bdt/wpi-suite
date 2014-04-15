@@ -14,7 +14,6 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree;
 
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -60,7 +59,7 @@ public class GameTree extends JPanel implements MouseListener{
 	public GameTree(){
 		super(new GridBagLayout());
 		ViewEventController.getInstance().setGameOverviewTree(this);
-		this.refresh();
+		refresh();
 	}
 
 	/**
@@ -68,20 +67,20 @@ public class GameTree extends JPanel implements MouseListener{
 	 * Used when the list of games is updated or changed.
 	 */
 	public void refresh(){
-		if(this.getComponentCount() != 0){
-			this.remove(0);
+		if(getComponentCount() != 0){
+			remove(0);
 		}
 		
 		active.removeAllChildren();
 		inactive.removeAllChildren();
 		history.removeAllChildren();
 		
-		List<Game> gameList = sortGames(GameModel.getInstance().getGames()); //retrive the list of all of the games
+		List<Game> gameList = sortGames(GameModel.getInstance().getGames()); //retrieve the list of all of the games
 		System.out.println("Numb Games: " + gameList.size());
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
-			if(!game.isComplete()){ //If the game is not complete then add it to the active game dropdown
+			if(!game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
 				if(game.isActive()){
 					active.add(newGameNode);
 				}
@@ -96,34 +95,37 @@ public class GameTree extends JPanel implements MouseListener{
 		gameNode.add(inactive);
 		gameNode.add(active);
 		gameNode.add(history);
+		System.out.println("Numb Games: " + gameList.size());
+
+		
 		gameTree = new JTree(gameNode);
 		
 		gameTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		gameTree.setToggleClickCount(0);
 		gameTree.addMouseListener(this);
 	
-		this.setLayout(new GridBagLayout());
+		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
 		c.fill = GridBagConstraints.BOTH;
-		c.anchor = GridBagConstraints.CENTER;
 		//c.weighty = 1;
 		c.weightx = 1;
-		c.gridx = 1;
-		c.gridy = 1;
+		
 		gameTreeScroll = new JScrollPane(gameTree);
 		gameTreeScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		gameTreeScroll.setPreferredSize(new Dimension(190, 500));
+		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);		
 		
-		
-	    this.add(gameTreeScroll, c);
+	    add(gameTreeScroll, c);
+	    c.weighty = 0;
 	    ViewEventController.getInstance().setGameOverviewTree(this);
-	   
-	    this.repaint();
+	    
+	    revalidate();
+	    gameTree.revalidate();
+	    gameTreeScroll.revalidate();
+	    repaint();
 	    gameTree.repaint();
 		gameTreeScroll.repaint();
-	    this.validate();
+	    validate();
 		
 	}
 	
