@@ -20,8 +20,8 @@ import javax.swing.AbstractListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controller.AddGameController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controller.UpdateGameController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.AddGameController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.UpdateGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game;

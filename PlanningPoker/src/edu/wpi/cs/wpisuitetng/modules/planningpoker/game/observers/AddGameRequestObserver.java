@@ -10,7 +10,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controller.AddGameController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;

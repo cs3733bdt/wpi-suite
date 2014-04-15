@@ -8,7 +8,7 @@
  * Contributors: Team Bobby Drop Tables
  ******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controller;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers.AddGameRequestObserver;
