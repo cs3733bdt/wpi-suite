@@ -11,9 +11,11 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 import java.awt.Container;
+import java.awt.Font;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -35,21 +37,43 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		rightView.setLayout(layout);							//Sets the container to have the spring layout
 
 		/**
+		 * Creates a new font for use later
+		 */
+		//create a dummy JTextArea
+		JTextArea editingArea = new JTextArea();
+		// get the current font
+		Font f = editingArea.getFont();
+		// create a new, larger font from the current font
+		Font newFont = new Font(f.getFontName(), f.getStyle(), f.getSize()+8);		
+		//set the bigger font for userStoryDesc
+		Font bigFont = newFont;
+		
+		/**
 		 * Create and/or initialize components
 		 */
+		JPanel namePanel= new JPanel();
+		JPanel selecReqPanel= new JPanel();
 		JLabel nameLabel = new JLabel("Requirements");			//Creates the Label for the Name
+		nameLabel.setFont(bigFont);
 		JLabel selecReqLabel= new JLabel("Selected Requirement");
+		selecReqLabel.setFont(bigFont);
 		JLabel reqLabel = new JLabel("Name");
 		JLabel desLabel = new JLabel("Description");
+		
+		namePanel.add(nameLabel);
+		selecReqPanel.add(selecReqLabel);
+		
 		nameTextField = new JTextArea(1,30);				//Initializes the textfield for the game name and sets the size to 30
 		nameTextField.setText("Requirement1");
 		nameTextField.setBorder(defaultBorder);
 		nameTextField.setEditable(false);
+		
 		descriptionTextField = new JTextArea(3, 30);		//Initializes the textarea for the game description
 		descriptionTextField.setText("Sleep");
 		descriptionTextField.setBorder(defaultBorder);
 		descriptionTextField.setEditable(false);
 		
+
 		/**
 		 * Initializes a table's columns and rows and the table
 		 */
@@ -71,27 +95,35 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/**
 		 * Add components to container
 		 */
-		rightView.add(nameLabel);							//Adds name label to the container
+		rightView.add(namePanel);							//Adds name label to the container
 		rightView.add(table);					//Adds description field to the container
-		rightView.add(selecReqLabel);
+		rightView.add(selecReqPanel);
 		rightView.add(reqLabel);
 		rightView.add(nameTextField);
 		rightView.add(desLabel);
 		rightView.add(descriptionTextField);
 		
-		layout.putConstraint(SpringLayout.WEST, nameLabel, 40, SpringLayout.WEST, rightView); 					//Adds the name label to the far left
-		layout.putConstraint(SpringLayout.NORTH, nameLabel, 10, SpringLayout.NORTH, rightView);
+		layout.putConstraint(SpringLayout.WEST, namePanel, 40, SpringLayout.WEST, rightView);
+		layout.putConstraint(SpringLayout.EAST, namePanel, -40, SpringLayout.EAST, rightView);//Adds the name label to the far left
+		layout.putConstraint(SpringLayout.NORTH, namePanel, 10, SpringLayout.NORTH, rightView);
+		
 		layout.putConstraint(SpringLayout.WEST, table, 40, SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.EAST, table, -40, SpringLayout.EAST, rightView);
-		layout.putConstraint(SpringLayout.NORTH, table, 10, SpringLayout.SOUTH, nameLabel);
-		layout.putConstraint(SpringLayout.WEST, selecReqLabel, 40, SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.NORTH, selecReqLabel, 10, SpringLayout.SOUTH, table);
+		layout.putConstraint(SpringLayout.NORTH, table, 10, SpringLayout.SOUTH, namePanel);
+		
+		layout.putConstraint(SpringLayout.WEST, selecReqPanel, 40, SpringLayout.WEST, rightView);
+		layout.putConstraint(SpringLayout.EAST, selecReqPanel, -40, SpringLayout.EAST, rightView);
+		layout.putConstraint(SpringLayout.NORTH, selecReqPanel, 10, SpringLayout.SOUTH, table);
+		
 		layout.putConstraint(SpringLayout.WEST, reqLabel, 40, SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.NORTH, reqLabel, 10, SpringLayout.SOUTH, selecReqLabel);
+		layout.putConstraint(SpringLayout.NORTH, reqLabel, 10, SpringLayout.SOUTH, selecReqPanel);
+		
 		layout.putConstraint(SpringLayout.WEST, nameTextField, 40, SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, nameTextField, 0, SpringLayout.SOUTH, reqLabel);
+		
 		layout.putConstraint(SpringLayout.WEST, desLabel, 40, SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, desLabel, 0, SpringLayout.SOUTH, nameTextField);
+		
 		layout.putConstraint(SpringLayout.WEST, descriptionTextField, 40, SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, descriptionTextField, 0, SpringLayout.SOUTH, desLabel);
 		
