@@ -40,7 +40,7 @@ public class MainView extends JSplitPane {
 		
 		this.setRightComponent(tabView);
 		this.setLeftComponent(filterPanel);
-		this.setDividerLocation(180);
+		this.setDividerLocation(200);
 		
 	}
 	

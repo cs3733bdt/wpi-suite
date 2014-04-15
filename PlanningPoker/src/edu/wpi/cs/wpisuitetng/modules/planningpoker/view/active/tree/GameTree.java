@@ -46,7 +46,6 @@ public class GameTree extends JPanel implements MouseListener{
 	DefaultMutableTreeNode inactive = new DefaultMutableTreeNode("Pending Games");
 	DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the starting node
 	DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the starting node
-	JPanel viewPanel = new JPanel();
 	
 	/**
 	 * Constructor for a GameTree
@@ -93,24 +92,27 @@ public class GameTree extends JPanel implements MouseListener{
 		gameTree.setToggleClickCount(0);
 		gameTree.addMouseListener(this);
 		
-		gameTree.setPreferredSize(new Dimension(250 , 10 + gameList.size()*21));
+		gameTree.setPreferredSize(new Dimension(450 , 10 + gameList.size()*21));
 		
-		viewPanel.setLayout(new GridBagLayout());
+		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
+		c.fill = GridBagConstraints.BOTH;
 		c.anchor = GridBagConstraints.CENTER; 
-		gameTreeScroll = new JScrollPane(gameTree);
-		gameTreeScroll.setPreferredSize(new Dimension(150 + 25, 590));
+		c.weightx = 1;
+		c.gridx = 1;
+		c.gridy = 1;
+		c.gridwidth = 1;
 		
-		if(viewPanel.getComponentCount() != 0){
-			viewPanel.remove(0);
+		gameTreeScroll = new JScrollPane(gameTree);
+		gameTreeScroll.setPreferredSize(new Dimension(150, 500));
+		
+		if(this.getComponentCount() != 0){
+			this.remove(0);
 		}
-	    viewPanel.add(gameTreeScroll, c);
-	    viewPanel.setPreferredSize(new Dimension(176,590));
-	   
-	    this.add(viewPanel);
+	    this.add(gameTreeScroll, c);
+	    this.setPreferredSize(new Dimension(150,550));
 	    ViewEventController.getInstance().setGameOverviewTree(this);
-	    viewPanel.repaint();
 	    this.repaint();
 	    this.validate();
 	    System.out.println("Finished refresshing the tree");
