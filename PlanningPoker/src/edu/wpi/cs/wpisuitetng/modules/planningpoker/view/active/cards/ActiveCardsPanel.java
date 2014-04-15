@@ -161,4 +161,10 @@ public boolean validateField(IErrorView warningField) {
 	return false;
 }
 
+@Override
+public boolean hasChanges() {
+	// TODO Auto-generated method stub
+	return false;
+}
+
 }
