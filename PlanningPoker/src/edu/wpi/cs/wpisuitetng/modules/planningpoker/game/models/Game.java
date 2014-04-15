@@ -21,6 +21,7 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
@@ -349,6 +350,19 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			this.delayChange();
 			description = newDescription;
 		}
+	}
+	
+	/**
+	 * Sets the project for the game and it's requirements
+	 */
+	@Override
+	public void setProject(Project p) {
+		// Set requirements' project
+		for(Requirement r: requirements) {
+			r.setProject(p);
+		}
+		// Set game's project
+		super.setProject(p);
 	}
 	
 	/**
