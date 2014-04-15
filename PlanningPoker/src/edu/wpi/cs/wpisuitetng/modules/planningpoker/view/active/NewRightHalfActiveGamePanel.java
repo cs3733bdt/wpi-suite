@@ -21,7 +21,6 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
-
 public class NewRightHalfActiveGamePanel extends JScrollPane {
 	
 	private JTextArea nameTextField;
@@ -69,7 +68,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/**
 		 * Initializes a table's columns and rows and the table
 		 */
-		String[] columnNames = {"Requirement", "Description"};
+		String[] columnNames = {"Requirement", "Description", "Voted"};
 		Object[][] data = {};
 		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
 		table.setBorder(defaultBorder);
@@ -78,14 +77,14 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		 * Adds temporary data into the table. 
 		 * DELETE THIS ONCE DATA IS SUCCESSFULLY IMPORTED FROM REQUIREMENT MANAGER!!!!!!!!!!!!
 		 */
-		table.tableModel.addRow(new Object[]{"Requirement1", "Dinner"});
-		table.tableModel.addRow(new Object[]{"Requirement2", "Homework"});
-		table.tableModel.addRow(new Object[]{"Requirement3", "Review"});
-		table.tableModel.addRow(new Object[]{"Requirement4", "Sleep"});
-		table.tableModel.addRow(new Object[]{"Requirement1", "Dinner"});
-		table.tableModel.addRow(new Object[]{"Requirement2", "Homework"});
-		table.tableModel.addRow(new Object[]{"Requirement3", "Review"});
-		table.tableModel.addRow(new Object[]{"Requirement4", "Sleep"});
+		table.tableModel.addRow(new Object[]{"Requirement1", "Dinner","*"});
+		table.tableModel.addRow(new Object[]{"Requirement2", "Homework",""});
+		table.tableModel.addRow(new Object[]{"Requirement3", "Review",""});
+		table.tableModel.addRow(new Object[]{"Requirement4", "Sleep","*"});
+		table.tableModel.addRow(new Object[]{"Requirement1", "Dinner",""});
+		table.tableModel.addRow(new Object[]{"Requirement2", "Homework",""});
+		table.tableModel.addRow(new Object[]{"Requirement3", "Review",""});
+		table.tableModel.addRow(new Object[]{"Requirement4", "Sleep",""});
 		
 		JScrollPane tablePanel=new JScrollPane(table);
 		tablePanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
