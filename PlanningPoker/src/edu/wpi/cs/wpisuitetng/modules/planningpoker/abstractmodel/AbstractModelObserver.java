@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel;
 
 /**
  * A class can implement the <code>Observer</code> interface when it

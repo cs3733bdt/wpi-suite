@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,12 +21,12 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.EmailNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.FacebookNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification.SMSNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 
 /**
  * Basic Game class that contains the data to be store for a Game

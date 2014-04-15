@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models;
 
 import java.util.List;
 

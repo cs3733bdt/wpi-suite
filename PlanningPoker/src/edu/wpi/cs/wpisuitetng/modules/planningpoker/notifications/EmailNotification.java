@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 
 import java.util.Properties;
 
@@ -24,8 +24,7 @@ import javax.mail.internet.MimeMessage;
 import com.sun.mail.util.MailConnectException;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
 /**
  * This is a class that will send out email notifications
@@ -35,9 +34,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
  */
 public class EmailNotification {
 	
-	// Game to get users from to send emails to
+	/** Game to get users from to send emails to */
 	private final Game g;
-	// Sender Email Information
+	/** Sender Email Information */
 	private final String username = "WPI.Suite.BDT.NoReply@gmail.com";
 	private final String password = "bobbydroptables";
 	
@@ -112,8 +111,13 @@ public class EmailNotification {
 		
 		//Check to see if no users are attached to this project
 		if(users[0] != null) {
+			// Send email to each user
 			for (int i = 0; i < users.length; i++) {
-				sendEmail(login(), users[i]);
+				// TODO implement verify if email format
+				if (users[i].getEmail() != null)
+					sendEmail(login(), users[i]);
+				else
+					System.err.println(users[i].getName() + " doesn't have an email Stored.");
 			}
 		} else {
 			System.out.println("Project: " + g.getProject().getName() + ", has no users in its team.");

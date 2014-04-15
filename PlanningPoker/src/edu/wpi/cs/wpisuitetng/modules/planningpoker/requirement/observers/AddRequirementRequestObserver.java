@@ -9,9 +9,10 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -76,5 +77,4 @@ public class AddRequirementRequestObserver implements RequestObserver {
 	public void fail(IRequest iReq, Exception exception) {
 		System.err.println("The request to add a requirement failed.");
 	}
-
 }

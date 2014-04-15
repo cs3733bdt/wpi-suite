@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;
@@ -23,18 +23,19 @@ import com.restfb.DefaultFacebookClient;
 import com.restfb.FacebookClient;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
 /**
- * TODO: add documentaiton
+ * This is a class that will send out facebook notifications
+ * whenever a game is successfully created.
+ * 
  * @author Bobby Drop Tables
- *
  */
 public class FacebookNotification {
 	
-	// Game to get users to send facebook notifications to.
+	/** Game to get users to send facebook notifications to */
 	private final Game g;
-	// Authentication information
+	/** Authentication information */
 	private final String XMPP_HOST = "chat.facebook.com";
 	private final int XMPP_PORT = 5222;
 	private final String username = "wpi.suite.bdt.noreply@gmail.com";
@@ -54,9 +55,11 @@ public class FacebookNotification {
 	 * @throws XMPPException
 	 */
 	public XMPPConnection login() throws XMPPException {
+		// Facebook uses SASL authentication
 		SASLAuthentication.registerSASLMechanism("DIGEST-MD5", SASLDigestMD5Mechanism.class);
 		SASLAuthentication.supportSASLMechanism("DIGEST-MD5", 0);
 
+		// Connect to facebook servers using XMPP
 		ConnectionConfiguration config = new ConnectionConfiguration(XMPP_HOST, XMPP_PORT);
 		XMPPConnection connection = new XMPPConnection(config);
 		connection.connect();
@@ -70,12 +73,22 @@ public class FacebookNotification {
 	 * in the game's project team.
 	 */
 	public void sendFacebookNotifications() {
-		User[] users = g.getProject().getTeam();
+		
+		// Get the users that are expected to play the game
+		User[] users = null;
+		// Make sure there is a project and a team before
+		// setting the users to the team
+		try {
+			users = g.getProject().getTeam();
+		} catch(NullPointerException e) {
+			e.printStackTrace();
+			System.err.println("Could not set the list 'users' to the list 'team'.");
+		}
 		
 		// Make sure there are users in the team
 		if (users[0] != null) {
+			// Try to connect to facebook servers
 			XMPPConnection connection = null;
-			
 			try {
 				connection = login();
 			} catch (XMPPException e) {
@@ -83,13 +96,14 @@ public class FacebookNotification {
 				e.printStackTrace();
 			}
 			
+			// Send facebook notifications
 			for (int i = 0; i < users.length; i++) {
+				// Make sure users have a username stored
 				if (users[i].getFacebookUsername() != null)
 					sendFacebookNotification(connection, users[i]);
 				else
 					System.err.println(users[i].getName() + " doesn't have a facebook Username Stored.");
 			}
-			
 		} else {
 			System.err.println("There are no users on the team of Project: " + g.getProject().getName());
 		}
@@ -103,13 +117,16 @@ public class FacebookNotification {
 	public void sendFacebookNotification(XMPPConnection connection, User user) {
 		String uid = getUserId(user.getFacebookUsername());
 		
+		// Make sure uid is valid (facebook username)
 		if (uid != null) {
+			// Connect to chat server
 			Chat chat = connection.getChatManager().createChat("-" + uid + "@chat.facebook.com", null);
+			// Set message
 			Message message = new Message("-" + uid + "@chat.facebook.com", Message.Type.chat);
-	
 			message.setBody("Voting is required for game: " + g.getName()
 					+ "\nGame Ending : " + g.getEndDate().toString());
 			
+			// Try to send the message
 			try {
 				chat.sendMessage(message);
 				System.out.println("Sent facebook message successfully");
@@ -117,6 +134,10 @@ public class FacebookNotification {
 				System.err.println("Failed to send Facebook Notification.");
 				e.printStackTrace();
 			}
+		} else {
+			// TODO possibly implement send email to user telling them their facebook
+			// username is invalid
+			System.err.println("User: " + user.getName() + " does not have a valid facebook username stored.");
 		}
 	}
 	
@@ -127,6 +148,7 @@ public class FacebookNotification {
 	 */
 	public String getUserId(String username) {
 		FacebookClient facebookClient = new DefaultFacebookClient();
+		// Need to force restfb User type
 		com.restfb.types.User fbUser = facebookClient.fetchObject(username, com.restfb.types.User.class);
 		
 		return fbUser.getId();

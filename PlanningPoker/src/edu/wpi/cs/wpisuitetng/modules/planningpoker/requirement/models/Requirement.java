@@ -8,7 +8,7 @@
  *
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models;
 
 
 import java.util.ArrayList;
@@ -17,9 +17,9 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 
 /**

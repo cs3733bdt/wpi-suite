@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -18,10 +18,10 @@ import java.util.UUID;
 
 import javax.swing.AbstractListModel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.AddGameController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.UpdateGameController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controller.AddGameController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controller.UpdateGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.model.Game;

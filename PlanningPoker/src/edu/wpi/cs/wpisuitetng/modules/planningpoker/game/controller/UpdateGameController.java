@@ -9,19 +9,18 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers.UpdateGameRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
-
 /**
- * This controller responds when the user clicks the Edit button 
+ * This controller responds when the user does something to update the game.
  * 
  * @author Chris Knapp
- *
  */
 public class UpdateGameController {
 	
@@ -49,12 +48,13 @@ public class UpdateGameController {
 	 */
 	public void updateGame(Game newGame) {
 		System.out.println("Updating " + newGame.getName() + " to server");
+		// Update request
 		Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.POST);
+		// Set the game to update
 		request.setBody(newGame.toJSON());
+		// Add observer to get response
 		request.addObserver(observer);
+		// Send the update request
 		request.send();
 	}
-	
-	
-
 }

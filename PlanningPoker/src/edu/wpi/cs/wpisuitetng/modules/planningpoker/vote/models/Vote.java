@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models;
  
 /**
  * TODO: add documentation here

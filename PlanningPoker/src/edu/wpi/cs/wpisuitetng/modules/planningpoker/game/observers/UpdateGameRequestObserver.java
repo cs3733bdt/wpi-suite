@@ -9,10 +9,11 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controller.UpdateGameController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -22,11 +23,12 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  * to the server to update a game
  * 
  * @author Chris Knapp
- *
  */
-
-public class UpdateGameRequestObserver implements RequestObserver{
-	
+public class UpdateGameRequestObserver implements RequestObserver {
+	/** We don't actually use the controller,
+	 * in the defect tracker they use it to print
+	 * error messages.
+	 */
 	private final UpdateGameController controller;
 	
 	/**
@@ -44,26 +46,33 @@ public class UpdateGameRequestObserver implements RequestObserver{
 	public void responseSuccess(IRequest iReq) {
 		final ResponseModel response = iReq.getResponse();
 		
+		// The game that got updated
 		Game game = Game.fromJSON(response.getBody());
 		
-		System.out.println("Game name: " + game.getName());
-		
+		// Send out email, text, and facebook notifications on game creation
 		if (!game.isNotifiedOfCreation() && game.isActive()) {
-			// Send out email, text, and facebook notifications for game creation
 			Game realGame = GameModel.getInstance().getGameById(game.getIdentity());
+			// Make sure game exists
 			if (!realGame.equals(null)) {
+				// Set the project of the game, without this it throws a null pointer
+				// if the game is created/added on an update call
 				realGame.setProject(game.getProject());
+				// Set notified before sending notifications to remove looping possibility
 				realGame.setNotifiedOfCreation(true);
+				// Finally send
 				realGame.sendNotifications();
 			} else {
 				System.err.println(game.getName() + ": Does not exist");
 			}
+		// Send out email, text, and facebook notifications on game completion
 		} else if (!game.isNotifiedOfCompletion() && game.isComplete()) {
-			// Send out email, text, and facebook notifications for game completion
 			// TODO make a different method for sending completion text
 			Game realGame = GameModel.getInstance().getGameById(game.getIdentity());
+			// Make sure game exists
 			if (!realGame.equals(null)) {
+				// Set notified before sending notifications to remove looping possibility
 				realGame.setNotifiedOfCreation(true);
+				// Finally Send
 				realGame.sendNotifications();
 			} else {
 				System.err.println(game.getName() + ": Does not exist");
@@ -78,8 +87,7 @@ public class UpdateGameRequestObserver implements RequestObserver{
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println(iReq.getResponse().getStatusMessage());
-		System.err.println("The request to update a game failed.");
+		System.err.println("Response Error: " + iReq.getResponse().getStatusMessage());
 	}
 	
 	/**
@@ -87,7 +95,6 @@ public class UpdateGameRequestObserver implements RequestObserver{
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		System.err.println("The request to update a game failed.");
+		System.err.println("The request to update a game failed with exception: " + exception.getMessage());
 	}
-
 }

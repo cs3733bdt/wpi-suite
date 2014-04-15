@@ -10,7 +10,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel;
 
 import java.util.Vector;
 

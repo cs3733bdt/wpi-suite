@@ -8,18 +8,20 @@
  * Contributors: Team Bobby Drop Tables
  ******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controller.GetGameController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
- * @author Andrew Busch
+ * This observer is called when a response is received from a request to the server to get a game
  * 
+ * @author Andrew Busch
  */
 public class GetGameRequestObserver implements RequestObserver {
-
+	/** Used to print messages from the controller */
 	private GetGameController controller;
 	
 	/**
@@ -46,7 +48,7 @@ public class GetGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-	    fail(iReq, null);
+	    System.err.println("Response Error: " + iReq.getResponse().getStatusMessage());
 	}
 
 	/**
@@ -56,6 +58,6 @@ public class GetGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-	    System.err.println("Failed to get games.");
+	    System.err.println("Failed to get games with exception: " + exception.getMessage());
 	}
 }

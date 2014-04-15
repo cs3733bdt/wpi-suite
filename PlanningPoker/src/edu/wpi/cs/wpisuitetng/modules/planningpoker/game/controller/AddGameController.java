@@ -8,9 +8,10 @@
  * Contributors: Team Bobby Drop Tables
  ******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controller;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers.AddGameRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -29,24 +30,23 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 public class AddGameController {
 	private static AddGameController instance;
 	
-	private AddGameController(){
-	}
+	private AddGameController() {}
 	
 	/**
 	 * @return returns a new instance of an AddGameController
 	 */
-	public static AddGameController getInstance(){
-		if(instance == null){
+	public static AddGameController getInstance() {
+		if(instance == null) {
 			instance = new AddGameController();
 		}
 		return instance;
 	}
 	
 	/**
-	 * This method assd a requirement to the server
+	 * This method adds a game to the server
 	 * @param newGame is the game to add to the server
 	 */
-	public void addGame(Game newGame){
+	public void addGame(Game newGame) {
 		System.out.println("Adding: " + newGame.getName() + " to server");
 		final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.PUT);
 		request.setBody(newGame.toJSON());
@@ -54,5 +54,4 @@ public class AddGameController {
 		request.addObserver(observer) ;
 		request.send();
 	}
-	
 }

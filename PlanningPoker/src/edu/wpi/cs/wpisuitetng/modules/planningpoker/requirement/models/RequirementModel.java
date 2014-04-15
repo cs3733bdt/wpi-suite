@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,7 +17,7 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement.AddRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
 
 
 //import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
