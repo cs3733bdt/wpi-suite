@@ -463,34 +463,6 @@ public class CreateGamePanel extends JScrollPane {
 		boolean areRequirementsSelected = false;
 		boolean isEndDateValid = false;
 		
-		isNameValid = getBoxName().validateField(errorField);
-		
-		//BEGIN DESCRIPTION BOX VALDATION
-		if(getBoxDescription().getText().length() <= 0){
-			isDescriptionValid = false;
-			if(warn){
-				//getErrorDescription().setText("** Description is REQUIRED");
-				getBoxDescription().setBorder(errorBorder);
-				//getErrorDescription().setForeground(Color.RED);
-			}
-			//TODO add a way to display error descriptions
-			displayError("Description is required");
-		} else {
-			if (warn){
-				//getErrorDescription().setText("");
-				getBoxDescription().setBorder(defaultBorder);
-			}
-			isDescriptionValid = true;
-		}
-		
-		if(requirements.size() == 0){
-			displayError("You must have at least one requirement.");
-			areRequirementsSelected = false;
-		} else{
-			areRequirementsSelected = true;
-		}
-		
-		
 		//BEGIN END DATE VALIDATION
 		endDate = endDateField.getEndDate();
 		Calendar endCalendar = new GregorianCalendar();
@@ -505,6 +477,34 @@ public class CreateGamePanel extends JScrollPane {
 			displayError("End Date and time must be set later than the current date");
 		}
 
+		//BEGIN DESCRIPTION AND REQUIREMET BOX VALDATION				
+				if(requirements.size() == 0){
+					displayError("You must have at least one requirement.");
+					areRequirementsSelected = false;
+				} else{
+					areRequirementsSelected = true;
+				}
+				
+				if(getBoxDescription().getText().length() <= 0){
+					isDescriptionValid = false;
+					if(warn){
+						getBoxDescription().setBorder(errorBorder);
+					}
+					//TODO add a way to display error descriptions
+					displayError("Description is required");
+				} else {
+					if (warn){
+						getBoxDescription().setBorder(defaultBorder);
+					}
+					isDescriptionValid = true;
+				}
+				
+		isNameValid = getBoxName().validateField(errorField);
+		
+		if(!isNameValid && !isDescriptionValid){
+			getBoxDescription().setBorder(defaultBorder);
+		}
+		
 		return (isNameValid && isDescriptionValid && areRequirementsSelected && isEndDateValid);
 	}
 	
