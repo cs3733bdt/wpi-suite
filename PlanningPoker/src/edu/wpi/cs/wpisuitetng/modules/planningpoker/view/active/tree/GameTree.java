@@ -46,12 +46,13 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 @SuppressWarnings("serial")
 public class GameTree extends JPanel implements MouseListener{
 	private boolean initialized = false; //Used to check if the GameModel should be generated from the server.
-	JTree gameTree;
-	JScrollPane gameTreeScroll;
-	DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode("Games");
-	DefaultMutableTreeNode inactive = new DefaultMutableTreeNode("Pending Games");
-	DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the starting node
-	DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the starting node
+	JTree gameTree; // JTree to hold the hierarchy of games
+	JScrollPane gameTreeScroll; // scrollPane to put the tree in
+	DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode("Games"); // makes the master node to hold the other 3
+	DefaultMutableTreeNode inactive = new DefaultMutableTreeNode("Pending Games"); // makes the pending games node
+	DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the active games node
+	DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the games history node
+	
 	
 	/**
 	 * Constructor for a GameTree
@@ -67,6 +68,10 @@ public class GameTree extends JPanel implements MouseListener{
 	 * Used when the list of games is updated or changed.
 	 */
 	public void refresh(){
+		if(this.getComponentCount() != 0){
+			this.remove(0);
+		}
+		
 		active.removeAllChildren();
 		inactive.removeAllChildren();
 		history.removeAllChildren();
@@ -76,7 +81,6 @@ public class GameTree extends JPanel implements MouseListener{
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
-			//if
 			if(!game.isComplete()){ //If the game is not complete then add it to the active game dropdown
 				if(game.isActive()){
 					active.add(newGameNode);
@@ -111,9 +115,7 @@ public class GameTree extends JPanel implements MouseListener{
 		gameTreeScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		gameTreeScroll.setPreferredSize(new Dimension(190, 500));
-		if(this.getComponentCount() != 0){
-			this.remove(0);
-		}
+		
 	    this.add(gameTreeScroll, c);
 	    ViewEventController.getInstance().setGameOverviewTree(this);
 	    this.repaint();
@@ -177,6 +179,14 @@ public class GameTree extends JPanel implements MouseListener{
 						}
 						else{
 							ViewEventController.getInstance().viewEndGame((Game)node.getUserObject());
+						}
+					}
+					else if(node.getUserObject() instanceof String){
+						if(gameTree.isCollapsed(gameTree.getPathForLocation(x, y))){
+							gameTree.expandPath(gameTree.getPathForLocation(x, y));
+						}
+						else {
+							gameTree.collapsePath(gameTree.getPathForLocation(x, y));
 						}
 					}
 				}
