@@ -55,9 +55,17 @@ public class AddGameRequestObserver implements RequestObserver{
 		
 		if (!game.isNotifiedOfCreation() && game.isActive()) {
 			// Send out email, text, and facebook notifications for game creation
-			game.sendNotifications();
-			game.setNotifiedOfCreation(true);
-			GameModel.getInstance().update(game, true);
+			Game realGame = GameModel.getInstance().getGameById(game.getIdentity());
+			// getGameByName will return null if a game with that name doesn't exist yet
+			// So do a null check
+			if (!realGame.equals(null)) {
+				// Have to set
+				realGame.setProject(game.getProject());
+				realGame.setNotifiedOfCreation(true);
+				realGame.sendNotifications();
+			} else {
+				System.err.println(game.getName() + ": Does not exist");
+			}
 		}
 		
 		System.out.println("The request to add a game has succeeded!");

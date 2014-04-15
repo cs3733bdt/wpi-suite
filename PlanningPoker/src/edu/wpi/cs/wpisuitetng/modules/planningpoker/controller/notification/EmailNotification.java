@@ -99,7 +99,15 @@ public class EmailNotification {
 	public void sendEmails() 
 	{
 		// Get the users that are expected to play the game
-		User[] users = g.getProject().getTeam();
+		User[] users = null;
+		// Make sure there is a project and a team before
+		// setting the users to the team
+		try {
+			users = g.getProject().getTeam();
+		} catch(NullPointerException e) {
+			e.printStackTrace();
+			System.err.println("Could not set the list 'users' to the list 'team'.");
+		}
 		
 		//Check to see if no users are attached to this project
 		if(users[0] != null) {
