@@ -19,13 +19,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 	NewAddRequirementsPanel reqPanel;    //initialize new add requirements panel
 	NewAddReqImportReqPanel importPanel;    //initialize the panel with the buttons "Add Requirement" and "Import Requirements"
 	NewCreateGamePanel createGamePanel;  //initialize variable to hold panel above this panel
+	SpringLayout layout = new SpringLayout();
+	final Container rightView = new Container();
 	
 	public NewRightHalfCreateGamePanel(NewCreateGamePanel createGamePanel){
 		this.createGamePanel = createGamePanel;
 		
 		//Initializes a container with SpringLayout and adds it to this panel 
-		final Container rightView = new Container();
-		SpringLayout layout = new SpringLayout();
 		rightView.setLayout(layout);
 		rightView.setMinimumSize(new Dimension(250, 500)); //@TODO change the 500 to something more appropriate
 		
@@ -77,11 +77,22 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 
 		rightView.add(reqPanel);
 		//rightView.add(importPanel);
-		this.getViewport().add(rightView);
+		getViewport().add(rightView);
 	}
 
 	public void addRequirement(Requirement requirement) {
 		createGamePanel.addRequirement(requirement);
+	}
+	
+	public SpringLayout getLayout() {
+		return layout;
+	}
+	
+	public void addComponent(Component c) {
+		rightView.add(c);
+//		rightView.add(reqPanel);
+		getViewport().add(rightView);
+		
 	}
 	
 }
