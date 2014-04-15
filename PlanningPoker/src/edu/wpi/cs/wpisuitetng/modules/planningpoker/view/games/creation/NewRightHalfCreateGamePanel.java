@@ -1,6 +1,21 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
+import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
@@ -20,37 +35,59 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 		this.createGamePanel = createGamePanel;
 		
 		//Initializes a container with SpringLayout and adds it to this panel 
-		Container rightView = new Container();
+		final Container rightView = new Container();
 		SpringLayout layout = new SpringLayout();
 		rightView.setLayout(layout);
+		rightView.setMinimumSize(new Dimension(250, 500)); //@TODO change the 500 to something more appropriate
+		
+		
+		
+		rightView.addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				rightView.repaint();
+			}
+			
+		});
 		
 		reqPanel =  new NewAddRequirementsPanel(this);
-		importPanel = new NewAddReqImportReqPanel(reqPanel);
+		//importPanel = new NewAddReqImportReqPanel(reqPanel);
 		
-		//Anchor reqPanel to left side of container
+		//Anchor AddReqPanel's left side to left side of container
 		layout.putConstraint(SpringLayout.WEST, reqPanel,
-		                     5, //add -5 if issues with the bar
-		                     SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.NORTH, reqPanel,
-		                     5,
-		                     SpringLayout.NORTH, rightView);
+				5, //add -5 if issues with the bar
+				SpringLayout.WEST, rightView);
+
 		
+		//Anchor AddReqPanel top to the top of the container
+		layout.putConstraint(SpringLayout.NORTH, reqPanel,
+				5,
+				SpringLayout.NORTH, rightView);
+
+		//Anchor the AddReqPanel's right side to the right side of the container
 		layout.putConstraint(SpringLayout.EAST, reqPanel, 
-							-5, 
-							SpringLayout.EAST, rightView);
-	
-		//Adjust constraints for the text field so it's at
-		layout.putConstraint(SpringLayout.NORTH, importPanel,
-		                     5,
-		                     SpringLayout.SOUTH, reqPanel);
-		layout.putConstraint(SpringLayout.WEST, importPanel,
-		                     5,
-		                     SpringLayout.WEST, rightView);
+				-5, 
+				SpringLayout.EAST, rightView);
+
+//		//Anchor the top of the import panel to the bottom of the AddReqPanel
+//		layout.putConstraint(SpringLayout.NORTH, importPanel,
+//				5,
+//				SpringLayout.SOUTH, reqPanel);
+//
+//		//Anchor the left side of the import panel to the left side of the container
+//		layout.putConstraint(SpringLayout.WEST, importPanel,
+//				5,
+//				SpringLayout.WEST, rightView);
+//
+//		//Anchor the right side of the import panel to the right side of the container
+//		layout.putConstraint(SpringLayout.EAST, importPanel,
+//				5,
+//				SpringLayout.EAST, rightView);
 		
 		
 
 		rightView.add(reqPanel);
-		rightView.add(importPanel);
+		//rightView.add(importPanel);
 		this.getViewport().add(rightView);
 	}
 

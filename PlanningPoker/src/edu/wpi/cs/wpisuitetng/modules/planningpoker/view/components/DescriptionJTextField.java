@@ -15,9 +15,10 @@ import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
+import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
-public class DescriptionJTextField extends JTextField implements IDataField {
+public class DescriptionJTextField extends JTextArea implements IDataField {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
@@ -27,11 +28,6 @@ public class DescriptionJTextField extends JTextField implements IDataField {
 	public DescriptionJTextField(String text) {
 		super(text);
 		startingText = text;
-	}
-
-	public DescriptionJTextField(int size) {
-		super(size);
-		startingText = "";
 	}
 
 	public DescriptionJTextField() {
