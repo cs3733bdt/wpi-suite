@@ -1,8 +1,20 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -25,7 +37,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
  */
 public class GameUpdateRaceConditionTest {
 	
-	public int j;
+	private int j;
 	
 	Requirement req1;
 	
@@ -33,7 +45,7 @@ public class GameUpdateRaceConditionTest {
 	vote13, vote14, vote15, vote16, vote17, vote18, vote19, vote20, vote21, vote22, vote23, vote24,
 	vote25, vote26, vote27, vote28, vote29, vote30;
 	
-	ArrayList<Requirement> reqList;
+	List<Requirement> reqList;
 	
 	final GameModel model = GameModel.getInstance();
 	
@@ -56,6 +68,7 @@ public class GameUpdateRaceConditionTest {
 	 *
 	 */
 	public class AddVotesThread extends Thread {
+		@Override
 		public void run()
 		{
 			Requirement reqModel1 = model.getGames().get(0).getRequirements().get(0);
@@ -103,6 +116,7 @@ public class GameUpdateRaceConditionTest {
 	 *
 	 */
 	public class UpdateGameThread extends Thread {
+		@Override
 		public void run()
 		{
 			Game gamesFromModel[];

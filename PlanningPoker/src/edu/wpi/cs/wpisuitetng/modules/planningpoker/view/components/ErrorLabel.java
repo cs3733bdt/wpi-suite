@@ -13,8 +13,13 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 
 import javax.swing.JLabel;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 public class ErrorLabel extends JLabel implements IErrorView {
-	public ErrorLabel(){
-	}
+	/*public ErrorLabel(){
+	}*/
 
 }

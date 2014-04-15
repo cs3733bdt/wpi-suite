@@ -68,7 +68,7 @@ public abstract class ObservableModel extends AbstractModel {
      * observers is not specified. See the class comment.
      *
      * @param   o   an observer to be added.
-     * @throws NullPointerException   if the parameter o is null.
+     * @Sthrows NullPointerException if the parameter o is null.
      */
     public synchronized void addObserver(AbstractModelObserver o) {
         if (o == null)
@@ -163,7 +163,7 @@ public abstract class ObservableModel extends AbstractModel {
      * Marks this <tt>Observable</tt> object as having been changed; the
      * <tt>hasChanged</tt> method will now return <tt>true</tt>.
      */
-    protected synchronized void setChanged() {
+    protected synchronized void makeChanged() {
         changed = true;
     }
 
@@ -204,6 +204,11 @@ public abstract class ObservableModel extends AbstractModel {
         return obs.size();
     }
     
+    /**
+     * TODO add documenation
+     * @param i
+     * @return
+     */
     protected synchronized AbstractModelObserver getObserver(int i){
     	return obs.get(i);
     }

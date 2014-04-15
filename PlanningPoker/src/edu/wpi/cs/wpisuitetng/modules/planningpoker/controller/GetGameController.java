@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  *
  */
 public class GetGameController implements ActionListener {
-	private GetGameRequestObserver observer;
+	private final GetGameRequestObserver observer;
 	private static GetGameController instance;
 	private Timer timer;
 	private boolean isRunning = false;
@@ -85,7 +85,7 @@ public class GetGameController implements ActionListener {
 	 * Add the given Games to the local model (they were received from the core).
 	 * This method is called by the GetGamesRequestObserver
 	 * 
-	 * @param Games an array of Games received from the server
+	 * @param games an array of Games received from the server
 	 */
 	public synchronized void receivedGames(Game[] games) {
 		System.out.println("The size of the list returned from the server is: " + games.length);

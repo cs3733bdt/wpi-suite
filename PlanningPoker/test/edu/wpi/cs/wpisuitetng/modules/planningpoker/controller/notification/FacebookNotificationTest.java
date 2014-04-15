@@ -6,6 +6,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,7 +28,7 @@ public class FacebookNotificationTest {
 	User[] team1;
 	String[] support1;
 	Project p;
-	ArrayList<Requirement> reqs;
+	List<Requirement> reqs;
 	
 	@Before
 	public void setUp()

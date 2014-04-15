@@ -67,8 +67,8 @@ public class StatisticsPanel extends JPanel{
 		this.invalidate();
 		this.revalidate();
 
-		this.activeGame = game;
-		this.activeRequirement = requirement;
+		activeGame = game;
+		activeRequirement = requirement;
 		
 		//this.overviewPanel =  new Container();
 		overviewPanel.setLayout(new GridBagLayout());

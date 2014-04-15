@@ -37,6 +37,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 @SuppressWarnings("serial")
 public class GameTree extends JPanel implements MouseListener{
 	private boolean initialized = false; //Used to check if the GameModel should be generated from the server.
@@ -144,7 +149,7 @@ public class GameTree extends JPanel implements MouseListener{
 	}
 
 	public JTree getGameTree(){
-		return this.gameTree;
+		return gameTree;
 	}
 
 	@Override

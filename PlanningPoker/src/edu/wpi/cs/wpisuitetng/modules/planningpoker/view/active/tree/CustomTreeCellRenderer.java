@@ -27,10 +27,10 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 	Icon requirementIcon;
 	Icon iterationIcon;
 
-	public CustomTreeCellRenderer() {
-		//requirementIcon = new RequirementIcon();
-		//iterationIcon = new IterationIcon();
-	}
+	/*public CustomTreeCellRenderer() {
+		requirementIcon = new RequirementIcon();
+		iterationIcon = new IterationIcon();
+	}*/
 
 	/**
 	 * Method getTreeCellRendererComponent.

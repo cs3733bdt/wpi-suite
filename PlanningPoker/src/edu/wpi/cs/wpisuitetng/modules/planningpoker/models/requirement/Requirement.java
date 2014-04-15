@@ -12,6 +12,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
 
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import com.google.gson.Gson;
@@ -45,7 +46,7 @@ public class Requirement extends ObservableModel {
 	private boolean fromRequirementModule;
 	
 	/** list of votes for this requirement */
-	private ArrayList<Vote> votes = new ArrayList<Vote>();
+	private List<Vote> votes = new ArrayList<Vote>();
 
 	/** boolean for whether the requirement has been voted on by all users */
 	private boolean complete = false;
@@ -65,8 +66,6 @@ public class Requirement extends ObservableModel {
 	/**
 	 * Construct a Requirement with required properties provided
 	 * 
-	 * @param id
-	 *            The ID number of the requirement
 	 * @param name
 	 *            The name of the requirement
 	 * @param description
@@ -138,34 +137,34 @@ public class Requirement extends ObservableModel {
 	 * getter for the votes
 	 * @return the votes 
 	 */
-	public ArrayList<Vote> getVotes() {
+	public List<Vote> getVotes() {
 		return votes;
 	}
 
 	/**
 	 * adds a vote to the votes ArrayList
-	 * @param votes the votes to set          
+	 * @param vote the votes to set          
 	 */
 	public void addVote(Vote vote) {
 		this.delayChange();		//Holds the code here until the server is finished re-populating the model
 		for(int i = 0; i < votes.size(); i++) {
 			if(vote.getUsername().equals(votes.get(i).getUsername())) {		//Check to see if this person has voted
 				votes.get(i).setVoteNumber(vote.getVoteNumber());			//If they have update their vote to the new number
-				this.setChanged();											//Says that the requirement has changed
+				this.hasChanged();											//Says that the requirement has changed
 				this.notifyObservers(votes.get(i));							//Run update in the game class
 				return;														//Exit this class
 			}
 		}
-		this.votes.add(vote);
+		votes.add(vote);
 		if(this.getProject() != null){
 			if(votes.size() == this.getProject().getTeam().length) {
-				this.setComplete();
+				this.makeComplete();
 			}
 		} else {
 			System.err.println("THE PROJECT IN THE REQUIREMENT WAS NULL: ADD VOTE METHOD");
 		}
 		
-		this.setChanged();
+		this.hasChanged();
 		this.notifyObservers(vote);
 	}
 	
@@ -182,10 +181,10 @@ public class Requirement extends ObservableModel {
 	/**
 	 * sets the requirement to completed
 	 */
-	public void setComplete() {
+	public void makeComplete() {
 		this.delayChange();
-		this.complete = true;
-		this.setChanged();
+		complete = true;
+		this.makeChanged();
 		this.notifyObservers();
 	}
 
@@ -194,11 +193,11 @@ public class Requirement extends ObservableModel {
 	 * @return the number of votes, or a star if the game is complete
 	 */
 	public String displayComplete(){
-		if(this.complete){
+		if(complete){
 			return "*";
 		}
 		else{
-			return Integer.toString(this.getVotes().size());
+			return Integer.toString(getVotes().size());
 		}
 	}
 	/**
@@ -270,11 +269,11 @@ public class Requirement extends ObservableModel {
 		Requirement comp = (Requirement)o;
 		
 		if(fromRequirementModule){
-			if(this.id != comp.id){
+			if(id != comp.id){
 				return false;
 			}
 		} else {
-			if(!this.identity.equals(comp.identity)){
+			if(!identity.equals(comp.identity)){
 				return false;
 			}
 		}
@@ -305,19 +304,20 @@ public class Requirement extends ObservableModel {
 	 * 
 	 * @param toCopyFrom
 	 *            the requirement to copy from.
+	 * @return true if copyFrom succeeded, false if it did not
 	 */
 	public boolean copyFrom(Requirement toCopyFrom) {
 		boolean wasChanged = false;
-		if(!this.description.equals(toCopyFrom.description)){
-			this.description = toCopyFrom.description;
+		if(!description.equals(toCopyFrom.description)){
+			description = toCopyFrom.description;
 			wasChanged = true;
 		}
-		if(!this.name.equals(toCopyFrom.name)){
-			this.name = toCopyFrom.name;
+		if(!name.equals(toCopyFrom.name)){
+			name = toCopyFrom.name;
 			wasChanged = true;
 		}
-		if(!this.votes.equals(toCopyFrom.votes)){
-			this.votes = toCopyFrom.votes;
+		if(!votes.equals(toCopyFrom.votes)){
+			votes = toCopyFrom.votes;
 			wasChanged = true;
 		}
 		return wasChanged; //TODO THIS IS A PLACE HOLDER! THIS MUST CHECK TO MAKE SURE THAT CHANGES ARE ACTUALLY MADE
@@ -328,6 +328,6 @@ public class Requirement extends ObservableModel {
 	 * prevent race-time condition for fields setting/overriding
 	 */
 	private void delayChange(){
-		while(GameModel.getInstance().serverUpdating()){} // $codepro.audit.disable emptyWhileStatement
+		while(GameModel.getInstance().isServerUpdating()){} // $codepro.audit.disable emptyWhileStatement
 	}
 }

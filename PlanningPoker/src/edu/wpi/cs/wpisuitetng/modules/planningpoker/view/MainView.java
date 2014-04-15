@@ -20,6 +20,11 @@ import javax.swing.JSplitPane;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 @SuppressWarnings("serial")
 public class MainView extends JSplitPane {
 	TabbedView tabView = new TabbedView();

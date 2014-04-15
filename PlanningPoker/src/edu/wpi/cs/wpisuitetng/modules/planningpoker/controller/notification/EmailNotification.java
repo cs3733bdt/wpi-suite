@@ -31,6 +31,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
  * This is a class that will send out email notifications
  * whenever a game is successfully created.
  *
+ * @author Bobby Drop Tables
  */
 public class EmailNotification {
 	
@@ -123,6 +124,7 @@ public class EmailNotification {
 	/**
 	 * This method uses the javaMail API library to send an email to the user
 	 * This code is inspired by http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
+	 * @param session the session with email server
 	 * @param user The user to be emailed.
 	 */
 	public void sendEmail(Session session, User user) {

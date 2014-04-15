@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -28,24 +29,29 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 public class ActiveCardsPanel extends JPanel implements IDataField {
 
 	private int sum = 0;
-	private ArrayList<String> deck;
-	private ArrayList<CardButton> JToggleButtonList = new ArrayList<CardButton>();
+	private final List<String> deck;
+	private final List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
 
 	//initialized array to remember what buttons were pressed if "0?" button is pressed
-    private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
-    private EstimatePanel panel;
+    private final ArrayList<Integer> memoryArray = new ArrayList<Integer>();
+    private final EstimatePanel panel;
 	
-	public ActiveCardsPanel(ArrayList<String> passedDeck, EstimatePanel passedPanel) {
-		this.panel = passedPanel;
-		this.deck = passedDeck;
+	public ActiveCardsPanel(List<String> passedDeck, EstimatePanel passedPanel) {
+		panel = passedPanel;
+		deck = passedDeck;
 		
 		this.setPreferredSize(new Dimension(800, (68 * (Math.round(deck.size() / 11)) ) ) ); //800,100
 		for (int i = 0; i < (deck.size()); i++) {
-			this.JToggleButtonList.add(new CardButton(i, deck, this, panel));
+			JToggleButtonList.add(new CardButton(i, deck, this, panel));
 		}//idk button is part of array
 
 
@@ -125,7 +131,7 @@ public int getSum() {
 	return sum;
 }
 
-public ArrayList<CardButton> getCardButtonArray() {
+public List<CardButton> getCardButtonArray() {
 	return JToggleButtonList; 
 }
 /*

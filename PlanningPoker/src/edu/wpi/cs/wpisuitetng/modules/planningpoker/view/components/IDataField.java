@@ -11,6 +11,11 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 public interface IDataField {
 	
 	
@@ -21,6 +26,6 @@ public interface IDataField {
 	 * @param warningField The external warning field that you want to indicate the error to
 	 * @return true when all of the fields in this component are valid
 	 */
-	public boolean validateField(IErrorView warningField);
+	boolean validateField(IErrorView warningField);
 
 }

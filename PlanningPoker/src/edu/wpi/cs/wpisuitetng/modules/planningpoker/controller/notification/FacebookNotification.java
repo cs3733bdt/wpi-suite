@@ -11,11 +11,6 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
 
-/**
- * @author dstapply
- *
- */
-
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.SASLAuthentication;
@@ -30,6 +25,11 @@ import com.restfb.FacebookClient;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 
+/**
+ * TODO: add documentaiton
+ * @author Bobby Drop Tables
+ *
+ */
 public class FacebookNotification {
 	
 	// Game to get users to send facebook notifications to.

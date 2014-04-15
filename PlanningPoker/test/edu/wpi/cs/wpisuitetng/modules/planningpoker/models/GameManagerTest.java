@@ -191,7 +191,7 @@ public class GameManagerTest {
 	@Test
 	public void testGetAll() throws WPISuiteException{
 		manager.save(defaultSession, game2);
-		Game returnedGameList [] = manager.getAll(defaultSession);
+		Game[] returnedGameList = manager.getAll(defaultSession);
 		assertEquals(2, returnedGameList.length);
 	}
 }
