@@ -93,7 +93,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	{
 		Requirement temp = null;
 		// iterate through list of requirements until id is found
-		for (int i=0; i < this.requirements.size(); i++){
+		for (int i=0; i < requirements.size(); i++){
 			temp = requirements.get(i);
 			if (temp.getId() == id){
 				break;
@@ -108,7 +108,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 */
 	public void removeRequirement(int removeId){
 		// iterate through list of requirements until id of project is found
-		for (int i=0; i < this.requirements.size(); i++){
+		for (int i=0; i < requirements.size(); i++){
 			if (requirements.get(i).getId() == removeId){
 				// remove the id
 				requirements.remove(i);
@@ -142,7 +142,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	public int getNextID()
 	{
 		
-		return this.nextID++;
+		return nextID++;
 	}
 
 	/**

@@ -18,6 +18,7 @@ import java.awt.GridBagLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -40,25 +41,25 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requireme
 public class EndGamePanel extends JScrollPane implements AbstractModelObserver{
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
-	private Game active;
+	private final Game active;
 
 	/**
 	 * Set the gameName equal to the name of the game that was selected from the
 	 * active games list
 	 */
-	private JTextArea gameName = new JTextArea();
+	private final JTextArea gameName = new JTextArea();
 
 	/**
 	 * Set the gameDesc equal to the description of the game that was selected
 	 * from the active games list
 	 */
-	private JTextArea gameDesc = new JTextArea();
+	private final JTextArea gameDesc = new JTextArea();
 
 	/**
 	 * Set the userStoryDesc equal to the description of the requirement being
 	 * selected in the table
 	 */
-	private JTextArea userStoryDesc = new JTextArea();
+	private final JTextArea userStoryDesc = new JTextArea();
 
 	/**
 	 * The estText is needed when the user inputs their estimate, since it must
@@ -82,7 +83,7 @@ public class EndGamePanel extends JScrollPane implements AbstractModelObserver{
 	 */
 	//private JScrollPane activeGameScrollPane;
 	
-	private JPanel blankPanel2;
+	private final JPanel blankPanel2;
 
 	public EndGamePanel(final Game game) {
 		//super(new GridBagLayout());
@@ -90,7 +91,7 @@ public class EndGamePanel extends JScrollPane implements AbstractModelObserver{
 		game.addObserver(this); //Makes this the observer for the game
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 		active = game;
-		this.isEstimatePanelCreated = false;
+		isEstimatePanelCreated = false;
 	
 		topHalfPanel.setLayout(new GridBagLayout());
 
@@ -298,7 +299,7 @@ public class EndGamePanel extends JScrollPane implements AbstractModelObserver{
 	}
 	
 	public void endGameButtonPressed(){
-		active.setComplete();
+		active.makeComplete();
 		active.notifyObservers();
 	}
 	
@@ -307,7 +308,7 @@ public class EndGamePanel extends JScrollPane implements AbstractModelObserver{
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         
-        ArrayList<Requirement> reqs = new ArrayList<Requirement>();
+        List<Requirement> reqs = new ArrayList<Requirement>();
         reqs.add(new Requirement("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 				"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
 				

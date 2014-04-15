@@ -118,7 +118,7 @@ public class SMSNotification {
 		 * Appends the carrier to the end of the phone number
 		 * which is needed to be sent.
 		 * @param user
-		 * @return
+		 * @return String of user with selected carrier on the end of the string
 		 */
 		public String appendCarrier(User user)
 		{
@@ -152,6 +152,7 @@ public class SMSNotification {
 		/**
 		 * This method uses the javaMail API library to send an SMS to the user
 		 * This code is inspired by http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
+		 * @param session the session with the SMS server
 		 * @param user The user to be messaged.
 		 */
 		public void sendSMS(Session session, User user) {

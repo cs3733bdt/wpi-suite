@@ -299,7 +299,7 @@ public class GameModel extends AbstractListModel<Game> implements
 	 * 
 	 * @return true if the server is updating the game model
 	 */
-	public boolean serverUpdating() {
+	public boolean isServerUpdating() {
 		return serverUpdating;
 	}
 }

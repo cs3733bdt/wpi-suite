@@ -14,6 +14,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote;
 /**
  * TODO: add documentation here
  *
+ * @author Bobby Drop Tables
  */
 public class Vote {
 
@@ -51,7 +52,7 @@ public class Vote {
 	 * @param newVote value to set the number of votes to
 	 */
 	public void setVoteNumber(int newVote) {
-		this.voteNumber = newVote;
+		voteNumber = newVote;
 	}
 	
 	

@@ -22,7 +22,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CreateGameButto
  */
 public class ToolbarView extends DefaultToolbarView {
 	
-	public CreateGameButtonPanel createGameButton = new CreateGameButtonPanel();
+	private final CreateGameButtonPanel createGameButton = new CreateGameButtonPanel();
 	
 	/**
 	 * Creates and positions the buttons/other information in the tool bar

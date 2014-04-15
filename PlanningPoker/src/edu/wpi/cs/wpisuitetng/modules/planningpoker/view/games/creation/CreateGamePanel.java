@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -80,7 +81,7 @@ public class CreateGamePanel extends JScrollPane {
 	private JRadioButton textEntryButton = new JRadioButton(
 			"Estimate With Text Entry");
 
-	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
+	private List<Requirement> requirements = new ArrayList<Requirement>();
 	
 	private Date endDate;
 
@@ -95,7 +96,7 @@ public class CreateGamePanel extends JScrollPane {
 	
 	public CreateGamePanel(Game game){
 		build();
-		this.currentGame = game;
+		currentGame = game;
 		requirements = game.getRequirements();
 	}
 
@@ -393,8 +394,8 @@ public class CreateGamePanel extends JScrollPane {
 	 * @return nameTextField
 	 */
 	public String getNameText() {
-		System.out.println(this.nameTextField.getText());
-		return this.nameTextField.getText();
+		System.out.println(nameTextField.getText());
+		return nameTextField.getText();
 	}
 
 	/**
@@ -403,16 +404,16 @@ public class CreateGamePanel extends JScrollPane {
 	 * @return descriptionTextField
 	 */
 	public String getDescText() {
-		System.out.println(this.descriptionTextField.getText());
-		return this.descriptionTextField.getText();
+		System.out.println(descriptionTextField.getText());
+		return descriptionTextField.getText();
 	}
 
 	public void addRequirement(Requirement newReq) {
-		this.requirements.add(newReq);
+		requirements.add(newReq);
 	}
 
-	public ArrayList<Requirement> getRequirements() {
-		return this.requirements;
+	public List<Requirement> getRequirements() {
+		return requirements;
 	}
 
 
@@ -482,7 +483,7 @@ public class CreateGamePanel extends JScrollPane {
 			isDescriptionValid = true;
 		}
 		
-		if(this.requirements.size() == 0){
+		if(requirements.size() == 0){
 			displayError("You must have at least one requirement.");
 			areRequirementsSelected = false;
 		} else{
@@ -543,7 +544,7 @@ public class CreateGamePanel extends JScrollPane {
 	}
 	
 	public void setBoxName(String newName){
-		this.nameTextField.setText(newName);
+		nameTextField.setText(newName);
 	}
 	
 	public JTextArea getBoxDescription() {
@@ -551,7 +552,7 @@ public class CreateGamePanel extends JScrollPane {
 	}
 	
 	public void setBoxDescription(String newDescription){
-		this.descriptionTextField.setText(newDescription);
+		descriptionTextField.setText(newDescription);
 	}
 	
 	public JLabel getErrorName(){
@@ -561,7 +562,7 @@ public class CreateGamePanel extends JScrollPane {
 	}
 	
 	public AddRequirementsPanel getAddReqPan(){
-		return this.addReqPan;
+		return addReqPan;
 	}
 	
 	public boolean doesUseCards(){
@@ -573,17 +574,17 @@ public class CreateGamePanel extends JScrollPane {
 	}
 	
 	public Game getGame(){
-		return this.currentGame;
+		return currentGame;
 	}
 	
 	public void setUsesCards(boolean usesCards){
 		if(usesCards){
-			this.cardsButton.setSelected(true);
-			this.textEntryButton.setSelected(false);
+			cardsButton.setSelected(true);
+			textEntryButton.setSelected(false);
 		}
 		else{
-			this.cardsButton.setSelected(false);
-			this.textEntryButton.setSelected(true);
+			cardsButton.setSelected(false);
+			textEntryButton.setSelected(true);
 		}
 	}
 	

@@ -38,8 +38,12 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  */
 public class GameEntityManager implements EntityManager<Game> {
 
-	private Data db;
+	private final Data db;
 
+	/**
+	 * constructor the the GameEntityManager class
+	 * @param db the data to be added to the database
+	 */
 	public GameEntityManager(Data db) {
 		this.db = db;
 	}

@@ -304,7 +304,7 @@ public class MockData implements Data {
 	@SuppressWarnings("unchecked")
 	@Override
 	public <T> List<Model> retrieveAll(T arg0, Project arg1) {
-		return filterByProject((List<Model>) retrieveAll(arg0), arg1);
+		return filterByProject( (List<Model>) retrieveAll(arg0), arg1);
 	}
 
 	/**

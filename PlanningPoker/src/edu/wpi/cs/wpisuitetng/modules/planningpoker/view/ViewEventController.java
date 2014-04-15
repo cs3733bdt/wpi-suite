@@ -15,6 +15,7 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.swing.JComponent;
 
@@ -33,9 +34,9 @@ public class ViewEventController {
 	private MainView main = null;
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
-	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
-	private ArrayList<ActiveGamesPanel> listOfActiveGamePanels = new ArrayList<ActiveGamesPanel>();
-	private ArrayList<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
+	private List<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
+	private List<ActiveGamesPanel> listOfActiveGamePanels = new ArrayList<ActiveGamesPanel>();
+	private List<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
 	
 	/**
 	 * Default constructor for the ViewEventController. Is protected to prevent instantiation.
@@ -229,11 +230,11 @@ public class ViewEventController {
 	public void removeTab(JComponent comp){
 		if (comp instanceof CreateGamePanel){
 			if(!((CreateGamePanel) comp).readyToRemove()) return;
-			this.listOfCreateGamePanels.remove(comp);
+			listOfCreateGamePanels.remove(comp);
 		}
 		if (comp instanceof ActiveGamesPanel) {
 			if(!((ActiveGamesPanel) comp).readyToRemove()) return;
-			this.listOfActiveGamePanels.remove(comp);
+			listOfActiveGamePanels.remove(comp);
 		}
 		main.getTabbedView().remove(comp);
 	}
@@ -256,14 +257,14 @@ public class ViewEventController {
 			if(toBeRemoved instanceof ActiveGamesPanel)
 			{
 				if(!((ActiveGamesPanel)toBeRemoved).readyToRemove()) continue;
-				this.listOfActiveGamePanels.remove(toBeRemoved);
+				listOfActiveGamePanels.remove(toBeRemoved);
 			}
 			
 
 			if(toBeRemoved instanceof CreateGamePanel)
 			{
 				if(!((CreateGamePanel)toBeRemoved).readyToRemove()) continue;
-				this.listOfCreateGamePanels.remove(toBeRemoved);
+				listOfCreateGamePanels.remove(toBeRemoved);
 			}
 
 			main.getTabbedView().removeTabAt(i);
@@ -292,7 +293,7 @@ public class ViewEventController {
 			{
 				if(!((CreateGamePanel)toBeRemoved).readyToRemove()){
 					break;}
-				this.listOfCreateGamePanels.remove(toBeRemoved);
+				listOfCreateGamePanels.remove(toBeRemoved);
 			}
 
 			main.getTabbedView().removeTabAt(i);
@@ -313,7 +314,7 @@ public class ViewEventController {
 	 */
 	public void refreshGameTree() {
 		//This method will call a method that refreshes the the tree
-		this.gameTree.refresh();
+		gameTree.refresh();
 		
 	}
 

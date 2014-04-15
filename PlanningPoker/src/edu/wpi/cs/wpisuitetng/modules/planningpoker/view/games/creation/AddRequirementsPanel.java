@@ -32,23 +32,28 @@ import javax.swing.border.Border;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 public class AddRequirementsPanel extends JPanel {
 	
 	//THIS IS THE REQUIREMENT NAME FIELD THAT WILL BE NEEDED FOR CONTROLLER
-	private JTextField nameArea = new JTextField();
+	private final JTextField nameArea = new JTextField();
 		
 	//THIS IS THE REQUIREMENT DESCRIPTION FIELD THAT WILL BE NEEDED FOR CONTROLLER
-	private JTextArea descArea = new JTextArea();
+	private final JTextArea descArea = new JTextArea();
 	
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
-	private JPanel createReqPanel = new JPanel();
+	private final JPanel createReqPanel = new JPanel();
 	
-	private	JPanel importReqPanel = new JPanel();
+	private final	JPanel importReqPanel = new JPanel();
 	
-	private JPanel currentReqsPanel = new JPanel();
+	private final JPanel currentReqsPanel = new JPanel();
 	
-	private ActiveGamesTable table2;
+	private final ActiveGamesTable table2;
 	
 	public AddRequirementsPanel(final CreateGamePanel view){
 		
