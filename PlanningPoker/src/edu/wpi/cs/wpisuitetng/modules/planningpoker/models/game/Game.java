@@ -546,9 +546,14 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setNotifiedOfCreation(boolean notifiedOfCreation) {
 		if (this.notifiedOfCreation != notifiedOfCreation) {
+<<<<<<< HEAD
 			this.notifiedOfCreation = notifiedOfCreation;
 			this.makeChanged();
+=======
+			this.setChanged();
+>>>>>>> 3c404bfadb5fb7b0478e1a7af131e5ebd9434f17
 			this.delayChange();
+			this.notifiedOfCreation = notifiedOfCreation;
 		}
 	}
 
@@ -566,9 +571,14 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setNotifiedOfCompletion(boolean notifiedOfCompletion) {
 		if (this.notifiedOfCompletion != notifiedOfCompletion) {
+<<<<<<< HEAD
 			this.notifiedOfCompletion = notifiedOfCompletion;
 			this.makeChanged();
+=======
+			this.setChanged();
+>>>>>>> 3c404bfadb5fb7b0478e1a7af131e5ebd9434f17
 			this.delayChange();
+			this.notifiedOfCompletion = notifiedOfCompletion;
 		}
 	}
 

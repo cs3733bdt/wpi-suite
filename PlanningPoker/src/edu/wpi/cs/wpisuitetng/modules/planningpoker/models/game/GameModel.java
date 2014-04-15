@@ -14,6 +14,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import javax.swing.AbstractListModel;
 
@@ -91,6 +92,7 @@ public class GameModel extends AbstractListModel<Game> implements
 	 *            game to be added to the games ArrayList
 	 */
 	public synchronized void addGame(Game newGame) {
+		while (serverUpdating()) {}
 		games.add(newGame);
 		try {
 			AddGameController.getInstance().addGame(newGame);
@@ -173,7 +175,7 @@ public class GameModel extends AbstractListModel<Game> implements
 	public synchronized void updateGames(Game[] allGames) {
 		boolean changes = false;
 
-		if (!this.isUpdating()) {
+		if (!isUpdating()) {
 			serverUpdating = true;
 
 			int startingSize = getSize();
@@ -293,6 +295,22 @@ public class GameModel extends AbstractListModel<Game> implements
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Gets the game with the UUID passed.
+	 * @param id the UUID of the game to get
+	 * @return return game with UUID
+	 */
+	public Game getGameById(UUID id) {
+		for (Game g : games) {
+			if (g.getIdentity().equals(id)) {
+				return g;
+			}
+		}
+		System.err.println("Could not fine a game with idenity: " + id);
+		
+		return null;
 	}
 
 	/**
