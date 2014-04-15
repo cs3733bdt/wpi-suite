@@ -98,9 +98,9 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.NORTH, gameDesc, 5, SpringLayout.SOUTH, gameDescLabel);
 		layout.putConstraint(SpringLayout.WEST, gameDesc, 5, SpringLayout.WEST, newLeftView);
 		layout.putConstraint(SpringLayout.EAST, gameDesc, -5, SpringLayout.EAST, newLeftView);
-		layout.putConstraint(SpringLayout.NORTH, gameCreatorName, 10, SpringLayout.SOUTH, gameDesc);
+		layout.putConstraint(SpringLayout.NORTH, gameCreatorName, 15, SpringLayout.SOUTH, gameDesc);
 		layout.putConstraint(SpringLayout.WEST, gameCreatorName, 5, SpringLayout.EAST, gameCreatorLabel);
-		layout.putConstraint(SpringLayout.NORTH, gameCreatorLabel, 10, SpringLayout.SOUTH, gameDesc);
+		layout.putConstraint(SpringLayout.NORTH, gameCreatorLabel, 15, SpringLayout.SOUTH, gameDesc);
 		layout.putConstraint(SpringLayout.WEST, gameCreatorLabel, 5, SpringLayout.WEST, newLeftView);
 		layout.putConstraint(SpringLayout.NORTH, gameEndDateLabel, 5, SpringLayout.SOUTH, gameCreatorLabel);
 		layout.putConstraint(SpringLayout.WEST, gameEndDateLabel, 5, SpringLayout.WEST, newLeftView);
