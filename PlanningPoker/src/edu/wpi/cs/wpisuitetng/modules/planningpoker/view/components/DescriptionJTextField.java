@@ -15,23 +15,35 @@ import java.awt.Color;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
+import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
-public class DescriptionJTextField extends JTextField implements IDataField {
+public class DescriptionJTextField extends JTextArea implements IDataField {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
+	
+	private String startingText;
 
 	public DescriptionJTextField(String text) {
 		super(text);
-	}
-
-	public DescriptionJTextField(int size) {
-		super(size);
+		startingText = text;
 	}
 
 	public DescriptionJTextField() {
+		startingText = "";
 	}
+	
+	public void displayStandardBorder(){
+		setBorder(BorderFactory.createTitledBorder("Description"));
+	}
+	
+	@Override
+	public void setText(String text){
+		startingText = text;
+		super.setText(text);
+	}
+	
 
 	@Override
 	public boolean validateField(IErrorView errorField) {
@@ -51,4 +63,8 @@ public class DescriptionJTextField extends JTextField implements IDataField {
 		return isDescriptionValid;
 	}
 
+	@Override
+	public boolean hasChanges() {
+		return getText().equals(startingText);
+	}
 }
