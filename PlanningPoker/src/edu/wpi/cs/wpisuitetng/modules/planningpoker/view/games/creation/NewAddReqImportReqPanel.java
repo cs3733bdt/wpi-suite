@@ -29,7 +29,7 @@ public class NewAddReqImportReqPanel extends JPanel {
 				 nameArea.setText("");
 				 descArea.setText("");*/
 				 reqPanel.getCreateReqPanel().setVisible(true);
-				 reqPanel.getImportReqPanel().setVisible(false);
+				 reqPanel.getImportReqPanel().setVisible(true);
 				 reqPanel.getCurrentReqsPanel().setVisible(false);
 			 }
 		});
