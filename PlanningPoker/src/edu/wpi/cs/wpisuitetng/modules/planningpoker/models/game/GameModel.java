@@ -41,10 +41,10 @@ public class GameModel extends AbstractListModel<Game> implements
 	private static GameModel instance;
 
 	/** Stores the next ID */
-	private int nextID;
+	private final int nextID;
 
 	/** List of available games */
-	private List<Game> games;
+	private final List<Game> games;
 
 	private boolean serverUpdating = false;
 
@@ -92,7 +92,7 @@ public class GameModel extends AbstractListModel<Game> implements
 	 *            game to be added to the games ArrayList
 	 */
 	public synchronized void addGame(Game newGame) {
-		while (serverUpdating()) {}
+		while (isServerUpdating()) {}
 		games.add(newGame);
 		try {
 			AddGameController.getInstance().addGame(newGame);

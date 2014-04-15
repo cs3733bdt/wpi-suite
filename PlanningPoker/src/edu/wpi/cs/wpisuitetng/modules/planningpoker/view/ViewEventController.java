@@ -34,9 +34,9 @@ public class ViewEventController {
 	private MainView main = null;
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
-	private List<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
-	private List<ActiveGamesPanel> listOfActiveGamePanels = new ArrayList<ActiveGamesPanel>();
-	private List<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
+	private final List<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
+	private final List<ActiveGamesPanel> listOfActiveGamePanels = new ArrayList<ActiveGamesPanel>();
+	private final List<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
 	
 	/**
 	 * Default constructor for the ViewEventController. Is protected to prevent instantiation.
@@ -285,9 +285,12 @@ public class ViewEventController {
 		{
 			Component toBeRemoved = main.getTabbedView().getComponentAt(i);
 
-			if(toBeRemoved instanceof ActiveGamesPanel){continue;}
-			if(toBeRemoved == selected){
-				continue;}
+			if(toBeRemoved instanceof ActiveGamesPanel) {
+				continue;
+			}
+			if(toBeRemoved == selected) {
+				continue;
+			}
 
 			if(toBeRemoved instanceof CreateGamePanel)
 			{
