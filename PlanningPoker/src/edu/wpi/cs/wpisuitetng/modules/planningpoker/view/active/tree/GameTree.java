@@ -97,7 +97,9 @@ public class GameTree extends JPanel implements MouseListener{
 		gameTree.setToggleClickCount(0);
 		gameTree.addMouseListener(this);
 		
-		gameTree.setPreferredSize(new Dimension(500 , 10 + gameList.size()*21));
+		int width = getLongestGameNameLength(gameList);
+		
+		gameTree.setPreferredSize(new Dimension(30 + width*5 , 10 + gameList.size()*21));
 
 		this.setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
@@ -108,22 +110,16 @@ public class GameTree extends JPanel implements MouseListener{
 		c.weightx = 1;
 		c.gridx = 1;
 		c.gridy = 1;
-		c.gridwidth = 1;
 		gameTreeScroll = new JScrollPane(gameTree);
 		
+		gameTreeScroll.setPreferredSize(new Dimension(190, 500));
 		if(this.getComponentCount() != 0){
 			this.remove(0);
 		}
-        gameTreeScroll.setPreferredSize(new Dimension(150, 500));
-
 	    this.add(gameTreeScroll, c);
-	    
-        this.setPreferredSize(new Dimension(150,550));
-
 	    ViewEventController.getInstance().setGameOverviewTree(this);
 	    this.repaint();
 	    this.validate();
-	    System.out.println("Finished refresshing the tree");
 		
 	}
 	
@@ -223,6 +219,17 @@ public class GameTree extends JPanel implements MouseListener{
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private int getLongestGameNameLength(List<Game> gameList){
+		int longestSoFar = 0;
+		for(int i = 0; i < gameList.size(); i++){
+			if(gameList.get(i).getName().length() > longestSoFar){
+				longestSoFar = gameList.get(i).getName().length();
+			}	
+		}
+		System.out.println(longestSoFar);
+		return longestSoFar;
 	}
 	
 }
