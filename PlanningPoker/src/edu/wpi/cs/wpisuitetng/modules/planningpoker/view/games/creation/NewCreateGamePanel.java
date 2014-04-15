@@ -13,6 +13,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requireme
  * Used to create a new Planning Poker game using the input of the user.
  */
 
+
 public class NewCreateGamePanel extends JSplitPane {
 	NewLeftHalfCreateGamePanel leftHalf = new NewLeftHalfCreateGamePanel();
 	NewRightHalfCreateGamePanel rightHalf = new NewRightHalfCreateGamePanel(this);
@@ -22,7 +23,7 @@ public class NewCreateGamePanel extends JSplitPane {
 		this.setRightComponent(rightHalf);
 		rightHalf.setMinimumSize(new Dimension(500, 400));
 		this.setLeftComponent(leftHalf);
-		this.setDividerLocation(700);
+		this.setDividerLocation(400);
 		
 	}
 	
@@ -40,7 +41,7 @@ public class NewCreateGamePanel extends JSplitPane {
 	}
 
 	public void addRequirement(Requirement requirement) {
-		//this.requirements.add(requirement);
+//		this.requirements.add(requirement);
 	}
 	
 }
