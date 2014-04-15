@@ -35,7 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.defecttracker.entitymanagers.DefectManager
 import edu.wpi.cs.wpisuitetng.modules.postboard.model.PostBoardEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.iterations.IterationEntityManager;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameEntityManager;
 
 /**
  * This singleton class responds to API requests directed at 

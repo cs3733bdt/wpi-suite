@@ -21,10 +21,10 @@ import org.junit.Test;
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 /**
  * This test checks whether if adding votes can be successfully done while the game model
@@ -108,7 +108,7 @@ public class GameUpdateRaceConditionTest {
 		}
 	}
 	
-	boolean updateStarted = false;
+	private boolean updateStarted = false;
 	/**
 	 * This thread mimics the server by retrieving the games from the model
 	 * and updating the games in the game model.
@@ -138,7 +138,7 @@ public class GameUpdateRaceConditionTest {
 	}
 	
 	
-	@Test
+	@Test(timeout=20000)
 	public void testRaceConditionVoteAndUpdate()
 	{
 		req1 = new Requirement("Req1", "Desc1");
@@ -233,7 +233,7 @@ public class GameUpdateRaceConditionTest {
 		while(!isFinishedUpdate || !isFinishedVotes){
 			//System.out.println("isFinishedUpdate: " + isFinishedUpdate + " " + j + " , isFinishedVotes: " + isFinishedVotes);
 			try {
-				Thread.sleep(1);					//If this is not here then we hit an infinite loop
+				Thread.sleep(3);					//If this is not here then we hit an infinite loop
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

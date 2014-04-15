@@ -16,6 +16,8 @@ import static org.junit.Assert.assertEquals;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
+
 /**
  * TODO: add documentation
  * @author Bobby Drop Tables
