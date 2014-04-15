@@ -14,7 +14,6 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
@@ -104,16 +103,23 @@ public class GameTree extends JPanel implements MouseListener{
 		GridBagConstraints c = new GridBagConstraints();
 		
 		c.fill = GridBagConstraints.BOTH;
-		c.weighty = 1;
+		c.anchor = GridBagConstraints.CENTER;
+		//c.weighty = 1;
 		c.weightx = 1;
 		c.gridx = 1;
 		c.gridy = 1;
+		c.gridwidth = 1;
 		gameTreeScroll = new JScrollPane(gameTree);
 		
 		if(this.getComponentCount() != 0){
 			this.remove(0);
 		}
+        gameTreeScroll.setPreferredSize(new Dimension(150, 500));
+
 	    this.add(gameTreeScroll, c);
+	    
+        this.setPreferredSize(new Dimension(150,550));
+
 	    ViewEventController.getInstance().setGameOverviewTree(this);
 	    this.repaint();
 	    this.validate();
