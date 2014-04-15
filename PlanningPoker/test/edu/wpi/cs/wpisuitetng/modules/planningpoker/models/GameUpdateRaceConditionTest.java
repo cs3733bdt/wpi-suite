@@ -108,7 +108,7 @@ public class GameUpdateRaceConditionTest {
 		}
 	}
 	
-	boolean updateStarted = false;
+	private boolean updateStarted = false;
 	/**
 	 * This thread mimics the server by retrieving the games from the model
 	 * and updating the games in the game model.
@@ -138,7 +138,7 @@ public class GameUpdateRaceConditionTest {
 	}
 	
 	
-	@Test
+	@Test(timeout=20000)
 	public void testRaceConditionVoteAndUpdate()
 	{
 		req1 = new Requirement("Req1", "Desc1");
@@ -233,7 +233,7 @@ public class GameUpdateRaceConditionTest {
 		while(!isFinishedUpdate || !isFinishedVotes){
 			//System.out.println("isFinishedUpdate: " + isFinishedUpdate + " " + j + " , isFinishedVotes: " + isFinishedVotes);
 			try {
-				Thread.sleep(1);					//If this is not here then we hit an infinite loop
+				Thread.sleep(3);					//If this is not here then we hit an infinite loop
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
