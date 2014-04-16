@@ -226,7 +226,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		 * Adds data to the table
 		 */
 		for (int i = 0; i < game.getRequirements().size(); i++) {
-			table.tableModel.addRow(new Object[] {
+			table.getTableModel().addRow(new Object[] {
 					game.getRequirements().get(i).getName(),
 					game.getRequirements().get(i).getDescription(),
 					game.getRequirements().get(i).displayComplete() });
