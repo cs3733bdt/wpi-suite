@@ -14,6 +14,7 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -52,7 +53,12 @@ public class GameTree extends JPanel implements MouseListener{
 	DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the active games node
 	DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the games history node
 	
+	boolean isInactiveCollapsed = true;
+	boolean isActiveCollapsed = true;
+	boolean isHistoryCollapsed = true;
 	
+	int inactiveCount = 0;
+	int activeCount = 0;
 	/**
 	 * Constructor for a GameTree
 	 */
@@ -67,8 +73,18 @@ public class GameTree extends JPanel implements MouseListener{
 	 * Used when the list of games is updated or changed.
 	 */
 	public void refresh(){
-		if(getComponentCount() != 0){
+		if(getComponentCount() != 0){			
+			isInactiveCollapsed = gameTree.isCollapsed(1);
+			inactiveCount += 2;
+			
+			isActiveCollapsed = gameTree.isCollapsed(inactiveCount);
+			activeCount += inactiveCount + 1;
+			
+			isHistoryCollapsed = gameTree.isCollapsed(activeCount);
 			remove(0);
+			
+			inactiveCount = 0;
+			activeCount = 0;
 		}
 		
 		active.removeAllChildren();
@@ -83,9 +99,11 @@ public class GameTree extends JPanel implements MouseListener{
 			if(!game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
 				if(game.isActive()){
 					active.add(newGameNode);
+					activeCount++;
 				}
 				else if(game.isCreator(ConfigManager.getConfig().getUserName())){
 					inactive.add(newGameNode);
+					inactiveCount++; 
 				}
 			} else { //If the game is complete then put it in the history
 				history.add(newGameNode);
@@ -114,10 +132,42 @@ public class GameTree extends JPanel implements MouseListener{
 		gameTreeScroll = new JScrollPane(gameTree);
 		gameTreeScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);		
+		gameTreeScroll.setPreferredSize(new Dimension(190, 500));
 		
 	    add(gameTreeScroll, c);
-	    c.weighty = 0;
 	    ViewEventController.getInstance().setGameOverviewTree(this);
+	    
+	    
+	    if(isInactiveCollapsed){
+	    	gameTree.collapseRow(1);
+	    }
+	    else{
+	    	gameTree.expandRow(1);	
+	    }
+	   
+	    inactiveCount += 2;
+	    	    
+	    if(isActiveCollapsed){
+	    	gameTree.collapseRow(inactiveCount);
+	    }
+	    else{
+	    	gameTree.expandRow(inactiveCount);	
+	    }
+	    
+	    activeCount += inactiveCount + 1;
+	    	    
+	    if(isHistoryCollapsed){
+	    	gameTree.collapseRow(activeCount);
+	    }
+	    else{
+	    	gameTree.expandRow(activeCount);	
+	    }
+	    
+	    inactiveCount = 0;
+		activeCount = 0;
+
+	    
+	    
 	    
 	    revalidate();
 	    gameTree.revalidate();
