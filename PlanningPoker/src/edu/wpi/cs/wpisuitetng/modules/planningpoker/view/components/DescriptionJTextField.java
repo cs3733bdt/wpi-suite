@@ -18,7 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 /**
- * TODO: add documentation
+ * creates a textbox which allows the user to enter a description for the game
+ * the description cannot be empty when creating a game
  * @author Bobby Drop Tables
  *
  */

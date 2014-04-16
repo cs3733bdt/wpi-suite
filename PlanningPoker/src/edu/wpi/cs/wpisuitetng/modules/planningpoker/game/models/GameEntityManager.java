@@ -28,10 +28,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 /**
  * 
- * Most of the code is referenced and refactored directly from the Requirement
- * Entity Manager module
- * 
- * TODO: add documentation
+ * This is the entity manager for the Game in the PlanningPoker module
  * 
  * @author dstapply
  * 
@@ -145,13 +142,10 @@ public class GameEntityManager implements EntityManager<Game> {
 	/**
 	 * Deletes a requirement from the database
 	 * 
-	 * @param s
-	 *            the session
-	 * @param id
-	 *            the id of the requirement to delete
-	 * 
-	 * @return true if the deletion was successful * @throws WPISuiteException * @throws
-	 *         WPISuiteException * @throws WPISuiteException
+	 * @param s the session
+	 * @param id the id of the requirement to delete 
+	 * @return true if the deletion was successful 
+	 * @throws WPISuiteException 
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session,
 	 *      String)
 	 */
@@ -202,13 +196,10 @@ public class GameEntityManager implements EntityManager<Game> {
 	/**
 	 * Ensures that a user is of the specified role
 	 * 
-	 * @param session
-	 *            the session
-	 * @param role
-	 *            the role being verified
+	 * @param session the session
+	 * @param role the role being verified
 	 * 
-	 * @throws WPISuiteException
-	 *             user isn't authorized for the given role
+	 * @throws WPISuiteException user isn't authorized for the given role
 	 */
 	private void ensureRole(Session session, Role role)
 			throws WPISuiteException {

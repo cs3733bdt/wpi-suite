@@ -26,6 +26,7 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
+ * creates the button that allows the user to create a game
  * @author TomPaolillo
  * @version $Revision: 1.0 $
  */
@@ -75,9 +76,10 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		this.add(contentPanel);
 	}
 	/**
-	 * Method getCreateGameIcon.
+	 * getter for the create game icon
 	
-	 * @return JButton */
+	 * @return the create game icon 
+	 */
 	public JButton getCreateGameIcon() {
 		return createGameIcon;
 	}

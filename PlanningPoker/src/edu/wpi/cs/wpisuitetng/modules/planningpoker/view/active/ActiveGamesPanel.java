@@ -97,8 +97,8 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 	private final JPanel blankPanel2;
 	
 	/**
-	 * TODO add documentation
-	 * @param game
+	 * displays the active games panel for a game
+	 * @param game the game which the panel will be displayed for
 	 */
 	public ActiveGamesPanel(final Game game) {
 		//super(new GridBagLayout());

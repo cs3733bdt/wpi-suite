@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 
 /**
- * 
+ * creates a button which allows a user to save a game which they can edit later
  * @author TomPaolillo
  *
  */
@@ -32,6 +32,10 @@ public class SaveGameButtonPanel extends JPanel{
 	JPanel contentPanel = new JPanel();
 	JButton saveGameButton = new JButton("Save Game");	
 	
+	/**
+	 * displays and sets the save game button
+	 * @param panel the panel which the button is located on
+	 */
 	public SaveGameButtonPanel(CreateGamePanel panel){
 		//super("");
 		
@@ -57,9 +61,10 @@ public class SaveGameButtonPanel extends JPanel{
 		parentPanel = panel;
 	}
 	/**
-	 * Method getSaveGameButton.
+	 * getter for the save game button
 	
-	 * @return JButton */
+	 * @return the save game button
+	 */
 	public JButton getSaveGameButton() {
 		return saveGameButton;
 	}

@@ -41,7 +41,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
- * TODO: add documentation
+ * Displays and lists the game nodes and stores games in them which
+ * is dependant on the status of the game
  * @author Bobby Drop Tables
  *
  */

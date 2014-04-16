@@ -50,8 +50,8 @@ public class EmailNotification {
 	}
 	
 	/**
-	 * TODO: fill out this documentation
-	 * @return
+	 * logs in the user into the email server
+	 * @return session that contains the email server
 	 */
 	public Session login() {
 		// Get system properties

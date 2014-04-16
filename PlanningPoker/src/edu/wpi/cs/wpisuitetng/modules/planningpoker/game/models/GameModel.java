@@ -72,8 +72,7 @@ AbstractModelObserver {
 	/**
 	 * Gets a game at the specified location
 	 * 
-	 * @param the
-	 *            index to retrive
+	 * @param the index to retrieve
 	 */
 	@Override
 	public Game getElementAt(int arg0) {
@@ -88,8 +87,7 @@ AbstractModelObserver {
 	/**
 	 * Adds a Game to the data model games
 	 * 
-	 * @param newGame
-	 *            game to be added to the games ArrayList
+	 * @param newGame game to be added to the games ArrayList
 	 */
 	public synchronized void addGame(Game newGame) {
 		while (serverUpdating) {}
@@ -137,8 +135,7 @@ AbstractModelObserver {
 	 * This is used when a database add fails so that the model reflects the
 	 * database properly
 	 * 
-	 * @param toRemove
-	 *            The game to remove from the model
+	 * @param toRemove The game to remove from the model
 	 */
 	public void removeGameFromModel(Game toRemove) {
 		int index = 0;
@@ -158,8 +155,7 @@ AbstractModelObserver {
 	 * Adds all of the list of games to the model Used by the database
 	 * controller construct the game model initially.
 	 * 
-	 * @param newGames
-	 *            The games to be added to the model
+	 * @param newGames The games to be added to the model
 	 */
 	public synchronized void addGames(Game[] newGames) {
 		updateGames(newGames);
@@ -170,7 +166,7 @@ AbstractModelObserver {
 	 * UUID's between the model and the list of games the values for the games
 	 * will be updated using the server's values.
 	 * 
-	 * @param allGames
+	 * @param allGames the list of games already in the model
 	 */
 	public synchronized void updateGames(Game[] allGames) {
 		boolean changes = false;
@@ -261,10 +257,8 @@ AbstractModelObserver {
 	 * <code>notifyObservers</code> method to have all the object's observers
 	 * notified of the change.
 	 * 
-	 * @param o
-	 *            the observable object.
-	 * @param arg
-	 *            an argument passed to the <code>notifyObservers</code> method.
+	 * @param o the observable object.
+	 * @param arg an argument passed to the <code>notifyObservers</code> method.
 	 */
 	@Override
 	public void update(ObservableModel o, Object arg) {
@@ -287,6 +281,7 @@ AbstractModelObserver {
 	}
 
 	/**
+	 * checks to see if the game is updating
 	 * @return true if this game model is updating
 	 * 
 	 */
@@ -316,7 +311,7 @@ AbstractModelObserver {
 	}
 
 	/**
-	 * 
+	 * checks to see if the server is updating the game
 	 * @return true if the server is updating the game model
 	 */
 	public boolean isServerUpdating() {

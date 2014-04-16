@@ -614,7 +614,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * hasChanged in the super class does not check if the 
 	 * requirements has been changed. This method is to check
 	 * whether if the requirements are also changed.
-	 * @return
+	 * @return true if the requirement is changed
 	 * 
 	 */
 	@Override

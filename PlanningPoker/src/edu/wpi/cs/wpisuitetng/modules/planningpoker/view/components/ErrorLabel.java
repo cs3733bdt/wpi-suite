@@ -14,7 +14,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 import javax.swing.JLabel;
 
 /**
- * TODO: add documentation
+ * used to display any errors that occur
  * @author Bobby Drop Tables
  *
  */

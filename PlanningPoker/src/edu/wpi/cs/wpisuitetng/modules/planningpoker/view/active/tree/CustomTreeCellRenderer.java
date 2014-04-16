@@ -1,12 +1,13 @@
 /*******************************************************************************
- * Copyright (c) 2013 WPI-Suite
+ * Copyright (c) 2014 -- WPI Suite
+ *
  * All rights reserved. This program and the accompanying materials
  * are made available under the terms of the Eclipse Public License v1.0
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
- * 
- * Contributors: Team Rolling Thunder
- ******************************************************************************/
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree;
 
 import java.awt.Component;
@@ -20,8 +21,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
 
 /**
- * @author justinhess
- * @version $Revision: 1.0 $
+ * 
+ * @author Bobby Drop Tables
  */
 public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 	Icon requirementIcon;
@@ -35,32 +36,19 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 	/**
 	 * Method getTreeCellRendererComponent.
 	 * 
-	 * @param tree
-	 *            JTree
-	 * @param value
-	 *            Object
-	 * @param sel
-	 *            boolean
-	 * @param expanded
-	 *            boolean
-	 * @param leaf
-	 *            boolean
-	 * @param row
-	 *            int
-	 * @param hasFocus
-	 *            boolean
-	
-	
-	 * @return Component
-	 * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(JTree,
-	 *      Object, boolean, boolean, boolean, int, boolean) */
+	 * @param tree JTree
+	 * @param value Object
+	 * @param sel boolean
+	 * @param expanded boolean
+	 * @param leaf boolean
+	 * @param row int
+	 * @param hasFocus boolean
+	 * @return Component that the renderer uses to draw the file
+	 * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(JTree, Object, boolean, boolean, boolean, int, boolean) */
 	@Override
-	public Component getTreeCellRendererComponent(JTree tree, Object value,
-			boolean sel, boolean expanded, boolean leaf, int row,
-			boolean hasFocus) {
+	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
 
-		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf,
-				row, hasFocus);
+		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
 
 		if (node.getUserObject() instanceof Game) {

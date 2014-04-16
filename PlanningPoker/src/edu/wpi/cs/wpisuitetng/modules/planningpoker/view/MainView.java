@@ -50,6 +50,7 @@ public class MainView extends JSplitPane {
 	}
 	
 	/**
+	 * creates a tabbed view base on requests.
 	 * @return current TabbedView
 	 */
 	public TabbedView getTabbedView(){

@@ -44,7 +44,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 /**
- * TODO: add documentation
+ * Displays the estimations made by the planning poker cards
  * @author Bobby Drop Tables
  *
  */
@@ -87,6 +87,9 @@ public class EstimatePanel extends JPanel{
     
     /**
 	 * If the ArrayList passed in is empty it will use the default deck
+	 * @param game the Game that estimate panel which the estimate is displayed on
+	 * @param requirement the requirement to be added
+	 * @param deck2 the deck of cards that can be added to the game
 	 **/
 	public EstimatePanel(Game game, Requirement requirement, List<String> deck2){ //add a deck of cards as a parameter
 
@@ -358,7 +361,8 @@ public class EstimatePanel extends JPanel{
 	}
 	
 	/**
-	 * Returns the sum of all the cards
+	 * getter for the sum of all the cards
+	 * @return the sun if all the cards
 	 */
 	public int getMaxSum() {
 		int sum = 0;
@@ -368,6 +372,10 @@ public class EstimatePanel extends JPanel{
 		return sum;
 	}
 	
+	/**
+	 * getter for all of the cards
+	 * @return the list of cards
+	 */
 	public List<CardButton> getCardButtonArray() {
 		return new ArrayList<CardButton>();
 	}
@@ -387,7 +395,10 @@ public class EstimatePanel extends JPanel{
 	public Requirement getRequirement(){
 		return activeRequirement;
 	}
-		
+	
+	/**
+	 * sees if the submit vote button passes
+	 */
 	public void submitEstimatePressed() {
 		if(getGame().doesUseCards()){
 			this.submitEstimate();

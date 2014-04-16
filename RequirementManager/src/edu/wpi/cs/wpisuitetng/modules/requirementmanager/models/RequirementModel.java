@@ -51,7 +51,7 @@ public class RequirementModel extends AbstractListModel{
 	}
 	
 	/**
-	
+	 * getter for an instance of a requirement
 	 * @return the instance of the requirement model singleton. */
 	public static RequirementModel getInstance()
 	{
@@ -86,8 +86,8 @@ public class RequirementModel extends AbstractListModel{
 	 * Returns the Requirement with the given ID
 	 * 
 	 * @param id The ID number of the requirement to be returned
-	
-	 * @return the requirement for the id or null if the requirement is not found */
+	 * @return the requirement for the id or null if the requirement is not found 
+	 */
 	public Requirement getRequirement(int id)
 	{
 		Requirement temp = null;
@@ -125,10 +125,7 @@ public class RequirementModel extends AbstractListModel{
 	 * Provides the number of elements in the list of requirements for the project. This
 	 * function is called internally by the JList in NewRequirementPanel. Returns elements
 	 * in reverse order, so the newest requirement is returned first.
-	 * 
-	
-	
-	
+	 *	
 	 * @return the number of requirements in the project * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize()
 	 */
 	public int getSize() {
@@ -139,8 +136,8 @@ public class RequirementModel extends AbstractListModel{
 	 * 
 	 * Provides the next ID number that should be used for a new requirement that is created.
 	 * 
-	
-	 * @return the next open id number */
+	 * @return the next open id number 
+	 */
 	public int getNextID()
 	{
 		
@@ -152,10 +149,8 @@ public class RequirementModel extends AbstractListModel{
 	 * for the project. Used internally by the JList in NewRequirementModel.
 	 * 
 	 * @param index The index of the requirement to be returned
-	
-	
-	
-	 * @return the requirement associated with the provided index * @see javax.swing.ListModel#getElementAt(int) * @see javax.swing.ListModel#getElementAt(int) * @see javax.swing.ListModel#getElementAt(int)
+	 * @return the requirement associated with the provided index 
+	 * @see javax.swing.ListModel#getElementAt(int) 
 	 */
 	public Requirement getElementAt(int index) {
 		return requirements.get(requirements.size() - 1 - index);

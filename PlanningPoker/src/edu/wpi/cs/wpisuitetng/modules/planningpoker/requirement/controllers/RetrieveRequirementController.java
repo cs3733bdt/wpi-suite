@@ -42,6 +42,7 @@ public class RetrieveRequirementController implements ActionListener {
 	}
 	
 	/**
+	 * getter for an instance of the RetrieveRequirementsController
 	 * @return the instance of the RetrieveRequirementsController or creates one if it does not
 	 * exist.
 	 */
@@ -59,7 +60,6 @@ public class RetrieveRequirementController implements ActionListener {
 	 * Sends an HTTP request to store a requirement when the
 	 * update button is pressed
 	 * @param e ActionEvent
-	
 	 * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
 	 */
 	@Override

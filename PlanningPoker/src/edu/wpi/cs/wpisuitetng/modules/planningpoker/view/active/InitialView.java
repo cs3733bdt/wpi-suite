@@ -18,7 +18,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JPanel;
 
 /**
- * TODO: add documentation
+ * The default view for the GUI
  * @author Bobby Drop Tables
  *
  */

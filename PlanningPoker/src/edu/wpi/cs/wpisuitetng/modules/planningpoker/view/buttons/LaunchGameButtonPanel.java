@@ -20,7 +20,7 @@ import javax.swing.JPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 
 /**
- * 
+ * Creates a button which allows a user to start a game after making one
  * @author TomPaolillo
  *
  */
@@ -32,6 +32,10 @@ public class LaunchGameButtonPanel extends JPanel{
 	JPanel contentPanel = new JPanel();
 	JButton launchGameButton = new JButton("Launch Game");	
 	
+	/**
+	 * displays and sets the launch game button
+	 * @param panel the panel which the button is located on
+	 */
 	public LaunchGameButtonPanel(CreateGamePanel panel){
 		//super("");
 		//super(new GridBagLayout());
@@ -55,13 +59,17 @@ public class LaunchGameButtonPanel extends JPanel{
 		parentPanel = panel;
 	}
 	/**
-	 * Method getLaunchGameButton.
+	 * getter for the launch game button
 	
-	 * @return JButton */
+	 * @return the launch game button 
+	 */
 	public JButton getLaunchGameButton() {
 		return launchGameButton;
 	}
 	
+	/**
+	 * sets the action listeners for the launch game buttons
+	 */
 	void setupActionListeners(){
 		launchGameButton.addActionListener(new ActionListener(){
 			@Override

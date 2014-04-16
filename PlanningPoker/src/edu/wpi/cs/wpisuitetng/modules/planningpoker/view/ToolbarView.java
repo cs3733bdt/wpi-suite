@@ -26,6 +26,7 @@ public class ToolbarView extends DefaultToolbarView {
 	
 	/**
 	 * Creates and positions the buttons/other information in the tool bar
+	 * @param visible returns true if the card is visible
 	 */
 	public ToolbarView(boolean visible){
 		this.addGroup(createGameButton);

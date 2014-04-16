@@ -87,7 +87,8 @@ public class ViewEventController {
 	
 	/**
 	 * Creates an EditGamePanel instance, adds a tab representing 
-	 * that panel, and switches to that new panel 
+	 * that panel, and switches to that new panel
+	 * @param game The game to be added
 	 */
 	public void editGame(Game game) {
 		CreateGamePanel newGame = new CreateGamePanel(game);
@@ -153,6 +154,7 @@ public class ViewEventController {
 	/**
 	 * After clicking a game in the games list, the active games view will be displayed.
 	 * This also pulls an active game to focus on double click
+	 * @param game Game to be joined
 	 */
 	public void joinGame(Game game){
 		//Attempt to find the game in the active panels list
@@ -187,7 +189,8 @@ public class ViewEventController {
 	}
 	
 	/**
-	 * TODO: add documentation for this funciton
+	 * ends the game when activated
+	 * @param game Game to be searched for
 	 */
 	public void viewEndGame(Game game){
 		//Attempt to find the game in the active panels list

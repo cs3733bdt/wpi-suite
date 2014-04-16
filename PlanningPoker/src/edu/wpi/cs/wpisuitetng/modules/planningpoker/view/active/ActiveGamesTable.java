@@ -18,7 +18,7 @@ import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * TODO: add documentation
+ * creates the table of active games
  * @author Bobby Drop Tables
  *
  */
@@ -53,10 +53,18 @@ public class ActiveGamesTable extends JTable
 		return false;
 	}
 
+	/**
+	 * getter for the table model of the current game
+	 * @return the table model
+	 */
 	public DefaultTableModel getTableModel() {
 		return tableModel;
 	}
 
+	/** 
+	 * sets the table model specifically for that game
+	 * @param tableModel the model to be set
+	 */
 	public void setTableModel(DefaultTableModel tableModel) {
 		this.tableModel = tableModel;
 	}

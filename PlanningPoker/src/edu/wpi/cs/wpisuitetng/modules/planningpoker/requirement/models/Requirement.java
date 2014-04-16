@@ -66,10 +66,8 @@ public class Requirement extends ObservableModel {
 	/**
 	 * Construct a Requirement with required properties provided
 	 * 
-	 * @param name
-	 *            The name of the requirement
-	 * @param description
-	 *            A short description of the requirement
+	 * @param name The name of the requirement
+	 * @param description A short description of the requirement
 	 */
 	// need to phase out supplying the ID
 	//We took out int id -- Jeff, Tom, Jordan
@@ -89,6 +87,7 @@ public class Requirement extends ObservableModel {
 	}
 	
 	/**
+	 * getter for the UUID of the requirement
 	 * @return UUID of the requirement
 	 */
 	public UUID getIdentity(){
@@ -212,8 +211,6 @@ public class Requirement extends ObservableModel {
 
 	/**
 	 * Method toJSON.
-	
-	
 	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
 	 */
@@ -232,9 +229,7 @@ public class Requirement extends ObservableModel {
 	 * Returns an instance of Requirement constructed using the given
 	 * Requirement encoded as a JSON string.
 	 * 
-	 * @param json
-	 *            JSON-encoded Requirement to deserialize
-	
+	 * @param json JSON-encoded Requirement to deserialize
 	 * @return the Requirement contained in the given JSON */
 	public static Requirement fromJson(String json) {
 		final Gson parser = new Gson();
@@ -245,9 +240,7 @@ public class Requirement extends ObservableModel {
 	 * Returns an array of Requirements parsed from the given JSON-encoded
 	 * string.
 	 * 
-	 * @param json
-	 *            string containing a JSON-encoded array of Requirement
-	
+	 * @param json string containing a JSON-encoded array of Requirement
 	 * @return an array of Requirement deserialized from the given JSON string */
 	public static Requirement[] fromJsonArray(String json) {
 		final Gson parser = new Gson();
@@ -305,8 +298,7 @@ public class Requirement extends ObservableModel {
 	/**
 	 * Copies all of the values from the given requirement to this requirement.
 	 * 
-	 * @param toCopyFrom
-	 *            the requirement to copy from.
+	 * @param toCopyFrom the requirement to copy from.
 	 * @return true if copyFrom succeeded, false if it did not
 	 */
 	public boolean copyFrom(Requirement toCopyFrom) {
