@@ -46,7 +46,7 @@ public class NewAddRequirementsPanel extends JPanel {
 	
 	
 	
-	public NewAddRequirementsPanel(final NewRightHalfCreateGamePanel rightView) {
+	public NewAddRequirementsPanel(final NewRightHalfCreateGamePanelOLD rightView) {
 		
 		/*
 		 * Planned Changes:
@@ -186,6 +186,9 @@ public class NewAddRequirementsPanel extends JPanel {
 //		importReqPanel.setBorder(defaultBorder);
 //		importReqPanel.setVisible(true);
 		
+//		createReqPanel.setBorder(defaultBorder);
+//		createReqPanel.setVisible(false);
+//		reqPanel.add(createReqPanel);
 //		
 //		/**
 //		 * Creates and adds the create requirement label
