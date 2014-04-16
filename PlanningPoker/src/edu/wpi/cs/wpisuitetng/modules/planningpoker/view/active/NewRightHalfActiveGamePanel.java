@@ -85,7 +85,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 																	// Label for
 																	// the
 																	// Description
-
+		
 		/**
 		 * Initializes a table's columns and rows and the table
 		 */
@@ -93,7 +93,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		Object[][] data = {};
 		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
 		table.setBorder(defaultBorder);
-
+		
 		/**
 		 * Display the requirement list in the table
 		 */

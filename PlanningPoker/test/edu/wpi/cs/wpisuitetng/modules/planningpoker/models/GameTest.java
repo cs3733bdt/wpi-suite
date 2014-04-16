@@ -28,6 +28,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.Deck;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -164,29 +165,18 @@ public class GameTest {
 	
 	@Test
 	public void testCustomDeck() {
-		List<Requirement> reqList = new ArrayList<Requirement>();
-		List<String> customDeck = new ArrayList<String>();
+		ArrayList<String> customDeck = new ArrayList<String>();
 		//populate customDeck
-		int maxSumCheck = 0;
-		for (int i = 0; i < 6; i++) {
-			customDeck.add("" + i + "");
-			maxSumCheck += i;
+		int i;
+		for (i = 0; i < 6; i++) {
+			customDeck.add(Integer.toString(i));
 		}
 		
-		Game game1 = new Game("Game A", "Test description", reqList, true, false);
-	
-		Requirement req = new Requirement("Test Requirement", "Test description");
-		reqList.add(req);
+		Deck Deck = new Deck(customDeck);
 		
-		EstimatePanel estimatePanel = new EstimatePanel(game1, req, customDeck);
-		
-		assertEquals(maxSumCheck,estimatePanel.getMaxSum());
-		
-		ActiveGamesPanel ActivePanel = new ActiveGamesPanel(game1);
-		ActivePanel.updateEstimatePanel(game1, req);
-		
-		assertEquals(ActivePanel.getGame().getRequirements().size(),1);
-		
+		for (int j = 0; j < i; j++) {
+			assertEquals(j,Deck.get(j));
+		}
 	}
 	
 
