@@ -17,14 +17,19 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 @SuppressWarnings("serial")
 public class ActiveGamesTable extends JTable
 {
 	public DefaultTableModel tableModel = null;
 	private boolean initialized;
 	private boolean isInEditMode;
-	private boolean changedByRefresh = false;	
-	private Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
+	private final boolean changedByRefresh = false;	
+	private final Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
 	
 	/**
 	 * Sets initial table view
@@ -34,7 +39,7 @@ public class ActiveGamesTable extends JTable
 	 */
 	public ActiveGamesTable(Object[][] data, String[] columnNames)
 	{
-		this.tableModel = new DefaultTableModel(data, columnNames);
+		tableModel = new DefaultTableModel(data, columnNames);
 		this.setModel(tableModel);
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		

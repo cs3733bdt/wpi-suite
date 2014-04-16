@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -24,28 +25,35 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 public class ActiveCardsPanel extends JPanel implements IDataField {
 
 	private int sum = 0;
-	private ArrayList<String> deck;
-	private ArrayList<CardButton> JToggleButtonList = new ArrayList<CardButton>();
+	private final List<String> deck;
+	private final List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
 
 	//initialized array to remember what buttons were pressed if "0?" button is pressed
+
     private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
-    private EstimatePanel panel;
+    private NewRightHalfActiveGamePanel panel;
 	
-	public ActiveCardsPanel(ArrayList<String> passedDeck, EstimatePanel passedPanel) {
+	public ActiveCardsPanel(ArrayList<String> passedDeck, NewRightHalfActiveGamePanel passedPanel) {
 		this.panel = passedPanel;
 		this.deck = passedDeck;
+
 		
 		this.setPreferredSize(new Dimension(800, (68 * (Math.round(deck.size() / 11)) ) ) ); //800,100
 		for (int i = 0; i < (deck.size()); i++) {
-			this.JToggleButtonList.add(new CardButton(i, deck, this, panel));
+			JToggleButtonList.add(new CardButton(i, deck, this, panel));
 		}//idk button is part of array
 
 
@@ -87,14 +95,19 @@ public int getCount() {
 	return 0;
 }
 
+/**
+ * Decrease total sum by amount entered
+ * @param cardValue
+ */
 public void addToCardSum(int cardValue) {
 	sum += cardValue;
 	counterLabel.setText("Your current estimate total: " + sum);
 	System.out.println(sum);
 }
 
-/*
+/**
  * Decrease total sum by amount entered
+ * @param cardValue
  */
 public void decToCardSum(int cardValue) {
 	sum -= cardValue;
@@ -110,8 +123,9 @@ public void doClicks() {
 		JToggleButtonList.get(i).doClick();
 	}
 }
-/*
- * Returns the sum of all the cards
+
+/**
+ * @return sum of all the cards
  */
 public int getMaxSum() {
 	int sum = 0;
@@ -125,33 +139,33 @@ public int getSum() {
 	return sum;
 }
 
-public ArrayList<CardButton> getCardButtonArray() {
+public List<CardButton> getCardButtonArray() {
 	return JToggleButtonList; 
 }
-/*
+/**
  * adds an element to the array of buttons to be remembered when the "0?" button is unpress
- */
+ **/
 public void memoryArrayAddElt(int elt) {
 	memoryArray.add(elt);
 }
 
-/*
+/**
  * getter for size of the memory array
- */
+ **/
 public int memoryArrayGetSize() {
 	return memoryArray.size();
 }
 
-/*
+/**
  * clears memory array; use after the values stored in the array are restored
- */
+ **/
 public void memoryArrayClear() {
 	memoryArray.clear();
 }
 
-/*
+/**
  * adds index of the button to be remembered to the memory array
- */
+ **/
 public int memoryArrayGetElt(int elt) {
 	return memoryArray.get(elt);
 }

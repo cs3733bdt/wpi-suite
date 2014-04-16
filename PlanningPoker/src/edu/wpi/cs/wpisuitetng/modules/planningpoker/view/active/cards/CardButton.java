@@ -13,7 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards;
 
 import java.awt.Image;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.accessibility.Accessible;
 import javax.imageio.ImageIO;
@@ -21,16 +21,18 @@ import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
 
 public class CardButton extends JToggleButton implements Accessible {
 	JToggleButton button;
-	ArrayList<String> deck;
+	List<String> deck;
 	ActiveCardsPanel panel;
 
-	public CardButton(int cardNum, ArrayList<String> passedDeck, ActiveCardsPanel passedCardsPanel, EstimatePanel passedEstimatePanel){
+	public CardButton(int cardNum, List<String> passedDeck, ActiveCardsPanel passedCardsPanel, NewRightHalfActiveGamePanel panel2){
 		this.deck = passedDeck;
 		this.panel = passedCardsPanel;
+		deck = passedDeck;
+		panel = passedCardsPanel;
 		
 		//Initialize the Button and the number on the button
 		String buttonNum;
@@ -59,7 +61,7 @@ public class CardButton extends JToggleButton implements Accessible {
 		 this.setVerticalAlignment(SwingConstants.CENTER);
 		 
 		 //Add the action listener to the button
-		this.addActionListener(new CardActionListenerRefactor(cardNum, deck, this, passedCardsPanel, passedEstimatePanel));
+		this.addActionListener(new CardActionListenerRefactor(cardNum, deck, this, passedCardsPanel, panel2));
 		panel.add(this);
 	}
 

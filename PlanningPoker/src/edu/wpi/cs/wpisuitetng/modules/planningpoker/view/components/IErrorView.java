@@ -11,8 +11,13 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 public interface IErrorView {
 	
-	public void setText(String text);
+	void setText(String text);
 
 }
