@@ -24,6 +24,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
@@ -84,7 +85,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/**
 		 * Initializes a table's columns and rows and the table
 		 */
-		String[] columnNames = { "Requirement", "Description" };
+		String[] columnNames = { "Requirement", "Description", "Complete" };
 		Object[][] data = {};
 		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
 		table.setBorder(defaultBorder);
@@ -94,8 +95,28 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		 */
 		for (Requirement r : currentGame.getRequirements()) {
 			table.tableModel.addRow(new Object[] { r.getName(),
-					r.getDescription() });
+					r.getDescription(), r.displayComplete() });
 		}
+		
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					JTable target = (JTable) e.getSource();
+					int row = target.getSelectedRow();
+					int column = target.getSelectedColumn();
+					String selected = (String) target.getValueAt(row, column);
+					for (int i = 0; i < currentGame.getRequirements().size(); i++) {
+						if (selected.equals(currentGame.getRequirements().get(i).getName())
+								|| selected.equals(currentGame.getRequirements().get(i).getDescription())) {
+							activeRequirement=currentGame.getRequirements().get(i);
+							nameTextField.setText(currentGame.getRequirements().get(i).getName());
+							descriptionTextField.setText(currentGame.getRequirements().get(i).getDescription());
+						}
+					}
+				}
+			}
+		});
 
 		JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel
@@ -105,15 +126,14 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		nameTextField = new JTextArea(1, 30); // Initializes the textfield for
 		// the game name and sets the
 		// size to 30
-		nameTextField.setText("Requirement1"); // dummy Requirement
+		nameTextField.setText("");
 		nameTextField.setBorder(defaultBorder);
 		nameTextField.setEditable(false);
 
 		descriptionTextField = new JTextArea(3, 30); // Initializes the textarea
 		// for the game
 		// description
-		descriptionTextField
-				.setText("Sleep Sleep Sleep Sleep Sleep Sleep Sleep "); // dummy
+		descriptionTextField.setText(""); 
 		// description
 		descriptionTextField.setBorder(defaultBorder);
 		descriptionTextField.setEditable(false);
@@ -129,9 +149,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		// Label and accumulate sum
 		counterLabel = new JLabel("Your current estimate total: " + 0);
 		sum = 0;
-
-		//JToggleButtonList = cardsPanel.getCardButtonArray();
-
 
 		// This branch will be run if the default deck is to be used
 		 boolean useDefaultDeck;
@@ -166,7 +183,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			JScrollPane cardPanel = new JScrollPane(cardsPanel);
 			cardPanel
 					.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			cardPanel.setPreferredSize(new Dimension(400, 100));
+			cardPanel.setPreferredSize(new Dimension(100, 100));
 			rightView.add(cardPanel);
 			layout.putConstraint(SpringLayout.WEST, cardPanel, 40,
 					SpringLayout.WEST, rightView);
@@ -247,6 +264,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		rightView.add(descriptionPanel);
 		rightView.add(counterLabel);
 		rightView.add(submitButton);
+		rightView.add(errorField);
 
 		layout.putConstraint(SpringLayout.WEST, nameLabel, 40,
 				SpringLayout.WEST, rightView);
@@ -296,7 +314,12 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		layout.putConstraint(SpringLayout.WEST, submitButton, 40,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, submitButton, -20,
+		layout.putConstraint(SpringLayout.SOUTH, submitButton, -30,
+				SpringLayout.SOUTH, rightView);
+		
+		layout.putConstraint(SpringLayout.WEST, errorField, 40,
+				SpringLayout.WEST, rightView);
+		layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
 				SpringLayout.SOUTH, rightView);
 
 		this.getViewport().add(rightView); // Sets the rightview to be the
