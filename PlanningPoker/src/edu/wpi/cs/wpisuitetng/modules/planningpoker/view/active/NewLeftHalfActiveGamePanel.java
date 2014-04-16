@@ -90,12 +90,13 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		}
 	}
 	
-	public void build() {
+	public void build(){
 		// Creates the container to hold all the components
 		// and sets the container's layout to be SpringLayout
 		Container newLeftView = new Container();
 		SpringLayout layout = new SpringLayout();
-		newLeftView.setLayout(layout);	
+		newLeftView.setLayout(layout);
+		setMinimumSize(new Dimension(500,500));
 
 		/**
 		 * Create and/or initialize components
@@ -175,8 +176,6 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		endGameErrorLabel = new JLabel("*A note is required for ending games manually");
 		endGameErrorLabel.setForeground(Color.RED);
 		endGameErrorLabel.setVisible(false);
-		
-		
 		
 		/**
 		 * Add components to the container
