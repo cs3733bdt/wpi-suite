@@ -17,6 +17,7 @@ import javax.swing.JSplitPane;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 
 
@@ -31,13 +32,19 @@ public class NewActiveGamePanel extends JSplitPane implements AbstractModelObser
 		game.addObserver(this);	
 		currentGame = game;
 		
-		leftHalf = new NewLeftHalfActiveGamePanel(currentGame);
+		leftHalf = new NewLeftHalfActiveGamePanel(currentGame, this);
 		rightHalf = new NewRightHalfActiveGamePanel(currentGame);
 		
 		this.setRightComponent(rightHalf);
 		this.setLeftComponent(leftHalf);
 		this.setDividerLocation(400);
 		
+	}
+	
+	public void endGame(){
+		currentGame.makeComplete();
+		currentGame.notifyObservers();
+		ViewEventController.getInstance().removeTab(this);
 	}
 	
 	@Override

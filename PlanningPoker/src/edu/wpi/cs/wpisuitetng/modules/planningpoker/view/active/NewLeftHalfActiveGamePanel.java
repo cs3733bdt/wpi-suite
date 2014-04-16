@@ -27,6 +27,7 @@ import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
@@ -53,23 +54,23 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 	JScrollPane notePane;
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
+	private NewActiveGamePanel parentPanel;
 	/**
 	 * Constructor for NewLeftHalfActiveGamePanel
 	 * @param game the current planning poker game session
 	 */
-	public NewLeftHalfActiveGamePanel(final Game game) {
+	public NewLeftHalfActiveGamePanel(final Game game, final NewActiveGamePanel activeGamePanel) {
 		active = game;
 		build();
 		isUserCreator();
+		parentPanel = activeGamePanel;
 	}
 	
 	/**
 	 * Method to notify observers and set game complete if end game is pressed
 	 */
 	public void endGameManuallyButtonPressed(){
-		active.makeComplete();
-		active.notifyObservers();
-		System.out.println("Game ended");
+		parentPanel.endGame();
 	}
 	
 	/**
