@@ -19,12 +19,11 @@ import java.util.List;
 
 import javax.swing.JComponent;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
 
 /**
@@ -37,9 +36,9 @@ public class ViewEventController {
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
 
-	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
-	private ArrayList<NewActiveGamePanel> listOfActiveGamePanels = new ArrayList<NewActiveGamePanel>();
-	private ArrayList<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
+	private List<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
+	private List<NewActiveGamePanel> listOfActiveGamePanels = new ArrayList<NewActiveGamePanel>();
+	private List<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
 	
 	/**
 	 * Default constructor for the ViewEventController. Is protected to prevent instantiation.
@@ -298,7 +297,6 @@ public class ViewEventController {
 		{
 			Component toBeRemoved = main.getTabbedView().getComponentAt(i);
 
-<<<<<<< HEAD
 			if(toBeRemoved instanceof NewActiveGamePanel){continue;}
 			if(toBeRemoved == selected){
 				continue;}
