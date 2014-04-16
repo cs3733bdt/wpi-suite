@@ -1,12 +1,16 @@
 edu.wpi.cs.wpisuitetng.modules.planningpoker
-edu.wpi.cs.wpisuitetng.modules.planningpoker.controller
+edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel
 edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification
-edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.requirement
+edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers
+edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models
+edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers
 edu.wpi.cs.wpisuitetng.modules.planningpoker.models
-edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game
-edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers
 edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement
 edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote
+edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications
+edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers
+edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models
+edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards
@@ -15,3 +19,4 @@ edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation
 edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end
+edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models
