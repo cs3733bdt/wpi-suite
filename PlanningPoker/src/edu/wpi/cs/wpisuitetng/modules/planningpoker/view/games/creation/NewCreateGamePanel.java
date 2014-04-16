@@ -12,6 +12,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -33,6 +35,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
 public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	NewLeftHalfCreateGamePanel leftHalf;
 	NewRightHalfCreateGamePanel rightHalf;
+	
+	private List<Requirement> requirements = new ArrayList<Requirement>();
 	
 	private boolean readyToClose = false;
 	private boolean readyToRemove = true; // The window starts off ready to
@@ -58,6 +62,8 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		rightHalf.setMinimumSize(new Dimension(500, 500));
 		this.setDividerLocation(420);
 		
+		revalidate();
+		repaint();
 		
 	}
 	
@@ -83,7 +89,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	}
 
 	public void addRequirement(Requirement requirement) {
-//		this.requirements.add(requirement);
+		requirements.add(requirement);
 	}
 	
 	/**

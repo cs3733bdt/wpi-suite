@@ -311,6 +311,16 @@ public class Requirement extends ObservableModel {
 	 */
 	public boolean copyFrom(Requirement toCopyFrom) {
 		boolean wasChanged = false;
+		if(id != toCopyFrom.id){
+			id = toCopyFrom.id;
+			wasChanged = true;
+		}
+		
+		if(!identity.equals(toCopyFrom.identity)){
+			identity = toCopyFrom.identity;
+			wasChanged = true;
+		}
+		
 		if(!description.equals(toCopyFrom.description)){
 			description = toCopyFrom.description;
 			wasChanged = true;
@@ -323,9 +333,7 @@ public class Requirement extends ObservableModel {
 			votes = toCopyFrom.votes;
 			wasChanged = true;
 		}
-		return wasChanged; /*TODO THIS IS A PLACE HOLDER! 
-							THIS MUST CHECK TO MAKE SURE THAT CHANGES ARE ACTUALLY MADE
-							*/
+		return wasChanged;
 	}
 	
 	/**

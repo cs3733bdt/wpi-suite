@@ -24,6 +24,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
@@ -39,8 +40,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 public class NewRightHalfActiveGamePanel extends JScrollPane {
-	Game currentGame;
-	Requirement activeRequirement;
+	private Game currentGame;
+	private Requirement activeRequirement;
 	private JTextArea nameTextField;
 	private JTextArea descriptionTextField;
 	private JButton submitButton;
@@ -55,7 +56,11 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private JTextField estText = new JTextField();
 	private JTextArea counter = new JTextArea();
 	private JLabel errorField = new JLabel();
-
+	private JScrollPane descriptionPanel;
+	private JLabel reqLabel;
+	private JLabel desLabel;
+	private JScrollPane cardPanel;
+	
 	NewRightHalfActiveGamePanel(final Game game) {
 		currentGame = game;
 		build();
@@ -68,15 +73,15 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 													// used: Spring Layout
 		rightView.setLayout(layout); // Sets the container to have the spring
 										// layout
-
+		
 		/**
 		 * Create and/or initialize components
 		 */
 		JLabel nameLabel = new JLabel("Requirements"); // Creates the Label for
 														// the Name
-		JLabel reqLabel = new JLabel("Requirement Name"); // Creates the Label
+		reqLabel = new JLabel("Requirement Name"); // Creates the Label
 															// for the Name
-		JLabel desLabel = new JLabel("Requirement Description"); // Creates the
+		desLabel = new JLabel("Requirement Description"); // Creates the
 																	// Label for
 																	// the
 																	// Description
@@ -84,7 +89,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/**
 		 * Initializes a table's columns and rows and the table
 		 */
-		String[] columnNames = { "Requirement", "Description" };
+		String[] columnNames = { "Requirement", "Description", "Complete" };
 		Object[][] data = {};
 		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
 		table.setBorder(defaultBorder);
@@ -94,8 +99,30 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		 */
 		for (Requirement r : currentGame.getRequirements()) {
 			table.getTableModel().addRow(new Object[] { r.getName(),
-					r.getDescription() });
+					r.getDescription(), r.displayComplete() });
 		}
+		
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					JTable target = (JTable) e.getSource();
+					int row = target.getSelectedRow();
+					int column = target.getSelectedColumn();
+					String selected = (String) target.getValueAt(row, column);
+					for (int i = 0; i < currentGame.getRequirements().size(); i++) {
+						if (selected.equals(currentGame.getRequirements().get(i).getName())
+								|| selected.equals(currentGame.getRequirements().get(i).getDescription())
+								|| selected.equals(currentGame.getRequirements().get(i).displayComplete())) {
+							activeRequirement=currentGame.getRequirements().get(i);
+							nameTextField.setText(currentGame.getRequirements().get(i).getName());
+							descriptionTextField.setText(currentGame.getRequirements().get(i).getDescription());
+							setFieldsVisible(true);
+						}
+					}
+				}
+			}
+		});
 
 		JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel
@@ -105,20 +132,19 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		nameTextField = new JTextArea(1, 30); // Initializes the textfield for
 		// the game name and sets the
 		// size to 30
-		nameTextField.setText("Requirement1"); // dummy Requirement
+		nameTextField.setText("");
 		nameTextField.setBorder(defaultBorder);
 		nameTextField.setEditable(false);
 
 		descriptionTextField = new JTextArea(3, 30); // Initializes the textarea
 		// for the game
 		// description
-		descriptionTextField
-				.setText("Sleep Sleep Sleep Sleep Sleep Sleep Sleep "); // dummy
+		descriptionTextField.setText(""); 
 		// description
 		descriptionTextField.setBorder(defaultBorder);
 		descriptionTextField.setEditable(false);
 
-		JScrollPane descriptionPanel = new JScrollPane(descriptionTextField);
+		descriptionPanel = new JScrollPane(descriptionTextField);
 		descriptionPanel
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		descriptionPanel.setPreferredSize(new Dimension(200, 100));
@@ -129,9 +155,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		// Label and accumulate sum
 		counterLabel = new JLabel("Your current estimate total: " + 0);
 		sum = 0;
-
-		//JToggleButtonList = cardsPanel.getCardButtonArray();
-
 
 		// This branch will be run if the default deck is to be used
 		 boolean useDefaultDeck;
@@ -161,12 +184,13 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		cardsPanel = new ActiveCardsPanel(deck, this);
 		
 		
+		
 		// added below
 		if (this.getGame().doesUseCards()) {
-			JScrollPane cardPanel = new JScrollPane(cardsPanel);
+			cardPanel = new JScrollPane(cardsPanel);
 			cardPanel
 					.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			cardPanel.setPreferredSize(new Dimension(400, 100));
+			cardPanel.setPreferredSize(new Dimension(100, 100));
 			rightView.add(cardPanel);
 			layout.putConstraint(SpringLayout.WEST, cardPanel, 40,
 					SpringLayout.WEST, rightView);
@@ -174,7 +198,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
-
+			cardPanel.setVisible(false);
+			
 		} else {
 			rightView.add(cardsPanel);
 			layout.putConstraint(SpringLayout.WEST, cardsPanel, 40,
@@ -183,9 +208,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardsPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
-
 		}
-
+		cardsPanel.setVisible(false);
+		
 		// added above
 
 		this.JToggleButtonList = cardsPanel.getCardButtonArray();
@@ -247,7 +272,16 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		rightView.add(descriptionPanel);
 		rightView.add(counterLabel);
 		rightView.add(submitButton);
-
+		rightView.add(errorField);
+		
+		reqLabel.setVisible(false);
+		nameTextField.setVisible(false);
+		desLabel.setVisible(false);
+		descriptionPanel.setVisible(false);
+		counterLabel.setVisible(false);
+		submitButton.setVisible(false);
+		estText.setVisible(false);
+		
 		layout.putConstraint(SpringLayout.WEST, nameLabel, 40,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.EAST, nameLabel, -40,
@@ -296,7 +330,12 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		layout.putConstraint(SpringLayout.WEST, submitButton, 40,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, submitButton, -20,
+		layout.putConstraint(SpringLayout.SOUTH, submitButton, -30,
+				SpringLayout.SOUTH, rightView);
+		
+		layout.putConstraint(SpringLayout.WEST, errorField, 40,
+				SpringLayout.WEST, rightView);
+		layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
 				SpringLayout.SOUTH, rightView);
 
 		this.getViewport().add(rightView); // Sets the rightview to be the
@@ -425,7 +464,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			voteNumber = Integer.parseInt(estText.getText());
 		}
 		Vote vote = new Vote(currentUser, voteNumber);
-		getRequirement().addVote(vote);
+		activeRequirement.addVote(vote);
 
 		System.out.println("You voted: " + vote.getVoteNumber());
 
@@ -446,4 +485,19 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		errorField.setText(successString);
 	}
 
+	private void setFieldsVisible(boolean visible){
+		reqLabel.setVisible(visible);
+		nameTextField.setVisible(visible);
+		desLabel.setVisible(visible);
+		descriptionPanel.setVisible(visible);
+		submitButton.setVisible(visible);
+		if (getGame().doesUseCards()==false){
+			estText.setVisible(visible);
+		}
+		else{
+			counterLabel.setVisible(visible);
+			cardPanel.setVisible(true);
+			cardsPanel.setVisible(true);
+		}
+	}
 }

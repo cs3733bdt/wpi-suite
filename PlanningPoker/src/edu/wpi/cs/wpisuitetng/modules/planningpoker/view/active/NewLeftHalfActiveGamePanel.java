@@ -53,23 +53,23 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 	JScrollPane notePane;
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
+	private NewActiveGamePanel parentPanel;
 	/**
 	 * Constructor for NewLeftHalfActiveGamePanel
 	 * @param game the current planning poker game session
 	 */
-	public NewLeftHalfActiveGamePanel(final Game game) {
+	public NewLeftHalfActiveGamePanel(final Game game, final NewActiveGamePanel activeGamePanel) {
 		active = game;
 		build();
 		isUserCreator();
+		parentPanel = activeGamePanel;
 	}
 	
 	/**
 	 * Method to notify observers and set game complete if end game is pressed
 	 */
 	public void endGameManuallyButtonPressed(){
-		active.makeComplete();
-		active.notifyObservers();
-		System.out.println("Game ended");
+		parentPanel.endGame();
 	}
 	
 	/**
@@ -97,7 +97,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		Container newLeftView = new Container();
 		SpringLayout layout = new SpringLayout();
 		newLeftView.setLayout(layout);
-		setMinimumSize(new Dimension(500,500));
+		setMinimumSize(new Dimension(300,300));
 
 		/**
 		 * Create and/or initialize components

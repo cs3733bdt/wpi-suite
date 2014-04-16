@@ -166,6 +166,9 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		setMinimumSize(new Dimension(450, 110));			//Sets the minimum size of the left half view
 		leftView.setPreferredSize(new Dimension(410, 410));		//Sets the size of the view
 		
+		revalidate();
+		repaint();
+		
 		setViewportView(leftView);						//Sets the view of the scrollpane to be the entire container which has everything contained within it
 
 	}

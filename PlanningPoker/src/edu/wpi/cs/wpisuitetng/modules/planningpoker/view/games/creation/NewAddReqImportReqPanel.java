@@ -30,7 +30,7 @@ public class NewAddReqImportReqPanel extends JPanel {
 				 descArea.setText("");*/
 				 reqPanel.getCreateReqPanel().setVisible(true);
 				 reqPanel.getImportReqPanel().setVisible(true);
-				 reqPanel.getCurrentReqsPanel().setVisible(false);
+				 reqPanel.getCurrentReqsTable().setVisible(false);
 			 }
 		});
 		
@@ -43,7 +43,7 @@ public class NewAddReqImportReqPanel extends JPanel {
 				 descArea.setText("");*/
 				 reqPanel.getCreateReqPanel().setVisible(false);
 				 reqPanel.getImportReqPanel().setVisible(true);
-				 reqPanel.getCurrentReqsPanel().setVisible(false);
+				 reqPanel.getCurrentReqsTable().setVisible(false);
 			 }
 		});
 		/**
