@@ -23,8 +23,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 
 /**
  * @author TomPaolillo
@@ -54,9 +54,11 @@ public class StatisticsPanel extends JPanel{
 	private JLabel yourLabel = new JLabel("Your Estimate: 0");
 	
 	Container overviewPanel = new Container();
-    
-    /*
+ 
+	/**
 	 * If the ArrayList passed in is empty it will use the default deck
+	 * @param game 
+	 * @param requirement 
 	 */
 	public StatisticsPanel(Game game, Requirement requirement){
 
@@ -67,8 +69,8 @@ public class StatisticsPanel extends JPanel{
 		this.invalidate();
 		this.revalidate();
 
-		this.activeGame = game;
-		this.activeRequirement = requirement;
+		activeGame = game;
+		activeRequirement = requirement;
 		
 		//this.overviewPanel =  new Container();
 		overviewPanel.setLayout(new GridBagLayout());

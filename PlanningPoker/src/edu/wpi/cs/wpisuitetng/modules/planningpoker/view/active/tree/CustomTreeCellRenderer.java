@@ -16,7 +16,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
 
 /**
@@ -27,10 +27,10 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 	Icon requirementIcon;
 	Icon iterationIcon;
 
-	public CustomTreeCellRenderer() {
-		//requirementIcon = new RequirementIcon();
-		//iterationIcon = new IterationIcon();
-	}
+	/*public CustomTreeCellRenderer() {
+		requirementIcon = new RequirementIcon();
+		iterationIcon = new IterationIcon();
+	}*/
 
 	/**
 	 * Method getTreeCellRendererComponent.
@@ -51,7 +51,8 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 	 *            boolean
 	
 	
-	 * @return Component * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(JTree,
+	 * @return Component
+	 * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(JTree,
 	 *      Object, boolean, boolean, boolean, int, boolean) */
 	@Override
 	public Component getTreeCellRendererComponent(JTree tree, Object value,

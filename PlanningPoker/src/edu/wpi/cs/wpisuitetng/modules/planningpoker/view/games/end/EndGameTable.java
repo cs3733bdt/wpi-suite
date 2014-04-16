@@ -15,10 +15,15 @@ import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 @SuppressWarnings("serial")
 public class EndGameTable extends JTable
 {
-	public DefaultTableModel tableModel = null;	
+	private DefaultTableModel tableModel = null;	
 	/**
 	 * Sets initial table view
 	 * 
@@ -27,13 +32,21 @@ public class EndGameTable extends JTable
 	 */
 	public EndGameTable(Object[][] data, String[] columnNames)
 	{
-		this.tableModel = new DefaultTableModel(data, columnNames);
-		this.setModel(tableModel);
+		setTableModel(new DefaultTableModel(data, columnNames));
+		this.setModel(getTableModel());
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);		
 	}
 	
 	@Override
 	public boolean isCellEditable(int row, int column){
 		return false;
+	}
+
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+
+	public void setTableModel(DefaultTableModel tableModel) {
+		this.tableModel = tableModel;
 	}
 }

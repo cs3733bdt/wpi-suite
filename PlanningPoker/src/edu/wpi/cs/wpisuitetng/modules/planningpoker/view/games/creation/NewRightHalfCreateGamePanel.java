@@ -1,18 +1,14 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,7 +18,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
@@ -275,6 +271,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 	}
 	
 	public void addRequirement(Requirement requirement){
-		table2.tableModel.addRow(new Object[]{requirement.getName(), requirement.getDescription()});
+		table2.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 	}
 }

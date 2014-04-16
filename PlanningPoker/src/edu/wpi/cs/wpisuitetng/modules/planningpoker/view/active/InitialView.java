@@ -17,6 +17,11 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JPanel;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 public class InitialView extends JPanel {
 	
 	public InitialView() {

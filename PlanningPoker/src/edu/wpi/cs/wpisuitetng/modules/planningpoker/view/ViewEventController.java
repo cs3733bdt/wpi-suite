@@ -18,8 +18,10 @@ import java.util.GregorianCalendar;
 
 import javax.swing.JComponent;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
@@ -35,7 +37,7 @@ public class ViewEventController {
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
 	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
-	private ArrayList<ActiveGamesPanel> listOfActiveGamePanels = new ArrayList<ActiveGamesPanel>();
+	private ArrayList<IActiveGamePanel> listOfActiveGamePanels = new ArrayList<IActiveGamePanel>();
 	private ArrayList<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
 	
 	/**
@@ -70,7 +72,7 @@ public class ViewEventController {
 	 */
 	public void setToolBar(ToolbarView tb){
 		toolbar = tb;
-		toolbar.repaint(); //Unsure why this is necessary but this is what is done in Requirement Manager
+		toolbar.repaint(); 
 	}
 	
 	/**
@@ -78,13 +80,13 @@ public class ViewEventController {
 	 * that panel, and switches to that new panel
 	 */
 	public void createGame() {
-		CreateGamePanel newGame = new CreateGamePanel();
+		//CreateGamePanel newGame = new CreateGamePanel();
 		/**
 		 * REMOVE ABOVE LINE (CreateGamePanel newGame = new CreateGamePanel();)
 		 * AND ADD FOLLOWING LINE (NewCreateGamePanel newGame = new NewCreateGamePanel();)
 		 * WHEN READY TO SEE NEW CREATEGAMEPANEL IN JANEWAY. THEN DO FUN CONTROLLER CHANGES!
 		 */
-		//NewCreateGamePanel newGame = new NewCreateGamePanel();
+		NewCreateGamePanel newGame = new NewCreateGamePanel(new Game());
 		main.getTabbedView().addTab("New Game", null, newGame, "New Game");
 		main.invalidate(); //force the tabbedpane to redraw.
 		main.repaint();
@@ -104,6 +106,8 @@ public class ViewEventController {
 		}
 		newGame.setUsesCards(game.doesUseCards());
 		
+		
+		//TODO MOVE THIS INTO THE CREATE GAME PANEL START!
 		Calendar dateMaker = new GregorianCalendar();
 		dateMaker.setTime(game.getEndDate());
 		String hour = Integer.toString(dateMaker.get(Calendar.HOUR));
@@ -118,6 +122,7 @@ public class ViewEventController {
 		}
 		
 		newGame.getEndDateField().setDateAndTime(dateMaker.getTime(), hour, minute, AM_PM);				
+		//TODO MOVE THIS INTO THE CREATE GAME PANEL END!
 		
 		for(CreateGamePanel gameSearch : listOfCreateGamePanels){
 			if(game.equals(gameSearch.getGame())){
@@ -128,7 +133,8 @@ public class ViewEventController {
 			}
 		}
 		
-		// Makes the game name not be longer than 6 charaters
+		// SET THE TAB TEXT 
+		// Makes the game name not be longer than 6 characters
 		StringBuilder tabName = new StringBuilder();
 		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
 		tabName.append(game.getName().subSequence(0, subStringLength));
@@ -162,9 +168,9 @@ public class ViewEventController {
 	 */
 	public void joinGame(Game game){
 		//Attempt to find the game in the active panels list
-		for(ActiveGamesPanel gameSearch : listOfActiveGamePanels){
+		for(IActiveGamePanel gameSearch : listOfActiveGamePanels){
 			if(game.equals(gameSearch.getGame())){
-				main.getTabbedView().setSelectedComponent(gameSearch);
+				main.getTabbedView().setSelectedComponent((Component)gameSearch);
 				main.invalidate();
 				main.repaint();
 				return; //The game has been found and made active. Done!
@@ -172,7 +178,7 @@ public class ViewEventController {
 		}
 		
 		//Game not found in the active game list
-		ActiveGamesPanel viewGame = new ActiveGamesPanel(game);
+		NewActiveGamePanel viewGame = new NewActiveGamePanel(game);
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 		
 		
@@ -236,11 +242,15 @@ public class ViewEventController {
 	public void removeTab(JComponent comp){
 		if (comp instanceof CreateGamePanel){
 			if(!((CreateGamePanel) comp).readyToRemove()) return;
-			this.listOfCreateGamePanels.remove(comp);
+			listOfCreateGamePanels.remove(comp);
+		}
+		if (comp instanceof IActiveGamePanel) {
+			if(!((IActiveGamePanel) comp).readyToRemove()) return;
+			this.listOfActiveGamePanels.remove(comp);
 		}
 		if (comp instanceof ActiveGamesPanel) {
 			if(!((ActiveGamesPanel) comp).readyToRemove()) return;
-			this.listOfActiveGamePanels.remove(comp);
+			listOfActiveGamePanels.remove(comp);
 		}
 		main.getTabbedView().remove(comp);
 	}
@@ -260,9 +270,9 @@ public class ViewEventController {
 			
 			System.out.println(toBeRemoved.getClass().getName());
 
-			if(toBeRemoved instanceof ActiveGamesPanel)
+			if(toBeRemoved instanceof IActiveGamePanel)
 			{
-				if(!((ActiveGamesPanel)toBeRemoved).readyToRemove()) continue;
+				if(!((IActiveGamePanel)toBeRemoved).readyToRemove()) continue;
 				this.listOfActiveGamePanels.remove(toBeRemoved);
 			}
 			
@@ -270,7 +280,7 @@ public class ViewEventController {
 			if(toBeRemoved instanceof CreateGamePanel)
 			{
 				if(!((CreateGamePanel)toBeRemoved).readyToRemove()) continue;
-				this.listOfCreateGamePanels.remove(toBeRemoved);
+				listOfCreateGamePanels.remove(toBeRemoved);
 			}
 
 			main.getTabbedView().removeTabAt(i);
@@ -281,7 +291,8 @@ public class ViewEventController {
 	
 	/**
 	 * Closes all the tabs except for the one that was clicked.
-	 * Used in conjunction with the tab right click drop-down that allows users to close multiple tabs at once.
+	 * Used in conjunction with the tab right click drop-down 
+	 * that allows users to close multiple tabs at once.
 	 */
 	public void closeOthers() {
 		int tabCount = main.getTabbedView().getTabCount();
@@ -291,7 +302,7 @@ public class ViewEventController {
 		{
 			Component toBeRemoved = main.getTabbedView().getComponentAt(i);
 
-			if(toBeRemoved instanceof ActiveGamesPanel){continue;}
+			if(toBeRemoved instanceof IActiveGamePanel){continue;}
 			if(toBeRemoved == selected){
 				continue;}
 
@@ -299,7 +310,7 @@ public class ViewEventController {
 			{
 				if(!((CreateGamePanel)toBeRemoved).readyToRemove()){
 					break;}
-				this.listOfCreateGamePanels.remove(toBeRemoved);
+				listOfCreateGamePanels.remove(toBeRemoved);
 			}
 
 			main.getTabbedView().removeTabAt(i);
@@ -320,7 +331,7 @@ public class ViewEventController {
 	 */
 	public void refreshGameTree() {
 		//This method will call a method that refreshes the the tree
-		this.gameTree.refresh();
+		gameTree.refresh();
 		
 	}
 

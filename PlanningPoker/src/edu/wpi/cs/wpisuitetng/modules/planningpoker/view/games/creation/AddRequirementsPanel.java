@@ -29,26 +29,31 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 public class AddRequirementsPanel extends JPanel {
 	
 	//THIS IS THE REQUIREMENT NAME FIELD THAT WILL BE NEEDED FOR CONTROLLER
-	private JTextField nameArea = new JTextField();
+	private final JTextField nameArea = new JTextField();
 		
 	//THIS IS THE REQUIREMENT DESCRIPTION FIELD THAT WILL BE NEEDED FOR CONTROLLER
-	private JTextArea descArea = new JTextArea();
+	private final JTextArea descArea = new JTextArea();
 	
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
-	private JPanel createReqPanel = new JPanel();
+	private final JPanel createReqPanel = new JPanel();
 	
-	private	JPanel importReqPanel = new JPanel();
+	private final	JPanel importReqPanel = new JPanel();
 	
-	private JPanel currentReqsPanel = new JPanel();
+	private final JPanel currentReqsPanel = new JPanel();
 	
-	private ActiveGamesTable table2;
+	private final ActiveGamesTable table2;
 	
 	public AddRequirementsPanel(final CreateGamePanel view){
 		
@@ -243,16 +248,16 @@ public class AddRequirementsPanel extends JPanel {
 		 * Adds temporary data into the table. 
 		 * DELETE THIS ONCE DATA IS SUCCESSFULLY IMPORTED FROM REQUIREMENT MANAGER!!!!!!!!!!!!
 		 */
-		table.tableModel.addRow(new Object[]{"Requirement1", "Description1"});
-		table.tableModel.addRow(new Object[]{"Requirement2", "Description2"});
-		table.tableModel.addRow(new Object[]{"Requirement3", "Description3"});
-		table.tableModel.addRow(new Object[]{"Requirement4", "Description4"});
-		table.tableModel.addRow(new Object[]{"Requirement5", "Description5"});
-		table.tableModel.addRow(new Object[]{"Requirement6", "Description6"});
-		table.tableModel.addRow(new Object[]{"Requirement7", "Description7"});
-		table.tableModel.addRow(new Object[]{"Requirement8", "Description8"});
-		table.tableModel.addRow(new Object[]{"Requirement9", "Description9"});
-		table.tableModel.addRow(new Object[]{"Requirement10", "Description10"});		
+		table.getTableModel().addRow(new Object[]{"Requirement1", "Description1"});
+		table.getTableModel().addRow(new Object[]{"Requirement2", "Description2"});
+		table.getTableModel().addRow(new Object[]{"Requirement3", "Description3"});
+		table.getTableModel().addRow(new Object[]{"Requirement4", "Description4"});
+		table.getTableModel().addRow(new Object[]{"Requirement5", "Description5"});
+		table.getTableModel().addRow(new Object[]{"Requirement6", "Description6"});
+		table.getTableModel().addRow(new Object[]{"Requirement7", "Description7"});
+		table.getTableModel().addRow(new Object[]{"Requirement8", "Description8"});
+		table.getTableModel().addRow(new Object[]{"Requirement9", "Description9"});
+		table.getTableModel().addRow(new Object[]{"Requirement10", "Description10"});		
 		
 		/**
 		 * Creates a scroll pane, and puts the table within this scroll pane,
@@ -397,6 +402,6 @@ public class AddRequirementsPanel extends JPanel {
 	}
 
 	public void addRequirement(Requirement requirement){
-		table2.tableModel.addRow(new Object[]{requirement.getName(), requirement.getDescription()});
+		table2.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 	}
 }

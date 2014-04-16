@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -36,9 +37,9 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.LaunchGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveGameButtonPanel;
@@ -80,7 +81,7 @@ public class CreateGamePanel extends JScrollPane {
 	private JRadioButton textEntryButton = new JRadioButton(
 			"Estimate With Text Entry");
 
-	private ArrayList<Requirement> requirements = new ArrayList<Requirement>();
+	private List<Requirement> requirements = new ArrayList<Requirement>();
 	
 	private Date endDate;
 
@@ -95,7 +96,7 @@ public class CreateGamePanel extends JScrollPane {
 	
 	public CreateGamePanel(Game game){
 		build();
-		this.currentGame = game;
+		currentGame = game;
 		requirements = game.getRequirements();
 	}
 
@@ -358,8 +359,9 @@ public class CreateGamePanel extends JScrollPane {
 					.showMessageDialog(
 							null,
 							"\tYour connection to the server has been lost.\n"
-									+ "\tYour changes have been resored but no further changes to the server can be made.\n"
-									+ "\tPlease save your changes to a text file and restart Janeway.",
+									+ "\tYour changes have been restored but no further changes to "
+									+ "the server can be made.\n\tPlease save your changes"
+									+ " to a text file and restart Janeway.",
 							"Network Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
@@ -393,8 +395,8 @@ public class CreateGamePanel extends JScrollPane {
 	 * @return nameTextField
 	 */
 	public String getNameText() {
-		System.out.println(this.nameTextField.getText());
-		return this.nameTextField.getText();
+		System.out.println(nameTextField.getText());
+		return nameTextField.getText();
 	}
 
 	/**
@@ -403,16 +405,16 @@ public class CreateGamePanel extends JScrollPane {
 	 * @return descriptionTextField
 	 */
 	public String getDescText() {
-		System.out.println(this.descriptionTextField.getText());
-		return this.descriptionTextField.getText();
+		System.out.println(descriptionTextField.getText());
+		return descriptionTextField.getText();
 	}
 
 	public void addRequirement(Requirement newReq) {
-		this.requirements.add(newReq);
+		requirements.add(newReq);
 	}
 
-	public ArrayList<Requirement> getRequirements() {
-		return this.requirements;
+	public List<Requirement> getRequirements() {
+		return requirements;
 	}
 
 
@@ -462,34 +464,6 @@ public class CreateGamePanel extends JScrollPane {
 		boolean areRequirementsSelected = false;
 		boolean isEndDateValid = false;
 		
-		isNameValid = getBoxName().validateField(errorField);
-		
-		//BEGIN DESCRIPTION BOX VALDATION
-		if(getBoxDescription().getText().length() <= 0){
-			isDescriptionValid = false;
-			if(warn){
-				//getErrorDescription().setText("** Description is REQUIRED");
-				getBoxDescription().setBorder(errorBorder);
-				//getErrorDescription().setForeground(Color.RED);
-			}
-			//TODO add a way to display error descriptions
-			displayError("Description is required");
-		} else {
-			if (warn){
-				//getErrorDescription().setText("");
-				getBoxDescription().setBorder(defaultBorder);
-			}
-			isDescriptionValid = true;
-		}
-		
-		if(this.requirements.size() == 0){
-			displayError("You must have at least one requirement.");
-			areRequirementsSelected = false;
-		} else{
-			areRequirementsSelected = true;
-		}
-		
-		
 		//BEGIN END DATE VALIDATION
 		endDate = endDateField.getEndDate();
 		Calendar endCalendar = new GregorianCalendar();
@@ -504,12 +478,39 @@ public class CreateGamePanel extends JScrollPane {
 			displayError("End Date and time must be set later than the current date");
 		}
 
+		//BEGIN DESCRIPTION AND REQUIREMET BOX VALDATION				
+				if(requirements.size() == 0){
+					displayError("You must have at least one requirement.");
+					areRequirementsSelected = false;
+				} else{
+					areRequirementsSelected = true;
+				}
+				
+				if(getBoxDescription().getText().length() <= 0){
+					isDescriptionValid = false;
+					if(warn){
+						getBoxDescription().setBorder(errorBorder);
+					}
+					//TODO add a way to display error descriptions
+					displayError("Description is required");
+				} else {
+					if (warn){
+						getBoxDescription().setBorder(defaultBorder);
+					}
+					isDescriptionValid = true;
+				}
+				
+		isNameValid = getBoxName().validateField(errorField);
+		
+		if(!isNameValid && !isDescriptionValid){
+			getBoxDescription().setBorder(defaultBorder);
+		}
+		
 		return (isNameValid && isDescriptionValid && areRequirementsSelected && isEndDateValid);
 	}
 	
 	/**
 	 * Adds the game to the model and to the server and sets it to inactive
-	 * @param endDate 
 	 */
 	public void  saveGame(){	
 		if(currentGame == null){
@@ -543,7 +544,7 @@ public class CreateGamePanel extends JScrollPane {
 	}
 	
 	public void setBoxName(String newName){
-		this.nameTextField.setText(newName);
+		nameTextField.setText(newName);
 	}
 	
 	public JTextArea getBoxDescription() {
@@ -551,7 +552,7 @@ public class CreateGamePanel extends JScrollPane {
 	}
 	
 	public void setBoxDescription(String newDescription){
-		this.descriptionTextField.setText(newDescription);
+		descriptionTextField.setText(newDescription);
 	}
 	
 	public JLabel getErrorName(){
@@ -561,7 +562,7 @@ public class CreateGamePanel extends JScrollPane {
 	}
 	
 	public AddRequirementsPanel getAddReqPan(){
-		return this.addReqPan;
+		return addReqPan;
 	}
 	
 	public boolean doesUseCards(){
@@ -573,17 +574,17 @@ public class CreateGamePanel extends JScrollPane {
 	}
 	
 	public Game getGame(){
-		return this.currentGame;
+		return currentGame;
 	}
 	
 	public void setUsesCards(boolean usesCards){
 		if(usesCards){
-			this.cardsButton.setSelected(true);
-			this.textEntryButton.setSelected(false);
+			cardsButton.setSelected(true);
+			textEntryButton.setSelected(false);
 		}
 		else{
-			this.cardsButton.setSelected(false);
-			this.textEntryButton.setSelected(true);
+			cardsButton.setSelected(false);
+			textEntryButton.setSelected(true);
 		}
 	}
 	
@@ -611,7 +612,7 @@ public class CreateGamePanel extends JScrollPane {
 		currentGame.setDescription(this.getBoxDescription().getText());
 		currentGame.setActive(active);
 		currentGame.setUsesCards(doesUseCards());
-		currentGame.setRequirements(getRequirements());
+		currentGame.setRequirements(requirements);
 		currentGame.setEndDate(endDateField.getEndDate());
 		currentGame.setCreator(ConfigManager.getConfig().getUserName());
 		currentGame.notifyObservers();

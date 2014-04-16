@@ -20,6 +20,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -34,10 +35,11 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 /**
  * Sets up the panel for the active games screen, which
  *         has the list of all active games in which the user is playing. When
@@ -48,25 +50,25 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requireme
 public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserver{
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
-	private Game active;
+	private final Game active;
 
 	/**
 	 * Set the gameName equal to the name of the game that was selected from the
 	 * active games list
 	 */
-	private JTextArea gameName = new JTextArea();
+	private final JTextArea gameName = new JTextArea();
 
 	/**
 	 * Set the gameDesc equal to the description of the game that was selected
 	 * from the active games list
 	 */
-	private JTextArea gameDesc = new JTextArea();
+	private final JTextArea gameDesc = new JTextArea();
 
 	/**
 	 * Set the userStoryDesc equal to the description of the requirement being
 	 * selected in the table
 	 */
-	private JTextArea userStoryDesc = new JTextArea();
+	private final JTextArea userStoryDesc = new JTextArea();
 
 	/**
 	 * The estText is needed when the user inputs their estimate, since it must
@@ -92,15 +94,19 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 	 */
 	//private JScrollPane activeGameScrollPane;
 	
-	private JPanel blankPanel2;
-
+	private final JPanel blankPanel2;
+	
+	/**
+	 * TODO add documentation
+	 * @param game
+	 */
 	public ActiveGamesPanel(final Game game) {
 		//super(new GridBagLayout());
 	
 		game.addObserver(this); //Makes this the observer for the game
 		rightPanel.setLayout(new BoxLayout(rightPanel, BoxLayout.Y_AXIS));
 		active = game;
-		this.isEstimatePanelCreated = false;
+		isEstimatePanelCreated = false;
 	
 		topHalfPanel.setLayout(new GridBagLayout());
 
@@ -221,7 +227,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		 * Adds data to the table
 		 */
 		for (int i = 0; i < game.getRequirements().size(); i++) {
-			table.tableModel.addRow(new Object[] {
+			table.getTableModel().addRow(new Object[] {
 					game.getRequirements().get(i).getName(),
 					game.getRequirements().get(i).getDescription(),
 					game.getRequirements().get(i).displayComplete() });
@@ -236,8 +242,8 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 					int column = target.getSelectedColumn();
 					String selected = (String) target.getValueAt(row, column);
 					for (int i = 0; i < game.getRequirements().size(); i++) {
-						if (selected.equals(game.getRequirements().get(i).getName())
-								|| selected.equals(game.getRequirements().get(i).getDescription())) {
+						if (selected.equals(game.getRequirements().get(i).getName()) || 
+								selected.equals(game.getRequirements().get(i).getDescription())) {
 							if(isEstimatePanelCreated){
 								removeEstimatePanel();
 								updateEstimatePanel(game, game.getRequirements().get(i));
@@ -304,7 +310,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 	
 	public void updateEstimatePanel(Game game, Requirement requirement){
 		blankPanel2.setVisible(false);
-		ArrayList<String> deck = new ArrayList<String>(); //this line makes it so the default deck is selected
+		List<String> deck = new ArrayList<String>(); //make it so the default deck is selected
 		rightPanel.add(new EstimatePanel(game, requirement, deck));
 		rightPanel.revalidate();
 		this.revalidate();
@@ -329,8 +335,9 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 	}
 	
 	public void endGameButtonPressed(){
-		active.setComplete();
+		active.makeComplete();
 		active.notifyObservers();
+		ViewEventController.getInstance().removeTab(this);
 	}
 	
 	public static void main(String args[]){
@@ -338,9 +345,12 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         
-        ArrayList<Requirement> reqs = new ArrayList<Requirement>();
+        List<Requirement> reqs = new ArrayList<Requirement>();
         reqs.add(new Requirement("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-				"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
+				"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
 				
         //Set up the content pane.
         frame.add(new ActiveGamesPanel(new Game("name", "desc", reqs, false, true)));

@@ -15,35 +15,48 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
 
+/**
+ * sets the ActionListener for each of the estimates. The "I don't know" button
+ * clears all selected buttons when selected and if deselected, previously 
+ * selected buttons are reselected. "I don't know" button is deselected when an
+ * estimate button is selected. 
+ * @author Bobby Drop Tables
+ *
+ */
 public class CardActionListenerRefactor implements ActionListener {
 
 	//Size is the size of the button array including the "IDK" button
 	int size;
 	JToggleButton button;
 	int index;
-	ArrayList<String> deck;
+	List<String> deck;
 	ActiveCardsPanel cardsPanel;
-	EstimatePanel estimatePanel;
+	NewRightHalfActiveGamePanel estimatePanel;
 	
 	/**
+	 * sets the action listener for each button
 	 * @param index of the button to be created
 	 * @param deckUsed to create the button
+	 * @param passedButton the button to be given an action
+	 * @param passedCardsPanel cards that have been selected
+	 * @param passedEstimatePanel the estimate before the action occurs
 	 */
-	public CardActionListenerRefactor(int index, ArrayList<String> deckUsed, JToggleButton passedButton, ActiveCardsPanel passedCardsPanel, EstimatePanel passedEstimatePanel) {
-		this.size = deckUsed.size();
-		this.cardsPanel = passedCardsPanel;
-		this.estimatePanel = passedEstimatePanel;
-		this.deck = deckUsed;
+
+	public CardActionListenerRefactor(int index, List<String> deckUsed, JToggleButton passedButton, ActiveCardsPanel passedCardsPanel, NewRightHalfActiveGamePanel panel2) {
+		size = deckUsed.size();
+		cardsPanel = passedCardsPanel;
+		estimatePanel = panel2;
+		deck = deckUsed;
 		this.index = index;
-		this.button = passedButton;
+		button = passedButton;
 	}	 
 	
 	@Override
@@ -86,12 +99,18 @@ public class CardActionListenerRefactor implements ActionListener {
 			ex.printStackTrace();
 		}
 	}
-
+	/**
+	 * Increase total sum by amount entered
+	 * @param cardValue
+	 */
 	public void addToCardSum(int cardValue) {
 		cardsPanel.addToCardSum(cardValue);
 		estimatePanel.updateSum();
 	}
-
+	/**
+	 * Decrease total sum by amount entered
+	 * @param cardValue
+	 */
 	public void decToCardSum(int cardValue) {
 		cardsPanel.decToCardSum(cardValue);
 		estimatePanel.updateSum();

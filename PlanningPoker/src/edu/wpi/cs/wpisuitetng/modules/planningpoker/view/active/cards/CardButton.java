@@ -13,7 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards;
 
 import java.awt.Image;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
 
 import javax.accessibility.Accessible;
 import javax.imageio.ImageIO;
@@ -21,16 +21,31 @@ import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
 
+/**
+ * creates all of the buttons to be used for the estimation
+ * @author Bobby Drop Tables
+ *
+ */
 public class CardButton extends JToggleButton implements Accessible {
 	JToggleButton button;
-	ArrayList<String> deck;
+	List<String> deck;
 	ActiveCardsPanel panel;
 
-	public CardButton(int cardNum, ArrayList<String> passedDeck, ActiveCardsPanel passedCardsPanel, EstimatePanel passedEstimatePanel){
+	/**
+	 * creates the buttons based on the deck
+	 * @param cardNum the index of the card
+	 * @param passedDeck the deck of cards to be used
+	 * @param passedCardsPanel the panel that displays the cards
+	 * @param passedEstimatePanel the panel that displays the estimates
+	 */
+
+	public CardButton(int cardNum, List<String> passedDeck, ActiveCardsPanel passedCardsPanel, NewRightHalfActiveGamePanel panel2){
 		this.deck = passedDeck;
 		this.panel = passedCardsPanel;
+		deck = passedDeck;
+		panel = passedCardsPanel;
 		
 		//Initialize the Button and the number on the button
 		String buttonNum;
@@ -59,10 +74,14 @@ public class CardButton extends JToggleButton implements Accessible {
 		 this.setVerticalAlignment(SwingConstants.CENTER);
 		 
 		 //Add the action listener to the button
-		this.addActionListener(new CardActionListenerRefactor(cardNum, deck, this, passedCardsPanel, passedEstimatePanel));
+		this.addActionListener(new CardActionListenerRefactor(cardNum, deck, this, passedCardsPanel, panel2));
 		panel.add(this);
 	}
 
+	/**
+	 * getter for the value of the card
+	 * @return the value of the card
+	 */
 	public String getValue() {
 		return this.getText();
 	}

@@ -24,9 +24,9 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameEntityManager;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -147,7 +147,8 @@ public class GameManagerTest {
 	}
 	
 	/**
-	 * Ensures an UnauthorizedException is thrown when trying to delete an entity while not authorized
+	 * Ensures an UnauthorizedException is thrown when trying to delete 
+	 * an entity while not authorized
 	 * @throws WPISuiteException
 	 */
 	@Test(expected=UnauthorizedException.class)
@@ -191,7 +192,7 @@ public class GameManagerTest {
 	@Test
 	public void testGetAll() throws WPISuiteException{
 		manager.save(defaultSession, game2);
-		Game returnedGameList [] = manager.getAll(defaultSession);
+		Game[] returnedGameList = manager.getAll(defaultSession);
 		assertEquals(2, returnedGameList.length);
 	}
 }
