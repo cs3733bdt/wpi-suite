@@ -49,7 +49,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
     
     private JButton addReqButton = new JButton("Add Requirement");
    
-    public NewRightHalfCreateGamePanel(NewCreateGamePanel createGamePanel){
+    public NewRightHalfCreateGamePanel(final NewCreateGamePanel createGamePanel){
        
         Container rightView = new Container();                 //Creates the container for everything in the view
         SpringLayout layout = new SpringLayout();             //Creates the layout to be used: Spring Layout
@@ -87,6 +87,12 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
         createReqsPanel.setLayout(createLayout);
         createReqsPanel.setBorder(defaultBorder);
         
+        //initializes and set up the Create Requirement Label
+        JLabel createReqsLabel = new JLabel("Create Requirements");
+        createReqsLabel.setFont(labelFont);
+        createReqsPanel.add(createReqsLabel);
+   
+        
         //Initializes the Name label and Area and adds them to the createReqPanel
 		nameArea.setPreferredSize(new Dimension(75, 25));
         JLabel reqName = new JLabel("Requirement Name: *");
@@ -108,7 +114,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 		 */
 		descArea.setLineWrap(true);
 		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		
+	
 		
 		createReqsPanel.add(reqDesc);
 		createReqsPanel.add(descPane);
@@ -124,8 +130,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 		submitAddReqButton.addActionListener(new ActionListener() {
 			 @Override
 			public void actionPerformed(ActionEvent e) {
-				 //view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
-				 //addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
+				 createGamePanel.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
+				 addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
 				 nameArea.setText("");
 				 descArea.setText("");
 				 createReqsPanel.setVisible(false);
@@ -149,10 +155,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 		createReqsPanel.add(submitAddReqButton);
 		createReqsPanel.add(cancelRequirementButton);
 		
-		
-        
-        
-        createReqsPanel.setVisible(false);
+		createReqsPanel.setVisible(false);
        
         //IN THE CURRENT REQ PANEL
         // the tile with respect to the panel
@@ -188,9 +191,14 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
         layout.putConstraint(SpringLayout.SOUTH, addReqButton, -5, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, addReqButton);
         
+        // the tile with respect to the panel
+        createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, createReqsLabel, 5, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
+        // Table with respect to the title
+        createLayout.putConstraint(SpringLayout.NORTH, createReqsLabel, 5, SpringLayout.NORTH, createGamePanel);
+        
         // req name label with respect to create panel
         createLayout.putConstraint(SpringLayout.WEST, reqName, 5, SpringLayout.WEST, createReqsPanel); 					
-		createLayout.putConstraint(SpringLayout.NORTH, reqName, 5, SpringLayout.NORTH, createReqsPanel); 					
+		createLayout.putConstraint(SpringLayout.NORTH, reqName, 5, SpringLayout.SOUTH, createReqsLabel); 					
 		// req name label with respect to the text box
 		createLayout.putConstraint(SpringLayout.NORTH, nameArea, 5, SpringLayout.SOUTH, reqName); 
 		//name text box with respect to the create panel 
@@ -206,6 +214,18 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 		// desc text box with respect to the create panel 
 		createLayout.putConstraint(SpringLayout.WEST, descPane, 5, SpringLayout.WEST, createReqsPanel); 				
         createLayout.putConstraint(SpringLayout.EAST, descPane, -5, SpringLayout.EAST, createReqsPanel); 
+        
+        //position submit button with respect to createReqPanel
+        createLayout.putConstraint(SpringLayout.SOUTH, submitAddReqButton, -5, SpringLayout.SOUTH, createReqsPanel);
+        createLayout.putConstraint(SpringLayout.WEST, submitAddReqButton, 5, SpringLayout.WEST, createReqsPanel);
+       
+        //position cancel button with respect to createReqPanel
+        createLayout.putConstraint(SpringLayout.SOUTH, cancelRequirementButton, -5, SpringLayout.SOUTH, createReqsPanel);
+        createLayout.putConstraint(SpringLayout.EAST, cancelRequirementButton, -5, SpringLayout.EAST, createReqsPanel);
+        
+        //anchor descPane to the top of the submit button
+        createLayout.putConstraint(SpringLayout.SOUTH, descPane, -20, SpringLayout.NORTH, submitAddReqButton);
+        
       
         
         
@@ -252,5 +272,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 		String[] columnNames2 = {"Requirement", "Description"};
 		Object[][] data2 = {};
 		return new ActiveGamesTable(data2, columnNames2);
+	}
+	
+	public void addRequirement(Requirement requirement){
+		table2.tableModel.addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 	}
 }
