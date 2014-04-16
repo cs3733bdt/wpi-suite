@@ -19,7 +19,7 @@ import java.util.GregorianCalendar;
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
+//import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
@@ -129,7 +129,7 @@ public class ViewEventController {
 			}
 		}
 		
-		// Makes the game name not be longer than 6 charaters
+		// Makes the game name not be longer than 6 characters
 		StringBuilder tabName = new StringBuilder();
 		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
 		tabName.append(game.getName().subSequence(0, subStringLength));
@@ -239,8 +239,8 @@ public class ViewEventController {
 			if(!((CreateGamePanel) comp).readyToRemove()) return;
 			this.listOfCreateGamePanels.remove(comp);
 		}
-		if (comp instanceof ActiveGamesPanel) {
-			if(!((ActiveGamesPanel) comp).readyToRemove()) return;
+		if (comp instanceof NewActiveGamePanel) {
+			if(!((NewActiveGamePanel) comp).readyToRemove()) return;
 			this.listOfActiveGamePanels.remove(comp);
 		}
 		main.getTabbedView().remove(comp);
@@ -261,9 +261,9 @@ public class ViewEventController {
 			
 			System.out.println(toBeRemoved.getClass().getName());
 
-			if(toBeRemoved instanceof ActiveGamesPanel)
+			if(toBeRemoved instanceof NewActiveGamePanel)
 			{
-				if(!((ActiveGamesPanel)toBeRemoved).readyToRemove()) continue;
+				if(!((NewActiveGamePanel)toBeRemoved).readyToRemove()) continue;
 				this.listOfActiveGamePanels.remove(toBeRemoved);
 			}
 			
@@ -292,7 +292,7 @@ public class ViewEventController {
 		{
 			Component toBeRemoved = main.getTabbedView().getComponentAt(i);
 
-			if(toBeRemoved instanceof ActiveGamesPanel){continue;}
+			if(toBeRemoved instanceof NewActiveGamePanel){continue;}
 			if(toBeRemoved == selected){
 				continue;}
 

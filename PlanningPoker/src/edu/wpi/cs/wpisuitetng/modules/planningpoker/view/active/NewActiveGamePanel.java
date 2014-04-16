@@ -11,21 +11,13 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 
-import java.awt.Dimension;
-import java.util.ArrayList;
 
-import javax.swing.JFrame;
 import javax.swing.JSplitPane;
 
-import edu.wpi.cs.wpisuitetng.Session;
-import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewLeftHalfCreateGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewRightHalfCreateGamePanel;
+
 
 
 public class NewActiveGamePanel extends JSplitPane implements AbstractModelObserver{
@@ -44,7 +36,7 @@ public class NewActiveGamePanel extends JSplitPane implements AbstractModelObser
 		
 		this.setRightComponent(rightHalf);
 		this.setLeftComponent(leftHalf);
-		this.setDividerLocation(400);
+		this.setDividerLocation(600);
 		
 	}
 	
@@ -57,6 +49,11 @@ public class NewActiveGamePanel extends JSplitPane implements AbstractModelObser
 	
 	public Game getGame() {
 		return currentGame;
+	}
+
+	public boolean readyToRemove() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 	
 	/*
