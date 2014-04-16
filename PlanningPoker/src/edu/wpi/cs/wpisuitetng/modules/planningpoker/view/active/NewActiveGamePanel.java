@@ -77,6 +77,5 @@ public class NewActiveGamePanel extends JSplitPane implements AbstractModelObser
         frame.pack();
         frame.setVisible(true);
 	}
-*/
-	
+	*/
 }

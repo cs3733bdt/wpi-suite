@@ -188,7 +188,7 @@ public class EstimatePanel extends JPanel{
 		c.gridy = 6;
 		c.gridwidth = 2;
 		
-		cardsPanel = new ActiveCardsPanel(deck, this);
+		//cardsPanel = new ActiveCardsPanel(deck, this);
 		
 		//added below
 		if (this.getGame().doesUseCards()) {

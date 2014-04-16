@@ -14,8 +14,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
-import javax.swing.JTextField;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 public class DescriptionJTextField extends JTextArea implements IDataField {

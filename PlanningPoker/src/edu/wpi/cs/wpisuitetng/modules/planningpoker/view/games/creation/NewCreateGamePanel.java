@@ -12,8 +12,10 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
 import java.awt.Dimension;
+
 import javax.swing.JFrame;
 import javax.swing.JSplitPane;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
 
 /**

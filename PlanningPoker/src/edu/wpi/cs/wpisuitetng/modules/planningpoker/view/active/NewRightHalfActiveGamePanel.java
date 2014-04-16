@@ -10,10 +10,16 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -23,22 +29,31 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.ActiveCardsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton;
 
 public class NewRightHalfActiveGamePanel extends JScrollPane {
 	Game currentGame;
+	Requirement activeRequirement;
 	private JTextArea nameTextField;
 	private JTextArea descriptionTextField;
 	private JButton submitButton;
 	private final Border defaultBorder = (new JTextField()).getBorder();
+	private final Border errorBorder = BorderFactory
+			.createLineBorder(Color.RED);
 	private ArrayList<String> deck = new ArrayList<String>();
 	private ArrayList<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	private ActiveCardsPanel cardsPanel;
 	private int sum;
 	private JLabel counterLabel;
+	private JTextField estText = new JTextField();
+	private JTextArea counter = new JTextArea();
+	private JLabel errorField = new JLabel();
 
 	NewRightHalfActiveGamePanel(final Game game) {
 		currentGame = game;
@@ -107,15 +122,115 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		descriptionPanel.setPreferredSize(new Dimension(200, 100));
 
+		/**
+		 * Set up the cards panel
+		 */
 		// Label and accumulate sum
 		counterLabel = new JLabel("Your current estimate total: " + 0);
 		sum = 0;
 		JToggleButtonList = cardsPanel.getCardButtonArray();
 
+		// This branch will be run if the default deck is to be used
+		// boolean useDefaultDeck;
+		// if (customDeck.size() == 0) {
+		// generate fibonachi sequence
+		int firstnum = 0;
+		int secondnum = 1;
+		int currnum;
+		deck.add(Integer.toString(secondnum));
+		// Default value is 6.
+		int Fibcount = 6; // if this is 6, the highest number generated will be
+							// 13
+		for (int i = 0; i < Fibcount; i++) {
+			currnum = firstnum + secondnum;
+			deck.add("" + currnum + "");
+			firstnum = secondnum;
+			secondnum = currnum;
+		}
+		/*
+		 * useDefaultDeck = true; } This branch will be run if a custom deck is
+		 * to be used else { deck = customDeck; useDefaultDeck = false; }
+		 * 
+		 * if (useDefaultDeck) { deck.add("0?"); }
+		 */
+
+		cardsPanel = new ActiveCardsPanel(deck, this);
+
+		// added below
+		if (this.getGame().doesUseCards()) {
+			JScrollPane cardPanel = new JScrollPane(cardsPanel);
+			cardPanel
+					.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			cardPanel.setPreferredSize(new Dimension(400, 100));
+			rightView.add(cardPanel);
+			layout.putConstraint(SpringLayout.WEST, cardPanel, 40,
+					SpringLayout.WEST, rightView);
+			layout.putConstraint(SpringLayout.EAST, cardPanel, 40,
+					SpringLayout.EAST, rightView);
+			layout.putConstraint(SpringLayout.NORTH, cardPanel, 20,
+					SpringLayout.SOUTH, desLabel);
+
+		} else {
+			rightView.add(cardsPanel);
+			layout.putConstraint(SpringLayout.WEST, cardsPanel, 40,
+					SpringLayout.WEST, rightView);
+			layout.putConstraint(SpringLayout.EAST, cardsPanel, 40,
+					SpringLayout.EAST, rightView);
+			layout.putConstraint(SpringLayout.NORTH, cardsPanel, 20,
+					SpringLayout.SOUTH, desLabel);
+
+		}
+
+		// added above
+
+		this.JToggleButtonList = cardsPanel.getCardButtonArray();
+		/**
+		 * The text area where the user types their estimate
+		 */
+		estText.setText("Estimate Here");
+		estText.setMinimumSize(new Dimension(100, 50));
+		estText.setPreferredSize(new Dimension(100, 50));
+		estText.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				estText.setText("");
+			}
+		});
+		rightView.add(estText);
+		layout.putConstraint(SpringLayout.WEST, estText, 40,
+				SpringLayout.WEST, rightView);
+		layout.putConstraint(SpringLayout.EAST, estText, 40,
+				SpringLayout.EAST, rightView);
+		layout.putConstraint(SpringLayout.NORTH, estText, 20,
+				SpringLayout.SOUTH, desLabel);
+
+		/**
+		 * The label for the counter
+		 */
+		counterLabel = new JLabel("Your current estimate total: " + 0);
+
+		rightView.add(counterLabel);
+
+		if (currentGame.doesUseCards()) {
+			estText.setVisible(false);
+		} else {
+			cardsPanel.setVerifyInputWhenFocusTarget(false);
+			for (int i = 0; i < JToggleButtonList.size(); i++) {
+				JToggleButtonList.get(i).setVisible(false);
+			}
+			counter.setVisible(false);
+			counterLabel.setVisible(false);
+		}
+
 		submitButton = new JButton();
 		submitButton.setSize(10, 5);
 		submitButton.setText("SUBMIT");
-
+		submitButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				submitButtonPressed();
+			}
+		});
 		/**
 		 * Add components to container
 		 */
@@ -168,13 +283,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.NORTH, descriptionPanel, 0,
 				SpringLayout.SOUTH, desLabel);
 
-		layout.putConstraint(SpringLayout.WEST, cardsPanel, 40,
-				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, cardsPanel, 40,
-				SpringLayout.EAST, rightView);
-		layout.putConstraint(SpringLayout.NORTH, cardsPanel, 20,
-				SpringLayout.SOUTH, desLabel);
-
 		layout.putConstraint(SpringLayout.WEST, counterLabel, 40,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.EAST, counterLabel, 40,
@@ -193,23 +301,12 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	}
 
 	/**
-	 * Set up the default deck of cards
+	 * getter for the EstimateText text field
+	 * 
+	 * @return estText
 	 */
-	public void setUpDefaultDeck() {
-		// generate fibonachi sequence
-		int firstnum = 0;
-		int secondnum = 1;
-		int currnum;
-		deck.add(Integer.toString(secondnum));
-		// Default value is 6.
-		int Fibcount = 6; // if this is 6, the highest number generated will be
-							// 13
-		for (int i = 0; i < Fibcount; i++) {
-			currnum = firstnum + secondnum;
-			deck.add("" + currnum + "");
-			firstnum = secondnum;
-			secondnum = currnum;
-		}
+	public JTextField getEstimateText() {
+		return estText;
 	}
 
 	/**
@@ -229,6 +326,121 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			sum += Integer.parseInt(deck.get(i));
 		}
 		return sum;
+	}
+
+	public ArrayList<CardButton> getCardButtonArray() {
+		return new ArrayList<CardButton>();
+	}
+
+	/**
+	 * getter for the game field
+	 * 
+	 * @return currentGame
+	 */
+	public Game getGame() {
+		// TODO Auto-generated method stub
+		return currentGame;
+	}
+
+	/**
+	 * getter for the requirement field
+	 * 
+	 * @return activeRequirement
+	 */
+	public Requirement getRequirement() {
+		return activeRequirement;
+	}
+
+	public void submitButtonPressed() {
+		if (getGame().doesUseCards()) {
+			this.submitButton();
+			System.out.println("Submit Vote Pressed Passed");
+		} else {
+			if (this.validateField(true)) {
+				this.submitButton();
+				System.out.println("Submit Vote Pressed Passed.");
+			} else {
+				System.out.println("Submit Vote Pressed Failed.");
+			}
+		}
+	}
+
+	private boolean validateField(boolean warn) {
+		boolean isEstimateValid = false;
+
+		// check to see if estimate is parsable to int
+		boolean parsable = true;
+		try {
+			Integer.parseInt(getEstimateText().getText());
+
+		} catch (NumberFormatException e) {
+			parsable = false;
+		}
+		// end parsable check
+
+		// BEGIN ESTIMATE BOX VALDATION
+		if (getEstimateText().getText().length() <= 0) {
+			isEstimateValid = false;
+			if (warn) {
+				getEstimateText().setBorder(errorBorder);
+			}
+			displayError("An estimation is required before submission");
+		} else if (parsable) {
+			if (Integer.parseInt(getEstimateText().getText()) < 0) {
+				isEstimateValid = false;
+				if (warn) {
+					getEstimateText().setBorder(errorBorder);
+				}
+				displayError("An estimate must be at least 0");
+			} else {
+				if (warn) {
+					getEstimateText().setBorder(defaultBorder);
+				}
+				isEstimateValid = true;
+			}
+		} else {
+			isEstimateValid = false;
+			if (warn) {
+				getEstimateText().setBorder(errorBorder);
+			}
+			displayError("An estimation must contain only numbers");
+		}
+
+		return isEstimateValid;
+	}
+
+	public void submitButton() {
+		String currentUser = ConfigManager.getConfig().getUserName(); // Gets
+																		// the
+																		// currently
+																		// active
+																		// user
+		int voteNumber;
+		if (getGame().doesUseCards()) {
+			voteNumber = cardsPanel.getSum();
+		} else {
+			voteNumber = Integer.parseInt(estText.getText());
+		}
+		Vote vote = new Vote(currentUser, voteNumber);
+		getRequirement().addVote(vote);
+
+		System.out.println("You voted: " + vote.getVoteNumber());
+
+		ViewEventController.getInstance().refreshGameTable();
+		ViewEventController.getInstance().refreshGameTree();
+
+		getEstimateText().setBorder(defaultBorder);
+		displaySuccess("   Vote Successful!");
+	}
+
+	public void displayError(String errorString) {
+		errorField.setForeground(Color.RED);
+		errorField.setText(errorString);
+	}
+
+	public void displaySuccess(String successString) {
+		errorField.setForeground(Color.BLUE);
+		errorField.setText(successString);
 	}
 
 }

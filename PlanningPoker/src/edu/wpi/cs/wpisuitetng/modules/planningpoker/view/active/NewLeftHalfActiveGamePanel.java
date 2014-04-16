@@ -27,8 +27,8 @@ import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextField;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
  * TODO Documentation

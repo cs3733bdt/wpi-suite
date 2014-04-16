@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
 
 public class CardActionListenerRefactor implements ActionListener {
 
@@ -31,16 +31,16 @@ public class CardActionListenerRefactor implements ActionListener {
 	int index;
 	ArrayList<String> deck;
 	ActiveCardsPanel cardsPanel;
-	EstimatePanel estimatePanel;
+	NewRightHalfActiveGamePanel estimatePanel;
 	
 	/**
 	 * @param index of the button to be created
 	 * @param deckUsed to create the button
 	 */
-	public CardActionListenerRefactor(int index, ArrayList<String> deckUsed, JToggleButton passedButton, ActiveCardsPanel passedCardsPanel, EstimatePanel passedEstimatePanel) {
+	public CardActionListenerRefactor(int index, ArrayList<String> deckUsed, JToggleButton passedButton, ActiveCardsPanel passedCardsPanel, NewRightHalfActiveGamePanel panel2) {
 		this.size = deckUsed.size();
 		this.cardsPanel = passedCardsPanel;
-		this.estimatePanel = passedEstimatePanel;
+		this.estimatePanel = panel2;
 		this.deck = deckUsed;
 		this.index = index;
 		this.button = passedButton;
