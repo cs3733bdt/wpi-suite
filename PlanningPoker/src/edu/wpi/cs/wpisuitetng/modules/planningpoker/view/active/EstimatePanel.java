@@ -88,7 +88,9 @@ public class EstimatePanel extends JPanel{
     /*
 	 * If the ArrayList passed in is empty it will use the default deck
 	 */
-	public EstimatePanel(Game game, Requirement requirement, List<String> deck2){ //add a deck of cards as a parameter
+	public EstimatePanel(Game game, 
+				Requirement requirement, 
+				List<String> deck2){ //add a deck of cards as a parameter
 
 		super(new GridBagLayout());
 
@@ -448,7 +450,7 @@ public class EstimatePanel extends JPanel{
 	}
 
 	public void submitEstimate() {
-		String currentUser = ConfigManager.getConfig().getUserName(); // Gets the currently active user
+		String currentUser = ConfigManager.getConfig().getUserName(); // Get currently active user
 		int voteNumber;
 		if(getGame().doesUseCards()){
 			voteNumber = cardsPanel.getSum();

@@ -52,7 +52,8 @@ public class PlanningPoker implements IJanewayModule {
 	    ViewEventController.getInstance().setToolBar(toolbarPanel);
 
 	    // Create a tab model that contains the toolbar panel and the main content panel
-	    JanewayTabModel tab1 = new JanewayTabModel(getName(), new ImageIcon(), toolbarPanel, mainPanel);
+	    JanewayTabModel tab1 = 
+	    		new JanewayTabModel(getName(), new ImageIcon(), toolbarPanel, mainPanel);
 
 	    // Add the tab to the list of tabs owned by this module
 	    tabs.add(tab1);
@@ -60,7 +61,8 @@ public class PlanningPoker implements IJanewayModule {
 	
 	/**
 	 * Returns the name of the PlanningPoker tab.
-	 * @return String * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName() * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName()
+	 * @return String * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName() * 
+	 * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName()
 	 */
 	@Override
 	public String getName() {
@@ -69,7 +71,9 @@ public class PlanningPoker implements IJanewayModule {
 	
 	/**
 	 * Returns the tab that makes up the Planning Poker tab.
-	 * @return List<JanewayTabModel> * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs() * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs()
+	 * @return List<JanewayTabModel> * 
+	 * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs() * 
+	 * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs()
 	 */
 	@Override
 	public List<JanewayTabModel> getTabs() {

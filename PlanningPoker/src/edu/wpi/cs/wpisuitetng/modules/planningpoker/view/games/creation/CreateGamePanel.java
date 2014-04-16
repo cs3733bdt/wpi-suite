@@ -359,8 +359,9 @@ public class CreateGamePanel extends JScrollPane {
 					.showMessageDialog(
 							null,
 							"\tYour connection to the server has been lost.\n"
-									+ "\tYour changes have been resored but no further changes to the server can be made.\n"
-									+ "\tPlease save your changes to a text file and restart Janeway.",
+									+ "\tYour changes have been restored but no further changes to "
+									+ "the server can be made.\n\tPlease save your changes"
+									+ " to a text file and restart Janeway.",
 							"Network Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}

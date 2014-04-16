@@ -81,7 +81,11 @@ public class GameTest {
 	public void testCopyContentsOfOneGameToAnother() {
 		
 		// create two games, one with fields initialized, one without
-		Game game1 = new Game("Game A", "Test description", new ArrayList<Requirement>(), true, false);
+		Game game1 = new Game("Game A",
+				"Test description", 
+				new ArrayList<Requirement>(), 
+				true, 
+				false);
 		List<Requirement> removeList = new ArrayList<Requirement>();
 		removeList.add(new Requirement("Requirement", "Description"));
 		Game game2 = new Game("Game B", "A Description to be removed", removeList, false, true);
@@ -101,7 +105,11 @@ public class GameTest {
 		
 		List<Requirement> keepList = new ArrayList<Requirement>();
 		keepList.add(new Requirement("Requirement One", "Description One"));
-		game1 = new Game(game1.getName(), game1.getDescription(), keepList, true, game1.doesUseCards());
+		game1 = new Game(game1.getName(), 
+				game1.getDescription(), 
+				keepList, 
+				true, 
+				game1.doesUseCards());
 		
 		assertTrue(game2.copyFrom(game1));
 		
@@ -141,7 +149,11 @@ public class GameTest {
 	@Test
 	public void testCheckActive(){
 		Game game1 = new Game("Game 1", "Description", new ArrayList<Requirement>(), true, true);
-		Game game2 = new Game("Game 2", "Other Description", new ArrayList<Requirement>(), false, false);
+		Game game2 = new Game("Game 2", 
+				"Other Description", 
+				new ArrayList<Requirement>(), 
+				false, 
+				false);
 		game2.makeComplete();
 		boolean complete1 = game1.isComplete();
 		boolean complete2 = game2.isComplete();
