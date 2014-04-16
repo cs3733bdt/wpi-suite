@@ -40,8 +40,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 public class NewRightHalfActiveGamePanel extends JScrollPane {
-	Game currentGame;
-	Requirement activeRequirement;
+	private Game currentGame;
+	private Requirement activeRequirement;
 	private JTextArea nameTextField;
 	private JTextArea descriptionTextField;
 	private JButton submitButton;
@@ -448,7 +448,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			voteNumber = Integer.parseInt(estText.getText());
 		}
 		Vote vote = new Vote(currentUser, voteNumber);
-		getRequirement().addVote(vote);
+		activeRequirement.addVote(vote);
 
 		System.out.println("You voted: " + vote.getVoteNumber());
 
