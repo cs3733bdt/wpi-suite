@@ -57,6 +57,9 @@ public class GameTree extends JPanel implements MouseListener{
 	DefaultMutableTreeNode history = 
 			new DefaultMutableTreeNode("Game History"); //Make games history node
 	
+	boolean isInactiveCollapsed = true;
+	boolean isActiveCollapsed = true;
+	boolean isHistoryCollapsed = true;
 	
 	/**
 	 * Constructor for a GameTree
@@ -64,7 +67,7 @@ public class GameTree extends JPanel implements MouseListener{
 	public GameTree(){
 		super(new GridBagLayout());
 		ViewEventController.getInstance().setGameOverviewTree(this);
-		this.refresh();
+		refresh();
 	}
 
 	/**
@@ -72,21 +75,32 @@ public class GameTree extends JPanel implements MouseListener{
 	 * Used when the list of games is updated or changed.
 	 */
 	public void refresh(){
-		if(this.getComponentCount() != 0){
-			this.remove(0);
+		if(getComponentCount() != 0){			
+			isInactiveCollapsed = gameTree.isCollapsed(new TreePath(inactive.getPath()));
+			isActiveCollapsed = gameTree.isCollapsed(new TreePath(active.getPath()));			
+			isHistoryCollapsed = gameTree.isCollapsed(new TreePath(history.getPath()));
+			remove(0);
 		}
 		
 		active.removeAllChildren();
 		inactive.removeAllChildren();
 		history.removeAllChildren();
 		
+<<<<<<< HEAD
 		List<Game> gameList = 
 				sortGames(GameModel.getInstance().getGames());//retrieve list of all games
+=======
+		List<Game> gameList = sortGames(GameModel.getInstance().getGames()); //retrieve the list of all of the games
+>>>>>>> e117535b264ea3c3ab0c986fb5be2503858ea260
 		System.out.println("Numb Games: " + gameList.size());
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
+<<<<<<< HEAD
 			if(!game.isComplete()){ //If game is not complete, add it to the active game drop down
+=======
+			if(!game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
+>>>>>>> e117535b264ea3c3ab0c986fb5be2503858ea260
 				if(game.isActive()){
 					active.add(newGameNode);
 				}
@@ -101,34 +115,60 @@ public class GameTree extends JPanel implements MouseListener{
 		gameNode.add(inactive);
 		gameNode.add(active);
 		gameNode.add(history);
+		System.out.println("Numb Games: " + gameList.size());
+
+		
 		gameTree = new JTree(gameNode);
 		
 		gameTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		gameTree.setToggleClickCount(0);
 		gameTree.addMouseListener(this);
 	
-		this.setLayout(new GridBagLayout());
+		setLayout(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		
 		c.fill = GridBagConstraints.BOTH;
-		c.anchor = GridBagConstraints.CENTER;
 		//c.weighty = 1;
 		c.weightx = 1;
-		c.gridx = 1;
-		c.gridy = 1;
+		
 		gameTreeScroll = new JScrollPane(gameTree);
 		gameTreeScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);		
 		gameTreeScroll.setPreferredSize(new Dimension(190, 500));
 		
-		
-	    this.add(gameTreeScroll, c);
+	    add(gameTreeScroll, c);
 	    ViewEventController.getInstance().setGameOverviewTree(this);
+	    
+	    
+	    if(isInactiveCollapsed){
+	    	gameTree.collapsePath(new TreePath(inactive.getPath()));
+	    }
+	    else{
+	    	gameTree.expandPath(new TreePath(inactive.getPath()));
+	    }
 	   
-	    this.repaint();
+	    if(isActiveCollapsed){
+	    	gameTree.collapsePath(new TreePath(active.getPath()));
+	    }
+	    else{
+	    	gameTree.expandPath(new TreePath(active.getPath()));
+	    }
+	    	    
+	    if(isHistoryCollapsed){
+	    	gameTree.collapsePath(new TreePath(history.getPath()));
+	    }
+	    else{
+	    	gameTree.expandPath(new TreePath(history.getPath()));
+	    }
+	    
+	    
+	    revalidate();
+	    gameTree.revalidate();
+	    gameTreeScroll.revalidate();
+	    repaint();
 	    gameTree.repaint();
 		gameTreeScroll.repaint();
-	    this.validate();
+	    validate();
 		
 	}
 	

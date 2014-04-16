@@ -511,7 +511,6 @@ public class CreateGamePanel extends JScrollPane {
 	
 	/**
 	 * Adds the game to the model and to the server and sets it to inactive
-	 * @param endDate 
 	 */
 	public void  saveGame(){	
 		if(currentGame == null){
