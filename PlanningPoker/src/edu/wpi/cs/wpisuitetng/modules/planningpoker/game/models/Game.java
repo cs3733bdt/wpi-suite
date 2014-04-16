@@ -519,7 +519,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			this.makeChanged();
 			this.notifyObservers(arg);
 		}
-		System.out.println("Game: " + getName() + " has " + this.countObservers() + " observers");
+		System.out.println("Game: " + name + " has " + this.countObservers() + " observers");
 		if(this.countObservers()>0){
 			System.out.println("\t" + this.getObserver(0));
 		}

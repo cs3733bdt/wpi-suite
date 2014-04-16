@@ -92,7 +92,7 @@ AbstractModelObserver {
 	 *            game to be added to the games ArrayList
 	 */
 	public synchronized void addGame(Game newGame) {
-		while (isServerUpdating()) {}
+		while (serverUpdating) {}
 		games.add(newGame);
 		try {
 			AddGameController.getInstance().addGame(newGame);
@@ -274,6 +274,8 @@ AbstractModelObserver {
 				UpdateGameController.getInstance().updateGame((Game) o);
 				System.out.println("A game is being updated: "
 						+ ((Game) o).getName());
+				ViewEventController.getInstance().refreshGameTable();
+				ViewEventController.getInstance().refreshGameTree();
 			} catch (Exception e) {
 				System.err.println("The network has not been instantiated");
 			}
