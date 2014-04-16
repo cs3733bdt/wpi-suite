@@ -77,8 +77,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		table2 = initializeTable();
 		Font labelFont = makeFont();
 		
-		Border defaultBorder = BorderFactory.createLineBorder(Color.black);
-       
+		//Border defaultBorder = BorderFactory.createLineBorder(Color.black);
+		Border defaultBorder = defaultAreaBorder;
+		
 		/*
 		 * Code for Current Reqs Panel
 		 */
