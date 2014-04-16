@@ -23,8 +23,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.ActiveCardsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton;
 
@@ -110,7 +110,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		// Label and accumulate sum
 		counterLabel = new JLabel("Your current estimate total: " + 0);
 		sum = 0;
-		JToggleButtonList = cardsPanel.getCardButtonArray();
+		JToggleButtonList = (ArrayList<CardButton>) cardsPanel.getCardButtonArray();
 
 		submitButton = new JButton();
 		submitButton.setSize(10, 5);

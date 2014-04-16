@@ -19,11 +19,16 @@ import javax.swing.JPanel;
 
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.AddRequirementsPanel;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 public class AddReqImportReqPanel extends JPanel {
 	
-	private JButton addReq;
+	private final JButton addReq;
 	
-	private JButton importReq;
+	private final JButton importReq;
 		
 	public AddReqImportReqPanel(final AddRequirementsPanel view2){
 		

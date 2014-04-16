@@ -6,6 +6,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.PasswordAuthentication;
@@ -16,8 +17,9 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 
 /**
  * @author dstapply
@@ -32,7 +34,7 @@ public class testEmailNotification {
 	String[] support1;
 	Project p;
 	EmailNotification en;
-	ArrayList<Requirement> reqs;
+	List<Requirement> reqs;
 	
 	@Before
 	public void setUp()

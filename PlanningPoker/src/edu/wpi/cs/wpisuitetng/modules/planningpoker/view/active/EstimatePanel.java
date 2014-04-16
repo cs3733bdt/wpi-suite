@@ -23,6 +23,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -35,18 +36,23 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.vote.Vote;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.ActiveCardsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 public class EstimatePanel extends JPanel{
 	Game activeGame;
 	Requirement activeRequirement;	
 	
-	private ArrayList<String> deck = new ArrayList<String>();
+	private List<String> deck = new ArrayList<String>();
 	ActiveCardsPanel cardsPanel;
 	
 	//Label and accumlated sum
@@ -54,18 +60,18 @@ public class EstimatePanel extends JPanel{
 	private int sum = 0;
 	
 	//initializes the JToggleButton
-    private ArrayList<CardButton> JToggleButtonList = new ArrayList<CardButton>();
+    private List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	
 	/**
 	 * Set the userStoryDesc equal to the description of the requirement being
 	 * selected in the table
 	 */
-	private JTextArea userStoryDesc = new JTextArea();
+	private final JTextArea userStoryDesc = new JTextArea();
 	/**
 	 * The estText is needed when the user inputs their estimate, since it must
 	 * be added to the server
 	 */
-	private JTextField estText = new JTextField();
+	private final JTextField estText = new JTextField();
 
 	/** Shows the names of the errors */
 	JLabel errorField = new JLabel();
@@ -82,7 +88,7 @@ public class EstimatePanel extends JPanel{
     /*
 	 * If the ArrayList passed in is empty it will use the default deck
 	 */
-	public EstimatePanel(Game game, Requirement requirement, ArrayList<String> customDeck){ //add a deck of cards as a parameter
+	public EstimatePanel(Game game, Requirement requirement, List<String> deck2){ //add a deck of cards as a parameter
 
 		super(new GridBagLayout());
 
@@ -91,8 +97,8 @@ public class EstimatePanel extends JPanel{
 		this.invalidate();
 		this.revalidate();
 
-		this.activeGame = game;
-		this.activeRequirement = requirement;
+		activeGame = game;
+		activeRequirement = requirement;
 		
 		//this.overviewPanel =  new Container();
 		overviewPanel.setLayout(new GridBagLayout());
@@ -152,7 +158,7 @@ public class EstimatePanel extends JPanel{
 		
 		//This branch will be run if the default deck is to be used
 		boolean useDefaultDeck;
-		if (customDeck.size() == 0) {
+		if (deck2.size() == 0) {
 			//generate fibonachi sequence
 			int firstnum = 0;
 			int secondnum = 1;
@@ -171,7 +177,7 @@ public class EstimatePanel extends JPanel{
 		
 		//This branch will be run if a custom deck is to be used
 		else {
-			deck = customDeck; 
+			deck = deck2; 
 			useDefaultDeck = false;
 		}
 		
@@ -203,7 +209,7 @@ public class EstimatePanel extends JPanel{
 		
 		//added above
 		
-		this.JToggleButtonList = cardsPanel.getCardButtonArray();/**
+		JToggleButtonList = cardsPanel.getCardButtonArray();/**
 		 * The text area where the user types their estimate
 		 */
 		estText.setText("Estimate Here");
@@ -359,7 +365,7 @@ public class EstimatePanel extends JPanel{
 		return sum;
 	}
 	
-	public ArrayList<CardButton> getCardButtonArray() {
+	public List<CardButton> getCardButtonArray() {
 		return new ArrayList<CardButton>();
 	}
 	

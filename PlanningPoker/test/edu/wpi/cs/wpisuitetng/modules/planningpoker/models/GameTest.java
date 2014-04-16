@@ -1,3 +1,14 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
 
 import static org.junit.Assert.assertEquals;
@@ -5,20 +16,26 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 public class GameTest {
 
 	@Before
@@ -31,7 +48,7 @@ public class GameTest {
 
 	@Test
 	public void testJSONConversion() {
-		ArrayList<Requirement> reqList = new ArrayList<Requirement>();
+		List<Requirement> reqList = new ArrayList<Requirement>();
 		
 		Game object = new Game("Game A", "Test description", reqList, true, false);
 		Requirement req = new Requirement("Test Requirement", "Test description");
@@ -65,7 +82,7 @@ public class GameTest {
 		
 		// create two games, one with fields initialized, one without
 		Game game1 = new Game("Game A", "Test description", new ArrayList<Requirement>(), true, false);
-		ArrayList<Requirement> removeList = new ArrayList<Requirement>();
+		List<Requirement> removeList = new ArrayList<Requirement>();
 		removeList.add(new Requirement("Requirement", "Description"));
 		Game game2 = new Game("Game B", "A Description to be removed", removeList, false, true);
 		
@@ -82,7 +99,7 @@ public class GameTest {
 		assertEquals(game2.isComplete(), false);
 		assertEquals(game2.doesUseCards(), false);
 		
-		ArrayList<Requirement> keepList = new ArrayList<Requirement>();
+		List<Requirement> keepList = new ArrayList<Requirement>();
 		keepList.add(new Requirement("Requirement One", "Description One"));
 		game1 = new Game(game1.getName(), game1.getDescription(), keepList, true, game1.doesUseCards());
 		
@@ -125,7 +142,7 @@ public class GameTest {
 	public void testCheckActive(){
 		Game game1 = new Game("Game 1", "Description", new ArrayList<Requirement>(), true, true);
 		Game game2 = new Game("Game 2", "Other Description", new ArrayList<Requirement>(), false, false);
-		game2.setComplete();
+		game2.makeComplete();
 		boolean complete1 = game1.isComplete();
 		boolean complete2 = game2.isComplete();
 		assertFalse(complete1);
@@ -135,8 +152,8 @@ public class GameTest {
 	
 	@Test
 	public void testCustomDeck() {
-		ArrayList<Requirement> reqList = new ArrayList<Requirement>();
-		ArrayList<String> customDeck = new ArrayList<String>();
+		List<Requirement> reqList = new ArrayList<Requirement>();
+		List<String> customDeck = new ArrayList<String>();
 		//populate customDeck
 		int maxSumCheck = 0;
 		for (int i = 0; i < 6; i++) {
