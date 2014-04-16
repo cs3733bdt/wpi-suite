@@ -35,12 +35,11 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private JButton submitButton;
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private ArrayList<String> deck = new ArrayList<String>();
-	//initializes the JToggleButton
-    private ArrayList<CardButton> JToggleButtonList = new ArrayList<CardButton>();
+	private ArrayList<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	private ActiveCardsPanel cardsPanel;
 	private int sum;
 	private JLabel counterLabel;
-	
+
 	NewRightHalfActiveGamePanel(final Game game) {
 		currentGame = game;
 		build();
@@ -54,11 +53,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		rightView.setLayout(layout); // Sets the container to have the spring
 										// layout
 
-		//Label and accumlated sum
-		counterLabel = new JLabel("Your current estimate total: " + 0);
-		sum = 0;
-		JToggleButtonList = cardsPanel.getCardButtonArray();
-		
 		/**
 		 * Create and/or initialize components
 		 */
@@ -70,28 +64,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 																	// Label for
 																	// the
 																	// Description
-		submitButton = new JButton();
-		submitButton.setSize(10, 5);
-		submitButton.setText("SUBMIT");
-
-		nameTextField = new JTextArea(1, 30); // Initializes the textfield for
-												// the game name and sets the
-												// size to 30
-		nameTextField.setText("Requirement1"); // dummy Requirement
-		nameTextField.setBorder(defaultBorder);
-		nameTextField.setEditable(false);
-
-		descriptionTextField = new JTextArea(3, 30); // Initializes the textarea
-														// for the game
-														// description
-		descriptionTextField.setText("Sleep Sleep Sleep Sleep Sleep Sleep Sleep "); // dummy
-																				// description
-		descriptionTextField.setBorder(defaultBorder);
-		descriptionTextField.setEditable(false);
-		
-		JScrollPane descriptionPanel = new JScrollPane(descriptionTextField);
-		descriptionPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		descriptionPanel.setPreferredSize(new Dimension(200, 100));
 
 		/**
 		 * Initializes a table's columns and rows and the table
@@ -113,6 +85,36 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		tablePanel
 				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		tablePanel.setPreferredSize(new Dimension(200, 100));
+
+		nameTextField = new JTextArea(1, 30); // Initializes the textfield for
+		// the game name and sets the
+		// size to 30
+		nameTextField.setText("Requirement1"); // dummy Requirement
+		nameTextField.setBorder(defaultBorder);
+		nameTextField.setEditable(false);
+
+		descriptionTextField = new JTextArea(3, 30); // Initializes the textarea
+		// for the game
+		// description
+		descriptionTextField
+				.setText("Sleep Sleep Sleep Sleep Sleep Sleep Sleep "); // dummy
+		// description
+		descriptionTextField.setBorder(defaultBorder);
+		descriptionTextField.setEditable(false);
+
+		JScrollPane descriptionPanel = new JScrollPane(descriptionTextField);
+		descriptionPanel
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		descriptionPanel.setPreferredSize(new Dimension(200, 100));
+
+		// Label and accumulate sum
+		counterLabel = new JLabel("Your current estimate total: " + 0);
+		sum = 0;
+		JToggleButtonList = cardsPanel.getCardButtonArray();
+
+		submitButton = new JButton();
+		submitButton.setSize(10, 5);
+		submitButton.setText("SUBMIT");
 
 		/**
 		 * Add components to container
@@ -172,14 +174,14 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, cardsPanel, 20,
 				SpringLayout.SOUTH, desLabel);
-		
+
 		layout.putConstraint(SpringLayout.WEST, counterLabel, 40,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.EAST, counterLabel, 40,
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, counterLabel, 10,
 				SpringLayout.SOUTH, cardsPanel);
-		
+
 		layout.putConstraint(SpringLayout.WEST, submitButton, 40,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.SOUTH, submitButton, -20,
@@ -189,7 +191,27 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 											// entire container which has
 											// everything contained within it
 	}
-	
+
+	/**
+	 * Set up the default deck of cards
+	 */
+	public void setUpDefaultDeck() {
+		// generate fibonachi sequence
+		int firstnum = 0;
+		int secondnum = 1;
+		int currnum;
+		deck.add(Integer.toString(secondnum));
+		// Default value is 6.
+		int Fibcount = 6; // if this is 6, the highest number generated will be
+							// 13
+		for (int i = 0; i < Fibcount; i++) {
+			currnum = firstnum + secondnum;
+			deck.add("" + currnum + "");
+			firstnum = secondnum;
+			secondnum = currnum;
+		}
+	}
+
 	/**
 	 * Update the sum of cards and display it
 	 */
@@ -197,7 +219,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		sum = cardsPanel.getSum();
 		counterLabel.setText("Your current estimate total: " + sum);
 	}
-	
+
 	/**
 	 * Returns the sum of all the cards
 	 */
@@ -208,5 +230,5 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		}
 		return sum;
 	}
-	
+
 }
