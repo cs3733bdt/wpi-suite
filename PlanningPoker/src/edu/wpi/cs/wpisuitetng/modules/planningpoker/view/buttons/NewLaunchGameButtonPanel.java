@@ -30,7 +30,7 @@ public class NewLaunchGameButtonPanel extends JPanel{
 	
 	private final NewCreateGamePanel parentPanel;
 	
-	private JButton launchGameButton = new JButton("Launch Game");	
+	private JButton launchGameButton = new JButton("Start Game");	
 	
 	/**
 	 * Creates the Launch GameButton and attaches it's respective action listener
