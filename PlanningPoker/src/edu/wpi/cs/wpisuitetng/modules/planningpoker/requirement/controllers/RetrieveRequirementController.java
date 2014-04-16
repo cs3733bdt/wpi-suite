@@ -65,18 +65,20 @@ public class RetrieveRequirementController implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Send a request to the core to save this requirement
-		final Request request = Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.GET); // GET == read
-		request.addObserver(observer); // add an observer to process the response
-		request.send(); // send the request
+		final Request request = 
+				Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.GET);
+		request.addObserver(observer); 
+		request.send();
 	}
 	
 	/**
 	 * Sends an HTTP request to retrieve all requirements
 	 */
 	public void retrieveRequirements() {
-		final Request request = Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.GET); // GET == read
-		request.addObserver(observer); // add an observer to process the response
-		request.send(); // send the request
+		final Request request = 
+				Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.GET);
+		request.addObserver(observer); 
+		request.send();
 	}
 
 	/**

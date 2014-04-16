@@ -77,7 +77,8 @@ public class EmailNotification {
 			try {
 				// Waiting 5 seconds then trying again.
 				Thread.sleep(5000);
-				System.err.println("Session.getInstance threw a NullPointerException, trying again...");
+				System.err.println("Session.getInstance "
+						+ "threw a NullPointerException, trying again...");
 				session = Session.getInstance(properties,
 						  new javax.mail.Authenticator() {
 							@Override
@@ -121,14 +122,16 @@ public class EmailNotification {
 					System.err.println(users[i].getName() + " doesn't have an email Stored.");
 			}
 		} else {
-			System.out.println("Project: " + g.getProject().getName() + ", has no users in its team.");
+			System.out.println("Project: " + g.getProject().getName() 
+					+ ", has no users in its team.");
 			System.out.println("No Emails were sent.");
 		}
 	}
 	
 	/**
 	 * This method uses the javaMail API library to send an email to the user
-	 * This code is inspired by http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
+	 * This code is inspired by 
+	 * http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
 	 * @param session the session with email server
 	 * @param user The user to be emailed.
 	 */

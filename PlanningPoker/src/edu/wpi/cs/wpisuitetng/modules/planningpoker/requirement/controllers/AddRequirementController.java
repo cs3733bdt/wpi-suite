@@ -55,9 +55,10 @@ public class AddRequirementController{
 	 */
 	public void addRequirement(Requirement newRequirement) 
 	{
-		final Request request = Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.PUT); // PUT == create
-		request.setBody(newRequirement.toJSON()); // put the new requirement in the body of the request
-		request.addObserver(observer); // add an observer to process the response
+		final Request request = 
+				Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.PUT);
+		request.setBody(newRequirement.toJSON()); 
+		request.addObserver(observer); 
 		request.send(); 
 	}
 }

@@ -111,10 +111,11 @@ public class RequirementTest {
 	
 	@Test
 	public void testCopyFrom(){
-		Requirement copyTo = new Requirement(req1.getName() + " copy", req1.getDescription() + " copy");
+		Requirement copyTo = 
+				new Requirement(req1.getName() + " copy", req1.getDescription() + " copy");
 		copyTo.addVote(new Vote("Steve", 20));
 		assertTrue(copyTo.copyFrom(req1)); //Should return true because changes were made
-		assertFalse(copyTo.copyFrom(req1)); //Should return false because no changes were made to the class
+		assertFalse(copyTo.copyFrom(req1)); //Should return false; no changes are made to the class
 		
 		assertEquals(copyTo.getName(), req1.getName());
 		assertEquals(copyTo.getDescription(), req1.getDescription());

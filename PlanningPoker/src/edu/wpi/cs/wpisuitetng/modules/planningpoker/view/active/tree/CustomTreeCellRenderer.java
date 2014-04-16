@@ -51,7 +51,8 @@ public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 	 *            boolean
 	
 	
-	 * @return Component * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(JTree,
+	 * @return Component
+	 * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(JTree,
 	 *      Object, boolean, boolean, boolean, int, boolean) */
 	@Override
 	public Component getTreeCellRendererComponent(JTree tree, Object value,

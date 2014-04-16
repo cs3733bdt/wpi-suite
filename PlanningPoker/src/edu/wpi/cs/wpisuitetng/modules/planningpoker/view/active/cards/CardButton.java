@@ -28,7 +28,10 @@ public class CardButton extends JToggleButton implements Accessible {
 	List<String> deck;
 	ActiveCardsPanel panel;
 
-	public CardButton(int cardNum, List<String> passedDeck, ActiveCardsPanel passedCardsPanel, EstimatePanel passedEstimatePanel){
+	public CardButton(int cardNum, 
+					List<String> passedDeck, 
+					ActiveCardsPanel passedCardsPanel, 
+					EstimatePanel passedEstimatePanel){
 		deck = passedDeck;
 		panel = passedCardsPanel;
 		
@@ -59,7 +62,8 @@ public class CardButton extends JToggleButton implements Accessible {
 		 this.setVerticalAlignment(SwingConstants.CENTER);
 		 
 		 //Add the action listener to the button
-		this.addActionListener(new CardActionListenerRefactor(cardNum, deck, this, passedCardsPanel, passedEstimatePanel));
+		this.addActionListener(new CardActionListenerRefactor(cardNum, 
+				deck, this, passedCardsPanel, passedEstimatePanel));
 		panel.add(this);
 	}
 

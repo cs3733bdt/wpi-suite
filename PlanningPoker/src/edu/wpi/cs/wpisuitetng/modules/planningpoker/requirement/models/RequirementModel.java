@@ -104,7 +104,8 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	/**
 	 * Removes the requirement with the given ID
 	 * 
-	 * @param removeId The ID number of the requirement to be removed from the list of requirements in the project
+	 * @param removeId The ID number of the requirement to be removed 
+	 * from the list of requirements in the project
 	 */
 	public void removeRequirement(int removeId){
 		// iterate through list of requirements until id of project is found
@@ -125,7 +126,9 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	
 	
 	
-	 * @return the number of requirements in the project * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize()
+	 * @return the number of requirements in the project * 
+	 * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize() * 
+	 * @see javax.swing.ListModel#getSize()
 	 */
 	@Override
 	public int getSize() {
@@ -153,7 +156,10 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	
 	
 	
-	 * @return the requirement associated with the provided index * @see javax.swing.ListModel#getElementAt(int) * @see javax.swing.ListModel#getElementAt(int) * @see javax.swing.ListModel#getElementAt(int)
+	 * @return the requirement associated with the provided index * 
+	 * @see javax.swing.ListModel#getElementAt(int) * 
+	 * @see javax.swing.ListModel#getElementAt(int) * 
+	 * @see javax.swing.ListModel#getElementAt(int)
 	 */
 	@Override
 	public Requirement getElementAt(int index) {

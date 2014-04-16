@@ -102,10 +102,12 @@ public class FacebookNotification {
 				if (users[i].getFacebookUsername() != null)
 					sendFacebookNotification(connection, users[i]);
 				else
-					System.err.println(users[i].getName() + " doesn't have a facebook Username Stored.");
+					System.err.println(users[i].getName() 
+							+ " doesn't have a facebook Username Stored.");
 			}
 		} else {
-			System.err.println("There are no users on the team of Project: " + g.getProject().getName());
+			System.err.println("There are no users on the team of Project: "
+					+ g.getProject().getName());
 		}
 	}
 	
@@ -140,7 +142,8 @@ public class FacebookNotification {
 		} else {
 			// TODO possibly implement send email to user telling them their facebook
 			// username is invalid
-			System.err.println("User: " + user.getName() + " does not have a valid facebook username stored.");
+			System.err.println("User: " + user.getName() 
+					+ " does not have a valid facebook username stored.");
 		}
 	}
 	
@@ -152,7 +155,8 @@ public class FacebookNotification {
 	public String getUserId(String username) {
 		FacebookClient facebookClient = new DefaultFacebookClient();
 		// Need to force restfb User type
-		com.restfb.types.User fbUser = facebookClient.fetchObject(username, com.restfb.types.User.class);
+		com.restfb.types.User fbUser = 
+				facebookClient.fetchObject(username, com.restfb.types.User.class);
 		
 		return fbUser.getId();
 	}

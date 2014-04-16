@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 @SuppressWarnings("serial")
 public class ActiveGamesTable extends JTable
 {
-	public DefaultTableModel tableModel = null;
+	private DefaultTableModel tableModel = null;
 	private boolean initialized;
 	private boolean isInEditMode;
 	private final boolean changedByRefresh = false;	
@@ -39,8 +39,8 @@ public class ActiveGamesTable extends JTable
 	 */
 	public ActiveGamesTable(Object[][] data, String[] columnNames)
 	{
-		tableModel = new DefaultTableModel(data, columnNames);
-		this.setModel(tableModel);
+		setTableModel(new DefaultTableModel(data, columnNames));
+		this.setModel(getTableModel());
 		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		
@@ -51,5 +51,13 @@ public class ActiveGamesTable extends JTable
 	@Override
 	public boolean isCellEditable(int row, int column){
 		return false;
+	}
+
+	public DefaultTableModel getTableModel() {
+		return tableModel;
+	}
+
+	public void setTableModel(DefaultTableModel tableModel) {
+		this.tableModel = tableModel;
 	}
 }

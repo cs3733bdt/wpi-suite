@@ -95,6 +95,7 @@ public class UpdateGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		System.err.println("The request to update a game failed with exception: " + exception.getMessage());
+		System.err.println("The request to update a game failed with exception: "
+				+ exception.getMessage());
 	}
 }

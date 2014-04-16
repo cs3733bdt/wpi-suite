@@ -146,13 +146,13 @@ public class Requirement extends ObservableModel {
 	 * @param vote the votes to set          
 	 */
 	public void addVote(Vote vote) {
-		this.delayChange();		//Holds the code here until the server is finished re-populating the model
+		this.delayChange();	//Holds the code until the server is finished re-populating the model
 		for(int i = 0; i < votes.size(); i++) {
-			if(vote.getUsername().equals(votes.get(i).getUsername())) {		//Check to see if this person has voted
-				votes.get(i).setVoteNumber(vote.getVoteNumber());			//If they have update their vote to the new number
-				this.hasChanged();											//Says that the requirement has changed
-				this.notifyObservers(votes.get(i));							//Run update in the game class
-				return;														//Exit this class
+			if(vote.getUsername().equals(votes.get(i).getUsername())) {	//Has person voted?
+				votes.get(i).setVoteNumber(vote.getVoteNumber());		//Update their vote
+				this.hasChanged();										//Acknowledge change
+				this.notifyObservers(votes.get(i));						//Run update in game class
+				return;													//Exit this class
 			}
 		}
 		votes.add(vote);
@@ -214,7 +214,8 @@ public class Requirement extends ObservableModel {
 	 * Method toJSON.
 	
 	
-	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
+	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * 
+	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
 	 */
 	@Override
 	/**This returns a Json encoded String representation of this requirement object.
@@ -256,7 +257,8 @@ public class Requirement extends ObservableModel {
 	/**
 	 * Method identify.
 	 * @param o Object
-	 * @return Boolean * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(Object) * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(Object)
+	 * @return Boolean * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(Object) * 
+	 * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(Object)
 	 */
 	@Override
 	public Boolean identify(Object o) {
@@ -282,7 +284,8 @@ public class Requirement extends ObservableModel {
 
 	/**
 	 * Method toString.
-	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toString() * @see edu.wpi.cs.wpisuitetng.modules.Model#toString()
+	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toString() * 
+	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toString()
 	 */
 	@Override
 	public String toString() {
@@ -320,7 +323,9 @@ public class Requirement extends ObservableModel {
 			votes = toCopyFrom.votes;
 			wasChanged = true;
 		}
-		return wasChanged; //TODO THIS IS A PLACE HOLDER! THIS MUST CHECK TO MAKE SURE THAT CHANGES ARE ACTUALLY MADE
+		return wasChanged; /*TODO THIS IS A PLACE HOLDER! 
+							THIS MUST CHECK TO MAKE SURE THAT CHANGES ARE ACTUALLY MADE
+							*/
 	}
 	
 	/**

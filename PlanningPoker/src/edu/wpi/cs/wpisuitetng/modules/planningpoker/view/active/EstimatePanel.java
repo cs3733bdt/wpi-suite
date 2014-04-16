@@ -451,7 +451,7 @@ public class EstimatePanel extends JPanel{
 	}
 
 	public void submitEstimate() {
-		String currentUser = ConfigManager.getConfig().getUserName(); // Gets the currently active user
+		String currentUser = ConfigManager.getConfig().getUserName(); // Get currently active user
 		int voteNumber;
 		if(getGame().doesUseCards()){
 			voteNumber = cardsPanel.getSum();
