@@ -50,6 +50,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 	private JTextArea endGameManuallyNote;
 	private JButton endGameManuallyButton;
 	private JLabel endGameErrorLabel;
+	JScrollPane notePane;
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
 	/**
@@ -79,12 +80,13 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		if(ConfigManager.getConfig().getUserName().equals(active.getCreator())){
 			endGameManuallyNoteLabel.setVisible(true);
 			endGameManuallyNoteLabel1.setVisible(true);
+			endGameManuallyNote.setBorder(defaultBorder);
 			endGameManuallyNote.setVisible(true);
 			endGameManuallyButton.setVisible(true);
 		} else {
 			endGameManuallyNoteLabel.setVisible(false);
 			endGameManuallyNoteLabel1.setVisible(false);
-			endGameManuallyNote.setVisible(false);
+			notePane.setVisible(false);
 			endGameManuallyButton.setVisible(false);
 		}
 	}
@@ -125,7 +127,6 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		JScrollPane descPane = new JScrollPane(gameDesc);
 		descPane.setPreferredSize(new Dimension(200, 100));
 
-
 		// Initializes and sets game creator label
 		gameCreatorLabel = new JLabel("Creator: ");				
 
@@ -149,7 +150,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		endGameManuallyNote.setLineWrap(true);
 
 		// Creates a scroll pane to hold the text area for end game note
-		JScrollPane notePane = new JScrollPane(endGameManuallyNote);
+		notePane = new JScrollPane(endGameManuallyNote);
 		notePane.setPreferredSize(new Dimension(200, 200));
 
 		// Creates end game button
