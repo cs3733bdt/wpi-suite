@@ -1,5 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -10,6 +11,7 @@ import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,7 +35,7 @@ public class NewAddRequirementsPanel extends JPanel {
 	private JTextArea descArea = new JTextArea();
 	
 	private final Border defaultBorder = (new JTextField()).getBorder();
-	
+
 	private JPanel createReqPanel = new JPanel();
 	
 	private	JPanel importReqPanel = new JPanel();
@@ -42,16 +44,9 @@ public class NewAddRequirementsPanel extends JPanel {
 	
 	private ActiveGamesTable table2;
 	
+	
+	
 	public NewAddRequirementsPanel(final NewRightHalfCreateGamePanel rightView) {
-		
-		
-		//SpringLayout layout = (SpringLayout) newRightHalfCreateGamePanel.getLayout();
-	//	SpringLayout layout = new SpringLayout();
-		//this.setLayout(layout);
-		
-		//SpringLayout.Constraints pcons = layout.getConstraints(newRightHalfCreateGamePanel);
-
-		////JPanel reqPanel = new JPanel();
 		
 		/*
 		 * Planned Changes:
@@ -61,13 +56,22 @@ public class NewAddRequirementsPanel extends JPanel {
 		 *  	name area, desc area, submit button, cancel button
 		 *  
 		 */
+		/**
+		 * creates the container to hold everything
+		 */
+		Container reqContainer = new Container();
 		
-		this.setPreferredSize(rightView.getPreferredSize());
-		JPanel reqPanel = new JPanel();
-		//Container reqPanel = new Container();
-		
-		SpringLayout layout = rightView.getLayout();		
+		/**
+		 * create a new springlayout and add it
+		 */
+		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
+		
+		/**
+		 * set a prefered size for the overall Panel
+		 */
+		setPreferredSize(new Dimension(200, 200));
+		
 		
 		/**
 		 * Creates a new font for use later
@@ -81,90 +85,58 @@ public class NewAddRequirementsPanel extends JPanel {
 		//set the bigger font for userStoryDesc
 		Font bigFont = newFont;
 		
-		currentReqsPanel.setBorder(defaultBorder);
+		/**
+		 * set the border for the currentReqPanel and set it visible
+		 */
+	    currentReqsPanel.setBorder(defaultBorder);
 		currentReqsPanel.setVisible(true);
 		
 		/**
 		 * Creates and adds a label for the Current Requirements
 		 */
 		JLabel currentReqs = new JLabel("Current Requirements");
-		currentReqs.setFont(bigFont);
-		
-//``	
-////		THE BELOW LINES EXTEND A PANEL		
-		//anchor the right side of the reqPanel with the right side of the overall panel
-     	layout.putConstraint(SpringLayout.EAST, currentReqsPanel, 
-     			5, 
-     			SpringLayout.EAST, this);
-
-     	
-     	//anchor the left side of the reqPanel with the left side of the overall panel
-     	layout.putConstraint(SpringLayout.WEST, currentReqsPanel, 
-     				5, 
-     				SpringLayout.WEST, this);
-
-     	
-		
+		//currentReqs.setFont(bigFont);
 		
      	/**
 		 * Initializes objects for use in table
 		 */
-		String[] columnNames2 = {"Requirement", "Description"};
-		Object[][] data2 = {};
-		table2 = new ActiveGamesTable(data2, columnNames2);
+//		String[] columnNames2 = {"Requirement", "Description"};
+//		Object[][] data2 = {};
+//		table2 = new ActiveGamesTable(data2, columnNames2);
+		
 		/**
-		 * Puts the table within a scroll pane, and adds to the view.
+		 * Puts the table within a scroll pane, and adds to the currentReqsPanel
 		 */
-		JScrollPane tablePanel2 = new JScrollPane(table2);
-		tablePanel2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		tablePanel2.setMinimumSize(new Dimension(500, 100));
-		tablePanel2.setPreferredSize(new Dimension(500, 166));
+//		JScrollPane tablePanel2 = new JScrollPane(table2);
+//		tablePanel2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+//		tablePanel2.setBorder(BorderFactory.createLineBorder(Color.black));
+//		currentReqsPanel.add(tablePanel2);
 		
-
-//		//anchor the right side of the reqPanel with the right side of the table it contains
-//     	layout.putConstraint(SpringLayout.EAST, tablePanel2, 
-//     			5, 
-//     			SpringLayout.EAST, currentReqsPanel);
-//     	
-//     	//anchor the left side of the reqPanel with the left side of the table it contains
-//     	layout.putConstraint(SpringLayout.WEST, tablePanel2, 
-//     				5, 
-//     				SpringLayout.WEST, currentReqsPanel);
-
+		/**
+		 * add the elements to the NewAddRequirementsPanel
+		 */
+		reqContainer.add(currentReqs);
 		
-////		//anchor the right side of the reqPanel with the right side of the table it contains
-////     	layout.putConstraint(SpringLayout.EAST, table2, 
-////     			5, 
-////     			SpringLayout.EAST, currentReqsPanel);
-//     	
-////     	//anchor the left side of the reqPanel with the left side of the table it contains
-////     	layout.putConstraint(SpringLayout.WEST, table2, 
-////     				5, 
-////     				SpringLayout.WEST, currentReqsPanel);
+		/**
+		 * add newAddRequirementsPanel to NewRightHalfCreateGamePanel
+		 */
+		add(reqContainer);
 		
 		
-		layout.putConstraint(SpringLayout.NORTH, currentReqsPanel,
-				5,
-				SpringLayout.SOUTH, currentReqs);
-     	
-		
-//		reqPanel.add(tablePanel2);
-//     	reqPanel.add(currentReqs);
-//     	reqPanel.add(currentReqsPanel);
-//		rightView.addComponent(reqPanel);
-
-     	
- //    	this.add(reqPanel);
-   //     rightView.addComponent(this);     	
-      	
-  
-		currentReqsPanel.add(tablePanel2);
+//	
+//		/**
+//		 * anchors the bottom of the label to the top of the panel containing the table
+//		 */
+//		layout.putConstraint(SpringLayout.WEST, currentReqs,
+//				5, 
+//				SpringLayout.WEST, reqContainer);
 //		
-    // 	rightView.addComponent(tablePanel2);
-		rightView.addComponent(currentReqsPanel);		
-		rightView.addComponent(currentReqs);
-
+//		revalidate();
+//		repaint();
+//		
 		
+		
+		//rightView.addComponent();
 		
 		
 		
@@ -200,18 +172,20 @@ public class NewAddRequirementsPanel extends JPanel {
 //		createReqPanel.setVisible(false);
 //		reqPanel.add(createReqPanel);
 		
-//		/**
-//		 * panel for importing a requirement
-//		 */
-//		importReqPanel.setLayout(new GridBagLayout());
-//		importReqPanel.setBorder(defaultBorder);
-//		importReqPanel.setVisible(false);
-//		reqPanel.add(importReqPanel);
+
 //		
 //		/**
 //		 * panel for viewing the current requirements added to the game
 //		 */
 //		
+		
+//		
+//		/**
+//		 * panel for importing a requirement
+//		 *
+//		importReqPanel.setBorder(defaultBorder);
+//		importReqPanel.setVisible(true);
+		
 //		
 //		/**
 //		 * Creates and adds the create requirement label
@@ -462,7 +436,7 @@ public class NewAddRequirementsPanel extends JPanel {
 		return importReqPanel;
 	}
 	
-	public JPanel getCurrentReqsPanel() {
+	public JPanel getCurrentReqsTable() {
 		return currentReqsPanel;
 	}
 
