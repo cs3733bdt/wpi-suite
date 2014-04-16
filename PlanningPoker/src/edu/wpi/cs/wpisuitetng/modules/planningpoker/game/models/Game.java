@@ -282,8 +282,11 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return name;
 	}
 	
-	/*
-	 * TODO: add documentation
+
+	
+	/**
+	 * Sets the name of a game
+	 * @param newName
 	 */
 	public void setName(String newName){
 		if(!name.equals(newName)){
