@@ -22,12 +22,14 @@ import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
  * TODO DOCUMENTATION
  */
-public class NewRightHalfCreateGamePanel extends JScrollPane {
+public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataField{
     private NewAddRequirementsPanel reqPanel;    //initialize new add requirements panel
     private NewAddReqImportReqPanel importPanel;    //initialize the panel with the buttons "Add Requirement" and "Import Requirements"
     private NewCreateGamePanel createGamePanel;  //initialize variable to hold panel above this panel
@@ -302,5 +304,24 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 	public void addRequirement(Requirement requirement){
 		table2.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 		requirements.add(requirement);
+	}
+
+
+	@Override
+	public boolean validateField(IErrorView warningField) {
+		if(requirements.size() <= 0){
+			if(warningField != null){
+				warningField.setText("The requirments list can not be empty");
+			}
+			return false;
+		}
+		return true;
+	}
+
+
+	@Override
+	public boolean hasChanges() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

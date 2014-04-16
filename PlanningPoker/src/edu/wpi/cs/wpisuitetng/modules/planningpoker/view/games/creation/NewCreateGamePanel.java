@@ -29,8 +29,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
 /**
  * Used to create a new Planning Poker game using the input of the user.
  */
-
-
 public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	private NewLeftHalfCreateGamePanel leftHalf;
 	private NewRightHalfCreateGamePanel rightHalf;
@@ -43,6 +41,11 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	private Game currentGame;
 	
 	
+	/**
+	 * Creates a NewCreateGamePanel with the game setting the fields for the panel.
+	 * This is used to edit an existing game in the model that has not yet been made active
+	 * @param game the game that we are editing
+	 */
 	public NewCreateGamePanel(Game game) {
 		this.currentGame = game;
 		leftHalf = new NewLeftHalfCreateGamePanel(this);
@@ -58,8 +61,26 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		
 	}
 	
+	
+	/**
+	 * Creates a NewCreateGamePanel
+	 * This is equivalent to calling NewCreateGamePanel(null)
+	 */
 	public NewCreateGamePanel(){
 		this(null);
+	}
+	
+	public NewCreateGamePanel(Game game, boolean withError) {
+		this(game);
+		if (withError) {
+			JOptionPane
+					.showMessageDialog(
+							null,
+							"\tYour connection to the server has been lost.\n"
+									+ "\tYour changes have been resored but no further changes to the server can be made.\n"
+									+ "\tPlease save your changes to a text file and restart Janeway.",
+							"Network Error", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	public static void main(String args[]){
@@ -103,10 +124,15 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 
 	}
 	
+	/**
+	 * Checks to see if all of this panels sub elements are valid to be saved or launched
+	 * @param whether or not to show the error
+	 * @return true when the all of this panel's sub elements are valid
+	 */
 	private boolean validateField(boolean show){
 		boolean leftPanelValid = leftHalf.validateField(null);
-		//boolean rightPanelValid = rightHalf.validateField(null);
-		return leftPanelValid;
+		boolean rightPanelValid = rightHalf.validateField(/*leftHalf.getErrorName()*/null);
+		return leftPanelValid && rightPanelValid;
 	}
 	
 
@@ -178,6 +204,10 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		ViewEventController.getInstance().refreshGameTree();
 	}
 	
+	/**
+	 * Constructs the current game with the data from the fields in this panel
+	 * @param active Whether to make this game active or not
+	 */
 	private void setCurrentGame(boolean active){
 		currentGame.setName(getBoxName().getText());
 		currentGame.setDescription(getBoxDescription().getText());
@@ -189,6 +219,10 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		currentGame.notifyObservers();
 	}
 
+	/**
+	 * Gets the requirements for this panel
+	 * @return the requirements that have been created for this game.
+	 */
 	private List<Requirement> getRequirements() {
 		return rightHalf.getRequirements();
 	}
