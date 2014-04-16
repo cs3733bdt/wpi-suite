@@ -137,19 +137,19 @@ public class SMSNotification {
 		Carrier c = user.getCarrier();
 		switch(c) {
 		case ATT:
-			numberWithCarrier = numberWithCarrier +"@txt.att.net";
+			numberWithCarrier += "@txt.att.net";
 			break;
 		case VERIZON:
-			numberWithCarrier = numberWithCarrier +"@vtext.com";
+			numberWithCarrier += "@vtext.com";
 			break;
 		case TMOBILE:
-			numberWithCarrier = numberWithCarrier +"@tmomail.net";
+			numberWithCarrier += "@tmomail.net";
 			break;
 		case SPRINT:
-			numberWithCarrier = numberWithCarrier +"@messaging.sprintpcs.com";
+			numberWithCarrier += "@messaging.sprintpcs.com";
 			break;
 		case USCELLULAR:
-			numberWithCarrier = numberWithCarrier + "@email.uscc.net";
+			numberWithCarrier += "@email.uscc.net";
 			break;
 		default:
 			System.out.print("No carrier.");
