@@ -11,10 +11,14 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewLeftHalfCreateGamePanel;
 
 /**
@@ -25,15 +29,19 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewLeftH
 
 public class NewLaunchGameButtonPanel extends JPanel{
 	
-	private final NewLeftHalfCreateGamePanel parentPanel;
+	private final NewCreateGamePanel parentPanel;
 	
 	private JButton launchGameButton = new JButton("Launch Game");	
 	
-	public NewLaunchGameButtonPanel(NewLeftHalfCreateGamePanel panel){
+	/**
+	 * Creates the Launch GameButton and attaches it's respective action listener
+	 * @param panel the parent panel to call launch from
+	 */
+	public NewLaunchGameButtonPanel(NewCreateGamePanel panel){
 		SpringLayout layout = new SpringLayout(); 
 		setLayout(layout);
 		
-		/*setupActionListeners();*/
+		setupActionListeners();
 		
 		add(launchGameButton);
 		
@@ -54,13 +62,13 @@ public class NewLaunchGameButtonPanel extends JPanel{
 		return launchGameButton;
 	}
 	
-/*	void setupActionListeners(){
+	void setupActionListeners(){
 		launchGameButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
 				parentPanel.LaunchGamePressed();
 			}
 		});
-	}*/
+	}
 	
 }

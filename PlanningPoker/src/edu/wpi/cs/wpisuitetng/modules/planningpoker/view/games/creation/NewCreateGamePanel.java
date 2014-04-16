@@ -16,9 +16,15 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
+import javax.swing.text.JTextComponent;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
  * Used to create a new Planning Poker game using the input of the user.
@@ -33,7 +39,8 @@ public class NewCreateGamePanel extends JSplitPane {
 	private boolean readyToRemove = true; // The window starts off ready to
 											// remove because no changes have
 											// happened
-	Game thisGame;
+	private Game currentGame;
+	
 	
 	public NewCreateGamePanel(Game game) {
 
@@ -41,7 +48,7 @@ public class NewCreateGamePanel extends JSplitPane {
 		rightHalf.setMinimumSize(new Dimension(500, 500));
 		this.setLeftComponent(leftHalf);
 		this.setDividerLocation(400);
-		this.thisGame = game;
+		this.currentGame = game;
 		
 	}
 	
@@ -56,6 +63,10 @@ public class NewCreateGamePanel extends JSplitPane {
         //Display the window.
         frame.pack();
         frame.setVisible(true);
+	}
+	
+	public Game getGame(){
+		return currentGame;
 	}
 
 	public void addRequirement(Requirement requirement) {
@@ -85,6 +96,98 @@ public class NewCreateGamePanel extends JSplitPane {
 
 	}
 	
+	private boolean validateField(boolean show){
+		boolean leftPanelValid = leftHalf.validateField(null);
+		//boolean rightPanelValid = rightHalf.validateField(null);
+		return leftPanelValid;
+	}
 	
+
+	/**
+	 * Triggered when the save game button is pressed using the mouse listener
+	 * @return true when a game is sucsessfully added
+	 */
+	public boolean SaveGamePressed() {
+		if(this.validateField(true)){
+			saveGame();
+			ViewEventController.getInstance().removeTab(this);
+			System.out.println("Add Game Pressed Passed.");
+			return true;
+		} else {
+			System.out.println("Add Game Pressed Failed.");
+			return false;
+		}
+		
+	}
 	
+	/**
+	 * Called by the 'Launch Game' action listener
+	 * @return
+	 */
+	public boolean LaunchGamePressed() {
+		if(this.validateField(true)){
+			this.launchGame();
+			ViewEventController.getInstance().removeTab(this);
+			System.out.println("Launch Game Pressed Passed.");
+			return true;
+		} else {
+			System.out.println("Launch Game Pressed Failed.");
+			return false;
+		}
+		
+	}
+	
+	/**
+	 * Adds the game to the model and to the server and sets it to inactive
+	 * @param endDate 
+	 */
+	public void  saveGame(){	
+		if(currentGame == null){
+			currentGame = new Game();
+			setCurrentGame(false);
+			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
+		} else{
+			setCurrentGame(false);
+		}
+		ViewEventController.getInstance().refreshGameTable();
+		ViewEventController.getInstance().refreshGameTree();
+	}
+	
+	/**
+	 * Adds the game to the model and to the server and sets it to active
+	 */
+	public void  launchGame(){
+		if(currentGame == null){
+			currentGame = new Game();
+			setCurrentGame(true);
+			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
+		} else{
+			setCurrentGame(true);
+		}
+		ViewEventController.getInstance().refreshGameTable();
+		ViewEventController.getInstance().refreshGameTree();
+	}
+	
+	private void setCurrentGame(boolean active){
+		currentGame.setName(getBoxName().getText());
+		currentGame.setDescription(getBoxDescription().getText());
+		currentGame.setActive(active);
+		//currentGame.setUsesCards(doesUseCards());
+		//currentGame.setRequirements(getRequirements());
+		currentGame.setEndDate(getEndDateField().getEndDate());
+		currentGame.setCreator(ConfigManager.getConfig().getUserName());
+		currentGame.notifyObservers();
+	}
+
+	private DescriptionJTextArea getBoxDescription() {
+		return leftHalf.getBoxDescription();
+	}
+
+	private NameJTextField getBoxName() {
+		return leftHalf.getBoxName();
+	}
+	
+	private NewAddEndDatePanel getEndDateField(){
+		return leftHalf.getEndDateField();
+	}
 }

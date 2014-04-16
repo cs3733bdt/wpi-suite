@@ -11,10 +11,14 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewLeftHalfCreateGamePanel;
 
 /**
@@ -25,9 +29,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewLeftH
 
 public class NewSaveGameButtonPanel extends JPanel{
 	
-	private JButton saveGameButton = new JButton("Save Game");	
+	private JButton saveGameButton = new JButton("Save Game");
+	NewCreateGamePanel parent;
 	
-	public NewSaveGameButtonPanel(NewLeftHalfCreateGamePanel panel){
+	public NewSaveGameButtonPanel(NewCreateGamePanel panel){
+		parent = panel;
 		
 		SpringLayout layout = new SpringLayout(); 
 		setLayout(layout);
@@ -53,13 +59,13 @@ public class NewSaveGameButtonPanel extends JPanel{
 		return saveGameButton;
 	}
 	
-	/*void setupActionListeners(){
+	void setupActionListeners(){
 		saveGameButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e){
-				parentPanel.SaveGamePressed();
+				parent.SaveGamePressed();
 			}
 		});
-	}*/
+	}
 	
 }

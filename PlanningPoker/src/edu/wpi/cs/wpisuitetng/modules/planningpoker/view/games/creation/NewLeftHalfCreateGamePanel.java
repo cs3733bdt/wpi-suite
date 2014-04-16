@@ -38,18 +38,21 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewLaunchGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewSaveGameButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
  * TODO DOCUMENTATION
  */
-public class NewLeftHalfCreateGamePanel extends JScrollPane {
+public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataField, ICreateGamePanel{
 	
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
 	private NameJTextField nameTextField;
-	private JTextArea descriptionTextField;
+	private DescriptionJTextArea descriptionTextField;
 	
 	private JRadioButton cardsButton = new JRadioButton("Estimate With Cards");
 	private JRadioButton textEntryButton = new JRadioButton("Estimate With Text Entry");
@@ -69,11 +72,15 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane {
 	
 	private Date endDate;
 	
-	private Game currentGame;
+	private Game game;
+	
+	private NewCreateGamePanel parent;
 	
 	public NewLeftHalfCreateGamePanel(NewCreateGamePanel mainPanel) {
-		build();	
-		this.currentGame = mainPanel.thisGame;
+		parent = mainPanel;
+		this.game = mainPanel.getGame();
+		build();
+		buildFields();
 	}
 	
 	public void build(){
@@ -91,7 +98,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane {
 		
 		JLabel descLabel = new JLabel("Description * ");				//Creates the label for the Description
 		
-		descriptionTextField = new JTextArea();							//Initializes the text area for the game description
+		descriptionTextField = new DescriptionJTextArea();				//Initializes the text area for the game description
 		descriptionTextField.setBorder(defaultBorder);					//Sets the default border to the description text area
 		
 		JScrollPane descPane = new JScrollPane(descriptionTextField);	//Creates the scrollPane for the description field
@@ -109,8 +116,8 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane {
 		
 		endDateField = new NewAddEndDatePanel(this);					//Creates an end date panel
 		
-		saveGameButton = new NewSaveGameButtonPanel(this);				//Creates a save game button
-		launchGameButton = new NewLaunchGameButtonPanel(this);			//Creates a launch game button
+		saveGameButton = new NewSaveGameButtonPanel(parent);				//Creates a save game button
+		launchGameButton = new NewLaunchGameButtonPanel(parent);		//Creates a launch game button
 		//cancelGameButton = new NewCancelGameButtonPanel(this);		//TODO implement this
 		
 		JPanel buttonPanel = new JPanel();								//Creates a panel for the buttons
@@ -167,10 +174,16 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane {
 
 	}
 	
+	private void buildFields(){
+		if(!parent.getGame().equals(null)){
+			nameTextField.setText(game.getName());
+			descriptionTextField.setText(game.getDescription());
+		}
+	}
+	
 	public NewLeftHalfCreateGamePanel(Game game, boolean withError) {
 		this(new NewCreateGamePanel(game));
-		nameTextField.setText(game.getName());
-		descriptionTextField.setText(game.getDescription());
+		buildFields();
 		if (withError) {
 			JOptionPane
 					.showMessageDialog(
@@ -203,45 +216,42 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane {
 		System.out.println(this.descriptionTextField.getText());
 		return this.descriptionTextField.getText();
 	}
-	
-	/**
-	 * Triggered when the save game button is pressed using the mouse listener
-	 * @return true when a game is sucsessfully added
-	 */
-	public boolean SaveGamePressed() {
-		if(this.validateField(true)){
-			this.saveGame();
-			ViewEventController.getInstance().removeTab(this);
-			System.out.println("Add Game Pressed Passed.");
-			return true;
-		} else {
-			System.out.println("Add Game Pressed Failed.");
-			return false;
-		}
-		
+
+	public NameJTextField getBoxName(){
+		return nameTextField;
 	}
 	
-	public boolean LaunchGamePressed() {
-		if(this.validateField(true)){
-			this.launchGame();
-			ViewEventController.getInstance().removeTab(this);
-			System.out.println("Launch Game Pressed Passed.");
-			return true;
-		} else {
-			System.out.println("Launch Game Pressed Failed.");
-			return false;
-		}
-		
+	public void setBoxName(String newName){
+		this.nameTextField.setText(newName);
+	}
+	
+	public DescriptionJTextArea getBoxDescription() {
+		return descriptionTextField;
+	}
+	
+	public void setBoxDescription(String newDescription){
+		this.descriptionTextField.setText(newDescription);
+	}
+	
+	public JLabel getErrorName(){
+		//TODO add errors to the indivitdual fields
+		//WHEN FIXED UNCOMMENT THE LINES THAT USE THIS METHOD IN VALIDATE
+		return null;
+	}
+	
+	public void displayError(String error){
+		errorField.setText(error);
 	}
 	
 	/**
 	 * Checks all fields to determine if they are prepared to be removed.
 	 * If a field is invalid the it warns the user with a notification and by highlighting
 	 * the offending box on the GUI.
-	 * @param warn Whether to warn the user via coloring texboxes and warning labels
+	 * @param warningField the field to output the errors to
 	 * @return true If all fields are valid and the window is ready to be removed
 	 */
-	private boolean validateField(boolean warn) {
+	@Override
+	public boolean validateField(IErrorView warningField) {
 		boolean isNameValid = false;
 		boolean isDescriptionValid = false;
 		boolean isEndDateValid = false;
@@ -249,22 +259,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane {
 		isNameValid = getBoxName().validateField(errorField);
 		
 		//BEGIN DESCRIPTION BOX VALDATION
-		if(getBoxDescription().getText().length() <= 0){
-			isDescriptionValid = false;
-			if(warn){
-				//getErrorDescription().setText("** Description is REQUIRED");
-				getBoxDescription().setBorder(errorBorder);
-				//getErrorDescription().setForeground(Color.RED);
-			}
-			//TODO add a way to display error descriptions
-			displayError("Description is required");
-		} else {
-			if (warn){
-				//getErrorDescription().setText("");
-				getBoxDescription().setBorder(defaultBorder);
-			}
-			isDescriptionValid = true;
-		}
+		isDescriptionValid = getBoxDescription().validateField(errorField);
 		
 		
 		//BEGIN END DATE VALIDATION
@@ -284,71 +279,13 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane {
 		return (isNameValid && isDescriptionValid && isEndDateValid);
 	}
 	
-	/**
-	 * Adds the game to the model and to the server and sets it to inactive
-	 * @param endDate 
-	 */
-	public void  saveGame(){	
-		if(currentGame == null){
-			currentGame = new Game();
-			setCurrentGame(false);
-			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
-		} else{
-			setCurrentGame(false);
-		}
-		ViewEventController.getInstance().refreshGameTable();
-		ViewEventController.getInstance().refreshGameTree();
-	}
 	
-	/**
-	 * Adds the game to the model and to the server and sets it to active
-	 */
-	public void  launchGame(){
-		if(currentGame == null){
-			currentGame = new Game();
-			setCurrentGame(true);
-			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
-		} else{
-			setCurrentGame(true);
-		}
-		ViewEventController.getInstance().refreshGameTable();
-		ViewEventController.getInstance().refreshGameTree();
-	}
 
-	public NameJTextField getBoxName(){
-		return nameTextField;
+	@Override
+	public boolean hasChanges() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
-	public void setBoxName(String newName){
-		this.nameTextField.setText(newName);
-	}
 	
-	public JTextArea getBoxDescription() {
-		return descriptionTextField;
-	}
-	
-	public void setBoxDescription(String newDescription){
-		this.descriptionTextField.setText(newDescription);
-	}
-	
-	public JLabel getErrorName(){
-		//TODO add errors to the indivitdual fields
-		//WHEN FIXED UNCOMMENT THE LINES THAT USE THIS METHOD IN VALIDATE
-		return null;
-	}
-	
-	public void displayError(String error){
-		errorField.setText(error);
-	}
-	
-	private void setCurrentGame(boolean active){
-		currentGame.setName(this.getBoxName().getText());
-		currentGame.setDescription(this.getBoxDescription().getText());
-		currentGame.setActive(active);
-		//currentGame.setUsesCards(doesUseCards());
-		//currentGame.setRequirements(getRequirements());
-		currentGame.setEndDate(endDateField.getEndDate());
-		currentGame.setCreator(ConfigManager.getConfig().getUserName());
-		currentGame.notifyObservers();
-	}
 }
