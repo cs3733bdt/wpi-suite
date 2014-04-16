@@ -233,7 +233,7 @@ public class GameUpdateRaceConditionTest {
 		while(!isFinishedUpdate || !isFinishedVotes){
 			//System.out.println("isFinishedUpdate: " + isFinishedUpdate + " " + j + " , isFinishedVotes: " + isFinishedVotes);
 			try {
-				Thread.sleep(3);					//If this is not here then we hit an infinite loop
+				Thread.sleep(10);					//If this is not here then we hit an infinite loop
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
