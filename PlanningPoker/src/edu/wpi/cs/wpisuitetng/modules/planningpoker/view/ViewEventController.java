@@ -218,17 +218,13 @@ public class ViewEventController {
 	 * @param comp the component to remove
 	 */
 	public void removeTab(JComponent comp){
-		if (comp instanceof CreateGamePanel){
-			if(!((CreateGamePanel) comp).readyToRemove()) return;
+		if (comp instanceof ICreateGamePanel){
+			if(!((ICreateGamePanel) comp).readyToRemove()) return;
 			listOfCreateGamePanels.remove(comp);
 		}
 		if (comp instanceof IActiveGamePanel) {
 			if(!((IActiveGamePanel) comp).readyToRemove()) return;
 			this.listOfActiveGamePanels.remove(comp);
-		}
-		if (comp instanceof ActiveGamesPanel) {
-			if(!((ActiveGamesPanel) comp).readyToRemove()) return;
-			listOfActiveGamePanels.remove(comp);
 		}
 		main.getTabbedView().remove(comp);
 	}
@@ -255,9 +251,9 @@ public class ViewEventController {
 			}
 			
 
-			if(toBeRemoved instanceof CreateGamePanel)
+			if(toBeRemoved instanceof ICreateGamePanel)
 			{
-				if(!((CreateGamePanel)toBeRemoved).readyToRemove()) continue;
+				if(!((ICreateGamePanel)toBeRemoved).readyToRemove()) continue;
 				listOfCreateGamePanels.remove(toBeRemoved);
 			}
 
@@ -284,9 +280,9 @@ public class ViewEventController {
 			if(toBeRemoved == selected){
 				continue;}
 
-			if(toBeRemoved instanceof CreateGamePanel)
+			if(toBeRemoved instanceof ICreateGamePanel)
 			{
-				if(!((CreateGamePanel)toBeRemoved).readyToRemove()){
+				if(!((ICreateGamePanel)toBeRemoved).readyToRemove()){
 					break;}
 				listOfCreateGamePanels.remove(toBeRemoved);
 			}
