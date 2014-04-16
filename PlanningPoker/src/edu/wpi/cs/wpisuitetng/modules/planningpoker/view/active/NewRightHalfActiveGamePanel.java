@@ -167,19 +167,19 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			rightView.add(cardPanel);
 			layout.putConstraint(SpringLayout.WEST, cardPanel, 40,
 					SpringLayout.WEST, rightView);
-			layout.putConstraint(SpringLayout.EAST, cardPanel, 40,
+			layout.putConstraint(SpringLayout.EAST, cardPanel, -40,
 					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardPanel, 20,
-					SpringLayout.SOUTH, desLabel);
+					SpringLayout.SOUTH, descriptionPanel);
 
 		} else {
 			rightView.add(cardsPanel);
 			layout.putConstraint(SpringLayout.WEST, cardsPanel, 40,
 					SpringLayout.WEST, rightView);
-			layout.putConstraint(SpringLayout.EAST, cardsPanel, 40,
+			layout.putConstraint(SpringLayout.EAST, cardsPanel, -40,
 					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardsPanel, 20,
-					SpringLayout.SOUTH, desLabel);
+					SpringLayout.SOUTH, descriptionPanel);
 
 		}
 
@@ -201,10 +201,10 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		rightView.add(estText);
 		layout.putConstraint(SpringLayout.WEST, estText, 40,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, estText, 40,
+		layout.putConstraint(SpringLayout.EAST, estText, -40,
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, estText, 20,
-				SpringLayout.SOUTH, desLabel);
+				SpringLayout.SOUTH, descriptionPanel);
 
 		/**
 		 * The label for the counter
@@ -242,7 +242,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		rightView.add(nameTextField);
 		rightView.add(desLabel);
 		rightView.add(descriptionPanel);
-		rightView.add(cardsPanel);
 		rightView.add(counterLabel);
 		rightView.add(submitButton);
 
@@ -289,8 +288,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.EAST, counterLabel, 40,
 				SpringLayout.EAST, rightView);
-		layout.putConstraint(SpringLayout.NORTH, counterLabel, 10,
-				SpringLayout.SOUTH, cardsPanel);
+		layout.putConstraint(SpringLayout.SOUTH, counterLabel, -10,
+				SpringLayout.NORTH, submitButton);
 
 		layout.putConstraint(SpringLayout.WEST, submitButton, 40,
 				SpringLayout.WEST, rightView);
