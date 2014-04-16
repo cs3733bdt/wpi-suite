@@ -198,7 +198,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
-
+			cardPanel.setVisible(false);
+			
 		} else {
 			rightView.add(cardsPanel);
 			layout.putConstraint(SpringLayout.WEST, cardsPanel, 40,
@@ -208,7 +209,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			layout.putConstraint(SpringLayout.NORTH, cardsPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
 		}
-		cardPanel.setVisible(false);
 		cardsPanel.setVisible(false);
 		
 		// added above
