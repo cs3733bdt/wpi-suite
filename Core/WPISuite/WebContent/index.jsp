@@ -223,7 +223,7 @@ Carrier:<select id="carrierSelector"><option value="VERIZON">Verizon</option>
 									<option value="SPRINT">Sprint</option>
 									<option value="USCELLULAR">U.S. Cellular</option>
 									<option value="TMOBILE">T-Mobile</option></select>
-<input type="button" value="Submit" onclick="phoneNumberChange()"><span id="changephoneresponse"></span>
+<input type="button" value="Submit" onclick="phoneNumberChange()"><span id="phonechangeresponse"></span>
 
 <h4>Role Change:</h4>
 Username:<input type="text" id="rolechangeusername"></input><br>
