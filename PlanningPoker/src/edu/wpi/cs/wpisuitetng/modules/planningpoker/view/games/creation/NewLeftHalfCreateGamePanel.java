@@ -41,7 +41,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
- * TODO DOCUMENTATION
+ * The Left Half panel for the NewCreateGamePanel
+ * Used to input the Games name, description, end date, whether it uses cards
  */
 public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 	
@@ -79,7 +80,11 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		buildFields();
 	}
 	
-	public void build(){
+	/**
+	 * Builds the layout for this panel
+	 * Sets up all of the elements in their respective locations
+	 */
+	private void build(){
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		Container leftView = new Container(); 				//Creates the container for everything in the view
@@ -173,6 +178,9 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 
 	}
 	
+	/**
+	 * Sets the fields for the current panel using the current game if the current game is not null
+	 */
 	private void buildFields(){
 		if(game != null){
 			nameTextField.setText(game.getName());
@@ -200,20 +208,10 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		}
 	}
 	
-	public NewLeftHalfCreateGamePanel(Game game, boolean withError) {
-		this(new NewCreateGamePanel(game));
-		buildFields();
-		if (withError) {
-			JOptionPane
-					.showMessageDialog(
-							null,
-							"\tYour connection to the server has been lost.\n"
-									+ "\tYour changes have been resored but no further changes to the server can be made.\n"
-									+ "\tPlease save your changes to a text file and restart Janeway.",
-							"Network Error", JOptionPane.ERROR_MESSAGE);
-		}
-	}
-	
+	/**
+	 * Gets the end date field for this panel
+	 * @return the current end date field
+	 */
 	public NewAddEndDatePanel getEndDateField(){
 		return endDateField;
 	}
@@ -236,26 +234,16 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		return this.descriptionTextField.getText();
 	}
 
+	/**
+	 * Gets the NameJTextField for this game panel
+	 * @return the NameJTextField
+	 */
 	public NameJTextField getBoxName(){
 		return nameTextField;
 	}
 	
-	public void setBoxName(String newName){
-		this.nameTextField.setText(newName);
-	}
-	
 	public DescriptionJTextArea getBoxDescription() {
 		return descriptionTextField;
-	}
-	
-	public void setBoxDescription(String newDescription){
-		this.descriptionTextField.setText(newDescription);
-	}
-	
-	public JLabel getErrorName(){
-		//TODO add errors to the indivitdual fields
-		//WHEN FIXED UNCOMMENT THE LINES THAT USE THIS METHOD IN VALIDATE
-		return null;
 	}
 	
 	public void displayError(String error){
@@ -310,6 +298,10 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		return cardsButton.isSelected();
 	}
 	
+	/**
+	 * Sets the toggle panel to indicate if this game is supposed to display a use of cards
+	 * @param usesCards true if this game uses cards
+	 */
 	public void setUsesCards(boolean usesCards){
 		if(usesCards){
 			cardsButton.setSelected(true);
