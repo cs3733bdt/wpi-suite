@@ -12,7 +12,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -33,10 +32,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
 
 
 public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
-	NewLeftHalfCreateGamePanel leftHalf;
-	NewRightHalfCreateGamePanel rightHalf;
+	private NewLeftHalfCreateGamePanel leftHalf;
+	private NewRightHalfCreateGamePanel rightHalf;
 	
-	private List<Requirement> requirements = new ArrayList<Requirement>();
 	
 	private boolean readyToClose = false;
 	private boolean readyToRemove = true; // The window starts off ready to
@@ -81,9 +79,6 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		return currentGame;
 	}
 
-	public void addRequirement(Requirement requirement) {
-		requirements.add(requirement);
-	}
 	
 	/**
 	 * Checks to see if the panel has unsaved changes
@@ -188,10 +183,14 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		currentGame.setDescription(getBoxDescription().getText());
 		currentGame.setActive(active);
 		currentGame.setUsesCards(doesUseCards());
-		//currentGame.setRequirements(getRequirements());
+		currentGame.setRequirements(getRequirements());
 		currentGame.setEndDate(getEndDateField().getEndDate());
 		currentGame.setCreator(ConfigManager.getConfig().getUserName());
 		currentGame.notifyObservers();
+	}
+
+	private List<Requirement> getRequirements() {
+		return rightHalf.getRequirements();
 	}
 
 	private DescriptionJTextArea getBoxDescription() {

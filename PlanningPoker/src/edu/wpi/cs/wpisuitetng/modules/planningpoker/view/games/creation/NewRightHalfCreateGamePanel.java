@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -26,9 +28,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * TODO DOCUMENTATION
  */
 public class NewRightHalfCreateGamePanel extends JScrollPane {
-    NewAddRequirementsPanel reqPanel;    //initialize new add requirements panel
-    NewAddReqImportReqPanel importPanel;    //initialize the panel with the buttons "Add Requirement" and "Import Requirements"
-    NewCreateGamePanel createGamePanel;  //initialize variable to hold panel above this panel
+    private NewAddRequirementsPanel reqPanel;    //initialize new add requirements panel
+    private NewAddReqImportReqPanel importPanel;    //initialize the panel with the buttons "Add Requirement" and "Import Requirements"
+    private NewCreateGamePanel createGamePanel;  //initialize variable to hold panel above this panel
+    
+    private List<Requirement> requirements = new ArrayList<Requirement>();
    
     private final Border defaultBorder = (new JTextField()).getBorder();
 
@@ -132,7 +136,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 		submitAddReqButton.addActionListener(new ActionListener() {
 			 @Override
 			public void actionPerformed(ActionEvent e) {
-				 addRequirementCreatePanel(new Requirement(nameArea.getText(), descArea.getText()));
+				 //addRequirementCreatePanel(new Requirement(nameArea.getText(), descArea.getText()));
 				 addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
 				 nameArea.setText("");
 				 descArea.setText("");
@@ -270,26 +274,33 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 		return bigFont;
 	}
 	
+	/**
+	 * Instantiates this table
+	 * @return the ActiveGamesTable
+	 */
 	private ActiveGamesTable initializeTable() {
 		String[] columnNames2 = {"Requirement", "Description"};
 		Object[][] data2 = {};
 		return new ActiveGamesTable(data2, columnNames2);
 	}
 	
+	/**
+	 * Sets the fields for this panel
+	 */
 	public void buildFields(){
 		if(createGamePanel.getGame() != null){
-			for(int i = 0; i < createGamePanel.getGame().getRequirements().size(); i++){
-				addRequirement(createGamePanel.getGame().getRequirements().get(i));
+			for(Requirement r : createGamePanel.getGame().getRequirements()){
+				addRequirement(r);
 			}
-		}
-		
+		}	
+	}
+	
+	public List<Requirement> getRequirements(){
+		return requirements;
 	}
 	
 	public void addRequirement(Requirement requirement){
 		table2.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
-	}
-	
-	public void addRequirementCreatePanel(Requirement requirement) {
-		createGamePanel.addRequirement(requirement);
+		requirements.add(requirement);
 	}
 }
