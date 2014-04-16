@@ -28,6 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.Spring;
+import javax.swing.SpringLayout;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
@@ -110,20 +112,24 @@ public class GameTree extends JPanel implements MouseListener{
 		gameTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		gameTree.setToggleClickCount(0);
 		gameTree.addMouseListener(this);
-	
-		setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		
-		c.fill = GridBagConstraints.BOTH;
-		//c.weighty = 1;
-		c.weightx = 1;
 		
 		gameTreeScroll = new JScrollPane(gameTree);
 		gameTreeScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);		
 		gameTreeScroll.setPreferredSize(new Dimension(190, 500));
 		
-	    add(gameTreeScroll, c);
+
+		SpringLayout layout = new SpringLayout();
+		setLayout(layout);
+	  
+		SpringLayout.Constraints  cons;
+        cons = layout.getConstraints(gameTreeScroll);
+        cons.setX(Spring.constant(0));
+        cons.setY(Spring.constant(0));
+        cons.setWidth(Spring.scale(layout.getConstraint(SpringLayout.EAST, this), .995f)); // must be as close as possible to 1f without being 1f. 1f breaks it for some reason
+        cons.setHeight(layout.getConstraint(SpringLayout.SOUTH, this));
+		
+		add(gameTreeScroll);
 	    ViewEventController.getInstance().setGameOverviewTree(this);
 	    
 	    
