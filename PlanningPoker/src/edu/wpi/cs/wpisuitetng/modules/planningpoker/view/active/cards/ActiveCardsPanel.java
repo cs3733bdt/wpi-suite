@@ -25,7 +25,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
@@ -42,12 +42,14 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
 
 	//initialized array to remember what buttons were pressed if "0?" button is pressed
-    private final ArrayList<Integer> memoryArray = new ArrayList<Integer>();
-    private final EstimatePanel panel;
+
+    private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
+    private NewRightHalfActiveGamePanel panel;
 	
-	public ActiveCardsPanel(List<String> passedDeck, EstimatePanel passedPanel) {
-		panel = passedPanel;
-		deck = passedDeck;
+	public ActiveCardsPanel(ArrayList<String> passedDeck, NewRightHalfActiveGamePanel passedPanel) {
+		this.panel = passedPanel;
+		this.deck = passedDeck;
+
 		
 		this.setPreferredSize(new Dimension(800, 
 				(68 * (Math.round(deck.size() / 11)) ) ) ); //800,100
@@ -184,6 +186,12 @@ public int memoryArrayGetElt(int elt) {
 
 @Override
 public boolean validateField(IErrorView warningField) {
+	return false;
+}
+
+@Override
+public boolean hasChanges() {
+	// TODO Auto-generated method stub
 	return false;
 }
 

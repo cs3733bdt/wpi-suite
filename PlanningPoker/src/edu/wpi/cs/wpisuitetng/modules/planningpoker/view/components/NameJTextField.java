@@ -27,13 +27,15 @@ public class NameJTextField extends JTextField implements IDataField {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
-	
+	private String startingText;
+
 	/**
 	 * initializes the textbox with a specific string
 	 * @param text the initialized text for the textbox
 	 */
 	public NameJTextField(String text) {
 		super(text);
+		startingText = text;
 	}
 
 	/**
@@ -42,12 +44,24 @@ public class NameJTextField extends JTextField implements IDataField {
 	 */
 	public NameJTextField(int size) {
 		super(size);
+		startingText = "";
 	}
 
 	/**
 	 * initializes a textbox with no initial string or columns
 	 */
 	public NameJTextField() {
+		startingText = "";
+	}
+	
+	@Override
+	public void setText(String text){
+		startingText = text;
+		super.setText(text);
+	}
+
+	public void displayStandardBorder(){
+		setBorder(BorderFactory.createTitledBorder("Name"));
 	}
 
 	@Override
@@ -74,6 +88,11 @@ public class NameJTextField extends JTextField implements IDataField {
 			isNameValid = true;
 		}
 		return isNameValid;
+	}
+
+	@Override
+	public boolean hasChanges() {
+		return getText().equals(startingText);
 	}
 
 }

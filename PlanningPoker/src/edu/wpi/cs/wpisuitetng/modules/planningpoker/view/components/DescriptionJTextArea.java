@@ -14,6 +14,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
@@ -23,21 +24,32 @@ import javax.swing.border.Border;
  * @author Bobby Drop Tables
  *
  */
-public class DescriptionJTextField extends JTextField implements IDataField {
+public class DescriptionJTextArea extends JTextArea implements IDataField {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
+	
+	private String startingText;
 
-	public DescriptionJTextField(String text) {
+	public DescriptionJTextArea(String text) {
 		super(text);
+		startingText = text;
 	}
 
-	public DescriptionJTextField(int size) {
-		super(size);
+	public DescriptionJTextArea() {
+		startingText = "";
 	}
-
-	public DescriptionJTextField() {
+	
+	public void displayStandardBorder(){
+		setBorder(BorderFactory.createTitledBorder("Description"));
 	}
+	
+	@Override
+	public void setText(String text){
+		startingText = text;
+		super.setText(text);
+	}
+	
 
 	@Override
 	public boolean validateField(IErrorView errorField) {
@@ -57,4 +69,8 @@ public class DescriptionJTextField extends JTextField implements IDataField {
 		return isDescriptionValid;
 	}
 
+	@Override
+	public boolean hasChanges() {
+		return getText().equals(startingText);
+	}
 }

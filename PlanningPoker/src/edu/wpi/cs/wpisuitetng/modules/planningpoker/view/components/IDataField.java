@@ -26,6 +26,13 @@ public interface IDataField {
 	 * @param warningField The external warning field that you want to indicate the error to
 	 * @return true when all of the fields in this component are valid
 	 */
-	boolean validateField(IErrorView warningField);
-
+	public boolean validateField(IErrorView warningField);
+	
+	
+	/**
+	 * Runs over all of this DataFields subcomponents and checks to see if there are any
+	 * changes since this panel was instantiated.
+	 * @return true when the user has made changes to the field since it was created or set
+	 */
+	public boolean hasChanges();
 }

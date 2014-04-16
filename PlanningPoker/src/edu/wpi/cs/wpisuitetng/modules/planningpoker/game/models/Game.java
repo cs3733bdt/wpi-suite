@@ -609,6 +609,14 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		while(GameModel.getInstance().isServerUpdating()){} // $codepro.audit.disable emptyWhileStatement
 	}
 	
+	@Override
+	public synchronized void addObserver(AbstractModelObserver o){
+		for(Requirement r : requirements){
+			r.addObserver(this);
+		}
+		super.addObserver(o);
+	}
+	
 	
 	/**
 	 * hasChanged in the super class does not check if the 
