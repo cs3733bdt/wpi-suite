@@ -197,7 +197,7 @@ public class Requirement extends ObservableModel {
 			return "*";
 		}
 		else{
-			return Integer.toString(getVotes().size());
+			return Integer.toString(votes.size());
 		}
 	}
 	/**

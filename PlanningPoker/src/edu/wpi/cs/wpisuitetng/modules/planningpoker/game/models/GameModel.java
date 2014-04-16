@@ -92,7 +92,7 @@ AbstractModelObserver {
 	 *            game to be added to the games ArrayList
 	 */
 	public synchronized void addGame(Game newGame) {
-		while (isServerUpdating()) {}
+		while (serverUpdating) {}
 		games.add(newGame);
 		try {
 			AddGameController.getInstance().addGame(newGame);

@@ -612,7 +612,7 @@ public class CreateGamePanel extends JScrollPane {
 		currentGame.setDescription(this.getBoxDescription().getText());
 		currentGame.setActive(active);
 		currentGame.setUsesCards(doesUseCards());
-		currentGame.setRequirements(getRequirements());
+		currentGame.setRequirements(requirements);
 		currentGame.setEndDate(endDateField.getEndDate());
 		currentGame.setCreator(ConfigManager.getConfig().getUserName());
 		currentGame.notifyObservers();
