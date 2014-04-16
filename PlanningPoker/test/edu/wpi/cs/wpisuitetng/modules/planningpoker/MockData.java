@@ -42,7 +42,8 @@ public class MockData implements Data {
 	 * @param arg0 T
 	
 	
-	 * @return T * @see edu.wpi.cs.wpisuitetng.database.Data#delete(T) * @see edu.wpi.cs.wpisuitetng.database.Data#delete(T)
+	 * @return T * @see edu.wpi.cs.wpisuitetng.database.Data#delete(T) * 
+	 * @see edu.wpi.cs.wpisuitetng.database.Data#delete(T)
 	 */
 	@Override
 	public <T> T delete(T arg0) {
@@ -58,7 +59,8 @@ public class MockData implements Data {
 	 * @param arg0 T
 	
 	
-	 * @return List<T> * @see edu.wpi.cs.wpisuitetng.database.Data#deleteAll(T) * @see edu.wpi.cs.wpisuitetng.database.Data#deleteAll(T)
+	 * @return List<T> * @see edu.wpi.cs.wpisuitetng.database.Data#deleteAll(T) * 
+	 * @see edu.wpi.cs.wpisuitetng.database.Data#deleteAll(T)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -81,7 +83,9 @@ public class MockData implements Data {
 	 * @param value Object
 	
 	
-	 * @return List<Model> * @see edu.wpi.cs.wpisuitetng.database.Data#retrieve(Class, String, Object) * @see edu.wpi.cs.wpisuitetng.database.Data#retrieve(Class, String, Object)
+	 * @return List<Model> *
+	 * @see edu.wpi.cs.wpisuitetng.database.Data#retrieve(Class, String, Object) * 
+	 * @see edu.wpi.cs.wpisuitetng.database.Data#retrieve(Class, String, Object)
 	 */
 	@SuppressWarnings("rawtypes")
 	@Override
@@ -119,7 +123,8 @@ public class MockData implements Data {
 	 * @param arg0 T
 	
 	
-	 * @return List<T> * @see edu.wpi.cs.wpisuitetng.database.Data#retrieveAll(T) * @see edu.wpi.cs.wpisuitetng.database.Data#retrieveAll(T)
+	 * @return List<T> * @see edu.wpi.cs.wpisuitetng.database.Data#retrieveAll(T) * 
+	 * @see edu.wpi.cs.wpisuitetng.database.Data#retrieveAll(T)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -138,7 +143,8 @@ public class MockData implements Data {
 	 * @param arg0 T
 	
 	
-	 * @return boolean * @see edu.wpi.cs.wpisuitetng.database.Data#save(T) * @see edu.wpi.cs.wpisuitetng.database.Data#save(T)
+	 * @return boolean * @see edu.wpi.cs.wpisuitetng.database.Data#save(T) * 
+	 * @see edu.wpi.cs.wpisuitetng.database.Data#save(T)
 	 */
 	@Override
 	public <T> boolean save(T arg0) {
@@ -174,7 +180,11 @@ public class MockData implements Data {
 	
 	
 	
-	 * @return List<Model> * @throws WPISuiteException * @throws IllegalArgumentException * @throws IllegalAccessException * @throws InvocationTargetException * @see edu.wpi.cs.wpisuitetng.database.Data#andRetrieve(Class, String[], List<Object>) * @throws WPISuiteException
+	 * @return List<Model> * @throws WPISuiteException * 
+	 * @throws IllegalArgumentException * @throws IllegalAccessException * 
+	 * @throws InvocationTargetException * 
+	 * @see edu.wpi.cs.wpisuitetng.database.Data#andRetrieve(Class, String[], List<Object>) * 
+	 * @throws WPISuiteException
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
@@ -203,7 +213,12 @@ public class MockData implements Data {
 	
 	
 	
-	 * @return List<Model> * @throws WPISuiteException * @throws IllegalArgumentException * @throws IllegalAccessException * @throws InvocationTargetException * @see edu.wpi.cs.wpisuitetng.database.Data#complexRetrieve(Class, String[], List<Object>, Class, String[], List<Object>) * @throws WPISuiteException
+	 * @return List<Model> * @throws WPISuiteException * 
+	 * @throws IllegalArgumentException * 
+	 * @throws IllegalAccessException * 
+	 * @throws InvocationTargetException * 
+	 * @see edu.wpi.cs.wpisuitetng.database.Data#complexRetrieve(Class, String[], List<Object>, Class, String[], List<Object>) * 
+	 * @throws WPISuiteException
 	 * @throws IllegalArgumentException
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
@@ -225,7 +240,8 @@ public class MockData implements Data {
 	 * @param arg1 Project
 	
 	
-	 * @return List<Model> * @see edu.wpi.cs.wpisuitetng.database.Data#deleteAll(T, Project) * @see edu.wpi.cs.wpisuitetng.database.Data#deleteAll(T, Project)
+	 * @return List<Model> * @see edu.wpi.cs.wpisuitetng.database.Data#deleteAll(T, Project) * 
+	 * @see edu.wpi.cs.wpisuitetng.database.Data#deleteAll(T, Project)
 	 */
 	@Override
 	public <T> List<Model> deleteAll(T arg0, Project arg1) {
@@ -244,7 +260,12 @@ public class MockData implements Data {
 	
 	
 	
-	 * @return List<Model> * @throws WPISuiteException * @throws IllegalAccessException * @throws InvocationTargetException * @see edu.wpi.cs.wpisuitetng.database.Data#orRetrieve(Class, String[], List<Object>) * @throws WPISuiteException
+	 * @return List<Model> *
+	 * @throws WPISuiteException * 
+	 * @throws IllegalAccessException * 
+	 * @throws InvocationTargetException *
+	 *  @see edu.wpi.cs.wpisuitetng.database.Data#orRetrieve(Class, String[], List<Object>) * 
+	 *  @throws WPISuiteException
 	 * @throws IllegalAccessException
 	 * @throws InvocationTargetException
 	 * @see edu.wpi.cs.wpisuitetng.database.Data#orRetrieve(Class, String[], List<Object>)
@@ -283,7 +304,9 @@ public class MockData implements Data {
 	
 	
 	
-	 * @return List<Model> * @throws WPISuiteException * @see edu.wpi.cs.wpisuitetng.database.Data#retrieve(Class, String, Object, Project) * @throws WPISuiteException
+	 * @return List<Model> * @throws WPISuiteException * 
+	 * @see edu.wpi.cs.wpisuitetng.database.Data#retrieve(Class, String, Object, Project) * 
+	 * @throws WPISuiteException
 	 * @see edu.wpi.cs.wpisuitetng.database.Data#retrieve(Class, String, Object, Project)
 	 */
 	@SuppressWarnings("rawtypes")
@@ -299,7 +322,8 @@ public class MockData implements Data {
 	 * @param arg1 Project
 	
 	
-	 * @return List<Model> * @see edu.wpi.cs.wpisuitetng.database.Data#retrieveAll(T, Project) * @see edu.wpi.cs.wpisuitetng.database.Data#retrieveAll(T, Project)
+	 * @return List<Model> * @see edu.wpi.cs.wpisuitetng.database.Data#retrieveAll(T, Project) * 
+	 * @see edu.wpi.cs.wpisuitetng.database.Data#retrieveAll(T, Project)
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
@@ -313,7 +337,8 @@ public class MockData implements Data {
 	 * @param arg1 Project
 	
 	
-	 * @return boolean * @see edu.wpi.cs.wpisuitetng.database.Data#save(T, Project) * @see edu.wpi.cs.wpisuitetng.database.Data#save(T, Project)
+	 * @return boolean * @see edu.wpi.cs.wpisuitetng.database.Data#save(T, Project) * 
+	 * @see edu.wpi.cs.wpisuitetng.database.Data#save(T, Project)
 	 */
 	@Override
 	public <T> boolean save(T arg0, Project arg1) {

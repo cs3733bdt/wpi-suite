@@ -70,7 +70,7 @@ public class ViewEventController {
 	 */
 	public void setToolBar(ToolbarView tb){
 		toolbar = tb;
-		toolbar.repaint(); //Unsure why this is necessary but this is what is done in Requirement Manager
+		toolbar.repaint(); 
 	}
 	
 	/**
@@ -275,7 +275,8 @@ public class ViewEventController {
 	
 	/**
 	 * Closes all the tabs except for the one that was clicked.
-	 * Used in conjunction with the tab right click drop-down that allows users to close multiple tabs at once.
+	 * Used in conjunction with the tab right click drop-down 
+	 * that allows users to close multiple tabs at once.
 	 */
 	public void closeOthers() {
 		int tabCount = main.getTabbedView().getTabCount();

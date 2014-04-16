@@ -84,7 +84,8 @@ public class AddGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println("The request to add a Game failed. Response Error: " + iReq.getResponse().getStatusMessage());
+		System.err.println("The request to add a Game failed. Response Error: "
+				+ iReq.getResponse().getStatusMessage());
 		redisplayGame();
 	}
 
@@ -94,7 +95,8 @@ public class AddGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		System.err.println("The request to add a Game failed with exception: " + exception.getMessage());
+		System.err.println("The request to add a Game failed with exception: "
+				+ exception.getMessage());
 		redisplayGame();
 	}
 	

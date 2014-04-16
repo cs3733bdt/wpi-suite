@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
 @SuppressWarnings("serial")
 public class EndGameTable extends JTable
 {
-	public DefaultTableModel tableModel = null;	
+	private DefaultTableModel tableModel = null;	
 	/**
 	 * Sets initial table view
 	 * 

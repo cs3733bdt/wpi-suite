@@ -47,13 +47,17 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  */
 @SuppressWarnings("serial")
 public class GameTree extends JPanel implements MouseListener{
-	private boolean initialized = false; //Used to check if the GameModel should be generated from the server.
+	private boolean initialized = false; //Check if GameModel should be generated from the server
 	JTree gameTree; // JTree to hold the hierarchy of games
 	JScrollPane gameTreeScroll; // scrollPane to put the tree in
-	DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode("Games"); // makes the master node to hold the other 3
-	DefaultMutableTreeNode inactive = new DefaultMutableTreeNode("Pending Games"); // makes the pending games node
-	DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the active games node
-	DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the games history node
+	DefaultMutableTreeNode gameNode = 
+			new DefaultMutableTreeNode("Games"); //Make master node hold the other 3
+	DefaultMutableTreeNode inactive = 
+			new DefaultMutableTreeNode("Pending Games"); //Make pending games node
+	DefaultMutableTreeNode active = 
+			new DefaultMutableTreeNode("Active Games"); //Make active games node
+	DefaultMutableTreeNode history = 
+			new DefaultMutableTreeNode("Game History"); //Make games history node
 	
 	boolean isInactiveCollapsed = true;
 	boolean isActiveCollapsed = true;
@@ -84,12 +88,21 @@ public class GameTree extends JPanel implements MouseListener{
 		inactive.removeAllChildren();
 		history.removeAllChildren();
 		
+<<<<<<< HEAD
+		List<Game> gameList = 
+				sortGames(GameModel.getInstance().getGames());//retrieve list of all games
+=======
 		List<Game> gameList = sortGames(GameModel.getInstance().getGames()); //retrieve the list of all of the games
+>>>>>>> e117535b264ea3c3ab0c986fb5be2503858ea260
 		System.out.println("Numb Games: " + gameList.size());
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
+<<<<<<< HEAD
+			if(!game.isComplete()){ //If game is not complete, add it to the active game drop down
+=======
 			if(!game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
+>>>>>>> e117535b264ea3c3ab0c986fb5be2503858ea260
 				if(game.isActive()){
 					active.add(newGameNode);
 				}
@@ -209,11 +222,14 @@ public class GameTree extends JPanel implements MouseListener{
 			}
 			if(treePath != null){
 				System.out.println("Tree Path valid");
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
+				DefaultMutableTreeNode node = 
+						(DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
 				if(node != null) {
-					if(node.getUserObject() instanceof Game){ 		//Make sure that this is actually a game
-						System.out.println("Setting view to game: " + ((Game)node.getUserObject()).toString());
-						if(((Game)node.getUserObject()).isActive() && (!((Game)node.getUserObject()).isComplete())){
+					if(node.getUserObject() instanceof Game){ //Confirm that this is a game
+						System.out.println("Setting view to game: " + 
+								((Game)node.getUserObject()).toString());
+						if(((Game)node.getUserObject()).isActive() &&
+								(!((Game)node.getUserObject()).isComplete())){
 							ViewEventController.getInstance().joinGame((Game)node.getUserObject());
 						}
 						else if(!((Game)node.getUserObject()).isComplete()){

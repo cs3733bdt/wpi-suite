@@ -147,7 +147,8 @@ public class GameManagerTest {
 	}
 	
 	/**
-	 * Ensures an UnauthorizedException is thrown when trying to delete an entity while not authorized
+	 * Ensures an UnauthorizedException is thrown when trying to delete 
+	 * an entity while not authorized
 	 * @throws WPISuiteException
 	 */
 	@Test(expected=UnauthorizedException.class)

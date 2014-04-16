@@ -46,7 +46,11 @@ public class CardActionListenerRefactor implements ActionListener {
 	 * @param passedCardsPanel
 	 * @param passedEstimatePanel
 	 */
-	public CardActionListenerRefactor(int index, List<String> deckUsed, JToggleButton passedButton, ActiveCardsPanel passedCardsPanel, EstimatePanel passedEstimatePanel) {
+	public CardActionListenerRefactor(int index, 
+									List<String> deckUsed, 
+									JToggleButton passedButton, 
+									ActiveCardsPanel passedCardsPanel, 
+									EstimatePanel passedEstimatePanel) {
 		size = deckUsed.size();
 		cardsPanel = passedCardsPanel;
 		estimatePanel = passedEstimatePanel;

@@ -25,7 +25,7 @@ import javax.swing.table.DefaultTableModel;
 @SuppressWarnings("serial")
 public class ActiveGamesTable extends JTable
 {
-	public DefaultTableModel tableModel = null;
+	private DefaultTableModel tableModel = null;
 	private boolean initialized;
 	private boolean isInEditMode;
 	private final boolean changedByRefresh = false;	
