@@ -47,10 +47,24 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		nameTextField.setEditable(false);
 		
 		descriptionTextField = new JTextArea(3, 30);		//Initializes the textarea for the game description
-		descriptionTextField.setText("Sleep");              //dummy description
+		descriptionTextField.setText("Sleep Sleep Sleep Sleep Sleep Sleep Sleep "
+				+ "Sleep Sleep Sleep Sleep Sleep\nSleep Sleep Sleep Sleep "
+				+ "Sleep Sleep Sleep Sleep Sleep Sleep Sleep Sleep\nSleep "
+				+ "Sleep Sleep Sleep Sleep Sleep Sleep Sleep Sleep Sleep "
+				+ "Sleep Sleep\nSleep Sleep Sleep Sleep Sleep Sleep Sleep "
+				+ "Sleep Sleep Sleep Sleep Sleep\nSleep Sleep Sleep Sleep "
+				+ "Sleep Sleep Sleep Sleep Sleep Sleep Sleep Sleep\nSleep Sleep Sleep Sleep "
+				+ "Sleep Sleep Sleep Sleep Sleep Sleep Sleep Sleep\nSleep Sleep Sleep Sleep "
+				+ "Sleep Sleep Sleep Sleep Sleep Sleep Sleep Sleep\nSleep Sleep Sleep Sleep "
+				+ "Sleep Sleep Sleep Sleep Sleep Sleep Sleep Sleep\nSleep Sleep Sleep Sleep "
+				+ "Sleep Sleep Sleep Sleep Sleep Sleep Sleep Sleep\nSleep Sleep Sleep Sleep "
+				+ "Sleep Sleep Sleep Sleep Sleep Sleep Sleep Sleep\nSleep Sleep Sleep Sleep "
+				+ "Sleep Sleep Sleep Sleep Sleep Sleep Sleep Sleep ");              //dummy description
 		descriptionTextField.setBorder(defaultBorder);
 		descriptionTextField.setEditable(false);
-		
+		JScrollPane descriptionPanel=new JScrollPane(descriptionTextField);
+		descriptionPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		descriptionPanel.setPreferredSize(new Dimension(200,100));
 
 		/**
 		 * Initializes a table's columns and rows and the table
@@ -85,7 +99,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		rightView.add(reqLabel);
 		rightView.add(nameTextField);
 		rightView.add(desLabel);
-		rightView.add(descriptionTextField);
+		rightView.add(descriptionPanel);
 		
 		layout.putConstraint(SpringLayout.WEST, nameLabel, 40, SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.EAST, nameLabel, -40, SpringLayout.EAST, rightView);//Adds the name label to the far left
@@ -99,15 +113,17 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.NORTH, reqLabel, 10, SpringLayout.SOUTH, tablePanel);
 		
 		layout.putConstraint(SpringLayout.WEST, nameTextField, 40, SpringLayout.WEST, rightView);
+		layout.putConstraint(SpringLayout.EAST, nameTextField, -40, SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, nameTextField, 0, SpringLayout.SOUTH, reqLabel);
 		
 		layout.putConstraint(SpringLayout.WEST, desLabel, 40, SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, desLabel, 5, SpringLayout.SOUTH, nameTextField);
 		
-		layout.putConstraint(SpringLayout.WEST, descriptionTextField, 40, SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.NORTH, descriptionTextField, 0, SpringLayout.SOUTH, desLabel);
+		layout.putConstraint(SpringLayout.WEST, descriptionPanel, 40, SpringLayout.WEST, rightView);
+		layout.putConstraint(SpringLayout.EAST, descriptionPanel, -40, SpringLayout.EAST, rightView);
+		layout.putConstraint(SpringLayout.NORTH, descriptionPanel, 0, SpringLayout.SOUTH, desLabel);
 		
-		this.getViewport().add(rightView);			//Sets the view of the scrollpane to be the entire container which has everything contained within it
+		this.getViewport().add(rightView);			//Sets the rightview to be the entire container which has everything contained within it
 
 	}
 	

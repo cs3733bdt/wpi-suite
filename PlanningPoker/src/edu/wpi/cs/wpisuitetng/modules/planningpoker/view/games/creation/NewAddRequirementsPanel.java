@@ -1,5 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -41,19 +42,16 @@ public class NewAddRequirementsPanel extends JPanel {
 	
 	private ActiveGamesTable table2;
 	
-	public NewAddRequirementsPanel(final NewRightHalfCreateGamePanel newRightHalfCreateGamePanel) {
+	public NewAddRequirementsPanel(final NewRightHalfCreateGamePanel rightView) {
 		
 		
 		//SpringLayout layout = (SpringLayout) newRightHalfCreateGamePanel.getLayout();
-		SpringLayout layout = new SpringLayout();
+	//	SpringLayout layout = new SpringLayout();
 		//this.setLayout(layout);
 		
 		//SpringLayout.Constraints pcons = layout.getConstraints(newRightHalfCreateGamePanel);
-		
-		//Container reqPanel = new Container();
-		
+
 		////JPanel reqPanel = new JPanel();
-		////reqPanel.setLayout(new SpringLayout());
 		
 		/*
 		 * Planned Changes:
@@ -64,6 +62,12 @@ public class NewAddRequirementsPanel extends JPanel {
 		 *  
 		 */
 		
+		this.setPreferredSize(rightView.getPreferredSize());
+		JPanel reqPanel = new JPanel();
+		//Container reqPanel = new Container();
+		
+		SpringLayout layout = rightView.getLayout();		
+		setLayout(layout);
 		
 		/**
 		 * Creates a new font for use later
@@ -86,27 +90,21 @@ public class NewAddRequirementsPanel extends JPanel {
 		JLabel currentReqs = new JLabel("Current Requirements");
 		currentReqs.setFont(bigFont);
 		
-		add(currentReqs);
+//``	
+////		THE BELOW LINES EXTEND A PANEL		
+		//anchor the right side of the reqPanel with the right side of the overall panel
+     	layout.putConstraint(SpringLayout.EAST, currentReqsPanel, 
+     			5, 
+     			SpringLayout.EAST, this);
+
+     	
+     	//anchor the left side of the reqPanel with the left side of the overall panel
+     	layout.putConstraint(SpringLayout.WEST, currentReqsPanel, 
+     				5, 
+     				SpringLayout.WEST, this);
+
+     	
 		
-		SpringLayout.Constraints labelCons = layout.getConstraints(currentReqs);
-		
-//		labelCons.setX(Spring.constant(5));
-//		labelCons.setY(Spring.constant(5));
-//		
-		//anchor the left side of the currentReq Label to the left side of the box
-		layout.putConstraint(SpringLayout.WEST, currentReqs,
-				5, //add -5 if issues with the bar
-				SpringLayout.WEST, this);
-	
-		//anchor the bottom of the label to the top of the panel.
-		layout.putConstraint(SpringLayout.SOUTH, currentReqs,
-				-5, 
-				SpringLayout.NORTH, currentReqsPanel);
-		
-		//reverse of above
-		layout.putConstraint(SpringLayout.NORTH, currentReqsPanel,
-				5,
-				SpringLayout.SOUTH, currentReqs);
 		
      	/**
 		 * Initializes objects for use in table
@@ -114,7 +112,6 @@ public class NewAddRequirementsPanel extends JPanel {
 		String[] columnNames2 = {"Requirement", "Description"};
 		Object[][] data2 = {};
 		table2 = new ActiveGamesTable(data2, columnNames2);
-		
 		/**
 		 * Puts the table within a scroll pane, and adds to the view.
 		 */
@@ -122,11 +119,78 @@ public class NewAddRequirementsPanel extends JPanel {
 		tablePanel2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		tablePanel2.setMinimumSize(new Dimension(500, 100));
 		tablePanel2.setPreferredSize(new Dimension(500, 166));
-		currentReqsPanel.add(tablePanel2);
 		
-		add(currentReqsPanel);
+
+//		//anchor the right side of the reqPanel with the right side of the table it contains
+//     	layout.putConstraint(SpringLayout.EAST, tablePanel2, 
+//     			5, 
+//     			SpringLayout.EAST, currentReqsPanel);
+//     	
+//     	//anchor the left side of the reqPanel with the left side of the table it contains
+//     	layout.putConstraint(SpringLayout.WEST, tablePanel2, 
+//     				5, 
+//     				SpringLayout.WEST, currentReqsPanel);
+
+		
+////		//anchor the right side of the reqPanel with the right side of the table it contains
+////     	layout.putConstraint(SpringLayout.EAST, table2, 
+////     			5, 
+////     			SpringLayout.EAST, currentReqsPanel);
+//     	
+////     	//anchor the left side of the reqPanel with the left side of the table it contains
+////     	layout.putConstraint(SpringLayout.WEST, table2, 
+////     				5, 
+////     				SpringLayout.WEST, currentReqsPanel);
+		
+		
+		layout.putConstraint(SpringLayout.NORTH, currentReqsPanel,
+				5,
+				SpringLayout.SOUTH, currentReqs);
+     	
+		
+//		reqPanel.add(tablePanel2);
+//     	reqPanel.add(currentReqs);
+//     	reqPanel.add(currentReqsPanel);
+//		rightView.addComponent(reqPanel);
+
+     	
+ //    	this.add(reqPanel);
+   //     rightView.addComponent(this);     	
+      	
+  
+		currentReqsPanel.add(tablePanel2);
+//		
+    // 	rightView.addComponent(tablePanel2);
+		rightView.addComponent(currentReqsPanel);		
+		rightView.addComponent(currentReqs);
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		//-------------------------end of currentReq
+		
+		
+		//SpringLayout.Constraints labelCons = layout.getConstraints(currentReqs);
+		
+//		labelCons.setX(Spring.constant(5));
+//		labelCons.setY(Spring.constant(5));
+//		
+		//anchor the left side of the currentReq Label to the left side of the box
+//		layout.putConstraint(SpringLayout.WEST, currentReqs,
+//				5, //add -5 if issues with the bar
+//				SpringLayout.WEST, this);
+	
 		
 //		/**
 //		 * Panel for creating a requirement by text entry
@@ -405,4 +469,5 @@ public class NewAddRequirementsPanel extends JPanel {
 	public void addRequirement(Requirement requirement){
 		table2.tableModel.addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 	}
+	
 }
