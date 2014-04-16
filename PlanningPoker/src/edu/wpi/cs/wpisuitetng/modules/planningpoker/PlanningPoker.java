@@ -47,7 +47,7 @@ public class PlanningPoker implements IJanewayModule {
 	    // Create a JPanel to hold the main contents of the tab
 	    MainView mainPanel = new MainView();
 	    
-	    //Add the panels to the view controller
+	    // Add the panels to the view controller
 	    ViewEventController.getInstance().setMainView(mainPanel);
 	    ViewEventController.getInstance().setToolBar(toolbarPanel);
 
@@ -60,24 +60,19 @@ public class PlanningPoker implements IJanewayModule {
 	
 	/**
 	 * Returns the name of the PlanningPoker tab.
-	
 	 * @return String * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName() * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getName()
 	 */
 	@Override
 	public String getName() {
 		return "PlanningPoker";
 	}
-
 	
 	/**
 	 * Returns the tab that makes up the Planning Poker tab.
-	
-	
 	 * @return List<JanewayTabModel> * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs() * @see edu.wpi.cs.wpisuitetng.janeway.modules.IJanewayModule#getTabs()
 	 */
 	@Override
 	public List<JanewayTabModel> getTabs() {
 		return tabs;
 	}
-
 }

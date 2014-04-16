@@ -42,15 +42,15 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 	public CreateGameButtonPanel(){
 		super("");
 		
-		this.contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
+		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
 		this.setPreferredSize(new Dimension(175,50)); 
 		
 		
-		this.createGameIcon.setHorizontalAlignment(SwingConstants.CENTER);
+		createGameIcon.setHorizontalAlignment(SwingConstants.CENTER);
 	   try {
 	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));
-	        this.createGameIcon.setIcon(new ImageIcon(img));
+	        createGameIcon.setIcon(new ImageIcon(img));
 		    
 		} catch (IOException ex) {
 			ex.printStackTrace();

@@ -11,6 +11,11 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
 public interface IDataField {
 	
 	
@@ -30,5 +35,4 @@ public interface IDataField {
 	 * @return true when the user has made changes to the field since it was created or set
 	 */
 	public boolean hasChanges();
-
 }
