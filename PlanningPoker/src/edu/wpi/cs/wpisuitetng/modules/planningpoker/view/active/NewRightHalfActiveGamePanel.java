@@ -110,13 +110,13 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					int row = target.getSelectedRow();
 					int column = target.getSelectedColumn();
 					String selected = (String) target.getValueAt(row, column);
-					for (int i = 0; i < currentGame.getRequirements().size(); i++) {
-						if (selected.equals(currentGame.getRequirements().get(i).getName())
-								|| selected.equals(currentGame.getRequirements().get(i).getDescription())
-								|| selected.equals(currentGame.getRequirements().get(i).displayComplete())) {
-							activeRequirement=currentGame.getRequirements().get(i);
-							nameTextField.setText(currentGame.getRequirements().get(i).getName());
-							descriptionTextField.setText(currentGame.getRequirements().get(i).getDescription());
+					for (Requirement r : currentGame.getRequirements()) {
+						if (selected.equals(r.getName())
+								|| selected.equals(r.getDescription())
+								|| selected.equals(r.displayComplete())) {
+							activeRequirement=r;
+							nameTextField.setText(r.getName());
+							descriptionTextField.setText(r.getDescription());
 							setFieldsVisible(true);
 						}
 					}

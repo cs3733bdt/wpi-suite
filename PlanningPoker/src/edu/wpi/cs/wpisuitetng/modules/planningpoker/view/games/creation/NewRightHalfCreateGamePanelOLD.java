@@ -325,7 +325,7 @@ public class NewRightHalfCreateGamePanelOLD extends JScrollPane {
 	}
 
 	public void addRequirement(Requirement requirement) {
-		createGamePanel.addRequirement(requirement);
+		//createGamePanel.addRequirement(requirement);
 	}
 	
 	public SpringLayout getLayout() {
