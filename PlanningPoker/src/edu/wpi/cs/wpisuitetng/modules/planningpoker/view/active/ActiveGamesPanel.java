@@ -39,6 +39,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelO
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 /**
  * Sets up the panel for the active games screen, which
  *         has the list of all active games in which the user is playing. When
@@ -336,6 +337,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 	public void endGameButtonPressed(){
 		active.makeComplete();
 		active.notifyObservers();
+		ViewEventController.getInstance().removeTab(this);
 	}
 	
 	public static void main(String args[]){
