@@ -129,10 +129,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		// Label and accumulate sum
 		counterLabel = new JLabel("Your current estimate total: " + 0);
 		sum = 0;
-		JToggleButtonList = (ArrayList<CardButton>) cardsPanel.getCardButtonArray();
 
 		// This branch will be run if the default deck is to be used
-		// boolean useDefaultDeck;
+		 boolean useDefaultDeck;
 		// if (customDeck.size() == 0) {
 		// generate fibonachi sequence
 		int firstnum = 0;
@@ -148,15 +147,17 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			firstnum = secondnum;
 			secondnum = currnum;
 		}
+		useDefaultDeck = true;
 		/*
-		 * useDefaultDeck = true; } This branch will be run if a custom deck is
+		 *  } This branch will be run if a custom deck is
 		 * to be used else { deck = customDeck; useDefaultDeck = false; }
-		 * 
-		 * if (useDefaultDeck) { deck.add("0?"); }
 		 */
+		 if (useDefaultDeck) { deck.add("0?"); }
+		 
 
 		cardsPanel = new ActiveCardsPanel(deck, this);
-
+		
+		
 		// added below
 		if (this.getGame().doesUseCards()) {
 			JScrollPane cardPanel = new JScrollPane(cardsPanel);
@@ -339,7 +340,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	 * @return currentGame
 	 */
 	public Game getGame() {
-		// TODO Auto-generated method stub
 		return currentGame;
 	}
 
