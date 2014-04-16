@@ -123,9 +123,12 @@ public class FacebookNotification {
 			Chat chat = connection.getChatManager().createChat("-" + uid + "@chat.facebook.com", null);
 			// Set message
 			Message message = new Message("-" + uid + "@chat.facebook.com", Message.Type.chat);
-			message.setBody("Voting is required for game: " + g.getName()
-					+ "\nGame Ending : " + g.getEndDate().toString());
 			
+			if(!g.isComplete()){
+				message.setBody(generateCreateGameMessage());
+			} else{
+				message.setBody(generateEndGameMessage());
+			}
 			// Try to send the message
 			try {
 				chat.sendMessage(message);
@@ -152,6 +155,26 @@ public class FacebookNotification {
 		com.restfb.types.User fbUser = facebookClient.fetchObject(username, com.restfb.types.User.class);
 		
 		return fbUser.getId();
+	}
+	
+	/**
+	 * Used to generate the message text for notifying users of game creation,
+	 * contains game's name, and end date.
+	 * @return String representing message to be sent on game creation.
+	 */
+	private String generateCreateGameMessage(){
+		return "Voting is Required for game: " + g.getName() +
+		"\nGame Ending : " + g.getEndDate().toString();
+	}
+	
+	/**
+	 * Used to generate the message text for notifying users of game end,
+	 * contains ...
+	 * @return String representing message to be sent on game end.
+	 */
+	private String generateEndGameMessage(){
+		//TODO
+		return "Needs updating...";
 	}
 }
 

@@ -186,8 +186,11 @@ public class SMSNotification {
 
 				//Sets message text. Doesn't include requirements to keep text message
 				//a reasonable size
-					message.setText("Voting is Required for game: " + g.getName() +
-							"\nGame Ending : " + g.getEndDate().toString());
+				if(!g.isComplete())	{
+					message.setText(generateCreateGameMessage());
+				} else{
+					message.setText(generateEndGameMessage());
+				}
 				
 				try {
 					// Send message
@@ -212,5 +215,25 @@ public class SMSNotification {
 		} else {
 			System.out.println("User: " + user.getName() + ", does not have a phone number stored.");
 		}
+	}
+	
+	/**
+	 * Used to generate the message text for notifying users of game creation,
+	 * contains games name, and end date.
+	 * @return String representing message to be sent on game creation.
+	 */
+	private String generateCreateGameMessage(){
+		return "Voting is Required for game: " + g.getName() +
+		"\nGame Ending : " + g.getEndDate().toString();
+	}
+	
+	/**
+	 * Used to generate the message text for notifying users of game end,
+	 * contains ...
+	 * @return String representing message to be sent on game end.
+	 */
+	private String generateEndGameMessage(){
+		//TODO
+		return "Needs updating...";
 	}
 }
