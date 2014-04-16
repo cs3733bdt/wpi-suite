@@ -19,11 +19,10 @@ import java.util.GregorianCalendar;
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-//import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
 
 /**
@@ -36,7 +35,7 @@ public class ViewEventController {
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
 	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
-	private ArrayList<NewActiveGamePanel> listOfActiveGamePanels = new ArrayList<NewActiveGamePanel>();
+	private ArrayList<IActiveGamePanel> listOfActiveGamePanels = new ArrayList<IActiveGamePanel>();
 	private ArrayList<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
 	
 	/**
@@ -105,6 +104,8 @@ public class ViewEventController {
 		}
 		newGame.setUsesCards(game.doesUseCards());
 		
+		
+		//TODO MOVE THIS INTO THE CREATE GAME PANEL START!
 		Calendar dateMaker = new GregorianCalendar();
 		dateMaker.setTime(game.getEndDate());
 		String hour = Integer.toString(dateMaker.get(Calendar.HOUR));
@@ -119,6 +120,7 @@ public class ViewEventController {
 		}
 		
 		newGame.getEndDateField().setDateAndTime(dateMaker.getTime(), hour, minute, AM_PM);				
+		//TODO MOVE THIS INTO THE CREATE GAME PANEL END!
 		
 		for(CreateGamePanel gameSearch : listOfCreateGamePanels){
 			if(game.equals(gameSearch.getGame())){
@@ -129,6 +131,7 @@ public class ViewEventController {
 			}
 		}
 		
+		// SET THE TAB TEXT 
 		// Makes the game name not be longer than 6 characters
 		StringBuilder tabName = new StringBuilder();
 		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
@@ -163,9 +166,9 @@ public class ViewEventController {
 	 */
 	public void joinGame(Game game){
 		//Attempt to find the game in the active panels list
-		for(NewActiveGamePanel gameSearch : listOfActiveGamePanels){
+		for(IActiveGamePanel gameSearch : listOfActiveGamePanels){
 			if(game.equals(gameSearch.getGame())){
-				main.getTabbedView().setSelectedComponent(gameSearch);
+				main.getTabbedView().setSelectedComponent((Component)gameSearch);
 				main.invalidate();
 				main.repaint();
 				return; //The game has been found and made active. Done!
@@ -239,8 +242,8 @@ public class ViewEventController {
 			if(!((CreateGamePanel) comp).readyToRemove()) return;
 			this.listOfCreateGamePanels.remove(comp);
 		}
-		if (comp instanceof NewActiveGamePanel) {
-			if(!((NewActiveGamePanel) comp).readyToRemove()) return;
+		if (comp instanceof IActiveGamePanel) {
+			if(!((IActiveGamePanel) comp).readyToRemove()) return;
 			this.listOfActiveGamePanels.remove(comp);
 		}
 		main.getTabbedView().remove(comp);
@@ -261,9 +264,9 @@ public class ViewEventController {
 			
 			System.out.println(toBeRemoved.getClass().getName());
 
-			if(toBeRemoved instanceof NewActiveGamePanel)
+			if(toBeRemoved instanceof IActiveGamePanel)
 			{
-				if(!((NewActiveGamePanel)toBeRemoved).readyToRemove()) continue;
+				if(!((IActiveGamePanel)toBeRemoved).readyToRemove()) continue;
 				this.listOfActiveGamePanels.remove(toBeRemoved);
 			}
 			
@@ -292,7 +295,7 @@ public class ViewEventController {
 		{
 			Component toBeRemoved = main.getTabbedView().getComponentAt(i);
 
-			if(toBeRemoved instanceof NewActiveGamePanel){continue;}
+			if(toBeRemoved instanceof IActiveGamePanel){continue;}
 			if(toBeRemoved == selected){
 				continue;}
 

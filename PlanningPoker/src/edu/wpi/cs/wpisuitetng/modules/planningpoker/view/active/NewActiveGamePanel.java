@@ -20,7 +20,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableM
 
 
 
-public class NewActiveGamePanel extends JSplitPane implements AbstractModelObserver{
+public class NewActiveGamePanel extends JSplitPane implements AbstractModelObserver, IActiveGamePanel{
 	Game currentGame;
 	
 	
