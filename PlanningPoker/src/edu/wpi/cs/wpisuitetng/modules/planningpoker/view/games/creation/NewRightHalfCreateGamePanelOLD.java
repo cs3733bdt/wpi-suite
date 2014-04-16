@@ -306,20 +306,6 @@ public class NewRightHalfCreateGamePanelOLD extends JScrollPane {
 //		});
 		
 		
-//		addReqButton.addActionListener(new ActionListener() {
-//			 @Override
-//			public void actionPerformed(ActionEvent e) {
-//				 /*view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
-//				 nameArea.setText("");
-//				 descArea.setText("");*/
-//				 
-//				 //set everything on create reqPanel to visible.setVisible(true);
-//				 
-//				//reqPanel.getImportReqPanel().setVisible(true); //Not applicable at time of coding 
-//				 currentReqsLabel.setVisible(false);
-//				 tablePanel2.setVisible(false);
-//			 }
-//		});
 		
 		revalidate();
 		repaint();

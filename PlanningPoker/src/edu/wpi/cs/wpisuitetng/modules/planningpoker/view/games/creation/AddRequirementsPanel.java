@@ -150,9 +150,9 @@ public class AddRequirementsPanel extends JPanel {
 		c.gridy = 2;
 		c.anchor = GridBagConstraints.CENTER;
 		createReqPanel.add(reqDesc, c);
-		
+	
 		/**
-		 * Creates a scoll pane for the description
+		 * Creates a scroll pane for the description
 		 */
 		JScrollPane descPane = new JScrollPane(descArea);
 		
