@@ -20,6 +20,7 @@ import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
@@ -35,7 +36,7 @@ public class ViewEventController {
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
 	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
-	private ArrayList<ActiveGamesPanel> listOfActiveGamePanels = new ArrayList<ActiveGamesPanel>();
+	private ArrayList<NewActiveGamePanel> listOfActiveGamePanels = new ArrayList<NewActiveGamePanel>();
 	private ArrayList<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
 	
 	/**
@@ -162,7 +163,7 @@ public class ViewEventController {
 	 */
 	public void joinGame(Game game){
 		//Attempt to find the game in the active panels list
-		for(ActiveGamesPanel gameSearch : listOfActiveGamePanels){
+		for(NewActiveGamePanel gameSearch : listOfActiveGamePanels){
 			if(game.equals(gameSearch.getGame())){
 				main.getTabbedView().setSelectedComponent(gameSearch);
 				main.invalidate();
@@ -172,7 +173,7 @@ public class ViewEventController {
 		}
 		
 		//Game not found in the active game list
-		ActiveGamesPanel viewGame = new ActiveGamesPanel(game);
+		NewActiveGamePanel viewGame = new NewActiveGamePanel(game);
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 		
 		
