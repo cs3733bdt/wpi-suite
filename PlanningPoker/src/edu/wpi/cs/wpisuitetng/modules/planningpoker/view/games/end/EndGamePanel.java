@@ -36,6 +36,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableMode
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 /**
+ * used to display the completed game and requirements within it
  * @author TomPaolillo
  */
 public class EndGamePanel extends JScrollPane implements AbstractModelObserver{

@@ -94,6 +94,10 @@ public class CreateGamePanel extends JScrollPane {
 		build();
 	}
 	
+	/**
+	 * Creates a game based on another game
+	 * @param game the game which is being copied
+	 */
 	public CreateGamePanel(Game game){
 		build();
 		currentGame = game;

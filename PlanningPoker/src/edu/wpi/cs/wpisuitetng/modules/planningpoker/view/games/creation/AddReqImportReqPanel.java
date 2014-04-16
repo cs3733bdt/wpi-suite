@@ -20,7 +20,8 @@ import javax.swing.JPanel;
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.AddRequirementsPanel;
 
 /**
- * TODO: add documentation
+ * used to allow the game creator to import requirements from the
+ * requirement manager to use for their game
  * @author Bobby Drop Tables
  *
  */

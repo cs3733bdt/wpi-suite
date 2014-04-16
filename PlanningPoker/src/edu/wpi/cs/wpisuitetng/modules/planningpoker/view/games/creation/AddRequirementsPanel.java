@@ -33,7 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requireme
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
 
 /**
- * TODO: add documentation
+ * Used to allow the game creator to manually create and add their own requirements
  * @author Bobby Drop Tables
  *
  */

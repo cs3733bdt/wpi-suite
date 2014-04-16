@@ -16,7 +16,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * TODO: add documentation
+ * table that displays the end game results
  * @author Bobby Drop Tables
  *
  */
@@ -42,10 +42,18 @@ public class EndGameTable extends JTable
 		return false;
 	}
 
+	/**
+	 * getter for the table model
+	 * @return the table model
+	 */
 	public DefaultTableModel getTableModel() {
 		return tableModel;
 	}
 
+	/**
+	 * setter for the table model
+	 * @param tableModel the table model that is being set
+	 */
 	public void setTableModel(DefaultTableModel tableModel) {
 		this.tableModel = tableModel;
 	}

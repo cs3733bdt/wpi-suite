@@ -27,6 +27,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 
 /**
+ * used to display the end game statistics upon ending a game
  * @author TomPaolillo
  */
 public class StatisticsPanel extends JPanel{

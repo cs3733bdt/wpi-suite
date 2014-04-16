@@ -18,7 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 /**
- * TODO: add documentation
+ * creates a textbox which allows a user to input a name for a game.
+ * the textbox cannot be empty when creating a new game and makes sure to check it
  * @author Bobby Drop Tables
  *
  */
@@ -27,15 +28,25 @@ public class NameJTextField extends JTextField implements IDataField {
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
 	
-
+	/**
+	 * initializes the textbox with a specific string
+	 * @param text the initialized text for the textbox
+	 */
 	public NameJTextField(String text) {
 		super(text);
 	}
 
+	/**
+	 * initializes the textbox to have a specific number of columns
+	 * @param size the number of columns the textbox has
+	 */
 	public NameJTextField(int size) {
 		super(size);
 	}
 
+	/**
+	 * initializes a textbox with no initial string or columns
+	 */
 	public NameJTextField() {
 	}
 

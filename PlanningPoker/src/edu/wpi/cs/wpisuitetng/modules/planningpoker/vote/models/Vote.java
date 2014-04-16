@@ -12,7 +12,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models;
  
 /**
- * TODO: add documentation here
+ * used to record user votes for a game
  *
  * @author Bobby Drop Tables
  */
