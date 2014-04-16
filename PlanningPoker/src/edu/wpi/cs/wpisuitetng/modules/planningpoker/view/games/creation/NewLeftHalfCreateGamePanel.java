@@ -252,6 +252,10 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		return descriptionTextField;
 	}
 	
+	public ErrorLabel getErrorField(){
+		return errorField;
+	}
+	
 	public void displayError(String error){
 		errorField.setText(error);
 	}

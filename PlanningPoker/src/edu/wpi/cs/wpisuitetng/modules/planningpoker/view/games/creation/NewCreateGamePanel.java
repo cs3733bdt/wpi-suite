@@ -131,7 +131,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 */
 	private boolean validateField(boolean show){
 		boolean leftPanelValid = leftHalf.validateField(null);
-		boolean rightPanelValid = rightHalf.validateField(/*leftHalf.getErrorName()*/null);
+		boolean rightPanelValid = rightHalf.validateField(leftHalf.getErrorField());
 		return leftPanelValid && rightPanelValid;
 	}
 	
