@@ -36,7 +36,12 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
     
     private List<Requirement> requirements = new ArrayList<Requirement>();
    
-    private final Border defaultBorder = (new JTextField()).getBorder();
+    private final Border defaultFieldBorder = (new JTextField()).getBorder();
+    
+    private final Border defaultAreaBorder = (new JTextArea()).getBorder();
+    
+    private final Border errorBorder = BorderFactory
+			.createLineBorder(Color.RED);
 
     //THIS IS THE REQUIREMENT NAME FIELD THAT WILL BE NEEDED FOR CONTROLLER
 	private JTextField nameArea = new NameJTextField(30);	
@@ -44,10 +49,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	//THIS IS THE REQUIREMENT DESCRIPTION FIELD THAT WILL BE NEEDED FOR CONTROLLER
 	private JTextArea descArea = new JTextArea();
     
-    
+    private JLabel errorLabel = new JLabel();
+	
     private ActiveGamesTable table2;
    
     private JPanel createReqsPanel = new JPanel();
+    
+    final JPanel currentReqsPanel = new JPanel();
     
     private JButton addReqButton = new JButton("Add Requirement");
    
@@ -69,12 +77,12 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		table2 = initializeTable();
 		Font labelFont = makeFont();
 		
-		Border defaultBorder = BorderFactory.createLineBorder(Color.black);
-       
+		//Border defaultBorder = BorderFactory.createLineBorder(Color.black);
+		Border defaultBorder = defaultAreaBorder;
+		
 		/*
 		 * Code for Current Reqs Panel
 		 */
-        final JPanel currentReqsPanel = new JPanel();
         SpringLayout currentLayout = new SpringLayout();
         currentReqsPanel.setLayout(currentLayout);
         currentReqsPanel.setBorder(defaultBorder);
@@ -107,6 +115,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         createReqsPanel.add(reqName);
         createReqsPanel.add(nameArea);
         
+        //Adds error label to the createReqPanel
+        createReqsPanel.add(errorLabel);
+        
         //initializes the Desc Label and area and adds them to the createPanel
         /**
 		 * Creates and adds the requirement description label
@@ -138,12 +149,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		submitAddReqButton.addActionListener(new ActionListener() {
 			 @Override
 			public void actionPerformed(ActionEvent e) {
-				 //addRequirementCreatePanel(new Requirement(nameArea.getText(), descArea.getText()));
-				 addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
-				 nameArea.setText("");
-				 descArea.setText("");
-				 createReqsPanel.setVisible(false);
-				 currentReqsPanel.setVisible(true);
+				submitButtonPressed();
 			 }
 		});
 		/*
@@ -227,6 +233,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         createLayout.putConstraint(SpringLayout.SOUTH, submitAddReqButton, -5, SpringLayout.SOUTH, createReqsPanel);
         createLayout.putConstraint(SpringLayout.WEST, submitAddReqButton, 5, SpringLayout.WEST, createReqsPanel);
        
+        //postion error label with respect to creaReqPanel
+        createLayout.putConstraint(SpringLayout.SOUTH, errorLabel, -1, SpringLayout.SOUTH, createReqsPanel);
+        createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorLabel, 1, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
+       
         //position cancel button with respect to createReqPanel
         createLayout.putConstraint(SpringLayout.SOUTH, cancelRequirementButton, -5, SpringLayout.SOUTH, createReqsPanel);
         createLayout.putConstraint(SpringLayout.EAST, cancelRequirementButton, -5, SpringLayout.EAST, createReqsPanel);
@@ -284,6 +294,50 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		String[] columnNames2 = {"Requirement", "Description"};
 		Object[][] data2 = {};
 		return new ActiveGamesTable(data2, columnNames2);
+	}
+	
+	private void submitButtonPressed(){
+		if(validateNameAndDesc()){
+			addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
+			nameArea.setText("");
+			descArea.setText("");
+			createReqsPanel.setVisible(false);
+			currentReqsPanel.setVisible(true);
+		}
+	}
+	
+	private boolean validateNameAndDesc(){
+		boolean descriptionValid = false;
+		boolean nameValid = false;
+		
+		if(descArea.getText().equals("")){
+			displayError("A description must be entered");
+			descArea.setBorder(errorBorder);
+			descriptionValid = false;
+		}
+		else{
+			descArea.setBorder(defaultAreaBorder);
+			descriptionValid = true;
+		}
+		
+		if(nameArea.getText().equals("")){
+			displayError("A name must be entered");
+			nameArea.setBorder(errorBorder);
+			descArea.setBorder(defaultAreaBorder);
+			nameValid = false;
+		}
+		else{
+			nameArea.setBorder(defaultFieldBorder);
+			nameValid = true;
+		}
+		
+		
+		return nameValid && descriptionValid;
+	}
+	
+	private void displayError(String errorString){
+		errorLabel.setForeground(Color.RED);
+		errorLabel.setText(errorString);
 	}
 	
 	/**

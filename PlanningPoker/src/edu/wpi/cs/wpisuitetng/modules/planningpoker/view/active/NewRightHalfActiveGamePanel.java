@@ -85,7 +85,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 																	// Label for
 																	// the
 																	// Description
-
+		
 		/**
 		 * Initializes a table's columns and rows and the table
 		 */
@@ -93,7 +93,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		Object[][] data = {};
 		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
 		table.setBorder(defaultBorder);
-
+		
 		/**
 		 * Display the requirement list in the table
 		 */
@@ -190,7 +190,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			cardPanel = new JScrollPane(cardsPanel);
 			cardPanel
 					.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			cardPanel.setPreferredSize(new Dimension(100, 100));
+			cardPanel.setPreferredSize(new Dimension(800, 100));
 			rightView.add(cardPanel);
 			layout.putConstraint(SpringLayout.WEST, cardPanel, 40,
 					SpringLayout.WEST, rightView);
@@ -198,6 +198,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
+			cardPanel.getHorizontalScrollBar().setValue(200);
+//		    layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, cardPanel, 5, SpringLayout.HORIZONTAL_CENTER, rightView);
 			cardPanel.setVisible(false);
 			
 		} else {

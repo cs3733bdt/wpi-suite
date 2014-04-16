@@ -49,10 +49,11 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	public ActiveCardsPanel(ArrayList<String> passedDeck, NewRightHalfActiveGamePanel passedPanel) {
 		this.panel = passedPanel;
 		this.deck = passedDeck;
-
+		
+		int cardsPerRow = 11;
 		
 		this.setPreferredSize(new Dimension(800, 
-				(68 * (Math.round(deck.size() / 11)) ) ) ); //800,100
+				(68 * (Math.round(deck.size() / cardsPerRow)) ) ) ); 
 		for (int i = 0; i < (deck.size()); i++) {
 			JToggleButtonList.add(new CardButton(i, deck, this, panel));
 		}//idk button is part of array
