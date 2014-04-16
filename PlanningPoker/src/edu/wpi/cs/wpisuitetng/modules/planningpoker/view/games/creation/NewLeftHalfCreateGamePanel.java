@@ -26,16 +26,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewLaunchGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewSaveGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
@@ -47,7 +43,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
 /**
  * TODO DOCUMENTATION
  */
-public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataField, ICreateGamePanel{
+public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 	
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
@@ -175,9 +171,29 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	}
 	
 	private void buildFields(){
-		if(!parent.getGame().equals(null)){
+		if(game != null){
 			nameTextField.setText(game.getName());
 			descriptionTextField.setText(game.getDescription());
+			setUsesCards(game.doesUseCards());
+			
+			
+			
+			//CALENDAR SETUP
+			Calendar dateMaker = new GregorianCalendar();
+			dateMaker.setTime(game.getEndDate());
+			String hour = Integer.toString(dateMaker.get(Calendar.HOUR));
+			String minute = Integer.toString(dateMaker.get(Calendar.MINUTE));		
+			String AM_PM = "If this doesn't change, something is wrong";
+			
+			if(dateMaker.get(Calendar.AM_PM) == Calendar.AM){
+				AM_PM = "AM";
+			}
+			if(dateMaker.get(Calendar.AM_PM) == Calendar.PM){
+				AM_PM = "PM";
+			}
+			
+			getEndDateField().setDateAndTime(dateMaker.getTime(), hour, minute, AM_PM);
+			//>>END CALENDAR SETUP
 		}
 	}
 	
@@ -285,6 +301,21 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	public boolean hasChanges() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	public boolean doesUseCards(){
+		return cardsButton.isSelected();
+	}
+	
+	public void setUsesCards(boolean usesCards){
+		if(usesCards){
+			cardsButton.setSelected(true);
+			textEntryButton.setSelected(false);
+		}
+		else{
+			cardsButton.setSelected(false);
+			textEntryButton.setSelected(true);
+		}
 	}
 	
 	

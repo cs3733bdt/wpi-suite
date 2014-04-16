@@ -16,7 +16,6 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
-import javax.swing.text.JTextComponent;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
@@ -31,9 +30,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  */
 
 
-public class NewCreateGamePanel extends JSplitPane {
-	NewLeftHalfCreateGamePanel leftHalf = new NewLeftHalfCreateGamePanel(this);
-	NewRightHalfCreateGamePanel rightHalf = new NewRightHalfCreateGamePanel(this);
+public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
+	NewLeftHalfCreateGamePanel leftHalf;
+	NewRightHalfCreateGamePanel rightHalf;
 	
 	private boolean readyToClose = false;
 	private boolean readyToRemove = true; // The window starts off ready to
@@ -43,13 +42,27 @@ public class NewCreateGamePanel extends JSplitPane {
 	
 	
 	public NewCreateGamePanel(Game game) {
-
+		this.currentGame = game;
+		leftHalf = new NewLeftHalfCreateGamePanel(this);
+		rightHalf = new NewRightHalfCreateGamePanel(this);
+		
+		
+		//TODO MOVE THIS INTO THE RIGHT HALF CODE
+		for(int i = 0; i < game.getRequirements().size(); i++){
+			//rightHalf.getAddReqPan().addRequirement(game.getRequirements().get(i));
+		}
+		//TODO END MOVE THIS INTO THE RIGHT HALF CODE
+		
+		this.setLeftComponent(leftHalf);
 		this.setRightComponent(rightHalf);
 		rightHalf.setMinimumSize(new Dimension(500, 500));
-		this.setLeftComponent(leftHalf);
-		this.setDividerLocation(400);
-		this.currentGame = game;
+		this.setDividerLocation(420);
 		
+		
+	}
+	
+	public NewCreateGamePanel(){
+		this(null);
 	}
 	
 	public static void main(String args[]){
@@ -110,6 +123,7 @@ public class NewCreateGamePanel extends JSplitPane {
 	public boolean SaveGamePressed() {
 		if(this.validateField(true)){
 			saveGame();
+			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 			System.out.println("Add Game Pressed Passed.");
 			return true;
@@ -127,6 +141,7 @@ public class NewCreateGamePanel extends JSplitPane {
 	public boolean LaunchGamePressed() {
 		if(this.validateField(true)){
 			this.launchGame();
+			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 			System.out.println("Launch Game Pressed Passed.");
 			return true;
@@ -146,6 +161,7 @@ public class NewCreateGamePanel extends JSplitPane {
 			currentGame = new Game();
 			setCurrentGame(false);
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
+			System.out.println("Launch Game Pressed Passed.");
 		} else{
 			setCurrentGame(false);
 		}
@@ -172,7 +188,7 @@ public class NewCreateGamePanel extends JSplitPane {
 		currentGame.setName(getBoxName().getText());
 		currentGame.setDescription(getBoxDescription().getText());
 		currentGame.setActive(active);
-		//currentGame.setUsesCards(doesUseCards());
+		currentGame.setUsesCards(doesUseCards());
 		//currentGame.setRequirements(getRequirements());
 		currentGame.setEndDate(getEndDateField().getEndDate());
 		currentGame.setCreator(ConfigManager.getConfig().getUserName());
@@ -189,5 +205,9 @@ public class NewCreateGamePanel extends JSplitPane {
 	
 	private NewAddEndDatePanel getEndDateField(){
 		return leftHalf.getEndDateField();
+	}
+	
+	private boolean doesUseCards(){
+		return leftHalf.doesUseCards();
 	}
 }

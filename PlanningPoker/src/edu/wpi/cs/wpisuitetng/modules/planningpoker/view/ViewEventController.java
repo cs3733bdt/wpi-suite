@@ -24,6 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
 
@@ -36,7 +37,7 @@ public class ViewEventController {
 	private MainView main = null;
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
-	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
+	private ArrayList<ICreateGamePanel> listOfCreateGamePanels = new ArrayList<ICreateGamePanel>();
 	private ArrayList<IActiveGamePanel> listOfActiveGamePanels = new ArrayList<IActiveGamePanel>();
 	private ArrayList<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
 	
@@ -86,9 +87,9 @@ public class ViewEventController {
 		 * AND ADD FOLLOWING LINE (NewCreateGamePanel newGame = new NewCreateGamePanel();)
 		 * WHEN READY TO SEE NEW CREATEGAMEPANEL IN JANEWAY. THEN DO FUN CONTROLLER CHANGES!
 		 */
-		NewCreateGamePanel newGame = new NewCreateGamePanel(new Game());
+		NewCreateGamePanel newGame = new NewCreateGamePanel();
 		main.getTabbedView().addTab("New Game", null, newGame, "New Game");
-		main.invalidate(); //force the tabbedpane to redraw.
+		main.invalidate(); //force the tabbed pane to redraw.
 		main.repaint();
 		main.getTabbedView().setSelectedComponent(newGame);
 	}
@@ -98,35 +99,12 @@ public class ViewEventController {
 	 * that panel, and switches to that new panel 
 	 */
 	public void editGame(Game game) {
-		CreateGamePanel newGame = new CreateGamePanel(game);
-		newGame.setBoxName(game.getName());
-		newGame.setBoxDescription(game.getDescription());
-		for(int i = 0; i < game.getRequirements().size(); i++){
-			newGame.getAddReqPan().addRequirement(game.getRequirements().get(i));
-		}
-		newGame.setUsesCards(game.doesUseCards());
+		NewCreateGamePanel newGame = new NewCreateGamePanel(game);
 		
-		
-		//TODO MOVE THIS INTO THE CREATE GAME PANEL START!
-		Calendar dateMaker = new GregorianCalendar();
-		dateMaker.setTime(game.getEndDate());
-		String hour = Integer.toString(dateMaker.get(Calendar.HOUR));
-		String minute = Integer.toString(dateMaker.get(Calendar.MINUTE));		
-		String AM_PM = "If this doesn't change, something is wrong";
-		
-		if(dateMaker.get(Calendar.AM_PM) == Calendar.AM){
-			AM_PM = "AM";
-		}
-		if(dateMaker.get(Calendar.AM_PM) == Calendar.PM){
-			AM_PM = "PM";
-		}
-		
-		newGame.getEndDateField().setDateAndTime(dateMaker.getTime(), hour, minute, AM_PM);				
-		//TODO MOVE THIS INTO THE CREATE GAME PANEL END!
-		
-		for(CreateGamePanel gameSearch : listOfCreateGamePanels){
-			if(game.equals(gameSearch.getGame())){
-				main.getTabbedView().setSelectedComponent(gameSearch);
+		//FIND THE CURRENT EDIT GAME PANEL
+		for(ICreateGamePanel gameSearch : listOfCreateGamePanels){
+			if(game.equals(gameSearch.getGame())){			//If found then make it the active
+				main.getTabbedView().setSelectedComponent((Component)gameSearch);
 				main.invalidate();
 				main.repaint();
 				return;
@@ -142,7 +120,7 @@ public class ViewEventController {
 			tabName.append("...");
 		main.getTabbedView().addTab(tabName.toString(), newGame);
 
-		listOfCreateGamePanels.add(newGame);
+		listOfCreateGamePanels.add((ICreateGamePanel) newGame);
 
 		main.getTabbedView().setSelectedComponent(newGame);
 		main.invalidate();

@@ -1,5 +1,9 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
-public interface ICreateGamePanel {
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.IGamePanel;
+
+public interface ICreateGamePanel extends IGamePanel {
+	
+	
 	
 }

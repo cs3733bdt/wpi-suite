@@ -1,6 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.IGamePanel;
 
 /**
  * If this panel is a way to view an active game then
@@ -8,9 +8,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
  * @author jonathanleitschuh
  *
  */
-public interface IActiveGamePanel{
+public interface IActiveGamePanel extends IGamePanel{
 	
-	Game getGame();
 	
-	boolean readyToRemove();
 }
