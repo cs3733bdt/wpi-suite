@@ -244,7 +244,6 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane {
 	private boolean validateField(boolean warn) {
 		boolean isNameValid = false;
 		boolean isDescriptionValid = false;
-		boolean areRequirementsSelected = false;
 		boolean isEndDateValid = false;
 		
 		isNameValid = getBoxName().validateField(errorField);
@@ -282,7 +281,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane {
 			displayError("End Date and time must be set later than the current date");
 		}
 
-		return (isNameValid && isDescriptionValid && areRequirementsSelected && isEndDateValid);
+		return (isNameValid && isDescriptionValid && isEndDateValid);
 	}
 	
 	/**
