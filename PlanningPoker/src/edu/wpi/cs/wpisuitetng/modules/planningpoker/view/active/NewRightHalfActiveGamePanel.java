@@ -190,22 +190,23 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			cardPanel = new JScrollPane(cardsPanel);
 			cardPanel
 					.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			cardPanel.setPreferredSize(new Dimension(100, 100));
+			cardPanel.setPreferredSize(new Dimension(800, 100));
 			rightView.add(cardPanel);
-			layout.putConstraint(SpringLayout.WEST, cardPanel, 40,
-					SpringLayout.WEST, rightView);
-			layout.putConstraint(SpringLayout.EAST, cardPanel, -40,
-					SpringLayout.EAST, rightView);
+//			layout.putConstraint(SpringLayout.WEST, cardPanel, 40,
+//					SpringLayout.WEST, rightView);
+//			layout.putConstraint(SpringLayout.EAST, cardPanel, -40,
+//					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
+		    layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, cardPanel, 5, SpringLayout.HORIZONTAL_CENTER, rightView);
 			cardPanel.setVisible(false);
 			
 		} else {
 			rightView.add(cardsPanel);
-			layout.putConstraint(SpringLayout.WEST, cardsPanel, 40,
-					SpringLayout.WEST, rightView);
-			layout.putConstraint(SpringLayout.EAST, cardsPanel, -40,
-					SpringLayout.EAST, rightView);
+//			layout.putConstraint(SpringLayout.WEST, cardsPanel, 40,
+//					SpringLayout.WEST, rightView);
+//			layout.putConstraint(SpringLayout.EAST, cardsPanel, -40,
+//					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardsPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
 		}
