@@ -11,18 +11,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 import javax.swing.SpringLayout;
-import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewLeftHalfCreateGamePanel;
 

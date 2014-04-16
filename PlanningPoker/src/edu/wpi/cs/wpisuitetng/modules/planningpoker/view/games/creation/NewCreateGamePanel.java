@@ -17,8 +17,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 
 /**

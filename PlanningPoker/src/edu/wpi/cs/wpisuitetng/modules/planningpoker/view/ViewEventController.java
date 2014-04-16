@@ -24,6 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
 
 /**
