@@ -97,7 +97,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		Container newLeftView = new Container();
 		SpringLayout layout = new SpringLayout();
 		newLeftView.setLayout(layout);
-		setMinimumSize(new Dimension(500,500));
+		setMinimumSize(new Dimension(300,300));
 
 		/**
 		 * Create and/or initialize components

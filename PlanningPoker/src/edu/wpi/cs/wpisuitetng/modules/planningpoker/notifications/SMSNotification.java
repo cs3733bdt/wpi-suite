@@ -77,7 +77,8 @@ public class SMSNotification {
 			try {
 				// Waiting 5 seconds then trying again.
 				Thread.sleep(5000);
-				System.err.println("Session.getInstance threw a NullPointerException, trying again...");
+				System.err.println("Session.getInstance "
+						+ "threw a NullPointerException, trying again...");
 				session = Session.getInstance(properties,
 						  new javax.mail.Authenticator() {
 							@Override
@@ -119,7 +120,8 @@ public class SMSNotification {
 					System.err.println(users[i].getName() + " doesn't have an email Stored.");
 			}
 		} else {
-			System.out.println("Project: " + g.getProject().getName() + ", has no users in its team.");
+			System.out.println("Project: " 
+					+ g.getProject().getName() + ", has no users in its team.");
 			System.out.println("No SMS messages were sent.");
 		}
 	}
@@ -135,19 +137,19 @@ public class SMSNotification {
 		Carrier c = user.getCarrier();
 		switch(c) {
 		case ATT:
-			numberWithCarrier = numberWithCarrier +"@txt.att.net";
+			numberWithCarrier += "@txt.att.net";
 			break;
 		case VERIZON:
-			numberWithCarrier = numberWithCarrier +"@vtext.com";
+			numberWithCarrier += "@vtext.com";
 			break;
 		case TMOBILE:
-			numberWithCarrier = numberWithCarrier +"@tmomail.net";
+			numberWithCarrier += "@tmomail.net";
 			break;
 		case SPRINT:
-			numberWithCarrier = numberWithCarrier +"@messaging.sprintpcs.com";
+			numberWithCarrier += "@messaging.sprintpcs.com";
 			break;
 		case USCELLULAR:
-			numberWithCarrier = numberWithCarrier + "@email.uscc.net";
+			numberWithCarrier += "@email.uscc.net";
 			break;
 		default:
 			System.out.print("No carrier.");
@@ -160,7 +162,8 @@ public class SMSNotification {
 	
 	/**
 	 * This method uses the javaMail API library to send an SMS to the user
-	 * This code is inspired by http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
+	 * This code is inspired by 
+	 * http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
 	 * @param session the session with the SMS server
 	 * @param user The user to be messaged.
 	 */
@@ -186,8 +189,11 @@ public class SMSNotification {
 
 				//Sets message text. Doesn't include requirements to keep text message
 				//a reasonable size
-					message.setText("Voting is Required for game: " + g.getName() +
-							"\nGame Ending : " + g.getEndDate().toString());
+				if(!g.isComplete())	{
+					message.setText(generateCreateGameMessage());
+				} else{
+					message.setText(generateEndGameMessage());
+				}
 				
 				try {
 					// Send message
@@ -201,7 +207,8 @@ public class SMSNotification {
 						Transport.send(message);
 						System.out.println("Sent message successfully....");
 					} catch (InterruptedException e1) {
-						System.err.println("Can't connect to host; either internet or host is down");
+						System.err.println("Can't connect to host; "
+								+ "either internet or host is down");
 						System.err.println("Users won't get messages for game: " + g.getName());
 						e1.printStackTrace();
 					}
@@ -210,7 +217,28 @@ public class SMSNotification {
 				mex.printStackTrace();
 			}
 		} else {
-			System.out.println("User: " + user.getName() + ", does not have a phone number stored.");
+			System.out.println("User: " + user.getName() 
+					+ ", does not have a phone number stored.");
 		}
+	}
+	
+	/**
+	 * Used to generate the message text for notifying users of game creation,
+	 * contains games name, and end date.
+	 * @return String representing message to be sent on game creation.
+	 */
+	private String generateCreateGameMessage(){
+		return "Voting is Required for game: " + g.getName() +
+		"\nGame Ending : " + g.getEndDate().toString();
+	}
+	
+	/**
+	 * Used to generate the message text for notifying users of game end,
+	 * contains ...
+	 * @return String representing message to be sent on game end.
+	 */
+	private String generateEndGameMessage(){
+		//TODO
+		return "Needs updating...";
 	}
 }

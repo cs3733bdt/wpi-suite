@@ -458,7 +458,7 @@ public class NewAddRequirementsPanel extends JPanel {
 	}
 
 	public void addRequirement(Requirement requirement){
-		table2.tableModel.addRow(new Object[]{requirement.getName(), requirement.getDescription()});
+		table2.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 	}
 	
 }

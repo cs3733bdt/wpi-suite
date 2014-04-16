@@ -36,7 +36,7 @@ public class NewActiveGamePanel extends JSplitPane implements AbstractModelObser
 		
 		this.setRightComponent(rightHalf);
 		this.setLeftComponent(leftHalf);
-		this.setDividerLocation(600);
+		this.setDividerLocation(400);
 		
 	}
 	

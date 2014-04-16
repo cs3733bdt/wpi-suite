@@ -39,6 +39,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelO
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 /**
  * Sets up the panel for the active games screen, which
  *         has the list of all active games in which the user is playing. When
@@ -226,7 +227,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		 * Adds data to the table
 		 */
 		for (int i = 0; i < game.getRequirements().size(); i++) {
-			table.tableModel.addRow(new Object[] {
+			table.getTableModel().addRow(new Object[] {
 					game.getRequirements().get(i).getName(),
 					game.getRequirements().get(i).getDescription(),
 					game.getRequirements().get(i).displayComplete() });
@@ -241,8 +242,8 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 					int column = target.getSelectedColumn();
 					String selected = (String) target.getValueAt(row, column);
 					for (int i = 0; i < game.getRequirements().size(); i++) {
-						if (selected.equals(game.getRequirements().get(i).getName())
-								|| selected.equals(game.getRequirements().get(i).getDescription())) {
+						if (selected.equals(game.getRequirements().get(i).getName()) || 
+								selected.equals(game.getRequirements().get(i).getDescription())) {
 							if(isEstimatePanelCreated){
 								removeEstimatePanel();
 								updateEstimatePanel(game, game.getRequirements().get(i));
@@ -309,7 +310,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 	
 	public void updateEstimatePanel(Game game, Requirement requirement){
 		blankPanel2.setVisible(false);
-		List<String> deck = new ArrayList<String>(); //this line makes it so the default deck is selected
+		List<String> deck = new ArrayList<String>(); //make it so the default deck is selected
 		rightPanel.add(new EstimatePanel(game, requirement, deck));
 		rightPanel.revalidate();
 		this.revalidate();
@@ -336,6 +337,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 	public void endGameButtonPressed(){
 		active.makeComplete();
 		active.notifyObservers();
+		ViewEventController.getInstance().removeTab(this);
 	}
 	
 	public static void main(String args[]){
@@ -345,7 +347,10 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
         
         List<Requirement> reqs = new ArrayList<Requirement>();
         reqs.add(new Requirement("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-				"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
+				"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
 				
         //Set up the content pane.
         frame.add(new ActiveGamesPanel(new Game("name", "desc", reqs, false, true)));

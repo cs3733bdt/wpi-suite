@@ -25,6 +25,7 @@ import com.sun.mail.util.MailConnectException;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 
 /**
  * This is a class that will send out email notifications
@@ -76,7 +77,8 @@ public class EmailNotification {
 			try {
 				// Waiting 5 seconds then trying again.
 				Thread.sleep(5000);
-				System.err.println("Session.getInstance threw a NullPointerException, trying again...");
+				System.err.println("Session.getInstance "
+						+ "threw a NullPointerException, trying again...");
 				session = Session.getInstance(properties,
 						  new javax.mail.Authenticator() {
 							@Override
@@ -120,14 +122,16 @@ public class EmailNotification {
 					System.err.println(users[i].getName() + " doesn't have an email Stored.");
 			}
 		} else {
-			System.out.println("Project: " + g.getProject().getName() + ", has no users in its team.");
+			System.out.println("Project: " + g.getProject().getName() 
+					+ ", has no users in its team.");
 			System.out.println("No Emails were sent.");
 		}
 	}
 	
 	/**
 	 * This method uses the javaMail API library to send an email to the user
-	 * This code is inspired by http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
+	 * This code is inspired by 
+	 * http://www.mkyong.com/java/javamail-api-sending-email-via-gmail-smtp-example/
 	 * @param session the session with email server
 	 * @param user The user to be emailed.
 	 */
@@ -161,9 +165,12 @@ public class EmailNotification {
 			// of printing null requirements.
 			// Then set the actual message.
 			if (!g.getRequirements().isEmpty()) {
-				message.setText("Game Description: " + g.getDescription() + "\n\n"
-						+ "\nGame Ending : " + g.getEndDate().toString()
-						+ "\nGame Requirements: " + g.getRequirements());
+				if(!g.isComplete()){
+					message.setText(generateCreateGameMessage());
+				} else {
+					message.setText(generateEndGameMessage());
+				}
+				
 			} else {
 				message.setText("There are no current requirements.");
 			}
@@ -188,5 +195,32 @@ public class EmailNotification {
 		} catch (MessagingException mex) {
 			mex.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Used to generate the message text for notifying users of game creation,
+	 * contains game's name, requirements, and end date.
+	 * @return String representing message to be sent on game creation.
+	 */
+	private String generateCreateGameMessage(){
+		String reqs = "";
+		
+		for(Requirement r : g.getRequirements()){
+			reqs = reqs + r.toString();
+		}
+		
+		return "Game Description: " + g.getDescription() + "\n\n"
+				+ "\nGame Ending : " + g.getEndDate().toString()
+				+ "\nGame Requirements: " + reqs;
+	}
+	
+	/**
+	 * Used to generate the message text for notifying users of game end,
+	 * contains ...
+	 * @return String representing message to be sent on game end.
+	 */
+	private String generateEndGameMessage(){
+		//TODO
+		return "Needs updating...";
 	}
 }

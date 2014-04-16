@@ -28,6 +28,8 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.Spring;
+import javax.swing.SpringLayout;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
@@ -45,14 +47,21 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  */
 @SuppressWarnings("serial")
 public class GameTree extends JPanel implements MouseListener{
-	private boolean initialized = false; //Used to check if the GameModel should be generated from the server.
+	private boolean initialized = false; //Check if GameModel should be generated from the server
 	JTree gameTree; // JTree to hold the hierarchy of games
 	JScrollPane gameTreeScroll; // scrollPane to put the tree in
-	DefaultMutableTreeNode gameNode = new DefaultMutableTreeNode("Games"); // makes the master node to hold the other 3
-	DefaultMutableTreeNode inactive = new DefaultMutableTreeNode("Pending Games"); // makes the pending games node
-	DefaultMutableTreeNode active = new DefaultMutableTreeNode("Active Games"); //Makes the active games node
-	DefaultMutableTreeNode history = new DefaultMutableTreeNode("Game History"); //Makes the games history node
+	DefaultMutableTreeNode gameNode = 
+			new DefaultMutableTreeNode("Games"); //Make master node hold the other 3
+	DefaultMutableTreeNode inactive = 
+			new DefaultMutableTreeNode("Pending Games"); //Make pending games node
+	DefaultMutableTreeNode active = 
+			new DefaultMutableTreeNode("Active Games"); //Make active games node
+	DefaultMutableTreeNode history = 
+			new DefaultMutableTreeNode("Game History"); //Make games history node
 	
+	boolean isInactiveCollapsed = true;
+	boolean isActiveCollapsed = true;
+	boolean isHistoryCollapsed = true;
 	
 	/**
 	 * Constructor for a GameTree
@@ -60,7 +69,7 @@ public class GameTree extends JPanel implements MouseListener{
 	public GameTree(){
 		super(new GridBagLayout());
 		ViewEventController.getInstance().setGameOverviewTree(this);
-		this.refresh();
+		refresh();
 	}
 
 	/**
@@ -68,20 +77,25 @@ public class GameTree extends JPanel implements MouseListener{
 	 * Used when the list of games is updated or changed.
 	 */
 	public void refresh(){
-		if(this.getComponentCount() != 0){
-			this.remove(0);
+		if(getComponentCount() != 0){			
+			isInactiveCollapsed = gameTree.isCollapsed(new TreePath(inactive.getPath()));
+			isActiveCollapsed = gameTree.isCollapsed(new TreePath(active.getPath()));			
+			isHistoryCollapsed = gameTree.isCollapsed(new TreePath(history.getPath()));
+			remove(0);
 		}
 		
 		active.removeAllChildren();
 		inactive.removeAllChildren();
 		history.removeAllChildren();
 		
-		List<Game> gameList = sortGames(GameModel.getInstance().getGames()); //retrive the list of all of the games
+		List<Game> gameList = 
+				sortGames(GameModel.getInstance().getGames());//retrieve list of all games
 		System.out.println("Numb Games: " + gameList.size());
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
-			if(!game.isComplete()){ //If the game is not complete then add it to the active game dropdown
+			if(!game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
+
 				if(game.isActive()){
 					active.add(newGameNode);
 				}
@@ -96,34 +110,64 @@ public class GameTree extends JPanel implements MouseListener{
 		gameNode.add(inactive);
 		gameNode.add(active);
 		gameNode.add(history);
+		System.out.println("Numb Games: " + gameList.size());
+
+		
 		gameTree = new JTree(gameNode);
 		
 		gameTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		gameTree.setToggleClickCount(0);
 		gameTree.addMouseListener(this);
-	
-		this.setLayout(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
 		
-		c.fill = GridBagConstraints.BOTH;
-		c.anchor = GridBagConstraints.CENTER;
-		//c.weighty = 1;
-		c.weightx = 1;
-		c.gridx = 1;
-		c.gridy = 1;
 		gameTreeScroll = new JScrollPane(gameTree);
 		gameTreeScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);		
 		gameTreeScroll.setPreferredSize(new Dimension(190, 500));
 		
+
+		SpringLayout layout = new SpringLayout();
+		setLayout(layout);
+	  
+		SpringLayout.Constraints  cons;
+        cons = layout.getConstraints(gameTreeScroll);
+        cons.setX(Spring.constant(0));
+        cons.setY(Spring.constant(0));
+        cons.setWidth(Spring.scale(layout.getConstraint(SpringLayout.EAST, this), .995f)); // must be as close as possible to 1f without being 1f. 1f breaks it for some reason
+        cons.setHeight(layout.getConstraint(SpringLayout.SOUTH, this));
 		
-	    this.add(gameTreeScroll, c);
+		add(gameTreeScroll);
 	    ViewEventController.getInstance().setGameOverviewTree(this);
+	    
+	    
+	    if(isInactiveCollapsed){
+	    	gameTree.collapsePath(new TreePath(inactive.getPath()));
+	    }
+	    else{
+	    	gameTree.expandPath(new TreePath(inactive.getPath()));
+	    }
 	   
-	    this.repaint();
+	    if(isActiveCollapsed){
+	    	gameTree.collapsePath(new TreePath(active.getPath()));
+	    }
+	    else{
+	    	gameTree.expandPath(new TreePath(active.getPath()));
+	    }
+	    	    
+	    if(isHistoryCollapsed){
+	    	gameTree.collapsePath(new TreePath(history.getPath()));
+	    }
+	    else{
+	    	gameTree.expandPath(new TreePath(history.getPath()));
+	    }
+	    
+	    
+	    revalidate();
+	    gameTree.revalidate();
+	    gameTreeScroll.revalidate();
+	    repaint();
 	    gameTree.repaint();
 		gameTreeScroll.repaint();
-	    this.validate();
+	    validate();
 		
 	}
 	
@@ -171,11 +215,14 @@ public class GameTree extends JPanel implements MouseListener{
 			}
 			if(treePath != null){
 				System.out.println("Tree Path valid");
-				DefaultMutableTreeNode node = (DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
+				DefaultMutableTreeNode node = 
+						(DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
 				if(node != null) {
-					if(node.getUserObject() instanceof Game){ 		//Make sure that this is actually a game
-						System.out.println("Setting view to game: " + ((Game)node.getUserObject()).toString());
-						if(((Game)node.getUserObject()).isActive() && (!((Game)node.getUserObject()).isComplete())){
+					if(node.getUserObject() instanceof Game){ //Confirm that this is a game
+						System.out.println("Setting view to game: " + 
+								((Game)node.getUserObject()).toString());
+						if(((Game)node.getUserObject()).isActive() &&
+								(!((Game)node.getUserObject()).isComplete())){
 							ViewEventController.getInstance().joinGame((Game)node.getUserObject());
 						}
 						else if(!((Game)node.getUserObject()).isComplete()){
