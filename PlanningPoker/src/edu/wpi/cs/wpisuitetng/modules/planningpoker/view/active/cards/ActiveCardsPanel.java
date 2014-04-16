@@ -142,6 +142,7 @@ public List<CardButton> getCardButtonArray() {
 }
 /**
  * adds an element to the array of buttons to be remembered when the "0?" button is unpress
+ * @param elt element to be added
  **/
 public void memoryArrayAddElt(int elt) {
 	memoryArray.add(elt);
@@ -149,6 +150,7 @@ public void memoryArrayAddElt(int elt) {
 
 /**
  * getter for size of the memory array
+ * @return size of the memory array
  **/
 public int memoryArrayGetSize() {
 	return memoryArray.size();

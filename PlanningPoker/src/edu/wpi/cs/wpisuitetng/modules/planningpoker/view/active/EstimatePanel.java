@@ -85,9 +85,9 @@ public class EstimatePanel extends JPanel{
 	/* End field Border Definitions */
 	JTextArea counter = new JTextArea(); 
     
-    /*
+    /**
 	 * If the ArrayList passed in is empty it will use the default deck
-	 */
+	 **/
 	public EstimatePanel(Game game, Requirement requirement, List<String> deck2){ //add a deck of cards as a parameter
 
 		super(new GridBagLayout());
@@ -332,9 +332,9 @@ public class EstimatePanel extends JPanel{
 //		System.out.println(sum);
 //	}
 	
-	/*
+	/**
 	 * Clicks all the buttons. Used for testing
-	 */
+	 **/
 	public void doClicks() {
 		for (int i = 0; i < JToggleButtonList.size(); i++) {
 			JToggleButtonList.get(i).doClick();
@@ -349,12 +349,15 @@ public class EstimatePanel extends JPanel{
 		return estText;
 	}
 	
+	/**
+	 * Updates the sum of the estimate
+	 */
 	public void updateSum() {
 		sum = cardsPanel.getSum();
 		counterLabel.setText("Your current estimate total: " + sum);
 	}
 	
-	/*
+	/**
 	 * Returns the sum of all the cards
 	 */
 	public int getMaxSum() {
