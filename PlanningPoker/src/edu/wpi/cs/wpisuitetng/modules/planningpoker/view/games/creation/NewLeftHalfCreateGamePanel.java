@@ -64,8 +64,6 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	
 	/** Shows the names of the errors */
 	private ErrorLabel errorField;
-
-	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
 	
 	private Date endDate;
 	
@@ -124,7 +122,11 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		JPanel buttonPanel = new JPanel();								//Creates a panel for the buttons
 		buttonPanel.add(saveGameButton);								//Adds the save button to the panel
 		buttonPanel.add(launchGameButton);								//Adds the launch button to the panel
-		buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel
+		//buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel
+		
+		errorField = new ErrorLabel();
+		errorField.setMinimumSize(new Dimension(150, 25));
+		errorField.setForeground(Color.RED);
 		
 		/**
 		 * Add components to container
@@ -136,6 +138,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		leftView.add(estimateSelectionPanel);			//Adds the panel with the radio buttons to the container
 		leftView.add(endDateField);						//Adds the end date field to the container
 		leftView.add(buttonPanel);						//Adds the panel with the buttons to the container
+		leftView.add(errorField);						//Adds stuff
 		
 		/**
 		 * Adjust layout constraints to correctly setup the layout of each component
@@ -162,14 +165,17 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		layout.putConstraint(SpringLayout.NORTH, endDateField, 10, SpringLayout.SOUTH, estimateSelectionPanel);	//Adds the end date field underneath the radio buttons panel
 		//layout.putConstraint(SpringLayout.SOUTH, endDateField, 50, SpringLayout.NORTH, buttonPanel);	
 		layout.putConstraint(SpringLayout.WEST, endDateField, 5, SpringLayout.WEST, leftView);					//Makes sure the left side of the panel stretches with the left side of the container
-		layout.putConstraint(SpringLayout.EAST, endDateField, 5, SpringLayout.EAST, leftView);					//Makes sure the right side of the panel stretches with the right side of the container
+		layout.putConstraint(SpringLayout.EAST, endDateField, -5, SpringLayout.EAST, leftView);					//Makes sure the right side of the panel stretches with the right side of the container
         
-		layout.putConstraint(SpringLayout.SOUTH, buttonPanel, -10, SpringLayout.SOUTH, leftView);				//Adds the button panel to the bottom of the container
+		layout.putConstraint(SpringLayout.SOUTH, buttonPanel, -20, SpringLayout.SOUTH, leftView);				//Adds the button panel to the bottom of the container
 		layout.putConstraint(SpringLayout.WEST, buttonPanel, 5, SpringLayout.WEST, leftView);					//Makes sure the left side of the panel stretches with the left side of the container
 		layout.putConstraint(SpringLayout.EAST, buttonPanel, 5, SpringLayout.EAST, leftView);					//Makes sure the right side of the panel stretches with the right side of the container
 		
-		setMinimumSize(new Dimension(450, 110));			//Sets the minimum size of the left half view
-		leftView.setPreferredSize(new Dimension(410, 410));		//Sets the size of the view
+		layout.putConstraint(SpringLayout.NORTH, errorField, 3, SpringLayout.SOUTH, buttonPanel);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorField, 5, SpringLayout.HORIZONTAL_CENTER, leftView);
+		
+		setMinimumSize(new Dimension(333, 115));			//Sets the minimum size of the left half view
+		leftView.setPreferredSize(new Dimension(410, 420));		//Sets the size of the view
 		
 		revalidate();
 		repaint();
@@ -263,26 +269,12 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		boolean isDescriptionValid = false;
 		boolean isEndDateValid = false;
 		
+		isEndDateValid = getEndDateField().validateField(errorField);
+		
+		isDescriptionValid = getBoxDescription().validateField(errorField);
+
 		isNameValid = getBoxName().validateField(errorField);
 		
-		//BEGIN DESCRIPTION BOX VALDATION
-		isDescriptionValid = getBoxDescription().validateField(errorField);
-		
-		
-		//BEGIN END DATE VALIDATION
-		endDate = endDateField.getEndDate();
-		Calendar endCalendar = new GregorianCalendar();
-		Calendar currentCalendar = new GregorianCalendar();
-		endCalendar.setTime(endDate);
-		currentCalendar.setTime(new Date());
-		
-		if(endDate.compareTo(new Date()) >= 0) {
-			isEndDateValid = true;
-		} else {
-			isEndDateValid = false;
-			displayError("End Date and time must be set later than the current date");
-		}
-
 		return (isNameValid && isDescriptionValid && isEndDateValid);
 	}
 	

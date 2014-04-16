@@ -97,7 +97,11 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		Container newLeftView = new Container();
 		SpringLayout layout = new SpringLayout();
 		newLeftView.setLayout(layout);
-		setMinimumSize(new Dimension(300,300));
+		setMinimumSize(new Dimension(310, 110));			//Sets the minimum size of the left half view
+		newLeftView.setPreferredSize(new Dimension(300, 518));		//Sets the size of the view
+		
+		revalidate();
+		repaint();
 
 		/**
 		 * Create and/or initialize components
@@ -151,7 +155,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 
 		// Creates a scroll pane to hold the text area for end game note
 		notePane = new JScrollPane(endGameManuallyNote);
-		notePane.setPreferredSize(new Dimension(200, 200));
+		notePane.setPreferredSize(new Dimension(200, 133));
 
 		// Creates end game button
 		endGameManuallyButton = new JButton();
