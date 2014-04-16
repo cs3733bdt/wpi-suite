@@ -46,9 +46,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
     private JButton addReqButton = new JButton("Add Requirement");
    
     public NewRightHalfCreateGamePanel(NewCreateGamePanel createGamePanel){
-       
-    	
     	this.createGamePanel = createGamePanel;
+    	build();
+    	buildFields();
+    }
+    
+    
+    private void build(){
         Container rightView = new Container();                 //Creates the container for everything in the view
         SpringLayout layout = new SpringLayout();             //Creates the layout to be used: Spring Layout
         rightView.setLayout(layout);                        //Sets the container to have the spring layout       
@@ -270,6 +274,15 @@ public class NewRightHalfCreateGamePanel extends JScrollPane {
 		String[] columnNames2 = {"Requirement", "Description"};
 		Object[][] data2 = {};
 		return new ActiveGamesTable(data2, columnNames2);
+	}
+	
+	public void buildFields(){
+		if(createGamePanel.getGame() != null){
+			for(int i = 0; i < createGamePanel.getGame().getRequirements().size(); i++){
+				addRequirement(createGamePanel.getGame().getRequirements().get(i));
+			}
+		}
+		
 	}
 	
 	public void addRequirement(Requirement requirement){
