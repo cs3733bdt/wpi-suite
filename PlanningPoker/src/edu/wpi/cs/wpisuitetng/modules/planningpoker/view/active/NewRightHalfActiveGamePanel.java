@@ -110,7 +110,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		// Label and accumulate sum
 		counterLabel = new JLabel("Your current estimate total: " + 0);
 		sum = 0;
-		JToggleButtonList = cardsPanel.getCardButtonArray();
+		//JToggleButtonList = cardsPanel.getCardButtonArray();
 
 		submitButton = new JButton();
 		submitButton.setSize(10, 5);
@@ -125,8 +125,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		rightView.add(nameTextField);
 		rightView.add(desLabel);
 		rightView.add(descriptionPanel);
-		rightView.add(cardsPanel);
-		rightView.add(counterLabel);
+		//rightView.add(cardsPanel);
+		//rightView.add(counterLabel);
 		rightView.add(submitButton);
 
 		layout.putConstraint(SpringLayout.WEST, nameLabel, 40,
@@ -167,7 +167,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, descriptionPanel, 0,
 				SpringLayout.SOUTH, desLabel);
-
+/*
 		layout.putConstraint(SpringLayout.WEST, cardsPanel, 40,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.EAST, cardsPanel, 40,
@@ -181,7 +181,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, counterLabel, 10,
 				SpringLayout.SOUTH, cardsPanel);
-
+*/
 		layout.putConstraint(SpringLayout.WEST, submitButton, 40,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.SOUTH, submitButton, -20,
