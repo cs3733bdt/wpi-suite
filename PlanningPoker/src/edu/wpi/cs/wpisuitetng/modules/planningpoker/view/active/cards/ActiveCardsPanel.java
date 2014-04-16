@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
 /**
- * TODO: add documentation
+ * creates the panel that displays all of the buttons and adds a clear button
  * @author Bobby Drop Tables
  *
  */
@@ -95,8 +95,8 @@ public int getCount() {
 }
 
 /**
- * Decrease total sum by amount entered
- * @param cardValue
+ * Increase total sum by amount entered
+ * @param cardValue the amount to be added
  */
 public void addToCardSum(int cardValue) {
 	sum += cardValue;
@@ -106,7 +106,7 @@ public void addToCardSum(int cardValue) {
 
 /**
  * Decrease total sum by amount entered
- * @param cardValue
+ * @param cardValue the amount to be subtracted
  */
 public void decToCardSum(int cardValue) {
 	sum -= cardValue;
@@ -114,7 +114,7 @@ public void decToCardSum(int cardValue) {
 	System.out.println(sum);
 }
 
-/*
+/**
  * Clicks all the buttons. Used for testing
  */
 public void doClicks() {
@@ -124,7 +124,8 @@ public void doClicks() {
 }
 
 /**
- * @return sum of all the cards
+ * gets the total of all the cards in the deck
+ * @return sum of all the cards in deck
  */
 public int getMaxSum() {
 	int sum = 0;
@@ -134,10 +135,18 @@ public int getMaxSum() {
 	return sum;
 }
 
+/**
+ * getter for the sum
+ * @return the sum of the cards
+ */
 public int getSum() {
 	return sum;
 }
 
+/**
+ * getter for all of the buttons
+ * @return a list of buttons in the panel
+ */
 public List<CardButton> getCardButtonArray() {
 	return JToggleButtonList; 
 }
@@ -166,6 +175,8 @@ public void memoryArrayClear() {
 
 /**
  * adds index of the button to be remembered to the memory array
+ * @param elt element to be searched for in the memory array
+ * @return the index of the element in the memory array
  **/
 public int memoryArrayGetElt(int elt) {
 	return memoryArray.get(elt);

@@ -23,15 +23,24 @@ import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
 
+/**
+ * creates all of the buttons to be used for the estimation
+ * @author Bobby Drop Tables
+ *
+ */
 public class CardButton extends JToggleButton implements Accessible {
 	JToggleButton button;
 	List<String> deck;
 	ActiveCardsPanel panel;
 
-	public CardButton(int cardNum, 
-					List<String> passedDeck, 
-					ActiveCardsPanel passedCardsPanel, 
-					EstimatePanel passedEstimatePanel){
+	/**
+	 * creates the buttons based on the deck
+	 * @param cardNum the index of the card
+	 * @param passedDeck the deck of cards to be used
+	 * @param passedCardsPanel the panel that displays the cards
+	 * @param passedEstimatePanel the panel that displays the estimates
+	 */
+	public CardButton(int cardNum, List<String> passedDeck, ActiveCardsPanel passedCardsPanel, EstimatePanel passedEstimatePanel){
 		deck = passedDeck;
 		panel = passedCardsPanel;
 		
@@ -67,6 +76,10 @@ public class CardButton extends JToggleButton implements Accessible {
 		panel.add(this);
 	}
 
+	/**
+	 * getter for the value of the card
+	 * @return the value of the card
+	 */
 	public String getValue() {
 		return this.getText();
 	}
