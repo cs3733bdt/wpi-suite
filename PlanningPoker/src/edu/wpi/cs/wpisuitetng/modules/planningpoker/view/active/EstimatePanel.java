@@ -87,15 +87,8 @@ public class EstimatePanel extends JPanel{
     
     /**
 	 * If the ArrayList passed in is empty it will use the default deck
-<<<<<<< HEAD
-	 */
-	public EstimatePanel(Game game, 
-				Requirement requirement, 
-				List<String> deck2){ //add a deck of cards as a parameter
-=======
 	 **/
 	public EstimatePanel(Game game, Requirement requirement, List<String> deck2){ //add a deck of cards as a parameter
->>>>>>> e117535b264ea3c3ab0c986fb5be2503858ea260
 
 		super(new GridBagLayout());
 

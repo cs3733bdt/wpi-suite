@@ -88,21 +88,14 @@ public class GameTree extends JPanel implements MouseListener{
 		inactive.removeAllChildren();
 		history.removeAllChildren();
 		
-<<<<<<< HEAD
 		List<Game> gameList = 
 				sortGames(GameModel.getInstance().getGames());//retrieve list of all games
-=======
-		List<Game> gameList = sortGames(GameModel.getInstance().getGames()); //retrieve the list of all of the games
->>>>>>> e117535b264ea3c3ab0c986fb5be2503858ea260
 		System.out.println("Numb Games: " + gameList.size());
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
-<<<<<<< HEAD
-			if(!game.isComplete()){ //If game is not complete, add it to the active game drop down
-=======
 			if(!game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
->>>>>>> e117535b264ea3c3ab0c986fb5be2503858ea260
+
 				if(game.isActive()){
 					active.add(newGameNode);
 				}
