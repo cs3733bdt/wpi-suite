@@ -14,11 +14,15 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 import java.awt.Color;
 
 import javax.swing.BorderFactory;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-public class DescriptionJTextField extends JTextArea implements IDataField {
+/**
+ * TODO: add documentation
+ * @author Bobby Drop Tables
+ *
+ */
+public class DescriptionJTextField extends JTextField implements IDataField {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);

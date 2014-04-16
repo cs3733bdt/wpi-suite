@@ -47,12 +47,14 @@ public class AddEndDatePanel extends JPanel {
 	 * @param view
 	 */
 	public AddEndDatePanel(final CreateGamePanel view){
+		dateMaker = new GregorianCalendar();
+		dateMaker.set(Calendar.DAY_OF_YEAR, dateMaker.get(Calendar.DAY_OF_YEAR)+1);
+		setDate(dateMaker.getTime());
 		this.add(endDateSelection);
 		this.add(datePicker);
 		this.add(hourSelection);
 		this.add(minuteSelection);
 		this.add(AmPmSelection);
-		dateMaker = new GregorianCalendar();
 	}
 	
 	/**
@@ -62,7 +64,7 @@ public class AddEndDatePanel extends JPanel {
 		endDate = datePicker.getDate();
 		dateMaker.setTime(endDate);
 		dateMaker.set(Calendar.HOUR, getHours());
-		dateMaker.set(Calendar.MINUTE, getMinutes());		
+		dateMaker.set(Calendar.MINUTE, getMinutes());
 		endDate = dateMaker.getTime();
 		return endDate;
 	}

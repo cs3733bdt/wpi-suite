@@ -26,8 +26,7 @@ import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextField;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
@@ -41,7 +40,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 	private JLabel gameNameLabel;
 	private NameJTextField gameName;
 	private JLabel gameDescLabel;
-	private DescriptionJTextField gameDesc;
+	private JTextArea gameDesc;
 	private JLabel gameCreatorLabel;
 	private JLabel gameEndDateLabel;
 	private JLabel gameCreatorName;
@@ -67,7 +66,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 	 * Method to notify observers and set game complete if end game is pressed
 	 */
 	public void endGameManuallyButtonPressed(){
-		active.setComplete();
+		active.makeComplete();
 		active.notifyObservers();
 		System.out.println("Game ended");
 	}
@@ -107,7 +106,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 
 		// Initializes and sets properties of game name label
 		gameName = new NameJTextField(30);						
-		gameName.setText(active.getName());						
+		gameName.setText(active.getName());				
 		gameName.setBorder(defaultBorder);						
 		gameName.setEditable(false); 
 		gameName.setBackground(Color.WHITE);
@@ -116,7 +115,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		gameDescLabel = new JLabel("Description");				
 
 		// Initializes and sets game description display area
-		gameDesc = new DescriptionJTextField();
+		gameDesc = new JTextArea();
 		gameDesc.setText(active.getDescription());
 		gameDesc.setEditable(false);
 		gameDesc.setBorder(defaultBorder);
