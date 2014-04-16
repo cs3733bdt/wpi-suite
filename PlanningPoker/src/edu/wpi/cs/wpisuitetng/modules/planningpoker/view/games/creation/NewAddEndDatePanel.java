@@ -11,22 +11,28 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
+import java.awt.Color;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import javax.swing.BorderFactory;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXDatePicker;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
 /**
  * This is where the graphical elements and calculation are done for 
  * allowing users to select an end date for their Planning Poker games
  * @author BDT
  */
-public class NewAddEndDatePanel extends JPanel {
+public class NewAddEndDatePanel extends JPanel implements IDataField{
 
 	Calendar dateMaker;
 	Date endDate;
@@ -40,6 +46,9 @@ public class NewAddEndDatePanel extends JPanel {
 	private final JComboBox<String> minuteSelection = new JComboBox<>(minuteArray);
 	private final JComboBox<String> AmPmSelection = new JComboBox<>(AmPmArray);
 	private final JLabel endDateSelection = new JLabel("Select End Date:");
+	
+	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
+
 	
 	/**
 	 * Only constructor for AddEndDatePanel
@@ -180,5 +189,32 @@ public class NewAddEndDatePanel extends JPanel {
 		setHour(oldHour);
 		setMinute(oldMinute);
 		setAMPM(oldAMPM);		
+	}
+
+	@Override
+	public boolean validateField(IErrorView warningField) {
+		// TODO Auto-generated method stub
+		boolean isEndDateValid = false;
+		endDate = getEndDate();
+		Calendar endCalendar = new GregorianCalendar();
+		Calendar currentCalendar = new GregorianCalendar();
+		endCalendar.setTime(endDate);
+		currentCalendar.setTime(new Date());
+		
+		if(endDate.compareTo(new Date()) >= 0) {
+			isEndDateValid = true;
+		} else {
+			isEndDateValid = false;
+			setBorder(errorBorder);
+			warningField.setText("End Date and time must be set later than the current date");
+		}
+		
+		return isEndDateValid;
+	}
+
+	@Override
+	public boolean hasChanges() {
+		// TODO Auto-generated method stub
+		return false;
 	}	
 }
