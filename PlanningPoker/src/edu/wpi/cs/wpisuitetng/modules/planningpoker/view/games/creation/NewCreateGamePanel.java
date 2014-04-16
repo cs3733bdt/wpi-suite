@@ -50,7 +50,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		
 		this.setLeftComponent(leftHalf);
 		this.setRightComponent(rightHalf);
-		rightHalf.setMinimumSize(new Dimension(500, 500));
+		rightHalf.setMinimumSize(new Dimension(333, 500));
 		this.setDividerLocation(420);
 		
 		revalidate();

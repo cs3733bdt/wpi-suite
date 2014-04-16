@@ -169,7 +169,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		layout.putConstraint(SpringLayout.NORTH, errorField, 3, SpringLayout.SOUTH, buttonPanel);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorField, 5, SpringLayout.HORIZONTAL_CENTER, leftView);
 		
-		setMinimumSize(new Dimension(450, 115));			//Sets the minimum size of the left half view
+		setMinimumSize(new Dimension(333, 115));			//Sets the minimum size of the left half view
 		leftView.setPreferredSize(new Dimension(410, 420));		//Sets the size of the view
 		
 		revalidate();
