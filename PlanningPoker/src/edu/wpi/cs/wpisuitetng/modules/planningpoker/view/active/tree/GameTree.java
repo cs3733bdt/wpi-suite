@@ -57,8 +57,6 @@ public class GameTree extends JPanel implements MouseListener{
 	boolean isActiveCollapsed = true;
 	boolean isHistoryCollapsed = true;
 	
-	int inactiveCount = 0;
-	int activeCount = 0;
 	/**
 	 * Constructor for a GameTree
 	 */
@@ -74,17 +72,10 @@ public class GameTree extends JPanel implements MouseListener{
 	 */
 	public void refresh(){
 		if(getComponentCount() != 0){			
-			isInactiveCollapsed = gameTree.isCollapsed(1);
-			inactiveCount += 2;
-			
-			isActiveCollapsed = gameTree.isCollapsed(inactiveCount);
-			activeCount += inactiveCount + 1;
-			
-			isHistoryCollapsed = gameTree.isCollapsed(activeCount);
+			isInactiveCollapsed = gameTree.isCollapsed(new TreePath(inactive.getPath()));
+			isActiveCollapsed = gameTree.isCollapsed(new TreePath(active.getPath()));			
+			isHistoryCollapsed = gameTree.isCollapsed(new TreePath(history.getPath()));
 			remove(0);
-			
-			inactiveCount = 0;
-			activeCount = 0;
 		}
 		
 		active.removeAllChildren();
@@ -99,11 +90,9 @@ public class GameTree extends JPanel implements MouseListener{
 			if(!game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
 				if(game.isActive()){
 					active.add(newGameNode);
-					activeCount++;
 				}
 				else if(game.isCreator(ConfigManager.getConfig().getUserName())){
 					inactive.add(newGameNode);
-					inactiveCount++; 
 				}
 			} else { //If the game is complete then put it in the history
 				history.add(newGameNode);
@@ -139,34 +128,25 @@ public class GameTree extends JPanel implements MouseListener{
 	    
 	    
 	    if(isInactiveCollapsed){
-	    	gameTree.collapseRow(1);
+	    	gameTree.collapsePath(new TreePath(inactive.getPath()));
 	    }
 	    else{
-	    	gameTree.expandRow(1);	
+	    	gameTree.expandPath(new TreePath(inactive.getPath()));
 	    }
 	   
-	    inactiveCount += 2;
-	    	    
 	    if(isActiveCollapsed){
-	    	gameTree.collapseRow(inactiveCount);
+	    	gameTree.collapsePath(new TreePath(active.getPath()));
 	    }
 	    else{
-	    	gameTree.expandRow(inactiveCount);	
+	    	gameTree.expandPath(new TreePath(active.getPath()));
 	    }
-	    
-	    activeCount += inactiveCount + 1;
 	    	    
 	    if(isHistoryCollapsed){
-	    	gameTree.collapseRow(activeCount);
+	    	gameTree.collapsePath(new TreePath(history.getPath()));
 	    }
 	    else{
-	    	gameTree.expandRow(activeCount);	
+	    	gameTree.expandPath(new TreePath(history.getPath()));
 	    }
-	    
-	    inactiveCount = 0;
-		activeCount = 0;
-
-	    
 	    
 	    
 	    revalidate();
