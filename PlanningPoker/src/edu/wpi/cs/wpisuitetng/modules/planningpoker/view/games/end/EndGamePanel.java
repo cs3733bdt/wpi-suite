@@ -39,7 +39,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requireme
  * used to display the completed game and requirements within it
  * @author TomPaolillo
  */
-public class EndGamePanel extends JScrollPane implements AbstractModelObserver{
+public class EndGamePanel extends JScrollPane implements AbstractModelObserver, IEndedGamePanel{
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
 	private final Game active;

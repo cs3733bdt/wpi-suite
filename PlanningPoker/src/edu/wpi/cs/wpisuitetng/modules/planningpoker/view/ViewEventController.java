@@ -34,9 +34,7 @@ public class ViewEventController {
 	private MainView main = null;
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
-	private ArrayList<ICreateGamePanel> listOfCreateGamePanels = new ArrayList<ICreateGamePanel>();
-	private ArrayList<IActiveGamePanel> listOfActiveGamePanels = new ArrayList<IActiveGamePanel>();
-	private ArrayList<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
+	
 	
 	/**
 	 * Default constructor for the ViewEventController. Is protected to prevent instantiation.
@@ -78,7 +76,6 @@ public class ViewEventController {
 	 * that panel, and switches to that new panel
 	 */
 	public void createGame() {
-		//CreateGamePanel newGame = new CreateGamePanel();
 		/**
 		 * REMOVE ABOVE LINE (CreateGamePanel newGame = new CreateGamePanel();)
 		 * AND ADD FOLLOWING LINE (NewCreateGamePanel newGame = new NewCreateGamePanel();)
@@ -97,30 +94,7 @@ public class ViewEventController {
 	 * @param game The game to be added
 	 */
 	public void editGame(Game game) {
-		NewCreateGamePanel newGame = new NewCreateGamePanel(game);
-		
-		//FIND THE CURRENT EDIT GAME PANEL
-		for(ICreateGamePanel gameSearch : listOfCreateGamePanels){
-			if(game.equals(gameSearch.getGame())){			//If found then make it the active
-				main.getTabbedView().setSelectedComponent((Component)gameSearch);
-				main.invalidate();
-				main.repaint();
-				return;
-			}
-		}
-		
-		// SET THE TAB TEXT 
-		// Makes the game name not be longer than 6 characters
-		StringBuilder tabName = new StringBuilder();
-		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
-		tabName.append(game.getName().subSequence(0, subStringLength));
-		if (game.getName().length() > 6)
-			tabName.append("...");
-		main.getTabbedView().addTab(tabName.toString(), newGame);
-
-		listOfCreateGamePanels.add((ICreateGamePanel) newGame);
-
-		main.getTabbedView().setSelectedComponent(newGame);
+		main.getTabbedView().editGame(game);
 		main.invalidate();
 		main.repaint();
 	}
@@ -131,7 +105,7 @@ public class ViewEventController {
 	 * @param game
 	 */
 	public void updateGame(Game game, boolean serverError){
-		CreateGamePanel aGame = new CreateGamePanel(game, serverError);
+		NewCreateGamePanel aGame = new NewCreateGamePanel(game, serverError);
 		main.getTabbedView().addTab("New Game", null, aGame, "New Game");
 		main.invalidate();
 		main.repaint();
@@ -144,68 +118,18 @@ public class ViewEventController {
 	 * @param game Game to be joined
 	 */
 	public void joinGame(Game game){
-		//Attempt to find the game in the active panels list
-		for(IActiveGamePanel gameSearch : listOfActiveGamePanels){
-			if(game.equals(gameSearch.getGame())){
-				main.getTabbedView().setSelectedComponent((Component)gameSearch);
-				main.invalidate();
-				main.repaint();
-				return; //The game has been found and made active. Done!
-			}
-		}
-		
-		//Game not found in the active game list
-		NewActiveGamePanel viewGame = new NewActiveGamePanel(game);
-		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
-		
-		
-		//Makes the game name not be longer than 6 charaters
-		StringBuilder tabName = new StringBuilder();
-		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
-		tabName.append(game.getName().subSequence(0,subStringLength));
-		if(game.getName().length() > 6) tabName.append("...");
-		main.getTabbedView().addTab(tabName.toString(),  viewGame);
-		
-		
-		listOfActiveGamePanels.add(viewGame);
-		
-		main.getTabbedView().setSelectedComponent(viewGame);
+		main.getTabbedView().joinGame(game);
 		main.invalidate();
 		main.repaint();
-		
 	}
 	
 	/**
-	 * ends the game when activated
+	 * Shows the ended game.
+	 * Displays the End Game Panel
 	 * @param game Game to be searched for
 	 */
 	public void viewEndGame(Game game){
-		//Attempt to find the game in the active panels list
-		for(EndGamePanel gameSearch : listOfEndGamePanels){
-			if(game.equals(gameSearch.getGame())){
-				main.getTabbedView().setSelectedComponent(gameSearch);
-				main.invalidate();
-				main.repaint();
-				return; //The game has been found and made active. Done!
-			}
-		}
-		
-		//Game not found in the active game list
-		EndGamePanel viewGame = new EndGamePanel(game);
-		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
-		
-		
-		//Makes the game name not be longer than 6 charaters
-		StringBuilder tabName = new StringBuilder();
-		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
-		tabName.append(game.getName().subSequence(0,subStringLength));
-		if(game.getName().length() > 6) tabName.append("...");
-		main.getTabbedView().addTab(tabName.toString(),  viewGame);
-		
-		
-		listOfEndGamePanels.add(viewGame);
-		
-		main.getTabbedView().setSelectedComponent(viewGame);
+		main.getTabbedView().viewEndGame(game);
 		main.invalidate();
 		main.repaint();
 		
@@ -218,49 +142,14 @@ public class ViewEventController {
 	 * @param comp the component to remove
 	 */
 	public void removeTab(JComponent comp){
-		if (comp instanceof ICreateGamePanel){
-			if(!((ICreateGamePanel) comp).readyToRemove()) return;
-			listOfCreateGamePanels.remove(comp);
-		}
-		if (comp instanceof IActiveGamePanel) {
-			if(!((IActiveGamePanel) comp).readyToRemove()) return;
-			this.listOfActiveGamePanels.remove(comp);
-		}
-		main.getTabbedView().remove(comp);
+		main.getTabbedView().removeTab(comp);
 	}
 	
 	/**
 	 * Closes all of the tabs besides the overview tab in the main view.
 	 */
 	public void closeAllTabs() {
-
-		int tabCount = main.getTabbedView().getTabCount();
-		
-		System.out.println("THE TAB COUNT IS:" + tabCount);
-
-		for(int i = tabCount - 1; i > 0; i--)
-		{
-			Component toBeRemoved = main.getTabbedView().getComponentAt(i);
-			
-			System.out.println(toBeRemoved.getClass().getName());
-
-			if(toBeRemoved instanceof IActiveGamePanel)
-			{
-				if(!((IActiveGamePanel)toBeRemoved).readyToRemove()) continue;
-				this.listOfActiveGamePanels.remove(toBeRemoved);
-			}
-			
-
-			if(toBeRemoved instanceof ICreateGamePanel)
-			{
-				if(!((ICreateGamePanel)toBeRemoved).readyToRemove()) continue;
-				listOfCreateGamePanels.remove(toBeRemoved);
-			}
-
-			main.getTabbedView().removeTabAt(i);
-		}
-
-		main.repaint();
+		main.getTabbedView().closeAllTabs();
 	}
 	
 	/**
@@ -269,26 +158,7 @@ public class ViewEventController {
 	 * that allows users to close multiple tabs at once.
 	 */
 	public void closeOthers() {
-		int tabCount = main.getTabbedView().getTabCount();
-		Component selected = main.getTabbedView().getSelectedComponent();
-
-		for(int i = tabCount - 1; i >= 0; i--)
-		{
-			Component toBeRemoved = main.getTabbedView().getComponentAt(i);
-
-			if(toBeRemoved instanceof IActiveGamePanel){continue;}
-			if(toBeRemoved == selected){
-				continue;}
-
-			if(toBeRemoved instanceof ICreateGamePanel)
-			{
-				if(!((ICreateGamePanel)toBeRemoved).readyToRemove()){
-					break;}
-				listOfCreateGamePanels.remove(toBeRemoved);
-			}
-
-			main.getTabbedView().removeTabAt(i);
-		}
+		main.getTabbedView().closeOthers();
 		main.repaint();
 
 	}
