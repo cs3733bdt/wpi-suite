@@ -49,7 +49,6 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 	private JLabel endGameManuallyNoteLabel1;
 	private JTextArea endGameManuallyNote;
 	private JButton endGameManuallyButton;
-	private JLabel endGameErrorLabel;
 	JScrollPane notePane;
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
@@ -145,8 +144,8 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		gameEndDate = new JLabel(active.getEndDate().toString());	
 		
 		// Initializes end game manually note labels
-		endGameManuallyNoteLabel = new JLabel("If you are ending the game manually,");
-		endGameManuallyNoteLabel1 = new JLabel("please enter your reason of doing so:");
+		endGameManuallyNoteLabel = new JLabel("If you wish to ending the game manually,");
+		endGameManuallyNoteLabel1 = new JLabel("you have the option to enter your reason for doing so:");
 
 		// Initializes text area to enter end game note
 		endGameManuallyNote = new JTextArea();
@@ -167,19 +166,9 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 
-				// Checks whether if the note is empty, if it is, doesn't end the game
-				if(endGameManuallyNote.getText().isEmpty())
-					endGameErrorLabel.setVisible(true);
-				else {
-					endGameManuallyButtonPressed();
-					endGameErrorLabel.setVisible(false);
+				endGameManuallyButtonPressed();
 				}
-			}
 		});
-		
-		endGameErrorLabel = new JLabel("*A note is required for ending games manually");
-		endGameErrorLabel.setForeground(Color.RED);
-		endGameErrorLabel.setVisible(false);
 		
 		/**
 		 * Add components to the container
@@ -196,7 +185,6 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		newLeftView.add(endGameManuallyNoteLabel1);
 		newLeftView.add(notePane);
 		newLeftView.add(endGameManuallyButton);
-		newLeftView.add(endGameErrorLabel);
 
 		/**
 		 * Adjust constraints on components
@@ -240,8 +228,6 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.NORTH, endGameManuallyButton, 5, SpringLayout.SOUTH, notePane);	
 		layout.putConstraint(SpringLayout.WEST, endGameManuallyButton, 5, SpringLayout.WEST, newLeftView);
 
-		layout.putConstraint(SpringLayout.NORTH, endGameErrorLabel, 5, SpringLayout.SOUTH, endGameManuallyButton);	
-		layout.putConstraint(SpringLayout.WEST, endGameErrorLabel, 5, SpringLayout.WEST, newLeftView);
 		
 		this.getViewport().add(newLeftView);
 	}
