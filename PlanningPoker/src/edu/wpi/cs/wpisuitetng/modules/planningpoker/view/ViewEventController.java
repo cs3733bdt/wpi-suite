@@ -15,12 +15,13 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.List;
 
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
@@ -34,9 +35,9 @@ public class ViewEventController {
 	private MainView main = null;
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
-	private final List<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
-	private final List<ActiveGamesPanel> listOfActiveGamePanels = new ArrayList<ActiveGamesPanel>();
-	private final List<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
+	private ArrayList<CreateGamePanel> listOfCreateGamePanels = new ArrayList<CreateGamePanel>();
+	private ArrayList<IActiveGamePanel> listOfActiveGamePanels = new ArrayList<IActiveGamePanel>();
+	private ArrayList<EndGamePanel> listOfEndGamePanels = new ArrayList<EndGamePanel>();
 	
 	/**
 	 * Default constructor for the ViewEventController. Is protected to prevent instantiation.
@@ -79,6 +80,12 @@ public class ViewEventController {
 	 */
 	public void createGame() {
 		CreateGamePanel newGame = new CreateGamePanel();
+		/**
+		 * REMOVE ABOVE LINE (CreateGamePanel newGame = new CreateGamePanel();)
+		 * AND ADD FOLLOWING LINE (NewCreateGamePanel newGame = new NewCreateGamePanel();)
+		 * WHEN READY TO SEE NEW CREATEGAMEPANEL IN JANEWAY. THEN DO FUN CONTROLLER CHANGES!
+		 */
+		//NewCreateGamePanel newGame = new NewCreateGamePanel();
 		main.getTabbedView().addTab("New Game", null, newGame, "New Game");
 		main.invalidate(); //force the tabbedpane to redraw.
 		main.repaint();
@@ -98,6 +105,8 @@ public class ViewEventController {
 		}
 		newGame.setUsesCards(game.doesUseCards());
 		
+		
+		//TODO MOVE THIS INTO THE CREATE GAME PANEL START!
 		Calendar dateMaker = new GregorianCalendar();
 		dateMaker.setTime(game.getEndDate());
 		String hour = Integer.toString(dateMaker.get(Calendar.HOUR));
@@ -112,6 +121,7 @@ public class ViewEventController {
 		}
 		
 		newGame.getEndDateField().setDateAndTime(dateMaker.getTime(), hour, minute, AM_PM);				
+		//TODO MOVE THIS INTO THE CREATE GAME PANEL END!
 		
 		for(CreateGamePanel gameSearch : listOfCreateGamePanels){
 			if(game.equals(gameSearch.getGame())){
@@ -122,7 +132,8 @@ public class ViewEventController {
 			}
 		}
 		
-		// Makes the game name not be longer than 6 charaters
+		// SET THE TAB TEXT 
+		// Makes the game name not be longer than 6 characters
 		StringBuilder tabName = new StringBuilder();
 		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
 		tabName.append(game.getName().subSequence(0, subStringLength));
@@ -156,9 +167,9 @@ public class ViewEventController {
 	 */
 	public void joinGame(Game game){
 		//Attempt to find the game in the active panels list
-		for(ActiveGamesPanel gameSearch : listOfActiveGamePanels){
+		for(IActiveGamePanel gameSearch : listOfActiveGamePanels){
 			if(game.equals(gameSearch.getGame())){
-				main.getTabbedView().setSelectedComponent(gameSearch);
+				main.getTabbedView().setSelectedComponent((Component)gameSearch);
 				main.invalidate();
 				main.repaint();
 				return; //The game has been found and made active. Done!
@@ -166,7 +177,7 @@ public class ViewEventController {
 		}
 		
 		//Game not found in the active game list
-		ActiveGamesPanel viewGame = new ActiveGamesPanel(game);
+		NewActiveGamePanel viewGame = new NewActiveGamePanel(game);
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 		
 		
@@ -232,6 +243,10 @@ public class ViewEventController {
 			if(!((CreateGamePanel) comp).readyToRemove()) return;
 			listOfCreateGamePanels.remove(comp);
 		}
+		if (comp instanceof IActiveGamePanel) {
+			if(!((IActiveGamePanel) comp).readyToRemove()) return;
+			this.listOfActiveGamePanels.remove(comp);
+		}
 		if (comp instanceof ActiveGamesPanel) {
 			if(!((ActiveGamesPanel) comp).readyToRemove()) return;
 			listOfActiveGamePanels.remove(comp);
@@ -254,10 +269,10 @@ public class ViewEventController {
 			
 			System.out.println(toBeRemoved.getClass().getName());
 
-			if(toBeRemoved instanceof ActiveGamesPanel)
+			if(toBeRemoved instanceof IActiveGamePanel)
 			{
-				if(!((ActiveGamesPanel)toBeRemoved).readyToRemove()) continue;
-				listOfActiveGamePanels.remove(toBeRemoved);
+				if(!((IActiveGamePanel)toBeRemoved).readyToRemove()) continue;
+				this.listOfActiveGamePanels.remove(toBeRemoved);
 			}
 			
 
@@ -286,12 +301,9 @@ public class ViewEventController {
 		{
 			Component toBeRemoved = main.getTabbedView().getComponentAt(i);
 
-			if(toBeRemoved instanceof ActiveGamesPanel) {
-				continue;
-			}
-			if(toBeRemoved == selected) {
-				continue;
-			}
+			if(toBeRemoved instanceof IActiveGamePanel){continue;}
+			if(toBeRemoved == selected){
+				continue;}
 
 			if(toBeRemoved instanceof CreateGamePanel)
 			{

@@ -11,9 +11,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
-import java.awt.Container;
+/*import java.awt.Container;
 import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
+import java.awt.GridBagLayout;*/
 
 import javax.swing.JSplitPane;
 
@@ -36,12 +36,12 @@ public class MainView extends JSplitPane {
 	public MainView() {
 		
 		
-		Container rightPanel = new Container();
+		/*Container rightPanel = new Container();
 		rightPanel.setLayout(new GridBagLayout());
 		
 		GridBagConstraints c = new GridBagConstraints();
 		
-		c.fill = GridBagConstraints.HORIZONTAL;
+		c.fill = GridBagConstraints.HORIZONTAL;*/
 		
 		this.setRightComponent(tabView);
 		this.setLeftComponent(filterPanel);

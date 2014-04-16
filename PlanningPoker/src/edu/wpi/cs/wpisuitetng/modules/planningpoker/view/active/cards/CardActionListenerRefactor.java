@@ -21,7 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
 
 /**
  * sets the ActionListener for each of the estimates. The "I don't know" button
@@ -39,7 +39,7 @@ public class CardActionListenerRefactor implements ActionListener {
 	int index;
 	List<String> deck;
 	ActiveCardsPanel cardsPanel;
-	EstimatePanel estimatePanel;
+	NewRightHalfActiveGamePanel estimatePanel;
 	
 	/**
 	 * sets the action listener for each button
@@ -49,10 +49,11 @@ public class CardActionListenerRefactor implements ActionListener {
 	 * @param passedCardsPanel cards that have been selected
 	 * @param passedEstimatePanel the estimate before the action occurs
 	 */
-	public CardActionListenerRefactor(int index, List<String> deckUsed, JToggleButton passedButton, ActiveCardsPanel passedCardsPanel, EstimatePanel passedEstimatePanel) {
+
+	public CardActionListenerRefactor(int index, List<String> deckUsed, JToggleButton passedButton, ActiveCardsPanel passedCardsPanel, NewRightHalfActiveGamePanel panel2) {
 		size = deckUsed.size();
 		cardsPanel = passedCardsPanel;
-		estimatePanel = passedEstimatePanel;
+		estimatePanel = panel2;
 		deck = deckUsed;
 		this.index = index;
 		button = passedButton;

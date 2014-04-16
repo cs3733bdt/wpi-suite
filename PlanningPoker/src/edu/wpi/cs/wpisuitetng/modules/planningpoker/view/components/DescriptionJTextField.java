@@ -26,17 +26,28 @@ public class DescriptionJTextField extends JTextField implements IDataField {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
+	
+	private String startingText;
 
 	public DescriptionJTextField(String text) {
 		super(text);
-	}
-
-	public DescriptionJTextField(int size) {
-		super(size);
+		startingText = text;
 	}
 
 	public DescriptionJTextField() {
+		startingText = "";
 	}
+	
+	public void displayStandardBorder(){
+		setBorder(BorderFactory.createTitledBorder("Description"));
+	}
+	
+	@Override
+	public void setText(String text){
+		startingText = text;
+		super.setText(text);
+	}
+	
 
 	@Override
 	public boolean validateField(IErrorView errorField) {
@@ -56,4 +67,8 @@ public class DescriptionJTextField extends JTextField implements IDataField {
 		return isDescriptionValid;
 	}
 
+	@Override
+	public boolean hasChanges() {
+		return getText().equals(startingText);
+	}
 }

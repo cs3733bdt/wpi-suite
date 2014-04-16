@@ -21,7 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
 
 /**
  * creates all of the buttons to be used for the estimation
@@ -40,7 +40,10 @@ public class CardButton extends JToggleButton implements Accessible {
 	 * @param passedCardsPanel the panel that displays the cards
 	 * @param passedEstimatePanel the panel that displays the estimates
 	 */
-	public CardButton(int cardNum, List<String> passedDeck, ActiveCardsPanel passedCardsPanel, EstimatePanel passedEstimatePanel){
+
+	public CardButton(int cardNum, List<String> passedDeck, ActiveCardsPanel passedCardsPanel, NewRightHalfActiveGamePanel panel2){
+		this.deck = passedDeck;
+		this.panel = passedCardsPanel;
 		deck = passedDeck;
 		panel = passedCardsPanel;
 		
@@ -71,8 +74,7 @@ public class CardButton extends JToggleButton implements Accessible {
 		 this.setVerticalAlignment(SwingConstants.CENTER);
 		 
 		 //Add the action listener to the button
-		this.addActionListener(new CardActionListenerRefactor(cardNum, 
-				deck, this, passedCardsPanel, passedEstimatePanel));
+		this.addActionListener(new CardActionListenerRefactor(cardNum, deck, this, passedCardsPanel, panel2));
 		panel.add(this);
 	}
 
