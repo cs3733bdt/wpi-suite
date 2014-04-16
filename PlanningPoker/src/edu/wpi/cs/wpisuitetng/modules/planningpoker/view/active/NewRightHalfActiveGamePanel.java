@@ -93,7 +93,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		 * Display the requirement list in the table
 		 */
 		for (Requirement r : currentGame.getRequirements()) {
-			table.tableModel.addRow(new Object[] { r.getName(),
+			table.getTableModel().addRow(new Object[] { r.getName(),
 					r.getDescription() });
 		}
 

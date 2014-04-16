@@ -37,7 +37,11 @@ public class GameModelTest {
 	@Test
 	public void testAddGame() {
 		GameModel model = GameModel.getInstance();
-		Game object = new Game("Test Game", "Test Description", new ArrayList<Requirement>(), true, false);
+		Game object = new Game("Test Game", 
+				"Test Description", 
+				new ArrayList<Requirement>(), 
+				true, 
+				false);
 		
 		model.emptyModel();
 		assertEquals(model.getSize(), 0);
@@ -48,7 +52,8 @@ public class GameModelTest {
 		Game objectReturned = model.getElementAt(0);
 		assertEquals(objectReturned.getName(), "Test Game");
 		assertEquals(objectReturned.getDescription(), "Test Description");
-		assertEquals(objectReturned.getCreator(), ConfigManager.getInstance().getConfig().getUserName());
+		assertEquals(objectReturned.getCreator(), 
+				ConfigManager.getInstance().getConfig().getUserName());
 	}
 	
 	@Test
@@ -73,7 +78,11 @@ public class GameModelTest {
 		assertEquals(returned2.getName(), "Game2");
 		assertEquals(returned3.getName(), "Game3");
 		
-		Game game4 = new Game("An updated game", "Overwriting an existing", new ArrayList<Requirement>(), false, true);
+		Game game4 = new Game("An updated game", 
+				"Overwriting an existing",
+				new ArrayList<Requirement>(), 
+				false, 
+				true);
 		game4.setIdentifier(game1.getIdentity());
 		gameList[0] = game4;
 		model.addGames(gameList);
@@ -122,7 +131,8 @@ public class GameModelTest {
 		
 		reqs2.add(new Requirement("RequirementChanged", "DescriptionChanged"));
 		
-		Requirement req2 = new Requirement("Requirement With New Votes", "Description With New Votes");
+		Requirement req2 = new Requirement("Requirement With New Votes",
+										"Description With New Votes");
 		req2.setIdentity(req.getIdentity());
 		
 		req2.addVote(new Vote("Steve", 1));
@@ -136,7 +146,7 @@ public class GameModelTest {
 		assertEquals(3, req2.getVoteCount());
 		
 		Game game1Changed = new Game("Game1 Changed", "DescriptionChanged", reqs2, true, false);
-		game1Changed.setIdentifier(game1.getIdentity()); //Makes this game 'the equivalent' to the other game
+		game1Changed.setIdentifier(game1.getIdentity()); //Make this game 'equivalent' to the other
 		game1Changed.makeComplete();
 		
 		assertEquals("Requirement With New Votes", game1Changed.getRequirements().get(1).getName());

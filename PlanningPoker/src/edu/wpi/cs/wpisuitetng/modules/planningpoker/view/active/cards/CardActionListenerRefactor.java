@@ -24,7 +24,10 @@ import javax.swing.JToggleButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
 
 /**
- * TODO: add documentation
+ * sets the ActionListener for each of the estimates. The "I don't know" button
+ * clears all selected buttons when selected and if deselected, previously 
+ * selected buttons are reselected. "I don't know" button is deselected when an
+ * estimate button is selected. 
  * @author Bobby Drop Tables
  *
  */
@@ -39,12 +42,12 @@ public class CardActionListenerRefactor implements ActionListener {
 	NewRightHalfActiveGamePanel estimatePanel;
 	
 	/**
-	 * 
+	 * sets the action listener for each button
 	 * @param index of the button to be created
 	 * @param deckUsed to create the button
-	 * @param passedButton
-	 * @param passedCardsPanel
-	 * @param passedEstimatePanel
+	 * @param passedButton the button to be given an action
+	 * @param passedCardsPanel cards that have been selected
+	 * @param passedEstimatePanel the estimate before the action occurs
 	 */
 
 	public CardActionListenerRefactor(int index, List<String> deckUsed, JToggleButton passedButton, ActiveCardsPanel passedCardsPanel, NewRightHalfActiveGamePanel panel2) {

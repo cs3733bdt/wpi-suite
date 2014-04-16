@@ -48,7 +48,8 @@ public class AddGameController {
 	 */
 	public void addGame(Game newGame) {
 		System.out.println("Adding: " + newGame.getName() + " to server");
-		final Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.PUT);
+		final Request request = 
+				Network.getInstance().makeRequest("planningpoker/game", HttpMethod.PUT);
 		request.setBody(newGame.toJSON());
 		final AddGameRequestObserver observer = new AddGameRequestObserver(this, newGame);
 		request.addObserver(observer) ;

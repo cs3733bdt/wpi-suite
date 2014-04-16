@@ -194,7 +194,7 @@ public class EndGamePanel extends JScrollPane implements AbstractModelObserver{
 		 * Adds data to the table
 		 */
 		for (int i = 0; i < game.getRequirements().size(); i++) {
-			table.tableModel.addRow(new Object[] {
+			table.getTableModel().addRow(new Object[] {
 					game.getRequirements().get(i).getName(),
 					game.getRequirements().get(i).getDescription(),
 					game.getRequirements().get(i).displayComplete() });
@@ -209,8 +209,8 @@ public class EndGamePanel extends JScrollPane implements AbstractModelObserver{
 					int column = target.getSelectedColumn();
 					String selected = (String) target.getValueAt(row, column);
 					for (int i = 0; i < game.getRequirements().size(); i++) {
-						if (selected.equals(game.getRequirements().get(i).getName())
-								|| selected.equals(game.getRequirements().get(i).getDescription())) {
+						if (selected.equals(game.getRequirements().get(i).getName()) ||
+								selected.equals(game.getRequirements().get(i).getDescription())) {
 							if(isEstimatePanelCreated){
 								removeStatisticsPanel();
 								updateStatisticsPanel(game, game.getRequirements().get(i));
@@ -310,7 +310,10 @@ public class EndGamePanel extends JScrollPane implements AbstractModelObserver{
         
         List<Requirement> reqs = new ArrayList<Requirement>();
         reqs.add(new Requirement("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-				"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
+				"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
+				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
 				
         //Set up the content pane.
         frame.add(new EndGamePanel(new Game("name", "desc", reqs, false, true)));

@@ -54,9 +54,11 @@ public class StatisticsPanel extends JPanel{
 	private JLabel yourLabel = new JLabel("Your Estimate: 0");
 	
 	Container overviewPanel = new Container();
-    
-    /*
+ 
+	/**
 	 * If the ArrayList passed in is empty it will use the default deck
+	 * @param game 
+	 * @param requirement 
 	 */
 	public StatisticsPanel(Game game, Requirement requirement){
 

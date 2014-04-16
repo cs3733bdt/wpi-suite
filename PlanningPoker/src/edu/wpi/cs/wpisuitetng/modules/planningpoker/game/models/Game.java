@@ -37,7 +37,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requireme
 
 public class Game extends ObservableModel implements AbstractModelObserver{
 	
-	/** This is the best way to keep games unique so that you are not relying upon data that can change */
+	/** This is the best way to keep games unique so 
+	 *  that you are not relying upon data that can change */
 	private UUID identity;
 	/** The name of the game */
 	private String name;
@@ -122,7 +123,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		}
 		
 		if(!requirements.equals(toCopyFrom.requirements)){
-			boolean changes = false;										//Are there changes?
+			boolean changes = false;
 			
 			//REMOVES REQUIREMENTS THAT HAVE BEEN REMOVED FROM THIS GAME
 			Iterator<Requirement> existingReq = requirements.iterator();
@@ -142,21 +143,21 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			//END REMOVE REQUIREMENTS
 			
 											
-			for(Requirement serverReq: toCopyFrom.requirements){	//Iterate over the new requirements
-				boolean found = false;								//Has the requirement been found in the list?
-				for(Requirement req : requirements){			//Iterate over the existing requirements list
-					if(serverReq.identify(req)){					//If this requirement is found
-						found = true;								//This requirement has been found
-						if(req.copyFrom(serverReq)){				//So copy the data over. If there are changes then make thoes changes
-							changes = true;
+			for(Requirement serverReq: toCopyFrom.requirements){//Iterate over the new requirements
+				boolean found = false;							 
+				for(Requirement req : requirements){//Iterate over the existing requirements list
+					if(serverReq.identify(req)){	//If this requirement is found
+						found = true;
+						if(req.copyFrom(serverReq)){//Copy the data over
+							changes = true;			//If there are changes then make those changes
 							req.addObserver(this);
 						}
 					}
 				}
-				if(!found){											//If this requirement does not exist in the list
-					changes = true;									//Indicates that this game has changes
-					serverReq.addObserver(this);					//Adds an this game as an observer for this game
-					requirements.add(serverReq);				//Adds this requirement to the list of server requirements
+				if(!found){						//If this requirement does not exist in the list
+					changes = true;				//Indicates that this game has changes
+					serverReq.addObserver(this);//Add this game as an observer for this requirement
+					requirements.add(serverReq);//Add to the list of server requirements
 				}
 			}
 			
@@ -227,7 +228,11 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @param usesCards checks if the game uses cards or text entry
 	 * 
 	 */
-	public Game(String name, String description, List<Requirement> requirements, boolean hasTimeLimit, boolean usesCards) {
+	public Game(String name, 
+			String description, 
+			List<Requirement> requirements,
+			boolean hasTimeLimit, 
+			boolean usesCards) {
 		this(); //Calls the default constructor
 		this.name = name;
 		this.description = description;
@@ -251,8 +256,13 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @param creationTime the data and time a game is created on
 	 * 
 	 */
-	public Game(String name, String description, List<Requirement> requirements, boolean hasTimeLimit, boolean usesCards, Date creationTime) {
-		this(name, description, requirements, hasTimeLimit, usesCards); //Calls the default constructor
+	public Game(String name, 
+			String description, 
+			List<Requirement> requirements, 
+			boolean hasTimeLimit, 
+			boolean usesCards, 
+			Date creationTime) {
+		this(name, description, requirements, hasTimeLimit, usesCards);
 		this.creationTime = creationTime;
 	}
 	
@@ -370,7 +380,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	
 	/**
 	 * Gets the list of requirements for this game
-	 * *WARNING* ADDING ELEMENTS TO THIS ARRAY WILL MAKE THEM UNTRACKABLE TO THE GAME AND PREVENT THEM FROM BEING ADDED TO THE SERVER
+	 * *WARNING* ADDING ELEMENTS TO THIS ARRAY WILL MAKE THEM UNTRACKABLE 
+	 * TO THE GAME AND PREVENT THEM FROM BEING ADDED TO THE SERVER
 	 * @return the list of requirements for the game
 	 */
 	final public List<Requirement> getRequirements(){
@@ -458,7 +469,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 
 	/**
 	 * Method toJSON.
-	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
+	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * 
+	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
 	 */
 	@Override
 	public String toJSON() {

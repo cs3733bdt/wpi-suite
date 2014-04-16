@@ -248,16 +248,16 @@ public class AddRequirementsPanel extends JPanel {
 		 * Adds temporary data into the table. 
 		 * DELETE THIS ONCE DATA IS SUCCESSFULLY IMPORTED FROM REQUIREMENT MANAGER!!!!!!!!!!!!
 		 */
-		table.tableModel.addRow(new Object[]{"Requirement1", "Description1"});
-		table.tableModel.addRow(new Object[]{"Requirement2", "Description2"});
-		table.tableModel.addRow(new Object[]{"Requirement3", "Description3"});
-		table.tableModel.addRow(new Object[]{"Requirement4", "Description4"});
-		table.tableModel.addRow(new Object[]{"Requirement5", "Description5"});
-		table.tableModel.addRow(new Object[]{"Requirement6", "Description6"});
-		table.tableModel.addRow(new Object[]{"Requirement7", "Description7"});
-		table.tableModel.addRow(new Object[]{"Requirement8", "Description8"});
-		table.tableModel.addRow(new Object[]{"Requirement9", "Description9"});
-		table.tableModel.addRow(new Object[]{"Requirement10", "Description10"});		
+		table.getTableModel().addRow(new Object[]{"Requirement1", "Description1"});
+		table.getTableModel().addRow(new Object[]{"Requirement2", "Description2"});
+		table.getTableModel().addRow(new Object[]{"Requirement3", "Description3"});
+		table.getTableModel().addRow(new Object[]{"Requirement4", "Description4"});
+		table.getTableModel().addRow(new Object[]{"Requirement5", "Description5"});
+		table.getTableModel().addRow(new Object[]{"Requirement6", "Description6"});
+		table.getTableModel().addRow(new Object[]{"Requirement7", "Description7"});
+		table.getTableModel().addRow(new Object[]{"Requirement8", "Description8"});
+		table.getTableModel().addRow(new Object[]{"Requirement9", "Description9"});
+		table.getTableModel().addRow(new Object[]{"Requirement10", "Description10"});		
 		
 		/**
 		 * Creates a scroll pane, and puts the table within this scroll pane,
@@ -402,6 +402,6 @@ public class AddRequirementsPanel extends JPanel {
 	}
 
 	public void addRequirement(Requirement requirement){
-		table2.tableModel.addRow(new Object[]{requirement.getName(), requirement.getDescription()});
+		table2.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 	}
 }
