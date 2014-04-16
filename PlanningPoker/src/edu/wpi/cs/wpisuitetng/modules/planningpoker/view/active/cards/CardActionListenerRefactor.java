@@ -95,12 +95,18 @@ public class CardActionListenerRefactor implements ActionListener {
 			ex.printStackTrace();
 		}
 	}
-
+	/**
+	 * Increase total sum by amount entered
+	 * @param cardValue
+	 */
 	public void addToCardSum(int cardValue) {
 		cardsPanel.addToCardSum(cardValue);
 		estimatePanel.updateSum();
 	}
-
+	/**
+	 * Decrease total sum by amount entered
+	 * @param cardValue
+	 */
 	public void decToCardSum(int cardValue) {
 		cardsPanel.decToCardSum(cardValue);
 		estimatePanel.updateSum();

@@ -59,7 +59,7 @@ public class GameUpdateRaceConditionTest {
 	boolean isFinishedVotes = false;
 	boolean isFinishedUpdate = false;
 	
-	Game gameList[] = new Game[20];
+	Game[] gameList = new Game[20];
 	
 
 	/**
@@ -119,7 +119,7 @@ public class GameUpdateRaceConditionTest {
 		@Override
 		public void run()
 		{
-			Game gamesFromModel[];
+			Game[] gamesFromModel;
 			updateStarted = true;
 			for(int i=0; i < 20; i++) 
 			{

@@ -93,14 +93,19 @@ public int getCount() {
 	return 0;
 }
 
+/**
+ * Decrease total sum by amount entered
+ * @param cardValue
+ */
 public void addToCardSum(int cardValue) {
 	sum += cardValue;
 	counterLabel.setText("Your current estimate total: " + sum);
 	System.out.println(sum);
 }
 
-/*
+/**
  * Decrease total sum by amount entered
+ * @param cardValue
  */
 public void decToCardSum(int cardValue) {
 	sum -= cardValue;
@@ -116,8 +121,9 @@ public void doClicks() {
 		JToggleButtonList.get(i).doClick();
 	}
 }
-/*
- * Returns the sum of all the cards
+
+/**
+ * @return sum of all the cards
  */
 public int getMaxSum() {
 	int sum = 0;
@@ -134,30 +140,30 @@ public int getSum() {
 public List<CardButton> getCardButtonArray() {
 	return JToggleButtonList; 
 }
-/*
+/**
  * adds an element to the array of buttons to be remembered when the "0?" button is unpress
- */
+ **/
 public void memoryArrayAddElt(int elt) {
 	memoryArray.add(elt);
 }
 
-/*
+/**
  * getter for size of the memory array
- */
+ **/
 public int memoryArrayGetSize() {
 	return memoryArray.size();
 }
 
-/*
+/**
  * clears memory array; use after the values stored in the array are restored
- */
+ **/
 public void memoryArrayClear() {
 	memoryArray.clear();
 }
 
-/*
+/**
  * adds index of the button to be remembered to the memory array
- */
+ **/
 public int memoryArrayGetElt(int elt) {
 	return memoryArray.get(elt);
 }

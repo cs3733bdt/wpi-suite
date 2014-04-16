@@ -35,7 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  */
 @SuppressWarnings({ "serial" })
 public class GameModel extends AbstractListModel<Game> implements
-		AbstractModelObserver {
+AbstractModelObserver {
 
 	/** Stores the singleton instance of this model */
 	private static GameModel instance;
@@ -92,7 +92,7 @@ public class GameModel extends AbstractListModel<Game> implements
 	 *            game to be added to the games ArrayList
 	 */
 	public synchronized void addGame(Game newGame) {
-		while (isServerUpdating()) {}
+		while (serverUpdating) {}
 		games.add(newGame);
 		try {
 			AddGameController.getInstance().addGame(newGame);
@@ -101,7 +101,7 @@ public class GameModel extends AbstractListModel<Game> implements
 					+ newGame.getName());
 		}
 		try { // Prevents a null pointer exception when the running tests (the
-				// JPanel's aren't instantiated)
+			// JPanel's aren't instantiated)
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
@@ -124,7 +124,7 @@ public class GameModel extends AbstractListModel<Game> implements
 		}
 		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));
 		try { // Prevents a null pointer exception when the running tests (the
-				// JPanel's aren't instantiated)
+			// JPanel's aren't instantiated)
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
@@ -183,11 +183,11 @@ public class GameModel extends AbstractListModel<Game> implements
 				boolean found = false; // Has this Game been found in the list
 				// GAME EXIST IN THE MODEL
 				for (Game modelGame : games) { // Iterates over the existing
-												// model
+					// model
 					if (aGame.identify(modelGame)) { // Compares the UUID's of
-														// the two objects to
-														// see if they should be
-														// the same
+						// the two objects to
+						// see if they should be
+						// the same
 						found = true; // This game has been found in the list
 						// aGame.deleteObservers();
 						aGame.addObserver(this);
@@ -200,40 +200,40 @@ public class GameModel extends AbstractListModel<Game> implements
 				if (!found) { // If the game is not found then
 					changes = true; // There were changes to the model
 					startingSize++; // This Game will be added to the model so
-									// increase the starting size
+					// increase the starting size
 					// aGame.deleteObservers();
 					aGame.addObserver(this); // Add an observer on this game
 					games.add(aGame); // Adds this game to the list of games in
-										// this list
+					// this list
 					System.out.print("Updating the model");
 					System.out
-							.println("\tNEW GAME FOUND BEING ADDED TO MODEL: "
-									+ aGame.getName());
+					.println("\tNEW GAME FOUND BEING ADDED TO MODEL: "
+							+ aGame.getName());
 				}
 			}
 			this.fireIntervalAdded(this, startingSize - 1, getSize() - 1); // Fires
-																			// the
-																			// event
-																			// listeners
-																			// on
-																			// this
-																			// list.
+			// the
+			// event
+			// listeners
+			// on
+			// this
+			// list.
 
 			if (changes) { // Only repaint game tree if the model has changed
 				try { // This is used to prevent the a null pointer exception
-						// when running test cases (the JPanel's aren't
-						// instantiated)
+					// when running test cases (the JPanel's aren't
+					// instantiated)
 					ViewEventController.getInstance().refreshGameTable(); // Currently
-																			// serves
-																			// no
-																			// purpose
+					// serves
+					// no
+					// purpose
 					ViewEventController.getInstance().refreshGameTree(); // Refreshes
-																			// the
-																			// active
-																			// table
+					// the
+					// active
+					// table
 				} catch (Exception e) {
 					System.err
-							.println("ViewEventController not fully initiallized");
+					.println("ViewEventController not fully initiallized");
 				}
 			} else {
 			}
@@ -281,7 +281,7 @@ public class GameModel extends AbstractListModel<Game> implements
 			}
 		} else {
 			System.err
-					.println("GAME MODEL ATTEMPTED TO UPDATE SOMETHING NOT A GAME");
+			.println("GAME MODEL ATTEMPTED TO UPDATE SOMETHING NOT A GAME");
 		}
 
 	}
@@ -298,7 +298,7 @@ public class GameModel extends AbstractListModel<Game> implements
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Gets the game with the UUID passed.
 	 * @param id the UUID of the game to get
@@ -311,7 +311,7 @@ public class GameModel extends AbstractListModel<Game> implements
 			}
 		}
 		System.err.println("Could not fine a game with idenity: " + id);
-		
+
 		return null;
 	}
 

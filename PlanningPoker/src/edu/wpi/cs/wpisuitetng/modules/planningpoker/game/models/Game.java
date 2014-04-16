@@ -21,6 +21,7 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
@@ -281,8 +282,11 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		return name;
 	}
 	
-	/*
-	 * TODO: add documentation
+
+	
+	/**
+	 * Sets the name of a game
+	 * @param newName
 	 */
 	public void setName(String newName){
 		if(!name.equals(newName)){
@@ -349,6 +353,19 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			this.delayChange();
 			description = newDescription;
 		}
+	}
+	
+	/**
+	 * Sets the project for the game and it's requirements
+	 */
+	@Override
+	public void setProject(Project p) {
+		// Set requirements' project
+		for(Requirement r: requirements) {
+			r.setProject(p);
+		}
+		// Set game's project
+		super.setProject(p);
 	}
 	
 	/**
@@ -502,7 +519,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			this.makeChanged();
 			this.notifyObservers(arg);
 		}
-		System.out.println("Game: " + getName() + " has " + this.countObservers() + " observers");
+		System.out.println("Game: " + name + " has " + this.countObservers() + " observers");
 		if(this.countObservers()>0){
 			System.out.println("\t" + this.getObserver(0));
 		}
