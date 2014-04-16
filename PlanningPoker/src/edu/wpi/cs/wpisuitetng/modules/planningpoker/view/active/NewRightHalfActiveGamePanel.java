@@ -130,6 +130,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		counterLabel = new JLabel("Your current estimate total: " + 0);
 		sum = 0;
 
+		//JToggleButtonList = cardsPanel.getCardButtonArray();
+
+
 		// This branch will be run if the default deck is to be used
 		 boolean useDefaultDeck;
 		// if (customDeck.size() == 0) {

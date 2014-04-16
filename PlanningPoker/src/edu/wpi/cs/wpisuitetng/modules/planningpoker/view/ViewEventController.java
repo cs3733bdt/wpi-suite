@@ -24,6 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
 
 /**
@@ -79,13 +80,13 @@ public class ViewEventController {
 	 * that panel, and switches to that new panel
 	 */
 	public void createGame() {
-		CreateGamePanel newGame = new CreateGamePanel();
+		//CreateGamePanel newGame = new CreateGamePanel();
 		/**
 		 * REMOVE ABOVE LINE (CreateGamePanel newGame = new CreateGamePanel();)
 		 * AND ADD FOLLOWING LINE (NewCreateGamePanel newGame = new NewCreateGamePanel();)
 		 * WHEN READY TO SEE NEW CREATEGAMEPANEL IN JANEWAY. THEN DO FUN CONTROLLER CHANGES!
 		 */
-		//NewCreateGamePanel newGame = new NewCreateGamePanel();
+		NewCreateGamePanel newGame = new NewCreateGamePanel(new Game());
 		main.getTabbedView().addTab("New Game", null, newGame, "New Game");
 		main.invalidate(); //force the tabbedpane to redraw.
 		main.repaint();
