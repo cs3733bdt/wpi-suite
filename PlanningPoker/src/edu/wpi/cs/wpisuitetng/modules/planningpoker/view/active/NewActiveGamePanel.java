@@ -14,9 +14,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 import javax.swing.JSplitPane;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.AbstractModelObserver;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.observers.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
 
 
@@ -77,6 +77,5 @@ public class NewActiveGamePanel extends JSplitPane implements AbstractModelObser
         frame.pack();
         frame.setVisible(true);
 	}
-*/
-	
+	*/
 }

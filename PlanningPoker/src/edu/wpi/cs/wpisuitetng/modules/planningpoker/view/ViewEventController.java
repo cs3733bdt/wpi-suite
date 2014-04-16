@@ -18,7 +18,8 @@ import java.util.GregorianCalendar;
 
 import javax.swing.JComponent;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.models.game.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
@@ -240,11 +241,15 @@ public class ViewEventController {
 	public void removeTab(JComponent comp){
 		if (comp instanceof CreateGamePanel){
 			if(!((CreateGamePanel) comp).readyToRemove()) return;
-			this.listOfCreateGamePanels.remove(comp);
+			listOfCreateGamePanels.remove(comp);
 		}
 		if (comp instanceof IActiveGamePanel) {
 			if(!((IActiveGamePanel) comp).readyToRemove()) return;
 			this.listOfActiveGamePanels.remove(comp);
+		}
+		if (comp instanceof ActiveGamesPanel) {
+			if(!((ActiveGamesPanel) comp).readyToRemove()) return;
+			listOfActiveGamePanels.remove(comp);
 		}
 		main.getTabbedView().remove(comp);
 	}
@@ -274,7 +279,7 @@ public class ViewEventController {
 			if(toBeRemoved instanceof CreateGamePanel)
 			{
 				if(!((CreateGamePanel)toBeRemoved).readyToRemove()) continue;
-				this.listOfCreateGamePanels.remove(toBeRemoved);
+				listOfCreateGamePanels.remove(toBeRemoved);
 			}
 
 			main.getTabbedView().removeTabAt(i);
@@ -303,7 +308,7 @@ public class ViewEventController {
 			{
 				if(!((CreateGamePanel)toBeRemoved).readyToRemove()){
 					break;}
-				this.listOfCreateGamePanels.remove(toBeRemoved);
+				listOfCreateGamePanels.remove(toBeRemoved);
 			}
 
 			main.getTabbedView().removeTabAt(i);
@@ -324,7 +329,7 @@ public class ViewEventController {
 	 */
 	public void refreshGameTree() {
 		//This method will call a method that refreshes the the tree
-		this.gameTree.refresh();
+		gameTree.refresh();
 		
 	}
 
