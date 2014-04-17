@@ -52,7 +52,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 		
 		int cardsPerRow = 11;
 		
-		this.setPreferredSize(new Dimension(800, 
+		this.setPreferredSize(new Dimension(525, 
 				(68 * (Math.round(deck.size() / cardsPerRow)) ) ) ); 
 		for (int i = 0; i < (deck.size()); i++) {
 			JToggleButtonList.add(new CardButton(i, deck, this, panel));

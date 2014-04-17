@@ -71,20 +71,20 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 												// everything in the view
 		SpringLayout layout = new SpringLayout(); // Creates the layout to be
 													// used: Spring Layout
-		rightView.setLayout(layout); // Sets the container to have the spring
-										// layout
+		rightView.setLayout(layout); // Sets the container to have the spring layout
+		
+		setMinimumSize(new Dimension(310, 110));			//Sets the minimum size of the left half view
+		rightView.setPreferredSize(new Dimension(300, 518));		//Sets the size of the view
+		
+		revalidate();
+		repaint();
 		
 		/**
 		 * Create and/or initialize components
 		 */
-		JLabel nameLabel = new JLabel("Requirements"); // Creates the Label for
-														// the Name
-		reqLabel = new JLabel("Requirement Name"); // Creates the Label
-															// for the Name
-		desLabel = new JLabel("Requirement Description"); // Creates the
-																	// Label for
-																	// the
-																	// Description
+		JLabel nameLabel = new JLabel("Requirements"); 		// Creates the label for the Name
+		reqLabel = new JLabel("Requirement Name"); 			// Creates the label for the Name
+		desLabel = new JLabel("Requirement Description"); 	// Creates the label for the description
 		
 		/**
 		 * Initializes a table's columns and rows and the table
@@ -125,8 +125,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		});
 
 		JScrollPane tablePanel = new JScrollPane(table);
-		tablePanel
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		tablePanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		tablePanel.setPreferredSize(new Dimension(200, 100));
 
 		nameTextField = new JTextArea(1, 30); // Initializes the textfield for
@@ -145,8 +144,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		descriptionTextField.setEditable(false);
 
 		descriptionPanel = new JScrollPane(descriptionTextField);
-		descriptionPanel
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		descriptionPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		descriptionPanel.setPreferredSize(new Dimension(200, 100));
 
 		/**
@@ -157,7 +155,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		sum = 0;
 
 		// This branch will be run if the default deck is to be used
-		 boolean useDefaultDeck;
+		boolean useDefaultDeck;
 		// if (customDeck.size() == 0) {
 		// generate fibonachi sequence
 		int firstnum = 0;
@@ -188,25 +186,24 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		// added below
 		if (this.getGame().doesUseCards()) {
 			cardPanel = new JScrollPane(cardsPanel);
-			cardPanel
-					.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			cardPanel.setPreferredSize(new Dimension(800, 100));
+			//cardPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			cardPanel.setPreferredSize(new Dimension(100, 100));
 			rightView.add(cardPanel);
-			layout.putConstraint(SpringLayout.WEST, cardPanel, 40,
+			layout.putConstraint(SpringLayout.WEST, cardPanel, 5,
 					SpringLayout.WEST, rightView);
-			layout.putConstraint(SpringLayout.EAST, cardPanel, -40,
+			layout.putConstraint(SpringLayout.EAST, cardPanel, -5,
 					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
-			cardPanel.getHorizontalScrollBar().setValue(200);
+			//cardPanel.getHorizontalScrollBar().setValue(200);
 //		    layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, cardPanel, 5, SpringLayout.HORIZONTAL_CENTER, rightView);
 			cardPanel.setVisible(false);
 			
 		} else {
 			rightView.add(cardsPanel);
-			layout.putConstraint(SpringLayout.WEST, cardsPanel, 40,
+			layout.putConstraint(SpringLayout.WEST, cardsPanel, 5,
 					SpringLayout.WEST, rightView);
-			layout.putConstraint(SpringLayout.EAST, cardsPanel, -40,
+			layout.putConstraint(SpringLayout.EAST, cardsPanel, -5,
 					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardsPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
@@ -229,9 +226,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			}
 		});
 		rightView.add(estText);
-		layout.putConstraint(SpringLayout.WEST, estText, 40,
+		layout.putConstraint(SpringLayout.WEST, estText, 5,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, estText, -40,
+		layout.putConstraint(SpringLayout.EAST, estText, -5,
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, estText, 20,
 				SpringLayout.SOUTH, descriptionPanel);
@@ -284,58 +281,58 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		submitButton.setVisible(false);
 		estText.setVisible(false);
 		
-		layout.putConstraint(SpringLayout.WEST, nameLabel, 40,
+		layout.putConstraint(SpringLayout.WEST, nameLabel, 5,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, nameLabel, -40,
+		layout.putConstraint(SpringLayout.EAST, nameLabel, -5,
 				SpringLayout.EAST, rightView);// Adds the name label to the far
 												// left
 		layout.putConstraint(SpringLayout.NORTH, nameLabel, 10,
 				SpringLayout.NORTH, rightView);
 
-		layout.putConstraint(SpringLayout.WEST, tablePanel, 40,
+		layout.putConstraint(SpringLayout.WEST, tablePanel, 5,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, tablePanel, -40,
+		layout.putConstraint(SpringLayout.EAST, tablePanel, -5,
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, tablePanel, 5,
 				SpringLayout.SOUTH, nameLabel);
 
-		layout.putConstraint(SpringLayout.WEST, reqLabel, 40,
+		layout.putConstraint(SpringLayout.WEST, reqLabel, 5,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, reqLabel, 10,
 				SpringLayout.SOUTH, tablePanel);
 
-		layout.putConstraint(SpringLayout.WEST, nameTextField, 40,
+		layout.putConstraint(SpringLayout.WEST, nameTextField, 5,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, nameTextField, -40,
+		layout.putConstraint(SpringLayout.EAST, nameTextField, -5,
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, nameTextField, 0,
 				SpringLayout.SOUTH, reqLabel);
 
-		layout.putConstraint(SpringLayout.WEST, desLabel, 40,
+		layout.putConstraint(SpringLayout.WEST, desLabel, 5,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, desLabel, 5,
 				SpringLayout.SOUTH, nameTextField);
 
-		layout.putConstraint(SpringLayout.WEST, descriptionPanel, 40,
+		layout.putConstraint(SpringLayout.WEST, descriptionPanel, 5,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, descriptionPanel, -40,
+		layout.putConstraint(SpringLayout.EAST, descriptionPanel, -5,
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, descriptionPanel, 0,
 				SpringLayout.SOUTH, desLabel);
 
-		layout.putConstraint(SpringLayout.WEST, counterLabel, 40,
+		layout.putConstraint(SpringLayout.WEST, counterLabel, 5,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, counterLabel, 40,
+		layout.putConstraint(SpringLayout.EAST, counterLabel, 5,
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.SOUTH, counterLabel, -10,
 				SpringLayout.NORTH, submitButton);
 
-		layout.putConstraint(SpringLayout.WEST, submitButton, 40,
+		layout.putConstraint(SpringLayout.WEST, submitButton, 5,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.SOUTH, submitButton, -30,
 				SpringLayout.SOUTH, rightView);
 		
-		layout.putConstraint(SpringLayout.WEST, errorField, 40,
+		layout.putConstraint(SpringLayout.WEST, errorField, 5,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
 				SpringLayout.SOUTH, rightView);
