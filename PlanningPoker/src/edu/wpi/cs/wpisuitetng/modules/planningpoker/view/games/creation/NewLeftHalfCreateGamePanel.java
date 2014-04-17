@@ -316,27 +316,24 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		boolean isEndDateValid = false;
 		
 		isEndDateValid = getEndDateField().validateField(errorField, show);
-		
+		if (!isEndDateValid) {
+			getBoxDescription().setBorder(defaultTextBorder);
+			getBoxName().setBorder(defaultTextBorder);
+			parent.getRightHalf().getCurrentReqsPanel().setBorder((new JPanel().getBorder()));
+		}
+
 		isDescriptionValid = getBoxDescription().validateField(errorField, show);
+		if (!isDescriptionValid) {
+			getEndDateField().setBorder(defaultDateBorder);
+			getBoxName().setBorder(defaultTextBorder);
+			parent.getRightHalf().getCurrentReqsPanel().setBorder((new JPanel().getBorder()));
+		}
 
 		isNameValid = getBoxName().validateField(errorField, show);
-		
-		
-		if(show){
-			if(!isEndDateValid){
-				getBoxDescription().setBorder(defaultTextBorder);
-				getBoxName().setBorder(defaultTextBorder);
-			}
-
-			if (!isDescriptionValid) {
-				getEndDateField().setBorder(defaultDateBorder);
-				getBoxName().setBorder(defaultTextBorder);
-			}
-
-			if (!isNameValid) {
-				getEndDateField().setBorder(defaultDateBorder);
-				getBoxDescription().setBorder(defaultTextBorder);
-			}
+		if (!isNameValid) {
+			getEndDateField().setBorder(defaultDateBorder);
+			getBoxDescription().setBorder(defaultTextBorder);
+			parent.getRightHalf().getCurrentReqsPanel().setBorder((new JPanel().getBorder()));
 		}
 		
 		return (isNameValid && isDescriptionValid && isEndDateValid);

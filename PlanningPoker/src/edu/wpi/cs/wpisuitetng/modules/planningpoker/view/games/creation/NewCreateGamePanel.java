@@ -286,4 +286,12 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	private boolean doesUseCards(){
 		return leftHalf.doesUseCards();
 	}
+
+	public NewLeftHalfCreateGamePanel getLeftHalf() {
+		return leftHalf;
+	}
+
+	public NewRightHalfCreateGamePanel getRightHalf() {
+		return rightHalf;
+	}	
 }

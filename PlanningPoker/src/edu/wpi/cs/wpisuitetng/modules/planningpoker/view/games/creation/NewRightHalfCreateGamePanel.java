@@ -25,6 +25,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import org.jdesktop.swingx.JXDatePicker;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
@@ -41,10 +43,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
     
     private List<Requirement> requirements = new ArrayList<Requirement>();
    
-    private final Border defaultFieldBorder = (new JTextField()).getBorder();
-    
-    private final Border defaultAreaBorder = (new JTextArea()).getBorder();
-    
+    private final Border defaultTextBorder = (new JTextField()).getBorder();
+       
     private final Border defaultPanelBorder = (new JPanel()).getBorder();
     
     private final Border errorBorder = BorderFactory
@@ -85,16 +85,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		 */
 		table2 = initializeTable();
 		Font labelFont = makeFont();
-		
-		//Border defaultBorder = BorderFactory.createLineBorder(Color.black);
-		Border defaultBorder = defaultAreaBorder;
-		
+				
 		/**
 		 * Code for Current Reqs Panel
 		 */
         SpringLayout currentLayout = new SpringLayout();
         currentReqsPanel.setLayout(currentLayout);
-        currentReqsPanel.setBorder(defaultBorder);
+        currentReqsPanel.setBorder(defaultPanelBorder);
        
         JLabel currentReqs = new JLabel("Current Requirements");
         currentReqs.setFont(labelFont);
@@ -110,7 +107,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
          */
         SpringLayout createLayout = new SpringLayout();
         createReqsPanel.setLayout(createLayout);
-        createReqsPanel.setBorder(defaultBorder);
+        createReqsPanel.setBorder(defaultTextBorder);
         
         //initializes and set up the Create Requirement Label
         JLabel createReqsLabel = new JLabel("Create Requirements");
@@ -328,25 +325,25 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			descriptionValid = false;
 		}
 		else{
-			descArea.setBorder(defaultAreaBorder);
+			descArea.setBorder(defaultTextBorder);
 			descriptionValid = true;
 		}
 		
 		if(nameArea.getText().equals("")){
 			displayError("A name must be entered");
 			nameArea.setBorder(errorBorder);
-			descArea.setBorder(defaultAreaBorder);
+			descArea.setBorder(defaultTextBorder);
 			nameValid = false;
 		}
 		else{
-			nameArea.setBorder(defaultFieldBorder);
+			nameArea.setBorder(defaultTextBorder);
 			nameValid = true;
 		}
 		
 		if(!show){
 			errorLabel.setText("");
-			nameArea.setBorder(defaultFieldBorder);
-			descArea.setBorder(defaultAreaBorder);
+			nameArea.setBorder(defaultTextBorder);
+			descArea.setBorder(defaultTextBorder);
 		}
 		
 		return nameValid && descriptionValid;
@@ -371,7 +368,12 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	public List<Requirement> getRequirements(){
 		return requirements;
 	}
-	
+		
+	public JPanel getCurrentReqsPanel() {
+		return currentReqsPanel;
+	}
+
+
 	public void addRequirement(Requirement requirement){
 		table2.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 		requirements.add(requirement);
@@ -380,6 +382,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 
 	@Override
 	public boolean validateField(IErrorView warningField, boolean show) {
+		parent.getLeftHalf().getBoxName().setBorder(defaultTextBorder);
+		parent.getLeftHalf().getBoxDescription().setBorder(defaultTextBorder);
+		parent.getLeftHalf().getEndDateField().setBorder((new JXDatePicker()).getBorder());
+		
 		if(requirements.size() <= 0){
 			if(warningField != null){
 				if(show){
