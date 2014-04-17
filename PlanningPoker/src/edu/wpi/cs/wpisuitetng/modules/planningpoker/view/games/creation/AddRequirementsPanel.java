@@ -385,7 +385,7 @@ public class AddRequirementsPanel extends JPanel {
 		c.gridwidth = 8;
 		reqPanel.add(blankPanel3, c);
 				
-		this.add(reqPanel);
+		add(reqPanel);
 
 	}
 	

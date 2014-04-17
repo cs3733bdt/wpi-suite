@@ -65,10 +65,10 @@ public class StatisticsPanel extends JPanel{
 
 		super(new GridBagLayout());
 
-		this.setMinimumSize(new Dimension(580, 200));
-		this.repaint();
-		this.invalidate();
-		this.revalidate();
+		setMinimumSize(new Dimension(580, 200));
+		repaint();
+		invalidate();
+		revalidate();
 
 		activeGame = game;
 		activeRequirement = requirement;

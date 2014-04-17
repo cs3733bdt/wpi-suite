@@ -95,10 +95,10 @@ public class EstimatePanel extends JPanel{
 
 		super(new GridBagLayout());
 
-		this.setMinimumSize(new Dimension(580, 200));
-		this.repaint();
-		this.invalidate();
-		this.revalidate();
+		setMinimumSize(new Dimension(580, 200));
+		repaint();
+		invalidate();
+		revalidate();
 
 		activeGame = game;
 		activeRequirement = requirement;
@@ -306,12 +306,12 @@ public class EstimatePanel extends JPanel{
 		c.gridx = 0;
 		c.gridy = 0;
 		c.weightx = 1;
-		this.add(overviewPanel, c);
+		add(overviewPanel, c);
 		
-		this.setMinimumSize(new Dimension(580, 200));
-		this.repaint();
-		this.invalidate();
-		this.revalidate();
+		setMinimumSize(new Dimension(580, 200));
+		repaint();
+		invalidate();
+		revalidate();
 
 	}
 	

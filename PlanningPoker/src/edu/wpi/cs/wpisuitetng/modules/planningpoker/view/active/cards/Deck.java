@@ -80,9 +80,11 @@ public class Deck implements IDataField {
 		}
 	}
 
-	@Override
+	/**
+	 * returns true if the deck validates
+	 */
 	public boolean validateField(IErrorView warningField) {
-		return errorBit;
+		return !errorBit;
 	}
 
 	@Override

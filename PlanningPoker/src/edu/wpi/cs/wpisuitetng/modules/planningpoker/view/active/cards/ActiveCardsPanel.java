@@ -52,7 +52,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 		
 		int cardsPerRow = 11;
 		
-		this.setPreferredSize(new Dimension(800, 
+		setPreferredSize(new Dimension(800, 
 				(68 * (Math.round(deck.size() / cardsPerRow)) ) ) ); 
 		for (int i = 0; i < (deck.size()); i++) {
 			JToggleButtonList.add(new CardButton(i, deck, this, panel));
@@ -62,7 +62,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 		//adds the button to clear all entered estimates
 		JButton clearButton = new JButton("Clr");
 		clearButton.setToolTipText("Clear all Estimates");
-		this.add(clearButton); 
+		add(clearButton); 
 
 		//action Listener for the clear button 
 		clearButton.addActionListener(new ActionListener() {

@@ -51,10 +51,10 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		leftHalf = new NewLeftHalfCreateGamePanel(this);
 		rightHalf = new NewRightHalfCreateGamePanel(this);
 		
-		this.setLeftComponent(leftHalf);
-		this.setRightComponent(rightHalf);
+		setLeftComponent(leftHalf);
+		setRightComponent(rightHalf);
 		rightHalf.setMinimumSize(new Dimension(333, 500));
-		this.setDividerLocation(420);
+		setDividerLocation(420);
 		
 		revalidate();
 		repaint();
@@ -159,8 +159,8 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 * @return
 	 */
 	public boolean LaunchGamePressed() {
-		if(this.validateField(true)){
-			this.launchGame();
+		if(validateField(true)){
+			launchGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 			System.out.println("Launch Game Pressed Passed.");

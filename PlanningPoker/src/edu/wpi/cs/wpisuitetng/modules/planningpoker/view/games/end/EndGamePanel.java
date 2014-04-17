@@ -252,7 +252,7 @@ public class EndGamePanel extends JScrollPane implements AbstractModelObserver, 
 		
 		rightPanel.add(topHalfPanel);
 	
-		this.getViewport().add(rightPanel);
+		getViewport().add(rightPanel);
 	}
 	
 	public void setGameName(String newGameName) {
@@ -280,7 +280,7 @@ public class EndGamePanel extends JScrollPane implements AbstractModelObserver, 
 		blankPanel2.setVisible(false);
 		rightPanel.add(new StatisticsPanel(game, requirement));
 		rightPanel.revalidate();
-		this.revalidate();
+		revalidate();
 	}
 	
 	public void removeStatisticsPanel(){
@@ -288,7 +288,7 @@ public class EndGamePanel extends JScrollPane implements AbstractModelObserver, 
 		rightPanel.remove(1);
 		rightPanel.repaint();
 		//activeGameScrollPane.repaint();
-		this.revalidate();
+		revalidate();
 		//this.repaint();
 	}
 

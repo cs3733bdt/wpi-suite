@@ -80,7 +80,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		//Border defaultBorder = BorderFactory.createLineBorder(Color.black);
 		Border defaultBorder = defaultAreaBorder;
 		
-		/*
+		/**
 		 * Code for Current Reqs Panel
 		 */
         SpringLayout currentLayout = new SpringLayout();
@@ -96,7 +96,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         currentReqsPanel.add(currentReqs);
         currentReqsPanel.add(tablePanel2);
         
-        /*
+        /**
          * CODE FOR CREATE REQ PANEL
          */
         SpringLayout createLayout = new SpringLayout();
@@ -152,7 +152,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				submitButtonPressed();
 			 }
 		});
-		/*
+		/**
 		 * Format and Create Cancel Button
 		 */
 		JButton cancelRequirementButton = new JButton("Cancel");
@@ -243,9 +243,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         
         //anchor descPane to the top of the submit button
         createLayout.putConstraint(SpringLayout.SOUTH, descPane, -20, SpringLayout.NORTH, submitAddReqButton);
-        
-      
-        
         
         rightView.add(createReqsPanel);
         rightView.add(addReqButton);

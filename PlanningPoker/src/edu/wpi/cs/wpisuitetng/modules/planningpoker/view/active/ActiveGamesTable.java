@@ -40,8 +40,8 @@ public class ActiveGamesTable extends JTable
 	public ActiveGamesTable(Object[][] data, String[] columnNames)
 	{
 		setTableModel(new DefaultTableModel(data, columnNames));
-		this.setModel(getTableModel());
-		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		setModel(getTableModel());
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
 		
 		//TODO ALOT

@@ -227,8 +227,8 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	 * @return nameTextField
 	 */
 	public String getNameText() {
-		System.out.println(this.nameTextField.getText());
-		return this.nameTextField.getText();
+		System.out.println(nameTextField.getText());
+		return nameTextField.getText();
 	}
 	
 	/**
@@ -236,8 +236,8 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	 * @return descriptionTextField
 	 */
 	public String getDescText() {
-		System.out.println(this.descriptionTextField.getText());
-		return this.descriptionTextField.getText();
+		System.out.println(descriptionTextField.getText());
+		return descriptionTextField.getText();
 	}
 
 	/**

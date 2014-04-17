@@ -50,11 +50,11 @@ public class AddEndDatePanel extends JPanel {
 		dateMaker = new GregorianCalendar();
 		dateMaker.set(Calendar.DAY_OF_YEAR, dateMaker.get(Calendar.DAY_OF_YEAR)+1);
 		setDate(dateMaker.getTime());
-		this.add(endDateSelection);
-		this.add(datePicker);
-		this.add(hourSelection);
-		this.add(minuteSelection);
-		this.add(AmPmSelection);
+		add(endDateSelection);
+		add(datePicker);
+		add(hourSelection);
+		add(minuteSelection);
+		add(AmPmSelection);
 	}
 	
 	/**

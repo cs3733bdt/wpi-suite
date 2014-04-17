@@ -54,7 +54,7 @@ public class LaunchGameButtonPanel extends JPanel{
 		
 
 		//this.add(contentPanel);
-		this.add(launchGameButton);
+		add(launchGameButton);
 		launchGameButton.setVisible(true);
 		parentPanel = panel;
 	}

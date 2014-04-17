@@ -1,4 +1,6 @@
 /*******************************************************************************
+
+
  * Copyright (c) 2014 -- WPI Suite
  *
  * All rights reserved. This program and the accompanying materials
@@ -66,14 +68,14 @@ public class AddReqImportReqPanel extends JPanel {
 		/**
 		 * adds both buttons to the panel
 		 */
-		this.add(addReq);
+		add(addReq);
 		//this.add(Box.createRigidArea(new Dimension(220, 0)));
 		//this.add(importReq);
 		
 	}
 	
 	public void setCreateReqPanelVisible(AddRequirementsPanel panel) {
-		this.setVisible(true);
+		setVisible(true);
 	}
 	
 }

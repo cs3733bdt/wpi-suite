@@ -34,7 +34,7 @@ public class InitialView extends JPanel {
 		
 		c.fill = GridBagConstraints.HORIZONTAL;
 		
-		this.add(panel);
+		add(panel);
 		
 	}
 	

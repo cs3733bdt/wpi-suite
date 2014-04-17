@@ -45,7 +45,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
-		this.setPreferredSize(new Dimension(175,50)); 
+		setPreferredSize(new Dimension(175,50)); 
 		
 		
 		createGameIcon.setHorizontalAlignment(SwingConstants.CENTER);
@@ -73,7 +73,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		contentPanel.setOpaque(false);
 		
-		this.add(contentPanel);
+		add(contentPanel);
 	}
 	/**
 	 * getter for the create game icon

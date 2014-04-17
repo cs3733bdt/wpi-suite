@@ -351,7 +351,7 @@ public class CreateGamePanel extends JScrollPane {
 		 */
 		
 
-		this.getViewport().add(rightPanel);
+		getViewport().add(rightPanel);
 	}
 
 	public CreateGamePanel(Game game, boolean withError) {
@@ -428,8 +428,8 @@ public class CreateGamePanel extends JScrollPane {
 	 * @return true when a game is sucsessfully added
 	 */
 	public boolean SaveGamePressed() {
-		if(this.validateField(true)){
-			this.saveGame();
+		if(validateField(true)){
+			saveGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 			System.out.println("Add Game Pressed Passed.");
@@ -442,8 +442,8 @@ public class CreateGamePanel extends JScrollPane {
 	}
 	
 	public boolean LaunchGamePressed() {
-		if(this.validateField(true)){
-			this.launchGame();
+		if(validateField(true)){
+			launchGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 			System.out.println("Launch Game Pressed Passed.");
@@ -612,8 +612,8 @@ public class CreateGamePanel extends JScrollPane {
 	}
 	
 	private void setCurrentGame(boolean active){
-		currentGame.setName(this.getBoxName().getText());
-		currentGame.setDescription(this.getBoxDescription().getText());
+		currentGame.setName(getBoxName().getText());
+		currentGame.setDescription(getBoxDescription().getText());
 		currentGame.setActive(active);
 		currentGame.setUsesCards(doesUseCards());
 		currentGame.setRequirements(requirements);

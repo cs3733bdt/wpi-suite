@@ -49,7 +49,7 @@ public class NewAddReqImportReqPanel extends JPanel {
 		/**
 		 * adds both buttons to the panel
 		 */
-		this.add(addReq);
+		add(addReq);
 		//this.add(Box.createRigidArea(new Dimension(220, 0)));
 		//this.add(importReq);
 		
