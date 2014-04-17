@@ -29,9 +29,9 @@ public class ToolbarView extends DefaultToolbarView {
 	 * @param visible returns true if the card is visible
 	 */
 	public ToolbarView(boolean visible){
-		this.addGroup(createGameButton);
+		addGroup(createGameButton);
 	    //this.setBorder(BorderFactory.createLineBorder(Color.blue, 2)); // add a border so you can see the panel
-	    this.repaint();
+	    repaint();
 	    
 	}
 }

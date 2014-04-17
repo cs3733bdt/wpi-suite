@@ -59,9 +59,9 @@ public class TabbedView extends JTabbedPane {
 	 */
 	public TabbedView(){
 		
-		this.addTab("Overview", initView);
+		addTab("Overview", initView);
 	    //this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
-		this.setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
+		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
 	    
 	    closeAll.addActionListener(new ActionListener()
 		{
@@ -84,33 +84,33 @@ public class TabbedView extends JTabbedPane {
 	    popup.add(closeAll);
 	    popup.add(closeOthers);
 	    
-	    this.addMouseListener(new MouseAdapter()
-		{
-			@Override
-			public void mousePressed(MouseEvent e)
-			{
-				if(e.isPopupTrigger()) popup.show(e.getComponent(), e.getX(), e.getY());
-			}
+	    addMouseListener(new MouseAdapter()
+	    {
+	    	@Override
+	    	public void mousePressed(MouseEvent e)
+	    	{
+	    		if(e.isPopupTrigger()) popup.show(e.getComponent(), e.getX(), e.getY());
+	    	}
 
-			@Override
-			public void mouseReleased(MouseEvent e) {
-				if(dragging) {
-					int tabNumber = getUI().tabForCoordinate(TabbedView.this, e.getX(), e.getY());
-					if(tabNumber >= 0) {
-						Component comp = getComponentAt(draggedTabIndex);
-						String title = getTitleAt(draggedTabIndex);
-						if (!title.equals("Overview")) {
-							removeTabAt(draggedTabIndex);
-							insertTab(title, null, comp, null, tabNumber);
-							setSelectedIndex(tabNumber);
-						}
-					}
-				}
+	    	@Override
+	    	public void mouseReleased(MouseEvent e) {
+	    		if(dragging) {
+	    			int tabNumber = getUI().tabForCoordinate(TabbedView.this, e.getX(), e.getY());
+	    			if(tabNumber >= 0) {
+	    				Component comp = getComponentAt(draggedTabIndex);
+	    				String title = getTitleAt(draggedTabIndex);
+	    				if (!title.equals("Overview")) {
+	    					removeTabAt(draggedTabIndex);
+	    					insertTab(title, null, comp, null, tabNumber);
+	    					setSelectedIndex(tabNumber);
+	    				}
+	    			}
+	    		}
 
-				dragging = false;
-				tabImage = null;
-			}
-		});
+	    		dragging = false;
+	    		tabImage = null;
+	    	}
+	    });
 	}
 
 	/**

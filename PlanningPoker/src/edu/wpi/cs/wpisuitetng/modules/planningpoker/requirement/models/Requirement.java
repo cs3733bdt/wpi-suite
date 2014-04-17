@@ -99,7 +99,7 @@ public class Requirement extends ObservableModel {
 	 * @param id value to set the id to
 	 */
 	public void setId(int id){
-		this.delayChange();
+		delayChange();
 		fromRequirementModule = true;
 		this.id = id;
 	}
@@ -109,7 +109,7 @@ public class Requirement extends ObservableModel {
 	 * @param identity value to set the identity to
 	 */
 	public void setIdentity(UUID identity){
-		this.delayChange();
+		delayChange();
 		fromRequirementModule = false;
 		this.identity = identity;
 	}
@@ -145,26 +145,26 @@ public class Requirement extends ObservableModel {
 	 * @param vote the votes to set          
 	 */
 	public void addVote(Vote vote) {
-		this.delayChange();	//Holds the code until the server is finished re-populating the model
+		delayChange();	//Holds the code until the server is finished re-populating the model
 		for(int i = 0; i < votes.size(); i++) {
 			if(vote.getUsername().equals(votes.get(i).getUsername())) {	//Has person voted?
 				votes.get(i).setVoteNumber(vote.getVoteNumber());		//Update their vote
-				this.hasChanged();										//Acknowledge change
-				this.notifyObservers(votes.get(i));						//Run update in game class
+				hasChanged();										//Acknowledge change
+				notifyObservers(votes.get(i));						//Run update in game class
 				return;													//Exit this class
 			}
 		}
 		votes.add(vote);
-		if(this.getProject() != null){
-			if(votes.size() == this.getProject().getTeam().length) {
-				this.makeComplete();
+		if(getProject() != null){
+			if(votes.size() == getProject().getTeam().length) {
+				makeComplete();
 			}
 		} else {
 			System.err.println("THE PROJECT IN THE REQUIREMENT WAS NULL: ADD VOTE METHOD");
 		}
 		
-		this.hasChanged();
-		this.notifyObservers(vote);
+		hasChanged();
+		notifyObservers(vote);
 	}
 	
 	/**
@@ -181,10 +181,10 @@ public class Requirement extends ObservableModel {
 	 * sets the requirement to completed
 	 */
 	public void makeComplete() {
-		this.delayChange();
+		delayChange();
 		complete = true;
-		this.makeChanged();
-		this.notifyObservers();
+		makeChanged();
+		notifyObservers();
 	}
 
 	/**

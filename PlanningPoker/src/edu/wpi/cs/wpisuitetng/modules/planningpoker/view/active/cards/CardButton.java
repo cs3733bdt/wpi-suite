@@ -57,24 +57,24 @@ public class CardButton extends JToggleButton implements Accessible {
 			//button = new JToggleButton(buttonNum);
 			try {
 				Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
-				this.setIcon(new ImageIcon(frontImg));
+				setIcon(new ImageIcon(frontImg));
 			} catch (IOException ex) {
 				ex.printStackTrace();
 			}
 			//Set the Button's tooltiptext and position it correctly
-			this.setText(deck.get(cardNum));
-			this.setToolTipText("Add " + buttonNum + " to the total");
+			setText(deck.get(cardNum));
+			setToolTipText("Add " + buttonNum + " to the total");
 		}
 		else {
-			this.setText("0?");
-			this.setToolTipText("I don't know what to estimate");
+			setText("0?");
+			setToolTipText("I don't know what to estimate");
 		}
 	
-		 this.setHorizontalTextPosition(SwingConstants.CENTER);
-		 this.setVerticalAlignment(SwingConstants.CENTER);
+		 setHorizontalTextPosition(SwingConstants.CENTER);
+		 setVerticalAlignment(SwingConstants.CENTER);
 		 
 		 //Add the action listener to the button
-		this.addActionListener(new CardActionListenerRefactor(cardNum, deck, this, passedCardsPanel, panel2));
+		addActionListener(new CardActionListenerRefactor(cardNum, deck, this, passedCardsPanel, panel2));
 		panel.add(this);
 	}
 
@@ -83,6 +83,6 @@ public class CardButton extends JToggleButton implements Accessible {
 	 * @return the value of the card
 	 */
 	public String getValue() {
-		return this.getText();
+		return getText();
 	}
 }

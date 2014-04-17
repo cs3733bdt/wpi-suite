@@ -33,8 +33,8 @@ public class EndGameTable extends JTable
 	public EndGameTable(Object[][] data, String[] columnNames)
 	{
 		setTableModel(new DefaultTableModel(data, columnNames));
-		this.setModel(getTableModel());
-		this.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);		
+		setModel(getTableModel());
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);		
 	}
 	
 	@Override

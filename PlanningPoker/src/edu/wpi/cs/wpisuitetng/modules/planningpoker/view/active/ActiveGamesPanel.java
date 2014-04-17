@@ -284,7 +284,7 @@ public class ActiveGamesPanel extends JScrollPane implements AbstractModelObserv
 		
 		rightPanel.add(topHalfPanel);
 	
-		this.getViewport().add(rightPanel);
+		getViewport().add(rightPanel);
 	}
 	
 	public void setGameName(String newGameName) {

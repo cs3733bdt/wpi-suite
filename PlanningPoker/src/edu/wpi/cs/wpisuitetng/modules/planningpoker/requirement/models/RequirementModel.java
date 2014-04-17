@@ -181,7 +181,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 			iterator.next();
 			iterator.remove();
 		}
-		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));
+		fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));
 	}
 	
 	/**
@@ -194,7 +194,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 			this.requirements.add(requirements[i]);
 			if(requirements[i].getId() >= nextID) nextID = requirements[i].getId() + 1;
 		}
-		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
+		fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
 		/*
 		ViewEventController.getInstance().refreshTable();
 		ViewEventController.getInstance().refreshTree();

@@ -40,7 +40,6 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 											// happened
 	private Game currentGame;
 	
-	
 	/**
 	 * Creates a NewCreateGamePanel with the game setting the fields for the panel.
 	 * This is used to edit an existing game in the model that has not yet been made active
@@ -51,10 +50,10 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		leftHalf = new NewLeftHalfCreateGamePanel(this);
 		rightHalf = new NewRightHalfCreateGamePanel(this);
 		
-		this.setLeftComponent(leftHalf);
-		this.setRightComponent(rightHalf);
+		setLeftComponent(leftHalf);
+		setRightComponent(rightHalf);
 		rightHalf.setMinimumSize(new Dimension(333, 500));
-		this.setDividerLocation(420);
+		setDividerLocation(420);
 		
 		revalidate();
 		repaint();
@@ -111,6 +110,13 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 			return true;
 
 		// TODO Check fields to see if this window has unsaved changes
+		if (containsData()) { 
+			readyToRemove = false;
+		}
+		else {
+			readyToRemove = true;
+		}
+		
 
 		if (readyToRemove) {
 			return true;
@@ -124,6 +130,13 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 
 	}
 	
+	private boolean containsData() {
+		return ( !(getBoxName().getText().isEmpty()) || 
+					!(getBoxDescription().getText().isEmpty()) ||
+						!(rightHalf.getRequirements().isEmpty()) ); 
+	}
+
+
 	/**
 	 * Checks to see if all of this panels sub elements are valid to be saved or launched
 	 * @param whether or not to show the error
@@ -159,8 +172,8 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 * @return
 	 */
 	public boolean LaunchGamePressed() {
-		if(this.validateField(true)){
-			this.launchGame();
+		if(validateField(true)){
+			launchGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 			System.out.println("Launch Game Pressed Passed.");

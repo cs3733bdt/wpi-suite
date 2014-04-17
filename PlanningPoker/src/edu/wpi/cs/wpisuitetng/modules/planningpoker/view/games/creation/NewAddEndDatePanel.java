@@ -56,11 +56,11 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 	 * @param view
 	 */
 	public NewAddEndDatePanel(final NewLeftHalfCreateGamePanel view){
-		this.add(endDateSelection);
-		this.add(datePicker);
-		this.add(hourSelection);
-		this.add(minuteSelection);
-		this.add(AmPmSelection);
+		add(endDateSelection);
+		add(datePicker);
+		add(hourSelection);
+		add(minuteSelection);
+		add(AmPmSelection);
 		dateMaker = new GregorianCalendar();
 	}
 	

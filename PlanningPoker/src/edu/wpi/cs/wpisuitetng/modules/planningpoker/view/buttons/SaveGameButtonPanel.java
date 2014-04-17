@@ -56,7 +56,7 @@ public class SaveGameButtonPanel extends JPanel{
 		
 
 		//this.add(contentPanel);
-		this.add(saveGameButton);
+		add(saveGameButton);
 		saveGameButton.setVisible(true);
 		parentPanel = panel;
 	}

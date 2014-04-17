@@ -193,8 +193,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		}
 		
 		if(needsUpdate){
-			this.makeChanged();
-			this.notifyObservers();
+			makeChanged();
+			notifyObservers();
 		}
 		
 		
@@ -240,7 +240,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		this.requirements = requirements;
 		for(Requirement req : this.requirements){
 			req.addObserver(this);
-			req.setProject(this.getProject());
+			req.setProject(getProject());
 		}
 		this.usesCards = usesCards;
 
@@ -271,8 +271,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @return the uuid of the game
 	 */
 	public void setIdentifier(UUID identifier){
-		this.delayChange();
-		this.makeChanged();
+		delayChange();
+		makeChanged();
 		identity = identifier;
 	}
 	
@@ -300,8 +300,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setName(String newName){
 		if(!name.equals(newName)){
-			this.makeChanged();
-			this.delayChange();
+			makeChanged();
+			delayChange();
 			name = newName;
 		}
 	}
@@ -319,8 +319,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void makeComplete(){
 		if(!complete ){
-			this.makeChanged();
-			this.delayChange();
+			makeChanged();
+			delayChange();
 			complete = true;
 		}
 	}
@@ -339,8 +339,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setUsesCards(boolean newUsesCards){
 		if(usesCards != newUsesCards){
-			this.makeChanged();
-			this.delayChange();
+			makeChanged();
+			delayChange();
 			usesCards = newUsesCards;
 		}
 	}
@@ -359,8 +359,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setDescription(String newDescription){
 		if(!description.equals(newDescription)){
-			this.makeChanged();
-			this.delayChange();
+			makeChanged();
+			delayChange();
 			description = newDescription;
 		}
 	}
@@ -394,8 +394,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setRequirements(List<Requirement> newReqs){
 		if(requirements != newReqs){
-			this.makeChanged();
-			this.delayChange();
+			makeChanged();
+			delayChange();
 			requirements = newReqs;
 			for(Requirement req : requirements){
 				req.addObserver(this);
@@ -417,8 +417,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setCreator(String creator) {
 		if(!this.creator.equals(creator)){
-			this.makeChanged();
-			this.delayChange();
+			makeChanged();
+			delayChange();
 			this.creator = creator;
 		}
 	}
@@ -428,7 +428,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 * @return the number of all users
 	 */
 	public int getUsers(){
-		return this.getProject().getTeam().length;
+		return getProject().getTeam().length;
 	}
 	
 	/**
@@ -456,8 +456,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setActive(boolean newActive){
 		if(active != newActive){
-			this.makeChanged();
-			this.delayChange();
+			makeChanged();
+			delayChange();
 			active = newActive;
 		}
 	}
@@ -528,11 +528,11 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	@Override
 	public void update(ObservableModel o, Object arg) {
 		if (o instanceof Requirement){
-			this.makeChanged();
-			this.notifyObservers(arg);
+			makeChanged();
+			notifyObservers(arg);
 		}
-		System.out.println("Game: " + name + " has " + this.countObservers() + " observers");
-		if(this.countObservers()>0){
+		System.out.println("Game: " + name + " has " + countObservers() + " observers");
+		if(countObservers()>0){
 			System.out.println("\t" + this.getObserver(0));
 		}
 	}
@@ -547,7 +547,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setEndDate(Date endDate) {
 		if(this.endDate != endDate){
-			this.makeChanged();
+			makeChanged();
 			this.endDate = endDate;
 		}
 	}
@@ -575,8 +575,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setNotifiedOfCreation(boolean notifiedOfCreation) {
 		if (this.notifiedOfCreation != notifiedOfCreation) {
-			this.makeChanged();
-			this.delayChange();
+			makeChanged();
+			delayChange();
 			this.notifiedOfCreation = notifiedOfCreation;
 		}
 	}
@@ -595,8 +595,8 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	 */
 	public void setNotifiedOfCompletion(boolean notifiedOfCompletion) {
 		if (this.notifiedOfCompletion != notifiedOfCompletion) {
-			this.makeChanged();
-			this.delayChange();
+			makeChanged();
+			delayChange();
 			this.notifiedOfCompletion = notifiedOfCompletion;
 		}
 	}

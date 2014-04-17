@@ -118,6 +118,7 @@ public class InitialView extends JScrollPane {
 				+ "can be found on the tree to the left. If a game is launched by clicking th Launch Game"
 				+ "button, it can be accessed in the Active Games folder in the tree to the left.");
 		
+
 		createGameExp.setEditable(false);
 		createGameExp.setBackground(null);
 		createGameExp.setWrapStyleWord(true);
@@ -148,6 +149,7 @@ public class InitialView extends JScrollPane {
 		
 		layout.putConstraint(SpringLayout.NORTH, whyPane, 10, SpringLayout.SOUTH, ppWhyLabel);
 		layout.putConstraint(SpringLayout.WEST, whyPane, 5, SpringLayout.WEST, panel);
+
 		
 		layout.putConstraint(SpringLayout.NORTH, createGameLabel, 10, SpringLayout.SOUTH, whyPane);
 		layout.putConstraint(SpringLayout.WEST, createGameLabel, 5, SpringLayout.WEST, panel);
