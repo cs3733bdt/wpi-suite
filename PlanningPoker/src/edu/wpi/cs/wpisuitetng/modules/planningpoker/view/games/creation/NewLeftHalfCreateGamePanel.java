@@ -16,10 +16,10 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -367,13 +367,9 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	}
 	
 	private void addKeyListenerTo(JComponent component){
-		component.addKeyListener(new KeyListener(){
-			public void keyPressed(KeyEvent arg0) {		
-			}
+		component.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {	
 				parent.updateButtons();
-			}
-			public void keyTyped(KeyEvent arg0) {
 			}
 		});
 	}
@@ -399,17 +395,9 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	}
 	
 	private void addMouseListenerTo(JComponent component){
-		component.addMouseListener(new MouseListener(){
+		component.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent arg0) {
 					parent.validateField(true);
-			}
-			public void mouseEntered(MouseEvent arg0) {				
-			}
-			public void mouseExited(MouseEvent arg0) {				
-			}
-			public void mousePressed(MouseEvent arg0) {				
-			}
-			public void mouseReleased(MouseEvent arg0) {				
 			}
 		});
 	}
