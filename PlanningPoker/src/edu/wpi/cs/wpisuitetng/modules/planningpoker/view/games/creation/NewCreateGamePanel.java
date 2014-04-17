@@ -110,6 +110,13 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 			return true;
 
 		// TODO Check fields to see if this window has unsaved changes
+		if (containsData()) { 
+			readyToRemove = false;
+		}
+		else {
+			readyToRemove = true;
+		}
+		
 
 		if (readyToRemove) {
 			return true;
@@ -123,6 +130,13 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 
 	}
 	
+	private boolean containsData() {
+		return ( !(getBoxName().getText().isEmpty()) || 
+					!(getBoxDescription().getText().isEmpty()) ||
+						!(rightHalf.getRequirements().isEmpty()) ); 
+	}
+
+
 	/**
 	 * Checks to see if all of this panels sub elements are valid to be saved or launched
 	 * @param whether or not to show the error
