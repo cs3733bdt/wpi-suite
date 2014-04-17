@@ -198,7 +198,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			layout.putConstraint(SpringLayout.NORTH, counterLabel, 5, 
 					SpringLayout.SOUTH, cardPanel);
 			cardPanel.getHorizontalScrollBar().setValue(200);
-	    layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, cardPanel, 5, SpringLayout.HORIZONTAL_CENTER, rightView);
+	    layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, cardPanel, 0, SpringLayout.HORIZONTAL_CENTER, rightView);
 
 			cardPanel.setVisible(false);
 			
