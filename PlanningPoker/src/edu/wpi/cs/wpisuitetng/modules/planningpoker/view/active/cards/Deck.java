@@ -83,7 +83,7 @@ public class Deck implements IDataField {
 	/**
 	 * returns true if the deck validates
 	 */
-	public boolean validateField(IErrorView warningField) {
+	public boolean validateField(IErrorView warningField, boolean show) {
 		return !errorBit;
 	}
 

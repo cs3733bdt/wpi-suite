@@ -146,8 +146,16 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 * @return true when the all of this panel's sub elements are valid
 	 */
 	public boolean validateField(boolean show){
-		boolean rightPanelValid = rightHalf.validateField(leftHalf.getErrorField());
-		boolean leftPanelValid = leftHalf.validateField(null);
+		boolean rightPanelValid;
+		boolean leftPanelValid;
+		if(show){
+			rightPanelValid = rightHalf.validateField(leftHalf.getErrorField(), true);
+			leftPanelValid = leftHalf.validateField(null, true);
+		}
+		else{
+			rightPanelValid = rightHalf.validateField(leftHalf.getErrorField(), false);
+			leftPanelValid = leftHalf.validateField(null, false);
+		}
 		
 		if(!leftHalf.getSaveGameButtonPanel().getSaveGameButton().isEnabled() && leftPanelValid && rightPanelValid){
 			leftHalf.getErrorField().setText("No changes have been made");

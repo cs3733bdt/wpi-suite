@@ -26,7 +26,7 @@ public interface IDataField {
 	 * @param warningField The external warning field that you want to indicate the error to
 	 * @return true when all of the fields in this component are valid
 	 */
-	public boolean validateField(IErrorView warningField);
+	public boolean validateField(IErrorView warningField, boolean show);
 	
 	
 	/**

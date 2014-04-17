@@ -30,7 +30,6 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -55,9 +54,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * Used to input the Games name, description, end date, whether it uses cards
  */
 public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataField{
-	
-	private final Border defaultBorder = (new JTextField()).getBorder();
-	
+		
 	private NameJTextField nameTextField;
 	private DescriptionJTextArea descriptionTextField;
 	
@@ -78,6 +75,13 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	private Date endDate;
 	
 	private Game game;
+	
+	 private final Border defaultTextBorder = (new JTextField()).getBorder();
+	    
+	 private final Border defaultDateBorder = (new JXDatePicker()).getBorder();	
+	 
+	 private final Border errorBorder = BorderFactory
+			.createLineBorder(Color.RED);
 	
 	private NewCreateGamePanel parent;
 	
@@ -108,7 +112,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		JLabel descLabel = new JLabel("Description * ");				//Creates the label for the Description
 		
 		descriptionTextField = new DescriptionJTextArea();				//Initializes the text area for the game description
-		descriptionTextField.setBorder(defaultBorder);					//Sets the default border to the description text area
+		descriptionTextField.setBorder(defaultTextBorder);					//Sets the default border to the description text area
 		
 		addKeyListenerTo(nameTextField);								//Adds KeyListener to update on key press
 		addKeyListenerTo(descriptionTextField);							//Adds KeyListener to update on key press
@@ -306,16 +310,34 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	 * @return true If all fields are valid and the window is ready to be removed
 	 */
 	@Override
-	public boolean validateField(IErrorView warningField) {
+	public boolean validateField(IErrorView warningField, boolean show) {
 		boolean isNameValid = false;
 		boolean isDescriptionValid = false;
 		boolean isEndDateValid = false;
 		
-		isEndDateValid = getEndDateField().validateField(errorField);
+		isEndDateValid = getEndDateField().validateField(errorField, show);
 		
-		isDescriptionValid = getBoxDescription().validateField(errorField);
+		isDescriptionValid = getBoxDescription().validateField(errorField, show);
 
-		isNameValid = getBoxName().validateField(errorField);
+		isNameValid = getBoxName().validateField(errorField, show);
+		
+		
+		if(show){
+			if(!isEndDateValid){
+				getBoxDescription().setBorder(defaultTextBorder);
+				getBoxName().setBorder(defaultTextBorder);
+			}
+
+			if (!isDescriptionValid) {
+				getEndDateField().setBorder(defaultDateBorder);
+				getBoxName().setBorder(defaultTextBorder);
+			}
+
+			if (!isNameValid) {
+				getEndDateField().setBorder(defaultDateBorder);
+				getBoxDescription().setBorder(defaultTextBorder);
+			}
+		}
 		
 		return (isNameValid && isDescriptionValid && isEndDateValid);
 	}
