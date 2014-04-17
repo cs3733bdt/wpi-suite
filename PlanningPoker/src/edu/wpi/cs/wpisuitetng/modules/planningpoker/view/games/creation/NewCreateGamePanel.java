@@ -40,7 +40,6 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 											// happened
 	private Game currentGame;
 	
-	
 	/**
 	 * Creates a NewCreateGamePanel with the game setting the fields for the panel.
 	 * This is used to edit an existing game in the model that has not yet been made active
