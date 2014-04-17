@@ -68,6 +68,8 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 */
 	public NewCreateGamePanel(){
 		this(null);
+		currentGame = null;
+
 	}
 	
 	public NewCreateGamePanel(Game game, boolean withError) {
@@ -146,6 +148,10 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	public boolean validateField(boolean show){
 		boolean rightPanelValid = rightHalf.validateField(leftHalf.getErrorField());
 		boolean leftPanelValid = leftHalf.validateField(null);
+		
+		if(!leftHalf.getSaveGameButtonPanel().getSaveGameButton().isEnabled() && leftPanelValid && rightPanelValid){
+			leftHalf.getErrorField().setText("No changes have been made");
+		}
 		
 		if(show == false){
 			leftHalf.getErrorField().setText("");

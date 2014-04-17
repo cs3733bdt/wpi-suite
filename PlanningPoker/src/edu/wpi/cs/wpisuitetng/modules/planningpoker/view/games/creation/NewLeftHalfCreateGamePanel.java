@@ -146,7 +146,9 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		buttonPanel.add(launchGameButton);								//Adds the launch button to the panel
 		//buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel
 		saveGameButton.getSaveGameButton().setEnabled(false);
-		launchGameButton.getLaunchGameButton().setEnabled(false);
+		if(parent.getGame() == null){
+			launchGameButton.getLaunchGameButton().setEnabled(false);
+		}
 		
 		addMouseListenerTo(buttonPanel);							//Adds MouseListener to validate on mouse click
 		addMouseListenerTo(saveGameButton.getSaveGameButton());		//Adds MouseListener to validate on mouse click
