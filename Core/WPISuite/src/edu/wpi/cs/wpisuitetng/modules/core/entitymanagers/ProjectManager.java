@@ -313,7 +313,7 @@ public class ProjectManager implements EntityManager<Project>{
 		}
 		else
 		{
-			p = data.retrieve(project, "idNum", id).toArray(p);
+			p = data.retrieve(project, "idNum", id).toArray(new Project[0]);
 			
 			if(p[0] == null)
 			{
