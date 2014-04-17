@@ -30,8 +30,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * Used to create a new Planning Poker game using the input of the user.
  */
 public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
-	private NewLeftHalfCreateGamePanel leftHalf;
-	private NewRightHalfCreateGamePanel rightHalf;
+	private NewLeftHalfCreateGamePanel leftHalf = new NewLeftHalfCreateGamePanel(this);
+	private NewRightHalfCreateGamePanel rightHalf = new NewRightHalfCreateGamePanel(this);
 	
 	
 	private boolean readyToClose = false;
@@ -46,9 +46,10 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 * @param game the game that we are editing
 	 */
 	public NewCreateGamePanel(Game game) {
-		this.currentGame = game;
+		currentGame = game;
 		leftHalf = new NewLeftHalfCreateGamePanel(this);
 		rightHalf = new NewRightHalfCreateGamePanel(this);
+		
 		
 		setLeftComponent(leftHalf);
 		setRightComponent(rightHalf);
@@ -128,9 +129,14 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 * @param whether or not to show the error
 	 * @return true when the all of this panel's sub elements are valid
 	 */
-	private boolean validateField(boolean show){
-		boolean leftPanelValid = leftHalf.validateField(null);
+	public boolean validateField(boolean show){
 		boolean rightPanelValid = rightHalf.validateField(leftHalf.getErrorField());
+		boolean leftPanelValid = leftHalf.validateField(null);
+		
+		if(show == false){
+			leftHalf.getErrorField().setText("");
+		}
+		
 		return leftPanelValid && rightPanelValid;
 	}
 	
@@ -216,6 +222,17 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		currentGame.setEndDate(getEndDateField().getEndDate());
 		currentGame.setCreator(ConfigManager.getConfig().getUserName());
 		currentGame.notifyObservers();
+	}
+	
+	public void updateButtons(){
+		if(validateField(false)){
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
+		}
+		else{
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+		}
 	}
 
 	/**

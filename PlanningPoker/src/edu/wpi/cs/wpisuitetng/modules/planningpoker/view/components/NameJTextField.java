@@ -70,21 +70,16 @@ public class NameJTextField extends JTextField implements IDataField {
 		
 		if (getText().length() >= 100) {
 			isNameValid = false;
-			setBorder(errorBorder);
-			// getErrorName().setForeground(Color.RED);
 			if(errorField != null) errorField.setText("Name can be no more than 100 chars.");
 		} else if (getText().length() <= 0) {
 			isNameValid = false;
 			if (errorField != null) {
 				// getErrorName().setText("** Name is REQUIRED");
-				setBorder(errorBorder);
 				// getErrorName().setForeground(Color.RED);
 			}
-
 			if(errorField != null) errorField.setText("Name is required");
 		} else {
 			// getErrorName().setText("");
-			setBorder(defaultBorder);
 			isNameValid = true;
 		}
 		return isNameValid;

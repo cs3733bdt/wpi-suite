@@ -155,6 +155,23 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 		
 		return hours;
 	}
+
+	
+	public JXDatePicker getDatePicker() {
+		return datePicker;
+	}
+
+	public JComboBox<String> getHourSelection() {
+		return hourSelection;
+	}
+
+	public JComboBox<String> getMinuteSelection() {
+		return minuteSelection;
+	}
+
+	public JComboBox<String> getAmPmSelection() {
+		return AmPmSelection;
+	}
 	
 	private void setDate(Date oldDate){
 		datePicker.setDate(oldDate);
@@ -205,7 +222,6 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 			isEndDateValid = true;
 		} else {
 			isEndDateValid = false;
-			setBorder(errorBorder);
 			warningField.setText("End Date and time must be set later than the current date");
 		}
 		

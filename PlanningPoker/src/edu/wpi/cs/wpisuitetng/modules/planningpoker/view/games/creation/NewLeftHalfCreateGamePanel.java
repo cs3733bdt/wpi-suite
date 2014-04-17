@@ -14,6 +14,12 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -21,6 +27,8 @@ import java.util.GregorianCalendar;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -30,6 +38,8 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+
+import org.jdesktop.swingx.JXDatePicker;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewLaunchGameButtonPanel;
@@ -100,6 +110,9 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		descriptionTextField = new DescriptionJTextArea();				//Initializes the text area for the game description
 		descriptionTextField.setBorder(defaultBorder);					//Sets the default border to the description text area
 		
+		addKeyListenerTo(nameTextField);								//Adds KeyListener to update on key press
+		addKeyListenerTo(descriptionTextField);							//Adds KeyListener to update on key press
+		
 		JScrollPane descPane = new JScrollPane(descriptionTextField);	//Creates the scrollPane for the description field
 		descPane.setPreferredSize(new Dimension(200, 200));				//Sets the preferred(which works as minimum for some reason) size of the description scroll pane
 		
@@ -115,6 +128,15 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		
 		endDateField = new NewAddEndDatePanel(this);					//Creates an end date panel
 		
+		addKeyListenerTo(endDateField.getDatePicker());
+		addActionListenerTo(endDateField.getDatePicker(), "JXDatePicker");			//Adds ActionListener to update when a selection is made
+		addActionListenerTo(endDateField.getHourSelection(), "JComboBox");			//Adds ActionListener to update when a selection is made
+		addActionListenerTo(endDateField.getMinuteSelection(), "JComboBox");		//Adds ActionListener to update when a selection is made
+		addActionListenerTo(endDateField.getAmPmSelection(), "JComboBox");			//Adds ActionListener to update when a selection is made
+
+		
+		
+		
 		saveGameButton = new NewSaveGameButtonPanel(parent);				//Creates a save game button
 		launchGameButton = new NewLaunchGameButtonPanel(parent);		//Creates a launch game button
 		//cancelGameButton = new NewCancelGameButtonPanel(this);		//TODO implement this
@@ -123,6 +145,12 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		buttonPanel.add(saveGameButton);								//Adds the save button to the panel
 		buttonPanel.add(launchGameButton);								//Adds the launch button to the panel
 		//buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel
+		saveGameButton.getSaveGameButton().setEnabled(false);
+		launchGameButton.getLaunchGameButton().setEnabled(false);
+		
+		addMouseListenerTo(buttonPanel);							//Adds MouseListener to validate on mouse click
+		addMouseListenerTo(saveGameButton.getSaveGameButton());		//Adds MouseListener to validate on mouse click
+		addMouseListenerTo(launchGameButton.getLaunchGameButton());	//Adds MouseListener to validate on mouse click
 		
 		errorField = new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
@@ -192,9 +220,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 			nameTextField.setText(game.getName());
 			descriptionTextField.setText(game.getDescription());
 			setUsesCards(game.doesUseCards());
-			
-			
-			
+	
 			//CALENDAR SETUP
 			Calendar dateMaker = new GregorianCalendar();
 			dateMaker.setTime(game.getEndDate());
@@ -260,6 +286,16 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		errorField.setText(error);
 	}
 	
+	
+	
+	public NewSaveGameButtonPanel getSaveGameButtonPanel() {
+		return saveGameButton;
+	}
+
+	public NewLaunchGameButtonPanel getLaunchGameButtonPanel() {
+		return launchGameButton;
+	}
+
 	/**
 	 * Checks all fields to determine if they are prepared to be removed.
 	 * If a field is invalid the it warns the user with a notification and by highlighting
@@ -309,5 +345,52 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		}
 	}
 	
+	private void addKeyListenerTo(JComponent component){
+		component.addKeyListener(new KeyListener(){
+			public void keyPressed(KeyEvent arg0) {		
+			}
+			public void keyReleased(KeyEvent arg0) {	
+				parent.updateButtons();
+			}
+			public void keyTyped(KeyEvent arg0) {
+			}
+		});
+	}
+	
+	
+	private void addActionListenerTo(JComponent component, String JComponentType){
+		// TODO Make if statements work with actual object types instead of the String placeholders
+		if(JComponentType.equals("JComboBox")){
+			((JComboBox)component).addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg0) {
+					parent.updateButtons();
+				}		
+			});
+		}
+		if(JComponentType.equals("JXDatePicker")){
+			((JXDatePicker)component).addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg0) {
+					parent.updateButtons();
+				}		
+			});
+		}
+		
+	}
+	
+	private void addMouseListenerTo(JComponent component){
+		component.addMouseListener(new MouseListener(){
+			public void mouseClicked(MouseEvent arg0) {
+					parent.validateField(true);
+			}
+			public void mouseEntered(MouseEvent arg0) {				
+			}
+			public void mouseExited(MouseEvent arg0) {				
+			}
+			public void mousePressed(MouseEvent arg0) {				
+			}
+			public void mouseReleased(MouseEvent arg0) {				
+			}
+		});
+	}
 	
 }

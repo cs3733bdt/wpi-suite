@@ -32,7 +32,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
 public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataField{
     private NewAddRequirementsPanel reqPanel;    //initialize new add requirements panel
     private NewAddReqImportReqPanel importPanel;    //initialize the panel with the buttons "Add Requirement" and "Import Requirements"
-    private NewCreateGamePanel createGamePanel;  //initialize variable to hold panel above this panel
+    private NewCreateGamePanel parent;  //initialize variable to hold panel above this panel
     
     private List<Requirement> requirements = new ArrayList<Requirement>();
    
@@ -60,7 +60,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
     private JButton addReqButton = new JButton("Add Requirement");
    
     public NewRightHalfCreateGamePanel(NewCreateGamePanel createGamePanel){
-    	this.createGamePanel = createGamePanel;
+    	parent = createGamePanel;
     	build();
     	buildFields();
     }
@@ -208,7 +208,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         // the tile with respect to the panel
         createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, createReqsLabel, 5, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
         // Table with respect to the title
-        createLayout.putConstraint(SpringLayout.NORTH, createReqsLabel, 5, SpringLayout.NORTH, createGamePanel);
+        createLayout.putConstraint(SpringLayout.NORTH, createReqsLabel, 5, SpringLayout.NORTH, parent);
         
         // req name label with respect to create panel
         createLayout.putConstraint(SpringLayout.WEST, reqName, 5, SpringLayout.WEST, createReqsPanel); 					
@@ -300,6 +300,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			descArea.setText("");
 			createReqsPanel.setVisible(false);
 			currentReqsPanel.setVisible(true);
+			parent.updateButtons();
 		}
 	}
 	
@@ -341,8 +342,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	 * Sets the fields for this panel
 	 */
 	public void buildFields(){
-		if(createGamePanel.getGame() != null){
-			for(Requirement r : createGamePanel.getGame().getRequirements()){
+		if(parent.getGame() != null){
+			for(Requirement r : parent.getGame().getRequirements()){
 				addRequirement(r);
 			}
 		}	

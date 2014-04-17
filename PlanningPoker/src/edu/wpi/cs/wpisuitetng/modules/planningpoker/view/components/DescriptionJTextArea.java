@@ -57,13 +57,11 @@ public class DescriptionJTextArea extends JTextArea implements IDataField {
 		if (getText().length() <= 0) {
 			isDescriptionValid = false;
 			// getErrorDescription().setText("** Description is REQUIRED");
-			setBorder(errorBorder);
 			// getErrorDescription().setForeground(Color.RED);
 			// TODO add a way to display error descriptions
 			errorField.setText("Description is required");
 		} else {
 			// getErrorDescription().setText("");
-			setBorder(defaultBorder);
 			isDescriptionValid = true;
 		}
 		return isDescriptionValid;
