@@ -203,8 +203,11 @@ public class User extends AbstractModel
 		
 		for(User a : u)
 		{
-			json += a.toJSON() + ", ";
+			json += a.toJSON() + ",";
 		}
+		
+		//remove that last comma
+		json = json.substring(0, json.length()-1);
 		
 		json += "]";
 				
