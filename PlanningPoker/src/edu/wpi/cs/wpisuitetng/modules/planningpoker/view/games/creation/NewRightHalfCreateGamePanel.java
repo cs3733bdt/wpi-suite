@@ -50,14 +50,20 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	private JTextArea descArea = new JTextArea();
     
     private JLabel errorLabel = new JLabel();
+    
+    private ActiveGamesTable table;
 	
     private ActiveGamesTable table2;
    
     private JPanel createReqsPanel = new JPanel();
     
     final JPanel currentReqsPanel = new JPanel();
+
+    private JPanel importReqsPanel = new JPanel();
     
     private JButton addReqButton = new JButton("Add Requirement");
+    
+    private JButton importReqButton = new JButton("Import Requirement");
    
     public NewRightHalfCreateGamePanel(NewCreateGamePanel createGamePanel){
     	this.createGamePanel = createGamePanel;
@@ -74,10 +80,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         /**
 		 * Initializes objects for use in table
 		 */
+        table = initializeTable();		//For import requirements table
 		table2 = initializeTable();
 		Font labelFont = makeFont();
 		
-		//Border defaultBorder = BorderFactory.createLineBorder(Color.black);
 		Border defaultBorder = defaultAreaBorder;
 		
 		/**
@@ -133,7 +139,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		 */
 		descArea.setLineWrap(true);
 		descPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-	
 		
 		createReqsPanel.add(reqDesc);
 		createReqsPanel.add(descPane);
@@ -163,6 +168,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				descArea.setText("");
 				createReqsPanel.setVisible(false);
 				currentReqsPanel.setVisible(true);
+				importReqsPanel.setVisible(false);
 			}
 		});
 		
@@ -171,6 +177,49 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		
 		createReqsPanel.setVisible(false);
        
+		
+		/**
+         * CODE FOR IMPORT REQ PANEL
+         */
+        SpringLayout importLayout = new SpringLayout();
+        importReqsPanel.setLayout(importLayout);
+        importReqsPanel.setBorder(defaultBorder);
+		
+		JLabel importReq = new JLabel("Import Requirement");	//Creates the label import requirement
+		importReq.setFont(labelFont);							//Sets the label font
+		
+		JScrollPane tablePanel = new JScrollPane(table);
+        tablePanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);        
+		
+        /**
+		 * Creates a new button to add the requirements to the game
+		 */
+		JButton submitImportReqButton = new JButton("Submit");
+		/*submitImportReqButton.addActionListener(new ActionListener() {
+			 @Override
+			public void actionPerformed(ActionEvent e) {
+				submitButtonPressed();
+			 }
+		});*/
+		JButton cancelImportReqButton = new JButton("Cancel");
+		cancelImportReqButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				nameArea.setText("");
+				descArea.setText("");
+				createReqsPanel.setVisible(false);
+				currentReqsPanel.setVisible(true);
+				importReqsPanel.setVisible(false);
+			}
+		});
+		
+		importReqsPanel.add(importReq);
+		importReqsPanel.add(tablePanel);
+		importReqsPanel.add(submitImportReqButton);
+		importReqsPanel.add(cancelImportReqButton);
+		
+		importReqsPanel.setVisible(false);
+		
         //IN THE CURRENT REQ PANEL
         // the tile with respect to the panel
         currentLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, currentReqs, 5, SpringLayout.HORIZONTAL_CENTER, currentReqsPanel);
@@ -180,10 +229,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         currentLayout.putConstraint(SpringLayout.WEST, tablePanel2, 5, SpringLayout.WEST, currentReqsPanel);
         currentLayout.putConstraint(SpringLayout.EAST, tablePanel2, -5, SpringLayout.EAST, currentReqsPanel);
         currentLayout.putConstraint(SpringLayout.SOUTH, tablePanel2, -5, SpringLayout.SOUTH, currentReqsPanel);
-       
+        
         rightView.add(currentReqsPanel);
         
-       //IN RIGHT VEIW CONTAINER 
+        //IN RIGHT VEIW CONTAINER 
         //currentPanel with respect to the container 
         layout.putConstraint(SpringLayout.NORTH, currentReqsPanel, 5, SpringLayout.NORTH, rightView);
         layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -50, SpringLayout.SOUTH, rightView);
@@ -193,8 +242,17 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         layout.putConstraint(SpringLayout.SOUTH, addReqButton, -5, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, addReqButton);
         // button with respect to container
-        layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, addReqButton, 5, SpringLayout.HORIZONTAL_CENTER, rightView);
-    
+        layout.putConstraint(SpringLayout.WEST, addReqButton, 5, SpringLayout.WEST, rightView);
+        
+       
+        
+        
+        layout.putConstraint(SpringLayout.SOUTH, importReqButton, -5, SpringLayout.SOUTH, rightView);
+        layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, importReqButton);
+        // button with respect to container
+        layout.putConstraint(SpringLayout.EAST, importReqButton, -5, SpringLayout.EAST, rightView);
+        
+        
         //CREATE REQS PANEL
         //createPanel with respect to the container 
         layout.putConstraint(SpringLayout.NORTH, createReqsPanel, 5, SpringLayout.NORTH, rightView);
@@ -204,6 +262,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         // createPanel with respect to the button 
         layout.putConstraint(SpringLayout.SOUTH, addReqButton, -5, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, addReqButton);
+        
+        layout.putConstraint(SpringLayout.SOUTH, importReqButton, -5, SpringLayout.SOUTH, rightView);
+        layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, importReqButton);
         
         // the tile with respect to the panel
         createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, createReqsLabel, 5, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
@@ -246,6 +307,30 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         
         rightView.add(createReqsPanel);
         rightView.add(addReqButton);
+        rightView.add(importReqButton);
+        rightView.add(importReqsPanel);
+        
+        
+        //IMPORT REQS PANEL
+        layout.putConstraint(SpringLayout.NORTH, importReqsPanel, 5, SpringLayout.NORTH, rightView);
+        layout.putConstraint(SpringLayout.SOUTH, importReqsPanel, -50, SpringLayout.SOUTH, rightView);
+        layout.putConstraint(SpringLayout.WEST, importReqsPanel, 5, SpringLayout.WEST, rightView);
+        layout.putConstraint(SpringLayout.EAST, importReqsPanel, -5, SpringLayout.EAST, rightView);
+        
+        importLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, importReq, 5, SpringLayout.HORIZONTAL_CENTER, importReqsPanel);
+        importLayout.putConstraint(SpringLayout.NORTH, importReq, 5, SpringLayout.NORTH, importReqsPanel);
+        
+        importLayout.putConstraint(SpringLayout.NORTH, tablePanel, 5, SpringLayout.SOUTH, importReq);
+        importLayout.putConstraint(SpringLayout.WEST, tablePanel, 5, SpringLayout.WEST, importReqsPanel);
+        importLayout.putConstraint(SpringLayout.EAST, tablePanel, -5, SpringLayout.EAST, importReqsPanel);
+        importLayout.putConstraint(SpringLayout.SOUTH, tablePanel, 5, SpringLayout.NORTH, submitImportReqButton);
+        
+        importLayout.putConstraint(SpringLayout.NORTH, submitImportReqButton, -30, SpringLayout.SOUTH, importReqsPanel);
+        importLayout.putConstraint(SpringLayout.WEST, submitImportReqButton, 5, SpringLayout.WEST, importReqsPanel);
+        
+        importLayout.putConstraint(SpringLayout.NORTH, cancelImportReqButton, -30, SpringLayout.SOUTH, importReqsPanel);
+        importLayout.putConstraint(SpringLayout.EAST, cancelImportReqButton, -5, SpringLayout.EAST, importReqsPanel);      
+        
         
         
         setMinimumSize(new Dimension(350, 350));
@@ -263,8 +348,29 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			//reqPanel.getImportReqPanel().setVisible(true); //Not applicable at time of coding 
 			 currentReqsPanel.setVisible(false);
 			 createReqsPanel.setVisible(true);
+			 importReqsPanel.setVisible(false);
 		 }
+		 
+		 
 	});
+		
+		importReqButton.addActionListener(new ActionListener() {
+			 @Override
+			public void actionPerformed(ActionEvent e) {
+				 /*view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
+				 nameArea.setText("");
+				 descArea.setText("");*/
+				 
+				 //set everything on create reqPanel to visible.setVisible(true);
+				 
+				//reqPanel.getImportReqPanel().setVisible(true); //Not applicable at time of coding 
+				 currentReqsPanel.setVisible(false);
+				 createReqsPanel.setVisible(false);
+				 importReqsPanel.setVisible(true);
+			 }
+			 
+			 
+		});
         
     }
     

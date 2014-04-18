@@ -138,7 +138,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		leftView.add(estimateSelectionPanel);			//Adds the panel with the radio buttons to the container
 		leftView.add(endDateField);						//Adds the end date field to the container
 		leftView.add(buttonPanel);						//Adds the panel with the buttons to the container
-		leftView.add(errorField);						//Adds stuff
+		leftView.add(errorField);						//Adds the error field to the container
 		
 		/**
 		 * Adjust layout constraints to correctly setup the layout of each component
@@ -161,9 +161,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		layout.putConstraint(SpringLayout.WEST, estimateSelectionPanel, 5, SpringLayout.WEST, leftView);		//Makes sure the left side of the panel stretches with the left side of the container
 		layout.putConstraint(SpringLayout.EAST, estimateSelectionPanel, 5, SpringLayout.EAST, leftView);		//Makes sure the right side of the panel stretches with the right side of the container
         
-		//layout.putConstraint(SpringLayout.SOUTH, endDateField, 50, SpringLayout.NORTH, buttonPanel);
 		layout.putConstraint(SpringLayout.NORTH, endDateField, 10, SpringLayout.SOUTH, estimateSelectionPanel);	//Adds the end date field underneath the radio buttons panel
-		//layout.putConstraint(SpringLayout.SOUTH, endDateField, 50, SpringLayout.NORTH, buttonPanel);	
 		layout.putConstraint(SpringLayout.WEST, endDateField, 5, SpringLayout.WEST, leftView);					//Makes sure the left side of the panel stretches with the left side of the container
 		layout.putConstraint(SpringLayout.EAST, endDateField, -5, SpringLayout.EAST, leftView);					//Makes sure the right side of the panel stretches with the right side of the container
         

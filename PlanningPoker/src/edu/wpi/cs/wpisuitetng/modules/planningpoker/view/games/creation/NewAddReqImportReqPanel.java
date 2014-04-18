@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SpringLayout;
 
 //import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.AddRequirementsPanel;
 
@@ -16,7 +17,8 @@ public class NewAddReqImportReqPanel extends JPanel {
 		
 	public NewAddReqImportReqPanel(final NewAddRequirementsPanel reqPanel) {
 		
-		//this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+		SpringLayout layout = new SpringLayout();
+		setLayout(layout);
 		
 		/**
 		 * Initializes Add Requirement button and sets its action listener
@@ -50,8 +52,10 @@ public class NewAddReqImportReqPanel extends JPanel {
 		 * adds both buttons to the panel
 		 */
 		add(addReq);
-		//this.add(Box.createRigidArea(new Dimension(220, 0)));
-		//this.add(importReq);
+		add(importReq);
+		
+		layout.putConstraint(SpringLayout.WEST, addReq, 5, SpringLayout.WEST, this);
+		layout.putConstraint(SpringLayout.EAST, importReq, -5, SpringLayout.EAST, this);
 		
 	}
 	
