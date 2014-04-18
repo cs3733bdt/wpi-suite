@@ -345,7 +345,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			 
 			 //set everything on create reqPanel to visible.setVisible(true);
 			 
-			//reqPanel.getImportReqPanel().setVisible(true); //Not applicable at time of coding 
+			//reqPanel.getImportReqPanel().setVisible(true); //TODO Not applicable at time of coding 
 			 currentReqsPanel.setVisible(false);
 			 createReqsPanel.setVisible(true);
 			 importReqsPanel.setVisible(false);

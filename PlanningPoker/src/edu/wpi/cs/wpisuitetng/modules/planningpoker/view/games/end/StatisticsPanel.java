@@ -13,24 +13,19 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SpringLayout;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-
 /**
  * used to display the end game statistics upon ending a game
  * @author TomPaolillo
  */
-public class StatisticsPanel extends JPanel{
+public class StatisticsPanel extends JScrollPane{
 	Game activeGame;
 	Requirement activeRequirement;
 	
@@ -46,13 +41,16 @@ public class StatisticsPanel extends JPanel{
 	
 	private int minEstimate;
 	private int maxEstimate;
-	private int averageEstimate;
-	private int yourEstimate; 
+	private int mean;
+	private int stDev;
+	private int median;
 	
-	private JLabel minLabel = new JLabel("Minimum Estimate: 0");
-	private JLabel maxLabel = new JLabel("Maximum Estimate: 0");
-	private JLabel averageLabel = new JLabel("Average Estimate: 0");
-	private JLabel yourLabel = new JLabel("Your Estimate: 0");
+	private ActiveStatisticsPanel statTable;
+//	
+//	private JLabel minLabel = new JLabel("Minimum Estimate: 0");
+//	private JLabel maxLabel = new JLabel("Maximum Estimate: 0");
+//	private JLabel averageLabel = new JLabel("Average Estimate: 0");
+//	private JLabel yourLabel = new JLabel("Your Estimate: 0");
 	
 	Container overviewPanel = new Container();
  
@@ -61,76 +59,61 @@ public class StatisticsPanel extends JPanel{
 	 * @param game 
 	 * @param requirement 
 	 */
-	public StatisticsPanel(Game game, Requirement requirement){
-
-		super(new GridBagLayout());
-
-		setMinimumSize(new Dimension(580, 200));
-		repaint();
-		invalidate();
-		revalidate();
+	public StatisticsPanel(Game game) {
+		
+		SpringLayout layout = new SpringLayout();
+		
+		overviewPanel.setLayout(layout);
 
 		activeGame = game;
-		activeRequirement = requirement;
 		
-		//this.overviewPanel =  new Container();
-		overviewPanel.setLayout(new GridBagLayout());
-
-		GridBagConstraints c = new GridBagConstraints();
+		activeRequirement = game.getRequirements().get(0); //default to first requirement //TODO dependent on the click
+		
+		statTable = initializeTable();
+		JScrollPane statsPanel = new JScrollPane(statTable);
+	 //   statsPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		
 
 		/**
 		 * Creates and adds the user story text area to the view.
 		 */
-		userStoryDesc.setText(requirement.getDescription());
+		userStoryDesc.setText(game.getRequirements().get(0).getDescription());
 		
 		JScrollPane userStoryPane = new JScrollPane(userStoryDesc);
+
+		layout.putConstraint(SpringLayout.NORTH, userStoryPane, 5, SpringLayout.NORTH, overviewPanel);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, userStoryPane, 0, SpringLayout.HORIZONTAL_CENTER, overviewPanel);
+		
+		
 		userStoryDesc.setLineWrap(true);
 		userStoryDesc.setEditable(false);
-		c.anchor = GridBagConstraints.CENTER;
-		c.gridwidth = 4;
-		c.gridx = 0;
-		c.gridy = 2;
-		c.weightx = 1;
-		c.weighty = 1;
-		userStoryPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+	//	userStoryPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		userStoryPane.setMinimumSize(new Dimension(580, 150));
-		userStoryPane.setPreferredSize(new Dimension(580, 150));
-		overviewPanel.add(userStoryPane, c);
+		overviewPanel.add(userStoryPane);
 		
-		c.anchor = GridBagConstraints.LINE_START;
-		c.gridwidth = 1;
-		c.weightx = 0;
-		c.gridx = 0;
-		c.gridy = 5;
-		overviewPanel.add(yourLabel,c);
-		
-		c.gridx = 0;
-		c.gridy = 6;
-		overviewPanel.add(averageLabel,c);
-		
-		c.anchor = GridBagConstraints.LINE_END;
-		c.gridx = 3;
-		c.gridy = 5;
-		overviewPanel.add(minLabel,c);
-		
-		c.gridx = 3;
-		c.gridy = 6;
-		overviewPanel.add(maxLabel,c);
-		
-		
-		c.anchor = GridBagConstraints.CENTER;
-		c.insets= new Insets(0, 0, 0, 0);
-		c.gridwidth = 10;
-		c.gridheight = 2;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.weightx = 1;
-		this.add(overviewPanel, c);
-		
-		this.setMinimumSize(new Dimension(580, 200));
-		this.repaint();
-		this.invalidate();
-		this.revalidate();
 
+		layout.putConstraint(SpringLayout.NORTH, statsPanel, 5, SpringLayout.SOUTH, userStoryPane);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, statsPanel, 5, SpringLayout.HORIZONTAL_CENTER, overviewPanel);
+		
+		overviewPanel.add(statsPanel);
+		
+	//	setMinimumSize(new Dimension(580, 200));
+		repaint();
+		invalidate();
+		revalidate();
+		
+		add(overviewPanel);
+		
+		setViewportView(overviewPanel);
+	}
+	
+	/**
+	 * Instantiates this table
+	 * @return the ActiveGamesTable
+	 */
+	private ActiveStatisticsPanel initializeTable() {
+		String[] columnNames2 = {"Mean", "Standard Deviation", "Median", "Max", "Min" };
+		Object[][] data2 = {};
+		return new ActiveStatisticsPanel(data2, columnNames2);
 	}
 }

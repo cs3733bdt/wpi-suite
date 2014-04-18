@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActi
 
 /**
  * creates all of the buttons to be used for the estimation
- * @author Bobby Drop Tables
+ * @author Justin Canas
  *
  */
 public class CardButton extends JToggleButton implements Accessible {
