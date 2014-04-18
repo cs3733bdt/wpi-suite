@@ -52,6 +52,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	private ActiveCardsPanel cardsPanel;
 	private int sum;
+	private JLabel previousEst;
 	private JLabel counterLabel;
 	private JTextField estText = new JTextField();
 	private JTextArea counter = new JTextArea();
@@ -115,6 +116,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 								|| selected.equals(r.getDescription())
 								|| selected.equals(r.displayComplete())) {
 							activeRequirement=r;
+							previousEst.setText("Previous estimate: " + userVote(r));
 							nameTextField.setText(r.getName());
 							descriptionTextField.setText(r.getDescription());
 							setFieldsVisible(true);
@@ -151,7 +153,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		 * Set up the cards panel
 		 */
 		// Label and accumulate sum
+		
 		counterLabel = new JLabel("Your current estimate total: " + 0);
+		previousEst=new JLabel();
 		sum = 0;
 
 		// This branch will be run if the default deck is to be used
@@ -272,6 +276,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		rightView.add(nameTextField);
 		rightView.add(desLabel);
 		rightView.add(descriptionPanel);
+		rightView.add(previousEst);
 		rightView.add(counterLabel);
 		rightView.add(submitButton);
 		rightView.add(errorField);
@@ -281,6 +286,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		desLabel.setVisible(false);
 		descriptionPanel.setVisible(false);
 		counterLabel.setVisible(false);
+		previousEst.setVisible(false);
 		submitButton.setVisible(false);
 		estText.setVisible(false);
 		
@@ -323,11 +329,18 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.NORTH, descriptionPanel, 0,
 				SpringLayout.SOUTH, desLabel);
 
+		layout.putConstraint(SpringLayout.WEST, previousEst, 5,
+				SpringLayout.WEST, rightView);
+		layout.putConstraint(SpringLayout.EAST, previousEst, 5,
+				SpringLayout.EAST, rightView);
+		layout.putConstraint(SpringLayout.SOUTH, previousEst, -20,
+				SpringLayout.NORTH, submitButton);
+		
 		layout.putConstraint(SpringLayout.WEST, counterLabel, 5,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.EAST, counterLabel, 5,
 				SpringLayout.EAST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, counterLabel, -10,
+		layout.putConstraint(SpringLayout.SOUTH, counterLabel, -7,
 				SpringLayout.NORTH, submitButton);
 
 		layout.putConstraint(SpringLayout.WEST, submitButton, 5,
@@ -491,6 +504,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		reqLabel.setVisible(visible);
 		nameTextField.setVisible(visible);
 		desLabel.setVisible(visible);
+		previousEst.setVisible(visible);
 		descriptionPanel.setVisible(visible);
 		submitButton.setVisible(visible);
 		if (getGame().doesUseCards()==false){
@@ -501,5 +515,21 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			cardPanel.setVisible(true);
 			cardsPanel.setVisible(true);
 		}
+	}
+	
+	/**
+	 * 
+	 * @return the number of vote if the user already voted, otherwise return 0;
+	 */
+	public int userVote(Requirement r){
+		String currentUser = ConfigManager.getConfig().getUserName();
+		for(Vote v:(r.getVotes())) {
+			if(currentUser.equals(v.getUsername())) {
+				System.out.println("name matches");
+				return v.getVoteNumber();
+			}
+		}
+		System.out.println("name does not match");
+		return 0;
 	}
 }
