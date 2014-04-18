@@ -62,47 +62,40 @@ public class StatisticsPanel extends JScrollPane{
 	public StatisticsPanel(Game game) {
 		
 		SpringLayout layout = new SpringLayout();
-		
 		overviewPanel.setLayout(layout);
 
 		activeGame = game;
-		
 		activeRequirement = game.getRequirements().get(0); //default to first requirement //TODO dependent on the click
+		
+		
 		
 		statTable = initializeTable();
 		JScrollPane statsPanel = new JScrollPane(statTable);
-	 //   statsPanel.setVerticalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
-
+		overviewPanel.add(userStoryDesc);
+		overviewPanel.add(statsPanel);
 		/**
 		 * Creates and adds the user story text area to the view.
 		 */
 		userStoryDesc.setText(game.getRequirements().get(0).getDescription());
-		
-		JScrollPane userStoryPane = new JScrollPane(userStoryDesc);
-
-		layout.putConstraint(SpringLayout.NORTH, userStoryPane, 5, SpringLayout.NORTH, overviewPanel);
-		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, userStoryPane, 0, SpringLayout.HORIZONTAL_CENTER, overviewPanel);
-		
-		
-		userStoryDesc.setLineWrap(true);
 		userStoryDesc.setEditable(false);
-	//	userStoryPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		userStoryPane.setMinimumSize(new Dimension(580, 150));
-		overviewPanel.add(userStoryPane);
+		userStoryDesc.setLineWrap(true);
+		userStoryDesc.setPreferredSize(new Dimension(580, 150));
 		
-
-		layout.putConstraint(SpringLayout.NORTH, statsPanel, 5, SpringLayout.SOUTH, userStoryPane);
-		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, statsPanel, 5, SpringLayout.HORIZONTAL_CENTER, overviewPanel);
+		//Constraints on the userStory Desc
+		layout.putConstraint(SpringLayout.NORTH, userStoryDesc, 5, SpringLayout.NORTH, overviewPanel); //Anchor user Story to the top of panel
+		layout.putConstraint(SpringLayout.WEST, userStoryDesc, 20, SpringLayout.WEST, overviewPanel);  //Anchor user Story to the left side of panel
+		layout.putConstraint(SpringLayout.EAST, userStoryDesc, -20, SpringLayout.EAST, overviewPanel); //Anchor user Story to the left side of panel
 		
-		overviewPanel.add(statsPanel);
+		//Constraints on the statsPanel
+		layout.putConstraint(SpringLayout.NORTH, statsPanel, 5, SpringLayout.SOUTH, userStoryDesc); //anchor top of stats panel to bottom of user story
+		layout.putConstraint(SpringLayout.WEST, statsPanel, 20, SpringLayout.WEST, overviewPanel);  //Anchor stats Panel to the left side of panel
+		layout.putConstraint(SpringLayout.EAST, statsPanel, -20, SpringLayout.EAST, overviewPanel); //Anchor user Story to the left side of panel
+		layout.putConstraint(SpringLayout.SOUTH, statsPanel, -20, SpringLayout.SOUTH, overviewPanel);
 		
-	//	setMinimumSize(new Dimension(580, 200));
 		repaint();
 		invalidate();
 		revalidate();
-		
-		add(overviewPanel);
 		
 		setViewportView(overviewPanel);
 	}
