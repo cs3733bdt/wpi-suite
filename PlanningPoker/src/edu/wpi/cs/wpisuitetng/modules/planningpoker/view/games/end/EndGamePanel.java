@@ -77,7 +77,8 @@ public class EndGamePanel extends JSplitPane implements AbstractModelObserver, I
 	private boolean isEstimatePanelCreated = false;
 
 	private StatisticsPanel rightHalf;
-	//private LeftHalfEndGamePanel leftHalf; //TODO
+	
+	private EndGameLeftHalf leftHalf;
 	
 	/**
 	 * Creates a scrollPane to contain everything
@@ -88,13 +89,13 @@ public class EndGamePanel extends JSplitPane implements AbstractModelObserver, I
 		this.game = game;
 
 		rightHalf = new StatisticsPanel(game);
-		//leftHalf = ;
+		leftHalf = new EndGameLeftHalf(game);
 	
 		game.addObserver(this); //Makes this the observer for the game
 		active = game;
 		isEstimatePanelCreated = false;
 	
-		//setLeftComponent(leftHalf);
+		setLeftComponent(leftHalf);
 		setRightComponent(rightHalf);
 		
 		rightHalf.setMinimumSize(new Dimension(333, 500));
