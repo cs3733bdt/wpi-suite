@@ -122,6 +122,10 @@ public class StatisticsPanel extends JScrollPane{
 		return new ActiveStatisticsPanel(data2, columnNames2);
 	}
 	
+	/**
+	 * @param requirement
+	 * @return an arrayList of the vote numbers from the passed requirement
+	 */
 	private ArrayList<Integer> requirementToVotes(Requirement requirement) {
 		List<Vote> Votes = requirement.getVotes();
 		if (Votes.size() == 0) {
