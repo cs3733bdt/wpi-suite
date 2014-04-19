@@ -106,10 +106,11 @@ public class StatisticsPanel extends JScrollPane{
 	}
 	
 	private void initStats() {
-		minEstimate = min(requirementToVotes(activeRequirement));
-		maxEstimate = max(requirementToVotes(activeRequirement));
-		mean = mean(requirementToVotes(activeRequirement));
-		stDev = stDev(requirementToVotes(activeRequirement));
+		ArrayList<Integer> voteData = requirementToVotes(activeRequirement); 
+		minEstimate = min(voteData);
+		maxEstimate = max(voteData);
+		mean = mean(voteData);
+		stDev = stDev(voteData);
 	}
 
 	/**
