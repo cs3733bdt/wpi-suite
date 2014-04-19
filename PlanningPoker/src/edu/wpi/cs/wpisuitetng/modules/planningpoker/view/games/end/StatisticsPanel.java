@@ -13,14 +13,18 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import java.util.ArrayList;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 /**
  * used to display the end game statistics upon ending a game
  * @author TomPaolillo
@@ -41,8 +45,8 @@ public class StatisticsPanel extends JScrollPane{
 	
 	private int minEstimate;
 	private int maxEstimate;
-	private int mean;
-	private int stDev;
+	private double mean;
+	private double stDev;
 	private int median;
 	
 	private ActiveStatisticsPanel statTable;
@@ -67,9 +71,10 @@ public class StatisticsPanel extends JScrollPane{
 		activeGame = game;
 		activeRequirement = game.getRequirements().get(0); //default to first requirement //TODO dependent on the click
 		
-		
+		initStats();
 		
 		statTable = initializeTable();
+		statTable.getTableModel().addRow(new Object[]{mean, stDev, "0", maxEstimate, minEstimate});
 		JScrollPane statsPanel = new JScrollPane(statTable);
 		
 		overviewPanel.add(userStoryDesc);
@@ -100,6 +105,13 @@ public class StatisticsPanel extends JScrollPane{
 		setViewportView(overviewPanel);
 	}
 	
+	private void initStats() {
+		minEstimate = min(requirementToVotes(activeRequirement));
+		maxEstimate = max(requirementToVotes(activeRequirement));
+		mean = mean(requirementToVotes(activeRequirement));
+		stDev = stDev(requirementToVotes(activeRequirement));
+	}
+
 	/**
 	 * Instantiates this table
 	 * @return the ActiveGamesTable
@@ -109,4 +121,80 @@ public class StatisticsPanel extends JScrollPane{
 		Object[][] data2 = {};
 		return new ActiveStatisticsPanel(data2, columnNames2);
 	}
+	
+	private ArrayList<Integer> requirementToVotes(Requirement requirement) {
+		List<Vote> Votes = requirement.getVotes();
+		if (Votes.size() == 0) {
+			return new ArrayList<Integer>();
+		}
+		ArrayList<Integer> voteArray = new ArrayList<Integer>();
+		for (int i = 0; i < Votes.size(); i++) {
+			voteArray.add(Votes.get(i).getVoteNumber());
+		}
+		return voteArray;
+	}
+	
+	/**
+	 * @param Votes a list of the integer values for the votes for a given requirement
+	 * @return the minimum of the array. will return -1 if the array is empty
+	 */
+	private int min(ArrayList<Integer> Votes) {
+		int min = -1;
+		
+		for (int i = 0; i < Votes.size(); i++) {
+			if (Votes.get(i) < min || min == -1) {
+				min = Votes.get(i);
+			}
+		}
+	
+		return min;
+	}
+	
+	/**
+	 * @param Votes a list of the integer values for the votes for a given requirement
+	 * @return the maximum of the array. will return -1 if the array is empty
+	 */
+	private int max(ArrayList<Integer> Votes) {
+		int max = -1;
+		
+		for (int i = 0; i < Votes.size(); i++) {
+			if (Votes.get(i) > max) {
+				max = Votes.get(i);
+			}
+		}
+	
+		return max;
+	}
+	
+	static double mean(ArrayList<Integer> a) {
+		double sum = 0;
+		int i;
+		
+		for(i = 0; i < a.size(); i++) {
+			sum += a.get(i);
+		}
+		
+		return sum/a.size();
+	}
+	
+	private static double stDev(ArrayList<Integer> a) {
+		double mean = mean(a);
+		ArrayList<Double> numMinusMeanSquared = new ArrayList<Double>();
+	//	double[] numMinusMeanSquared = new double[a.length]; 
+		
+		for (int i = 0; i < a.size(); i++) {
+			numMinusMeanSquared.add(Math.pow((a.get(i)-mean), 2)); 
+		}
+		
+		double sum = 0;
+		
+		for(int j = 0; j < numMinusMeanSquared.size(); j++) {
+			sum += numMinusMeanSquared.get(j);
+		}
+				
+		double variance = (sum / (double) numMinusMeanSquared.size());
+		
+		return Math.sqrt(variance);
+	}
+	
 }
