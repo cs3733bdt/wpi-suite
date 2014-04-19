@@ -44,7 +44,8 @@ public class TabbedView extends JTabbedPane {
 	private boolean dragging = false;
 	private Image tabImage = null;
 	private int draggedTabIndex = 0;
-	private InitialView initView = new InitialView();
+	private GameOverview gameOverview = new GameOverview();
+	private DeckOverview deckOverview = new DeckOverview();
 	
 	private final JPopupMenu popup = new JPopupMenu();
 	private JMenuItem closeAll = new JMenuItem("Close All Tabs");
@@ -59,7 +60,8 @@ public class TabbedView extends JTabbedPane {
 	 */
 	public TabbedView(){
 		
-		addTab("Overview", initView);
+		addTab("Game Overview", gameOverview);
+		addTab("Deck Overview", deckOverview);
 	    //this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
 		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
 	    
@@ -99,7 +101,7 @@ public class TabbedView extends JTabbedPane {
 	    			if(tabNumber >= 0) {
 	    				Component comp = getComponentAt(draggedTabIndex);
 	    				String title = getTitleAt(draggedTabIndex);
-	    				if (!title.equals("Overview")) {
+	    				if (!title.equals("Game Overview") && !title.equals("Deck Overview")) {
 	    					removeTabAt(draggedTabIndex);
 	    					insertTab(title, null, comp, null, tabNumber);
 	    					setSelectedIndex(tabNumber);
@@ -135,7 +137,7 @@ public class TabbedView extends JTabbedPane {
 	public void insertTab(String title, Icon icon, Component component,
 			String tip, int index) {
 		super.insertTab(title, icon, component, tip, index);
-		if (!(component instanceof InitialView)) {
+		if (!(component instanceof GameOverview) && !(component instanceof DeckOverview)) {
 			setTabComponentAt(index, new ClosableTabComponent(this));
 		}
 	}

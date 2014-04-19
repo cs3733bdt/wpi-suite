@@ -12,21 +12,30 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 import java.awt.Container;
+import java.awt.Desktop;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
+
+import org.jdesktop.swingx.JXHyperlink;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 
 /**
  * The default view for the GUI
  * @author Bobby Drop Tables
  *
  */
-public class InitialView extends JScrollPane {
+public class GameOverview extends JSplitPane {
 	
 	JLabel ppIntroLabel;
 	Font bigFont;
@@ -36,15 +45,21 @@ public class InitialView extends JScrollPane {
 	JLabel createGameLabel;
 	JTextArea createGameExp;
 	
+	JXHyperlink videoTutorial;
+	
+	GameTree filterPanel = new GameTree();
+	
 	/**
 	 * The constructor for the overview panel
 	 */
-	public InitialView() {
+	public GameOverview() {
 		
 		Container panel = new Container();
 		SpringLayout layout = new SpringLayout();
 		panel.setLayout(layout);
-		panel.setPreferredSize(new Dimension(500, 500));
+		JScrollPane scrollPanel = new JScrollPane(panel);
+		//scrollPanel.setMinimumSize(new Dimension(600, 450));
+		panel.setPreferredSize(new Dimension(610, 510));
 		
 		// Adds introduction label
 		ppIntroLabel = new JLabel("What is Planning Poker?");
@@ -75,7 +90,7 @@ public class InitialView extends JScrollPane {
 
 		// Creates a scroll pane to hold the planning poker description area
 		JScrollPane expPane = new JScrollPane(ppExplanation);
-		expPane.setPreferredSize(new Dimension(600, 120));
+		//expPane.setPreferredSize(new Dimension(600, 120));
 		expPane.setBorder(null);
 		
 		// Adds label
@@ -98,7 +113,7 @@ public class InitialView extends JScrollPane {
 
 		// Creates a scroll pane to hold the planning poker description area
 		JScrollPane whyPane = new JScrollPane(ppWhyExp);
-		whyPane.setPreferredSize(new Dimension(600, 110));
+		//whyPane.setPreferredSize(new Dimension(600, 90));
 		whyPane.setBorder(null);
 		
 		// Adds label
@@ -126,53 +141,65 @@ public class InitialView extends JScrollPane {
 
 		// Creates a scroll pane to hold the planning poker description area
 		JScrollPane createPane = new JScrollPane(createGameExp);
-		createPane.setPreferredSize(new Dimension(600, 150));
+		//createPane.setPreferredSize(new Dimension(600, 150));
 		createPane.setBorder(null);
+		
+		//Creates a hyperlink for the video tutorial
+		videoTutorial = new JXHyperlink();
+		videoTutorial.setText("Here is a video tutorial showing how to create a new Planning Poker game.");
+		videoTutorial.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                try {
+                    Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=okqEVeNqBhc"));
+                } catch (URISyntaxException | IOException ex) {
+                    //It looks like there's a problem
+                }
+            }
+        });
 		
 		// Adds components to the panel
 		panel.add(ppIntroLabel);
-		panel.add(expPane);
+		//panel.add(expPane);
+		panel.add(ppExplanation);
 		panel.add(ppWhyLabel);
-		panel.add(whyPane);
+		//panel.add(whyPane);
+		panel.add(ppWhyExp);
 		panel.add(createGameLabel);
-		panel.add(createPane);
+		//panel.add(createPane);
+		panel.add(createGameExp);
+		panel.add(videoTutorial);
 		
 		// Adjusts constraints on components
 		layout.putConstraint(SpringLayout.NORTH, ppIntroLabel, 10, SpringLayout.NORTH, panel);
 		layout.putConstraint(SpringLayout.WEST, ppIntroLabel, 5, SpringLayout.WEST, panel);
 		
-		layout.putConstraint(SpringLayout.NORTH, expPane, 10, SpringLayout.SOUTH, ppIntroLabel);
-		layout.putConstraint(SpringLayout.WEST, expPane, 5, SpringLayout.WEST, panel);
+		layout.putConstraint(SpringLayout.NORTH, ppExplanation, 10, SpringLayout.SOUTH, ppIntroLabel);
+		layout.putConstraint(SpringLayout.WEST, ppExplanation, 5, SpringLayout.WEST, panel);
+		layout.putConstraint(SpringLayout.EAST, ppExplanation, 600, SpringLayout.WEST, panel);
 		
-		layout.putConstraint(SpringLayout.NORTH, ppWhyLabel, 10, SpringLayout.SOUTH, expPane);
+		layout.putConstraint(SpringLayout.NORTH, ppWhyLabel, 40, SpringLayout.SOUTH, ppExplanation);
 		layout.putConstraint(SpringLayout.WEST, ppWhyLabel, 5, SpringLayout.WEST, panel);
 		
-		layout.putConstraint(SpringLayout.NORTH, whyPane, 10, SpringLayout.SOUTH, ppWhyLabel);
-		layout.putConstraint(SpringLayout.WEST, whyPane, 5, SpringLayout.WEST, panel);
-
+		layout.putConstraint(SpringLayout.NORTH, ppWhyExp, 10, SpringLayout.SOUTH, ppWhyLabel);
+		layout.putConstraint(SpringLayout.WEST, ppWhyExp, 5, SpringLayout.WEST, panel);
+		layout.putConstraint(SpringLayout.EAST, ppWhyExp, 600, SpringLayout.WEST, panel);
 		
-		layout.putConstraint(SpringLayout.NORTH, createGameLabel, 10, SpringLayout.SOUTH, whyPane);
+		layout.putConstraint(SpringLayout.NORTH, createGameLabel, 40, SpringLayout.SOUTH, ppWhyExp);
 		layout.putConstraint(SpringLayout.WEST, createGameLabel, 5, SpringLayout.WEST, panel);
 		
-		layout.putConstraint(SpringLayout.NORTH, createPane, 10, SpringLayout.SOUTH, createGameLabel);
-		layout.putConstraint(SpringLayout.WEST, createPane, 5, SpringLayout.WEST, panel);
+		layout.putConstraint(SpringLayout.NORTH, videoTutorial, 8, SpringLayout.SOUTH, createGameLabel);
+		layout.putConstraint(SpringLayout.WEST, videoTutorial, 5, SpringLayout.WEST, panel);
 		
-		this.getViewport().add(panel);
+		layout.putConstraint(SpringLayout.NORTH, createGameExp, 8, SpringLayout.SOUTH, videoTutorial);
+		layout.putConstraint(SpringLayout.WEST, createGameExp, 5, SpringLayout.WEST, panel);
+		layout.putConstraint(SpringLayout.EAST, createGameExp, 600, SpringLayout.WEST, panel);
+		
+		setRightComponent(scrollPanel);
+		setLeftComponent(filterPanel);
+		setDividerLocation(200);
+		
 	}
-	/*
-	public static void main(String args[]){
-		JFrame frame = new JFrame("Demo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-   
-        //Set up the content pane.
-        frame.add(new InitialView());
-        frame.setMinimumSize(new Dimension(1000, 600));
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-	}
-	*/
 }
 	
 	

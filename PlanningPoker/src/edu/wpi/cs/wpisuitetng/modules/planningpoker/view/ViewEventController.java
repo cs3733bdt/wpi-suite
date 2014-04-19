@@ -15,11 +15,13 @@ import java.awt.Component;
 import java.util.ArrayList;
 
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateDeckPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
@@ -86,6 +88,18 @@ public class ViewEventController {
 		main.invalidate(); //force the tabbed pane to redraw.
 		main.repaint();
 		main.getTabbedView().setSelectedComponent(newGame);
+	}
+	
+	/**
+	 * Creates a CreateDeckPanel instance, adds a tab representing 
+	 * that panel, and switches to that new panel
+	 */
+	public void createDeck() {
+		CreateDeckPanel newDeck = new CreateDeckPanel();
+		main.getTabbedView().addTab("New Deck", null, newDeck, "New Deck");
+		main.invalidate(); //force the tabbed pane to redraw.
+		main.repaint();
+		main.getTabbedView().setSelectedComponent(newDeck);
 	}
 	
 	/**

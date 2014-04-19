@@ -68,6 +68,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
     private JButton addReqButton = new JButton("Add Requirement");
     
     private JButton importReqButton = new JButton("Import Requirement");
+    
+    private JButton removeReqButton = new JButton("Remove Requirement");
    
     public NewRightHalfCreateGamePanel(NewCreateGamePanel createGamePanel){
     	this.createGamePanel = createGamePanel;
@@ -175,6 +177,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				importReqsPanel.setVisible(false);
 				addReqButton.setEnabled(true);
 				importReqButton.setEnabled(true);
+				removeReqButton.setEnabled(true);
 			}
 		});
 		
@@ -198,7 +201,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         tablePanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);        
 		
         /**
-		 * Creates a new button to add the requirements to the game
+		 * Creates a new button to import the requirements to the game
 		 */
 		JButton submitImportReqButton = new JButton("Submit");
 		submitImportReqButton.addActionListener(new ActionListener() {
@@ -207,13 +210,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				submitImportButtonPressed();
 			}
 		});
-		
-		/*submitImportReqButton.addActionListener(new ActionListener() {
-			 @Override
-			public void actionPerformed(ActionEvent e) {
-				submitButtonPressed();
-			 }
-		});*/
 		
 		JButton cancelImportReqButton = new JButton("Cancel");
 		cancelImportReqButton.addActionListener(new ActionListener() {
@@ -226,6 +222,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				importReqsPanel.setVisible(false);
 				addReqButton.setEnabled(true);
 				importReqButton.setEnabled(true);
+				removeReqButton.setEnabled(true);
 			}
 		});
 		
@@ -262,13 +259,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         layout.putConstraint(SpringLayout.SOUTH, addReqButton, -5, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, addReqButton);
         // button with respect to container
-        layout.putConstraint(SpringLayout.WEST, addReqButton, 5, SpringLayout.WEST, rightView);
+        layout.putConstraint(SpringLayout.WEST, addReqButton, 10, SpringLayout.WEST, rightView);
         
         
         layout.putConstraint(SpringLayout.SOUTH, importReqButton, -5, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, importReqButton);
         // button with respect to container
-        layout.putConstraint(SpringLayout.EAST, importReqButton, -5, SpringLayout.EAST, rightView);
+        layout.putConstraint(SpringLayout.WEST, importReqButton, 15, SpringLayout.EAST, addReqButton);
         
         
         //CREATE REQS PANEL
@@ -356,6 +353,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				importReqsPanel.setVisible(false);
 				addReqButton.setEnabled(false);
 				importReqButton.setEnabled(false);
+				removeReqButton.setEnabled(false);
 			}
 		});
 		
@@ -367,34 +365,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				importReqsPanel.setVisible(true);
 				addReqButton.setEnabled(false);
 				importReqButton.setEnabled(false);
+				removeReqButton.setEnabled(false);
 			} 
-		});
-		
-		//THIS ACTION LISTENER NEEDS FIXING!!!!!!!!
-		//RIGHT NOW, IT AUTOMATICALLY ADDS EACH ROW YOU 
-		importTable.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (importTable.getSelectedRowCount() > 1){}
-				if (e.getClickCount() == 1) {
-					JTable target = (JTable) e.getSource();
-					int row = target.getSelectedRow();
-					String selectedName = (String) target.getValueAt(row, 0);
-					String selectedDesc = (String) target.getValueAt(row, 1);
-					currentTable.getTableModel().addRow(new Object[]{selectedName, selectedDesc});
-				}
-				if (e.getClickCount() > 1) {
-					JTable target = (JTable) e.getSource();
-					int[] rows = target.getSelectedRows();
-					for (int i = 0; i < rows.length; i++){
-						String selectedName = (String) target.getValueAt(rows[i], 0);
-						String selectedDesc = (String) target.getValueAt(rows[i], 1);
-						currentTable.getTableModel().addRow(new Object[]{selectedName, selectedDesc});
-				
-					}
-				}
-				else {}
-			}
 		});
         
     }
@@ -464,23 +436,31 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			importReqsPanel.setVisible(false);
 			addReqButton.setEnabled(true);
 			importReqButton.setEnabled(true);
+			removeReqButton.setEnabled(true);
 		}
 	}
 	
 	private void submitImportButtonPressed(){
-		/*if(IS_A_REQUIREMENT_SELECTED()){
-			addRequirement(SELECTED_REQUIREMENT(S));
-			createReqsPanel.setVisible(false);
-			currentReqsPanel.setVisible(true);
-			importReqsPanel.setVisible(false);
-			addReqButton.setEnabled(true);
-			importReqButton.setEnabled(true);
-		}*/
+		if(importTable.getSelectedRowCount() == 0){
+			//SET ERROR LABEL TO SAY: "You must select one requirement to import, or click cancel to exit import."
+		}
+		else if(1==2){//SET IF-STATEMENT THAT CHECKS TO SEE IF THE SELECTED REQUIREMENTS ARE ALREADY ADDED
+			//SET ERROR LABEL TO SAY: "The requirement you have selected to import ha already been added to this game."
+		}
+		else{
+			int[] rows = importTable.getSelectedRows();
+			for (int i = 0; i < rows.length; i++){
+				String selectedName = (String) importTable.getValueAt(rows[i], 0);
+				String selectedDesc = (String) importTable.getValueAt(rows[i], 1);
+				currentTable.getTableModel().addRow(new Object[]{selectedName, selectedDesc});
+			}
+		}
 		createReqsPanel.setVisible(false);
 		currentReqsPanel.setVisible(true);
 		importReqsPanel.setVisible(false);
 		addReqButton.setEnabled(true);
 		importReqButton.setEnabled(true);
+		removeReqButton.setEnabled(true);
 	}
 	
 	private boolean validateNameAndDesc(){
