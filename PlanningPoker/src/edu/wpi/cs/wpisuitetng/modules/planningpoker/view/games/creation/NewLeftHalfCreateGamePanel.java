@@ -136,10 +136,10 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		endDateField = new NewAddEndDatePanel(this);					//Creates an end date panel
 		
 		addKeyListenerTo(endDateField.getDatePicker());
-		addActionListenerTo(endDateField.getDatePicker(), "JXDatePicker");			//Adds ActionListener to update when a selection is made
-		addActionListenerTo(endDateField.getHourSelection(), "JComboBox");			//Adds ActionListener to update when a selection is made
-		addActionListenerTo(endDateField.getMinuteSelection(), "JComboBox");		//Adds ActionListener to update when a selection is made
-		addActionListenerTo(endDateField.getAmPmSelection(), "JComboBox");			//Adds ActionListener to update when a selection is made
+		addActionListenerTo(endDateField.getDatePicker());			//Adds ActionListener to update when a selection is made
+		addActionListenerTo(endDateField.getHourSelection());			//Adds ActionListener to update when a selection is made
+		addActionListenerTo(endDateField.getMinuteSelection());		//Adds ActionListener to update when a selection is made
+		addActionListenerTo(endDateField.getAmPmSelection());			//Adds ActionListener to update when a selection is made
 
 		
 		
@@ -379,9 +379,8 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	}
 	
 	
-	private void addActionListenerTo(JComponent component, String JComponentType){
-		// TODO Make if statements work with actual object types instead of the String placeholders
-		if(JComponentType.equals("JComboBox")){
+	private void addActionListenerTo(JComponent component){
+		if(component instanceof JComboBox){
 			((JComboBox)component).addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
 					parent.updateButtons();
@@ -389,7 +388,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 				}		
 			});
 		}
-		if(JComponentType.equals("JXDatePicker")){
+		if(component instanceof JXDatePicker){
 			((JXDatePicker)component).addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
 					parent.updateButtons();
