@@ -278,7 +278,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		});
 		addMouseListenerTo(submitButton);
 		
-		
 		if (currentGame.doesUseCards()) {
 			estText.setVisible(false);
 			submitButton.setEnabled(true);
@@ -291,16 +290,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			counter.setVisible(false);
 			counterLabel.setVisible(false);
 		}
-		
-		submitButton = new JButton();
-		submitButton.setSize(10, 5);
-		submitButton.setText("SUBMIT");
-		submitButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				submitButtonPressed();
-			}
-		});
 		
 		/**
 		 * Add components to container
