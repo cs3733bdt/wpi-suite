@@ -9,34 +9,34 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
-/**
- * TODO Documentation
- * @author Doruk Uzunoglu
- *
- */
-public class NewLeftHalfActiveGamePanel extends JScrollPane{
+public class EndGameLeftHalf extends JScrollPane {
+	Game ended;
 	
-	Game active;
+	private JTextArea descriptionTextField;
+	
+	
+	
 	private JLabel gameNameLabel;
 	private NameJTextField gameName;
 	private JLabel gameDescLabel;
@@ -45,49 +45,12 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 	private JLabel gameEndDateLabel;
 	private JLabel gameCreatorName;
 	private JLabel gameEndDate;
-	private JLabel endGameManuallyNoteLabel;
-	private JLabel endGameManuallyNoteLabel1;
-	private JTextArea endGameManuallyNote;
-	private JButton endGameManuallyButton;
-	JScrollPane notePane;
+	
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
-	private NewActiveGamePanel parentPanel;
-	/**
-	 * Constructor for NewLeftHalfActiveGamePanel
-	 * @param game the current planning poker game session
-	 */
-	public NewLeftHalfActiveGamePanel(final Game game, final NewActiveGamePanel activeGamePanel) {
-		active = game;
+	public EndGameLeftHalf(final Game game){
+		ended = game;
 		build();
-		isUserCreator();
-		parentPanel = activeGamePanel;
-	}
-	
-	/**
-	 * Method to notify observers and set game complete if end game is pressed
-	 */
-	public void endGameManuallyButtonPressed(){
-		parentPanel.endGame();
-	}
-	
-	/**
-	 * Method to check if the creator of the game is the user in the current session
-	 * 
-	 */
-	public void isUserCreator() {
-		if(ConfigManager.getConfig().getUserName().equals(active.getCreator())){
-			endGameManuallyNoteLabel.setVisible(true);
-			endGameManuallyNoteLabel1.setVisible(true);
-			endGameManuallyNote.setBorder(defaultBorder);
-			endGameManuallyNote.setVisible(true);
-			endGameManuallyButton.setVisible(true);
-		} else {
-			endGameManuallyNoteLabel.setVisible(false);
-			endGameManuallyNoteLabel1.setVisible(false);
-			notePane.setVisible(false);
-			endGameManuallyButton.setVisible(false);
-		}
 	}
 	
 	public void build(){
@@ -96,8 +59,6 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		Container newLeftView = new Container();
 		SpringLayout layout = new SpringLayout();
 		newLeftView.setLayout(layout);
-		setMinimumSize(new Dimension(310, 110));			//Sets the minimum size of the left half view
-		newLeftView.setPreferredSize(new Dimension(315, 518));		//Sets the size of the view
 		
 		revalidate();
 		repaint();
@@ -111,7 +72,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 
 		// Initializes and sets properties of game name label
 		gameName = new NameJTextField(30);						
-		gameName.setText(active.getName());				
+		gameName.setText(ended.getName());				
 		gameName.setBorder(defaultBorder);						
 		gameName.setEditable(false); 
 		gameName.setBackground(Color.WHITE);
@@ -121,7 +82,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 
 		// Initializes and sets game description display area
 		gameDesc = new JTextArea();
-		gameDesc.setText(active.getDescription());
+		gameDesc.setText(ended.getDescription());
 		gameDesc.setEditable(false);
 		gameDesc.setBorder(defaultBorder);
 		gameDesc.setLineWrap(true);									
@@ -137,37 +98,46 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		gameEndDateLabel = new JLabel("End date: ");			
 
 		// Initializes and sets game creator name
-		gameCreatorName = new JLabel(active.getCreator());		
-		
+		gameCreatorName = new JLabel(ended.getCreator());		
 		
 		// Initializes and sets game end date
-		gameEndDate = new JLabel(active.getEndDate().toString());	
+		gameEndDate = new JLabel(ended.getEndDate().toString());	
 		
-		// Initializes end game manually note labels
-		endGameManuallyNoteLabel = new JLabel("If you wish to end the game manually,");
-		endGameManuallyNoteLabel1 = new JLabel("you have the option to enter your reason for doing so:");
-
-		// Initializes text area to enter end game note
-		endGameManuallyNote = new JTextArea();
-		endGameManuallyNote.setBorder(defaultBorder);
-		endGameManuallyNote.setLineWrap(true);
-
-		// Creates a scroll pane to hold the text area for end game note
-		notePane = new JScrollPane(endGameManuallyNote);
-		notePane.setPreferredSize(new Dimension(200, 133));
-
-		// Creates end game button
-		endGameManuallyButton = new JButton();
-		endGameManuallyButton.setSize(10, 5);
-		endGameManuallyButton.setText("End Game");
-
-		// If end game button is pressed, set the game complete
-		endGameManuallyButton.addActionListener(new ActionListener() {
+		/**
+		 * Initializes a table's columns and rows and the table
+		 */
+		String[] columnNames = { "Requirement", "Description"};
+		Object[][] data = {};
+		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
+		table.setBorder(defaultBorder);
+		JScrollPane tablePanel = new JScrollPane(table);
+		/**
+		 * Display the requirement list in the table
+		 */
+		for (Requirement r : ended.getRequirements()) {
+			table.getTableModel().addRow(new Object[] { r.getName(),
+					r.getDescription() });
+		}
+		
+		table.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				endGameManuallyButtonPressed();
+			public void mouseClicked(MouseEvent e) {
+				if (e.getClickCount() == 1) {
+					JTable target = (JTable) e.getSource();
+					int row = target.getSelectedRow();
+					int column = target.getSelectedColumn();
+					String selected = (String) target.getValueAt(row, column);
+					for (Requirement r : ended.getRequirements()) {
+						if (selected.equals(r.getName())
+								|| selected.equals(r.getDescription())) {
+							descriptionTextField.setText(r.getDescription());
+							//statisticsRow = {mean, std, med, max, min};
+							//TODO: GET AND SET OTHER FIELDS REQUIRED FOR RIGHTHALF OF END GAME PANEL
+							//AlSO TODO: figure out how to actually use this listener on the right half..
+						}
+					}
 				}
+			}
 		});
 		
 		/**
@@ -181,11 +151,8 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		newLeftView.add(gameEndDateLabel);
 		newLeftView.add(gameCreatorName);
 		newLeftView.add(gameEndDate);
-		newLeftView.add(endGameManuallyNoteLabel);
-		newLeftView.add(endGameManuallyNoteLabel1);
-		newLeftView.add(notePane);
-		newLeftView.add(endGameManuallyButton);
-
+		newLeftView.add(tablePanel);
+		
 		/**
 		 * Adjust constraints on components
 		 */
@@ -215,21 +182,15 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.NORTH, gameEndDate, 5, SpringLayout.SOUTH, gameCreatorLabel);	
 		layout.putConstraint(SpringLayout.WEST, gameEndDate, 5, SpringLayout.EAST, gameEndDateLabel);
 
-		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 50, SpringLayout.SOUTH, gameEndDateLabel);	
-		layout.putConstraint(SpringLayout.WEST, endGameManuallyNoteLabel, 5, SpringLayout.WEST, newLeftView);
-
-		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel1, 1, SpringLayout.SOUTH, endGameManuallyNoteLabel);	
-		layout.putConstraint(SpringLayout.WEST, endGameManuallyNoteLabel1, 5, SpringLayout.WEST, newLeftView);
-
-		layout.putConstraint(SpringLayout.NORTH, notePane, 5, SpringLayout.SOUTH, endGameManuallyNoteLabel1);	
-		layout.putConstraint(SpringLayout.WEST, notePane, 5, SpringLayout.WEST, newLeftView);
-		layout.putConstraint(SpringLayout.EAST, notePane, -5, SpringLayout.EAST, newLeftView);
-
-		layout.putConstraint(SpringLayout.NORTH, endGameManuallyButton, 5, SpringLayout.SOUTH, notePane);	
-		layout.putConstraint(SpringLayout.WEST, endGameManuallyButton, 5, SpringLayout.WEST, newLeftView);
-
+		layout.putConstraint(SpringLayout.NORTH, tablePanel, 15, SpringLayout.SOUTH, gameEndDateLabel);
+		layout.putConstraint(SpringLayout.WEST, tablePanel, 5, SpringLayout.WEST, newLeftView);
+		layout.putConstraint(SpringLayout.EAST, tablePanel, -5, SpringLayout.EAST, newLeftView);
+		layout.putConstraint(SpringLayout.SOUTH, tablePanel, -10, SpringLayout.SOUTH, newLeftView);
+		
+		setMinimumSize(new Dimension(310, 110));			//Sets the minimum size of the left half view
+		newLeftView.setPreferredSize(new Dimension(315, 400));		//Sets the size of the view
 		
 		this.getViewport().add(newLeftView);
+		
 	}
-
 }

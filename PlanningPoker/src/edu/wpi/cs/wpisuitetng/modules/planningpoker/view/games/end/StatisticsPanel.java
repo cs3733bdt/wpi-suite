@@ -13,24 +13,25 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.SpringLayout;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 /**
  * used to display the end game statistics upon ending a game
  * @author TomPaolillo
  */
-public class StatisticsPanel extends JPanel{
+public class StatisticsPanel extends JScrollPane{
 	Game activeGame;
 	Requirement activeRequirement;
 	
@@ -46,13 +47,18 @@ public class StatisticsPanel extends JPanel{
 	
 	private int minEstimate;
 	private int maxEstimate;
-	private int averageEstimate;
-	private int yourEstimate; 
+	private double mean;
+	private double stDev;
+	private int median;
 	
-	private JLabel minLabel = new JLabel("Minimum Estimate: 0");
-	private JLabel maxLabel = new JLabel("Maximum Estimate: 0");
-	private JLabel averageLabel = new JLabel("Average Estimate: 0");
-	private JLabel yourLabel = new JLabel("Your Estimate: 0");
+	private ActiveStatisticsTable statTable;
+	
+	private ActiveVotesTable voteTable;
+//	
+//	private JLabel minLabel = new JLabel("Minimum Estimate: 0");
+//	private JLabel maxLabel = new JLabel("Maximum Estimate: 0");
+//	private JLabel averageLabel = new JLabel("Average Estimate: 0");
+//	private JLabel yourLabel = new JLabel("Your Estimate: 0");
 	
 	Container overviewPanel = new Container();
  
@@ -61,76 +67,187 @@ public class StatisticsPanel extends JPanel{
 	 * @param game 
 	 * @param requirement 
 	 */
-	public StatisticsPanel(Game game, Requirement requirement){
-
-		super(new GridBagLayout());
-
-		setMinimumSize(new Dimension(580, 200));
-		repaint();
-		invalidate();
-		revalidate();
+	public StatisticsPanel(Game game) {
+		
+		SpringLayout layout = new SpringLayout();
+		overviewPanel.setLayout(layout);
 
 		activeGame = game;
-		activeRequirement = requirement;
+		activeRequirement = game.getRequirements().get(0); //default to first requirement //TODO dependent on the click
 		
-		//this.overviewPanel =  new Container();
-		overviewPanel.setLayout(new GridBagLayout());
-
-		GridBagConstraints c = new GridBagConstraints();
-
+		JLabel descLabel = new JLabel("Description");
+		JLabel statLabel = new JLabel("Statistics");
+		JLabel votesLabel = new JLabel("Votes by User");
+		
+		initStats();
+		
+		statTable = initializeStatTable();
+		voteTable = initializeVoteTable();
+		statTable.getTableModel().addRow(new Object[]{mean, stDev, "0", maxEstimate, minEstimate});
+		
+		JScrollPane statsPanel = new JScrollPane(statTable);
+		JScrollPane votePanel = new JScrollPane(voteTable);
+		JScrollPane descPanel = new JScrollPane(userStoryDesc);
+		
+		overviewPanel.add(descLabel);
+		overviewPanel.add(statLabel);
+		overviewPanel.add(votesLabel);
+		
+		overviewPanel.add(descPanel);
+		overviewPanel.add(statsPanel);
+		overviewPanel.add(votePanel);
+		
 		/**
 		 * Creates and adds the user story text area to the view.
 		 */
-		userStoryDesc.setText(requirement.getDescription());
-		
-		JScrollPane userStoryPane = new JScrollPane(userStoryDesc);
-		userStoryDesc.setLineWrap(true);
+		userStoryDesc.setText("W\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW"); //game.getRequirements().get(0).getDescription());
 		userStoryDesc.setEditable(false);
-		c.anchor = GridBagConstraints.CENTER;
-		c.gridwidth = 4;
-		c.gridx = 0;
-		c.gridy = 2;
-		c.weightx = 1;
-		c.weighty = 1;
-		userStoryPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		userStoryPane.setMinimumSize(new Dimension(580, 150));
-		userStoryPane.setPreferredSize(new Dimension(580, 150));
-		overviewPanel.add(userStoryPane, c);
-		
-		c.anchor = GridBagConstraints.LINE_START;
-		c.gridwidth = 1;
-		c.weightx = 0;
-		c.gridx = 0;
-		c.gridy = 5;
-		overviewPanel.add(yourLabel,c);
-		
-		c.gridx = 0;
-		c.gridy = 6;
-		overviewPanel.add(averageLabel,c);
-		
-		c.anchor = GridBagConstraints.LINE_END;
-		c.gridx = 3;
-		c.gridy = 5;
-		overviewPanel.add(minLabel,c);
-		
-		c.gridx = 3;
-		c.gridy = 6;
-		overviewPanel.add(maxLabel,c);
+		userStoryDesc.setLineWrap(true);
 		
 		
-		c.anchor = GridBagConstraints.CENTER;
-		c.insets= new Insets(0, 0, 0, 0);
-		c.gridwidth = 10;
-		c.gridheight = 2;
-		c.gridx = 0;
-		c.gridy = 0;
-		c.weightx = 1;
-		this.add(overviewPanel, c);
+		userStoryDesc.setPreferredSize(new Dimension(580, 150));
+		descPanel.setPreferredSize(new Dimension(580, 100));
+		statsPanel.setPreferredSize(new Dimension(580, 60));
 		
-		this.setMinimumSize(new Dimension(580, 200));
-		this.repaint();
-		this.invalidate();
-		this.revalidate();
-
+		//Label for Desc
+		layout.putConstraint(SpringLayout.NORTH, descLabel, 5, SpringLayout.NORTH, overviewPanel); //Anchor user Story to the top of panel
+		layout.putConstraint(SpringLayout.WEST, descLabel, 5, SpringLayout.WEST, overviewPanel);
+		
+		//Constraints on the userStory Desc
+		layout.putConstraint(SpringLayout.NORTH, descPanel, 5, SpringLayout.SOUTH, descLabel); 
+		layout.putConstraint(SpringLayout.WEST, descPanel, 5, SpringLayout.WEST, overviewPanel);
+		layout.putConstraint(SpringLayout.EAST, descPanel, -5, SpringLayout.EAST, overviewPanel); 
+		
+		//Constraints on the stats Label
+		layout.putConstraint(SpringLayout.NORTH, statLabel, 5, SpringLayout.SOUTH, descPanel); 
+		layout.putConstraint(SpringLayout.WEST, statLabel, 5, SpringLayout.WEST, overviewPanel);
+		layout.putConstraint(SpringLayout.EAST, statLabel, -5, SpringLayout.EAST, overviewPanel); 
+	
+		
+		//Constraints on the statsPanel
+		layout.putConstraint(SpringLayout.NORTH, statsPanel, 5, SpringLayout.SOUTH, statLabel); //anchor top of stats panel to bottom of user story
+		layout.putConstraint(SpringLayout.WEST, statsPanel, 5, SpringLayout.WEST, overviewPanel);  //Anchor stats Panel to the left side of panel
+		layout.putConstraint(SpringLayout.EAST, statsPanel, -5, SpringLayout.EAST, overviewPanel); //Anchor user Story to the left side of panel
+		
+		//Constraints on the vote Label
+		layout.putConstraint(SpringLayout.NORTH, votesLabel, 5, SpringLayout.SOUTH, statsPanel); 
+		layout.putConstraint(SpringLayout.WEST, votesLabel, 5, SpringLayout.WEST, overviewPanel);
+		layout.putConstraint(SpringLayout.EAST, votesLabel, -5, SpringLayout.EAST, overviewPanel); 
+		
+		//Constraints on the votePanel
+		layout.putConstraint(SpringLayout.NORTH, votePanel, 5, SpringLayout.SOUTH, votesLabel); 
+		layout.putConstraint(SpringLayout.WEST, votePanel, 5, SpringLayout.WEST, overviewPanel);  
+		layout.putConstraint(SpringLayout.EAST, votePanel, -5, SpringLayout.EAST, overviewPanel); 
+		layout.putConstraint(SpringLayout.SOUTH, votePanel, -10, SpringLayout.SOUTH, overviewPanel);
+		
+		repaint();
+		invalidate();
+		revalidate();
+		
+		setViewportView(overviewPanel);
 	}
+	
+	private void initStats() {
+		ArrayList<Integer> voteData = requirementToVotes(activeRequirement); 
+		minEstimate = min(voteData);
+		maxEstimate = max(voteData);
+		mean = mean(voteData);
+		stDev = stDev(voteData);
+	}
+
+	/**
+	 * Instantiates the active stats table
+	 * @return the table containing the statistics
+	 */
+	private ActiveStatisticsTable initializeStatTable() {
+		String[] columnNames2 = {"Mean", "Standard Deviation", "Median", "Max", "Min" };
+		Object[][] data2 = {};
+		return new ActiveStatisticsTable(data2, columnNames2);
+	}
+	
+	private ActiveVotesTable initializeVoteTable() {
+		String[] columnNames2 = {"User Name", "Estimate"};
+		Object[][] data2 = {};
+		return new ActiveVotesTable(data2, columnNames2);
+	}
+	
+	/**
+	 * @param requirement
+	 * @return an arrayList of the vote numbers from the passed requirement
+	 */
+	private ArrayList<Integer> requirementToVotes(Requirement requirement) {
+		List<Vote> Votes = requirement.getVotes();
+		if (Votes.size() == 0) {
+			return new ArrayList<Integer>();
+		}
+		ArrayList<Integer> voteArray = new ArrayList<Integer>();
+		for (int i = 0; i < Votes.size(); i++) {
+			voteArray.add(Votes.get(i).getVoteNumber());
+		}
+		return voteArray;
+	}
+	
+	/**
+	 * @param Votes a list of the integer values for the votes for a given requirement
+	 * @return the minimum of the array. will return -1 if the array is empty
+	 */
+	private int min(ArrayList<Integer> Votes) {
+		int min = -1;
+		
+		for (int i = 0; i < Votes.size(); i++) {
+			if (Votes.get(i) < min || min == -1) {
+				min = Votes.get(i);
+			}
+		}
+	
+		return min;
+	}
+	
+	/**
+	 * @param Votes a list of the integer values for the votes for a given requirement
+	 * @return the maximum of the array. will return -1 if the array is empty
+	 */
+	private int max(ArrayList<Integer> Votes) {
+		int max = -1;
+		
+		for (int i = 0; i < Votes.size(); i++) {
+			if (Votes.get(i) > max) {
+				max = Votes.get(i);
+			}
+		}
+	
+		return max;
+	}
+	
+	static double mean(ArrayList<Integer> a) {
+		double sum = 0;
+		int i;
+		
+		for(i = 0; i < a.size(); i++) {
+			sum += a.get(i);
+		}
+		
+		return sum/a.size();
+	}
+	
+	private static double stDev(ArrayList<Integer> a) {
+		double mean = mean(a);
+		ArrayList<Double> numMinusMeanSquared = new ArrayList<Double>();
+	//	double[] numMinusMeanSquared = new double[a.length]; 
+		
+		for (int i = 0; i < a.size(); i++) {
+			numMinusMeanSquared.add(Math.pow((a.get(i)-mean), 2)); 
+		}
+		
+		double sum = 0;
+		
+		for(int j = 0; j < numMinusMeanSquared.size(); j++) {
+			sum += numMinusMeanSquared.get(j);
+		}
+				
+		double variance = (sum / (double) numMinusMeanSquared.size());
+		
+		return Math.sqrt(variance);
+	}
+	
 }
