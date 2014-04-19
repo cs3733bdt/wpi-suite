@@ -61,6 +61,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private JLabel reqLabel;
 	private JLabel desLabel;
 	private JScrollPane cardPanel;
+	private ActiveGamesTable table; 
+	private int activeReqRowIndex;
 
 	NewRightHalfActiveGamePanel(final Game game) {
 		currentGame = game;
@@ -97,18 +99,18 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/**
 		 * Initializes a table's columns and rows and the table
 		 */
-		String[] columnNames = { "Requirement", "Description", "Complete" };
+		String[] columnNames = { "Requirement", "Description", "My Estimate", "Complete" };
 		Object[][] data = {};
-		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
+		table = new ActiveGamesTable(data, columnNames);
 		table.setBorder(defaultBorder);
-
+		
 		/**
 		 * Display the requirement list in the table
 		 */
 		for (Requirement r : currentGame.getRequirements()) {
 			table.getTableModel().addRow(
 					new Object[] { r.getName(), r.getDescription(),
-							r.displayComplete() });
+							userVote(r), r.displayComplete() });
 		}
 
 		/**
@@ -121,12 +123,14 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					JTable target = (JTable) e.getSource();
 					int row = target.getSelectedRow();
 					int column = target.getSelectedColumn();
-					String selected = (String) target.getValueAt(row, column);
+					String selected = target.getValueAt(row, column).toString();
 					for (Requirement r : currentGame.getRequirements()) {
 						if (selected.equals(r.getName())
 								|| selected.equals(r.getDescription())
+								|| selected.equals(Integer.toString(userVote(r)))
 								|| selected.equals(r.displayComplete())) {
 							activeRequirement = r;
+							activeReqRowIndex = row;
 							previousEst.setText("Previous estimate: "
 									+ userVote(r));
 							nameTextField.setText(r.getName());
@@ -515,6 +519,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		getEstimateText().setBorder(defaultBorder);
 		displaySuccess("   Vote Successful!");
+		
+		previousEst.setText("Previous estimate: " + userVote(activeRequirement));
+		table.setValueAt(userVote(activeRequirement), activeReqRowIndex, 2);
 	}
 
 	/**
@@ -573,4 +580,5 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		System.out.println("name does not match");
 		return 0;
 	}
+	
 }
