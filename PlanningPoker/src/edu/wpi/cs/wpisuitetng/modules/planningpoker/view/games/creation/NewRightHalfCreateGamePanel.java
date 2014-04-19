@@ -379,25 +379,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         setMinimumSize(new Dimension(350, 350));
         getViewport().add(rightView);
         
-//<<<<<<< HEAD
-//		addReqButton.addActionListener(new ActionListener() {
-//		 @Override
-//		public void actionPerformed(ActionEvent e) {
-//			 /*view.addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
-//			 nameArea.setText("");
-//			 descArea.setText("");*/
-//			 
-//			 //set everything on create reqPanel to visible.setVisible(true);
-//			 
-//			//reqPanel.getImportReqPanel().setVisible(true); //TODO Not applicable at time of coding 
-//			 currentReqsPanel.setVisible(false);
-//			 createReqsPanel.setVisible(true);
-//			 importReqsPanel.setVisible(false);
-//		 }
-//		 
-//		 
-//	});
-//=======
 		addReqButton.addActionListener(new ActionListener() {    
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -409,7 +390,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				importReqButton.setEnabled(false);
 			}
 		});
-//>>>>>>> 746f88387ad67fcb7806f108589cf4f8c5e6aacf
 		
 		importReqButton.addActionListener(new ActionListener() {
 			@Override
