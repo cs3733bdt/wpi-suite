@@ -21,7 +21,10 @@ import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 
+import sun.java2d.loops.FillRect;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
@@ -52,6 +55,9 @@ public class StatisticsPanel extends JScrollPane{
 	private int median;
 	
 	private ActiveStatisticsTable statTable;
+	
+	
+	
 	
 	private ActiveVotesTable voteTable;
 //	
@@ -84,6 +90,8 @@ public class StatisticsPanel extends JScrollPane{
 		statTable = initializeStatTable();
 		voteTable = initializeVoteTable();
 		statTable.getTableModel().addRow(new Object[]{mean, stDev, "0", maxEstimate, minEstimate});
+		fillVoteTable(activeRequirement);
+		
 		
 		JScrollPane statsPanel = new JScrollPane(statTable);
 		JScrollPane votePanel = new JScrollPane(voteTable);
@@ -140,6 +148,12 @@ public class StatisticsPanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.EAST, votePanel, -5, SpringLayout.EAST, overviewPanel); 
 		layout.putConstraint(SpringLayout.SOUTH, votePanel, -10, SpringLayout.SOUTH, overviewPanel);
 		
+		int[] test = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //5.5
+		int[] test2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}; //6
+		
+		System.out.println("Median test1:" + median(test));
+		System.out.println("Median test2:" + median(test2));
+		
 		repaint();
 		invalidate();
 		revalidate();
@@ -177,14 +191,20 @@ public class StatisticsPanel extends JScrollPane{
 	 */
 	private ArrayList<Integer> requirementToVotes(Requirement requirement) {
 		List<Vote> Votes = requirement.getVotes();
-		if (Votes.size() == 0) {
-			return new ArrayList<Integer>();
-		}
 		ArrayList<Integer> voteArray = new ArrayList<Integer>();
 		for (int i = 0; i < Votes.size(); i++) {
 			voteArray.add(Votes.get(i).getVoteNumber());
 		}
 		return voteArray;
+	}
+	
+	public ArrayList<String> requirementToNames(Requirement requirement) {
+		List<Vote> Votes = requirement.getVotes();
+		ArrayList<String> nameArray = new ArrayList<String>();
+		for (int i = 0; i < Votes.size(); i++) {
+			nameArray.add(Votes.get(i).getUsername());
+		}
+		return nameArray;
 	}
 	
 	/**
@@ -250,4 +270,41 @@ public class StatisticsPanel extends JScrollPane{
 		return Math.sqrt(variance);
 	}
 	
+	public static double median(ArrayList<Integer> Votes) {
+		int[] a = new int[Votes.size()];
+		for (int i = 0; i < Votes.size(); i++) {
+			a[i] = Votes.get(i);
+		}
+		Arrays.sort(a);
+		int mid = a.length/2;
+		if (a.length % 2 == 0) {
+			return (a[mid] + a[mid - 1])/2;
+		}
+		else {
+			return a[mid];
+		}		
+	}
+	
+	
+	public static double median(int[] a) {
+		double median;
+		Arrays.sort(a);
+		int mid = a.length/2;
+		if (a.length % 2 == 0) {
+			median = ((a[mid] + a[mid - 1])/2);
+		}
+		else {
+			median = a[mid];
+		}		
+		return median;
+	}
+	
+	
+	public void fillVoteTable(Requirement requirement) {
+		ArrayList<String> nameArray = requirementToNames(requirement);
+		ArrayList<Integer> voteArray = requirementToVotes(requirement);
+				for (int i = 0; i < nameArray.size(); i++) {
+					voteTable.getTableModel().addRow(new Object[]{nameArray.get(i),voteArray.get(i)});
+				}
+	}
 }
