@@ -533,7 +533,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	}
 	
 	private void updateButton(){
-		if(validateField(false)){
+		if(validateField(true)){
 			submitButton.setEnabled(true);
 		}
 		else{

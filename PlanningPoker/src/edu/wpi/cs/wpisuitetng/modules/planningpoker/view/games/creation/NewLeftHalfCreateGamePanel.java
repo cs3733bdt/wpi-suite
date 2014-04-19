@@ -33,6 +33,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
@@ -76,7 +77,9 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	
 	private Game game;
 	
-	 private final Border defaultTextBorder = (new JTextField()).getBorder();
+	 private final Border defaultTextFieldBorder = (new JTextField()).getBorder();
+	 
+	 private final Border defaultTextAreaBorder = (new JTextArea()).getBorder();
 	    
 	 private final Border defaultDateBorder = (new JXDatePicker()).getBorder();	
 	 
@@ -112,7 +115,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		JLabel descLabel = new JLabel("Description * ");				//Creates the label for the Description
 		
 		descriptionTextField = new DescriptionJTextArea();				//Initializes the text area for the game description
-		descriptionTextField.setBorder(defaultTextBorder);					//Sets the default border to the description text area
+		descriptionTextField.setBorder(defaultTextAreaBorder);					//Sets the default border to the description text area
 		
 		addKeyListenerTo(nameTextField);								//Adds KeyListener to update on key press
 		addKeyListenerTo(descriptionTextField);							//Adds KeyListener to update on key press
@@ -172,7 +175,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		leftView.add(estimateSelectionPanel);			//Adds the panel with the radio buttons to the container
 		leftView.add(endDateField);						//Adds the end date field to the container
 		leftView.add(buttonPanel);						//Adds the panel with the buttons to the container
-		leftView.add(errorField);						//Adds stuff
+		leftView.add(errorField);						//Adds the error field to the container
 		
 		/**
 		 * Adjust layout constraints to correctly setup the layout of each component
@@ -195,9 +198,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		layout.putConstraint(SpringLayout.WEST, estimateSelectionPanel, 5, SpringLayout.WEST, leftView);		//Makes sure the left side of the panel stretches with the left side of the container
 		layout.putConstraint(SpringLayout.EAST, estimateSelectionPanel, 5, SpringLayout.EAST, leftView);		//Makes sure the right side of the panel stretches with the right side of the container
         
-		//layout.putConstraint(SpringLayout.SOUTH, endDateField, 50, SpringLayout.NORTH, buttonPanel);
 		layout.putConstraint(SpringLayout.NORTH, endDateField, 10, SpringLayout.SOUTH, estimateSelectionPanel);	//Adds the end date field underneath the radio buttons panel
-		//layout.putConstraint(SpringLayout.SOUTH, endDateField, 50, SpringLayout.NORTH, buttonPanel);	
 		layout.putConstraint(SpringLayout.WEST, endDateField, 5, SpringLayout.WEST, leftView);					//Makes sure the left side of the panel stretches with the left side of the container
 		layout.putConstraint(SpringLayout.EAST, endDateField, -5, SpringLayout.EAST, leftView);					//Makes sure the right side of the panel stretches with the right side of the container
         
@@ -259,7 +260,6 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	 * @return nameTextField
 	 */
 	public String getNameText() {
-		System.out.println(nameTextField.getText());
 		return nameTextField.getText();
 	}
 	
@@ -317,22 +317,26 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		
 		isEndDateValid = getEndDateField().validateField(errorField, show);
 		if (!isEndDateValid) {
-			getBoxDescription().setBorder(defaultTextBorder);
-			getBoxName().setBorder(defaultTextBorder);
+			getBoxDescription().setBorder(defaultTextAreaBorder);
+			getBoxName().setBorder(defaultTextFieldBorder);
 			parent.getRightHalf().getCurrentReqsPanel().setBorder((new JPanel().getBorder()));
 		}
 
 		isDescriptionValid = getBoxDescription().validateField(errorField, show);
 		if (!isDescriptionValid) {
 			getEndDateField().setBorder(defaultDateBorder);
-			getBoxName().setBorder(defaultTextBorder);
+			getBoxName().setBorder(defaultTextFieldBorder);
 			parent.getRightHalf().getCurrentReqsPanel().setBorder((new JPanel().getBorder()));
 		}
+		else{
+			getBoxDescription().setBorder(defaultTextAreaBorder);
+		}
+		
 
 		isNameValid = getBoxName().validateField(errorField, show);
 		if (!isNameValid) {
 			getEndDateField().setBorder(defaultDateBorder);
-			getBoxDescription().setBorder(defaultTextBorder);
+			getBoxDescription().setBorder(defaultTextAreaBorder);
 			parent.getRightHalf().getCurrentReqsPanel().setBorder((new JPanel().getBorder()));
 		}
 		
@@ -381,6 +385,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 			((JComboBox)component).addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
 					parent.updateButtons();
+					getEndDateField().validateField(errorField, true);
 				}		
 			});
 		}
@@ -388,6 +393,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 			((JXDatePicker)component).addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
 					parent.updateButtons();
+					getEndDateField().validateField(errorField, true);
 				}		
 			});
 		}
