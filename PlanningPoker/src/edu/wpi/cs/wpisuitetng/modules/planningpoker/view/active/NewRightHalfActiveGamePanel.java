@@ -138,6 +138,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 									+ userVote(r));
 							nameTextField.setText(r.getName());
 							descriptionTextField.setText(r.getDescription());
+							estText.setText("Estimate Here");
 							setFieldsVisible(true);
 						}
 					}
