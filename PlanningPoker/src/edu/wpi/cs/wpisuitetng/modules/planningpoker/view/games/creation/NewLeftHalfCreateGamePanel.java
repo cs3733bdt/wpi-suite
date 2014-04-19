@@ -21,10 +21,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.GregorianCalendar;
 
-import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -72,19 +70,14 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	
 	/** Shows the names of the errors */
 	private ErrorLabel errorField;
-	
-	private Date endDate;
-	
+		
 	private Game game;
 	
-	 private final Border defaultTextFieldBorder = (new JTextField()).getBorder();
+	private final Border defaultTextFieldBorder = (new JTextField()).getBorder();
 	 
-	 private final Border defaultTextAreaBorder = (new JTextArea()).getBorder();
+	private final Border defaultTextAreaBorder = (new JTextArea()).getBorder();
 	    
-	 private final Border defaultDateBorder = (new JXDatePicker()).getBorder();	
-	 
-	 private final Border errorBorder = BorderFactory
-			.createLineBorder(Color.RED);
+	private final Border defaultDateBorder = (new JXDatePicker()).getBorder();	
 	
 	private NewCreateGamePanel parent;
 	
@@ -151,11 +144,8 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		JPanel buttonPanel = new JPanel();								//Creates a panel for the buttons
 		buttonPanel.add(saveGameButton);								//Adds the save button to the panel
 		buttonPanel.add(launchGameButton);								//Adds the launch button to the panel
-		//buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel
-		saveGameButton.getSaveGameButton().setEnabled(false);
-		if(parent.getGame() == null){
-			launchGameButton.getLaunchGameButton().setEnabled(false);
-		}
+		//buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel		
+		
 		
 		addMouseListenerTo(buttonPanel);							//Adds MouseListener to validate on mouse click
 		addMouseListenerTo(saveGameButton.getSaveGameButton());		//Adds MouseListener to validate on mouse click

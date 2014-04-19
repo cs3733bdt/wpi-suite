@@ -18,6 +18,8 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 
+import org.jdesktop.swingx.JXDatePicker;
+
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
@@ -55,6 +57,18 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		setRightComponent(rightHalf);
 		rightHalf.setMinimumSize(new Dimension(333, 500));
 		setDividerLocation(420);
+		
+		if(game == null){
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+		}
+		else if(!validateField(false)){
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+		}
+		else{
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
+		}
 		
 		revalidate();
 		repaint();
@@ -157,10 +171,6 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 			leftPanelValid = leftHalf.validateField(null, false);
 		}
 		
-		if(!leftHalf.getSaveGameButtonPanel().getSaveGameButton().isEnabled() && leftPanelValid && rightPanelValid){
-			leftHalf.getErrorField().setText("No changes have been made");
-		}
-		
 		if(show == false){
 			leftHalf.getErrorField().setText("");
 		}
@@ -174,7 +184,9 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 * @return true when a game is sucsessfully added
 	 */
 	public boolean SaveGamePressed() {
-		if(this.validateField(true)){
+		if(leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true)){
+			leftHalf.getEndDateField().setBorder((new JXDatePicker()).getBorder());
+			leftHalf.getErrorField().setText("");
 			saveGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
@@ -254,13 +266,19 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	
 	public void updateButtons(){
 		if(validateField(false)){
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
 			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
 		}
 		else{
 			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+		}
+		
+		if(leftHalf.getBoxName().validateField(leftHalf.getErrorField(), false)){
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
+		}
+		else{
 			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
 		}
+
 	}
 
 	/**
