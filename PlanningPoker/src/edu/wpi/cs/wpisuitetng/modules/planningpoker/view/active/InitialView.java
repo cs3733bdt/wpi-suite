@@ -15,7 +15,6 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
