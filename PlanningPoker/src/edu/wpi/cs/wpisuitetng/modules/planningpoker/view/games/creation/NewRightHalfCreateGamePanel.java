@@ -232,12 +232,14 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		importReqsPanel.add(cancelImportReqButton);
 		
 		importReqsPanel.setVisible(false);
+		removeReqButton.setEnabled(false);
 		
         rightView.add(currentReqsPanel);
         rightView.add(createReqsPanel);
         rightView.add(importReqsPanel);
         rightView.add(addReqButton);
         rightView.add(importReqButton);
+        rightView.add(removeReqButton);
 		
         //IN THE CURRENT REQ PANEL
         // the tile with respect to the panel
@@ -255,18 +257,19 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -50, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.WEST, currentReqsPanel, 5, SpringLayout.WEST, rightView);
         layout.putConstraint(SpringLayout.EAST, currentReqsPanel, -5, SpringLayout.EAST, rightView);
-        // currentPanel with respect to the button 
+        
+        //addreq button
         layout.putConstraint(SpringLayout.SOUTH, addReqButton, -5, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, addReqButton);
-        // button with respect to container
         layout.putConstraint(SpringLayout.WEST, addReqButton, 10, SpringLayout.WEST, rightView);
-        
-        
+        //importreq button
         layout.putConstraint(SpringLayout.SOUTH, importReqButton, -5, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, importReqButton);
-        // button with respect to container
         layout.putConstraint(SpringLayout.WEST, importReqButton, 15, SpringLayout.EAST, addReqButton);
-        
+        //removereq button
+        layout.putConstraint(SpringLayout.SOUTH, removeReqButton, -5, SpringLayout.SOUTH, rightView);
+        layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, removeReqButton);
+        layout.putConstraint(SpringLayout.WEST, removeReqButton, 15, SpringLayout.EAST, importReqButton);
         
         //CREATE REQS PANEL
         //createPanel with respect to the container 
@@ -343,6 +346,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         importLayout.putConstraint(SpringLayout.SOUTH, tablePanel, -20, SpringLayout.NORTH, submitImportReqButton);
         
         setMinimumSize(new Dimension(350, 350));
+        rightView.setPreferredSize(new Dimension(485, 350));
         getViewport().add(rightView);
         
 		addReqButton.addActionListener(new ActionListener() {
@@ -367,6 +371,27 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				importReqButton.setEnabled(false);
 				removeReqButton.setEnabled(false);
 			} 
+		});
+		
+		removeReqButton.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(currentTable.getSelectedRowCount() == 0){
+					//SET ERROR LABEL TO SAY: "You must select one requirement to remove.
+				}
+				else {
+					//AS OF RIGHT NOW, THE USER CAN ONLY SELECT ONE ROW AT A TIME, SO THIS
+					//METHOD OF REMOVING IS OVER-COMPLICATED. I DID IT THIS WAY THOUGH
+					//IN CASE WE CHANGE IT LATER:
+					int[] rows = currentTable.getSelectedRows();
+					for (int i = 0; i < rows.length; i++){
+						currentTable.getTableModel().removeRow(rows[i]);
+					}
+					if(currentTable.getTableModel().getRowCount() == 0){
+						removeReqButton.setEnabled(false);
+					}
+				}
+			}
 		});
         
     }
