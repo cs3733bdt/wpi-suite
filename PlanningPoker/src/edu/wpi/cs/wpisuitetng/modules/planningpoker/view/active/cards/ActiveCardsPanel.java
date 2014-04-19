@@ -187,7 +187,7 @@ public int memoryArrayGetElt(int elt) {
 }
 
 @Override
-public boolean validateField(IErrorView warningField) {
+public boolean validateField(IErrorView warningField, boolean show) {
 	return false;
 }
 

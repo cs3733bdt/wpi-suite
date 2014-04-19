@@ -15,6 +15,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -22,6 +24,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -247,10 +250,12 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		estText.setPreferredSize(new Dimension(100, 50));
 		estText.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				estText.setText("");
 			}
 		});
+		addKeyListenerTo(estText);
+		
 		rightView.add(estText);
 		layout.putConstraint(SpringLayout.WEST, estText, 5, SpringLayout.WEST,
 				rightView);
@@ -266,17 +271,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		rightView.add(counterLabel);
 
-		if (currentGame.doesUseCards()) {
-			estText.setVisible(false);
-		} else {
-			cardsPanel.setVerifyInputWhenFocusTarget(false);
-			for (int i = 0; i < JToggleButtonList.size(); i++) {
-				JToggleButtonList.get(i).setVisible(false);
-			}
-			counter.setVisible(false);
-			counterLabel.setVisible(false);
-		}
-
 		submitButton = new JButton();
 		submitButton.setSize(10, 5);
 		submitButton.setText("SUBMIT");
@@ -286,6 +280,20 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				submitButtonPressed();
 			}
 		});
+		addMouseListenerTo(submitButton);
+		
+		if (currentGame.doesUseCards()) {
+			estText.setVisible(false);
+			submitButton.setEnabled(true);
+		} else {
+			cardsPanel.setVerifyInputWhenFocusTarget(false);
+			for (int i = 0; i < JToggleButtonList.size(); i++) {
+				JToggleButtonList.get(i).setVisible(false);
+			}
+			submitButton.setEnabled(false);
+			counter.setVisible(false);
+			counterLabel.setVisible(false);
+		}
 		
 		/**
 		 * Add components to container
@@ -433,11 +441,11 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	 */
 	public void submitButtonPressed() {
 		if (getGame().doesUseCards()) {
-			this.submitButton();
+			submitButton();
 			System.out.println("Submit Vote Pressed Passed");
 		} else {
-			if (this.validateField(true)) {
-				this.submitButton();
+			if (validateField(true)) {
+				submitButton();
 				System.out.println("Submit Vote Pressed Passed.");
 			} else {
 				System.out.println("Submit Vote Pressed Failed.");
@@ -452,6 +460,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	 */
 	private boolean validateField(boolean warn) {
 		boolean isEstimateValid = false;
+		getEstimateText().setBorder(defaultBorder);
+		errorField.setText("");
 
 		// check to see if estimate is parsable to int
 		boolean parsable = true;
@@ -468,27 +478,25 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			isEstimateValid = false;
 			if (warn) {
 				getEstimateText().setBorder(errorBorder);
+				displayError("An estimation is required before submission");
 			}
-			displayError("An estimation is required before submission");
 		} else if (parsable) {
 			if (Integer.parseInt(getEstimateText().getText()) < 0) {
 				isEstimateValid = false;
 				if (warn) {
 					getEstimateText().setBorder(errorBorder);
+					displayError("An estimate must be at least 0");
 				}
-				displayError("An estimate must be at least 0");
 			} else {
-				if (warn) {
-					getEstimateText().setBorder(defaultBorder);
-				}
+				getEstimateText().setBorder(defaultBorder);
 				isEstimateValid = true;
 			}
 		} else {
 			isEstimateValid = false;
 			if (warn) {
 				getEstimateText().setBorder(errorBorder);
+				displayError("An estimation must contain only numbers");
 			}
-			displayError("An estimation must contain only numbers");
 		}
 
 		return isEstimateValid;
@@ -562,6 +570,33 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			counterLabel.setVisible(visible);
 			cardPanel.setVisible(true);
 			cardsPanel.setVisible(true);
+		}
+	}
+	
+	private void addKeyListenerTo(JComponent component) {
+		component.addKeyListener(new KeyAdapter(){
+			public void keyReleased(KeyEvent arg0) {
+				updateButton();
+			}
+		});
+	}
+	
+	private void addMouseListenerTo(JComponent component){
+		component.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent arg0) {
+				if(!submitButton.isEnabled()){	
+					validateField(true);
+				}
+			}
+		});
+	}
+	
+	private void updateButton(){
+		if(validateField(true)){
+			submitButton.setEnabled(true);
+		}
+		else{
+			submitButton.setEnabled(false);
 		}
 	}
 

@@ -14,6 +14,12 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -21,15 +27,19 @@ import java.util.GregorianCalendar;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+
+import org.jdesktop.swingx.JXDatePicker;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewLaunchGameButtonPanel;
@@ -45,9 +55,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * Used to input the Games name, description, end date, whether it uses cards
  */
 public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataField{
-	
-	private final Border defaultBorder = (new JTextField()).getBorder();
-	
+		
 	private NameJTextField nameTextField;
 	private DescriptionJTextArea descriptionTextField;
 	
@@ -68,6 +76,15 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	private Date endDate;
 	
 	private Game game;
+	
+	 private final Border defaultTextFieldBorder = (new JTextField()).getBorder();
+	 
+	 private final Border defaultTextAreaBorder = (new JTextArea()).getBorder();
+	    
+	 private final Border defaultDateBorder = (new JXDatePicker()).getBorder();	
+	 
+	 private final Border errorBorder = BorderFactory
+			.createLineBorder(Color.RED);
 	
 	private NewCreateGamePanel parent;
 	
@@ -98,7 +115,10 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		JLabel descLabel = new JLabel("Description * ");				//Creates the label for the Description
 		
 		descriptionTextField = new DescriptionJTextArea();				//Initializes the text area for the game description
-		descriptionTextField.setBorder(defaultBorder);					//Sets the default border to the description text area
+		descriptionTextField.setBorder(defaultTextAreaBorder);					//Sets the default border to the description text area
+		
+		addKeyListenerTo(nameTextField);								//Adds KeyListener to update on key press
+		addKeyListenerTo(descriptionTextField);							//Adds KeyListener to update on key press
 		
 		JScrollPane descPane = new JScrollPane(descriptionTextField);	//Creates the scrollPane for the description field
 		descPane.setPreferredSize(new Dimension(200, 200));				//Sets the preferred(which works as minimum for some reason) size of the description scroll pane
@@ -115,6 +135,15 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		
 		endDateField = new NewAddEndDatePanel(this);					//Creates an end date panel
 		
+		addKeyListenerTo(endDateField.getDatePicker());
+		addActionListenerTo(endDateField.getDatePicker());			//Adds ActionListener to update when a selection is made
+		addActionListenerTo(endDateField.getHourSelection());			//Adds ActionListener to update when a selection is made
+		addActionListenerTo(endDateField.getMinuteSelection());		//Adds ActionListener to update when a selection is made
+		addActionListenerTo(endDateField.getAmPmSelection());			//Adds ActionListener to update when a selection is made
+
+		
+		
+		
 		saveGameButton = new NewSaveGameButtonPanel(parent);				//Creates a save game button
 		launchGameButton = new NewLaunchGameButtonPanel(parent);		//Creates a launch game button
 		//cancelGameButton = new NewCancelGameButtonPanel(this);		//TODO implement this
@@ -123,6 +152,14 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		buttonPanel.add(saveGameButton);								//Adds the save button to the panel
 		buttonPanel.add(launchGameButton);								//Adds the launch button to the panel
 		//buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel
+		saveGameButton.getSaveGameButton().setEnabled(false);
+		if(parent.getGame() == null){
+			launchGameButton.getLaunchGameButton().setEnabled(false);
+		}
+		
+		addMouseListenerTo(buttonPanel);							//Adds MouseListener to validate on mouse click
+		addMouseListenerTo(saveGameButton.getSaveGameButton());		//Adds MouseListener to validate on mouse click
+		addMouseListenerTo(launchGameButton.getLaunchGameButton());	//Adds MouseListener to validate on mouse click
 		
 		errorField = new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
@@ -190,9 +227,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 			nameTextField.setText(game.getName());
 			descriptionTextField.setText(game.getDescription());
 			setUsesCards(game.doesUseCards());
-			
-			
-			
+	
 			//CALENDAR SETUP
 			Calendar dateMaker = new GregorianCalendar();
 			dateMaker.setTime(game.getEndDate());
@@ -225,7 +260,6 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	 * @return nameTextField
 	 */
 	public String getNameText() {
-		System.out.println(nameTextField.getText());
 		return nameTextField.getText();
 	}
 	
@@ -258,6 +292,16 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		errorField.setText(error);
 	}
 	
+	
+	
+	public NewSaveGameButtonPanel getSaveGameButtonPanel() {
+		return saveGameButton;
+	}
+
+	public NewLaunchGameButtonPanel getLaunchGameButtonPanel() {
+		return launchGameButton;
+	}
+
 	/**
 	 * Checks all fields to determine if they are prepared to be removed.
 	 * If a field is invalid the it warns the user with a notification and by highlighting
@@ -266,16 +310,35 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	 * @return true If all fields are valid and the window is ready to be removed
 	 */
 	@Override
-	public boolean validateField(IErrorView warningField) {
+	public boolean validateField(IErrorView warningField, boolean show) {
 		boolean isNameValid = false;
 		boolean isDescriptionValid = false;
 		boolean isEndDateValid = false;
 		
-		isEndDateValid = getEndDateField().validateField(errorField);
-		
-		isDescriptionValid = getBoxDescription().validateField(errorField);
+		isEndDateValid = getEndDateField().validateField(errorField, show);
+		if (!isEndDateValid) {
+			getBoxDescription().setBorder(defaultTextAreaBorder);
+			getBoxName().setBorder(defaultTextFieldBorder);
+			parent.getRightHalf().getCurrentReqsPanel().setBorder((new JPanel().getBorder()));
+		}
 
-		isNameValid = getBoxName().validateField(errorField);
+		isDescriptionValid = getBoxDescription().validateField(errorField, show);
+		if (!isDescriptionValid) {
+			getEndDateField().setBorder(defaultDateBorder);
+			getBoxName().setBorder(defaultTextFieldBorder);
+			parent.getRightHalf().getCurrentReqsPanel().setBorder((new JPanel().getBorder()));
+		}
+		else{
+			getBoxDescription().setBorder(defaultTextAreaBorder);
+		}
+		
+
+		isNameValid = getBoxName().validateField(errorField, show);
+		if (!isNameValid) {
+			getEndDateField().setBorder(defaultDateBorder);
+			getBoxDescription().setBorder(defaultTextAreaBorder);
+			parent.getRightHalf().getCurrentReqsPanel().setBorder((new JPanel().getBorder()));
+		}
 		
 		return (isNameValid && isDescriptionValid && isEndDateValid);
 	}
@@ -307,5 +370,41 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		}
 	}
 	
+	private void addKeyListenerTo(JComponent component){
+		component.addKeyListener(new KeyAdapter(){
+			public void keyReleased(KeyEvent arg0) {	
+				parent.updateButtons();
+			}
+		});
+	}
+	
+	
+	private void addActionListenerTo(JComponent component){
+		if(component instanceof JComboBox){
+			((JComboBox)component).addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg0) {
+					parent.updateButtons();
+					getEndDateField().validateField(errorField, true);
+				}		
+			});
+		}
+		if(component instanceof JXDatePicker){
+			((JXDatePicker)component).addActionListener(new ActionListener(){
+				public void actionPerformed(ActionEvent arg0) {
+					parent.updateButtons();
+					getEndDateField().validateField(errorField, true);
+				}		
+			});
+		}
+		
+	}
+	
+	private void addMouseListenerTo(JComponent component){
+		component.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent arg0) {
+					parent.validateField(true);
+			}
+		});
+	}
 	
 }
