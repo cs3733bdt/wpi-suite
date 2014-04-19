@@ -15,10 +15,12 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +51,9 @@ public class StatisticsPanel extends JScrollPane{
 	private double stDev;
 	private int median;
 	
-	private ActiveStatisticsPanel statTable;
+	private ActiveStatisticsTable statTable;
+	
+	private ActiveVotesTable voteTable;
 //	
 //	private JLabel minLabel = new JLabel("Minimum Estimate: 0");
 //	private JLabel maxLabel = new JLabel("Maximum Estimate: 0");
@@ -71,32 +75,70 @@ public class StatisticsPanel extends JScrollPane{
 		activeGame = game;
 		activeRequirement = game.getRequirements().get(0); //default to first requirement //TODO dependent on the click
 		
+		JLabel descLabel = new JLabel("Description");
+		JLabel statLabel = new JLabel("Statistics");
+		JLabel votesLabel = new JLabel("Votes by User");
+		
 		initStats();
 		
-		statTable = initializeTable();
+		statTable = initializeStatTable();
+		voteTable = initializeVoteTable();
 		statTable.getTableModel().addRow(new Object[]{mean, stDev, "0", maxEstimate, minEstimate});
-		JScrollPane statsPanel = new JScrollPane(statTable);
 		
-		overviewPanel.add(userStoryDesc);
+		JScrollPane statsPanel = new JScrollPane(statTable);
+		JScrollPane votePanel = new JScrollPane(voteTable);
+		JScrollPane descPanel = new JScrollPane(userStoryDesc);
+		
+		overviewPanel.add(descLabel);
+		overviewPanel.add(statLabel);
+		overviewPanel.add(votesLabel);
+		
+		overviewPanel.add(descPanel);
 		overviewPanel.add(statsPanel);
+		overviewPanel.add(votePanel);
+		
 		/**
 		 * Creates and adds the user story text area to the view.
 		 */
-		userStoryDesc.setText(game.getRequirements().get(0).getDescription());
+		userStoryDesc.setText("W\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW"); //game.getRequirements().get(0).getDescription());
 		userStoryDesc.setEditable(false);
 		userStoryDesc.setLineWrap(true);
+		
+		
 		userStoryDesc.setPreferredSize(new Dimension(580, 150));
+		descPanel.setPreferredSize(new Dimension(580, 100));
+		statsPanel.setPreferredSize(new Dimension(580, 60));
+		
+		//Label for Desc
+		layout.putConstraint(SpringLayout.NORTH, descLabel, 5, SpringLayout.NORTH, overviewPanel); //Anchor user Story to the top of panel
+		layout.putConstraint(SpringLayout.WEST, descLabel, 5, SpringLayout.WEST, overviewPanel);
 		
 		//Constraints on the userStory Desc
-		layout.putConstraint(SpringLayout.NORTH, userStoryDesc, 5, SpringLayout.NORTH, overviewPanel); //Anchor user Story to the top of panel
-		layout.putConstraint(SpringLayout.WEST, userStoryDesc, 20, SpringLayout.WEST, overviewPanel);  //Anchor user Story to the left side of panel
-		layout.putConstraint(SpringLayout.EAST, userStoryDesc, -20, SpringLayout.EAST, overviewPanel); //Anchor user Story to the left side of panel
+		layout.putConstraint(SpringLayout.NORTH, descPanel, 5, SpringLayout.SOUTH, descLabel); 
+		layout.putConstraint(SpringLayout.WEST, descPanel, 5, SpringLayout.WEST, overviewPanel);
+		layout.putConstraint(SpringLayout.EAST, descPanel, -5, SpringLayout.EAST, overviewPanel); 
+		
+		//Constraints on the stats Label
+		layout.putConstraint(SpringLayout.NORTH, statLabel, 5, SpringLayout.SOUTH, descPanel); 
+		layout.putConstraint(SpringLayout.WEST, statLabel, 5, SpringLayout.WEST, overviewPanel);
+		layout.putConstraint(SpringLayout.EAST, statLabel, -5, SpringLayout.EAST, overviewPanel); 
+	
 		
 		//Constraints on the statsPanel
-		layout.putConstraint(SpringLayout.NORTH, statsPanel, 5, SpringLayout.SOUTH, userStoryDesc); //anchor top of stats panel to bottom of user story
-		layout.putConstraint(SpringLayout.WEST, statsPanel, 20, SpringLayout.WEST, overviewPanel);  //Anchor stats Panel to the left side of panel
-		layout.putConstraint(SpringLayout.EAST, statsPanel, -20, SpringLayout.EAST, overviewPanel); //Anchor user Story to the left side of panel
-		layout.putConstraint(SpringLayout.SOUTH, statsPanel, -20, SpringLayout.SOUTH, overviewPanel);
+		layout.putConstraint(SpringLayout.NORTH, statsPanel, 5, SpringLayout.SOUTH, statLabel); //anchor top of stats panel to bottom of user story
+		layout.putConstraint(SpringLayout.WEST, statsPanel, 5, SpringLayout.WEST, overviewPanel);  //Anchor stats Panel to the left side of panel
+		layout.putConstraint(SpringLayout.EAST, statsPanel, -5, SpringLayout.EAST, overviewPanel); //Anchor user Story to the left side of panel
+		
+		//Constraints on the vote Label
+		layout.putConstraint(SpringLayout.NORTH, votesLabel, 5, SpringLayout.SOUTH, statsPanel); 
+		layout.putConstraint(SpringLayout.WEST, votesLabel, 5, SpringLayout.WEST, overviewPanel);
+		layout.putConstraint(SpringLayout.EAST, votesLabel, -5, SpringLayout.EAST, overviewPanel); 
+		
+		//Constraints on the votePanel
+		layout.putConstraint(SpringLayout.NORTH, votePanel, 5, SpringLayout.SOUTH, votesLabel); 
+		layout.putConstraint(SpringLayout.WEST, votePanel, 5, SpringLayout.WEST, overviewPanel);  
+		layout.putConstraint(SpringLayout.EAST, votePanel, -5, SpringLayout.EAST, overviewPanel); 
+		layout.putConstraint(SpringLayout.SOUTH, votePanel, -10, SpringLayout.SOUTH, overviewPanel);
 		
 		repaint();
 		invalidate();
@@ -114,13 +156,19 @@ public class StatisticsPanel extends JScrollPane{
 	}
 
 	/**
-	 * Instantiates this table
-	 * @return the ActiveGamesTable
+	 * Instantiates the active stats table
+	 * @return the table containing the statistics
 	 */
-	private ActiveStatisticsPanel initializeTable() {
+	private ActiveStatisticsTable initializeStatTable() {
 		String[] columnNames2 = {"Mean", "Standard Deviation", "Median", "Max", "Min" };
 		Object[][] data2 = {};
-		return new ActiveStatisticsPanel(data2, columnNames2);
+		return new ActiveStatisticsTable(data2, columnNames2);
+	}
+	
+	private ActiveVotesTable initializeVoteTable() {
+		String[] columnNames2 = {"User Name", "Estimate"};
+		Object[][] data2 = {};
+		return new ActiveVotesTable(data2, columnNames2);
 	}
 	
 	/**

@@ -23,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
  *
  */
 @SuppressWarnings("serial")
-public class ActiveStatisticsPanel extends JTable
+public class ActiveStatisticsTable extends JTable
 {
 	private DefaultTableModel tableModel = null;
 	private boolean initialized;
@@ -37,7 +37,7 @@ public class ActiveStatisticsPanel extends JTable
 	 * @param data	Initial data to fill OverviewTable
 	 * @param columnNames	Column headers of OverviewTable
 	 */
-	public ActiveStatisticsPanel(Object[][] data, String[] columnNames)
+	public ActiveStatisticsTable(Object[][] data, String[] columnNames)
 	{
 		setTableModel(new DefaultTableModel(data, columnNames));
 		setModel(getTableModel());
