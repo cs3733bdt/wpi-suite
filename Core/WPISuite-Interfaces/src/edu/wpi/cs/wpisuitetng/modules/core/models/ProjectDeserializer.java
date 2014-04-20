@@ -89,8 +89,16 @@ public class ProjectDeserializer implements JsonDeserializer<Project> {
 			 {
 				 inflated.addTeamMember(User.fromJSON(member.getAsString()));
 			 }
-			 
+			 if(inflated.getTeam() == null){
+				 System.out.println("Had team list but no team was added to the model");
+			 } else if (inflated.getTeam()[0] == null){
+				 System.out.println("Had team list but first team is null");
+			 }
+		 } else {
+			 System.out.println("Deseralizer, we are missing the team for this object\nElts:");
+			 System.out.println(deflated.toString());
 		 }
+		 System.out.println("Deflated: " + deflated.toString());
 		 
 		 return inflated;
 	}
