@@ -19,6 +19,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -139,6 +140,12 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 							nameTextField.setText(r.getName());
 							descriptionTextField.setText(r.getDescription());
 							estText.setText("Estimate Here");
+							try {
+								cardsPanel.clearCards();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 							setFieldsVisible(true);
 						}
 					}
