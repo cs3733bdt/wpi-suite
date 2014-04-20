@@ -51,7 +51,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
        
     private final Border defaultPanelBorder = (new JPanel()).getBorder();
     
-    private int globalRow;
+    private int globalRow = -1; //this Variable is used to keep track of when the submit or update button is grayed out as well as which row is being updated
     
     private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
@@ -193,6 +193,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				createReqsPanel.setVisible(false);
 				currentReqsPanel.setVisible(true);
 				importReqsPanel.setVisible(false);
+				globalRow = -1;
 				enableButtons();
 			}
 		});
@@ -365,6 +366,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
        
         //postion error label with respect to creaReqPanel
         createLayout.putConstraint(SpringLayout.SOUTH, errorLabel, -1, SpringLayout.SOUTH, createReqsPanel);
+        createLayout.putConstraint(SpringLayout.NORTH, errorLabel, 1, SpringLayout.SOUTH, updateAddReqButton);
         createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorLabel, 1, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
        
         //position cancel button with respect to createReqPanel
@@ -433,7 +435,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				currentReqsPanel.setVisible(false);
 				createReqsPanel.setVisible(true);
 				importReqsPanel.setVisible(false);
-				submitAddReqButton.setEnabled(true);
+			//	submitAddReqButton.setEnabled(true);
 				updateAddReqButton.setEnabled(false);
 				disableButtons();
 			}
@@ -693,8 +695,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	
 	private void addKeyListenerTo(JComponent component){
 		component.addKeyListener(new KeyAdapter(){
-			public void keyReleased(KeyEvent arg0) {	
-				updateSubmitButton();
+			public void keyReleased(KeyEvent arg0) {
+				if (globalRow == -1) {
+					updateSubmitButton();
+				}
+				else {
+					updateUpdateButton();
+				}
 			}
 		});
 	}
@@ -707,6 +714,14 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		});
 	}
 	
+	private void updateUpdateButton(){
+		if(validateNameAndDesc(false)){
+			updateAddReqButton.setEnabled(true);
+		}
+		else{
+			updateAddReqButton.setEnabled(false);	
+		}
+	}
 	
 	private void updateSubmitButton(){
 		if(validateNameAndDesc(false)){
