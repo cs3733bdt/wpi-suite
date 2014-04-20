@@ -128,13 +128,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				if (e.getClickCount() == 1) {
 					JTable target = (JTable) e.getSource();
 					int row = target.getSelectedRow();
-					int column = target.getSelectedColumn();
-					String selected = target.getValueAt(row, column).toString();
 					for (Requirement r : currentGame.getRequirements()) {
-						if (selected.equals(r.getName())
-								|| selected.equals(r.getDescription())
-								|| selected.equals(Integer.toString(userVote(r)))
-								|| selected.equals(r.displayComplete())) {
+						if (target.getValueAt(row, 0).toString().equals(r.getName())) {
 							activeRequirement = r;
 							activeReqRowIndex = row;
 							previousEst.setText("Your saved estimate is: "
