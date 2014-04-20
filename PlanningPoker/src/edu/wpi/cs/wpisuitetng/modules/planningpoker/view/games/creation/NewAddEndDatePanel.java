@@ -48,7 +48,8 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 	private final JLabel endDateSelection = new JLabel("Select End Date:");
 	
 	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
-
+	private final Border defaultBorder = (new JXDatePicker()).getBorder();
+	
 	
 	/**
 	 * Only constructor for AddEndDatePanel
@@ -155,6 +156,23 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 		
 		return hours;
 	}
+
+	
+	public JXDatePicker getDatePicker() {
+		return datePicker;
+	}
+
+	public JComboBox<String> getHourSelection() {
+		return hourSelection;
+	}
+
+	public JComboBox<String> getMinuteSelection() {
+		return minuteSelection;
+	}
+
+	public JComboBox<String> getAmPmSelection() {
+		return AmPmSelection;
+	}
 	
 	private void setDate(Date oldDate){
 		datePicker.setDate(oldDate);
@@ -192,7 +210,7 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 	}
 
 	@Override
-	public boolean validateField(IErrorView warningField) {
+	public boolean validateField(IErrorView warningField, boolean show) {
 		// TODO Auto-generated method stub
 		boolean isEndDateValid = false;
 		endDate = getEndDate();
@@ -203,10 +221,13 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 		
 		if(endDate.compareTo(new Date()) >= 0) {
 			isEndDateValid = true;
+			this.setBorder(defaultBorder);
 		} else {
 			isEndDateValid = false;
-			setBorder(errorBorder);
-			warningField.setText("End Date and time must be set later than the current date");
+			if(show){
+				warningField.setText("End Date and time must be set later than the current date");
+				this.setBorder(errorBorder);
+			}
 		}
 		
 		return isEndDateValid;

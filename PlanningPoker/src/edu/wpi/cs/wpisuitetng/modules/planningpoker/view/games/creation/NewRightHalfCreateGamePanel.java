@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -13,6 +15,7 @@ import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -22,6 +25,8 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+
+import org.jdesktop.swingx.JXDatePicker;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
@@ -36,13 +41,15 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
 public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataField{
     private NewAddRequirementsPanel reqPanel;    //initialize new add requirements panel
     private NewAddReqImportReqPanel importPanel;    //initialize the panel with the buttons "Add Requirement" and "Import Requirements"
-    private NewCreateGamePanel createGamePanel;  //initialize variable to hold panel above this panel
+    private NewCreateGamePanel parent;  //initialize variable to hold panel above this panel
     
     private List<Requirement> requirements = new ArrayList<Requirement>();
    
-    private final Border defaultFieldBorder = (new JTextField()).getBorder();
+    private final Border defaultTextFieldBorder = (new JTextField()).getBorder();
     
-    private final Border defaultAreaBorder = (new JTextArea()).getBorder();
+    private final Border defaultTextAreaBorder = (new JTextArea()).getBorder();
+       
+    private final Border defaultPanelBorder = (new JPanel()).getBorder();
     
     private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
@@ -67,12 +74,14 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
     
     private JButton addReqButton = new JButton("Add Requirement");
     
+    private JButton submitAddReqButton = new JButton("Submit");
+
     private JButton importReqButton = new JButton("Import Requirement");
     
     private JButton removeReqButton = new JButton("Remove Requirement");
    
     public NewRightHalfCreateGamePanel(NewCreateGamePanel createGamePanel){
-    	this.createGamePanel = createGamePanel;
+    	parent = createGamePanel;
     	build();
     	buildFields();
     }
@@ -89,15 +98,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         importTable = initializeImportTable();
 		currentTable = initializeTable();
 		Font labelFont = makeFont();
-		
-		Border defaultBorder = defaultAreaBorder;
-		
+						
 		/**
 		 * Code for Current Reqs Panel
 		 */
         SpringLayout currentLayout = new SpringLayout();
         currentReqsPanel.setLayout(currentLayout);
-        currentReqsPanel.setBorder(defaultBorder);
+        currentReqsPanel.setBorder(defaultPanelBorder);
        
         JLabel currentReqs = new JLabel("Current Requirements");
         currentReqs.setFont(labelFont);
@@ -113,7 +120,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
          */
         SpringLayout createLayout = new SpringLayout();
         createReqsPanel.setLayout(createLayout);
-        createReqsPanel.setBorder(defaultBorder);
+        createReqsPanel.setBorder(defaultPanelBorder);
         
         //initializes and set up the Create Requirement Label
         JLabel createReqsLabel = new JLabel("Create Requirements");
@@ -126,6 +133,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         JLabel reqName = new JLabel("Requirement Name: *");
         createReqsPanel.add(reqName);
         createReqsPanel.add(nameArea);
+        addKeyListenerTo(nameArea);
         
         //Adds error label to the createReqPanel
         createReqsPanel.add(errorLabel);
@@ -139,6 +147,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		 * Creates a scroll pane for the description
 		 */
 		JScrollPane descPane = new JScrollPane(descArea);
+		addKeyListenerTo(descArea);
 		
 		/**
 		 * Creates and adds the description text area (descArea)
@@ -149,6 +158,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		createReqsPanel.add(reqDesc);
 		createReqsPanel.add(descPane);
 		
+		
 		/**
 		 * add submit and cancel button to createReqsPanel
 		 */
@@ -156,13 +166,15 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		/**
 		 * Creates a new button to add the requirements to the game
 		 */
-		JButton submitAddReqButton = new JButton("Submit");
+		submitAddReqButton.setEnabled(false);
 		submitAddReqButton.addActionListener(new ActionListener() {
 			 @Override
 			public void actionPerformed(ActionEvent e) {
 				submitButtonPressed();
 			 }
 		});
+		addMouseListenerTo(submitAddReqButton);
+		
 		/**
 		 * Format and Create Cancel Button
 		 */
@@ -192,7 +204,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
          */
         SpringLayout importLayout = new SpringLayout();
         importReqsPanel.setLayout(importLayout);
-        importReqsPanel.setBorder(defaultBorder);
 		
 		JLabel importReq = new JLabel("Import Requirement");	//Creates the label import requirement
 		importReq.setFont(labelFont);							//Sets the label font
@@ -287,7 +298,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         // the tile with respect to the panel
         createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, createReqsLabel, 5, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
         // Table with respect to the title
-        createLayout.putConstraint(SpringLayout.NORTH, createReqsLabel, 5, SpringLayout.NORTH, createGamePanel);
+        createLayout.putConstraint(SpringLayout.NORTH, createReqsLabel, 5, SpringLayout.NORTH, parent);
         
         // req name label with respect to create panel
         createLayout.putConstraint(SpringLayout.WEST, reqName, 5, SpringLayout.WEST, createReqsPanel); 					
@@ -349,7 +360,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         rightView.setPreferredSize(new Dimension(485, 350));
         getViewport().add(rightView);
         
-		addReqButton.addActionListener(new ActionListener() {
+		addReqButton.addActionListener(new ActionListener() {    
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currentReqsPanel.setVisible(false);
@@ -363,7 +374,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		
 		importReqButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) {			 
 				currentReqsPanel.setVisible(false);
 				createReqsPanel.setVisible(false);
 				importReqsPanel.setVisible(true);
@@ -452,16 +463,17 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	}
 	
 	private void submitButtonPressed(){
-		if(validateNameAndDesc()){
+		if(validateNameAndDesc(true)){
 			addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
 			nameArea.setText("");
 			descArea.setText("");
 			createReqsPanel.setVisible(false);
 			currentReqsPanel.setVisible(true);
-			importReqsPanel.setVisible(false);
+			submitAddReqButton.setEnabled(false);
 			addReqButton.setEnabled(true);
 			importReqButton.setEnabled(true);
 			removeReqButton.setEnabled(true);
+			parent.updateButtons();
 		}
 	}
 	
@@ -488,7 +500,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		removeReqButton.setEnabled(true);
 	}
 	
-	private boolean validateNameAndDesc(){
+	private boolean validateNameAndDesc(boolean show){
 		boolean descriptionValid = false;
 		boolean nameValid = false;
 		
@@ -498,21 +510,26 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			descriptionValid = false;
 		}
 		else{
-			descArea.setBorder(defaultAreaBorder);
+			descArea.setBorder(defaultTextAreaBorder);
 			descriptionValid = true;
 		}
 		
 		if(nameArea.getText().equals("")){
 			displayError("A name must be entered");
 			nameArea.setBorder(errorBorder);
-			descArea.setBorder(defaultAreaBorder);
+			descArea.setBorder(defaultTextAreaBorder);
 			nameValid = false;
 		}
 		else{
-			nameArea.setBorder(defaultFieldBorder);
+			nameArea.setBorder(defaultTextFieldBorder);
 			nameValid = true;
 		}
 		
+		if(!show){
+			errorLabel.setText("");
+			nameArea.setBorder(defaultTextFieldBorder);
+			descArea.setBorder(defaultTextAreaBorder);
+		}
 		
 		return nameValid && descriptionValid;
 	}
@@ -526,8 +543,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	 * Sets the fields for this panel
 	 */
 	public void buildFields(){
-		if(createGamePanel.getGame() != null){
-			for(Requirement r : createGamePanel.getGame().getRequirements()){
+		if(parent.getGame() != null){
+			for(Requirement r : parent.getGame().getRequirements()){
 				addRequirement(r);
 			}
 		}	
@@ -536,7 +553,12 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	public List<Requirement> getRequirements(){
 		return requirements;
 	}
-	
+		
+	public JPanel getCurrentReqsPanel() {
+		return currentReqsPanel;
+	}
+
+
 	public void addRequirement(Requirement requirement){
 		currentTable.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 		requirements.add(requirement);
@@ -544,14 +566,24 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 
 
 	@Override
-	public boolean validateField(IErrorView warningField) {
+	public boolean validateField(IErrorView warningField, boolean show) {
+		parent.getLeftHalf().getBoxName().setBorder(defaultTextFieldBorder);
+		parent.getLeftHalf().getBoxDescription().setBorder(defaultTextAreaBorder);
+		parent.getLeftHalf().getEndDateField().setBorder((new JXDatePicker()).getBorder());
+		
 		if(requirements.size() <= 0){
 			if(warningField != null){
-				warningField.setText("The requirments list can not be empty");
+				if(show){
+					currentReqsPanel.setBorder(errorBorder);
+					warningField.setText("The requirments list can not be empty");
+				}
 			}
 			return false;
 		}
-		return true;
+		else{
+			currentReqsPanel.setBorder(defaultPanelBorder);
+			return true;
+		}
 	}
 
 
@@ -559,5 +591,31 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	public boolean hasChanges() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	private void addKeyListenerTo(JComponent component){
+		component.addKeyListener(new KeyAdapter(){
+			public void keyReleased(KeyEvent arg0) {	
+				updateSubmitButton();
+			}
+		});
+	}
+	
+	private void addMouseListenerTo(JComponent component){
+		component.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent arg0) {
+					validateNameAndDesc(true);
+			}
+		});
+	}
+	
+	
+	private void updateSubmitButton(){
+		if(validateNameAndDesc(false)){
+			submitAddReqButton.setEnabled(true);
+		}
+		else{
+			submitAddReqButton.setEnabled(false);
+		}
 	}
 }

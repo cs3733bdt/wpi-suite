@@ -59,7 +59,7 @@ public class NewAddReqImportReqPanel extends JPanel {
 		
 	}
 	
-	public void setCreateReqPanelVisible(AddRequirementsPanel panel) {
+	public void setCreateReqPanelVisible(NewAddRequirementsPanel panel) {
 		this.setVisible(true);
 	}
 	
