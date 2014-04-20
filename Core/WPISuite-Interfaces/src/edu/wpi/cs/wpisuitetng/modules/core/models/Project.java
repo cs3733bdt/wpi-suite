@@ -73,6 +73,7 @@ public class Project extends AbstractModel
 	{
 		this.name = name;
 		this.idNum = idNum;
+		this.team = new ArrayList <User>();
 	}
 	
 	/* Accessors */
@@ -154,7 +155,9 @@ public class Project extends AbstractModel
 			json = json.substring(0, json.length()-1);
 			
 			json += "]";
-		}		
+		} else {
+			json += ",\"supportedModules\":\"\"";
+		}
 		
 		if(this.team != null && this.team.size() > 0)
 		{
@@ -168,6 +171,9 @@ public class Project extends AbstractModel
 			json = json.substring(0, json.length()-1);
 		
 			json += "]";
+			System.out.println("finsied parsing team list");
+		} else {
+			json += ",\"team\":\"\"";
 		}
 		
 		json += "}";
@@ -183,12 +189,16 @@ public class Project extends AbstractModel
 	 */
 	public static String toJSON(Project[] u)
 	{
-		String json ="";
+		String json ="[";
 		
-		Gson gson = new Gson();
+		for(Project p : u){
+			json += p.toJSON() + ",";
+		}
 		
-		json = gson.toJson(u, Project[].class);
+		//remove that last comma
+		json = json.substring(0, json.length()-1);
 		
+		json += "]";
 		
 		return json;
 		
@@ -284,7 +294,7 @@ public class Project extends AbstractModel
 	}
 
 	public User[] getTeam() {
-		User[] a = new User[1];
+		User[] a = new User[0];
 		return team.toArray(a);
 	}
 	
@@ -316,6 +326,10 @@ public class Project extends AbstractModel
 			return true;
 		}
 		return false;
+	}
+	
+	public void deleteTeam(){
+		team.clear();
 	}
 
 	
