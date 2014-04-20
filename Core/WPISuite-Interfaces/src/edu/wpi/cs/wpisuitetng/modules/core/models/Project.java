@@ -86,6 +86,11 @@ public class Project extends AbstractModel
 		return idNum;
 	}
 	
+	public User[] getTeam() {
+		User[] a = new User[1];
+		return team.toArray(a);
+	}
+	
 	/* Mutators */
 	public void setName(String newName)
 	{
@@ -95,6 +100,10 @@ public class Project extends AbstractModel
 	private void setIdNum(String newId)
 	{
 		this.idNum = newId;
+	}
+	
+	public void setTeam(User[] team) {
+		this.team = new ArrayList<User>(Arrays.asList(team));;
 	}
 	
 	/* database interaction */
@@ -281,11 +290,6 @@ public class Project extends AbstractModel
 
 	public void setOwner(User owner) {
 		this.owner = owner;
-	}
-
-	public User[] getTeam() {
-		User[] a = new User[1];
-		return team.toArray(a);
 	}
 	
 	/**
