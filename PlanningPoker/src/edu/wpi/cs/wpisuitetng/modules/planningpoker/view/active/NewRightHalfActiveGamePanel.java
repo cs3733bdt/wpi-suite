@@ -392,7 +392,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		layout.putConstraint(SpringLayout.WEST, submitButton, 5,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, submitButton, -30,
+		layout.putConstraint(SpringLayout.SOUTH, submitButton, -10,
 				SpringLayout.SOUTH, rightView);
 
 		layout.putConstraint(SpringLayout.WEST, errorField, 5,
