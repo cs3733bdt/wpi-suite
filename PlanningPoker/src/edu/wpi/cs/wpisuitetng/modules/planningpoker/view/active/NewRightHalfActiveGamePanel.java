@@ -342,6 +342,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.EAST, nameLabel, -5,
 				SpringLayout.EAST, rightView);// Adds the name label to the far
 												// left
+		
 		layout.putConstraint(SpringLayout.NORTH, nameLabel, 10,
 				SpringLayout.NORTH, rightView);
 
@@ -395,10 +396,11 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.SOUTH, submitButton, -10,
 				SpringLayout.SOUTH, rightView);
 
-		layout.putConstraint(SpringLayout.WEST, errorField, 5,
+		layout.putConstraint(SpringLayout.WEST, errorField, 120,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
 				SpringLayout.SOUTH, rightView);
+
 
 		this.getViewport().add(rightView); // Sets the rightview to be the
 											// entire container which has
@@ -545,7 +547,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		ViewEventController.getInstance().refreshGameTree();
 
 		getEstimateText().setBorder(defaultBorder);
-		displaySuccess("   Vote Successful!");
+		displaySuccess("Vote Successful!");
 		
 		previousEst.setText("Your saved estimate is: " + userVote(activeRequirement));
 		table.setValueAt(userVote(activeRequirement), activeReqRowIndex, 2);
