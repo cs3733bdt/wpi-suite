@@ -51,7 +51,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
        
     private final Border defaultPanelBorder = (new JPanel()).getBorder();
     
-    private int globalRow = -1; //this Variable is used to keep track of when the submit or update button is grayed out as well as which row is being updated
+    private int globalRow = -1; //this Variable is used to keep track of when the submit or update 
+    							//button is grayed out as well as which row is being updated when the edit button is pressed
     
     private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
@@ -149,6 +150,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		 * Creates and adds the requirement description label
 		 */
 		JLabel reqDesc = new JLabel("Requirement Description: *");
+		
 		/**
 		 * Creates a scroll pane for the description
 		 */
@@ -164,11 +166,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		createReqsPanel.add(reqDesc);
 		createReqsPanel.add(descPane);
 		
-		
-		/**
-		 * add submit and cancel button to createReqsPanel
-		 */
-
 		/**
 		 * Creates a new button to add the requirements to the game
 		 */
@@ -199,6 +196,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			}
 		});
 		
+		/**
+		 * Add all components to the createReqsPanel and set it to not visible at first
+		 */
 		createReqsPanel.add(submitAddReqButton);
 		createReqsPanel.add(cancelRequirementButton);
 		createReqsPanel.add(updateAddReqButton);
@@ -219,7 +219,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         tablePanel.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);        
 		
         /**
-		 * Creates a new button to add the requirements to the game
+		 * Button for submitting imported requirements
 		 */
 		JButton submitImportReqButton = new JButton("Submit");
 		submitImportReqButton.addActionListener(new ActionListener() {
@@ -229,13 +229,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			}
 		});
 		
-		
-		/*submitImportReqButton.addActionListener(new ActionListener() {
-			 @Override
-			public void actionPerformed(ActionEvent e) {
-				submitButtonPressed();
-			 }
-		});*/
+		/**
+		 * Action listener for the cancel button in the import req panel
+		 */
 		
 		JButton cancelImportReqButton = new JButton("Cancel");
 		cancelImportReqButton.addActionListener(new ActionListener() {
@@ -250,6 +246,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			}
 		});
 		
+		/**
+		 * Add an action listener the remove Req Button
+		 */
 		removeReqButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -261,13 +260,20 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			}
 		});
 		
+		/**
+		 * Add all components to the importReqsPanel and make it not visible to start
+		 */
 		importReqsPanel.add(importReq);
 		importReqsPanel.add(tablePanel);
 		importReqsPanel.add(submitImportReqButton);
 		importReqsPanel.add(cancelImportReqButton);
 		
+		
 		importReqsPanel.setVisible(false);
 		
+		/**
+		 * Add all components to the container
+		 */
         rightView.add(currentReqsPanel);
         rightView.add(createReqsPanel);
         rightView.add(importReqsPanel);
@@ -306,9 +312,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         //edit req button
         layout.putConstraint(SpringLayout.SOUTH, editReqButton, -5, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.WEST, editReqButton, 5, SpringLayout.EAST, addReqButton);
-//        layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, editReqButton);
-//        layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, editReqButton);
-
         
         //importReqButton
         layout.putConstraint(SpringLayout.SOUTH, importReqButton, -5, SpringLayout.SOUTH, rightView);
@@ -326,13 +329,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -50, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.WEST, createReqsPanel, 5, SpringLayout.WEST, rightView);
         layout.putConstraint(SpringLayout.EAST, createReqsPanel, -5, SpringLayout.EAST, rightView);
-        // createPanel with respect to the button 
         
-        
- 
-       // layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, importReqButton);
-        
-        // the tile with respect to the panel
+        // the title with respect to the panel
         createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, createReqsLabel, 5, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
         // Table with respect to the title
         createLayout.putConstraint(SpringLayout.NORTH, createReqsLabel, 5, SpringLayout.NORTH, parent);
@@ -399,9 +397,15 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         
         importLayout.putConstraint(SpringLayout.SOUTH, tablePanel, -20, SpringLayout.NORTH, submitImportReqButton);
         
+        /**
+         * Set the minimum size and add components to the viewport of the scrollpane
+         */
         setMinimumSize(new Dimension(350, 350));
         getViewport().add(rightView);
         
+        /**
+         * action listener for the edit button
+         */
         editReqButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -411,7 +415,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         });
  
 		
-        
+        /**
+         * action listener for the edit button inside the view for updating requirements
+         */
         updateAddReqButton.addActionListener(new ActionListener() {
 			
 			@Override
@@ -420,6 +426,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			}
 		});
         
+        /**
+         * Action listener for the button to add a requirement
+         */
 		addReqButton.addActionListener(new ActionListener() {    
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -432,6 +441,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			}
 		});
 		
+		/**
+		 * Action listener for the import requirement button
+		 */
 		importReqButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {			 
