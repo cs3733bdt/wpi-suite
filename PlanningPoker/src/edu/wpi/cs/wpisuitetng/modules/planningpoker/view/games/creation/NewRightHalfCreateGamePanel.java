@@ -22,6 +22,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
@@ -390,6 +391,14 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				if(currentTable.getSelectedRowCount() == 0){
 					//SET ERROR LABEL TO SAY: "You must select one requirement to remove.
 				}
+				/*else{
+					int[] rows = currentTable.getSelectedRows();
+					for (int i = 0; i < rows.length; i++){
+						String selectedName = (String) importTable.getValueAt(rows[i], 0);
+						String selectedDesc = (String) importTable.getValueAt(rows[i], 1);
+						currentTable.getTableModel().addRow(new Object[]{selectedName, selectedDesc});
+					}
+				}*/
 				else {
 					//AS OF RIGHT NOW, THE USER CAN ONLY SELECT ONE ROW AT A TIME, SO THIS
 					//METHOD OF REMOVING IS OVER-COMPLICATED. I DID IT THIS WAY THOUGH
@@ -397,6 +406,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 					int[] rows = currentTable.getSelectedRows();
 					for (int i = 0; i < rows.length; i++){
 						currentTable.getTableModel().removeRow(rows[i]);
+						i = i -1;
+						if(currentTable.getSelectedRowCount() == 0){
+							break;
+						}
 					}
 					if(currentTable.getTableModel().getRowCount() == 0){
 						removeReqButton.setEnabled(false);
@@ -430,6 +443,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		String[] columnNames2 = {"Requirement", "Description"};
 		Object[][] data2 = {};
 		ActiveGamesTable table = new ActiveGamesTable(data2, columnNames2);
+		table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 		table.getColumnModel().getColumn(0).setMinWidth(100);
 		table.getColumnModel().getColumn(0).setMaxWidth(400);
 		table.getColumnModel().getColumn(1).setMinWidth(100);
