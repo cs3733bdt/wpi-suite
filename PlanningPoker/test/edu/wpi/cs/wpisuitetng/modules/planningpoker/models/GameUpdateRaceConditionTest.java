@@ -16,6 +16,7 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.Session;
@@ -61,6 +62,11 @@ public class GameUpdateRaceConditionTest {
 	
 	Game[] gameList = new Game[20];
 	
+	@Before
+	public void setUp(){
+		
+	}
+	
 
 	/**
 	 * This thread is used to add votes to req1 from game1.
@@ -72,7 +78,15 @@ public class GameUpdateRaceConditionTest {
 		public void run()
 		{
 			Requirement reqModel1 = model.getGames().get(0).getRequirements().get(0);
-			while(!updateStarted){} // $codepro.audit.disable emptyWhileStatement
+			while(!updateStarted){
+				System.out.println("I'm stuck here");
+				try {
+					Thread.sleep(5);					//If this is not here then we hit an infinite loop
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} // $codepro.audit.disable emptyWhileStatement
 			reqModel1.addVote(vote1);
 			reqModel1.addVote(vote2);
 			reqModel1.addVote(vote3);		
@@ -155,7 +169,7 @@ public class GameUpdateRaceConditionTest {
 		game2 = new Game("Game2", "With a name2", new ArrayList<Requirement>(), true, true);
 		game3 = new Game("Game3", "With a name3", new ArrayList<Requirement>(), false, false);
 		game4 = new Game("Game4", "With a name4", new ArrayList<Requirement>(), true, true);
-		game5= new Game("Game5", "With a name5", new ArrayList<Requirement>(), false, false);
+		game5 = new Game("Game5", "With a name5", new ArrayList<Requirement>(), false, false);
 		game6 = new Game("Game6", "With a name6", new ArrayList<Requirement>(), true, true);
 		game7 = new Game("Game7", "With a name7", new ArrayList<Requirement>(), false, false);
 		game8 = new Game("Game8", "With a name8", new ArrayList<Requirement>(), true, true);
@@ -231,7 +245,7 @@ public class GameUpdateRaceConditionTest {
 		
 		// Wait until at least one thread finishes running
 		while(!isFinishedUpdate || !isFinishedVotes){
-			//System.out.println("isFinishedUpdate: " + isFinishedUpdate + " " + j + " , isFinishedVotes: " + isFinishedVotes);
+			System.out.println("isFinishedUpdate: " + isFinishedUpdate + " " + j + " , isFinishedVotes: " + isFinishedVotes + " updateStarted: " + updateStarted );
 			try {
 				Thread.sleep(10);					//If this is not here then we hit an infinite loop
 			} catch (InterruptedException e) {

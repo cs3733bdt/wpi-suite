@@ -155,7 +155,7 @@ public class Requirement extends ObservableModel {
 			}
 		}
 		votes.add(vote);
-		if(this.getProject() != null){
+		if(getProject() != null && getProject().getTeam() != null){
 			if(votes.size() == this.getProject().getTeam().length) {
 				this.makeComplete();
 			}
