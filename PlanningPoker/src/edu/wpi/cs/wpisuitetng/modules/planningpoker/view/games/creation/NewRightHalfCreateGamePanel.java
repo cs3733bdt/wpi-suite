@@ -194,6 +194,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				currentReqsPanel.setVisible(true);
 				importReqsPanel.setVisible(false);
 				globalRow = -1;
+				submitAddReqButton.setEnabled(false);
 				enableButtons();
 			}
 		});
@@ -405,21 +406,11 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int row = currentTable.getSelectedRow();
-				if (row == -1) {
-					return;
-				}
-				currentReqsPanel.setVisible(false);
-				createReqsPanel.setVisible(true);
-				importReqsPanel.setVisible(false);
-				submitAddReqButton.setEnabled(false);
-				updateAddReqButton.setEnabled(true);
-				disableButtons();
-				nameArea.setText((String) currentTable.getValueAt(row, 0));
-				descArea.setText((String) currentTable.getValueAt(row, 1));
-				globalRow = row;	
+				editReqButtonAction();	
 			}
-		});
+        });
+ 
+		
         
         updateAddReqButton.addActionListener(new ActionListener() {
 			
@@ -542,9 +533,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			descArea.setText("");
 			createReqsPanel.setVisible(false);
 			currentReqsPanel.setVisible(true);
-			submitAddReqButton.setEnabled(false);
 			enableButtons();
-			
+			submitAddReqButton.setEnabled(false);
+			globalRow = -1;
 			parent.updateButtons();
 		}
 		
@@ -573,8 +564,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		importReqButton.setEnabled(true);
 		removeReqButton.setEnabled(true);
 		editReqButton.setEnabled(true);
-		updateAddReqButton.setEnabled(true);
-		submitAddReqButton.setEnabled(true);
 	}
 	
 	private void disableButtons() {
@@ -657,6 +646,22 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	public JPanel getCurrentReqsPanel() {
 		return currentReqsPanel;
 	}
+	
+	private void editReqButtonAction() {
+		int row = currentTable.getSelectedRow();
+		if (row == -1) {
+			return;
+		}
+		currentReqsPanel.setVisible(false);
+		createReqsPanel.setVisible(true);
+		importReqsPanel.setVisible(false);
+		submitAddReqButton.setEnabled(false);
+		updateAddReqButton.setEnabled(false);
+		disableButtons();
+		nameArea.setText((String) currentTable.getValueAt(row, 0));
+		descArea.setText((String) currentTable.getValueAt(row, 1));
+		globalRow = row;
+	}
 
 
 	public void addRequirement(Requirement requirement){
@@ -715,7 +720,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	}
 	
 	private void updateUpdateButton(){
-		if(validateNameAndDesc(false)){
+		if(validateNameAndDesc(false) && updateValid()){
 			updateAddReqButton.setEnabled(true);
 		}
 		else{
@@ -731,4 +736,16 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			submitAddReqButton.setEnabled(false);
 		}
 	}
+	
+	/*
+	 * Returns true if the current update is different from the stored value
+	 */
+	private boolean updateValid() {
+		String updateName = nameArea.getText();
+		String currentName = (String) currentTable.getValueAt(globalRow, 0);
+		String updateDesc = descArea.getText();
+		String currentDesc = (String) currentTable.getValueAt(globalRow, 1);
+		return (!(currentName.equals(updateName))) || (!(currentDesc.equals(updateDesc)));
+	}
+	
 }
