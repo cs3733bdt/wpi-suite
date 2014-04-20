@@ -276,6 +276,13 @@ public class ProjectManager implements EntityManager<Project>{
 				{
 					toUpdate.setOwner(change.getOwner());
 				}
+				
+				if(change.getTeam() != null){
+					for(User u : change.getTeam()){
+						toUpdate.addTeamMember(u);
+					}
+				}
+				
 			}
 			catch(ConflictException e)
 			{
@@ -313,7 +320,7 @@ public class ProjectManager implements EntityManager<Project>{
 		}
 		else
 		{
-			p = data.retrieve(project, "idNum", id).toArray(p);
+			p = data.retrieve(project, "idNum", id).toArray(new Project[0]);
 			
 			if(p[0] == null)
 			{
@@ -334,7 +341,7 @@ public class ProjectManager implements EntityManager<Project>{
 	{
 		Project p = getEntity(args[2])[0];
 		String[] names = null;
-		
+
 		try{
 			names = gson.fromJson(content, String[].class);
 		}catch(JsonSyntaxException j)
@@ -343,6 +350,14 @@ public class ProjectManager implements EntityManager<Project>{
 		}
 		
 		ArrayList<String> success = new ArrayList<String>();
+		
+		System.out.print("Advance Putting: ");
+		for(String n :names){
+			System.out.print(" " + n + " ");
+		}
+		System.out.println();
+		System.out.println("In project: " + p.getProjectName() + " " + p.getIdNum());
+		
 		
 		UserManager u = ManagerLayer.getInstance().getUsers();
 		
@@ -365,6 +380,12 @@ public class ProjectManager implements EntityManager<Project>{
 				}
 			}
 		}
+		
+		System.out.print("Args: ");
+		for(String n :args){
+			System.out.print(" " + n + " ");
+		}
+		System.out.println("Team size: " + p.getTeam().length);
 		
 		save(s,p);
 		return gson.toJson(success.toArray(names),String[].class );
