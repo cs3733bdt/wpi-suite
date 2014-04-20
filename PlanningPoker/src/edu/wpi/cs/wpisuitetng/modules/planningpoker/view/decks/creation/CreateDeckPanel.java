@@ -9,17 +9,23 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
+
 public class CreateDeckPanel extends JScrollPane {
 	
+	private NameJTextField nameTextField;
+	private DescriptionJTextArea descriptionTextField;
 	
 	public CreateDeckPanel(){
 		
-		JLabel deckLabel = new JLabel("STUFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF");
-		getViewport().add(deckLabel);
+		JLabel nameLabel = new JLabel("Name * ");
+		JLabel descriptionLabel = new JLabel("Description");
+		getViewport().add(nameLabel);
 	}
 }
