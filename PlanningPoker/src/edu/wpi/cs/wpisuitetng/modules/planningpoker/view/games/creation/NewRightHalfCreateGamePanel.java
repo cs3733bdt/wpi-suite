@@ -51,6 +51,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
        
     private final Border defaultPanelBorder = (new JPanel()).getBorder();
     
+    private int globalRow;
+    
     private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
 
@@ -74,7 +76,11 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
     
     private JButton addReqButton = new JButton("Add Requirement");
     
-    private JButton removeReqButton = new JButton("Remove Requirement");
+
+    private JButton editReqButton = new JButton("Edit");
+    private JButton removeReqButton = new JButton("Remove");
+
+    private JButton updateAddReqButton = new JButton("Update");
     
     private JButton submitAddReqButton = new JButton("Submit");
 
@@ -187,14 +193,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				createReqsPanel.setVisible(false);
 				currentReqsPanel.setVisible(true);
 				importReqsPanel.setVisible(false);
-				addReqButton.setEnabled(true);
-				importReqButton.setEnabled(true);
-				removeReqButton.setEnabled(true);
+				enableButtons();
 			}
 		});
 		
 		createReqsPanel.add(submitAddReqButton);
 		createReqsPanel.add(cancelRequirementButton);
+		createReqsPanel.add(updateAddReqButton);
 		
 		createReqsPanel.setVisible(false);
        
@@ -222,6 +227,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			}
 		});
 		
+		
 		/*submitImportReqButton.addActionListener(new ActionListener() {
 			 @Override
 			public void actionPerformed(ActionEvent e) {
@@ -238,9 +244,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				createReqsPanel.setVisible(false);
 				currentReqsPanel.setVisible(true);
 				importReqsPanel.setVisible(false);
-				addReqButton.setEnabled(true);
-				importReqButton.setEnabled(true);
-				removeReqButton.setEnabled(true);
+				enableButtons();
 			}
 		});
 		
@@ -267,6 +271,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         rightView.add(importReqsPanel);
         rightView.add(addReqButton);
         rightView.add(removeReqButton);
+        rightView.add(editReqButton);
         rightView.add(importReqButton);
 		
         //IN THE CURRENT REQ PANEL
@@ -285,21 +290,32 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -50, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.WEST, currentReqsPanel, 5, SpringLayout.WEST, rightView);
         layout.putConstraint(SpringLayout.EAST, currentReqsPanel, -5, SpringLayout.EAST, rightView);
+        
         // currentPanel with respect to the button 
         layout.putConstraint(SpringLayout.SOUTH, addReqButton, -5, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, addReqButton);
+        layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, addReqButton);
         
-        //remove req button //TODO
-        layout.putConstraint(SpringLayout.SOUTH, removeReqButton, -5, SpringLayout.SOUTH, rightView);
-        layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, removeReqButton, 0, SpringLayout.HORIZONTAL_CENTER, rightView);
+        
         // button with respect to container
         layout.putConstraint(SpringLayout.WEST, addReqButton, 5, SpringLayout.WEST, rightView);
         
         
+        //edit req button
+        layout.putConstraint(SpringLayout.SOUTH, editReqButton, -5, SpringLayout.SOUTH, rightView);
+        layout.putConstraint(SpringLayout.WEST, editReqButton, 5, SpringLayout.EAST, addReqButton);
+//        layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, editReqButton);
+//        layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, editReqButton);
+
+        
+        //importReqButton
         layout.putConstraint(SpringLayout.SOUTH, importReqButton, -5, SpringLayout.SOUTH, rightView);
-        layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, importReqButton);
-        // button with respect to container
         layout.putConstraint(SpringLayout.EAST, importReqButton, -5, SpringLayout.EAST, rightView);
+        
+        //remove req button 
+        layout.putConstraint(SpringLayout.SOUTH, removeReqButton, -5, SpringLayout.SOUTH, rightView);
+        layout.putConstraint(SpringLayout.EAST, removeReqButton, 5, SpringLayout.WEST, importReqButton);
+        
         
         
         //CREATE REQS PANEL
@@ -309,11 +325,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         layout.putConstraint(SpringLayout.WEST, createReqsPanel, 5, SpringLayout.WEST, rightView);
         layout.putConstraint(SpringLayout.EAST, createReqsPanel, -5, SpringLayout.EAST, rightView);
         // createPanel with respect to the button 
-        layout.putConstraint(SpringLayout.SOUTH, addReqButton, -5, SpringLayout.SOUTH, rightView);
-        layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, addReqButton);
         
-        layout.putConstraint(SpringLayout.SOUTH, importReqButton, -5, SpringLayout.SOUTH, rightView);
-        layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, importReqButton);
+        
+ 
+       // layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, importReqButton);
         
         // the tile with respect to the panel
         createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, createReqsLabel, 5, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
@@ -342,6 +357,11 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         //position submit button with respect to createReqPanel
         createLayout.putConstraint(SpringLayout.SOUTH, submitAddReqButton, -5, SpringLayout.SOUTH, createReqsPanel);
         createLayout.putConstraint(SpringLayout.WEST, submitAddReqButton, 5, SpringLayout.WEST, createReqsPanel);
+        
+        //position update button with respect to createReqPanel
+        createLayout.putConstraint(SpringLayout.SOUTH, updateAddReqButton, -5, SpringLayout.SOUTH, createReqsPanel);
+        createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, updateAddReqButton, 5, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
+        
        
         //postion error label with respect to creaReqPanel
         createLayout.putConstraint(SpringLayout.SOUTH, errorLabel, -1, SpringLayout.SOUTH, createReqsPanel);
@@ -379,15 +399,43 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         setMinimumSize(new Dimension(350, 350));
         getViewport().add(rightView);
         
+        editReqButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int row = currentTable.getSelectedRow();
+				if (row == -1) {
+					return;
+				}
+				currentReqsPanel.setVisible(false);
+				createReqsPanel.setVisible(true);
+				importReqsPanel.setVisible(false);
+				submitAddReqButton.setEnabled(false);
+				updateAddReqButton.setEnabled(true);
+				disableButtons();
+				nameArea.setText((String) currentTable.getValueAt(row, 0));
+				descArea.setText((String) currentTable.getValueAt(row, 1));
+				globalRow = row;	
+			}
+		});
+        
+        updateAddReqButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				updateButtonPressed();
+			}
+		});
+        
 		addReqButton.addActionListener(new ActionListener() {    
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				currentReqsPanel.setVisible(false);
 				createReqsPanel.setVisible(true);
 				importReqsPanel.setVisible(false);
-				addReqButton.setEnabled(false);
-				removeReqButton.setEnabled(false);
-				importReqButton.setEnabled(false);
+				submitAddReqButton.setEnabled(true);
+				updateAddReqButton.setEnabled(false);
+				disableButtons();
 			}
 		});
 		
@@ -397,9 +445,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				currentReqsPanel.setVisible(false);
 				createReqsPanel.setVisible(false);
 				importReqsPanel.setVisible(true);
-				addReqButton.setEnabled(false);
-				removeReqButton.setEnabled(false);
-				importReqButton.setEnabled(false);
+				disableButtons();
 			} 
 		});
 		
@@ -463,7 +509,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	}
 	
 	private ImportGamesTable initializeImportTable() {
-		String[] columnNames2 = {"Requirement", "Description"};
+		String[] columnNames2 = {"Requirement", "Description,"};
 		Object[][] data2 = {};
 		ImportGamesTable table = new ImportGamesTable(data2, columnNames2);
 		/**
@@ -495,13 +541,48 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			createReqsPanel.setVisible(false);
 			currentReqsPanel.setVisible(true);
 			submitAddReqButton.setEnabled(false);
-			addReqButton.setEnabled(true);
-			importReqButton.setEnabled(true);
-			removeReqButton.setEnabled(true);
+			enableButtons();
+			
 			parent.updateButtons();
 		}
+		
+		
 	}
 	
+	private void updateButtonPressed(){
+		if(validateNameAndDesc(true) && globalRow != -1){
+			currentTable.setValueAt(nameArea.getText(), globalRow, 0);
+			currentTable.setValueAt(descArea.getText(), globalRow, 1);
+			globalRow = -1;
+			nameArea.setText("");
+			descArea.setText("");
+			createReqsPanel.setVisible(false);
+			currentReqsPanel.setVisible(true);
+			submitAddReqButton.setEnabled(false);
+			enableButtons();
+			parent.updateButtons();
+		}
+		
+		
+	}
+	
+	private void enableButtons() {
+		addReqButton.setEnabled(true);
+		importReqButton.setEnabled(true);
+		removeReqButton.setEnabled(true);
+		editReqButton.setEnabled(true);
+		updateAddReqButton.setEnabled(true);
+		submitAddReqButton.setEnabled(true);
+	}
+	
+	private void disableButtons() {
+		addReqButton.setEnabled(false);
+		importReqButton.setEnabled(false);
+		removeReqButton.setEnabled(false);
+		editReqButton.setEnabled(false);
+	}
+
+
 	private void submitImportButtonPressed(){
 		/*if(IS_A_REQUIREMENT_SELECTED()){
 			addRequirement(SELECTED_REQUIREMENT(S));
@@ -514,9 +595,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		createReqsPanel.setVisible(false);
 		currentReqsPanel.setVisible(true);
 		importReqsPanel.setVisible(false);
-		addReqButton.setEnabled(true);
-		importReqButton.setEnabled(true);
-		removeReqButton.setEnabled(true);
+		enableButtons();
 	}
 	
 	private boolean validateNameAndDesc(boolean show){
