@@ -24,17 +24,18 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-
-
-
-
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
 public class PreferencesPanel extends JScrollPane implements IDataField {
+	
 	JPanel emailPanel;
 	
 	JPanel mobilePanel;
+	
+	JPanel facebookPanel;
 	
 	JLabel emailOffNotify;
 	JTextField emailField;
@@ -47,6 +48,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	JCheckBox mobileCheckBox;
 	JButton updateCarrierButton;
 	JComboBox<String> carrierDropDown;
+	
+	JLabel facebookOffNotify;
+	JTextField facebookField;
+	JButton updateFacebookButton;
+	JCheckBox facebookCheckBox;
 	
     public PreferencesPanel() {
     	build();
@@ -131,6 +137,73 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	view.add(emailPanel);
     	
     	/**
+    	 * Code for the facebook Panel 
+    	 * 
+    	 **/
+
+    	//Create and add the facebook preferences panel
+    	facebookPanel = new JPanel();
+    	SpringLayout facebookLayout = new SpringLayout();
+    	facebookPanel.setLayout(facebookLayout);
+    	facebookPanel.setBorder((new JTextField()).getBorder());
+    	facebookPanel.setPreferredSize(new Dimension(600, 110));
+  
+    	//Create and add the facebook heading Label
+    	JLabel facebookPanelLabel = new JLabel("Facebook Preferences");
+    	facebookPanelLabel.setFont(makeFont(9));
+    	facebookPanel.add(facebookPanelLabel);
+    	
+    	//Create and add the "you are not receiving facebook" warning message. 
+    	facebookOffNotify = new JLabel("*You are not receiving facebook notifications");
+    	facebookOffNotify.setForeground(Color.blue);
+    	if (!receivingFacebook()) {
+    		facebookOffNotify.setVisible(true);
+    	}
+    	else {
+    		facebookOffNotify.setVisible(false);
+    	}
+    	facebookPanel.add(facebookOffNotify);
+    	
+    	//Create and add the user facebook label to the panel
+    	JLabel userfacebookLabel = new JLabel("Your facebook:");
+    	facebookPanel.add(userfacebookLabel);
+    	
+    	//Create, configure, and add the user facebook text box
+    	facebookField = new JTextField(50);
+    	facebookField.setEditable(true);
+    	facebookField.setFocusable(true);
+    	addKeyListenerTo(facebookField);
+    	facebookField.setText("facebook.username");
+    	facebookPanel.add(facebookField);
+   
+    	/**
+    	 * TODO autopopulate facebook field with user's facebook.
+    	 */
+    	
+    	//Create the update facebook button
+    	updateFacebookButton = new JButton("Update facebook");
+    	updateFacebookButton.setEnabled(false);
+    	facebookPanel.add(updateFacebookButton);
+    	
+    	//Create and add the checkbox for receiving facebooks
+    	facebookCheckBox = new JCheckBox("Receive facebook notifications", true);
+    	//TODO make this field initialize to the correct toggled state. Do that by modifying the constant "true" above
+    	
+    	facebookCheckBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				facebookCheckBoxListener();	
+			}
+		});
+    	
+    	reValidateFacebookPanel();
+    	facebookPanel.add(facebookCheckBox);
+    
+    	//Add the facebook Panel to the view
+    	view.add(facebookPanel);
+    	
+    	/**
     	 * Code for the mobile settings panel */
     	
     	//Create and add the mobile preferences panel
@@ -167,11 +240,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	addKeyListenerTo(mobileField);
     	mobileField.setText("555-555-5555");
     	mobilePanel.add(mobileField);
-   
+    	
     	/**
     	 * TODO autopopulate mobile field with user's number.
     	 */
-    	
     	
     	//Create the update mobile button
     	updateMobileButton = new JButton("Update Mobile Number");
@@ -248,13 +320,44 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	emailLayout.putConstraint(SpringLayout.NORTH, emailCheckBox, 5, SpringLayout.SOUTH, userEmailLabel);
     	emailLayout.putConstraint(SpringLayout.WEST, emailCheckBox, 20, SpringLayout.WEST, emailPanel);
     	
+    	/**
+    	 * Put constraints on the facebook preferences panel 
+    	 */
+    	layout.putConstraint(SpringLayout.WEST, facebookPanel, 5, SpringLayout.WEST, view);
+    	layout.putConstraint(SpringLayout.NORTH, facebookPanel, 20, SpringLayout.SOUTH, emailPanel);	
+       	layout.putConstraint(SpringLayout.EAST, facebookPanel, -5, SpringLayout.EAST, view);
+       	
+    	// put constraints on the facebook label 
+    	facebookLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, facebookPanelLabel, 0, SpringLayout.HORIZONTAL_CENTER, facebookPanel);
     	
+    	//put constraints on the facebookOffNotify label
+    	facebookLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, facebookOffNotify, 0, SpringLayout.HORIZONTAL_CENTER, facebookPanel);
+    	facebookLayout.putConstraint(SpringLayout.NORTH, facebookOffNotify, 5, SpringLayout.SOUTH, facebookPanelLabel);
+    	
+    	//put constraints on the user facebook label 
+    	facebookLayout.putConstraint(SpringLayout.NORTH, userfacebookLabel, 5, SpringLayout.SOUTH, facebookOffNotify);
+    	facebookLayout.putConstraint(SpringLayout.WEST, userfacebookLabel, 5, SpringLayout.WEST, facebookPanel);
+    	
+      	//Constraints for the facebook update button
+    	facebookLayout.putConstraint(SpringLayout.NORTH, updateFacebookButton, 5, SpringLayout.SOUTH, facebookField);
+    	facebookLayout.putConstraint(SpringLayout.EAST, updateFacebookButton, 0, SpringLayout.EAST, facebookField);
+    	
+    	
+    	//Put constraints on the facebook text field 
+    	facebookLayout.putConstraint(SpringLayout.NORTH, facebookField, 5, SpringLayout.SOUTH, facebookOffNotify);
+    	facebookLayout.putConstraint(SpringLayout.WEST, facebookField, 5, SpringLayout.EAST, userfacebookLabel);
+  //  	facebookLayout.putConstraint(SpringLayout.EAST, facebookField, -5, SpringLayout.WEST, updatefacebookButton);
+    	
+    	//Put constraints on the facebook checkbox
+    	facebookLayout.putConstraint(SpringLayout.NORTH, facebookCheckBox, 5, SpringLayout.SOUTH, userfacebookLabel);
+    	facebookLayout.putConstraint(SpringLayout.WEST, facebookCheckBox, 20, SpringLayout.WEST, facebookPanel);
+
      	
     	/**
     	 * put constraints on the mobile preferences panel 
     	 */
     	layout.putConstraint(SpringLayout.WEST, mobilePanel, 5, SpringLayout.WEST, view);
-    	layout.putConstraint(SpringLayout.NORTH, mobilePanel, 20, SpringLayout.SOUTH, emailPanel);
+    	layout.putConstraint(SpringLayout.NORTH, mobilePanel, 20, SpringLayout.SOUTH, facebookPanel);
     	layout.putConstraint(SpringLayout.EAST, mobilePanel, -5, SpringLayout.EAST, view);
     	
     	// put constraints on the mobile panel label
@@ -316,7 +419,8 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	}
     
 	private int getUserCarrier() {
-		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub	
+		
 		return 0;
 	}
 
@@ -350,6 +454,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		return true;
 	}
 	
+	public boolean receivingFacebook() {
+		//TODO
+		return true;
+	}
+	
 	public boolean receivingMobile() {
 		//TODO 
 		return true;
@@ -367,6 +476,21 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			
 			emailField.setEnabled(true);
 			reValidateEmailUpdateButton();
+		}
+	}
+	
+	public void facebookCheckBoxListener() {
+		if (!facebookCheckBox.isSelected()) {
+			facebookOffNotify.setVisible(true);
+		
+			facebookField.setEnabled(false);
+			updateFacebookButton.setEnabled(false);
+		}
+		else {
+			facebookOffNotify.setVisible(false);
+			
+			facebookField.setEnabled(true);
+			reValidateFacebookUpdateButton();
 		}
 	}
 	
@@ -396,12 +520,26 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		reValidateEmailUpdateButton();
 	}
 	
+	public void reValidateFacebookPanel() {
+		emailCheckBoxListener();
+		reValidateEmailUpdateButton();
+	}
+	
 	public void reValidateMobilePanel() {
 		mobileCheckBoxListener();
 		reValidateMobileUpdateButton();
 	}
 	
 	public void reValidateEmailUpdateButton() {
+		if (verifyEmailField()) {
+			updateEmailButton.setEnabled(true);
+		}
+		else {
+			updateEmailButton.setEnabled(false);
+		}
+	}
+	
+	public void reValidateFacebookUpdateButton() {
 		if (verifyEmailField()) {
 			updateEmailButton.setEnabled(true);
 		}
