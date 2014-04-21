@@ -88,7 +88,7 @@ public class RequirementTable extends JTable{
 			columnNames[0] = "Requirement";
 			columnNames[1] = "Description";
 			
-			setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // This might need to be changed
+			setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION); // This might need to be changed
 			setTableModel(new DefaultTableModel(data, columnNames));
 			setModel(getTableModel());
 			
@@ -104,13 +104,12 @@ public class RequirementTable extends JTable{
 			break;
 		}
 		
-		setRowSelectionInterval(0,0);
+		if(getRowCount() > 0) {
+			setRowSelectionInterval(0,0);
+		}
+		
 		
 	}
-	
-	
-	
-	//table.getTableModel().addRow(new Object[]{"Requirement1", "Description1"});
 	
 	@Override
 	public boolean isCellEditable(int row, int column){
