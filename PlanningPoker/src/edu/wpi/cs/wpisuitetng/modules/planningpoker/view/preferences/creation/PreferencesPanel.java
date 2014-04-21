@@ -7,17 +7,26 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+
+
+
+
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
@@ -37,8 +46,9 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	JButton updateMobileButton;
 	JCheckBox mobileCheckBox;
 	JButton updateCarrierButton;
+	JComboBox<String> carrierDropDown;
 	
-    public PreferencesPanel () {
+    public PreferencesPanel() {
     	build();
     }
 	
@@ -88,6 +98,8 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	//Create, configure, and add the user email text box
     	emailField = new JTextField(50);
     	emailField.setEditable(true);
+    	emailField.setFocusable(true);
+    	addKeyListenerTo(emailField);
     	emailField.setText("FillerText@gmail.com");
     	emailPanel.add(emailField);
    
@@ -151,6 +163,8 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	//Create, configure, and add the user email text box
     	mobileField = new JTextField(50);
     	mobileField.setEditable(true);
+    	mobileField.setFocusable(true);
+    	addKeyListenerTo(mobileField);
     	mobileField.setText("555-555-5555");
     	mobilePanel.add(mobileField);
    
@@ -175,7 +189,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	
     	//Create and add drop down menu for carriers
     	String[] items = { "Verizon", "AT&T", "T-Mobile", "Sprint", "U.S. Cellular"};
-    	JComboBox carrierDropDown = new JComboBox(items);
+    	carrierDropDown = new JComboBox<String>(items);
     	carrierDropDown.setSelectedIndex(getUserCarrier());
     	mobilePanel.add(carrierDropDown);
     	
@@ -285,6 +299,22 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	repaint();
     }
     
+	private void addKeyListenerTo(JComponent component){
+		component.addKeyListener(new KeyAdapter(){
+			public void keyReleased(KeyEvent arg0) {
+				if (emailField.isFocusOwner()) {
+					System.out.println("Here:");
+					reValidateEmailUpdateButton();
+				}
+				else if(mobileField.isFocusOwner()) {
+					System.out.println("Here:");
+					reValidateMobileUpdateButton();
+				}
+				else {}
+			}
+		});
+	}
+    
 	private int getUserCarrier() {
 		// TODO Auto-generated method stub
 		return 0;
@@ -347,13 +377,19 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			mobileOffNotify.setVisible(true);
 		
 			mobileField.setEnabled(false);
-			updateEmailButton.setEnabled(false);
+			carrierDropDown.setEnabled(false);
+			updateCarrierButton.setEnabled(false);
+			updateMobileButton.setEnabled(false);
 		}
 		else {
 			mobileOffNotify.setVisible(false);
 			
+			
 			mobileField.setEnabled(true);
-			reValidateMobileUpdateButton();
+			carrierDropDown.setEnabled(true);
+			updateCarrierButton.setEnabled(true);
+			updateMobileButton.setEnabled(true);
+			reValidateMobileUpdateButton(); //TODO fix this method to include both update buttons
 		}
 	}
 	
@@ -383,17 +419,112 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		else {
 			updateMobileButton.setEnabled(false);
 		}
+		
 	}
 	
 
 	private boolean verifyEmailField() {
-		// TODO Auto-generated method stub
-		return false;
+		String text = emailField.getText();
+		if (text.length() == 0) {
+			return false;
+		}
+		String currChar;
+		
+		//Code for checking the @ symbol
+		int atCount = 0;
+		int atIndex = -1;
+		String atSubstring = "";
+		boolean atBoolean = false;
+		for (int i = 0; i < text.length(); i++) {
+			currChar = Character.toString(text.charAt(i)); 
+			if (currChar.equals("@")) {
+				atCount++;
+				atIndex = i;
+				atSubstring = text.substring(i+1);
+				System.out.println("Atsubstring:" + atSubstring);
+			}	
+		}
+		if (atCount == 1 && atIndex != 0 && atIndex != -1 && atIndex+1 != text.length() ) {
+			atBoolean = true;
+		}
+		
+		//Code for checking the at substring
+		boolean atSubstringBool = true;
+		if (atSubstring.length() < 3) {
+			System.out.println("The length of the at substring is too short");
+			atSubstringBool = false;
+		}
+		
+		//Code for checking forbidden character
+		String forbiddenChars = "()<>[]\\:,;!#$%&'*+-/=?^_`{}| ~\" ";
+		boolean forbiddenCharsBool = true;
+		for (int i = 0; i < text.length(); i++) {
+			currChar = Character.toString(text.charAt(i));
+			if (forbiddenChars.contains(currChar)) {
+				System.out.println("ForbiddenChar present:" + currChar);
+				forbiddenCharsBool = false;
+			}
+		}
+		
+		//Checking dot substring
+		String dotSubstring;
+		boolean dotSubstringBool = true;
+//	    for (int i = 0; i < text.length(); i++) {
+//			currChar = Character.toString(text.charAt(i));
+//			if (currChar.equals(".")) {
+//				dotSubstring = text.substring(i + 1);
+//				if (dotSubstring.length() != 3 || i <= atIndex + 1) {
+//					dotSubstringBool = false;
+//				}
+//			}
+//			
+//	    }
+			
+			
+ 		return atBoolean && forbiddenCharsBool && atSubstringBool && dotSubstringBool;
 	}
 	
 	private boolean verifyMobileField() {
-		// TODO Auto-generated method stub
-		return false;
+		String text = mobileField.getText();
+		if (text.length() == 0) {
+			return false;
+		}
+		Pattern numPattern1 = Pattern.compile("\\d{3}-\\d{7}");
+		Pattern numPattern2 = Pattern.compile("\\d{1}-\\d{3}-\\d{7}");
+		Pattern numPattern3 = Pattern.compile("\\d{3}-\\d{3}-\\d{4}");
+		Pattern numPattern4 = Pattern.compile("\\d{1}-\\d{3}-\\d{3}-\\d{4}");
+		Pattern numPattern5 = Pattern.compile("\\d{10}");
+		Pattern numPattern6 = Pattern.compile("\\d{11}");
+		Pattern numPattern7 = Pattern.compile("\\(\\d{3}\\) \\d{3} \\d{4}");
+		Pattern numPattern8 = Pattern.compile("\\d{3} \\d{3} \\d{4}");
+		
+		Matcher matcher1 = numPattern1.matcher(text);
+		Matcher matcher2 = numPattern2.matcher(text);
+		Matcher matcher3 = numPattern3.matcher(text);
+		Matcher matcher4 = numPattern4.matcher(text);
+		Matcher matcher5 = numPattern5.matcher(text);
+		Matcher matcher6 = numPattern6.matcher(text);
+		Matcher matcher7 = numPattern7.matcher(text);
+		Matcher matcher8 = numPattern8.matcher(text);
+		
+		
+		boolean matcher1Boolean = matcher1.matches();
+		boolean matcher2Boolean = matcher2.matches();
+		boolean matcher3Boolean = matcher3.matches();
+		boolean matcher4Boolean = matcher4.matches();
+		boolean matcher5Boolean = matcher5.matches();
+		boolean matcher6Boolean = matcher6.matches();
+		boolean matcher7Boolean = matcher7.matches();
+		boolean matcher8Boolean = matcher8.matches();
+		
+		if (matcher2Boolean || matcher4Boolean || matcher6Boolean) { //if the pattern leads with 1 digit
+			String firstChar = Character.toString(text.charAt(0));
+			if (!firstChar.equals("1")) { //if the first character isn't 1
+				return false;
+			}
+		}
+		return (matcher1Boolean || matcher2Boolean || matcher3Boolean || matcher4Boolean || 
+				matcher5Boolean || matcher6Boolean || matcher7Boolean || matcher8Boolean);
 	}
 	
 }
