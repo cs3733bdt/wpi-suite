@@ -65,21 +65,25 @@ public class NameJTextField extends JTextField implements IDataField {
 	}
 
 	@Override
-	public boolean validateField(IErrorView errorField, boolean show) {
+	public boolean validateField(IErrorView errorField, boolean showLabel, boolean showBox) {
 		boolean isNameValid = false;
 		
 		if (getText().length() >= 100) {
 			isNameValid = false;
-			if(show){
+			if(showLabel){
 				if(errorField != null) errorField.setText("Name can be no more than 100 chars.");
+			}
+			if(showBox){
 				this.setBorder(errorBorder);
 			}
 			
 		} else if (getText().length() <= 0) {
 			isNameValid = false;
 			if(errorField != null){
-				if(show){
+				if(showLabel){
 					errorField.setText("Name is required");
+				}
+				if(showBox){
 					this.setBorder(errorBorder);
 				}
 			}
