@@ -45,7 +45,7 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 	private final JComboBox<String> hourSelection = new JComboBox<>(hourArray);
 	private final JComboBox<String> minuteSelection = new JComboBox<>(minuteArray);
 	private final JComboBox<String> AmPmSelection = new JComboBox<>(AmPmArray);
-	private final JLabel endDateSelection = new JLabel("Select End Date:");
+	private final JLabel endDateSelection = new JLabel("End Date * ");
 	
 	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
 	private final Border defaultBorder = (new JXDatePicker()).getBorder();
@@ -210,7 +210,7 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 	}
 
 	@Override
-	public boolean validateField(IErrorView warningField, boolean show) {
+	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
 		// TODO Auto-generated method stub
 		boolean isEndDateValid = false;
 		endDate = getEndDate();
@@ -224,8 +224,10 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 			this.setBorder(defaultBorder);
 		} else {
 			isEndDateValid = false;
-			if(show){
-				warningField.setText("End Date and time must be set later than the current date");
+			if(showLabel){
+				warningField.setText("End Time must be set later than the current time to start a game");
+			}
+			if(showBox){
 				this.setBorder(errorBorder);
 			}
 		}

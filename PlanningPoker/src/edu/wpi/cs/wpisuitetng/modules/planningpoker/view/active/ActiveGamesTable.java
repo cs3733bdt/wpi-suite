@@ -41,10 +41,7 @@ public class ActiveGamesTable extends JTable
 	{
 		setTableModel(new DefaultTableModel(data, columnNames));
 		setModel(getTableModel());
-		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		
-		
-		//TODO ALOT
+		setSelectionMode(ListSelectionModel.SINGLE_SELECTION);//TODO ALOT
 		
 	}
 	
@@ -68,4 +65,5 @@ public class ActiveGamesTable extends JTable
 	public void setTableModel(DefaultTableModel tableModel) {
 		this.tableModel = tableModel;
 	}
+
 }

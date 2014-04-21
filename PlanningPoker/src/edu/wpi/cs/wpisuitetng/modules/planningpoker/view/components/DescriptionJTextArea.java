@@ -52,13 +52,15 @@ public class DescriptionJTextArea extends JTextArea implements IDataField {
 	
 
 	@Override
-	public boolean validateField(IErrorView errorField, boolean show) {
+	public boolean validateField(IErrorView errorField, boolean showLabel, boolean showBox) {
 		boolean isDescriptionValid = false;
 		if (getText().length() <= 0) {
 			isDescriptionValid = false;
 			// TODO add a way to display error descriptions
-			if(show){
-				errorField.setText("Description is required");
+			if(showLabel){
+				errorField.setText("Description is required to start a game");
+			}
+			if(showBox){
 				this.setBorder(errorBorder);
 			}
 		} else {

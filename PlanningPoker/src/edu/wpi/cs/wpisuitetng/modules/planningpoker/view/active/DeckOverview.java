@@ -30,7 +30,6 @@ import javax.swing.SpringLayout;
 import org.jdesktop.swingx.JXHyperlink;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.DeckTree;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 
 /**
  * The default view for the GUI

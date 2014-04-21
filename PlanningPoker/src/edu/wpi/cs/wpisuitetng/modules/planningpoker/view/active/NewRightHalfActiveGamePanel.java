@@ -13,12 +13,14 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,6 +43,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.ActiveCardsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 
 public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private Game currentGame;
@@ -63,9 +66,10 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private JScrollPane descriptionPanel;
 	private JLabel reqLabel;
 	private JLabel desLabel;
-	private JScrollPane cardPanel;
-	private ActiveGamesTable table; 
-	private int activeReqRowIndex;
+	private JLabel nameLabel;
+	private JScrollPane cardScrollPanel;
+	private RequirementTable table;
+	private Font largeFont;
 
 	NewRightHalfActiveGamePanel(final Game game) {
 		currentGame = game;
@@ -91,30 +95,15 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/**
 		 * Create and/or initialize components
 		 */
-		JLabel nameLabel = new JLabel("Requirements"); // Creates the label for
-														// the Name
-		reqLabel = new JLabel("Requirement Name"); // Creates the label for the
-													// Name
-		desLabel = new JLabel("Requirement Description"); // Creates the label
-															// for the
-															// description
+		nameLabel = new JLabel("Select a Requirement to Vote:");
+		reqLabel = new JLabel("Requirement Name");
+		desLabel = new JLabel("Requirement Description");
 
-		/**
+		/*
 		 * Initializes a table's columns and rows and the table
 		 */
-		String[] columnNames = { "Requirement", "Description", "My Estimate", "Complete" };
-		Object[][] data = {};
-		table = new ActiveGamesTable(data, columnNames);
-		table.setBorder(defaultBorder);
-		
-		/**
-		 * Display the requirement list in the table
-		 */
-		for (Requirement r : currentGame.getRequirements()) {
-			table.getTableModel().addRow(
-					new Object[] { r.getName(), r.getDescription(),
-							userVote(r), r.displayComplete() });
-		}
+		table = new RequirementTable(currentGame.getRequirements(),
+				RequirementTableMode.ACTIVE);
 
 		/**
 		 * mouse listener
@@ -123,25 +112,26 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					JTable target = (JTable) e.getSource();
-					int row = target.getSelectedRow();
-					int column = target.getSelectedColumn();
-					String selected = target.getValueAt(row, column).toString();
-					for (Requirement r : currentGame.getRequirements()) {
-						if (selected.equals(r.getName())
-								|| selected.equals(r.getDescription())
-								|| selected.equals(Integer.toString(userVote(r)))
-								|| selected.equals(r.displayComplete())) {
-							activeRequirement = r;
-							activeReqRowIndex = row;
-							previousEst.setText("Previous estimate: "
-									+ userVote(r));
-							nameTextField.setText(r.getName());
-							descriptionTextField.setText(r.getDescription());
-							estText.setText("Estimate Here");
-							setFieldsVisible(true);
-						}
+
+					activeRequirement = table.getSelectedReq();
+					nameTextField.setText(activeRequirement.getName());
+					descriptionTextField.setText(activeRequirement
+							.getDescription());
+					estText.setText("Estimate Here");
+
+					previousEst.setText("Your saved estimate is: "
+							+ activeRequirement.userVote());
+					previousEst.setFont(largeFont);
+
+					try {
+						cardsPanel.clearCards();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
 					}
+					setFieldsVisible(true);
+					displaySuccess("");
+
 				}
 			}
 		});
@@ -176,8 +166,21 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		 */
 		// Label and accumulate sum
 
+		largeFont = new Font("Serif", Font.BOLD, 20);
+
 		counterLabel = new JLabel("Your current estimate total: " + 0);
+		counterLabel.setFont(largeFont);
+
 		previousEst = new JLabel();
+
+		if (activeRequirement != null) {
+			previousEst.setText("Your saved estimate is: "
+					+ activeRequirement.userVote());
+		} else {
+			previousEst.setText("Your saved estimate is: " + 0);
+		}
+		previousEst.setFont(largeFont);
+
 		sum = 0;
 
 		// This branch will be run if the default deck is to be used
@@ -210,23 +213,24 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		// added below
 		if (this.getGame().doesUseCards()) {
-			cardPanel = new JScrollPane(cardsPanel);
+			cardScrollPanel = new JScrollPane(cardsPanel);
 			// cardPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			cardPanel.setPreferredSize(new Dimension(100, 100));
-			rightView.add(cardPanel);
-			layout.putConstraint(SpringLayout.WEST, cardPanel, 5,
+			cardScrollPanel.setPreferredSize(new Dimension(100, 100));
+			rightView.add(cardScrollPanel);
+			layout.putConstraint(SpringLayout.WEST, cardScrollPanel, 5,
 					SpringLayout.WEST, rightView);
-			layout.putConstraint(SpringLayout.EAST, cardPanel, -5,
+			layout.putConstraint(SpringLayout.EAST, cardScrollPanel, -5,
 					SpringLayout.EAST, rightView);
-			layout.putConstraint(SpringLayout.NORTH, cardPanel, 20,
+			layout.putConstraint(SpringLayout.NORTH, cardScrollPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
 			layout.putConstraint(SpringLayout.NORTH, counterLabel, 5,
-					SpringLayout.SOUTH, cardPanel);
-			cardPanel.getHorizontalScrollBar().setValue(200);
-			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, cardPanel, 0,
-					SpringLayout.HORIZONTAL_CENTER, rightView);
+					SpringLayout.SOUTH, cardScrollPanel);
+			cardScrollPanel.getHorizontalScrollBar().setValue(200);
+			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER,
+					cardScrollPanel, 0, SpringLayout.HORIZONTAL_CENTER,
+					rightView);
 
-			cardPanel.setVisible(false);
+			cardScrollPanel.setVisible(false);
 
 		} else {
 			rightView.add(cardsPanel);
@@ -242,7 +246,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		// added above
 
 		this.JToggleButtonList = cardsPanel.getCardButtonArray();
-		
+
 		/**
 		 * The text area where the user types their estimate
 		 */
@@ -256,7 +260,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			}
 		});
 		addKeyListenerTo(estText);
-		
+
 		rightView.add(estText);
 		layout.putConstraint(SpringLayout.WEST, estText, 5, SpringLayout.WEST,
 				rightView);
@@ -264,11 +268,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				rightView);
 		layout.putConstraint(SpringLayout.NORTH, estText, 20,
 				SpringLayout.SOUTH, descriptionPanel);
-
-		/**
-		 * The label for the counter
-		 */
-		counterLabel = new JLabel("Your current estimate total: " + 0);
 
 		rightView.add(counterLabel);
 
@@ -282,7 +281,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			}
 		});
 		addMouseListenerTo(submitButton);
-		
+
 		if (currentGame.doesUseCards()) {
 			estText.setVisible(false);
 			submitButton.setEnabled(true);
@@ -295,7 +294,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			counter.setVisible(false);
 			counterLabel.setVisible(false);
 		}
-		
+
 		/**
 		 * Add components to container
 		 */
@@ -324,6 +323,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.EAST, nameLabel, -5,
 				SpringLayout.EAST, rightView);// Adds the name label to the far
 												// left
+
 		layout.putConstraint(SpringLayout.NORTH, nameLabel, 10,
 				SpringLayout.NORTH, rightView);
 
@@ -362,7 +362,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.EAST, previousEst, 5,
 				SpringLayout.EAST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, previousEst, -20,
+		layout.putConstraint(SpringLayout.SOUTH, previousEst, -40,
 				SpringLayout.NORTH, submitButton);
 
 		layout.putConstraint(SpringLayout.WEST, counterLabel, 5,
@@ -374,17 +374,30 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		layout.putConstraint(SpringLayout.WEST, submitButton, 5,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, submitButton, -30,
+		layout.putConstraint(SpringLayout.SOUTH, submitButton, -10,
 				SpringLayout.SOUTH, rightView);
 
-		layout.putConstraint(SpringLayout.WEST, errorField, 5,
+		layout.putConstraint(SpringLayout.WEST, errorField, 120,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
 				SpringLayout.SOUTH, rightView);
 
+		// TODO: make this into a method
+		activeRequirement = table.getSelectedReq();
+		nameTextField.setText(activeRequirement.getName());
+		descriptionTextField.setText(activeRequirement.getDescription());
+
 		this.getViewport().add(rightView); // Sets the rightview to be the
 											// entire container which has
 											// everything contained within it
+
+		setFieldsVisible(true);
+
+	}
+
+	private Font makeFont(int i) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -527,10 +540,12 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		ViewEventController.getInstance().refreshGameTree();
 
 		getEstimateText().setBorder(defaultBorder);
-		displaySuccess("   Vote Successful!");
-		
-		previousEst.setText("Previous estimate: " + userVote(activeRequirement));
-		table.setValueAt(userVote(activeRequirement), activeReqRowIndex, 2);
+		displaySuccess("Vote Successful!");
+
+		previousEst.setText("Your saved estimate is: "
+				+ activeRequirement.userVote());
+		table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(),
+				2);
 	}
 
 	/**
@@ -569,52 +584,35 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			estText.setVisible(visible);
 		} else {
 			counterLabel.setVisible(visible);
-			cardPanel.setVisible(true);
+			cardScrollPanel.setVisible(true);
 			cardsPanel.setVisible(true);
 		}
 	}
-	
+
 	private void addKeyListenerTo(JComponent component) {
-		component.addKeyListener(new KeyAdapter(){
+		component.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent arg0) {
 				updateButton();
 			}
 		});
 	}
-	
-	private void addMouseListenerTo(JComponent component){
-		component.addMouseListener(new MouseAdapter(){
+
+	private void addMouseListenerTo(JComponent component) {
+		component.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
-				if(!submitButton.isEnabled()){	
+				if (!submitButton.isEnabled()) {
 					validateField(true);
 				}
 			}
 		});
 	}
-	
-	private void updateButton(){
-		if(validateField(true)){
+
+	private void updateButton() {
+		if (validateField(true)) {
 			submitButton.setEnabled(true);
-		}
-		else{
+		} else {
 			submitButton.setEnabled(false);
 		}
 	}
 
-	/**
-	 * 
-	 * @return the number of vote if the user already voted, otherwise return 0;
-	 */
-	public int userVote(Requirement r) {
-		String currentUser = ConfigManager.getConfig().getUserName();
-		for (Vote v : (r.getVotes())) {
-			if (currentUser.equals(v.getUsername())) {
-				System.out.println("name matches");
-				return v.getVoteNumber();
-			}
-		}
-		System.out.println("name does not match");
-		return 0;
-	}
-	
 }

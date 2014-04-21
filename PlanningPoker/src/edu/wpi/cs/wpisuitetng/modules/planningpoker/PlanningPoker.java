@@ -21,6 +21,7 @@ import edu.wpi.cs.wpisuitetng.janeway.modules.JanewayTabModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.MainView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
 
 /**
  * This is the module for WPISuite that provides the Planning Poker system.
@@ -45,15 +46,15 @@ public class PlanningPoker implements IJanewayModule {
 	    ToolbarView toolbarPanel = new ToolbarView(true);
 
 	    // Create a JPanel to hold the main contents of the tab
-	    MainView mainPanel = new MainView();
+	    TabbedView tabPanel = new TabbedView();
 	    
 	    // Add the panels to the view controller
-	    ViewEventController.getInstance().setMainView(mainPanel);
+	    ViewEventController.getInstance().setTabbedView(tabPanel);
 	    ViewEventController.getInstance().setToolBar(toolbarPanel);
 
 	    // Create a tab model that contains the toolbar panel and the main content panel
 	    JanewayTabModel tab1 = 
-	    		new JanewayTabModel(getName(), new ImageIcon(), toolbarPanel, mainPanel);
+	    		new JanewayTabModel(getName(), new ImageIcon(), toolbarPanel, tabPanel);
 
 	    // Add the tab to the list of tabs owned by this module
 	    tabs.add(tab1);

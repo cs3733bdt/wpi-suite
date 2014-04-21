@@ -71,16 +71,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 			public void actionPerformed(ActionEvent e) {
 				memoryArray.clear();
 				try {
-					Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
-					for (int i = 0; i < (deck.size()-1); i++){
-						if (JToggleButtonList.get(i).isSelected()){
-							JToggleButtonList.get(i).doClick();
-							JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
-						}
-					}
-					if (JToggleButtonList.get(deck.size()-1).isSelected()) {
-						JToggleButtonList.get(deck.size()-1).doClick();
-					}
+					clearCards();
 					sum = 0;
 				} catch (IOException ex) {
 					ex.printStackTrace();
@@ -96,6 +87,19 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 
 public int getCount() {
 	return 0;
+}
+
+public void clearCards() throws IOException {
+	Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
+	for (int i = 0; i < (deck.size()-1); i++){
+		if (JToggleButtonList.get(i).isSelected()){
+			JToggleButtonList.get(i).doClick();
+			JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+		}
+	}
+	if (JToggleButtonList.get(deck.size()-1).isSelected()) {
+		JToggleButtonList.get(deck.size()-1).doClick();
+	}
 }
 
 /**
@@ -187,7 +191,7 @@ public int memoryArrayGetElt(int elt) {
 }
 
 @Override
-public boolean validateField(IErrorView warningField, boolean show) {
+public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
 	return false;
 }
 

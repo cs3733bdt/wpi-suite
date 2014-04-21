@@ -28,6 +28,7 @@ import javax.swing.JTextArea;
 import javax.swing.SpringLayout;
 
 import org.jdesktop.swingx.JXHyperlink;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 
 /**
@@ -47,7 +48,7 @@ public class GameOverview extends JSplitPane {
 	
 	JXHyperlink videoTutorial;
 	
-	GameTree filterPanel = new GameTree();
+	GameTree filterPanel = GameTree.getInstance();
 	
 	/**
 	 * The constructor for the overview panel
@@ -80,7 +81,7 @@ public class GameOverview extends JSplitPane {
 				+ "instead of speaking them aloud. The cards are revealed, and the "
 				+ "estimates are then discussed. By hiding the figures in this way, "
 				+ "the group can avoid the cognitive bias of anchoring, where the "
-				+ "first number spoken aloud sets a precedent for subsequent estimates. [TAKEN FROM"
+				+ "first number spoken aloud sets a precedent for subsequent estimates. \n[TAKEN FROM"
 				+ " WIKIPEDIA]");
 		
 		ppExplanation.setEditable(false);

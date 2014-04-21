@@ -14,15 +14,13 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
@@ -49,9 +47,9 @@ public class StatisticsPanel extends JScrollPane{
 	private int maxEstimate;
 	private double mean;
 	private double stDev;
-	private int median;
+	private double median;
 	
-	private ActiveStatisticsTable statTable;
+	private ActiveStatisticsTable statTable;	
 	
 	private ActiveVotesTable voteTable;
 //	
@@ -81,9 +79,12 @@ public class StatisticsPanel extends JScrollPane{
 		
 		initStats();
 		
+		
 		statTable = initializeStatTable();
 		voteTable = initializeVoteTable();
-		statTable.getTableModel().addRow(new Object[]{mean, stDev, "0", maxEstimate, minEstimate});
+		statTable.getTableModel().addRow(new Object[]{mean, stDev, median, maxEstimate, minEstimate});
+		fillVoteTable(activeRequirement);
+		
 		
 		JScrollPane statsPanel = new JScrollPane(statTable);
 		JScrollPane votePanel = new JScrollPane(voteTable);
@@ -100,7 +101,7 @@ public class StatisticsPanel extends JScrollPane{
 		/**
 		 * Creates and adds the user story text area to the view.
 		 */
-		userStoryDesc.setText("W\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW\nW"); //game.getRequirements().get(0).getDescription());
+		userStoryDesc.setText(game.getRequirements().get(0).getDescription());
 		userStoryDesc.setEditable(false);
 		userStoryDesc.setLineWrap(true);
 		
@@ -140,6 +141,12 @@ public class StatisticsPanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.EAST, votePanel, -5, SpringLayout.EAST, overviewPanel); 
 		layout.putConstraint(SpringLayout.SOUTH, votePanel, -10, SpringLayout.SOUTH, overviewPanel);
 		
+		int[] test = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //5.5
+		int[] test2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}; //6
+		
+		System.out.println("Median test1:" + median(test));
+		System.out.println("Median test2:" + median(test2));
+		
 		repaint();
 		invalidate();
 		revalidate();
@@ -148,11 +155,21 @@ public class StatisticsPanel extends JScrollPane{
 	}
 	
 	private void initStats() {
+		System.out.println(activeRequirement.getVotes().size());
+		System.out.println(activeGame.getName());
+		
 		ArrayList<Integer> voteData = requirementToVotes(activeRequirement); 
 		minEstimate = min(voteData);
 		maxEstimate = max(voteData);
 		mean = mean(voteData);
 		stDev = stDev(voteData);
+		median = median(voteData);
+	}
+	
+	private Object[] makeStatRow(Requirement requirement) {
+		ArrayList<Integer> voteData = requirementToVotes(requirement); 
+		Object[] row = new Object[] {mean(voteData), stDev(voteData), median(voteData), max(voteData), min(voteData)};
+		return row;
 	}
 
 	/**
@@ -177,14 +194,20 @@ public class StatisticsPanel extends JScrollPane{
 	 */
 	private ArrayList<Integer> requirementToVotes(Requirement requirement) {
 		List<Vote> Votes = requirement.getVotes();
-		if (Votes.size() == 0) {
-			return new ArrayList<Integer>();
-		}
 		ArrayList<Integer> voteArray = new ArrayList<Integer>();
 		for (int i = 0; i < Votes.size(); i++) {
 			voteArray.add(Votes.get(i).getVoteNumber());
 		}
 		return voteArray;
+	}
+	
+	public ArrayList<String> requirementToNames(Requirement requirement) {
+		List<Vote> Votes = requirement.getVotes();
+		ArrayList<String> nameArray = new ArrayList<String>();
+		for (int i = 0; i < Votes.size(); i++) {
+			nameArray.add(Votes.get(i).getUsername());
+		}
+		return nameArray;
 	}
 	
 	/**
@@ -230,7 +253,7 @@ public class StatisticsPanel extends JScrollPane{
 		return sum/a.size();
 	}
 	
-	private static double stDev(ArrayList<Integer> a) {
+	private double stDev(ArrayList<Integer> a) {
 		double mean = mean(a);
 		ArrayList<Double> numMinusMeanSquared = new ArrayList<Double>();
 	//	double[] numMinusMeanSquared = new double[a.length]; 
@@ -249,5 +272,66 @@ public class StatisticsPanel extends JScrollPane{
 		
 		return Math.sqrt(variance);
 	}
+
+	public static double median(ArrayList<Integer> Votes) {
+		if (Votes.size() == 0) {
+			return 0;
+		}
+		if (Votes.size() == 1) {
+			return Votes.get(0);
+		}
+		else {
+			int[] a = new int[Votes.size()];
+			for (int i = 0; i < Votes.size(); i++) {
+				a[i] = Votes.get(i);
+			}
+			Arrays.sort(a);
+			int mid = a.length/2;
+			if (a.length % 2 == 0) {
+				return ((double) a[mid] + (double) a[mid - 1])/2.0;
+			}
+			else {
+				return a[mid];
+			}		
+		}
+	}
+	
+	
+	public static double median(int[] a) {
+		double median;
+		Arrays.sort(a);
+		int mid = a.length/2;
+		if (a.length % 2 == 0) {
+			median = ((a[mid] + a[mid - 1])/2);
+		}
+		else {
+			median = a[mid];
+		}		
+		return median;
+	}
+	
+	
+	public void fillVoteTable(Requirement requirement) {
+		ArrayList<String> nameArray = requirementToNames(requirement);
+		ArrayList<Integer> voteArray = requirementToVotes(requirement);
+				for (int i = 0; i < nameArray.size(); i++) {
+					System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@Name:" + nameArray.get(i) + "Vote:" + voteArray.get(i));
+					voteTable.getTableModel().addRow(new Object[]{nameArray.get(i),voteArray.get(i)});
+				}
+	}
+	
+	public void reqClicked(Requirement req) {
+		activeRequirement = req;
+		userStoryDesc.setText(req.getDescription());
+		while (voteTable.getTableModel().getRowCount() > 0) {
+			voteTable.getTableModel().removeRow(0);
+		}
+		while (statTable.getTableModel().getRowCount() > 0) {
+			statTable.getTableModel().removeRow(0);
+		}
+		Object[] row = makeStatRow(req);
+		statTable.getTableModel().addRow(row);
+		fillVoteTable(req);
+		}
 	
 }

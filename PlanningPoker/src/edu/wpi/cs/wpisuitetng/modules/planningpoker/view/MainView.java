@@ -15,20 +15,21 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;*/
 
+import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 
 /**
- * TODO: add documentation
- * @author Bobby Drop Tables
- *
+ * The primary panel for viewing planning poker games and sessions.
+ * This panel shows the tabs for the games
  */
 @SuppressWarnings("serial")
-public class MainView extends JSplitPane {
+@Deprecated
+public class MainView extends JPanel {
 	TabbedView tabView = new TabbedView();
-	GameTree filterPanel = new GameTree();
+	//GameTree filterPanel = new GameTree();
 	
 	/**
 	 * constructs a MainView
@@ -43,9 +44,10 @@ public class MainView extends JSplitPane {
 		
 		c.fill = GridBagConstraints.HORIZONTAL;*/
 		
-		this.setRightComponent(tabView);
-		this.setLeftComponent(filterPanel);
-		this.setDividerLocation(200);
+		//this.setRightComponent(tabView);
+		//this.setLeftComponent(filterPanel);
+		//this.setDividerLocation(200);
+		this.add(tabView);
 		
 	}
 	

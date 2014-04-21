@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Contributors: TomPaolillo
+ * Contributors: Team Bobby Drop Tables
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
@@ -20,6 +20,7 @@ import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
@@ -43,7 +44,8 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
-		setPreferredSize(new Dimension(325,50)); 
+		setPreferredSize(new Dimension(400,50)); 
+		
 		
 	   try {
 	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));
@@ -51,7 +53,17 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		    
 		} catch (IOException ex) {
 			ex.printStackTrace();
-		}		
+		}
+	   
+	   createDeckIcon.setHorizontalAlignment(SwingConstants.CENTER);
+	   
+	   try {
+	        Image img = ImageIO.read(getClass().getResource("create_deck.png"));
+	        createDeckIcon.setIcon(new ImageIcon(img));
+		    
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}	   
 		
 	   try {
 	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));
@@ -84,6 +96,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		contentPanel.add(createGameIcon);
 		contentPanel.add(createDeckIcon);
+		//contentPanel.setOpaque(false);
 		
 		contentPanel.setOpaque(false);
 		
