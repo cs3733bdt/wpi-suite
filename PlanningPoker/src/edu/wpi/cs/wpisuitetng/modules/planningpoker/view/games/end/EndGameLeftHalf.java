@@ -16,6 +16,7 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -31,7 +32,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 public class EndGameLeftHalf extends JScrollPane {
-	Game ended;
+	private Game ended;
+	private EndGamePanel parent;
 	
 	private JTextArea descriptionTextField;
 	
@@ -48,7 +50,8 @@ public class EndGameLeftHalf extends JScrollPane {
 	
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
-	public EndGameLeftHalf(final Game game){
+	public EndGameLeftHalf(final Game game, EndGamePanel parent){
+		this.parent = parent;
 		ended = game;
 		build();
 	}
@@ -122,18 +125,17 @@ public class EndGameLeftHalf extends JScrollPane {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1) {
+				if (e.getClickCount() == 1) {}
+				if (e.getClickCount() == 2) {
 					JTable target = (JTable) e.getSource();
 					int row = target.getSelectedRow();
-					int column = target.getSelectedColumn();
-					String selected = (String) target.getValueAt(row, column);
+					String selectedName = (String) target.getValueAt(row, 0);
+					String selectedDesc = (String) target.getValueAt(row, 1);
 					for (Requirement r : ended.getRequirements()) {
-						if (selected.equals(r.getName())
-								|| selected.equals(r.getDescription())) {
-							descriptionTextField.setText(r.getDescription());
-							//statisticsRow = {mean, std, med, max, min};
-							//TODO: GET AND SET OTHER FIELDS REQUIRED FOR RIGHTHALF OF END GAME PANEL
-							//AlSO TODO: figure out how to actually use this listener on the right half..
+						if (selectedName.equals(r.getName())
+								&& selectedDesc.equals(r.getDescription())) {
+							parent.updateRightHalf(r);
+							break;
 						}
 					}
 				}
@@ -193,4 +195,9 @@ public class EndGameLeftHalf extends JScrollPane {
 		this.getViewport().add(newLeftView);
 		
 	}
+	
+	public List<Requirement> getRequirements() {
+		return ended.getRequirements();
+	}
+	
 }

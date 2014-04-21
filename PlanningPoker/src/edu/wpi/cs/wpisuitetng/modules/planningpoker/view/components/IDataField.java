@@ -24,6 +24,7 @@ public interface IDataField {
 	 * This method throws/displays any errors if there are any problems with the users input.
 	 * 
 	 * @param warningField The external warning field that you want to indicate the error to
+	 * @param show if true will indicate the field that has the error and show a dialog
 	 * @return true when all of the fields in this component are valid
 	 */
 	public boolean validateField(IErrorView warningField, boolean show);

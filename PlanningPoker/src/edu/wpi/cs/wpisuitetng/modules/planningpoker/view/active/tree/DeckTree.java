@@ -20,7 +20,6 @@ import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -45,21 +44,18 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  * @author Bobby Drop Tables
  *
  */
-@SuppressWarnings("serial")
-public class GameTree extends JPanel implements MouseListener{
-	private static GameTree instance = null;
-	
+public class DeckTree extends JPanel implements MouseListener{
 	private boolean initialized = false; //Check if GameModel should be generated from the server
 	JTree gameTree; // JTree to hold the hierarchy of games
 	JScrollPane gameTreeScroll; // scrollPane to put the tree in
 	DefaultMutableTreeNode gameNode = 
-			new DefaultMutableTreeNode("Games"); //Make master node hold the other 3
+			new DefaultMutableTreeNode("Decks"); //Make master node hold the other 3
 	DefaultMutableTreeNode inactive = 
-			new DefaultMutableTreeNode("Pending Games"); //Make pending games node
+			new DefaultMutableTreeNode("Red Decks"); //Make pending games node
 	DefaultMutableTreeNode active = 
-			new DefaultMutableTreeNode("Active Games"); //Make active games node
+			new DefaultMutableTreeNode("Blue Decks"); //Make active games node
 	DefaultMutableTreeNode history = 
-			new DefaultMutableTreeNode("Game History"); //Make games history node
+			new DefaultMutableTreeNode("Green Decks"); //Make games history node
 	
 	boolean isInactiveCollapsed = true;
 	boolean isActiveCollapsed = true;
@@ -68,22 +64,10 @@ public class GameTree extends JPanel implements MouseListener{
 	/**
 	 * Constructor for a GameTree
 	 */
-	private GameTree(){
+	public DeckTree(){
 		super(new GridBagLayout());
-		ViewEventController.getInstance().setGameOverviewTree(this);
+		//ViewEventController.getInstance().setGameOverviewTree(this);
 		refresh();
-	}
-	
-	/**
-	 * Instantiates the game tree if it does not already exist.
-	 * Otherwise it returns the current version of the GameTree
-	 * @return the singleton Game Tree
-	 */
-	public static GameTree getInstance(){
-		if(instance == null){
-			instance = new GameTree();
-		}
-		return instance;
 	}
 
 	/**
@@ -150,7 +134,7 @@ public class GameTree extends JPanel implements MouseListener{
         cons.setHeight(layout.getConstraint(SpringLayout.SOUTH, this));
 		
 		add(gameTreeScroll);
-	    ViewEventController.getInstance().setGameOverviewTree(this);
+	    //ViewEventController.getInstance().setGameOverviewTree(this);
 	    
 	    
 	    if(isInactiveCollapsed){
@@ -185,12 +169,6 @@ public class GameTree extends JPanel implements MouseListener{
 		
 	}
 	
-	/* (non-Javadoc)
-	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
-	 * 
-	 * This method is overridden in order to allow us to instantiated the games model when the network has been instantiated
-	 * 
-	 */
 	@Override
 	public void paintComponent(Graphics g){
 		if(!initialized){
@@ -215,11 +193,7 @@ public class GameTree extends JPanel implements MouseListener{
 		return list;
 	}
 
-	/**
-	 * Gets the current game tree
-	 * @return
-	 */
-	private JTree getGameTree(){
+	public JTree getGameTree(){
 		return gameTree;
 	}
 
@@ -312,9 +286,9 @@ public class GameTree extends JPanel implements MouseListener{
  * @author jonathanleitschuh
  *
  */
-class GameComparator implements Comparator<Game>{
+/*class GameComparator implements Comparator<Game>{
 	@Override
 	public int compare(Game G1, Game G2){
 		return -(G1.getCreationTime().compareTo(G2.getCreationTime()));
 	}
-}
+}*/

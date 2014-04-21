@@ -43,8 +43,6 @@ public class NewAddRequirementsPanel extends JPanel {
 	
 	private ActiveGamesTable table2;
 	
-	
-	
 	public NewAddRequirementsPanel(final NewRightHalfCreateGamePanelOLD rightView) {
 		
 		/*

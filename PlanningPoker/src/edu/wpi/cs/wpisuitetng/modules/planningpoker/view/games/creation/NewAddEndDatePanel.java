@@ -45,7 +45,7 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 	private final JComboBox<String> hourSelection = new JComboBox<>(hourArray);
 	private final JComboBox<String> minuteSelection = new JComboBox<>(minuteArray);
 	private final JComboBox<String> AmPmSelection = new JComboBox<>(AmPmArray);
-	private final JLabel endDateSelection = new JLabel("Select End Date:");
+	private final JLabel endDateSelection = new JLabel("End Date * ");
 	
 	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
 	private final Border defaultBorder = (new JXDatePicker()).getBorder();

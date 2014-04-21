@@ -19,7 +19,6 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
@@ -34,23 +33,20 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 public class CreateGameButtonPanel extends ToolbarGroupView{
 	
 	// initialize the main view toolbar buttons
-		private JButton createGameIcon = new JButton("Create Game");
-		private JButton createDeckIcon = new JButton("Create Deck");
-		/*
-		 * Temporary join game button until tree has clickable functionality
-		 */
-		
-		private final JPanel contentPanel = new JPanel();
+	private JButton createGameIcon = new JButton("Create Game");
+	
+	private JButton createDeckIcon = new JButton("Create Deck");
+
+	private final JPanel contentPanel = new JPanel();
 	
 	public CreateGameButtonPanel(){
 		super("");
 		
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
-		setPreferredSize(new Dimension(341,50)); 
+		setPreferredSize(new Dimension(400,50)); 
 		
 		
-		createGameIcon.setHorizontalAlignment(SwingConstants.CENTER);
 	   try {
 	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));
 	        createGameIcon.setIcon(new ImageIcon(img));
@@ -60,6 +56,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		}
 	   
 	   createDeckIcon.setHorizontalAlignment(SwingConstants.CENTER);
+	   
 	   try {
 	        Image img = ImageIO.read(getClass().getResource("create_deck.png"));
 	        createDeckIcon.setIcon(new ImageIcon(img));
@@ -68,6 +65,14 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 			ex.printStackTrace();
 		}	   
 		
+	   try {
+	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));
+	        createDeckIcon.setIcon(new ImageIcon(img));
+		    
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+	   
 		// the action listener for the Create Game Icon
 		createGameIcon.addActionListener(new ActionListener() {
 			@Override
@@ -77,16 +82,17 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 					ViewEventController.getInstance().createGame();
 			//	}
 			}
-		});
+		});	
 		
-		// the action listener for the Create Deck Icon
 		createDeckIcon.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-					JOptionPane.showMessageDialog(null, "This is not functional yet.", "Dummy Button", 1);
-				}
-			
-		});
+				// bring up a create requirement pane if not in Multiple Requirement Editing Mode
+				//if (!ViewEventController.getInstance().getOverviewTable().getEditFlag()) {
+					ViewEventController.getInstance().createDeck();
+			//	}
+			}
+		});	
 		
 		contentPanel.add(createGameIcon);
 		contentPanel.add(createDeckIcon);

@@ -14,7 +14,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CreateDeckPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 
 /**
@@ -23,9 +25,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreat
  */
 public class ViewEventController {
 	private static ViewEventController instance = null;
-	private MainView main = null;
+	//private MainView main = null;
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
+	private TabbedView tabs = null;
 	
 	
 	/**
@@ -50,9 +53,9 @@ public class ViewEventController {
 	
 	 * @param mainview The TabbedView
 	 */
-	public void setMainView(MainView mainview){
-		main = mainview;
-	}
+//	public void setMainView(MainView mainview){
+//		main = mainview;
+//	}
 	
 	/**
 	 * Sets the ToolBar view to the given toolbar
@@ -61,6 +64,19 @@ public class ViewEventController {
 	public void setToolBar(ToolbarView tb){
 		toolbar = tb;
 		toolbar.repaint(); 
+	}
+	
+	/**
+	 * Sets the modules tabbed view
+	 * @param tabs
+	 */
+	public void setTabbedView(TabbedView tabs){
+		this.tabs = tabs;
+		tabs.repaint();
+	}
+	
+	private TabbedView getTabbedView(){
+		return tabs;
 	}
 	
 	/**
@@ -74,10 +90,22 @@ public class ViewEventController {
 		 * WHEN READY TO SEE NEW CREATEGAMEPANEL IN JANEWAY. THEN DO FUN CONTROLLER CHANGES!
 		 */
 		NewCreateGamePanel newGame = new NewCreateGamePanel();
-		main.getTabbedView().addTab("New Game", null, newGame, "New Game");
-		main.invalidate(); //force the tabbed pane to redraw.
-		main.repaint();
-		main.getTabbedView().setSelectedComponent(newGame);
+		getTabbedView().addTab("New Game", null, newGame, "New Game");
+		getTabbedView().invalidate(); //force the tabbed pane to redraw.
+		getTabbedView().repaint();
+		getTabbedView().setSelectedComponent(newGame);
+	}
+	
+	/**
+	 * Creates a CreateDeckPanel instance, adds a tab representing 
+	 * that panel, and switches to that new panel
+	 */
+	public void createDeck() {
+		CreateDeckPanel newDeck = new CreateDeckPanel();
+		getTabbedView().addTab("New Deck", null, newDeck, "New Deck");
+		getTabbedView().invalidate(); //force the tabbed pane to redraw.
+		getTabbedView().repaint();
+		getTabbedView().setSelectedComponent(newDeck);
 	}
 	
 	/**
@@ -86,9 +114,9 @@ public class ViewEventController {
 	 * @param game The game to be added
 	 */
 	public void editGame(Game game) {
-		main.getTabbedView().editGame(game);
-		main.invalidate();
-		main.repaint();
+		getTabbedView().editGame(game);
+		getTabbedView().invalidate();
+		getTabbedView().repaint();
 	}
 	
 	/**
@@ -98,10 +126,10 @@ public class ViewEventController {
 	 */
 	public void updateGame(Game game, boolean serverError){
 		NewCreateGamePanel aGame = new NewCreateGamePanel(game, serverError);
-		main.getTabbedView().addTab("New Game", null, aGame, "New Game");
-		main.invalidate();
-		main.repaint();
-		main.getTabbedView().setSelectedComponent(aGame);
+		getTabbedView().addTab("New Game", null, aGame, "New Game");
+		getTabbedView().invalidate();
+		getTabbedView().repaint();
+		getTabbedView().setSelectedComponent(aGame);
 	}
 	
 	/**
@@ -110,9 +138,9 @@ public class ViewEventController {
 	 * @param game Game to be joined
 	 */
 	public void joinGame(Game game){
-		main.getTabbedView().joinGame(game);
-		main.invalidate();
-		main.repaint();
+		getTabbedView().joinGame(game);
+		getTabbedView().invalidate();
+		getTabbedView().repaint();
 	}
 	
 	/**
@@ -121,9 +149,9 @@ public class ViewEventController {
 	 * @param game Game to be searched for
 	 */
 	public void viewEndGame(Game game){
-		main.getTabbedView().viewEndGame(game);
-		main.invalidate();
-		main.repaint();
+		getTabbedView().viewEndGame(game);
+		getTabbedView().invalidate();
+		getTabbedView().repaint();
 		
 	}
 	
@@ -134,14 +162,14 @@ public class ViewEventController {
 	 * @param comp the component to remove
 	 */
 	public void removeTab(JComponent comp){
-		main.getTabbedView().removeTab(comp);
+		getTabbedView().removeTab(comp);
 	}
 	
 	/**
 	 * Closes all of the tabs besides the overview tab in the main view.
 	 */
 	public void closeAllTabs() {
-		main.getTabbedView().closeAllTabs();
+		getTabbedView().closeAllTabs();
 	}
 	
 	/**
@@ -150,8 +178,8 @@ public class ViewEventController {
 	 * that allows users to close multiple tabs at once.
 	 */
 	public void closeOthers() {
-		main.getTabbedView().closeOthers();
-		main.repaint();
+		getTabbedView().closeOthers();
+		getTabbedView().repaint();
 
 	}
 

@@ -11,33 +11,21 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 
-import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
-import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewLeftHalfCreateGamePanel;
 /**
  * used to display the completed game and requirements within it
  * @author TomPaolillo
@@ -89,7 +77,7 @@ public class EndGamePanel extends JSplitPane implements AbstractModelObserver, I
 		this.game = game;
 
 		rightHalf = new StatisticsPanel(game);
-		leftHalf = new EndGameLeftHalf(game);
+		leftHalf = new EndGameLeftHalf(game, this);
 	
 		game.addObserver(this); //Makes this the observer for the game
 		active = game;
@@ -101,6 +89,11 @@ public class EndGamePanel extends JSplitPane implements AbstractModelObserver, I
 		rightHalf.setMinimumSize(new Dimension(333, 500));
 		setDividerLocation(420);
 		
+	}
+	
+	public void updateRightHalf(Requirement req) {
+		rightHalf.reqClicked(req);
+		return;		
 	}
 
 	
