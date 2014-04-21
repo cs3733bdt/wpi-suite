@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Contributors: TomPaolillo
+ * Contributors: Team Bobby Drop Tables
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
@@ -47,7 +47,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
-		setPreferredSize(new Dimension(340,50)); 
+		setPreferredSize(new Dimension(341,50)); 
 		
 		
 		createGameIcon.setHorizontalAlignment(SwingConstants.CENTER);
