@@ -14,20 +14,24 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
+
+import sun.java2d.loops.FillRect;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 /**
  * used to display the end game statistics upon ending a game
- * @author TomPaolillo
  */
 public class StatisticsPanel extends JScrollPane{
 	Game activeGame;

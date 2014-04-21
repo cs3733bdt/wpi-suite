@@ -18,6 +18,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CreateDeckPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation.PreferencesPanel;
 
 /**
  * @author jonathanleitschuh
@@ -107,6 +108,15 @@ public class ViewEventController {
 		getTabbedView().repaint();
 		getTabbedView().setSelectedComponent(newDeck);
 	}
+	
+	public void editPreferences() {
+		PreferencesPanel newPreferencesPanel = new PreferencesPanel();
+		getTabbedView().addTab("Preferences", null, newPreferencesPanel, "Preferences");
+		getTabbedView().invalidate();
+		getTabbedView().repaint();
+		getTabbedView().setSelectedComponent(newPreferencesPanel);
+	}
+	
 	
 	/**
 	 * Creates an EditGamePanel instance, adds a tab representing 

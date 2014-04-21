@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
  * creates a preferences button so the user can change their preferences 
@@ -33,49 +34,49 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
  */
 
 public class PreferencesButtonPanel extends ToolbarGroupView{
-	
+
 	private JButton preferencesIcon = new JButton("Preferences");
-	
+
 	private final JPanel contentPanel = new JPanel();
-	
+
 	public PreferencesButtonPanel(){
 		super("");
-		
+
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
-		
+
 		setPreferredSize(new Dimension(159,50));
-		
+
 		preferencesIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		try {
-	        Image img = ImageIO.read(getClass().getResource("preferences.png"));
-	        preferencesIcon.setIcon(new ImageIcon(img));
-		    
+			Image img = ImageIO.read(getClass().getResource("preferences.png"));
+			preferencesIcon.setIcon(new ImageIcon(img));
+
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
-		
+
 		// the action listener for the Create Deck Icon
 		preferencesIcon.addActionListener(new ActionListener() {
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, "This is not functional yet.", "Dummy Button", 1);
-		}
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ViewEventController.getInstance().editPreferences();
+			}
 		});
-				
+
 		contentPanel.add(preferencesIcon);
 		//contentPanel.setOpaque(false);
-		
+
 		contentPanel.setOpaque(false);
-		
+
 		add(contentPanel);
 	}
-	
+
 	/**
 	 * getter for the help icon
 	 * 
 	 * @return the help icon
 	 */
-	
+
 	public JButton getpreferencesIcon() {
 		return preferencesIcon;
 	}
