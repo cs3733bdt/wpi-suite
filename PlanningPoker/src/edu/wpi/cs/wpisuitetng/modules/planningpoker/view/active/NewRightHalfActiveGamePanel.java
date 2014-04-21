@@ -126,7 +126,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			table.getTableModel().addRow(
 					new Object[] { r.getName(), r.getDescription(),
 							userVote(r), r.displayComplete() });
-		}	
+		}
+		//table.getComponentAt(0,0).setEnabled(true);
 
 		/**
 		 * mouse listener
@@ -141,8 +142,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 						if (target.getValueAt(row, 0).toString().equals(r.getName())) {
 							activeRequirement = r;
 							activeReqRowIndex = row;
-							previousEst.setText("Your saved estimate is: "
-									+ userVote(r));
 							nameTextField.setText(r.getName());
 							descriptionTextField.setText(r.getDescription());
 							estText.setText("Estimate Here");
@@ -153,11 +152,15 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 								e1.printStackTrace();
 							}
 							setFieldsVisible(true);
+							displaySuccess("");
+							
 						}
 					}
 				}
 			}
 		});
+		
+		
 
 		JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel
@@ -193,7 +196,14 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		counterLabel = new JLabel("Your current estimate total: " + 0);
 		counterLabel.setFont(largeFont);
+		
 		previousEst = new JLabel();
+		
+		if(activeRequirement != null) {
+			previousEst.setText("Your saved estimate is: " + userVote(activeRequirement));
+		} else {
+			previousEst.setText("Your saved estimate is: " + 0);
+		}
 		previousEst.setFont(largeFont);
 		
 		sum = 0;
@@ -282,11 +292,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				rightView);
 		layout.putConstraint(SpringLayout.NORTH, estText, 20,
 				SpringLayout.SOUTH, descriptionPanel);
-
-		/**
-		 * The label for the counter
-		 */
-		//counterLabel = new JLabel("Your current estimate total: " + 0);
 
 		rightView.add(counterLabel);
 
@@ -405,6 +410,12 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		this.getViewport().add(rightView); // Sets the rightview to be the
 											// entire container which has
 											// everything contained within it
+		
+		setFieldsVisible(true);
+		
+		// Make the first row of the table selected by default
+		table.setRowSelectionInterval(0,0);
+		
 	}
 
 	/**
@@ -636,5 +647,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		System.out.println("name does not match");
 		return 0;
 	}
+	
+	
 	
 }

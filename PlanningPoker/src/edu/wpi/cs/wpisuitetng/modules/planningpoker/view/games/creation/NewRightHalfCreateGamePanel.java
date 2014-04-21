@@ -79,6 +79,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
     private JLabel errorLabel = new JLabel();
     
     private ImportGamesTable importTable;
+    
+    private JLabel createReqsLabel;
+    private JLabel updateReqsLabel;
 	
     private ActiveGamesTable currentTable;
    
@@ -144,9 +147,14 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         createReqsPanel.setBorder(defaultPanelBorder);
         
         //initializes and set up the Create Requirement Label
-        JLabel createReqsLabel = new JLabel("Create Requirements");
+        createReqsLabel = new JLabel("Create Requirement");
         createReqsLabel.setFont(labelFont);
         createReqsPanel.add(createReqsLabel);
+        
+        //initializes and set up the update requirement label
+        updateReqsLabel = new JLabel("Update Requirement");
+        updateReqsLabel.setFont(labelFont);
+        createReqsPanel.add(updateReqsLabel);
    
         
         //Initializes the Name label and Area and adds them to the createReqPanel
@@ -367,11 +375,14 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         layout.putConstraint(SpringLayout.WEST, createReqsPanel, 5, SpringLayout.WEST, rightView);
         layout.putConstraint(SpringLayout.EAST, createReqsPanel, -5, SpringLayout.EAST, rightView);
         
-        // the title with respect to the panel
+        // create Reqs label
         createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, createReqsLabel, 5, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
-        // Table with respect to the title
         createLayout.putConstraint(SpringLayout.NORTH, createReqsLabel, 5, SpringLayout.NORTH, parent);
         
+        //update Reqs Label/
+        createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, updateReqsLabel, 5, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
+        createLayout.putConstraint(SpringLayout.NORTH, updateReqsLabel, 5, SpringLayout.NORTH, parent);
+       
         // req name label with respect to create panel
         createLayout.putConstraint(SpringLayout.WEST, reqName, 5, SpringLayout.WEST, createReqsPanel); 					
 		createLayout.putConstraint(SpringLayout.NORTH, reqName, 5, SpringLayout.SOUTH, createReqsLabel); 					
@@ -478,6 +489,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				removeReqButton.setEnabled(false);
 			//	submitAddReqButton.setEnabled(true);
 				updateAddReqButton.setEnabled(false);
+				updateReqsLabel.setVisible(false);
+				createReqsLabel.setVisible(true);
 				disableButtons();
 			}
 		});
@@ -732,6 +745,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		importReqsPanel.setVisible(false);
 		submitAddReqButton.setEnabled(false);
 		updateAddReqButton.setEnabled(false);
+		updateReqsLabel.setVisible(true);
+		createReqsLabel.setVisible(false);
+		
 		disableButtons();
 		nameArea.setText((String) currentTable.getValueAt(row, 0));
 		descArea.setText((String) currentTable.getValueAt(row, 1));

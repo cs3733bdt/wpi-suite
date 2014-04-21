@@ -65,4 +65,5 @@ public class ActiveGamesTable extends JTable
 	public void setTableModel(DefaultTableModel tableModel) {
 		this.tableModel = tableModel;
 	}
+
 }
