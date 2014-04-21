@@ -28,7 +28,8 @@ import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 public class EndGameLeftHalf extends JScrollPane {
@@ -47,6 +48,7 @@ public class EndGameLeftHalf extends JScrollPane {
 	private JLabel gameEndDateLabel;
 	private JLabel gameCreatorName;
 	private JLabel gameEndDate;
+	private RequirementTable table;
 	
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
@@ -109,18 +111,23 @@ public class EndGameLeftHalf extends JScrollPane {
 		/**
 		 * Initializes a table's columns and rows and the table
 		 */
-		String[] columnNames = { "Requirement", "Description"};
-		Object[][] data = {};
-		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
-		table.setBorder(defaultBorder);
+		
+		table = new RequirementTable(ended.getRequirements(), RequirementTableMode.ENDED);
 		JScrollPane tablePanel = new JScrollPane(table);
-		/**
-		 * Display the requirement list in the table
-		 */
-		for (Requirement r : ended.getRequirements()) {
-			table.getTableModel().addRow(new Object[] { r.getName(),
-					r.getDescription() });
-		}
+		
+		
+//		String[] columnNames = { "Requirement", "Description"};
+//		Object[][] data = {};
+//		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
+//		table.setBorder(defaultBorder);
+//		JScrollPane tablePanel = new JScrollPane(table);
+//		/**
+//		 * Display the requirement list in the table
+//		 */
+//		for (Requirement r : ended.getRequirements()) {
+//			table.getTableModel().addRow(new Object[] { r.getName(),
+//					r.getDescription() });
+//		}
 		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
