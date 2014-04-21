@@ -13,6 +13,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CreateGameButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.HelpButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.PreferencesButtonPanel;
 
 /**
  * Sets up the upper toolbar of the PlanningPoker Window
@@ -23,6 +25,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CreateGameButto
 public class ToolbarView extends DefaultToolbarView {
 	
 	private final CreateGameButtonPanel createGameButton = new CreateGameButtonPanel();
+	private final HelpButtonPanel helpButton = new HelpButtonPanel();
+	private final PreferencesButtonPanel preferencesButton = new PreferencesButtonPanel();
 	
 	/**
 	 * Creates and positions the buttons/other information in the tool bar
@@ -30,6 +34,8 @@ public class ToolbarView extends DefaultToolbarView {
 	 */
 	public ToolbarView(boolean visible){
 		addGroup(createGameButton);
+		addGroup(helpButton);
+		addGroup(preferencesButton);
 	    //this.setBorder(BorderFactory.createLineBorder(Color.blue, 2)); // add a border so you can see the panel
 	    repaint();
 	    
