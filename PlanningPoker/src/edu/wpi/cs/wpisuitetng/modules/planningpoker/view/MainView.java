@@ -26,6 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
  * This panel shows the tabs for the games
  */
 @SuppressWarnings("serial")
+@Deprecated
 public class MainView extends JPanel {
 	TabbedView tabView = new TabbedView();
 	//GameTree filterPanel = new GameTree();
