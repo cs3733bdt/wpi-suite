@@ -68,8 +68,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private JLabel desLabel;
 	private JLabel nameLabel;
 	private JScrollPane cardScrollPanel;
-	private RequirementTable table; 
-	private int activeReqRowIndex;
+	private RequirementTable table;
 	private Font largeFont;
 
 	NewRightHalfActiveGamePanel(final Game game) {
@@ -96,14 +95,15 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/**
 		 * Create and/or initialize components
 		 */
-		nameLabel = new JLabel("Requirements");
+		nameLabel = new JLabel("Select a Requirement to Vote:");
 		reqLabel = new JLabel("Requirement Name");
-		desLabel = new JLabel("Requirement Description"); 
+		desLabel = new JLabel("Requirement Description");
 
 		/*
 		 * Initializes a table's columns and rows and the table
 		 */
-		table = new RequirementTable(currentGame.getRequirements(), RequirementTableMode.ACTIVE);
+		table = new RequirementTable(currentGame.getRequirements(),
+				RequirementTableMode.ACTIVE);
 
 		/**
 		 * mouse listener
@@ -112,11 +112,17 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
+
 					activeRequirement = table.getSelectedReq();
 					nameTextField.setText(activeRequirement.getName());
 					descriptionTextField.setText(activeRequirement
 							.getDescription());
 					estText.setText("Estimate Here");
+
+					previousEst.setText("Your saved estimate is: "
+							+ activeRequirement.userVote());
+					previousEst.setFont(largeFont);
+
 					try {
 						cardsPanel.clearCards();
 					} catch (IOException e1) {
@@ -125,6 +131,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					}
 					setFieldsVisible(true);
 					displaySuccess("");
+
 				}
 			}
 		});
@@ -158,21 +165,22 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		 * Set up the cards panel
 		 */
 		// Label and accumulate sum
-		
-		largeFont = new Font("Serif",Font.BOLD,20);
+
+		largeFont = new Font("Serif", Font.BOLD, 20);
 
 		counterLabel = new JLabel("Your current estimate total: " + 0);
 		counterLabel.setFont(largeFont);
-		
+
 		previousEst = new JLabel();
-		
-		if(activeRequirement != null) {
-			previousEst.setText("Your saved estimate is: " + activeRequirement.userVote());
+
+		if (activeRequirement != null) {
+			previousEst.setText("Your saved estimate is: "
+					+ activeRequirement.userVote());
 		} else {
 			previousEst.setText("Your saved estimate is: " + 0);
 		}
 		previousEst.setFont(largeFont);
-		
+
 		sum = 0;
 
 		// This branch will be run if the default deck is to be used
@@ -218,8 +226,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			layout.putConstraint(SpringLayout.NORTH, counterLabel, 5,
 					SpringLayout.SOUTH, cardScrollPanel);
 			cardScrollPanel.getHorizontalScrollBar().setValue(200);
-			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, cardScrollPanel, 0,
-					SpringLayout.HORIZONTAL_CENTER, rightView);
+			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER,
+					cardScrollPanel, 0, SpringLayout.HORIZONTAL_CENTER,
+					rightView);
 
 			cardScrollPanel.setVisible(false);
 
@@ -237,7 +246,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		// added above
 
 		this.JToggleButtonList = cardsPanel.getCardButtonArray();
-		
+
 		/**
 		 * The text area where the user types their estimate
 		 */
@@ -251,7 +260,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			}
 		});
 		addKeyListenerTo(estText);
-		
+
 		rightView.add(estText);
 		layout.putConstraint(SpringLayout.WEST, estText, 5, SpringLayout.WEST,
 				rightView);
@@ -272,7 +281,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			}
 		});
 		addMouseListenerTo(submitButton);
-		
+
 		if (currentGame.doesUseCards()) {
 			estText.setVisible(false);
 			submitButton.setEnabled(true);
@@ -285,7 +294,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			counter.setVisible(false);
 			counterLabel.setVisible(false);
 		}
-		
+
 		/**
 		 * Add components to container
 		 */
@@ -314,7 +323,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.EAST, nameLabel, -5,
 				SpringLayout.EAST, rightView);// Adds the name label to the far
 												// left
-		
+
 		layout.putConstraint(SpringLayout.NORTH, nameLabel, 10,
 				SpringLayout.NORTH, rightView);
 
@@ -372,20 +381,23 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
 				SpringLayout.SOUTH, rightView);
-		
-		//TODO: make this into a method
-		activeRequirement = table.getSelectedReq(); 
+
+		// TODO: make this into a method
+		activeRequirement = table.getSelectedReq();
 		nameTextField.setText(activeRequirement.getName());
 		descriptionTextField.setText(activeRequirement.getDescription());
 
 		this.getViewport().add(rightView); // Sets the rightview to be the
 											// entire container which has
 											// everything contained within it
-		
+
 		setFieldsVisible(true);
-		
-		
-		
+
+	}
+
+	private Font makeFont(int i) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
@@ -529,9 +541,11 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		getEstimateText().setBorder(defaultBorder);
 		displaySuccess("Vote Successful!");
-		
-		previousEst.setText("Your saved estimate is: " + activeRequirement.userVote());
-		table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(), 2);
+
+		previousEst.setText("Your saved estimate is: "
+				+ activeRequirement.userVote());
+		table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(),
+				2);
 	}
 
 	/**
@@ -574,30 +588,29 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			cardsPanel.setVisible(true);
 		}
 	}
-	
+
 	private void addKeyListenerTo(JComponent component) {
-		component.addKeyListener(new KeyAdapter(){
+		component.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent arg0) {
 				updateButton();
 			}
 		});
 	}
-	
-	private void addMouseListenerTo(JComponent component){
-		component.addMouseListener(new MouseAdapter(){
+
+	private void addMouseListenerTo(JComponent component) {
+		component.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent arg0) {
-				if(!submitButton.isEnabled()){	
+				if (!submitButton.isEnabled()) {
 					validateField(true);
 				}
 			}
 		});
 	}
-	
-	private void updateButton(){
-		if(validateField(true)){
+
+	private void updateButton() {
+		if (validateField(true)) {
 			submitButton.setEnabled(true);
-		}
-		else{
+		} else {
 			submitButton.setEnabled(false);
 		}
 	}
