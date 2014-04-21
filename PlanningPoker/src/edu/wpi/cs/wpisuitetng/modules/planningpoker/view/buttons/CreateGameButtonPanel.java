@@ -19,8 +19,8 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
@@ -38,21 +38,13 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 	private JButton createDeckIcon = new JButton("Create Deck");
 
 	private final JPanel contentPanel = new JPanel();
-		private JButton createGameIcon = new JButton("Create Game");
-		private JButton createDeckIcon = new JButton("Create Deck");
-		/*
-		 * Temporary join game button until tree has clickable functionality
-		 */
-		
-		private final JPanel contentPanel = new JPanel();
 	
 	public CreateGameButtonPanel(){
 		super("");
 		
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
-		setPreferredSize(new Dimension(325,50)); 
-		setPreferredSize(new Dimension(341,50)); 
+		setPreferredSize(new Dimension(400,50)); 
 		
 		
 	   try {
@@ -64,6 +56,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		}
 	   
 	   createDeckIcon.setHorizontalAlignment(SwingConstants.CENTER);
+	   
 	   try {
 	        Image img = ImageIO.read(getClass().getResource("create_deck.png"));
 	        createDeckIcon.setIcon(new ImageIcon(img));
@@ -100,19 +93,6 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 			//	}
 			}
 		});	
-		
-		contentPanel.add(createGameIcon);
-		contentPanel.add(createDeckIcon);
-		});
-		
-		// the action listener for the Create Deck Icon
-		createDeckIcon.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-					JOptionPane.showMessageDialog(null, "This is not functional yet.", "Dummy Button", 1);
-				}
-			
-		});
 		
 		contentPanel.add(createGameIcon);
 		contentPanel.add(createDeckIcon);
