@@ -412,9 +412,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         
        
         //postion error label with respect to creaReqPanel
-        createLayout.putConstraint(SpringLayout.SOUTH, errorLabel, -1, SpringLayout.SOUTH, createReqsPanel);
-        createLayout.putConstraint(SpringLayout.NORTH, errorLabel, 1, SpringLayout.SOUTH, updateAddReqButton);
-        createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorLabel, 1, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
+        createLayout.putConstraint(SpringLayout.NORTH, errorLabel, 5, SpringLayout.SOUTH, createReqsPanel);
+        createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorLabel, 1, SpringLayout.HORIZONTAL_CENTER, rightView);
        
         //position cancel button with respect to createReqPanel
         createLayout.putConstraint(SpringLayout.SOUTH, cancelRequirementButton, -5, SpringLayout.SOUTH, createReqsPanel);
@@ -665,7 +664,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			for (int i = 0; i < rows.length; i++){
 				String selectedName = (String) importTable.getValueAt(rows[i], 0);
 				String selectedDesc = (String) importTable.getValueAt(rows[i], 1);
-				currentTable.getTableModel().addRow(new Object[]{selectedName, selectedDesc});
+				addRequirement(new Requirement(selectedName, selectedDesc));
 			}
 		}
 		createReqsPanel.setVisible(false);
@@ -756,8 +755,33 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 
 
 	public void addRequirement(Requirement requirement){
-		currentTable.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
-		requirements.add(requirement);
+		System.out.println("here");
+		if (!checkduplicateReq(requirement)) {
+			currentTable.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
+			requirements.add(requirement);
+		}
+		else {
+			displayError("Duplicate Requirement Added");
+			errorLabel.setVisible(true); //TODO
+			//errorLabel.setVisible(false);
+		}
+	}
+
+	/**
+	 * @param requirement
+	 * @return true if the requirement is already in the table
+	 */
+	private boolean checkduplicateReq(Requirement requirement) {
+		List<Requirement> reqList = requirements;
+		String reqName;
+		for (int i = 0; i < reqList.size(); i++) {
+			reqName = reqList.get(i).getName();
+			System.out.println("first req: " + reqName);
+			if (reqName.equals(requirement.getName())) {
+				return true;
+			}
+		}
+		return false;	
 	}
 
 

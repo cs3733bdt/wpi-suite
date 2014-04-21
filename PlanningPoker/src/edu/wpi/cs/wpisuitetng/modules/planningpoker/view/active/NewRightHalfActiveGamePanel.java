@@ -96,7 +96,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/**
 		 * Create and/or initialize components
 		 */
-		nameLabel = new JLabel("Requirements");
+		nameLabel = new JLabel("Select a Requirement to Vote:");
 		reqLabel = new JLabel("Requirement Name");
 		desLabel = new JLabel("Requirement Description"); 
 
@@ -394,6 +394,11 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		
 		
 		
+	}
+
+	private Font makeFont(int i) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/**
