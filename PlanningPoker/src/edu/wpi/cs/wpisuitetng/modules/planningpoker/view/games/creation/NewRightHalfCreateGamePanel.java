@@ -44,9 +44,11 @@ import org.jdesktop.swingx.JXDatePicker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ImportGamesTable;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 
 /**
  * TODO DOCUMENTATION
@@ -78,12 +80,12 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
     
     private JLabel errorLabel = new JLabel();
     
-    private ImportGamesTable importTable;
+    private RequirementTable importTable;
     
     private JLabel createReqsLabel;
     private JLabel updateReqsLabel;
 	
-    private ActiveGamesTable currentTable;
+    private RequirementTable currentTable;
    
     private JPanel createReqsPanel = new JPanel();
     
@@ -119,8 +121,24 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         /**
 		 * Initializes objects for use in table
 		 */
-        importTable = initializeImportTable();
-		currentTable = initializeTable();
+        importTable = new RequirementTable(new ArrayList<Requirement>(), RequirementTableMode.ENDED);
+        
+		/*
+		 * Adds temporary data into the table. 
+		 * DELETE THIS ONCE DATA IS SUCCESSFULLY IMPORTED FROM REQUIREMENT MANAGER!!!!!!!!!!!!
+		 */
+		importTable.getTableModel().addRow(new Object[]{"Requirement1", "Description1"});
+		importTable.getTableModel().addRow(new Object[]{"Requirement2", "Description2"});
+		importTable.getTableModel().addRow(new Object[]{"Requirement3", "Description3"});
+		importTable.getTableModel().addRow(new Object[]{"Requirement4", "Description4"});
+		importTable.getTableModel().addRow(new Object[]{"Requirement5", "Description5"});
+		importTable.getTableModel().addRow(new Object[]{"Requirement6", "Description6"});
+		importTable.getTableModel().addRow(new Object[]{"Requirement7", "Description7"});
+		importTable.getTableModel().addRow(new Object[]{"Requirement8", "Description8"});
+		importTable.getTableModel().addRow(new Object[]{"Requirement9", "Description9"});
+		importTable.getTableModel().addRow(new Object[]{"Requirement10", "Description10"});
+        
+		currentTable = new RequirementTable(new ArrayList<Requirement>(), RequirementTableMode.CREATE);
 		Font labelFont = makeFont();
 						
 		/**
@@ -558,47 +576,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		//set the bigger font for userStoryDesc
 		Font bigFont = newFont;
 		return bigFont;
-	}
-	
-	/**
-	 * Instantiates this table
-	 * @return the ActiveGamesTable
-	 */
-	private ActiveGamesTable initializeTable() {
-		String[] columnNames2 = {"Requirement", "Description"};
-		Object[][] data2 = {};
-		ActiveGamesTable table = new ActiveGamesTable(data2, columnNames2);
-		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-		table.getColumnModel().getColumn(0).setMinWidth(100);
-		table.getColumnModel().getColumn(0).setMaxWidth(400);
-		table.getColumnModel().getColumn(1).setMinWidth(100);
-		table.getColumnModel().getColumn(1).setMaxWidth(800);
-		return table;
-	}
-	
-	private ImportGamesTable initializeImportTable() {
-		String[] columnNames2 = {"Requirement", "Description,"};
-		Object[][] data2 = {};
-		ImportGamesTable table = new ImportGamesTable(data2, columnNames2);
-		/**
-		 * Adds temporary data into the table. 
-		 * DELETE THIS ONCE DATA IS SUCCESSFULLY IMPORTED FROM REQUIREMENT MANAGER!!!!!!!!!!!!
-		 */
-		table.getColumnModel().getColumn(0).setMinWidth(100);
-		table.getColumnModel().getColumn(0).setMaxWidth(400);
-		table.getColumnModel().getColumn(1).setMinWidth(100);
-		table.getColumnModel().getColumn(1).setMaxWidth(800);
-		table.getTableModel().addRow(new Object[]{"Requirement1", "Description1"});
-		table.getTableModel().addRow(new Object[]{"Requirement2", "Description2"});
-		table.getTableModel().addRow(new Object[]{"Requirement3", "Description3"});
-		table.getTableModel().addRow(new Object[]{"Requirement4", "Description4"});
-		table.getTableModel().addRow(new Object[]{"Requirement5", "Description5"});
-		table.getTableModel().addRow(new Object[]{"Requirement6", "Description6"});
-		table.getTableModel().addRow(new Object[]{"Requirement7", "Description7"});
-		table.getTableModel().addRow(new Object[]{"Requirement8", "Description8"});
-		table.getTableModel().addRow(new Object[]{"Requirement9", "Description9"});
-		table.getTableModel().addRow(new Object[]{"Requirement10", "Description10"});
-		return table;
 	}
 	
 	private void submitButtonPressed(){

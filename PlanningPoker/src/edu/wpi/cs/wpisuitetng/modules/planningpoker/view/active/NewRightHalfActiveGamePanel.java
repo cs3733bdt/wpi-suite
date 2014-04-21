@@ -112,16 +112,13 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					// JTable target = (JTable) e.getSource();
-					// int row = target.getSelectedRow();
-					// for (Requirement r : currentGame.getRequirements()) {
-					// if (target.getValueAt(row,
-					// 0).toString().equals(r.getName())) {
+
 					activeRequirement = table.getSelectedReq();
 					nameTextField.setText(activeRequirement.getName());
 					descriptionTextField.setText(activeRequirement
 							.getDescription());
 					estText.setText("Estimate Here");
+
 					previousEst.setText("Your saved estimate is: "
 							+ activeRequirement.userVote());
 					previousEst.setFont(largeFont);
@@ -135,8 +132,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					setFieldsVisible(true);
 					displaySuccess("");
 
-					// }
-					// }
 				}
 			}
 		});
