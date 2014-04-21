@@ -47,6 +47,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  */
 @SuppressWarnings("serial")
 public class GameTree extends JPanel implements MouseListener{
+	private static GameTree instance = null;
+	
 	private boolean initialized = false; //Check if GameModel should be generated from the server
 	JTree gameTree; // JTree to hold the hierarchy of games
 	JScrollPane gameTreeScroll; // scrollPane to put the tree in
@@ -66,10 +68,22 @@ public class GameTree extends JPanel implements MouseListener{
 	/**
 	 * Constructor for a GameTree
 	 */
-	public GameTree(){
+	private GameTree(){
 		super(new GridBagLayout());
 		ViewEventController.getInstance().setGameOverviewTree(this);
 		refresh();
+	}
+	
+	/**
+	 * Instantiates the game tree if it does not already exist.
+	 * Otherwise it returns the current version of the GameTree
+	 * @return the singleton Game Tree
+	 */
+	public static GameTree getInstance(){
+		if(instance == null){
+			instance = new GameTree();
+		}
+		return instance;
 	}
 
 	/**
@@ -171,6 +185,12 @@ public class GameTree extends JPanel implements MouseListener{
 		
 	}
 	
+	/* (non-Javadoc)
+	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
+	 * 
+	 * This method is overridden in order to allow us to instantiated the games model when the network has been instantiated
+	 * 
+	 */
 	@Override
 	public void paintComponent(Graphics g){
 		if(!initialized){
@@ -195,7 +215,11 @@ public class GameTree extends JPanel implements MouseListener{
 		return list;
 	}
 
-	public JTree getGameTree(){
+	/**
+	 * Gets the current game tree
+	 * @return
+	 */
+	private JTree getGameTree(){
 		return gameTree;
 	}
 

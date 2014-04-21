@@ -48,7 +48,7 @@ public class GameOverview extends JSplitPane {
 	
 	JXHyperlink videoTutorial;
 	
-	GameTree filterPanel = new GameTree();
+	GameTree filterPanel = GameTree.getInstance();
 	
 	/**
 	 * The constructor for the overview panel
