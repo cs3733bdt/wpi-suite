@@ -89,7 +89,7 @@ public class EndGamePanel extends JSplitPane implements AbstractModelObserver, I
 		this.game = game;
 
 		rightHalf = new StatisticsPanel(game);
-		leftHalf = new EndGameLeftHalf(game);
+		leftHalf = new EndGameLeftHalf(game, this);
 	
 		game.addObserver(this); //Makes this the observer for the game
 		active = game;
@@ -101,6 +101,11 @@ public class EndGamePanel extends JSplitPane implements AbstractModelObserver, I
 		rightHalf.setMinimumSize(new Dimension(333, 500));
 		setDividerLocation(420);
 		
+	}
+	
+	public void updateRightHalf(Requirement req) {
+		rightHalf.reqClicked(req);
+		return;		
 	}
 
 	
