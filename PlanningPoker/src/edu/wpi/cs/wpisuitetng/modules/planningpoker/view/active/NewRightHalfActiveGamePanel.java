@@ -65,7 +65,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private JScrollPane descriptionPanel;
 	private JLabel reqLabel;
 	private JLabel desLabel;
-	private JScrollPane cardPanel;
+	private JScrollPane cardScrollPanel;
 	private ActiveGamesTable table; 
 	private int activeReqRowIndex;
 	private Font largeFont;
@@ -125,7 +125,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		for (Requirement r : currentGame.getRequirements()) {
 			table.getTableModel().addRow(
 					new Object[] { r.getName(), r.getDescription(),
-							userVote(r), r.displayComplete() });
+							r.userVote(), r.displayComplete() });
 		}
 		//table.getComponentAt(0,0).setEnabled(true);
 
@@ -200,7 +200,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		previousEst = new JLabel();
 		
 		if(activeRequirement != null) {
-			previousEst.setText("Your saved estimate is: " + userVote(activeRequirement));
+			previousEst.setText("Your saved estimate is: " + activeRequirement.userVote());
 		} else {
 			previousEst.setText("Your saved estimate is: " + 0);
 		}
@@ -238,23 +238,23 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		// added below
 		if (this.getGame().doesUseCards()) {
-			cardPanel = new JScrollPane(cardsPanel);
+			cardScrollPanel = new JScrollPane(cardsPanel);
 			// cardPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			cardPanel.setPreferredSize(new Dimension(100, 100));
-			rightView.add(cardPanel);
-			layout.putConstraint(SpringLayout.WEST, cardPanel, 5,
+			cardScrollPanel.setPreferredSize(new Dimension(100, 100));
+			rightView.add(cardScrollPanel);
+			layout.putConstraint(SpringLayout.WEST, cardScrollPanel, 5,
 					SpringLayout.WEST, rightView);
-			layout.putConstraint(SpringLayout.EAST, cardPanel, -5,
+			layout.putConstraint(SpringLayout.EAST, cardScrollPanel, -5,
 					SpringLayout.EAST, rightView);
-			layout.putConstraint(SpringLayout.NORTH, cardPanel, 20,
+			layout.putConstraint(SpringLayout.NORTH, cardScrollPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
 			layout.putConstraint(SpringLayout.NORTH, counterLabel, 5,
-					SpringLayout.SOUTH, cardPanel);
-			cardPanel.getHorizontalScrollBar().setValue(200);
-			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, cardPanel, 0,
+					SpringLayout.SOUTH, cardScrollPanel);
+			cardScrollPanel.getHorizontalScrollBar().setValue(200);
+			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, cardScrollPanel, 0,
 					SpringLayout.HORIZONTAL_CENTER, rightView);
 
-			cardPanel.setVisible(false);
+			cardScrollPanel.setVisible(false);
 
 		} else {
 			rightView.add(cardsPanel);
@@ -413,9 +413,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		
 		setFieldsVisible(true);
 		
-		// Make the first row of the table selected by default
-		table.setRowSelectionInterval(0,0);
-		
 	}
 
 	/**
@@ -560,8 +557,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		getEstimateText().setBorder(defaultBorder);
 		displaySuccess("Vote Successful!");
 		
-		previousEst.setText("Your saved estimate is: " + userVote(activeRequirement));
-		table.setValueAt(userVote(activeRequirement), activeReqRowIndex, 2);
+		previousEst.setText("Your saved estimate is: " + activeRequirement.userVote());
+		table.setValueAt(activeRequirement.userVote(), activeReqRowIndex, 2);
 	}
 
 	/**
@@ -600,7 +597,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			estText.setVisible(visible);
 		} else {
 			counterLabel.setVisible(visible);
-			cardPanel.setVisible(true);
+			cardScrollPanel.setVisible(true);
 			cardsPanel.setVisible(true);
 		}
 	}
@@ -632,22 +629,4 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		}
 	}
 
-	/**
-	 * 
-	 * @return the number of vote if the user already voted, otherwise return 0;
-	 */
-	public int userVote(Requirement r) {
-		String currentUser = ConfigManager.getConfig().getUserName();
-		for (Vote v : (r.getVotes())) {
-			if (currentUser.equals(v.getUsername())) {
-				System.out.println("name matches");
-				return v.getVoteNumber();
-			}
-		}
-		System.out.println("name does not match");
-		return 0;
-	}
-	
-	
-	
 }

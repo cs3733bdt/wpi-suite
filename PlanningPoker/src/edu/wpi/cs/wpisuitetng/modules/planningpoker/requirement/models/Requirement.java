@@ -17,6 +17,7 @@ import java.util.UUID;
 
 import com.google.gson.Gson;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
@@ -335,4 +336,21 @@ public class Requirement extends ObservableModel {
 	private void delayChange(){
 		while(GameModel.getInstance().isServerUpdating()){} // $codepro.audit.disable emptyWhileStatement
 	}
+	
+	/**
+	 * 
+	 * @return the number of vote if the user already voted, otherwise return 0;
+	 */
+	public int userVote() {
+		String currentUser = ConfigManager.getConfig().getUserName();
+		for (Vote v : getVotes()) {
+			if (currentUser.equals(v.getUsername())) {
+				System.out.println("name matches");
+				return v.getVoteNumber();
+			}
+		}
+		System.out.println("name does not match");
+		return 0;
+	}
+
 }
