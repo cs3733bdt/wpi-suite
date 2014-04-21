@@ -33,6 +33,8 @@ public class CreateDeckPanel extends JScrollPane {
 	private NameJTextField nameTextField;
 	private DescriptionJTextArea descriptionTextField;
 	
+	private NameJTextField numCards;
+	
 	public CreateDeckPanel(){
 		
 		build();
@@ -47,20 +49,28 @@ public class CreateDeckPanel extends JScrollPane {
 		
 		/* Create components */
 		JLabel nameLabel = new JLabel("Name * ");
-		nameTextField = new NameJTextField(30);
+		nameTextField = new NameJTextField(20);
 		
 		JLabel descriptionLabel = new JLabel("Description");
 		descriptionTextField = new DescriptionJTextArea();
 		descriptionTextField.setLineWrap(true);
 		
 		JScrollPane descriptionScroll = new JScrollPane(descriptionTextField);
-		descriptionScroll.setPreferredSize(new Dimension(400, 50));		
+		descriptionScroll.setPreferredSize(new Dimension(400, 20));		
+		
+		JPanel numCardsPanel = new JPanel();
+		
+		JLabel numCardsLabel = new JLabel("Number of Cards * ");
+		numCards = new NameJTextField(5);
+		
+		JButton submitNumCards = new JButton("Submit");
+		
+		numCardsPanel.add(numCardsLabel);
+		numCardsPanel.add(numCards);
+		numCardsPanel.add(submitNumCards);
 		
 		JLabel colorLabel = new JLabel("Select Card Color * ");
 		colorLabel.setFont(makeFont(10));
-		
-		Integer[] values = {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
-		JComboBox<Integer> numberOfButtons = new JComboBox<Integer>(values);
 		
 		JButton addCardButton = new JButton("Add Card");
 		JButton removeCardButton = new JButton("Remove Card");
@@ -78,6 +88,10 @@ public class CreateDeckPanel extends JScrollPane {
 		view.add(nameTextField);
 		view.add(descriptionLabel);
 		view.add(descriptionScroll);
+		view.add(numCardsPanel);
+		//view.add(numCardsLabel);
+		//view.add(numCards);
+		//view.add(submitNumCards);
 		//view.add(colorLabel);
 		//view.add(colorsPanel);
 		
@@ -85,24 +99,36 @@ public class CreateDeckPanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.WEST, nameLabel, 10, SpringLayout.WEST, view);
 		layout.putConstraint(SpringLayout.NORTH, nameLabel, 10, SpringLayout.NORTH, view);
 		
-		layout.putConstraint(SpringLayout.WEST, nameTextField, 20, SpringLayout.EAST, nameLabel);
+		layout.putConstraint(SpringLayout.WEST, nameTextField, 5, SpringLayout.EAST, nameLabel);
 		layout.putConstraint(SpringLayout.NORTH, nameTextField, 10, SpringLayout.NORTH, view);
 		
-		layout.putConstraint(SpringLayout.WEST, descriptionLabel, 10, SpringLayout.WEST, view);
-		layout.putConstraint(SpringLayout.NORTH, descriptionLabel, 10, SpringLayout.SOUTH, nameLabel);
+		layout.putConstraint(SpringLayout.WEST, descriptionLabel, 10, SpringLayout.EAST, nameTextField);
+		layout.putConstraint(SpringLayout.NORTH, descriptionLabel, 10, SpringLayout.NORTH, view);
 		
 		layout.putConstraint(SpringLayout.WEST, descriptionScroll, 5, SpringLayout.EAST, descriptionLabel);
-		layout.putConstraint(SpringLayout.NORTH, descriptionScroll, 10, SpringLayout.SOUTH, nameTextField);
-		layout.putConstraint(SpringLayout.EAST, descriptionScroll, 0, SpringLayout.EAST, nameTextField);
+		layout.putConstraint(SpringLayout.NORTH, descriptionScroll, 10, SpringLayout.NORTH, view);
+		layout.putConstraint(SpringLayout.EAST, descriptionScroll, -10, SpringLayout.EAST, view);
 		
-		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, colorLabel, 5, SpringLayout.HORIZONTAL_CENTER, view);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, numCardsPanel, 5, SpringLayout.HORIZONTAL_CENTER, view);
+		layout.putConstraint(SpringLayout.NORTH, numCardsPanel, 10, SpringLayout.SOUTH, nameLabel);
+		
+//		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, numCardsLabel, -20, SpringLayout.HORIZONTAL_CENTER, view);
+//		layout.putConstraint(SpringLayout.NORTH, numCardsLabel, 10, SpringLayout.SOUTH, descriptionScroll);
+//	
+//		layout.putConstraint(SpringLayout.WEST, numCards, 5, SpringLayout.EAST, numCardsLabel);
+//		layout.putConstraint(SpringLayout.NORTH, numCards, 10, SpringLayout.SOUTH, descriptionScroll);
+//		
+//		layout.putConstraint(SpringLayout.WEST, submitNumCards, 5, SpringLayout.EAST, numCards);
+//		layout.putConstraint(SpringLayout.NORTH, submitNumCards, 10, SpringLayout.SOUTH, descriptionScroll);
+//		
+		/*layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, colorLabel, 5, SpringLayout.HORIZONTAL_CENTER, view);
 		layout.putConstraint(SpringLayout.NORTH, colorLabel, 75, SpringLayout.SOUTH, nameLabel);
 		
 		layout.putConstraint(SpringLayout.WEST, colorsPanel, 10, SpringLayout.WEST, view);
 		layout.putConstraint(SpringLayout.NORTH, colorsPanel, 10, SpringLayout.SOUTH, colorLabel);
 		layout.putConstraint(SpringLayout.SOUTH, colorsPanel, -100, SpringLayout.SOUTH, view);
 		layout.putConstraint(SpringLayout.EAST, colorsPanel, -10, SpringLayout.EAST, view);
-
+*/
 		setViewportView(view);
 	}
 	
