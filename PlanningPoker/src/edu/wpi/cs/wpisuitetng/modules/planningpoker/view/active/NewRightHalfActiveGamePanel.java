@@ -43,6 +43,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.ActiveCardsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 
 public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private Game currentGame;
@@ -65,8 +66,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private JScrollPane descriptionPanel;
 	private JLabel reqLabel;
 	private JLabel desLabel;
+	private JLabel nameLabel;
 	private JScrollPane cardScrollPanel;
-	private ActiveGamesTable table; 
+	private RequirementTable table; 
 	private int activeReqRowIndex;
 	private Font largeFont;
 
@@ -94,40 +96,14 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/**
 		 * Create and/or initialize components
 		 */
-		JLabel nameLabel = new JLabel("Requirements"); // Creates the label for
-														// the Name
-		reqLabel = new JLabel("Requirement Name"); // Creates the label for the
-													// Name
-		desLabel = new JLabel("Requirement Description"); // Creates the label
-															// for the
-															// description
+		nameLabel = new JLabel("Requirements");
+		reqLabel = new JLabel("Requirement Name");
+		desLabel = new JLabel("Requirement Description"); 
 
-		/**
+		/*
 		 * Initializes a table's columns and rows and the table
 		 */
-		String[] columnNames = { "Requirement", "Description", "My Estimate", "Complete" };
-		Object[][] data = {};
-		table = new ActiveGamesTable(data, columnNames);
-		table.setBorder(defaultBorder);
-		
-		table.getColumnModel().getColumn(0).setMinWidth(100);
-		table.getColumnModel().getColumn(0).setMaxWidth(400);
-		table.getColumnModel().getColumn(1).setMinWidth(100);
-		table.getColumnModel().getColumn(1).setMaxWidth(800);
-		table.getColumnModel().getColumn(2).setMinWidth(100);
-		table.getColumnModel().getColumn(2).setMaxWidth(150);
-		table.getColumnModel().getColumn(3).setMinWidth(100);
-		table.getColumnModel().getColumn(3).setMaxWidth(150);
-		
-		/**
-		 * Display the requirement list in the table
-		 */
-		for (Requirement r : currentGame.getRequirements()) {
-			table.getTableModel().addRow(
-					new Object[] { r.getName(), r.getDescription(),
-							r.userVote(), r.displayComplete() });
-		}
-		//table.getComponentAt(0,0).setEnabled(true);
+		table = new RequirementTable(currentGame.getRequirements(), RequirementTableMode.ACTIVE);
 
 		/**
 		 * mouse listener
@@ -136,14 +112,13 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-					JTable target = (JTable) e.getSource();
-					int row = target.getSelectedRow();
-					for (Requirement r : currentGame.getRequirements()) {
-						if (target.getValueAt(row, 0).toString().equals(r.getName())) {
-							activeRequirement = r;
-							activeReqRowIndex = row;
-							nameTextField.setText(r.getName());
-							descriptionTextField.setText(r.getDescription());
+//					JTable target = (JTable) e.getSource();
+//					int row = target.getSelectedRow();
+//					for (Requirement r : currentGame.getRequirements()) {
+//						if (target.getValueAt(row, 0).toString().equals(r.getName())) {
+					activeRequirement = table.getSelectedReq(); 
+							nameTextField.setText(activeRequirement.getName());
+							descriptionTextField.setText(activeRequirement.getDescription());
 							estText.setText("Estimate Here");
 							try {
 								cardsPanel.clearCards();
@@ -154,8 +129,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 							setFieldsVisible(true);
 							displaySuccess("");
 							
-						}
-					}
+						//}
+					//}
 				}
 			}
 		});
@@ -405,13 +380,19 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
 				SpringLayout.SOUTH, rightView);
-
+		
+		//TODO: make this into a method
+		activeRequirement = table.getSelectedReq(); 
+		nameTextField.setText(activeRequirement.getName());
+		descriptionTextField.setText(activeRequirement.getDescription());
 
 		this.getViewport().add(rightView); // Sets the rightview to be the
 											// entire container which has
 											// everything contained within it
 		
 		setFieldsVisible(true);
+		
+		
 		
 	}
 
@@ -558,7 +539,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		displaySuccess("Vote Successful!");
 		
 		previousEst.setText("Your saved estimate is: " + activeRequirement.userVote());
-		table.setValueAt(activeRequirement.userVote(), activeReqRowIndex, 2);
+		table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(), 2);
 	}
 
 	/**
