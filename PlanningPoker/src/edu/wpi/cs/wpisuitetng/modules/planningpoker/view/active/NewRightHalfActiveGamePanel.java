@@ -126,7 +126,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			table.getTableModel().addRow(
 					new Object[] { r.getName(), r.getDescription(),
 							userVote(r), r.displayComplete() });
-		}	
+		}
+		//table.getComponentAt(0,0).setEnabled(true);
 
 		/**
 		 * mouse listener
@@ -151,6 +152,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 								e1.printStackTrace();
 							}
 							setFieldsVisible(true);
+							displaySuccess("");
 							
 						}
 					}
@@ -410,6 +412,10 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 											// everything contained within it
 		
 		setFieldsVisible(true);
+		
+		// Make the first row of the table selected by default
+		table.setRowSelectionInterval(0,0);
+		
 	}
 
 	/**
