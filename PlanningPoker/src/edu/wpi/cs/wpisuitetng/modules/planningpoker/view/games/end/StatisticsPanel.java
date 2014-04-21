@@ -81,12 +81,12 @@ public class StatisticsPanel extends JScrollPane{
 		JLabel statLabel = new JLabel("Statistics");
 		JLabel votesLabel = new JLabel("Votes by User");
 		
-		initStats();
 		
+		Object[] row = makeStatRow(activeRequirement);
 		
 		statTable = initializeStatTable();
 		voteTable = initializeVoteTable();
-		statTable.getTableModel().addRow(new Object[]{mean, stDev, median, maxEstimate, minEstimate});
+		statTable.getTableModel().addRow(row);
 		fillVoteTable(activeRequirement);
 		
 		
@@ -158,18 +158,18 @@ public class StatisticsPanel extends JScrollPane{
 		setViewportView(overviewPanel);
 	}
 	
-	private void initStats() {
-		ArrayList<Integer> voteData = requirementToVotes(activeRequirement); 
-		minEstimate = min(voteData);
-		maxEstimate = max(voteData);
-		mean = mean(voteData);
-		stDev = stDev(voteData);
-		median = median(voteData);
-	}
+//	private void initStats() {
+//		ArrayList<Integer> voteData = requirementToVotes(activeRequirement); 
+//		minEstimate = min(voteData);
+//		maxEstimate = max(voteData);
+//		mean = mean(voteData);
+//		stDev = stDev(voteData);
+//		median = median(voteData);
+//	}
 	
 	private Object[] makeStatRow(Requirement requirement) {
 		ArrayList<Integer> voteData = requirementToVotes(requirement); 
-		Object[] row = new Object[] {mean(voteData), stDev(voteData), median(voteData), max(voteData), min(voteData)};
+		Object[] row = new Object[] {mean(voteData), stDev(voteData), median(voteData), max(voteData), min(voteData), voteData.size()};
 		return row;
 	}
 
@@ -178,7 +178,7 @@ public class StatisticsPanel extends JScrollPane{
 	 * @return the table containing the statistics
 	 */
 	private ActiveStatisticsTable initializeStatTable() {
-		String[] columnNames2 = {"Mean", "Standard Deviation", "Median", "Max", "Min" };
+		String[] columnNames2 = {"Mean", "Standard Deviation", "Median", "Max", "Min","Num Votes" };
 		Object[][] data2 = {};
 		return new ActiveStatisticsTable(data2, columnNames2);
 	}
