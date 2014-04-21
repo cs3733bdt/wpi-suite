@@ -389,7 +389,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 											// entire container which has
 											// everything contained within it
 
-		setFieldsVisible(true);
 
 	}
 
