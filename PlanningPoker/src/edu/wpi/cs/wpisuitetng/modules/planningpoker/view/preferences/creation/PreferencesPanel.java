@@ -11,6 +11,7 @@ import java.awt.event.ItemEvent;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -35,6 +36,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	JTextField mobileField;
 	JButton updateMobileButton;
 	JCheckBox mobileCheckBox;
+	JButton updateCarrierButton;
 	
     public PreferencesPanel () {
     	build();
@@ -61,11 +63,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	SpringLayout emailLayout = new SpringLayout();
     	emailPanel.setLayout(emailLayout);
     	emailPanel.setBorder((new JTextField()).getBorder());
-    	emailPanel.setPreferredSize(new Dimension(600, 100));
+    	emailPanel.setPreferredSize(new Dimension(600, 110));
   
     	//Create and add the email heading Label
     	JLabel emailPanelLabel = new JLabel("Email Preferences");
-    	emailPanel.setFont(makeFont(10));
+    	emailPanelLabel.setFont(makeFont(9));
     	emailPanel.add(emailPanelLabel);
     	
     	//Create and add the "you are not receiving email" warning message. 
@@ -94,7 +96,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	 */
     	
     	//Create the update email button
-    	updateEmailButton = new JButton("Update");
+    	updateEmailButton = new JButton("Update Email");
     	updateEmailButton.setEnabled(false);
     	emailPanel.add(updateEmailButton);
     	
@@ -124,7 +126,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	SpringLayout mobileLayout = new SpringLayout();
     	mobilePanel.setLayout(mobileLayout);
     	mobilePanel.setBorder((new JTextField()).getBorder());
-    	mobilePanel.setPreferredSize(new Dimension(600, 120));
+    	mobilePanel.setPreferredSize(new Dimension(600, 140));
     	
     	//Create and add the email heading Label
     	JLabel mobilePanelLabel = new JLabel("Mobile Preferences");
@@ -157,18 +159,28 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	 */
     	
     	
-    	//Create the update email button
-    	updateMobileButton = new JButton("Update");
+    	//Create the update mobile button
+    	updateMobileButton = new JButton("Update Mobile Number");
     	updateMobileButton.setEnabled(false);
     	mobilePanel.add(updateMobileButton);
     	
-    	//Create and add the user carrer label to the panel
+    	//Create the update carrier button
+    	updateCarrierButton = new JButton("Update Carrier");
+    	updateCarrierButton.setEnabled(false);
+    	mobilePanel.add(updateCarrierButton);
+    	
+    	//Create and add the user carrier label to the panel
     	JLabel userCarrierLabel = new JLabel("Your Carrier:");
     	mobilePanel.add(userCarrierLabel);
     	
+    	//Create and add drop down menu for carriers
+    	String[] items = { "Verizon", "AT&T", "T-Mobile", "Sprint", "U.S. Cellular"};
+    	JComboBox carrierDropDown = new JComboBox(items);
+    	carrierDropDown.setSelectedIndex(getUserCarrier());
+    	mobilePanel.add(carrierDropDown);
     	
     	//Create and add the checkbox for receiving emails
-    	mobileCheckBox = new JCheckBox("Receive mobile notifications", true);
+    	mobileCheckBox = new JCheckBox("Receive Mobile notifications", true);
     	//TODO make this field initialize to the correct toggled state. Do that by modifying the constant "true" above
     	
     	mobileCheckBox.addActionListener(new ActionListener() {
@@ -209,13 +221,14 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	emailLayout.putConstraint(SpringLayout.WEST, userEmailLabel, 5, SpringLayout.WEST, emailPanel);
     	
       	//Constraints for the email update button
-    	emailLayout.putConstraint(SpringLayout.NORTH, updateEmailButton, 5, SpringLayout.SOUTH, emailOffNotify);
-    	emailLayout.putConstraint(SpringLayout.EAST, updateEmailButton, -5, SpringLayout.EAST, emailPanel);
+    	emailLayout.putConstraint(SpringLayout.NORTH, updateEmailButton, 5, SpringLayout.SOUTH, emailField);
+    	emailLayout.putConstraint(SpringLayout.EAST, updateEmailButton, 0, SpringLayout.EAST, emailField);
+    	
     	
     	//Put constraints on the email text field 
     	emailLayout.putConstraint(SpringLayout.NORTH, emailField, 5, SpringLayout.SOUTH, emailOffNotify);
     	emailLayout.putConstraint(SpringLayout.WEST, emailField, 5, SpringLayout.EAST, userEmailLabel);
-    	emailLayout.putConstraint(SpringLayout.EAST, emailField, -5, SpringLayout.WEST, updateEmailButton);
+  //  	emailLayout.putConstraint(SpringLayout.EAST, emailField, -5, SpringLayout.WEST, updateEmailButton);
     	
     	//Put constraints on the email checkbox
     	emailLayout.putConstraint(SpringLayout.NORTH, emailCheckBox, 5, SpringLayout.SOUTH, userEmailLabel);
@@ -240,21 +253,31 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	//put constraints on the user mobile label 
     	mobileLayout.putConstraint(SpringLayout.NORTH, userMobileLabel, 5, SpringLayout.SOUTH, mobileOffNotify);
     	mobileLayout.putConstraint(SpringLayout.WEST, userMobileLabel, 5, SpringLayout.WEST, mobilePanel);
-    	
-      	//Constraints for the mobile update button
-    	mobileLayout.putConstraint(SpringLayout.NORTH, updateMobileButton, 5, SpringLayout.SOUTH, mobileOffNotify);
-    	mobileLayout.putConstraint(SpringLayout.EAST, updateMobileButton, -5, SpringLayout.EAST, mobilePanel);
-    	
+    
     	//Put constraints on the mobile text field 
     	mobileLayout.putConstraint(SpringLayout.NORTH, mobileField, 5, SpringLayout.SOUTH, mobileOffNotify);
     	mobileLayout.putConstraint(SpringLayout.WEST, mobileField, 5, SpringLayout.EAST, userMobileLabel);
-    	mobileLayout.putConstraint(SpringLayout.EAST, mobileField, -5, SpringLayout.WEST, updateMobileButton);
+//    	mobileLayout.putConstraint(SpringLayout.EAST, mobileField, -5, SpringLayout.WEST, updateMobileButton);
+//    
+      	//Constraints for the mobile update button
+    	mobileLayout.putConstraint(SpringLayout.EAST, updateMobileButton, 0, SpringLayout.EAST, mobileField);
+    	mobileLayout.putConstraint(SpringLayout.NORTH, updateMobileButton, 5, SpringLayout.SOUTH, mobileField);
     	
-    	//Put constraints on the mobile  checkbox
-    	mobileLayout.putConstraint(SpringLayout.NORTH, mobileCheckBox, 5, SpringLayout.SOUTH, userMobileLabel);
+    	//Constraints for the carrier update button
+    	mobileLayout.putConstraint(SpringLayout.WEST, updateCarrierButton, 5, SpringLayout.EAST, carrierDropDown);
+    	mobileLayout.putConstraint(SpringLayout.NORTH, updateCarrierButton, 5, SpringLayout.SOUTH, mobileField);
+    	
+    	//Put constraints on the mobile carrier label
+    	mobileLayout.putConstraint(SpringLayout.NORTH, userCarrierLabel, 5, SpringLayout.SOUTH, userMobileLabel);
+    	mobileLayout.putConstraint(SpringLayout.WEST, userCarrierLabel, 5, SpringLayout.WEST, mobilePanel);
+    	
+    	//put constraints on the mobile carrier drop down
+    	mobileLayout.putConstraint(SpringLayout.NORTH, carrierDropDown, 5, SpringLayout.SOUTH, mobileField);
+    	mobileLayout.putConstraint(SpringLayout.WEST, carrierDropDown, 5, SpringLayout.EAST, userMobileLabel);
+    	
+    	//Put constraints on the mobile checkbox
+    	mobileLayout.putConstraint(SpringLayout.NORTH, mobileCheckBox, 5, SpringLayout.SOUTH, carrierDropDown);
     	mobileLayout.putConstraint(SpringLayout.WEST, mobileCheckBox, 20, SpringLayout.WEST, mobilePanel);
-    	
-    	
     	
     	
     	setViewportView(view);
@@ -262,6 +285,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	repaint();
     }
     
+	private int getUserCarrier() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 	public Font makeFont(int size) {
 		/**
 		 * Creates a new font for use later
