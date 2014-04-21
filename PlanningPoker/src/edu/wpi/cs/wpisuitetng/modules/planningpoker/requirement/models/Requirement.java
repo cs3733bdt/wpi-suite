@@ -16,7 +16,10 @@ import java.util.List;
 import java.util.UUID;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
+import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
+import edu.wpi.cs.wpisuitetng.modules.core.models.ProjectDeserializer;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
@@ -28,10 +31,14 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
  *
  */
 public class Requirement extends ObservableModel {
-	/** the ID of the requirement */
+	/**
+	 * The ID of the requirement from the Requirement Manager
+	 * Only used if the requirement is from the Requirement Manager
+	 */
 	private int id;
 	
-	/** More secure version of identity. Guaranteed to be unique. This is used if
+	/** 
+	 * More secure version of identity. Guaranteed to be unique. This is used if
 	 * the Requirement was generated in the planning poker module
 	 */
 	private UUID identity;
@@ -51,7 +58,6 @@ public class Requirement extends ObservableModel {
 	/** boolean for whether the requirement has been voted on by all users */
 	private boolean complete = false;
 	
-	
 	/**
 	 * The basic constructor for a game
 	 * Sets all of the default values for a game class
@@ -69,11 +75,8 @@ public class Requirement extends ObservableModel {
 	 * @param name The name of the requirement
 	 * @param description A short description of the requirement
 	 */
-	// need to phase out supplying the ID
-	//We took out int id -- Jeff, Tom, Jordan
 	public Requirement(String name, String description) {
 		this();
-		//this.id = id;
 		this.name = name;
 		this.description = description;
 	}
@@ -84,6 +87,28 @@ public class Requirement extends ObservableModel {
 	 */
 	public int getId() {
 		return id;
+	}
+	
+	/**
+	 * Getter for fromRequirementModule
+	 * @return True if the requirement is from the
+	 * Requirement Manager
+	 */
+	public boolean getFromRequirementModule() {
+		return fromRequirementModule;
+	}
+	
+	/**
+	 * Checks if this requirement exists in list of requirements passed
+	 * @param requirements List of requirements to check
+	 * @return True if the requirement exists in the list
+	 */
+	public boolean existsIn(List<Requirement> requirements) {
+		for (Requirement r: requirements) {
+			if (id == r.getId())
+				return true;
+		}
+		return false;
 	}
 	
 	/**
@@ -114,7 +139,6 @@ public class Requirement extends ObservableModel {
 		this.identity = identity;
 	}
 
-
 	/**
 	 * getter for the name
 	 * @return the name 
@@ -131,7 +155,6 @@ public class Requirement extends ObservableModel {
 		return description;
 	}
 
-	
 	/**
 	 * getter for the votes
 	 * @return the votes 
@@ -172,10 +195,7 @@ public class Requirement extends ObservableModel {
 	 * @see edu.wpi.cs.wpisuitetng.modules.Model#save()
 	 */
 	@Override
-	public void save() {
-		// TODO Auto-generated method stub
-
-	}
+	public void save() {}
 	
 	/**
 	 * sets the requirement to completed
@@ -191,40 +211,32 @@ public class Requirement extends ObservableModel {
 	 * displays that the progress of the requirement
 	 * @return the number of votes, or a star if the game is complete
 	 */
-	public String displayComplete(){
-		if(complete){
+	public String displayComplete() {
+		if(complete) {
 			return "*";
 		}
 		else{
 			return Integer.toString(votes.size());
 		}
 	}
+	
 	/**
 	 * Method delete.
 	 * @see edu.wpi.cs.wpisuitetng.modules.Model#delete()
 	 */
 	@Override
-	public void delete() {
-		// TODO Auto-generated method stub
+	public void delete() {}
 
-	}
-
-	/**
-	 * Method toJSON.
-	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * 
-	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
-	 */
-	@Override
 	/**This returns a Json encoded String representation of this requirement object.
 	 * 
 	 * @return a Json encoded String representation of this requirement
 	 * 
 	 */
+	@Override
 	public String toJSON() {
 		return new Gson().toJson(this, Requirement.class);
 	}
 	
-
 	/**
 	 * Returns an instance of Requirement constructed using the given
 	 * Requirement encoded as a JSON string.
@@ -232,8 +244,13 @@ public class Requirement extends ObservableModel {
 	 * @param json JSON-encoded Requirement to deserialize
 	 * @return the Requirement contained in the given JSON */
 	public static Requirement fromJson(String json) {
-		final Gson parser = new Gson();
-		return parser.fromJson(json, Requirement.class);
+		Gson gson;
+		GsonBuilder builder = new GsonBuilder();
+		// Use our custom deserializer
+		builder.registerTypeAdapter(Requirement.class, new RequirementDeserializer());
+		gson = builder.create();
+		
+		return gson.fromJson(json, Requirement.class);
 	}
 	
 	/**
@@ -243,8 +260,13 @@ public class Requirement extends ObservableModel {
 	 * @param json string containing a JSON-encoded array of Requirement
 	 * @return an array of Requirement deserialized from the given JSON string */
 	public static Requirement[] fromJsonArray(String json) {
-		final Gson parser = new Gson();
-		return parser.fromJson(json, Requirement[].class);
+		Gson gson;
+		GsonBuilder builder = new GsonBuilder();
+		// Use our custom deserializer
+		builder.registerTypeAdapter(Requirement.class, new RequirementDeserializer());
+		gson = builder.create();
+		
+		return gson.fromJson(json, Requirement[].class);
 	}
 
 	/**
@@ -255,20 +277,20 @@ public class Requirement extends ObservableModel {
 	 */
 	@Override
 	public Boolean identify(Object o) {
-		if(o == null){
+		if(o == null) {
 			return false;
 		}
-		if(o.getClass() != this.getClass()){
+		if(o.getClass() != this.getClass()) {
 			return false;
 		}
 		Requirement comp = (Requirement)o;
 		
-		if(fromRequirementModule){
-			if(id != comp.id){
+		if(fromRequirementModule) {
+			if(id != comp.id) {
 				return false;
 			}
 		} else {
-			if(!identity.equals(comp.identity)){
+			if(!identity.equals(comp.identity)) {
 				return false;
 			}
 		}
@@ -290,10 +312,9 @@ public class Requirement extends ObservableModel {
 	/**
 	 * @return the number of votes submitted
 	 */
-	public int getVoteCount(){
+	public int getVoteCount() {
 		return votes.size();
 	}
-
 
 	/**
 	 * Copies all of the values from the given requirement to this requirement.
@@ -308,20 +329,20 @@ public class Requirement extends ObservableModel {
 			wasChanged = true;
 		}
 		
-		if(!identity.equals(toCopyFrom.identity)){
+		if(!identity.equals(toCopyFrom.identity)) {
 			identity = toCopyFrom.identity;
 			wasChanged = true;
 		}
 		
-		if(!description.equals(toCopyFrom.description)){
+		if(!description.equals(toCopyFrom.description)) {
 			description = toCopyFrom.description;
 			wasChanged = true;
 		}
-		if(!name.equals(toCopyFrom.name)){
+		if(!name.equals(toCopyFrom.name)) {
 			name = toCopyFrom.name;
 			wasChanged = true;
 		}
-		if(!votes.equals(toCopyFrom.votes)){
+		if(!votes.equals(toCopyFrom.votes)) {
 			votes = toCopyFrom.votes;
 			wasChanged = true;
 		}
@@ -332,7 +353,7 @@ public class Requirement extends ObservableModel {
 	 * hold the code while the game model is updating
 	 * prevent race-time condition for fields setting/overriding
 	 */
-	private void delayChange(){
-		while(GameModel.getInstance().isServerUpdating()){} // $codepro.audit.disable emptyWhileStatement
+	private void delayChange() {
+		while(GameModel.getInstance().isServerUpdating()) {} // $codepro.audit.disable emptyWhileStatement
 	}
 }

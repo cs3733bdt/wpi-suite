@@ -28,7 +28,10 @@ import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.RetrieveRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ImportGamesTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
@@ -374,7 +377,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		
 		importReqButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {			 
+			public void actionPerformed(ActionEvent e) {
+				//Add requirements to table
+				updateImportTable();
 				currentReqsPanel.setVisible(false);
 				createReqsPanel.setVisible(false);
 				importReqsPanel.setVisible(true);
@@ -397,6 +402,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 					int[] rows = currentTable.getSelectedRows();
 					for (int i = 0; i < rows.length; i++){
 						currentTable.getTableModel().removeRow(rows[i]);
+						// TODO remove the requirement from requirements list
 					}
 					if(currentTable.getTableModel().getRowCount() == 0){
 						removeReqButton.setEnabled(false);
@@ -441,25 +447,47 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		String[] columnNames2 = {"Requirement", "Description"};
 		Object[][] data2 = {};
 		ImportGamesTable table = new ImportGamesTable(data2, columnNames2);
-		/**
-		 * Adds temporary data into the table. 
-		 * DELETE THIS ONCE DATA IS SUCCESSFULLY IMPORTED FROM REQUIREMENT MANAGER!!!!!!!!!!!!
-		 */
+		
 		table.getColumnModel().getColumn(0).setMinWidth(100);
 		table.getColumnModel().getColumn(0).setMaxWidth(400);
 		table.getColumnModel().getColumn(1).setMinWidth(100);
 		table.getColumnModel().getColumn(1).setMaxWidth(800);
-		table.getTableModel().addRow(new Object[]{"Requirement1", "Description1"});
-		table.getTableModel().addRow(new Object[]{"Requirement2", "Description2"});
-		table.getTableModel().addRow(new Object[]{"Requirement3", "Description3"});
-		table.getTableModel().addRow(new Object[]{"Requirement4", "Description4"});
-		table.getTableModel().addRow(new Object[]{"Requirement5", "Description5"});
-		table.getTableModel().addRow(new Object[]{"Requirement6", "Description6"});
-		table.getTableModel().addRow(new Object[]{"Requirement7", "Description7"});
-		table.getTableModel().addRow(new Object[]{"Requirement8", "Description8"});
-		table.getTableModel().addRow(new Object[]{"Requirement9", "Description9"});
-		table.getTableModel().addRow(new Object[]{"Requirement10", "Description10"});
+		
 		return table;
+	}
+	
+	private void updateImportTable() {
+		// Clear Table
+		while (importTable.getTableModel().getRowCount() > 0) {
+			importTable.getTableModel().removeRow(0);
+		}
+		
+		// Add the Requirements from the Requirement Manager to the model
+		RetrieveRequirementController controller = RetrieveRequirementController.getInstance();
+		controller.retrieveRequirements();
+
+		// Sleep the thread for a little bit to ensure that
+		// the requirements get added to the model before 
+		// this continues
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// Get the requirements from the model
+		List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
+		
+		// Add the imported requirements to the table
+		for (Requirement r: requirements) {
+			System.err.println("Imported Requirement name: " + r.getName());
+			if (r.getFromRequirementModule()) {
+				// Don't allow duplicate requirements
+				if (!r.existsIn(this.requirements))
+					importTable.getTableModel().addRow(new Object[]{r.getName(), r.getDescription()});
+			}
+		}
 	}
 	
 	private void submitButtonPressed(){
@@ -478,18 +506,18 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	}
 	
 	private void submitImportButtonPressed(){
-		if(importTable.getSelectedRowCount() == 0){
+		if(importTable.getSelectedRowCount() == 0) {
 			//SET ERROR LABEL TO SAY: "You must select one requirement to import, or click cancel to exit import."
 		}
-		else if(1==2){//SET IF-STATEMENT THAT CHECKS TO SEE IF THE SELECTED REQUIREMENTS ARE ALREADY ADDED
+		else if(1==2) {//SET IF-STATEMENT THAT CHECKS TO SEE IF THE SELECTED REQUIREMENTS ARE ALREADY ADDED
 			//SET ERROR LABEL TO SAY: "The requirement you have selected to import ha already been added to this game."
 		}
-		else{
+		else {
 			int[] rows = importTable.getSelectedRows();
-			for (int i = 0; i < rows.length; i++){
+			for (int i = 0; i < rows.length; i++) {
 				String selectedName = (String) importTable.getValueAt(rows[i], 0);
 				String selectedDesc = (String) importTable.getValueAt(rows[i], 1);
-				currentTable.getTableModel().addRow(new Object[]{selectedName, selectedDesc});
+				addRequirement(new Requirement(selectedName, selectedDesc));
 			}
 		}
 		createReqsPanel.setVisible(false);
@@ -559,11 +587,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	}
 
 
-	public void addRequirement(Requirement requirement){
+	private void addRequirement(Requirement requirement){
 		currentTable.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 		requirements.add(requirement);
 	}
-
 
 	@Override
 	public boolean validateField(IErrorView warningField, boolean show) {
