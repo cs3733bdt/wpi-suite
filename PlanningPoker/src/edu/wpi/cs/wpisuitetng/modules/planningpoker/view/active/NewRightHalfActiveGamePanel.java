@@ -13,12 +13,14 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,6 +68,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private JScrollPane cardPanel;
 	private ActiveGamesTable table; 
 	private int activeReqRowIndex;
+	private Font largeFont;
 
 	NewRightHalfActiveGamePanel(final Game game) {
 		currentGame = game;
@@ -107,6 +110,15 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		table = new ActiveGamesTable(data, columnNames);
 		table.setBorder(defaultBorder);
 		
+		table.getColumnModel().getColumn(0).setMinWidth(100);
+		table.getColumnModel().getColumn(0).setMaxWidth(400);
+		table.getColumnModel().getColumn(1).setMinWidth(100);
+		table.getColumnModel().getColumn(1).setMaxWidth(800);
+		table.getColumnModel().getColumn(2).setMinWidth(100);
+		table.getColumnModel().getColumn(2).setMaxWidth(150);
+		table.getColumnModel().getColumn(3).setMinWidth(100);
+		table.getColumnModel().getColumn(3).setMaxWidth(150);
+		
 		/**
 		 * Display the requirement list in the table
 		 */
@@ -114,7 +126,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			table.getTableModel().addRow(
 					new Object[] { r.getName(), r.getDescription(),
 							userVote(r), r.displayComplete() });
-		}
+		}	
 
 		/**
 		 * mouse listener
@@ -125,20 +137,21 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				if (e.getClickCount() == 1) {
 					JTable target = (JTable) e.getSource();
 					int row = target.getSelectedRow();
-					int column = target.getSelectedColumn();
-					String selected = target.getValueAt(row, column).toString();
 					for (Requirement r : currentGame.getRequirements()) {
-						if (selected.equals(r.getName())
-								|| selected.equals(r.getDescription())
-								|| selected.equals(Integer.toString(userVote(r)))
-								|| selected.equals(r.displayComplete())) {
+						if (target.getValueAt(row, 0).toString().equals(r.getName())) {
 							activeRequirement = r;
 							activeReqRowIndex = row;
-							previousEst.setText("Previous estimate: "
+							previousEst.setText("Your saved estimate is: "
 									+ userVote(r));
 							nameTextField.setText(r.getName());
 							descriptionTextField.setText(r.getDescription());
 							estText.setText("Estimate Here");
+							try {
+								cardsPanel.clearCards();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 							setFieldsVisible(true);
 						}
 					}
@@ -175,9 +188,14 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		 * Set up the cards panel
 		 */
 		// Label and accumulate sum
+		
+		largeFont = new Font("Serif",Font.BOLD,20);
 
 		counterLabel = new JLabel("Your current estimate total: " + 0);
+		counterLabel.setFont(largeFont);
 		previousEst = new JLabel();
+		previousEst.setFont(largeFont);
+		
 		sum = 0;
 
 		// This branch will be run if the default deck is to be used
@@ -268,7 +286,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/**
 		 * The label for the counter
 		 */
-		counterLabel = new JLabel("Your current estimate total: " + 0);
+		//counterLabel = new JLabel("Your current estimate total: " + 0);
 
 		rightView.add(counterLabel);
 
@@ -324,6 +342,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.EAST, nameLabel, -5,
 				SpringLayout.EAST, rightView);// Adds the name label to the far
 												// left
+		
 		layout.putConstraint(SpringLayout.NORTH, nameLabel, 10,
 				SpringLayout.NORTH, rightView);
 
@@ -362,7 +381,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.EAST, previousEst, 5,
 				SpringLayout.EAST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, previousEst, -20,
+		layout.putConstraint(SpringLayout.SOUTH, previousEst, -40,
 				SpringLayout.NORTH, submitButton);
 
 		layout.putConstraint(SpringLayout.WEST, counterLabel, 5,
@@ -374,13 +393,14 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		layout.putConstraint(SpringLayout.WEST, submitButton, 5,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, submitButton, -30,
+		layout.putConstraint(SpringLayout.SOUTH, submitButton, -10,
 				SpringLayout.SOUTH, rightView);
 
-		layout.putConstraint(SpringLayout.WEST, errorField, 5,
+		layout.putConstraint(SpringLayout.WEST, errorField, 120,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
 				SpringLayout.SOUTH, rightView);
+
 
 		this.getViewport().add(rightView); // Sets the rightview to be the
 											// entire container which has
@@ -527,9 +547,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		ViewEventController.getInstance().refreshGameTree();
 
 		getEstimateText().setBorder(defaultBorder);
-		displaySuccess("   Vote Successful!");
+		displaySuccess("Vote Successful!");
 		
-		previousEst.setText("Previous estimate: " + userVote(activeRequirement));
+		previousEst.setText("Your saved estimate is: " + userVote(activeRequirement));
 		table.setValueAt(userVote(activeRequirement), activeReqRowIndex, 2);
 	}
 

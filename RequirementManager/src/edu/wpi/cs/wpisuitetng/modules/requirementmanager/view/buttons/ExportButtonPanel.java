@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 WPI-Suite
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ * 
+ * Contributors: Team Bobby Drop Tables
+ ******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.buttons;
 
 import java.awt.Dimension;
@@ -21,8 +31,8 @@ import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.exportCsv.ExportToCsv;
 
-/*
- * 
+/**
+ * creates the export requirements button
  * @author Doruk Uzunoglu  
  */
 
@@ -75,9 +85,10 @@ public class ExportButtonPanel extends ToolbarGroupView {
 	}
 	
 	/**
-	 * Method getExpButton.
+	 * getter for the export button.
 	
-	 * @return JButton */
+	 * @return the export button
+	 */
 	public JButton getExpButton() {
 		return this.createExportButton;
 	}
