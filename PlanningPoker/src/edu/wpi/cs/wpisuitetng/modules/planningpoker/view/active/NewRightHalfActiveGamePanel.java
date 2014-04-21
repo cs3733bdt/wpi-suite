@@ -112,30 +112,22 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (e.getClickCount() == 1) {
-//					JTable target = (JTable) e.getSource();
-//					int row = target.getSelectedRow();
-//					for (Requirement r : currentGame.getRequirements()) {
-//						if (target.getValueAt(row, 0).toString().equals(r.getName())) {
-					activeRequirement = table.getSelectedReq(); 
-							nameTextField.setText(activeRequirement.getName());
-							descriptionTextField.setText(activeRequirement.getDescription());
-							estText.setText("Estimate Here");
-							try {
-								cardsPanel.clearCards();
-							} catch (IOException e1) {
-								// TODO Auto-generated catch block
-								e1.printStackTrace();
-							}
-							setFieldsVisible(true);
-							displaySuccess("");
-							
-						//}
-					//}
+					activeRequirement = table.getSelectedReq();
+					nameTextField.setText(activeRequirement.getName());
+					descriptionTextField.setText(activeRequirement
+							.getDescription());
+					estText.setText("Estimate Here");
+					try {
+						cardsPanel.clearCards();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					setFieldsVisible(true);
+					displaySuccess("");
 				}
 			}
 		});
-		
-		
 
 		JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel
