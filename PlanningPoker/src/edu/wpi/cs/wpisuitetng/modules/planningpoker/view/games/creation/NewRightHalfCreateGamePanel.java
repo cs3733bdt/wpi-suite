@@ -10,6 +10,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,15 +81,14 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
     
 
     private JButton editReqButton = new JButton("Edit");
-    private JButton removeReqButton = new JButton("Remove");
 
     private JButton updateAddReqButton = new JButton("Update");
     
     private JButton submitAddReqButton = new JButton("Submit");
 
-    private JButton importReqButton = new JButton("Import Requirement");
+    private JButton importReqButton = new JButton("Import");
     
-    private JButton removeReqButton = new JButton("Remove Requirement");
+    private JButton removeReqButton = new JButton("Remove");
    
     public NewRightHalfCreateGamePanel(NewCreateGamePanel createGamePanel){
     	parent = createGamePanel;
@@ -218,7 +218,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         SpringLayout importLayout = new SpringLayout();
         importReqsPanel.setLayout(importLayout);
 		
-		JLabel importReq = new JLabel("Import Requirement");	//Creates the label import requirement
+		JLabel importReq = new JLabel("Import Requirements");	//Creates the label import requirement
 		importReq.setFont(labelFont);							//Sets the label font
 		
 		JScrollPane tablePanel = new JScrollPane(importTable);
@@ -279,7 +279,17 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		
 		
 		importReqsPanel.setVisible(false);
+		editReqButton.setEnabled(false);
 		removeReqButton.setEnabled(false);
+		
+		/**
+		 * Formats the buttons underneath the panels
+		 */
+		JButton testButton = new JButton("tttttttttttttttttt"); //Don't change text, it determines button width...
+		Dimension buttonD = testButton.getPreferredSize();
+		importReqButton.setPreferredSize(buttonD);
+        editReqButton.setPreferredSize(buttonD);
+        removeReqButton.setPreferredSize(buttonD);
 		
 		/**
 		 * Add all components to the container
@@ -292,7 +302,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         rightView.add(editReqButton);
         rightView.add(importReqButton);
         rightView.add(removeReqButton);
-		
+        
         //IN THE CURRENT REQ PANEL
         // the tile with respect to the panel
         currentLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, currentReqs, 5, SpringLayout.HORIZONTAL_CENTER, currentReqsPanel);
@@ -317,32 +327,26 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         //importreq button
         layout.putConstraint(SpringLayout.SOUTH, importReqButton, -5, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, importReqButton);
-        layout.putConstraint(SpringLayout.WEST, importReqButton, 15, SpringLayout.EAST, addReqButton);
+        layout.putConstraint(SpringLayout.WEST, importReqButton, 5, SpringLayout.EAST, addReqButton);
         //removereq button
         layout.putConstraint(SpringLayout.SOUTH, removeReqButton, -5, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, removeReqButton);
-        layout.putConstraint(SpringLayout.WEST, removeReqButton, 15, SpringLayout.EAST, importReqButton);
+        layout.putConstraint(SpringLayout.EAST, removeReqButton, -10, SpringLayout.EAST, rightView);
         // currentPanel with respect to the button 
         layout.putConstraint(SpringLayout.SOUTH, addReqButton, -5, SpringLayout.SOUTH, rightView);
         layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, addReqButton);
-        layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, addReqButton);
-        
-        
-        // button with respect to container
-        layout.putConstraint(SpringLayout.WEST, addReqButton, 5, SpringLayout.WEST, rightView);
-        
-        
+        layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, addReqButton);     
         //edit req button
         layout.putConstraint(SpringLayout.SOUTH, editReqButton, -5, SpringLayout.SOUTH, rightView);
-        layout.putConstraint(SpringLayout.WEST, editReqButton, 5, SpringLayout.EAST, addReqButton);
-        
-        //importReqButton
-        layout.putConstraint(SpringLayout.SOUTH, importReqButton, -5, SpringLayout.SOUTH, rightView);
-        layout.putConstraint(SpringLayout.EAST, importReqButton, -5, SpringLayout.EAST, rightView);
-        
-        //remove req button 
-        layout.putConstraint(SpringLayout.EAST, removeReqButton, 5, SpringLayout.WEST, importReqButton);
-        
+        layout.putConstraint(SpringLayout.EAST, editReqButton, -5, SpringLayout.WEST, removeReqButton);
+//        
+//        //importReqButton
+//        layout.putConstraint(SpringLayout.SOUTH, importReqButton, -5, SpringLayout.SOUTH, rightView);
+//        layout.putConstraint(SpringLayout.EAST, importReqButton, -5, SpringLayout.EAST, rightView);
+//        
+//        //remove req button 
+//        layout.putConstraint(SpringLayout.EAST, removeReqButton, 5, SpringLayout.WEST, importReqButton);
+//        
         
         
         //CREATE REQS PANEL
@@ -483,39 +487,38 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			} 
 		});
 		
+		/**
+		 * Add action listener to the remove button
+		 */
 		removeReqButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(currentTable.getSelectedRowCount() == 0){
-					//SET ERROR LABEL TO SAY: "You must select one requirement to remove.
 				}
-				/*else{
-					int[] rows = currentTable.getSelectedRows();
-					for (int i = 0; i < rows.length; i++){
-						String selectedName = (String) importTable.getValueAt(rows[i], 0);
-						String selectedDesc = (String) importTable.getValueAt(rows[i], 1);
-						currentTable.getTableModel().addRow(new Object[]{selectedName, selectedDesc});
-					}
-				}*/
 				else {
-					//AS OF RIGHT NOW, THE USER CAN ONLY SELECT ONE ROW AT A TIME, SO THIS
-					//METHOD OF REMOVING IS OVER-COMPLICATED. I DID IT THIS WAY THOUGH
-					//IN CASE WE CHANGE IT LATER:
+					while(currentTable.getSelectedRowCount() > 0){
 					int[] rows = currentTable.getSelectedRows();
-					for (int i = 0; i < rows.length; i++){
-						currentTable.getTableModel().removeRow(rows[i]);
-						i = i -1;
-						if(currentTable.getSelectedRowCount() == 0){
-							break;
-						}
+					currentTable.getTableModel().removeRow(rows[0]);
 					}
 					if(currentTable.getTableModel().getRowCount() == 0){
 						removeReqButton.setEnabled(false);
+						editReqButton.setEnabled(false);
 					}
 				}
 			}
 		});
-        
+		
+		currentTable.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (currentTable.getSelectedRowCount() > 1){
+					editReqButton.setEnabled(false);
+				}
+				else {
+					editReqButton.setEnabled(true);
+				}
+			}
+		});
     }
     
 	public Font makeFont() {
@@ -541,7 +544,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		String[] columnNames2 = {"Requirement", "Description"};
 		Object[][] data2 = {};
 		ActiveGamesTable table = new ActiveGamesTable(data2, columnNames2);
-		table.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
+		table.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
 		table.getColumnModel().getColumn(0).setMinWidth(100);
 		table.getColumnModel().getColumn(0).setMaxWidth(400);
 		table.getColumnModel().getColumn(1).setMinWidth(100);
@@ -586,6 +589,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			addReqButton.setEnabled(true);
 			importReqButton.setEnabled(true);
 			removeReqButton.setEnabled(true);
+			editReqButton.setEnabled(true);
 			globalRow = -1;
 			parent.updateButtons();
 		}

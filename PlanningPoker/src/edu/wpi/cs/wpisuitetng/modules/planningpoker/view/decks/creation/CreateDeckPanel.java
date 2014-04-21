@@ -14,7 +14,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
