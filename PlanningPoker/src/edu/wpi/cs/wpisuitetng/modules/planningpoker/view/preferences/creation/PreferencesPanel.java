@@ -527,4 +527,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 				matcher5Boolean || matcher6Boolean || matcher7Boolean || matcher8Boolean);
 	}
 	
+	
+	
 }

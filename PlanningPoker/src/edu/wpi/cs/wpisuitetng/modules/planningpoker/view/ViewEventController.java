@@ -11,6 +11,8 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import java.awt.Component;
+
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
@@ -117,6 +119,14 @@ public class ViewEventController {
 		getTabbedView().setSelectedComponent(newPreferencesPanel);
 	}
 	
+//	public void openHelp() {
+//		Component selectedComponent = getTabbedView().getSelectedComponent();
+//		switch(selectedComponent.getClass().toString()) {
+//	//	case(newPreferencesPanel)
+//		 
+//		}
+//		HelpPanel newHelpPanel = new HelpPanel
+//	}
 	
 	/**
 	 * Creates an EditGamePanel instance, adds a tab representing 
