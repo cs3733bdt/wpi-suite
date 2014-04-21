@@ -409,6 +409,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 					System.out.println("Here:");
 					reValidateEmailUpdateButton();
 				}
+				else if(facebookField.isFocusOwner()) {
+					System.out.println("Here:");
+					reValidateFacebookUpdateButton();
+				}
 				else if(mobileField.isFocusOwner()) {
 					System.out.println("Here:");
 					reValidateMobileUpdateButton();
@@ -521,8 +525,8 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	}
 	
 	public void reValidateFacebookPanel() {
-		emailCheckBoxListener();
-		reValidateEmailUpdateButton();
+		facebookCheckBoxListener();
+		reValidateFacebookUpdateButton();
 	}
 	
 	public void reValidateMobilePanel() {
@@ -540,11 +544,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	}
 	
 	public void reValidateFacebookUpdateButton() {
-		if (verifyEmailField()) {
-			updateEmailButton.setEnabled(true);
+		if (verifyFacebookField()) {
+			updateFacebookButton.setEnabled(true);
 		}
 		else {
-			updateEmailButton.setEnabled(false);
+			updateFacebookButton.setEnabled(false);
 		}
 	}
 	
@@ -558,7 +562,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		
 	}
 	
-
+	/**
+	 * Checks that the email field contains string with an @ symbol, is of a valid length
+	 * and does not contain any forbidden characters
+	 * @return returns true or false whether the email field contains a valid email
+	 */
 	private boolean verifyEmailField() {
 		String text = emailField.getText();
 		if (text.length() == 0) {
@@ -620,6 +628,40 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
  		return atBoolean && forbiddenCharsBool && atSubstringBool && dotSubstringBool;
 	}
 	
+	/**
+	 * Checks that the facebook field receives an input of appropriate length,
+	 * and contains appropriate symbols to be a valid facebook username
+	 * @return returns true or false whether the facebook field contains valid input
+	 */
+	private boolean verifyFacebookField() {
+		
+		String text = facebookField.getText();
+		
+		if (text.length() <5 ) {
+			return false;
+		}
+		
+		//Code for checking forbidden character
+		String forbiddenChars = "()<>[]\\:,;!#$%&'@*+-/=?^_`{}| ~\" ";
+		//boolean forbiddenCharsBool = true;
+		String currChar;
+		for (int i = 0; i < text.length(); i++) {
+			currChar = Character.toString(text.charAt(i));
+			if (forbiddenChars.contains(currChar)) {
+				System.out.println("ForbiddenChar present:" + currChar);
+				return false;
+			}
+		}
+		//No forbidden characters, and appropriate length, so return true.
+		return true;
+		
+	}
+	/**
+	 * Checks that the mobile field contains a valid phone number, in this case a 
+	 * ten digit number
+	 * @return returns true or false whether the mobile field contains a 
+	 * ten digit number
+	 */
 	private boolean verifyMobileField() {
 		String text = mobileField.getText();
 		if (text.length() == 0) {
