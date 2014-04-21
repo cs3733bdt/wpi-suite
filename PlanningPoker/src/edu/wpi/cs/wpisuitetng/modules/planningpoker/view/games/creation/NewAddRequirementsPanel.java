@@ -23,7 +23,6 @@ import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
 
 public class NewAddRequirementsPanel extends JPanel {
 	
@@ -41,9 +40,9 @@ public class NewAddRequirementsPanel extends JPanel {
 	
 	private JPanel currentReqsPanel = new JPanel();
 	
-	private ActiveGamesTable table2;
+	//private ActiveGamesTable table2;
 	
-	public NewAddRequirementsPanel(final NewRightHalfCreateGamePanelOLD rightView) {
+	public NewAddRequirementsPanel(/*final NewRightHalfCreateGamePanelOLD rightView*/) {
 		
 		/*
 		 * Planned Changes:
@@ -441,7 +440,7 @@ public class NewAddRequirementsPanel extends JPanel {
 	}
 
 	public void addRequirement(Requirement requirement){
-		table2.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
+		//table2.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 	}
 	
 }
