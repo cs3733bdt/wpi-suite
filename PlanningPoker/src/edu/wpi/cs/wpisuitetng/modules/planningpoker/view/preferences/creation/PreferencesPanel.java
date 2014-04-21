@@ -133,14 +133,14 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	/**
     	 * Code for the mobile settings panel */
     	
-    	//Create and add the email preferences panel
+    	//Create and add the mobile preferences panel
     	mobilePanel = new JPanel();
     	SpringLayout mobileLayout = new SpringLayout();
     	mobilePanel.setLayout(mobileLayout);
     	mobilePanel.setBorder((new JTextField()).getBorder());
     	mobilePanel.setPreferredSize(new Dimension(600, 140));
     	
-    	//Create and add the email heading Label
+    	//Create and add the mobile heading Label
     	JLabel mobilePanelLabel = new JLabel("Mobile Preferences");
     	mobilePanelLabel.setFont(makeFont(9));
     	mobilePanel.add(mobilePanelLabel);
@@ -156,11 +156,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	}
     	mobilePanel.add(mobileOffNotify);
     	
-    	//Create and add the user email label to the panel
+    	//Create and add the user mobile label to the panel
     	JLabel userMobileLabel = new JLabel("Your Phone Number:");
     	mobilePanel.add(userMobileLabel);
     	
-    	//Create, configure, and add the user email text box
+    	//Create, configure, and add the user mobile text box
     	mobileField = new JTextField(50);
     	mobileField.setEditable(true);
     	mobileField.setFocusable(true);
@@ -193,7 +193,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	carrierDropDown.setSelectedIndex(getUserCarrier());
     	mobilePanel.add(carrierDropDown);
     	
-    	//Create and add the checkbox for receiving emails
+    	//Create and add the checkbox for receiving mobile notifications
     	mobileCheckBox = new JCheckBox("Receive Mobile notifications", true);
     	//TODO make this field initialize to the correct toggled state. Do that by modifying the constant "true" above
     	
@@ -321,9 +321,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	}
 
 	public Font makeFont(int size) {
-		/**
-		 * Creates a new font for use later
-		 */
+		
 		//create a dummy JTextArea
 		JTextArea editingArea = new JTextArea();
 		// get the current font
