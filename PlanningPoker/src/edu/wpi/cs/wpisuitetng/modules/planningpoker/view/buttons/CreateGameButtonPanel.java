@@ -5,7 +5,7 @@
  * which accompanies this distribution, and is available at
  * http://www.eclipse.org/legal/epl-v10.html
  * 
- * Contributors: TomPaolillo
+ * Contributors: Team Bobby Drop Tables
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
@@ -37,6 +38,13 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 	private JButton createDeckIcon = new JButton("Create Deck");
 
 	private final JPanel contentPanel = new JPanel();
+		private JButton createGameIcon = new JButton("Create Game");
+		private JButton createDeckIcon = new JButton("Create Deck");
+		/*
+		 * Temporary join game button until tree has clickable functionality
+		 */
+		
+		private final JPanel contentPanel = new JPanel();
 	
 	public CreateGameButtonPanel(){
 		super("");
@@ -44,6 +52,8 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
 		setPreferredSize(new Dimension(325,50)); 
+		setPreferredSize(new Dimension(341,50)); 
+		
 		
 	   try {
 	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));
@@ -51,7 +61,16 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		    
 		} catch (IOException ex) {
 			ex.printStackTrace();
-		}		
+		}
+	   
+	   createDeckIcon.setHorizontalAlignment(SwingConstants.CENTER);
+	   try {
+	        Image img = ImageIO.read(getClass().getResource("create_deck.png"));
+	        createDeckIcon.setIcon(new ImageIcon(img));
+		    
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}	   
 		
 	   try {
 	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));
@@ -84,6 +103,20 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		contentPanel.add(createGameIcon);
 		contentPanel.add(createDeckIcon);
+		});
+		
+		// the action listener for the Create Deck Icon
+		createDeckIcon.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+					JOptionPane.showMessageDialog(null, "This is not functional yet.", "Dummy Button", 1);
+				}
+			
+		});
+		
+		contentPanel.add(createGameIcon);
+		contentPanel.add(createDeckIcon);
+		//contentPanel.setOpaque(false);
 		
 		contentPanel.setOpaque(false);
 		
