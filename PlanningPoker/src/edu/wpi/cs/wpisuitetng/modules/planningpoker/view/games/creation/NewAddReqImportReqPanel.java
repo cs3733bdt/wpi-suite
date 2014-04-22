@@ -25,7 +25,11 @@ public class NewAddReqImportReqPanel extends JPanel {
 	private JButton addReq;
 	
 	private JButton importReq;
-		
+	
+	/**
+	 * creates the panel for the Import and Add Requirements button
+	 * @param reqPanel the requirements panel that the buttons will be displayed on
+	 */
 	public NewAddReqImportReqPanel(final NewAddRequirementsPanel reqPanel) {
 		
 		SpringLayout layout = new SpringLayout();
@@ -70,6 +74,10 @@ public class NewAddReqImportReqPanel extends JPanel {
 		
 	}
 	
+	/**
+	 * Sets the panel to be visible or not
+	 * @param panel the panel which these buttons are located on 
+	 */
 	public void setCreateReqPanelVisible(NewAddRequirementsPanel panel) {
 		this.setVisible(true);
 	}

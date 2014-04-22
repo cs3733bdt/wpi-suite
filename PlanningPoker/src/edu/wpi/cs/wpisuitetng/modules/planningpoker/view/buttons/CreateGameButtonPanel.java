@@ -64,14 +64,6 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}	   
-		
-	   try {
-	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));
-	        createDeckIcon.setIcon(new ImageIcon(img));
-		    
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
 	   
 		// the action listener for the Create Game Icon
 		createGameIcon.addActionListener(new ActionListener() {
@@ -104,7 +96,6 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 	}
 	/**
 	 * getter for the create game icon
-	
 	 * @return the create game icon 
 	 */
 	public JButton getCreateGameIcon() {
