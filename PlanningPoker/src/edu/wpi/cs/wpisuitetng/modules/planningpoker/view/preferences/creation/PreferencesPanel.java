@@ -483,7 +483,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 				Thread.sleep(2000);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				//e1.printStackTrace();
 			}
 			userEmail = userController.getCurrentUser().getEmail();
 			if (userEmail == null) {
@@ -585,17 +585,17 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	}
 
 	public void initializeCheckBoxes() {
-		if (!hasFaceBook)  {
+		if (!hasFaceBook || !verifyFacebookField())  {
 			if (facebookCheckBox.isSelected()) {
 				facebookCheckBox.doClick();	
 			}
 		}
-		if (!hasNumber || !hasCarrier) {
+		if (!hasNumber || !hasCarrier || !verifyMobileField() || !verifyCarrierField()) {
 			if (mobileCheckBox.isSelected()) {
 				mobileCheckBox.doClick();
 			}
 		}
-		if (!hasEmail) {
+		if (!hasEmail || !verifyEmailField()) {
 			if (emailCheckBox.isSelected()) {
 				emailCheckBox.doClick();
 			}
