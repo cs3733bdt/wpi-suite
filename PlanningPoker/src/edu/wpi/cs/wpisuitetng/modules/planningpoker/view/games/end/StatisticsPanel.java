@@ -13,6 +13,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -33,6 +36,7 @@ import java.util.List;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
@@ -56,6 +60,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	private JLabel finalEstimateLabel;
 	private JTextField finalEstimateBox;
 	private JButton finalEstimateButton;
+	private JLabel finalEstimateDisplay;
 	
 	private int minEstimate;
 	private int maxEstimate;
@@ -91,7 +96,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		JLabel statLabel = new JLabel("Statistics");
 		JLabel votesLabel = new JLabel("Votes by User");
 		
-		
 		Object[] row = makeStatRow(activeRequirement);
 		
 		statTable = initializeStatTable();
@@ -99,20 +103,31 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(activeRequirement);
 		
-		
 		JScrollPane statsPanel = new JScrollPane(statTable);
 		JScrollPane votePanel = new JScrollPane(voteTable);
 		JScrollPane descPanel = new JScrollPane(userStoryDesc);
 		
-		
-		finalEstimateLabel = new JLabel("Enter a final estimate here:");
+		finalEstimateLabel = new JLabel("Enter a Final Estimate here:");
 		finalEstimateBox = new JTextField(4);
-		finalEstimateButton = new JButton("Submit Final Estimate");
 		addKeyListenerTo(finalEstimateBox);
-		validateSubmitButton();
-		//finalEstimateDisplay = new JLabel("Your current final Estimate is:");
+		finalEstimateButton = new JButton("Submit Final Estimate");
+		finalEstimateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				finalEstimateButtonPressed();		
+			}
+		});
 		
-			
+		validateSubmitButton();
+		finalEstimateDisplay = new JLabel();
+		int currFinalEstimate = activeGame.getFinalEstimate();
+		if (currFinalEstimate == -1) {
+			finalEstimateDisplay.setText("Your Current Final Estimate is: --");
+		}
+		else {
+			finalEstimateDisplay.setText("Your Current Final Estimate is: " + currFinalEstimate);
+		}
+		finalEstimateDisplay.setFont(makeFont());
 		
 		overviewPanel.add(descLabel);
 		overviewPanel.add(statLabel);
@@ -121,7 +136,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		overviewPanel.add(finalEstimateLabel);
 		overviewPanel.add(finalEstimateBox);
 		overviewPanel.add(finalEstimateButton);
-		isUserCreator(); //sets visibility for the above 3 components
+		overviewPanel.add(finalEstimateDisplay);
+		isUserCreator(); //sets visibility for the above 4 components
 		
 		overviewPanel.add(descPanel);
 		overviewPanel.add(statsPanel);
@@ -168,20 +184,24 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		layout.putConstraint(SpringLayout.NORTH, votePanel, 5, SpringLayout.SOUTH, votesLabel); 
 		layout.putConstraint(SpringLayout.WEST, votePanel, 5, SpringLayout.WEST, overviewPanel);  
 		layout.putConstraint(SpringLayout.EAST, votePanel, -5, SpringLayout.EAST, overviewPanel); 
-		layout.putConstraint(SpringLayout.SOUTH, votePanel, -30, SpringLayout.SOUTH, overviewPanel);
-		
-		//Constraints on the final estimate box
-		layout.putConstraint(SpringLayout.NORTH, finalEstimateBox, 5, SpringLayout.SOUTH, votePanel); 
-		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, finalEstimateBox, 5, SpringLayout.HORIZONTAL_CENTER, overviewPanel); 
-		
+		layout.putConstraint(SpringLayout.SOUTH, votePanel, -60, SpringLayout.SOUTH, overviewPanel);
+
 		//Constraints on the final estimate label
-		layout.putConstraint(SpringLayout.EAST, finalEstimateLabel, -5, SpringLayout.WEST, finalEstimateBox); 
+		layout.putConstraint(SpringLayout.WEST, finalEstimateLabel, 5, SpringLayout.WEST, overviewPanel); 
 		layout.putConstraint(SpringLayout.NORTH, finalEstimateLabel, 5, SpringLayout.SOUTH, votePanel); 
+
+		//Constraints on the final estimate box
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateBox, 5, SpringLayout.SOUTH, votePanel);
+		layout.putConstraint(SpringLayout.WEST, finalEstimateBox, 5, SpringLayout.EAST, finalEstimateLabel);
 		
 		//Constraints on the final estimate Button
-		layout.putConstraint(SpringLayout.WEST, finalEstimateButton, 5, SpringLayout.EAST, finalEstimateBox); 
-		layout.putConstraint(SpringLayout.NORTH, finalEstimateButton, 5, SpringLayout.SOUTH, votePanel); 
+		layout.putConstraint(SpringLayout.WEST, finalEstimateButton, 30, SpringLayout.WEST, overviewPanel); 
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateButton, 5, SpringLayout.SOUTH, finalEstimateLabel); 
 		
+		//Constraints on the final estimate display
+		layout.putConstraint(SpringLayout.WEST, finalEstimateDisplay, 60, SpringLayout.WEST, finalEstimateBox); 
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateDisplay, 15, SpringLayout.SOUTH, votePanel); 
+			
 		
 		int[] test = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //5.5 //TODO fix
 		int[] test2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}; //6
@@ -391,10 +411,12 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			finalEstimateBox.setVisible(true);
 			finalEstimateLabel.setVisible(true);
 			finalEstimateButton.setVisible(true);
+			finalEstimateDisplay.setVisible(true);
 		} else {
 			finalEstimateBox.setVisible(false);
 			finalEstimateLabel.setVisible(false);
 			finalEstimateButton.setVisible(false);
+			finalEstimateDisplay.setVisible(false);
 		}
 	}
 	
@@ -417,6 +439,14 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		else {
 			finalEstimateButton.setEnabled(false);
 		}
+	}
+	
+	private void finalEstimateButtonPressed() {
+		int newEstimate = Integer.parseInt(finalEstimateBox.getText());
+		activeGame.setFinalEstimate(newEstimate);
+		ViewEventController.getInstance().refreshGameTable();
+		ViewEventController.getInstance().refreshGameTree();
+		finalEstimateDisplay.setText("Your Current Final Estimate is: " + newEstimate);
 	}
 	
 	public boolean verifyFinalEstimateField() {
@@ -448,7 +478,21 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
+
+	public Font makeFont() {
+		/**
+		 * Creates a new font for use later
+		 */
+		//create a dummy JTextArea
+		JTextArea editingArea = new JTextArea();
+		// get the current font
+		Font f = editingArea.getFont();
+		// create a new, larger font from the current font
+		Font newFont = new Font(f.getFontName(), f.getStyle(), f.getSize()+8);		
+		//set the bigger font for userStoryDesc
+		Font bigFont = newFont;
+		return bigFont;
+	}
 	
 	
 }
