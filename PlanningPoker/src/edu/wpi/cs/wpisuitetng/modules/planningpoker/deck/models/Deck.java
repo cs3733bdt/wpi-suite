@@ -17,6 +17,8 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
@@ -26,7 +28,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
  * @author jonathanleitschuh
  *
  */
-public class Deck extends ObservableModel {
+public class Deck extends ObservableModel implements IModelObserver, IStorageModel<Deck>  {
 	private final UUID identity;
 	private String name;
 	private String description;
@@ -85,8 +87,17 @@ public class Deck extends ObservableModel {
 
 	@Override
 	public Boolean identify(Object o) {
-		// TODO Auto-generated method stub
-		return null;
+		if(o == null){
+			return false;
+		}
+		if(o.getClass() != this.getClass()){
+			return false;
+		}
+		Deck comp = (Deck)o;
+		if(!identity.equals(comp.identity)){
+			return false;
+		}
+		return true;
 	}
 
 	/**
@@ -128,6 +139,18 @@ public class Deck extends ObservableModel {
 	
 	public static Deck makeDeckSameID(String name, String description, List<Integer> cards, Deck identifyingDeck){
 		return new Deck(name, description, cards, identifyingDeck.identity);	
+	}
+
+	@Override
+	public boolean copyFrom(Deck toCopyFrom) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void update(ObservableModel o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
