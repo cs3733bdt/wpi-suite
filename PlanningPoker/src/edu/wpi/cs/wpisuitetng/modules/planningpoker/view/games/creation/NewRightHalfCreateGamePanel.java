@@ -21,7 +21,6 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +30,8 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
@@ -47,11 +44,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requireme
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ImportGamesTable;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 
 /**
  * TODO DOCUMENTATION
@@ -187,6 +185,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         
         //Adds error label to the createReqPanel
         createReqsPanel.add(errorLabel);
+        validateNameAndDesc(true, false);
         
         //initializes the Desc Label and area and adds them to the createPanel
         /**
@@ -433,8 +432,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         
        
         //postion error label with respect to creaReqPanel
-        createLayout.putConstraint(SpringLayout.NORTH, errorLabel, 5, SpringLayout.SOUTH, createReqsPanel);
-        createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorLabel, 1, SpringLayout.HORIZONTAL_CENTER, rightView);
+        createLayout.putConstraint(SpringLayout.SOUTH, errorLabel, -15, SpringLayout.SOUTH, createReqsPanel);
+        createLayout.putConstraint(SpringLayout.WEST, errorLabel, 50, SpringLayout.EAST, submitAddReqButton);
+        createLayout.putConstraint(SpringLayout.EAST, errorLabel, 50, SpringLayout.WEST, updateAddReqButton);
+        
        
         //position cancel button with respect to createReqPanel
         createLayout.putConstraint(SpringLayout.SOUTH, cancelRequirementButton, -5, SpringLayout.SOUTH, createReqsPanel);
@@ -646,7 +647,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	}
 
 	private void submitButtonPressed(){
-		if(validateNameAndDesc(true)){
+		if(validateNameAndDesc(true,true)){
 			addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
 			nameArea.setText("");
 			descArea.setText("");
@@ -664,7 +665,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	}
 	
 	private void updateButtonPressed(){
-		if(validateNameAndDesc(true) && globalRow != -1){
+		if(validateNameAndDesc(true,true) && globalRow != -1){
 			currentTable.setValueAt(nameArea.getText(), globalRow, 0);
 			currentTable.setValueAt(descArea.getText(), globalRow, 1);
 			globalRow = -1;
@@ -716,23 +717,28 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		enableButtons();
 	}
 	
-	private boolean validateNameAndDesc(boolean show){
+	private boolean validateNameAndDesc(boolean showLabel, boolean showBox){
 		boolean descriptionValid = false;
 		boolean nameValid = false;
 		
 		if(descArea.getText().equals("")){
 			displayError("A description must be entered");
-			descArea.setBorder(errorBorder);
+			if(showBox){
+				descArea.setBorder(errorBorder);
+			}
 			descriptionValid = false;
 		}
 		else{
+			errorLabel.setText("");
 			descArea.setBorder(defaultTextAreaBorder);
 			descriptionValid = true;
 		}
 		
 		if(nameArea.getText().equals("")){
 			displayError("A name must be entered");
-			nameArea.setBorder(errorBorder);
+			if(showBox){
+				nameArea.setBorder(errorBorder);
+			}
 			descArea.setBorder(defaultTextAreaBorder);
 			nameValid = false;
 		}
@@ -741,7 +747,11 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			nameValid = true;
 		}
 		
-		if(!show){
+		if(!nameArea.getText().equals("") && !descArea.getText().equals("")){
+			errorLabel.setText("");
+		}
+		
+		if(!showLabel){
 			errorLabel.setText("");
 			nameArea.setBorder(defaultTextFieldBorder);
 			descArea.setBorder(defaultTextAreaBorder);
@@ -869,13 +879,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	private void addMouseListenerTo(JComponent component){
 		component.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent arg0) {
-					validateNameAndDesc(true);
+					validateNameAndDesc(true,true);
 			}
 		});
 	}
 	
 	private void updateUpdateButton(){
-		if(validateNameAndDesc(false) && updateValid()){
+		if(validateNameAndDesc(true, false) && updateValid()){
 			updateAddReqButton.setEnabled(true);
 		}
 		else{
@@ -884,7 +894,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	}
 	
 	private void updateSubmitButton(){
-		if(validateNameAndDesc(false)){
+		if(validateNameAndDesc(true,false)){
 			submitAddReqButton.setEnabled(true);
 		}
 		else{

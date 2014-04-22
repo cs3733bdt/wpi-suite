@@ -16,10 +16,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;*/
 
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 
 /**
  * The primary panel for viewing planning poker games and sessions.

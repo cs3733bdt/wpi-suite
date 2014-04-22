@@ -29,7 +29,6 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
@@ -43,7 +42,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.ActiveCardsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 
 public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private Game currentGame;
@@ -391,7 +389,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 											// entire container which has
 											// everything contained within it
 
-		setFieldsVisible(true);
 
 	}
 
