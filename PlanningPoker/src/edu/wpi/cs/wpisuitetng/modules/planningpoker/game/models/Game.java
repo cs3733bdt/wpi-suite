@@ -64,8 +64,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	private boolean notifiedOfCreation;
 	/** True if the users of the game have been notified of game complete */
 	private boolean notifiedOfCompletion;
-	/** Final estimate submitted by the owner of the game. -1 if it has not been set yet. */
-	private int finalEstimate;
 
 	/**
 	 * Copies all of the values from the given Game to this Game.
@@ -123,13 +121,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			needsUpdate = true;
 			wasChanged = true;
 		}
-
-		if (finalEstimate != toCopyFrom.finalEstimate) {
-			finalEstimate = toCopyFrom.finalEstimate;
-			needsUpdate = true;
-			wasChanged = true;
-		}
-
+		
 		if(!requirements.equals(toCopyFrom.requirements)){
 			boolean changes = false;
 
@@ -223,7 +215,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		complete = false;
 		notifiedOfCreation = false;
 		notifiedOfCompletion = false;
-		finalEstimate = -1;
 		identity = UUID.randomUUID();
 	}
 
@@ -665,17 +656,5 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		FacebookNotification fbn = new FacebookNotification(this);
 		fbn.sendFacebookNotifications();
 
-	}
-
-	public int getFinalEstimate() {
-		return finalEstimate;
-	}
-
-	public void setFinalEstimate(int newValue) {
-		if(finalEstimate != newValue){
-			makeChanged();
-			delayChange();
-			finalEstimate = newValue;
-		}
 	}
 }

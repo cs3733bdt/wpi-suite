@@ -118,7 +118,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		
 		validateSubmitButton();
 		finalEstimateDisplay = new JLabel();
-		int currFinalEstimate = activeGame.getFinalEstimate();
+		int currFinalEstimate = activeRequirement.getFinalEstimate();
 		if (currFinalEstimate == -1) {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: --");
 		}
@@ -466,7 +466,11 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	
 	private void finalEstimateButtonPressed() {
 		int newEstimate = Integer.parseInt(finalEstimateBox.getText());
-		activeGame.setFinalEstimate(newEstimate);
+		for (int i = 0; i < activeGame.getRequirements().size(); i++) {
+			if (activeGame.getRequirements().get(i).identify(activeRequirement)) {
+				activeGame.getRequirements().get(i).setFinalEstimate(newEstimate);
+			}
+		}
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 		finalEstimateDisplay.setText("Your Current Final Estimate is: " + newEstimate);
