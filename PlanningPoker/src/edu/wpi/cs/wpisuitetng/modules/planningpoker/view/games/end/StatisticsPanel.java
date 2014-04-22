@@ -155,6 +155,9 @@ public class StatisticsPanel extends JScrollPane{
 	}
 	
 	private void initStats() {
+		System.out.println(activeRequirement.getVotes().size());
+		System.out.println(activeGame.getName());
+		
 		ArrayList<Integer> voteData = requirementToVotes(activeRequirement); 
 		minEstimate = min(voteData);
 		maxEstimate = max(voteData);

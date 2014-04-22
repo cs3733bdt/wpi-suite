@@ -300,19 +300,19 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	 * @return true If all fields are valid and the window is ready to be removed
 	 */
 	@Override
-	public boolean validateField(IErrorView warningField, boolean show) {
+	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
 		boolean isNameValid = false;
 		boolean isDescriptionValid = false;
 		boolean isEndDateValid = false;
 		
-		isEndDateValid = getEndDateField().validateField(errorField, show);
+		isEndDateValid = getEndDateField().validateField(errorField, showLabel, showBox);
 		if (!isEndDateValid) {
 			getBoxDescription().setBorder(defaultTextAreaBorder);
 			getBoxName().setBorder(defaultTextFieldBorder);
 			parent.getRightHalf().getCurrentReqsPanel().setBorder((new JPanel().getBorder()));
 		}
 
-		isDescriptionValid = getBoxDescription().validateField(errorField, show);
+		isDescriptionValid = getBoxDescription().validateField(errorField, showLabel, showBox);
 		if (!isDescriptionValid) {
 			getEndDateField().setBorder(defaultDateBorder);
 			getBoxName().setBorder(defaultTextFieldBorder);
@@ -323,7 +323,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		}
 		
 
-		isNameValid = getBoxName().validateField(errorField, show);
+		isNameValid = getBoxName().validateField(errorField, showLabel, showBox);
 		if (!isNameValid) {
 			getEndDateField().setBorder(defaultDateBorder);
 			getBoxDescription().setBorder(defaultTextAreaBorder);
@@ -374,7 +374,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 			((JComboBox)component).addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
 					parent.updateButtons();
-					getEndDateField().validateField(errorField, true);
+					getEndDateField().validateField(errorField, true, false);
 				}		
 			});
 		}
@@ -382,7 +382,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 			((JXDatePicker)component).addActionListener(new ActionListener(){
 				public void actionPerformed(ActionEvent arg0) {
 					parent.updateButtons();
-					getEndDateField().validateField(errorField, true);
+					getEndDateField().validateField(errorField, true, false);
 				}		
 			});
 		}
@@ -392,7 +392,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	private void addMouseListenerTo(JComponent component){
 		component.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent arg0) {
-					parent.validateField(true);
+					parent.validateField(true, true);
 			}
 		});
 	}
