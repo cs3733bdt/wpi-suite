@@ -18,6 +18,7 @@ import java.util.List;
 import javax.swing.AbstractListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.Model;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
@@ -27,13 +28,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
  * @author jonathanleitschuh
  *
  */
-public class DeckModel extends AbstractListModel<Deck> implements IModelObserver {
+public class DeckModel extends AbstractStorageModel<Deck> {
 	private static DeckModel instance = null;
 	
-	private List<Deck> decks;
 	
 	private DeckModel(){
-		decks = new ArrayList<Deck>();
+		super(new ArrayList<Deck>());
 	}
 	
 	
@@ -49,54 +49,32 @@ public class DeckModel extends AbstractListModel<Deck> implements IModelObserver
 	}
 	
 	public void emptyModel(){
-		int oldSize = getSize();
-		Iterator<Deck> iterator = decks.iterator();
-		while (iterator.hasNext()) {
-			iterator.next();
-			iterator.remove();
-		}
-		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));
-	}
-
-	@Override
-	public int getSize() {
-		return decks.size();
-	}
-
-	@Override
-	public Deck getElementAt(int index) {
-		return decks.get(index);
-	}
-
-	@Override
-	public void update(ObservableModel o, Object arg) {
-		// TODO Auto-generated method stub
-		
-	}
-	
-	public void update(Deck[] decks){
-		//TODO add functionality
+		super.emptyModel();
 	}
 
 	public void addDeck(Deck deck) {
-		decks.add(deck);
-		deck.addObserver(this);
-		this.fireIntervalAdded(this, 0, 0);
-		
+		add(deck);	
 	}
 
 
-	public void addDecks(Deck[] deckList) {
-		for(Deck d : deckList){
-			decks.add(d);
-		}
-		//decks.addAll(Arrays.asList(deckList));
+	public synchronized void addDecks(Deck[] deckList) {
+		updateDecks(deckList);
 		
+	}
+	
+	public synchronized void updateDecks(Deck[] allDecks) {
+		boolean changes = updateModels(allDecks);
 	}
 
 
 	public List<Deck> getDecks() {
-		return decks;
+		return list;
+	}
+	
+	@Override
+	public void update(ObservableModel o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
