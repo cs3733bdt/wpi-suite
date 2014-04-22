@@ -271,14 +271,14 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
 		}
 		else{
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
 		}
 		
 		if(leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true, false)){
 			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
 		}
 		else{
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
 		}
 
 	}

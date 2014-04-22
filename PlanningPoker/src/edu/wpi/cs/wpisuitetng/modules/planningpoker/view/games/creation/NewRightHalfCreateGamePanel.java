@@ -551,7 +551,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 						for (int i = 0; i < requirements.size(); i++) {
 							if (requirements.get(i).getName().equals(currentTable.getValueAt(rows[0], 0))) {
 								System.err.println("Removing Requirement: " + requirements.get(i).toJSON());
-								requirements.remove(i);
+								requirements.remove(requirements.get(i));
 							}
 						}
 						currentTable.getTableModel().removeRow(rows[0]);
@@ -561,6 +561,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 						editReqButton.setEnabled(false);
 						
 					}
+					parent.updateButtons();
 				}
 			}
 		});
