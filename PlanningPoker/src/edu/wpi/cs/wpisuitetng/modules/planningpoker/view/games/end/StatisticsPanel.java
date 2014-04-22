@@ -13,27 +13,33 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
-
-import sun.java2d.loops.FillRect;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 /**
  * used to display the end game statistics upon ending a game
  */
-public class StatisticsPanel extends JScrollPane{
+public class StatisticsPanel extends JScrollPane implements IDataField {
 	Game activeGame;
 	Requirement activeRequirement;
 	
@@ -46,6 +52,10 @@ public class StatisticsPanel extends JScrollPane{
 	 * The estText is needed when the user inputs their estimate, since it must
 	 * be added to the server
 	 */
+	
+	private JLabel finalEstimateLabel;
+	private JTextField finalEstimateBox;
+	private JButton finalEstimateButton;
 	
 	private int minEstimate;
 	private int maxEstimate;
@@ -81,12 +91,12 @@ public class StatisticsPanel extends JScrollPane{
 		JLabel statLabel = new JLabel("Statistics");
 		JLabel votesLabel = new JLabel("Votes by User");
 		
-		initStats();
 		
+		Object[] row = makeStatRow(activeRequirement);
 		
 		statTable = initializeStatTable();
 		voteTable = initializeVoteTable();
-		statTable.getTableModel().addRow(new Object[]{mean, stDev, median, maxEstimate, minEstimate});
+		statTable.getTableModel().addRow(row);
 		fillVoteTable(activeRequirement);
 		
 		
@@ -94,9 +104,24 @@ public class StatisticsPanel extends JScrollPane{
 		JScrollPane votePanel = new JScrollPane(voteTable);
 		JScrollPane descPanel = new JScrollPane(userStoryDesc);
 		
+		
+		finalEstimateLabel = new JLabel("Enter a final estimate here:");
+		finalEstimateBox = new JTextField(4);
+		finalEstimateButton = new JButton("Submit Final Estimate");
+		addKeyListenerTo(finalEstimateBox);
+		validateSubmitButton();
+		//finalEstimateDisplay = new JLabel("Your current final Estimate is:");
+		
+			
+		
 		overviewPanel.add(descLabel);
 		overviewPanel.add(statLabel);
 		overviewPanel.add(votesLabel);
+		
+		overviewPanel.add(finalEstimateLabel);
+		overviewPanel.add(finalEstimateBox);
+		overviewPanel.add(finalEstimateButton);
+		isUserCreator(); //sets visibility for the above 3 components
 		
 		overviewPanel.add(descPanel);
 		overviewPanel.add(statsPanel);
@@ -143,12 +168,25 @@ public class StatisticsPanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.NORTH, votePanel, 5, SpringLayout.SOUTH, votesLabel); 
 		layout.putConstraint(SpringLayout.WEST, votePanel, 5, SpringLayout.WEST, overviewPanel);  
 		layout.putConstraint(SpringLayout.EAST, votePanel, -5, SpringLayout.EAST, overviewPanel); 
-		layout.putConstraint(SpringLayout.SOUTH, votePanel, -10, SpringLayout.SOUTH, overviewPanel);
+		layout.putConstraint(SpringLayout.SOUTH, votePanel, -30, SpringLayout.SOUTH, overviewPanel);
 		
-		int[] test = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //5.5
+		//Constraints on the final estimate box
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateBox, 5, SpringLayout.SOUTH, votePanel); 
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, finalEstimateBox, 5, SpringLayout.HORIZONTAL_CENTER, overviewPanel); 
+		
+		//Constraints on the final estimate label
+		layout.putConstraint(SpringLayout.EAST, finalEstimateLabel, -5, SpringLayout.WEST, finalEstimateBox); 
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateLabel, 5, SpringLayout.SOUTH, votePanel); 
+		
+		//Constraints on the final estimate Button
+		layout.putConstraint(SpringLayout.WEST, finalEstimateButton, 5, SpringLayout.EAST, finalEstimateBox); 
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateButton, 5, SpringLayout.SOUTH, votePanel); 
+		
+		
+		int[] test = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //5.5 //TODO fix
 		int[] test2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}; //6
 		
-		System.out.println("Median test1:" + median(test));
+		System.out.println("Median test1 should be 5.5:" + median(test));
 		System.out.println("Median test2:" + median(test2));
 		
 		repaint();
@@ -158,18 +196,18 @@ public class StatisticsPanel extends JScrollPane{
 		setViewportView(overviewPanel);
 	}
 	
-	private void initStats() {
-		ArrayList<Integer> voteData = requirementToVotes(activeRequirement); 
-		minEstimate = min(voteData);
-		maxEstimate = max(voteData);
-		mean = mean(voteData);
-		stDev = stDev(voteData);
-		median = median(voteData);
-	}
+//	private void initStats() {
+//		ArrayList<Integer> voteData = requirementToVotes(activeRequirement); 
+//		minEstimate = min(voteData);
+//		maxEstimate = max(voteData);
+//		mean = mean(voteData);
+//		stDev = stDev(voteData);
+//		median = median(voteData);
+//	}
 	
 	private Object[] makeStatRow(Requirement requirement) {
 		ArrayList<Integer> voteData = requirementToVotes(requirement); 
-		Object[] row = new Object[] {mean(voteData), stDev(voteData), median(voteData), max(voteData), min(voteData)};
+		Object[] row = new Object[] {mean(voteData), stDev(voteData), median(voteData), max(voteData), min(voteData), voteData.size()};
 		return row;
 	}
 
@@ -178,7 +216,7 @@ public class StatisticsPanel extends JScrollPane{
 	 * @return the table containing the statistics
 	 */
 	private ActiveStatisticsTable initializeStatTable() {
-		String[] columnNames2 = {"Mean", "Standard Deviation", "Median", "Max", "Min" };
+		String[] columnNames2 = {"Mean", "Standard Deviation", "Median", "Max", "Min","Num Votes" };
 		Object[][] data2 = {};
 		return new ActiveStatisticsTable(data2, columnNames2);
 	}
@@ -188,6 +226,8 @@ public class StatisticsPanel extends JScrollPane{
 		Object[][] data2 = {};
 		return new ActiveVotesTable(data2, columnNames2);
 	}
+	
+	
 	
 	/**
 	 * @param requirement
@@ -282,14 +322,14 @@ public class StatisticsPanel extends JScrollPane{
 			return Votes.get(0);
 		}
 		else {
-			int[] a = new int[Votes.size()];
+			double[] a = new double[Votes.size()];
 			for (int i = 0; i < Votes.size(); i++) {
 				a[i] = Votes.get(i);
 			}
 			Arrays.sort(a);
 			int mid = a.length/2;
 			if (a.length % 2 == 0) {
-				return ((double) a[mid] + (double) a[mid - 1])/2.0;
+				return (a[mid] + a[mid - 1])/2.0;
 			}
 			else {
 				return a[mid];
@@ -334,5 +374,68 @@ public class StatisticsPanel extends JScrollPane{
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(req);
 		}
+	
+	public void isUserCreator() {
+		if(ConfigManager.getConfig().getUserName().equals(activeGame.getCreator())){
+			finalEstimateBox.setVisible(true);
+			finalEstimateLabel.setVisible(true);
+			finalEstimateButton.setVisible(true);
+		} else {
+			finalEstimateBox.setVisible(false);
+			finalEstimateLabel.setVisible(false);
+			finalEstimateButton.setVisible(false);
+		}
+	}
+	
+	private void addKeyListenerTo(JComponent component){
+		component.addKeyListener(new KeyAdapter(){
+			public void keyReleased(KeyEvent arg0) {
+				if (finalEstimateBox.isFocusOwner()) {
+					validateSubmitButton();
+				}
+				else {}
+			}
+		});
+	}
+
+	private void validateSubmitButton() {
+		String text = finalEstimateBox.getText();
+		if (verifyFinalEstimateField()) {
+			finalEstimateButton.setEnabled(true);
+		}
+		else {
+			finalEstimateButton.setEnabled(false);
+		}
+	}
+	
+	public boolean verifyFinalEstimateField() {
+		String text = finalEstimateBox.getText();
+		String allowedChars = "0123456789";
+		String currChar;
+		if (text.length() == 0) {
+			return false;
+		}
+		for (int i = 0; i < text.length(); i++) {
+			currChar = Character.toString(text.charAt(i));
+			if (!allowedChars.contains(currChar)) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	@Override
+	public boolean validateField(IErrorView warningField, boolean show) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean hasChanges() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
 	
 }
