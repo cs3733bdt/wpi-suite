@@ -26,6 +26,10 @@ import javax.swing.SpringLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
+/**
+ * The panel for the deck creation process
+ * Used to allow the user to create a new deck by filling out the indicated fields
+ */
 public class CreateDeckPanel extends JScrollPane {
 	
 	private NameJTextField nameTextField;
@@ -40,6 +44,10 @@ public class CreateDeckPanel extends JScrollPane {
 		
 	}
 	
+	/**
+	 * Builds the layout for this panel
+	 * Sets up all of the elements in their respective locations
+	 */
 	public void build(){
 		/* Set up initial container with spring layout */
 		Container view = new Container();
@@ -159,6 +167,12 @@ public class CreateDeckPanel extends JScrollPane {
 		setViewportView(view);
 	}
 	
+	/**
+	 * Build a new font based on specified size
+	 * @param size is how much larger you want the font to be than a default font in a JTextArea
+	 * Can have a negative value for size to decrease the font size
+	 * @return the font of the designated size
+	 */
 	public Font makeFont(int size) {
 		/**
 		 * Creates a new font for use later
