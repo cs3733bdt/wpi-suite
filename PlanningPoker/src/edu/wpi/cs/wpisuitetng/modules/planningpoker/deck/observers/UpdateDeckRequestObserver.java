@@ -11,6 +11,8 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers;
 
+import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.UpdateGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
@@ -47,39 +49,10 @@ public class UpdateDeckRequestObserver implements RequestObserver {
 		final ResponseModel response = iReq.getResponse();
 		
 		// The game that got updated
-		Game game = Game.fromJSON(response.getBody());
+		Deck game = Deck.fromJSON(response.getBody());
 		
-		// Send out email, text, and facebook notifications on game creation
-		if (!game.isNotifiedOfCreation() && game.isActive()) {
-			Game realGame = GameModel.getInstance().getGameById(game.getIdentity());
-			// Make sure game exists
-			if (!realGame.equals(null)) {
-				// Set the project of the game, without this it throws a null pointer
-				// if the game is created/added on an update call
-				realGame.setProject(game.getProject());
-				// Set notified before sending notifications to remove looping possibility
-				realGame.setNotifiedOfCreation(true);
-				// Finally send
-				realGame.sendNotifications();
-			} else {
-				System.err.println(game.getName() + ": Does not exist");
-			}
-		// Send out email, text, and facebook notifications on game completion
-		} else if (!game.isNotifiedOfCompletion() && game.isComplete()) {
-			// TODO make a different method for sending completion text
-			Game realGame = GameModel.getInstance().getGameById(game.getIdentity());
-			// Make sure game exists
-			if (!realGame.equals(null)) {
-				// Set notified before sending notifications to remove looping possibility
-				realGame.setNotifiedOfCreation(true);
-				// Finally Send
-				realGame.sendNotifications();
-			} else {
-				System.err.println(game.getName() + ": Does not exist");
-			}
-		}
 		
-		System.out.println("The request to update a game has succeeded!");
+		System.out.println("The request to update a deck has succeeded!");
 	}
 	
 	/**
