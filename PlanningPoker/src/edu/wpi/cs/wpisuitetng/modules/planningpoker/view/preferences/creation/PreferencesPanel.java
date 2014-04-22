@@ -516,13 +516,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		Font bigFont = newFont;
 		return bigFont;
 	}
-
-	@Override
-	public boolean validateField(IErrorView warningField, boolean show) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+	
 	@Override
 	public boolean hasChanges() {
 		// TODO Auto-generated method stub
@@ -779,6 +773,13 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		}
 		return (matcher1Boolean || matcher2Boolean || matcher3Boolean || matcher4Boolean || 
 				matcher5Boolean || matcher6Boolean || matcher7Boolean || matcher8Boolean);
+	}
+
+	@Override
+	public boolean validateField(IErrorView warningField, boolean showLabel,
+			boolean showBox) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 	

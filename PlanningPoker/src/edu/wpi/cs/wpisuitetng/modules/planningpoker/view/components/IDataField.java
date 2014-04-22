@@ -27,7 +27,7 @@ public interface IDataField {
 	 * @param show if true will indicate the field that has the error and show a dialog
 	 * @return true when all of the fields in this component are valid
 	 */
-	public boolean validateField(IErrorView warningField, boolean show);
+	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox);
 	
 	
 	/**
