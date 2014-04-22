@@ -47,6 +47,7 @@ public class Requirement extends ObservableModel {
 
 	/** a short description of the requirement */
 	private String description;
+
 	
 	/** If this requirement came from the requirement manager module*/
 	private boolean fromRequirementModule;
@@ -57,6 +58,7 @@ public class Requirement extends ObservableModel {
 	/** boolean for whether the requirement has been voted on by all users */
 	private boolean complete = false;
 	
+	private int finalEstimate = -1;
 	/**
 	 * The basic constructor for a game
 	 * Sets all of the default values for a game class
@@ -178,6 +180,7 @@ public class Requirement extends ObservableModel {
 		return votes;
 	}
 
+
 	/**
 	 * adds a vote to the votes ArrayList
 	 * @param vote the votes to set          
@@ -203,6 +206,20 @@ public class Requirement extends ObservableModel {
 		
 		hasChanged();
 		notifyObservers(vote);
+	}
+	
+	/**
+	 * Getter for the final estimate
+	 */
+	public int getFinalEstimate() {
+		return finalEstimate;
+	}
+	
+	/**
+	 * Setter for the final estimate
+	 */
+	public void setFinalEstimate(int newEstimate) {
+		this.finalEstimate = newEstimate;
 	}
 	
 	/**
@@ -346,6 +363,11 @@ public class Requirement extends ObservableModel {
 		
 		if(!identity.equals(toCopyFrom.identity)) {
 			identity = toCopyFrom.identity;
+			wasChanged = true;
+		}
+		
+		if (finalEstimate != toCopyFrom.finalEstimate) {
+			finalEstimate = toCopyFrom.finalEstimate;
 			wasChanged = true;
 		}
 		

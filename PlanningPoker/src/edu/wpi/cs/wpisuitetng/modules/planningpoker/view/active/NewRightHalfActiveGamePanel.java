@@ -388,9 +388,13 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		this.getViewport().add(rightView); // Sets the rightview to be the
 											// entire container which has
 											// everything contained within it
+		
+		setFieldsVisible(true);
 
 
 	}
+	
+	
 
 	private Font makeFont(int i) {
 		// TODO Auto-generated method stub

@@ -224,10 +224,10 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.NORTH, notePane, 5, SpringLayout.SOUTH, endGameManuallyNoteLabel1);	
 		layout.putConstraint(SpringLayout.WEST, notePane, 5, SpringLayout.WEST, newLeftView);
 		layout.putConstraint(SpringLayout.EAST, notePane, -5, SpringLayout.EAST, newLeftView);
-		layout.putConstraint(SpringLayout.SOUTH, notePane, -10, SpringLayout.NORTH, endGameManuallyButton);
+		layout.putConstraint(SpringLayout.SOUTH, notePane, -30, SpringLayout.NORTH, endGameManuallyButton);
 		
 		layout.putConstraint(SpringLayout.WEST, endGameManuallyButton, 5, SpringLayout.WEST, newLeftView);
-		layout.putConstraint(SpringLayout.SOUTH, endGameManuallyButton, -10, SpringLayout.SOUTH, newLeftView);
+		layout.putConstraint(SpringLayout.SOUTH, endGameManuallyButton, -40, SpringLayout.SOUTH, newLeftView);
 
 		
 		this.getViewport().add(newLeftView);
