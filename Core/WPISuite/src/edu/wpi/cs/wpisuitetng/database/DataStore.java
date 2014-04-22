@@ -63,6 +63,7 @@ public class DataStore implements Data {
 			config.common().objectClass(User.class).storeTransientFields(true); // Enables data persistence for passwords
 
 			config.common().objectClass(Game.class).updateDepth(3);
+			config.common().objectClass(Project.class).updateDepth(3);
 			
 			//Connect to the Database
 			server = Db4oClientServer.openServer(config, WPI_TNG_DB, PORT);
