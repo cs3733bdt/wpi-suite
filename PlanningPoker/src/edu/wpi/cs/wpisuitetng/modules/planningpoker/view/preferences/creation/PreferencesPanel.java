@@ -1,5 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation;
 
+
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -24,8 +25,15 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
+import edu.wpi.cs.wpisuitetng.Session;
+import edu.wpi.*;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
+import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
@@ -53,8 +61,9 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	JTextField facebookField;
 	JButton updateFacebookButton;
 	JCheckBox facebookCheckBox;
-	
+
     public PreferencesPanel() {
+
     	build();
     }
 	
@@ -422,10 +431,29 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		});
 	}
     
+	
+	private String getUserEmail() {
+		// TODO Auto-generated method stub	
+		
+		return null;
+	}
+	
+	private String getUserPhoneNumber() {
+		// TODO Auto-generated method stub	
+		
+		return null;
+	}
+	
 	private int getUserCarrier() {
 		// TODO Auto-generated method stub	
 		
 		return 0;
+	}
+	
+	private String getUserFacebookUsername() {
+		// TODO Auto-generated method stub	
+		
+		return null;
 	}
 
 	public Font makeFont(int size) {
