@@ -67,6 +67,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	private double mean;
 	private double stDev;
 	private double median;
+	private int numVotes;
 	
 	private ActiveStatisticsTable statTable;	
 	
@@ -236,10 +237,34 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		median = median(voteData);
 	}
 	
-	private Object[] makeStatRow(Requirement requirement) {
+	public int numVotes(ArrayList<Integer> voteData) {
+		numVotes = voteData.size();
+		return numVotes;
+	}
+	
+	public Object[] makeStatRow(Requirement requirement) {
 		ArrayList<Integer> voteData = requirementToVotes(requirement); 
-		Object[] row = new Object[] {mean(voteData), stDev(voteData), median(voteData), max(voteData), min(voteData), voteData.size()};
+		Object[] row = new Object[] {mean(voteData), stDev(voteData), median(voteData), max(voteData), min(voteData), numVotes(voteData)};
 		return row;
+	}
+	/**Pass it the name of the stat you want in string form (mean, stDev, min, max, numVotes, median) */
+	public double getStat(String stat) {
+		switch (stat) {
+		case "mean":
+			return mean;
+		case "stDev":
+			return stDev;
+		case "min":
+			return (double)minEstimate;
+		case "max":
+			return (double)maxEstimate;
+		case "numVotes":
+			return (double)numVotes;
+		case "median":
+			return median;
+		default:
+			return -1.0;
+		}
 	}
 
 	/**
@@ -264,7 +289,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param requirement
 	 * @return an arrayList of the vote numbers from the passed requirement
 	 */
-	private ArrayList<Integer> requirementToVotes(Requirement requirement) {
+	public ArrayList<Integer> requirementToVotes(Requirement requirement) {
 		List<Vote> Votes = requirement.getVotes();
 		ArrayList<Integer> voteArray = new ArrayList<Integer>();
 		for (int i = 0; i < Votes.size(); i++) {
@@ -294,7 +319,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 				min = Votes.get(i);
 			}
 		}
-	
+		this.minEstimate = min;
 		return min;
 	}
 	
@@ -310,19 +335,19 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 				max = Votes.get(i);
 			}
 		}
-	
+		this.maxEstimate = max;
 		return max;
 	}
 	
-	static double mean(ArrayList<Integer> a) {
+	double mean(ArrayList<Integer> a) {
 		double sum = 0;
 		int i;
 		
 		for(i = 0; i < a.size(); i++) {
 			sum += a.get(i);
 		}
-		
-		return sum/a.size();
+		mean = sum/ ((double)a.size());
+		return mean;
 	}
 	
 	private double stDev(ArrayList<Integer> a) {
@@ -341,16 +366,16 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		}
 				
 		double variance = (sum / (double) numMinusMeanSquared.size());
-		
-		return Math.sqrt(variance);
+		stDev = Math.sqrt(variance) ;
+		return stDev;
 	}
 
-	public static double median(ArrayList<Integer> Votes) {
+	public double median(ArrayList<Integer> Votes) {
 		if (Votes.size() == 0) {
-			return 0;
+			median = 0;
 		}
-		if (Votes.size() == 1) {
-			return Votes.get(0);
+		else if (Votes.size() == 1) {
+			median = Votes.get(0);
 		}
 		else {
 			double[] a = new double[Votes.size()];
@@ -359,18 +384,19 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			}
 			Arrays.sort(a);
 			int mid = a.length/2;
+		
 			if (a.length % 2 == 0) {
-				return (a[mid] + a[mid - 1])/2.0;
+				median = (a[mid] + a[mid - 1])/2.0;
 			}
 			else {
-				return a[mid];
+				median = a[mid];
 			}		
 		}
+		return median;
 	}
 	
 	
-	public static double median(int[] a) {
-		double median;
+	public double median(int[] a) {
 		Arrays.sort(a);
 		int mid = a.length/2;
 		if (a.length % 2 == 0) {
