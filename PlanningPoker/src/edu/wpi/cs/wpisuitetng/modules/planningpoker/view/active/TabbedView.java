@@ -291,6 +291,7 @@ public class TabbedView extends JTabbedPane {
 			hasPreferencesTab = false;	
 		}
 		remove(comp);
+		setSelectedComponent(gameOverview);
 	}
 	
 	/**
