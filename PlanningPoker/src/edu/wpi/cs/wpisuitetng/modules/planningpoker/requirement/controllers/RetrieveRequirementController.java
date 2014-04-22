@@ -66,7 +66,7 @@ public class RetrieveRequirementController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// Send a request to the core to save this requirement
 		final Request request = 
-				Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.GET);
+				Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.GET);
 		request.addObserver(observer); 
 		request.send();
 	}
@@ -76,7 +76,7 @@ public class RetrieveRequirementController implements ActionListener {
 	 */
 	public void retrieveRequirements() {
 		final Request request = 
-				Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.GET);
+				Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.GET);
 		request.addObserver(observer); 
 		request.send();
 	}
@@ -88,14 +88,15 @@ public class RetrieveRequirementController implements ActionListener {
 	 * @param requirements array of requirements received from the server
 	 */
 	public void receivedRequirements(Requirement[] requirements) {
-		// Empty the local model to eliminate duplications
-		RequirementModel.getInstance().emptyModel();
-		
-		// Make sure the response was not null
+		RequirementModel rModel = RequirementModel.getInstance();
+		// Make sure requirements exist in the Requirement Manager
 		if (requirements != null) {
-			
-			// add the requirements to the local model
-			RequirementModel.getInstance().addRequirements(requirements);
+			for (Requirement r: requirements) {
+				// Only add requirements to the model if they
+				// don't already exist there
+				if (!rModel.contains(r.getId()))
+					rModel.addRequirement(r);
+			}
 		}
 	}
 }

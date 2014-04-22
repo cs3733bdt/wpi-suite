@@ -49,7 +49,6 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	}
 	
 	/**
-	
 	 * @return the instance of the requirement model singleton.
 	 */
 	public static RequirementModel getInstance()
@@ -101,6 +100,22 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 		}
 		return temp;
 	}
+	
+	/**
+	 * Gets a requirement from the list of requirements
+	 * by the name of the requirement
+	 * @param name the name of the requirement
+	 * @return the requirement with given name
+	 */
+	public Requirement getRequirement(String name) {
+		Requirement req = null;
+		for (Requirement r: requirements) {
+			if (r.getName().equals(name))
+				req = r;
+		}
+		return req;
+	}
+	
 	/**
 	 * Removes the requirement with the given ID
 	 * 
@@ -144,7 +159,6 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 */
 	public int getNextID()
 	{
-		
 		return nextID++;
 	}
 
@@ -191,14 +205,29 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 */
 	public void addRequirements(Requirement[] requirements) {
 		for (int i = 0; i < requirements.length; i++) {
-			this.requirements.add(requirements[i]);
-			if(requirements[i].getId() >= nextID) nextID = requirements[i].getId() + 1;
+			if (!this.requirements.contains(requirements[i].getId())) {
+				this.requirements.add(requirements[i]);
+				if(requirements[i].getId() >= nextID) nextID = requirements[i].getId() + 1;
+			}
 		}
 		fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
 		/*
 		ViewEventController.getInstance().refreshTable();
 		ViewEventController.getInstance().refreshTree();
 		*/
+	}
+	
+	/**
+	 * Checks if the list of requirements has a requirement with the id passed
+	 * @param id the id that is being checked
+	 * @return true if a requirement with id exists in the list of requirements
+	 */
+	public boolean contains(int id) {
+		for (Requirement r: requirements) {
+			if (r.getId() == id)
+				return true;
+		}
+		return false;
 	}
 
 	/**
