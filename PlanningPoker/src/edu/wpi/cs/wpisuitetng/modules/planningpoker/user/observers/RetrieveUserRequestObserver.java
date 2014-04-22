@@ -43,7 +43,6 @@ public class RetrieveUserRequestObserver implements RequestObserver{
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		// Convert the JSON array of requirements to a Requirement object array
-		System.out.println("about to get the user from request...");
 		User[] users = User.fromJsonArray(iReq.getResponse().getBody());
 		
 		// Pass these Requirements to the controller

@@ -85,7 +85,7 @@ public class RetrieveUserController implements ActionListener{
 	}
 
 	/**
-	 * Get the users from the server in order to determine the current user.
+	 * Get the users from the server in order to set the currentUser
 	 * This method is called by the RetrieveUserRequestObserver
 	 * 
 	 * @param users array of users received from the server
@@ -93,13 +93,9 @@ public class RetrieveUserController implements ActionListener{
 	public void receivedUsers(User[] users) {
 		
 		String currentUsername = ConfigManager.getInstance().getConfig().getUserName();
-		System.out.println("Current username is..." + currentUsername);
 		// Make sure the response was not null
 		if (users != null) {
-			System.out.println("About to print the array of users");
-			for(User u: users)
-				System.out.println(u.toString());
-			
+			//Compare the current username to the array of users to find correct User
 			for (User u : users){
 				if(u.getUsername().equals(currentUsername)){
 					currentUser = u;

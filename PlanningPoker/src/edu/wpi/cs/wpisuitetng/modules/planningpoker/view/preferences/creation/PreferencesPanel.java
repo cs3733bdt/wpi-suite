@@ -64,10 +64,12 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	JButton updateFacebookButton;
 	JCheckBox facebookCheckBox;
 	
-	RetrieveUserController userController; // = RetrieveUserController.getInstance();
-
+	RetrieveUserController userController;
+	
     public PreferencesPanel() {
+    	//Get the instance of the user controller to get current user data.
     	userController = RetrieveUserController.getInstance();
+    	
     	build();
     }
 	
@@ -439,13 +441,18 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			}
 		});
 	}
-    
-	//TODO Add try catch incase request hasnt gone through completely? (should handle null ptrs)
-	
+    	
 	/**
+	 * Waits for a successful request to get the current user,
+	 * then returns the appropriate email string.
+	 * Other getUser Data methods below do not require try catch, because
+	 * getUserEmail is called first and insures a completed request
 	 * @return returns the email of the user currently logged in
 	 */
 	private String getUserEmail() {
+		//Try to get user data, if the request has not completed, will catch
+		//exception and try again, this time waiting a few seconds to insure
+		//that the request has completed.
 		try{
 		return userController.getCurrentUser().getEmail();
 		}catch(NullPointerException e){
@@ -655,7 +662,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 				atCount++;
 				atIndex = i;
 				atSubstring = text.substring(i+1);
-				System.out.println("Atsubstring:" + atSubstring);
+			//	System.out.println("Atsubstring:" + atSubstring);
 			}	
 		}
 		if (atCount == 1 && atIndex != 0 && atIndex != -1 && atIndex+1 != text.length() ) {
