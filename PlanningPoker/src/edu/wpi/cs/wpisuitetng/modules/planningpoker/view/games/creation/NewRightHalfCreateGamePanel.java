@@ -307,20 +307,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		});
 		
 		/**
-		 * Add an action listener the remove Req Button
-		 */
-		removeReqButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				int[] rows = currentTable.getSelectedRows();
-				for (int i = 0; i < rows.length; i++) {
-					currentTable.getTableModel().removeRow(rows[i]);
-				}
-			}
-		});
-		
-		/**
 		 * Add all components to the importReqsPanel and make it not visible to start
 		 */
 		importReqsPanel.add(importReq);
@@ -651,7 +637,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			globalRow = -1;
 			parent.updateButtons();
 			displayError("");
-		} else {
 		}
 	}
 	
