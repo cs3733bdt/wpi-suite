@@ -48,7 +48,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
- * TODO DOCUMENTATION
+ * The Right Half panel for the NewCreateGamePanel
+ * Used to import and add requirements to the game
  */
 public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataField{
     private NewAddRequirementsPanel reqPanel;    //initialize new add requirements panel
@@ -107,6 +108,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
     
     private JButton submitImportReqButton;
    
+    /**
+     * Builds the right half of the CreateGamePanel.
+     * @param createGamePanel
+     */
     public NewRightHalfCreateGamePanel(NewCreateGamePanel createGamePanel){
     	parent = createGamePanel;
     	build();
@@ -545,10 +550,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		});
     }
     
+    /**
+	 * Creates a new font for use later
+	 */
 	public Font makeFont() {
-		/**
-		 * Creates a new font for use later
-		 */
 		//create a dummy JTextArea
 		JTextArea editingArea = new JTextArea();
 		// get the current font
@@ -771,6 +776,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		globalRow = row;
 	}
 
+	/**
+	 * Adds a requirement to the game
+	 * @param requirement The requirement to be added to the game
+	 */
 	public void addRequirement(Requirement requirement){
 		if (!checkduplicateReq(requirement)) {
 			currentTable.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});

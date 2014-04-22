@@ -81,9 +81,13 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	
 	private NewCreateGamePanel parent;
 	
+	/**
+	 * Builds the left half of the CreateGamePanel
+	 * @param mainPanel the main panel this half is located on
+	 */
 	public NewLeftHalfCreateGamePanel(NewCreateGamePanel mainPanel) {
 		parent = mainPanel;
-		this.game = mainPanel.getGame();
+		game = mainPanel.getGame();
 		build();
 		buildFields();
 	}
@@ -278,6 +282,10 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		return errorField;
 	}
 	
+	/**
+	 * Displays text when an error is encountered
+	 * @param error The error text
+	 */
 	public void displayError(String error){
 		errorField.setText(error);
 	}
@@ -341,6 +349,10 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		return false;
 	}
 
+	/**
+	 * Determines if a game uses cards or not
+	 * @return true if the cards buttons is selected
+	 */
 	public boolean doesUseCards(){
 		return cardsButton.isSelected();
 	}
