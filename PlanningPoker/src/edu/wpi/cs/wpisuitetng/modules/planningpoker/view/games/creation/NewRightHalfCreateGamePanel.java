@@ -505,7 +505,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				updateAddReqButton.setEnabled(false);
 				updateReqsLabel.setVisible(false);
 				createReqsLabel.setVisible(true);
-				displayError("A name must be entered");
+				displayError("Name is required");
 				disableButtons();
 			}
 		});
