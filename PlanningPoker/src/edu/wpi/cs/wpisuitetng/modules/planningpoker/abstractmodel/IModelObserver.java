@@ -19,7 +19,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel;
  * @see     java.util.Observable
  * @since   JDK1.0
  */
-public interface AbstractModelObserver {
+public interface IModelObserver {
     /**
      * This method is called whenever the observed object is changed. An
      * application calls an <tt>Observable</tt> object's

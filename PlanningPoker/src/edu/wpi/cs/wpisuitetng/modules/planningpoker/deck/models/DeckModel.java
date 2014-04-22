@@ -18,7 +18,7 @@ import java.util.List;
 import javax.swing.AbstractListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.Model;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
@@ -27,7 +27,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
  * @author jonathanleitschuh
  *
  */
-public class DeckModel extends AbstractListModel<Deck> implements AbstractModelObserver {
+public class DeckModel extends AbstractListModel<Deck> implements IModelObserver {
 	private static DeckModel instance = null;
 	
 	private List<Deck> decks;

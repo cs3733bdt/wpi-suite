@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requireme
  * used to display the completed game and requirements within it
  * @author TomPaolillo
  */
-public class EndGamePanel extends JSplitPane implements AbstractModelObserver, IEndedGamePanel{
+public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGamePanel{
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
 	private final Game active;

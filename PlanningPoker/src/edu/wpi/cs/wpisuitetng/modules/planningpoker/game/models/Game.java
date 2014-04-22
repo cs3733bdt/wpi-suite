@@ -22,7 +22,7 @@ import java.util.UUID;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
@@ -35,7 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requireme
  * @author jonathanleitschuh
  */
 
-public class Game extends ObservableModel implements AbstractModelObserver{
+public class Game extends ObservableModel implements IModelObserver{
 	
 	/** This is the best way to keep games unique so 
 	 *  that you are not relying upon data that can change */
@@ -610,7 +610,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 	
 	@Override
-	public synchronized void addObserver(AbstractModelObserver o){
+	public synchronized void addObserver(IModelObserver o){
 		for(Requirement r : requirements){
 			r.addObserver(this);
 		}

@@ -18,7 +18,7 @@ import java.util.UUID;
 
 import javax.swing.AbstractListModel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.UpdateGameController;
@@ -35,7 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  */
 @SuppressWarnings({ "serial" })
 public class GameModel extends AbstractListModel<Game> implements
-AbstractModelObserver {
+IModelObserver {
 
 	/** Stores the singleton instance of this model */
 	private static GameModel instance;
