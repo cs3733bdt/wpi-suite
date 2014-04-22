@@ -40,7 +40,7 @@ public class GetDeckRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 	    Deck[] decks = Deck.fromJsonArray(iReq.getResponse().getBody());
-	    controller.receivedDeck(decks);
+	    controller.receivedDecks(decks);
 	}
 	
 	/**

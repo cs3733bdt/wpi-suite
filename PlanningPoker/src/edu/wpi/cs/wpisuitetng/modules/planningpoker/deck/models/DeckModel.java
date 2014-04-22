@@ -7,6 +7,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableMode
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
 public class DeckModel extends AbstractListModel<Deck> implements AbstractModelObserver {
+	private static DeckModel instance = null;
 
 	@Override
 	public int getSize() {
@@ -24,6 +25,17 @@ public class DeckModel extends AbstractListModel<Deck> implements AbstractModelO
 	public void update(ObservableModel o, Object arg) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public static DeckModel getInstance() {
+		if(instance == null){
+			instance = new DeckModel();
+		}
+		return instance;
+	}
+	
+	public void update(Deck[] decks){
+		//TODO add functionality
 	}
 
 }
