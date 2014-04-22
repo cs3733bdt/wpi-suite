@@ -148,8 +148,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		userStoryDesc.setEditable(false);
 		userStoryDesc.setLineWrap(true);
 		
-		
-		userStoryDesc.setPreferredSize(new Dimension(580, 150));
 		descPanel.setPreferredSize(new Dimension(580, 100));
 		statsPanel.setPreferredSize(new Dimension(580, 60));
 		
