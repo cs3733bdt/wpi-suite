@@ -224,6 +224,17 @@ public class GameUpdateRaceConditionTest {
 		vote29 = new Vote("user29", 5);
 		vote30 = new Vote("user30", 5);
 		
+		User[] userList = new User[30];
+		for(int i = 0; i < 30; i ++){
+			userList[i] = new User("user" + (1+i), "user" + (1+i), Integer.toString(i), "", "", i);
+		}
+		Project project = new Project("TestProject", Integer.toString(1234), userList[0], userList, null);
+		for(Game game: gameList){
+			game.setProject(project);
+		}
+		
+		
+		
 		// Run the three threads
 		model.addGames(gameList);
 		(new AddVotesThread()).start();
