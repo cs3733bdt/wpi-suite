@@ -143,14 +143,30 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 
 	@Override
 	public boolean copyFrom(Deck toCopyFrom) {
-		// TODO Auto-generated method stub
-		return false;
+		boolean changes = false;
+		if(!name.equals(toCopyFrom.name)){
+			name = toCopyFrom.name;
+			changes = true;
+		}
+		if(!description.equals(toCopyFrom.description)){
+			description = toCopyFrom.description;
+			changes = true;
+		}
+		if(!cards.equals(toCopyFrom.cards)){
+			cards = toCopyFrom.cards;
+			changes = true;
+		}
+		return changes;
 	}
 
 	@Override
 	public void update(ObservableModel o, Object arg) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public List<Integer> getCards() {
+		return cards;
 	}
 
 }

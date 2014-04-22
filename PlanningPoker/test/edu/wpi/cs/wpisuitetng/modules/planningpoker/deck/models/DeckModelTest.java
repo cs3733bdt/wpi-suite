@@ -71,7 +71,8 @@ public class DeckModelTest {
 		model.addDecks(deckList);//Add this set of decks to the model
 		assertEquals(deckList.length, model.getSize());
 		
-		deckList[0] = Deck.makeDeckSameID("New Deck Name", "New Deck Description", new ArrayList<Integer>(), deckList[0]);
+		Integer[] cards = {1, 2, 3, 4};
+		deckList[0] = Deck.makeDeckSameID("New Deck Name", "New Deck Description", new ArrayList<Integer>(Arrays.asList(cards)), deckList[0]);
 		
 		for(int i = 0; i<deckList.length; i++){
 			assertEquals("Deck"+Integer.toString(i), model.getElementAt(i).getName());
@@ -81,6 +82,9 @@ public class DeckModelTest {
 		
 		model.addDecks(deckList);
 		assertEquals(deckList.length, model.getSize());
+		assertEquals("New Deck Name", model.getElementAt(0).getName());
+		assertEquals("New Deck Description", model.getElementAt(0).getDescription());
+		assertEquals(4, model.getElementAt(0).getCards().size());
 		
 	}
 	
