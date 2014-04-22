@@ -147,13 +147,29 @@ public class Requirement extends ObservableModel {
 	public String getName() {
 		return name;
 	}
+	
+	/**
+	 * setter for the name
+	 * @param name
+	 */
+	public void setName(String name){
+		this.name = name;
+	}
 
 	/**
-	 * Getter for the description
+	 * getter for the description
 	 * @return the description 
 	 */
 	public String getDescription() {
 		return description;
+	}
+	
+	/**
+	 * setter for the description
+	 * @param description
+	 */
+	public void setDescription(String description){
+		this.description = description;
 	}
 
 	/**

@@ -42,7 +42,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.RetrieveRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
@@ -624,8 +623,17 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	
 	private void updateButtonPressed(){
 		if(globalRow != -1){
+			int[] rows = currentTable.getSelectedRows();
+			for (int i = 0; i < requirements.size(); i++) {
+				if (requirements.get(i).getName().equals(currentTable.getValueAt(rows[0], 0))) {
+					System.out.println(requirements.get(i).getName());
+					requirements.get(i).setName(nameArea.getText());
+					requirements.get(i).setDescription(descArea.getText());
+				}
+			}
+			
 			currentTable.setValueAt(nameArea.getText(), globalRow, 0);
-			currentTable.setValueAt(descArea.getText(), globalRow, 1);
+			currentTable.setValueAt(descArea.getText(), globalRow, 1);			
 			globalRow = -1;
 			nameArea.setText("");
 			descArea.setText("");
@@ -633,7 +641,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			currentReqsPanel.setVisible(true);
 			submitAddReqButton.setEnabled(false);
 			enableButtons();
-			parent.updateButtons();
+			parent.updateButtons();			
 		}
 	}
 	
