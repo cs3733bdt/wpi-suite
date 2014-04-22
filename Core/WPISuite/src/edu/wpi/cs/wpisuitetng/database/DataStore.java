@@ -60,7 +60,18 @@ public class DataStore implements Data {
 			ServerConfiguration config = Db4oClientServer.newServerConfiguration();
 			config.common().reflectWith(new JdkReflector(Thread.currentThread().getContextClassLoader()));
 			config.common().objectClass(User.class).storeTransientFields(true); // Enables data persistence for passwords
-
+			config.common().objectClass(Project.class).updateDepth(2); //
+			
+			//Attempt to load the game class if it even exists
+			ClassLoader classLoader = DataStore.class.getClassLoader();
+			try{
+				Class gameClass = classLoader.loadClass("edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game");
+				config.common().objectClass(gameClass).updateDepth(3);
+			} catch (ClassNotFoundException e){
+				logger.log(Level.FINER, "The game class could not be loaded");
+			}
+			
+			
 			//Connect to the Database
 			server = Db4oClientServer.openServer(config, WPI_TNG_DB, PORT);
 			server.grantAccess(DB4oUser,DB4oPass);

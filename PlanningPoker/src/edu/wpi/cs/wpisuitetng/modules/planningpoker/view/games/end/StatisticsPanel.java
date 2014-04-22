@@ -204,6 +204,17 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 //		stDev = stDev(voteData);
 //		median = median(voteData);
 //	}
+	private void initStats() {
+		System.out.println(activeRequirement.getVotes().size());
+		System.out.println(activeGame.getName());
+		
+		ArrayList<Integer> voteData = requirementToVotes(activeRequirement); 
+		minEstimate = min(voteData);
+		maxEstimate = max(voteData);
+		mean = mean(voteData);
+		stDev = stDev(voteData);
+		median = median(voteData);
+	}
 	
 	private Object[] makeStatRow(Requirement requirement) {
 		ArrayList<Integer> voteData = requirementToVotes(requirement); 
