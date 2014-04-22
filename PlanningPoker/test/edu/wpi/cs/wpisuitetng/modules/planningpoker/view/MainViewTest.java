@@ -19,7 +19,6 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
@@ -39,7 +38,7 @@ public class MainViewTest {
 	private ToolbarView toolbar;
 	private GameTree gameTree;
 	private TabbedView tabs;
-	private NewActiveGamePanel activeGameTab;
+	//private NewActiveGamePanel activeGameTab;
 	private NewCreateGamePanel createGameTab;
 	private EndGamePanel endGameTab;
 	private Game activeGame;
@@ -60,19 +59,43 @@ public class MainViewTest {
 		createGameTab = new NewCreateGamePanel(activeGame);
 		endGameTab = new EndGamePanel(activeGame);
 		//activeGameTab = new NewActiveGamePanel(activeGame);
+		
+		
 		vec.setGameOverviewTree(gameTree);
 		vec.setTabbedView(tabs);
 		vec.setToolBar(toolbar);
+		
 		
 	}
 	
 	@Test
 	public void numberOfTabs() {
 		assertEquals(2, tabs.getTabCount());
+		
 		tabs.addTab(activeGame.getName(),createGameTab);
 		assertEquals(3, tabs.getTabCount());
+		
 		tabs.addTab("EndGame 1", endGameTab);
 		assertEquals(4, tabs.getTabCount());
+		
+		vec.createGame();
+		assertEquals(5, tabs.getTabCount());
+		vec.createDeck();
+		assertEquals(6, tabs.getTabCount());
+		
+		vec.removeTab(endGameTab);
+		assertEquals(5, tabs.getTabCount());
+		
+		vec.closeOthers();
+		assertEquals(1, tabs.getTabCount());
+		
+		tabs.addTab("EndGame 1", endGameTab);
+		assertEquals(2, tabs.getTabCount());
+		
+		vec.closeAllTabs();
+		assertEquals(1, tabs.getTabCount());
+		
+		
 		//tabs.removeTab(activeGameTab);
 		//tabs.addTab(activeGame.getName(),activeGameTab);
 	}
