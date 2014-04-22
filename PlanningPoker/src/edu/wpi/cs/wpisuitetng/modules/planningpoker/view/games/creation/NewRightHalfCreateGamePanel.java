@@ -327,7 +327,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		importReqsPanel.add(tablePanel);
 		importReqsPanel.add(submitImportReqButton);
 		importReqsPanel.add(cancelImportReqButton);
-		
+		importReqsPanel.add(importErrorLabel);
 		
 		importReqsPanel.setVisible(false);
 		editReqButton.setEnabled(false);
@@ -462,7 +462,11 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
         importLayout.putConstraint(SpringLayout.WEST, submitImportReqButton, 5, SpringLayout.WEST, importReqsPanel);
         
         importLayout.putConstraint(SpringLayout.SOUTH, cancelImportReqButton, -5, SpringLayout.SOUTH, importReqsPanel);
-        importLayout.putConstraint(SpringLayout.EAST, cancelImportReqButton, -5, SpringLayout.EAST, importReqsPanel);      
+        importLayout.putConstraint(SpringLayout.EAST, cancelImportReqButton, -5, SpringLayout.EAST, importReqsPanel);   
+        
+        importLayout.putConstraint(SpringLayout.NORTH, importErrorLabel, 2, SpringLayout.NORTH, submitImportReqButton);
+        importLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, importErrorLabel, 0, SpringLayout.HORIZONTAL_CENTER, importReqsPanel);
+        
         
         importLayout.putConstraint(SpringLayout.SOUTH, tablePanel, -20, SpringLayout.NORTH, submitImportReqButton);
         
@@ -508,10 +512,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				addReqButton.setEnabled(false);
 				importReqButton.setEnabled(false);
 				removeReqButton.setEnabled(false);
-			//	submitAddReqButton.setEnabled(true);
 				updateAddReqButton.setEnabled(false);
 				updateReqsLabel.setVisible(false);
 				createReqsLabel.setVisible(true);
+				displayError("A name must be entered");
 				disableButtons();
 			}
 		});
@@ -620,10 +624,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		
 		if(importTable.getRowCount() == 0){
 			submitImportReqButton.setEnabled(false);
+			importErrorLabel.setText("No requirements to be imported. Please click cancel.");
+			importErrorLabel.setForeground(Color.red);
 			
 		}
 		else{
 			submitImportReqButton.setEnabled(true);
+			importErrorLabel.setText("");
 		}
 	}
 
@@ -643,6 +650,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				editReqButton.setEnabled(true);
 				globalRow = -1;
 				parent.updateButtons();
+				displayError("");
 			}
 			else {
 				displayError("Duplicate Requirement Added");
