@@ -42,8 +42,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.RetrieveRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamesTable;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ImportGamesTable;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
@@ -586,34 +584,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		//set the bigger font for userStoryDesc
 		Font bigFont = newFont;
 		return bigFont;
-	}
-
-	/**
-	 * Instantiates this table
-	 * @return the ActiveGamesTable
-	 */
-	private ActiveGamesTable initializeTable() {
-		String[] columnNames2 = {"Requirement", "Description"};
-		Object[][] data2 = {};
-		ActiveGamesTable table = new ActiveGamesTable(data2, columnNames2);
-		table.getColumnModel().getColumn(0).setMinWidth(100);
-		table.getColumnModel().getColumn(0).setMaxWidth(400);
-		table.getColumnModel().getColumn(1).setMinWidth(100);
-		table.getColumnModel().getColumn(1).setMaxWidth(800);
-		return table;
-	}
-	
-	private ImportGamesTable initializeImportTable() {
-		String[] columnNames2 = {"Requirement", "Description"};
-		Object[][] data2 = {};
-		ImportGamesTable table = new ImportGamesTable(data2, columnNames2);
-		
-		table.getColumnModel().getColumn(0).setMinWidth(100);
-		table.getColumnModel().getColumn(0).setMaxWidth(400);
-		table.getColumnModel().getColumn(1).setMinWidth(100);
-		table.getColumnModel().getColumn(1).setMaxWidth(800);
-		
-		return table;
 	}
 	
 	private void updateImportTable() {
