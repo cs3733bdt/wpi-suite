@@ -23,6 +23,7 @@ import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
@@ -35,7 +36,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requireme
  * @author jonathanleitschuh
  */
 
-public class Game extends ObservableModel implements IModelObserver{
+public class Game extends ObservableModel implements IModelObserver, IStorageModel<Game>{
 	
 	/** This is the best way to keep games unique so 
 	 *  that you are not relying upon data that can change */
