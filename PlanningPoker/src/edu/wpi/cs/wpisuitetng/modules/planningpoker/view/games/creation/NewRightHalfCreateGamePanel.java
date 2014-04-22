@@ -530,25 +530,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		removeReqButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(currentTable.getSelectedRowCount() != 0) {
-					while(currentTable.getSelectedRowCount() > 0) {
-						int[] rows = currentTable.getSelectedRows();
-						// Remove requirement from requirements list
-						for (int i = 0; i < requirements.size(); i++) {
-							if (requirements.get(i).getName().equals(currentTable.getValueAt(rows[0], 0))) {
-								System.err.println("Removing Requirement: " + requirements.get(i).toJSON());
-								requirements.remove(requirements.get(i));
-							}
-						}
-						currentTable.getTableModel().removeRow(rows[0]);
-					}
-					if(currentTable.getTableModel().getRowCount() == 0){
-						removeReqButton.setEnabled(false);
-						editReqButton.setEnabled(false);
-						
-					}
-					parent.updateButtons();
-				}
+				removeRequirement();
 			}
 		});
 		
@@ -641,7 +623,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	}
 	
 	private void updateButtonPressed(){
-		if(validateNameAndDesc(true,true) && globalRow != -1){
+		if(globalRow != -1){
 			currentTable.setValueAt(nameArea.getText(), globalRow, 0);
 			currentTable.setValueAt(descArea.getText(), globalRow, 1);
 			globalRow = -1;
@@ -691,6 +673,15 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		boolean nameValid = false;
 		boolean uniqueName = false;
 		
+		if(checkduplicateReq(new Requirement(nameArea.getText(), descArea.getText()))){
+			uniqueName = false;
+			displayError("A requirement already exists with that name");
+		}
+		else{
+			errorLabel.setText("");
+			uniqueName = true;
+		}
+		
 		if(descArea.getText().equals("")){
 			displayError("A description must be entered");
 			if(showBox){
@@ -699,7 +690,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			descriptionValid = false;
 		}
 		else{
-			errorLabel.setText("");
 			descArea.setBorder(defaultTextAreaBorder);
 			descriptionValid = true;
 		}
@@ -715,14 +705,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		else{
 			nameArea.setBorder(defaultTextFieldBorder);
 			nameValid = true;
-		}
-		
-		if(checkduplicateReq(new Requirement(nameArea.getText(), descArea.getText()))){
-			uniqueName = false;
-			displayError("A requirement already exists with that name");
-		}
-		else{
-			uniqueName = true;
 		}
 		
 		if(nameValid && descriptionValid && uniqueName){
@@ -767,6 +749,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		if (row == -1) {
 			return;
 		}
+		displayError("No changes have been made");
 		currentReqsPanel.setVisible(false);
 		createReqsPanel.setVisible(true);
 		importReqsPanel.setVisible(false);
@@ -790,6 +773,28 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			displayError("Duplicate Requirement Added");
 			errorLabel.setVisible(true); //TODO
 			//errorLabel.setVisible(false);
+		}
+	}
+	
+	private void removeRequirement(){
+		if(currentTable.getSelectedRowCount() != 0) {
+			while(currentTable.getSelectedRowCount() > 0) {
+				int[] rows = currentTable.getSelectedRows();
+				// Remove requirement from requirements list
+				for (int i = 0; i < requirements.size(); i++) {
+					if (requirements.get(i).getName().equals(currentTable.getValueAt(rows[0], 0))) {
+						System.err.println("Removing Requirement: " + requirements.get(i).toJSON());
+						requirements.remove(requirements.get(i));
+					}
+				}
+				currentTable.getTableModel().removeRow(rows[0]);
+			}
+			if(currentTable.getTableModel().getRowCount() == 0){
+				removeReqButton.setEnabled(false);
+				editReqButton.setEnabled(false);
+				
+			}
+			parent.updateButtons();
 		}
 	}
 
@@ -864,9 +869,21 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	private void updateUpdateButton(){
 		if(validateNameAndDesc(true, false) && updateValid()){
 			updateAddReqButton.setEnabled(true);
+			displayError("");
+		}
+		else if(!updateValid()) {
+			updateAddReqButton.setEnabled(false);
+			displayError("No changes have been made");
 		}
 		else{
-			updateAddReqButton.setEnabled(false);	
+			updateAddReqButton.setEnabled(false);
+			validateNameAndDesc(true, false);
+			if(errorLabel.getText().equals("A requirement already exists with that name")){
+				if(nameArea.getText().equals((String) currentTable.getValueAt(globalRow, 0))){
+					updateAddReqButton.setEnabled(true);
+					displayError("");
+				}
+			}
 		}
 	}
 	
@@ -884,7 +901,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	 */
 	private boolean updateValid() {
 		String updateName = nameArea.getText();
-		String currentName = (String) currentTable.getValueAt(globalRow, 0);
+		String currentName = (String) currentTable.getValueAt(globalRow, 0);		
 		String updateDesc = descArea.getText();
 		String currentDesc = (String) currentTable.getValueAt(globalRow, 1);
 		return (!(currentName.equals(updateName))) || (!(currentDesc.equals(updateDesc)));
