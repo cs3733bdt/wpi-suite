@@ -100,6 +100,22 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 		}
 		return temp;
 	}
+	
+	/**
+	 * Gets a requirement from the list of requirements
+	 * by the name of the requirement
+	 * @param name the name of the requirement
+	 * @return the requirement with given name
+	 */
+	public Requirement getRequirement(String name) {
+		Requirement req = null;
+		for (Requirement r: requirements) {
+			if (r.getName().equals(name))
+				req = r;
+		}
+		return req;
+	}
+	
 	/**
 	 * Removes the requirement with the given ID
 	 * 

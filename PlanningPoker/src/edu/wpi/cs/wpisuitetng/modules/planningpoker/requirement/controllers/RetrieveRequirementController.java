@@ -95,7 +95,7 @@ public class RetrieveRequirementController implements ActionListener {
 				// Only add requirements to the model if they
 				// don't already exist there
 				if (!rModel.contains(r.getId()))
-					rModel.addRequirements(requirements);
+					rModel.addRequirement(r);
 			}
 		}
 	}

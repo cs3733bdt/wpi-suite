@@ -539,13 +539,17 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		removeReqButton.addActionListener(new ActionListener(){
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(currentTable.getSelectedRowCount() == 0){
-				}
-				else {
-					while(currentTable.getSelectedRowCount() > 0){
-					int[] rows = currentTable.getSelectedRows();
-					// TODO remove the requirement from requirements list
-					currentTable.getTableModel().removeRow(rows[0]);
+				if(currentTable.getSelectedRowCount() != 0) {
+					while(currentTable.getSelectedRowCount() > 0) {
+						int[] rows = currentTable.getSelectedRows();
+						// Remove requirement from requirements list
+						for (int i = 0; i < requirements.size(); i++) {
+							if (requirements.get(i).getName().equals(currentTable.getValueAt(rows[0], 0))) {
+								System.err.println("Removing Requirement: " + requirements.get(i).toJSON());
+								requirements.remove(i);
+							}
+						}
+						currentTable.getTableModel().removeRow(rows[0]);
 					}
 					if(currentTable.getTableModel().getRowCount() == 0){
 						removeReqButton.setEnabled(false);
@@ -624,19 +628,15 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		// Sleep the thread for a little bit to ensure that
 		// the requirements get added to the model before 
 		// this continues
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		try { Thread.sleep(500); } 
+		catch (InterruptedException e) { e.printStackTrace(); }
 		
 		// Get the requirements from the model
 		List<Requirement> requirements = RequirementModel.getInstance().getRequirements();
 		
 		// Add the imported requirements to the table
 		for (Requirement r: requirements) {
-			System.err.println("Imported Requirement name: " + r.getName());
+			System.err.println("Imported Requirement: " + r.toJSON());
 			if (r.getFromRequirementModule()) {
 				// Don't allow duplicate requirements
 				if (!r.existsIn(this.requirements))
@@ -661,8 +661,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			globalRow = -1;
 			parent.updateButtons();
 		}
-		
-		
 	}
 	
 	private void updateButtonPressed(){
@@ -678,8 +676,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			enableButtons();
 			parent.updateButtons();
 		}
-		
-		
 	}
 	
 	private void enableButtons() {
@@ -708,8 +704,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			int[] rows = importTable.getSelectedRows();
 			for (int i = 0; i < rows.length; i++) {
 				String selectedName = (String) importTable.getValueAt(rows[i], 0);
-				String selectedDesc = (String) importTable.getValueAt(rows[i], 1);
-				addRequirement(new Requirement(selectedName, selectedDesc));
+				addRequirement(RequirementModel.getInstance().getRequirement(selectedName));
 			}
 		}
 		createReqsPanel.setVisible(false);
@@ -799,7 +794,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	}
 
 	public void addRequirement(Requirement requirement){
-		System.out.println("here");
 		if (!checkduplicateReq(requirement)) {
 			currentTable.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 			requirements.add(requirement);

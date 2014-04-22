@@ -20,7 +20,6 @@ public class RequirementDeserializer implements JsonDeserializer<Requirement> {
 	public Requirement deserialize(JsonElement requirementElement, Type requirementType,
 			JsonDeserializationContext context) throws JsonParseException {
 		 JsonObject deflated = requirementElement.getAsJsonObject();
-		 System.err.println("Requirement: " + deflated);
 		 
 		 if (!deflated.has("id")) {
 			 throw new JsonParseException("The serialized Requirement did not contain the required id field.");
