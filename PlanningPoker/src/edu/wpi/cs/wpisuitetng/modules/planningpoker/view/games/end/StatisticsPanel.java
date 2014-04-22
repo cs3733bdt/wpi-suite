@@ -435,8 +435,10 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		return true;
 	}
 
+
 	@Override
-	public boolean validateField(IErrorView warningField, boolean show) {
+	public boolean validateField(IErrorView warningField, boolean showLabel,
+			boolean showBox) {
 		// TODO Auto-generated method stub
 		return false;
 	}

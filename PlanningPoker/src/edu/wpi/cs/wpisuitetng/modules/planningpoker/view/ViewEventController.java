@@ -112,11 +112,10 @@ public class ViewEventController {
 	}
 	
 	public void editPreferences() {
-		PreferencesPanel newPreferencesPanel = new PreferencesPanel();
-		getTabbedView().addTab("Preferences", null, newPreferencesPanel, "Preferences");
+		getTabbedView().openPreferencesTab();
 		getTabbedView().invalidate();
 		getTabbedView().repaint();
-		getTabbedView().setSelectedComponent(newPreferencesPanel);
+		
 	}
 	
 //	public void openHelp() {
