@@ -636,28 +636,22 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 
 	private void submitButtonPressed(){
 		if(validateNameAndDesc(true,true)){
-			if(!checkduplicateReq(new Requirement(nameArea.getText(), descArea.getText()))){
-				addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
-				nameArea.setText("");
-				descArea.setText("");
-				createReqsPanel.setVisible(false);
-				currentReqsPanel.setVisible(true);
-				enableButtons();
-				submitAddReqButton.setEnabled(false);
-				addReqButton.setEnabled(true);
-				importReqButton.setEnabled(true);
-				removeReqButton.setEnabled(true);
-				editReqButton.setEnabled(true);
-				globalRow = -1;
-				parent.updateButtons();
-				displayError("");
-			}
-			else {
-				displayError("Duplicate Requirement Added");
-				//errorLabel.setVisible(true);
-			}
+			addRequirement(new Requirement(nameArea.getText(),descArea.getText()));
+			nameArea.setText("");
+			descArea.setText("");
+			createReqsPanel.setVisible(false);
+			currentReqsPanel.setVisible(true);
+			enableButtons();
+			submitAddReqButton.setEnabled(false);
+			addReqButton.setEnabled(true);
+			importReqButton.setEnabled(true);
+			removeReqButton.setEnabled(true);
+			editReqButton.setEnabled(true);
+			globalRow = -1;
+			parent.updateButtons();
+			displayError("");
+		} else {
 		}
-		else {}
 	}
 	
 	private void updateButtonPressed(){
@@ -709,6 +703,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	private boolean validateNameAndDesc(boolean showLabel, boolean showBox){
 		boolean descriptionValid = false;
 		boolean nameValid = false;
+		boolean uniqueName = false;
 		
 		if(descArea.getText().equals("")){
 			displayError("A description must be entered");
@@ -736,7 +731,15 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			nameValid = true;
 		}
 		
-		if(!nameArea.getText().equals("") && !descArea.getText().equals("")){
+		if(checkduplicateReq(new Requirement(nameArea.getText(), descArea.getText()))){
+			uniqueName = false;
+			displayError("A requirement already exists with that name");
+		}
+		else{
+			uniqueName = true;
+		}
+		
+		if(nameValid && descriptionValid && uniqueName){
 			errorLabel.setText("");
 		}
 		
@@ -746,7 +749,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			descArea.setBorder(defaultTextAreaBorder);
 		}
 		
-		return nameValid && descriptionValid;
+		return nameValid && descriptionValid && uniqueName;
 	}
 	
 	private void displayError(String errorString){
@@ -813,8 +816,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		String reqName;
 		for (int i = 0; i < reqList.size(); i++) {
 			reqName = reqList.get(i).getName();
-			System.out.println("first req: " + reqName);
-			if (reqName.equals(requirement.getName())) {
+			if (reqName.equals(requirement.getName())) {				
 				return true;
 			}
 		}
