@@ -18,8 +18,6 @@ import java.util.UUID;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
-import edu.wpi.cs.wpisuitetng.modules.core.models.ProjectDeserializer;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;

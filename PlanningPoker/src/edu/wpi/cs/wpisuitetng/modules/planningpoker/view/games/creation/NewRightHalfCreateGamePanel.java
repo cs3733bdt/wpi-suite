@@ -38,7 +38,6 @@ import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXDatePicker;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.RetrieveRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
