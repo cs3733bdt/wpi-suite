@@ -30,7 +30,7 @@ public class User extends AbstractModel
 	private String email;
 	private String facebookUsername;
 	private Role role;
-	private Carrier carrier;
+	private String carrier;
 	private String phoneNumber;
 	
 	transient private String password; // excluded from serialization, still stored.
@@ -158,7 +158,7 @@ public class User extends AbstractModel
 	public String getPhoneNumber(){
 		return phoneNumber;
 	}
-	public Carrier getCarrier(){
+	public String getCarrier(){
 		return carrier;
 	}
 	
@@ -279,8 +279,8 @@ public class User extends AbstractModel
 		return this;
 	}
 	
-	public User setCarrier(Carrier c){
-		this.carrier = c;
+	public User setCarrier(String carrier){
+		this.carrier = carrier;
 		return this;
 	}
 	
@@ -294,7 +294,7 @@ public class User extends AbstractModel
 		this.role = r;
 	}
 
-	
+	/*
 	public static User fromJSON(String json) {
 		// build the custom serializer/deserializer
 		Gson gson;
@@ -304,6 +304,16 @@ public class User extends AbstractModel
 		gson = builder.create();
 		
 		return gson.fromJson(json, User.class);
+	} */
+	
+	public static User fromJSON(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, User.class);
+	}
+	
+	public static User[] fromJsonArray(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, User[].class);
 	}
 
 	@Override

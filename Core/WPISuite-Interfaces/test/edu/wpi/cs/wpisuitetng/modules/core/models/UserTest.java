@@ -159,8 +159,8 @@ public class UserTest {
 	@Test
 	public void testSetCarrier()
 	{
-		u3.setCarrier(Carrier.VERIZON);
-		assertTrue(u3.getCarrier().equals(Carrier.VERIZON));
+		u3.setCarrier("VERIZON");
+		assertTrue(u3.getCarrier().equals("VERIZON"));
 		
 	}
 	

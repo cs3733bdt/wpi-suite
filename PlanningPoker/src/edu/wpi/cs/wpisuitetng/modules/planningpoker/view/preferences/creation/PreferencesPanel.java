@@ -28,11 +28,13 @@ import javax.swing.SpringLayout;
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.*;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.user.controllers.RetrieveUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
@@ -61,9 +63,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	JTextField facebookField;
 	JButton updateFacebookButton;
 	JCheckBox facebookCheckBox;
+	
+	RetrieveUserController userController; // = RetrieveUserController.getInstance();
 
     public PreferencesPanel() {
-
+    	userController = RetrieveUserController.getInstance();
     	build();
     }
 	
@@ -121,6 +125,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	/**
     	 * TODO autopopulate email field with user's email.
     	 */
+    	emailField.setText(getUserEmail());
     	
     	//Create the update email button
     	updateEmailButton = new JButton("Update Email");
@@ -189,6 +194,8 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	 * TODO autopopulate facebook field with user's facebook.
     	 */
     	
+    	facebookField.setText(getUserFacebookUsername());
+    	
     	//Create the update facebook button
     	updateFacebookButton = new JButton("Update facebook");
     	updateFacebookButton.setEnabled(false);
@@ -253,6 +260,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	/**
     	 * TODO autopopulate mobile field with user's number.
     	 */
+    	mobileField.setText(getUserMobile());
     	
     	//Create the update mobile button
     	updateMobileButton = new JButton("Update Mobile Number");
@@ -271,6 +279,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	//Create and add drop down menu for carriers
     	String[] items = { "Verizon", "AT&T", "T-Mobile", "Sprint", "U.S. Cellular"};
     	carrierDropDown = new JComboBox<String>(items);
+    	carrierDropDown.setSelectedIndex(0);
     	carrierDropDown.setSelectedIndex(getUserCarrier());
     	mobilePanel.add(carrierDropDown);
     	
@@ -431,29 +440,68 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		});
 	}
     
+	//TODO Add try catch incase request hasnt gone through completely? (should handle null ptrs)
 	
+	/**
+	 * @return returns the email of the user currently logged in
+	 */
 	private String getUserEmail() {
-		// TODO Auto-generated method stub	
-		
-		return null;
+		try{
+		return userController.getCurrentUser().getEmail();
+		}catch(NullPointerException e){
+			try {
+				Thread.sleep(2000);
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			return userController.getCurrentUser().getEmail();
+		}
 	}
 	
-	private String getUserPhoneNumber() {
-		// TODO Auto-generated method stub	
-		
-		return null;
+	/**
+	 * @return returns the phone number of the user currently logged in
+	 */
+	private String getUserMobile() {
+		return userController.getCurrentUser().getPhoneNumber();
 	}
 	
+	/**
+	 * @return returns the carrier of the user currently logged in
+	 */
 	private int getUserCarrier() {
-		// TODO Auto-generated method stub	
-		
-		return 0;
+		int carrierNum;	
+		String carrier = userController.getCurrentUser().getCarrier();
+		switch(carrier) {
+		case "ATT":
+			carrierNum = 1;
+			break;
+		case "VERIZON":
+			carrierNum = 0;
+			break;
+		case "TMOBILE":
+			carrierNum = 2;
+			break;
+		case "SPRINT":
+			carrierNum = 3;
+			break;
+		case "USCELLULAR":
+			carrierNum = 4;
+			break;
+		default:
+			System.out.print("No carrier.");
+			carrierNum = 0;
+			break;
+		} 
+		return carrierNum;
 	}
 	
+	/**
+	 * @return returns the facebook username of the user currently logged in
+	 */
 	private String getUserFacebookUsername() {
-		// TODO Auto-generated method stub	
-		
-		return null;
+		return userController.getCurrentUser().getFacebookUsername();
+
 	}
 
 	public Font makeFont(int size) {

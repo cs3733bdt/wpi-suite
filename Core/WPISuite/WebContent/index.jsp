@@ -132,7 +132,7 @@ function phoneNumberChange()
 	var user = new Object();
 	user.username = document.getElementById("phonechangeusername").value;
 	user.phoneNumber = document.getElementById("phoneNumber").value;
-	user.carrier = document.getElementById("carrierSelector").options[document.getElementById("carrierSelector").selectedIndex].value;
+	user.carrier = document.getElementById("carrier").options[document.getElementById("carrier").selectedIndex].value;
 	
 	var juser = JSON.stringify(user);
 	if(user.username == "")
@@ -218,7 +218,7 @@ Password:<input type="password" id="loginpassword"></input><br>
 <h4>Add Phone Number:</h4>
 Username:<input type="text" id="phonechangeusername"></input><br>
 Phone Number:<input type="text" id="phoneNumber"></input><br>
-Carrier:<select id="carrierSelector"><option value="VERIZON">Verizon</option>
+Carrier:<select id="carrier"><option value="VERIZON">Verizon</option>
 									<option value="ATT">AT&T</option>
 									<option value="SPRINT">Sprint</option>
 									<option value="USCELLULAR">U.S. Cellular</option>
