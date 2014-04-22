@@ -192,10 +192,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	facebookField.setText("facebook.username");
     	facebookPanel.add(facebookField);
    
-    	/**
-    	 * TODO autopopulate facebook field with user's facebook.
-    	 */
-    	
     	facebookField.setText(getUserFacebookUsername());
     	
     	//Create the update facebook button
@@ -453,8 +449,15 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		//Try to get user data, if the request has not completed, will catch
 		//exception and try again, this time waiting a few seconds to insure
 		//that the request has completed.
+		String userEmail;
 		try{
-		return userController.getCurrentUser().getEmail();
+			userEmail = userController.getCurrentUser().getEmail();
+			if (userEmail == null) {
+				return "";
+			}
+			else {
+				return userEmail;
+			}
 		}catch(NullPointerException e){
 			try {
 				Thread.sleep(2000);
@@ -462,7 +465,13 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			return userController.getCurrentUser().getEmail();
+			userEmail = userController.getCurrentUser().getEmail();
+			if (userEmail == null) {
+				return "";
+			}
+			else {
+				return userEmail;
+			}
 		}
 	}
 	
@@ -478,7 +487,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	 */
 	private int getUserCarrier() {
 		int carrierNum;	
-		String carrier = userController.getCurrentUser().getCarrier();
+		String carrier = userController.getCurrentUser().getCarrier(); //TODO fix: this throws a null pointer exception
+		if (carrier == null) {
+			carrier = "noCarrier";
+		}
 		switch(carrier) {
 		case "ATT":
 			carrierNum = 1;
@@ -496,7 +508,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			carrierNum = 4;
 			break;
 		default:
-			System.out.print("No carrier.");
 			carrierNum = 0;
 			break;
 		} 
