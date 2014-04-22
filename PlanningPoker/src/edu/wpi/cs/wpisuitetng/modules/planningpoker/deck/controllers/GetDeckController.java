@@ -104,7 +104,7 @@ public class GetDeckController implements ActionListener {
 	    // Make sure the response was not null
 	    if (decks != null) {
 	        // add the Decks to the local model
-	        DeckModel.getInstance().update(decks);
+	        DeckModel.getInstance().updateDecks(decks);
 	    }
 	}
 }
