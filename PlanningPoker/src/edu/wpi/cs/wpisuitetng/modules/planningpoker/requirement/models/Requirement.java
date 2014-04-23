@@ -129,7 +129,9 @@ public class Requirement extends ObservableModel {
 	public void setId(int id){
 		delayChange();
 		fromRequirementModule = true;
-		this.id = id;
+		// Make Id one more than the id in the 
+		// Requirement Manager
+		this.id = id + 1;
 	}
 	
 	/**

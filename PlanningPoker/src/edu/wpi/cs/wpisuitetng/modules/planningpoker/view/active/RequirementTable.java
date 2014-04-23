@@ -97,8 +97,8 @@ public class RequirementTable extends JTable{
 			getColumnModel().getColumn(1).setMinWidth(100);
 			getColumnModel().getColumn(1).setMaxWidth(800);
 			
-			for(int i=0; i < reqList.size(); i++) {
-				getTableModel().addRow(new Object[]{reqList.get(i).getName(), reqList.get(i).getDescription()});
+			for(Requirement r: reqList) {
+				getTableModel().addRow(new Object[]{r.getName(), r.getDescription()});
 			}
 			
 			break;
