@@ -75,7 +75,7 @@ public class GetGameController implements ActionListener {
 	public synchronized void retrieveGames() {
 		if(!isRunning) {
 			timer = new Timer(25000, this);
-			timer.setInitialDelay(25000);
+			timer.setInitialDelay(9000);
 			timer.setCoalesce(true);
 			timer.start();
 			isRunning = true;
