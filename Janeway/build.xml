@@ -17,6 +17,7 @@
 			<include name="swingx-all-1.6.4.jar"/>
 			<include name="smack-3.4.1-0cec571.jar" />
 			<include name="restfb-1.6.14.jar" />
+			<include name="db4o-8.0.249.16098-all-java5.jar" />
 		</fileset>
 	</path>
 	<path id="test-classpath">
@@ -70,6 +71,7 @@
 			<zipfileset src="./lib/javax.mail.jar"/>
 			<zipfileset src="./lib/smack-3.4.1-0cec571.jar" />
 			<zipfileset src="./lib/restfb-1.6.14.jar" />
+			<zipfileset src="./lib/db4o-8.0.249.16098-all-java5.jar" />
 			<zipfileset src="${core-lib}/gson-2.2.2.jar" />
 			<zipfileset src="${core-lib}/commons-codec-1.7.jar" />
 		</jar>

@@ -261,7 +261,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
     	 */
     	
     	//Create the update mobile button
-    	updateMobileButton = new JButton("Update Mobile Number");
+    	updateMobileButton = new JButton("Update Number");
     	updateMobileButton.setEnabled(false);
     	mobilePanel.add(updateMobileButton);
     	

@@ -243,6 +243,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				globalRow = -1;
 				submitAddReqButton.setEnabled(false);
 				//enableButtons();
+				currentTable.clearSelection();
 			}
 		});
 		
@@ -295,6 +296,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				addReqButton.setEnabled(true);
 				importReqButton.setEnabled(true);
 				//enableButtons();
+				currentTable.clearSelection();
 			}
 		});
 		
@@ -613,6 +615,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			globalRow = -1;
 			parent.updateButtons();
 			displayError("");
+			currentTable.clearSelection();
 		}
 	}
 	
@@ -636,7 +639,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			currentReqsPanel.setVisible(true);
 			submitAddReqButton.setEnabled(false);
 			enableButtons();
-			parent.updateButtons();			
+			parent.updateButtons();		
+			currentTable.clearSelection();
 		}
 	}
 	
@@ -654,7 +658,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		editReqButton.setEnabled(false);
 	}
 
-
 	private void submitImportButtonPressed(){
 		
 		int[] rows = importTable.getSelectedRows();
@@ -667,8 +670,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		importReqsPanel.setVisible(false);
 		addReqButton.setEnabled(true);
 		importReqButton.setEnabled(true);
-		removeReqButton.setEnabled(true);
+		//removeReqButton.setEnabled(true);
 		enableButtons();
+		currentTable.clearSelection();
 	}
 	
 	private boolean validateNameAndDesc(boolean showLabel, boolean showBox){
