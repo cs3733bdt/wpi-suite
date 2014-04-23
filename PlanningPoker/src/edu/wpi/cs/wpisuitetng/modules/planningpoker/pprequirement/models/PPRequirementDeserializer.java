@@ -41,7 +41,7 @@ public class PPRequirementDeserializer implements JsonDeserializer<PPRequirement
 		 
 		 PPRequirement inflated = new PPRequirement(name, description);
 		 
-		 inflated.setId(Integer.parseInt(id));
+		 inflated.setIdPlusOne(Integer.parseInt(id));
 		 
 		 return inflated;
 	}

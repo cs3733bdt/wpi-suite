@@ -55,7 +55,7 @@ public class PPRequirementEntityManager implements EntityManager<PPRequirement> 
 	 */
 	@Override
 	public PPRequirement makeEntity(Session s, String content) throws WPISuiteException {
-		final PPRequirement newRequirement = PPRequirement.fromJson(content);
+		final PPRequirement newRequirement = PPRequirement.fromJSON(content);
 		if(!db.save(newRequirement, s.getProject())) {
 			throw new WPISuiteException();
 		}
@@ -174,7 +174,7 @@ public class PPRequirementEntityManager implements EntityManager<PPRequirement> 
 	@Override
 	public PPRequirement update(Session session, String content) throws WPISuiteException {
 		
-		PPRequirement updatedRequirement = PPRequirement.fromJson(content);
+		PPRequirement updatedRequirement = PPRequirement.fromJSON(content);
 		/*
 		 * Because of the disconnected objects problem in db4o, we can't just save Requirements.
 		 * We have to get the original defect from db4o, copy properties from updatedRequirement,

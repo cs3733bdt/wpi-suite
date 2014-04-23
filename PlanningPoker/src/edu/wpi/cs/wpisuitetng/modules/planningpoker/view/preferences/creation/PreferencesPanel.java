@@ -373,9 +373,8 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		/**
 		 * Put constraints on the email preferences panel 
 		 */
-		layout.putConstraint(SpringLayout.WEST, emailPanel, 5, SpringLayout.WEST, view);
-		layout.putConstraint(SpringLayout.NORTH, emailPanel, 20, SpringLayout.SOUTH, headingLabel);	
-		layout.putConstraint(SpringLayout.EAST, emailPanel, -5, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.NORTH, emailPanel, 20, SpringLayout.SOUTH, headingLabel);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, emailPanel, 0, SpringLayout.HORIZONTAL_CENTER, view);
 
 		// put constraints on the email label 
 		emailLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, emailPanelLabel, 0, SpringLayout.HORIZONTAL_CENTER, emailPanel);
@@ -396,6 +395,8 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		//Put constraints on the email text field 
 		emailLayout.putConstraint(SpringLayout.NORTH, emailField, 5, SpringLayout.SOUTH, emailOffNotify);
 		emailLayout.putConstraint(SpringLayout.WEST, emailField, 5, SpringLayout.EAST, userEmailLabel);
+
+		emailLayout.putConstraint(SpringLayout.EAST, emailField, -5, SpringLayout.EAST, emailPanel);
 		//  	emailLayout.putConstraint(SpringLayout.EAST, emailField, -5, SpringLayout.WEST, updateEmailButton);
 
 		//Put constraints on the email checkbox
@@ -405,10 +406,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		/**
 		 * Put constraints on the facebook preferences panel 
 		 */
-		layout.putConstraint(SpringLayout.WEST, facebookPanel, 5, SpringLayout.WEST, view);
 		layout.putConstraint(SpringLayout.NORTH, facebookPanel, 20, SpringLayout.SOUTH, emailPanel);	
-		layout.putConstraint(SpringLayout.EAST, facebookPanel, -5, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, facebookPanel, 0, SpringLayout.HORIZONTAL_CENTER, view);
 
+		
 		// put constraints on the facebook label 
 		facebookLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, facebookPanelLabel, 0, SpringLayout.HORIZONTAL_CENTER, facebookPanel);
 
@@ -428,6 +429,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		//Put constraints on the facebook text field 
 		facebookLayout.putConstraint(SpringLayout.NORTH, facebookField, 5, SpringLayout.SOUTH, facebookOffNotify);
 		facebookLayout.putConstraint(SpringLayout.WEST, facebookField, 5, SpringLayout.EAST, userfacebookLabel);
+		facebookLayout.putConstraint(SpringLayout.EAST, facebookField, -5, SpringLayout.EAST, facebookPanel);
 		//  	facebookLayout.putConstraint(SpringLayout.EAST, facebookField, -5, SpringLayout.WEST, updatefacebookButton);
 
 		//Put constraints on the facebook checkbox
@@ -438,10 +440,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		/**
 		 * put constraints on the mobile preferences panel 
 		 */
-		layout.putConstraint(SpringLayout.WEST, mobilePanel, 5, SpringLayout.WEST, view);
 		layout.putConstraint(SpringLayout.NORTH, mobilePanel, 20, SpringLayout.SOUTH, facebookPanel);
-		layout.putConstraint(SpringLayout.EAST, mobilePanel, -5, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, mobilePanel, 0, SpringLayout.HORIZONTAL_CENTER, view);
 
+		
 		// put constraints on the mobile panel label
 		mobileLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, mobilePanelLabel, 0, SpringLayout.HORIZONTAL_CENTER, mobilePanel);
 
@@ -456,6 +458,8 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		//Put constraints on the mobile text field 
 		mobileLayout.putConstraint(SpringLayout.NORTH, mobileField, 5, SpringLayout.SOUTH, mobileOffNotify);
 		mobileLayout.putConstraint(SpringLayout.WEST, mobileField, 5, SpringLayout.EAST, userMobileLabel);
+		mobileLayout.putConstraint(SpringLayout.EAST, mobileField, -5, SpringLayout.EAST, mobilePanel);
+		
 		//    	mobileLayout.putConstraint(SpringLayout.EAST, mobileField, -5, SpringLayout.WEST, updateMobileButton);
 		//    
 		//Constraints for the mobile update button

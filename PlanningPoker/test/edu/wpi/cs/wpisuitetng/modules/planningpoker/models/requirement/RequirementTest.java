@@ -62,6 +62,7 @@ public class RequirementTest {
 		req2 = new PPRequirement("Req2", "Desc2");
 		req2.setId(2);
 		req3 = new PPRequirement("Req3", "Desc3");
+		req3.setId(3);
 		
 		vote1 = new Vote ("Steve", 7);		
 		req1Votes = new ArrayList<Vote>();
@@ -97,6 +98,8 @@ public class RequirementTest {
 		
 		assertEquals("Req2", req2.getName());
 		assertTrue(req2.identify(req2));
+		assertTrue(req2.getFromRequirementModule());
+		assertTrue(req2Dupe.getFromRequirementModule());
 		assertTrue(req2.identify(req2Dupe));
 		assertFalse(req2.identify(req3Dupe));
 		assertFalse(req2.identify(null));
