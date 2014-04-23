@@ -129,7 +129,9 @@ public class Requirement extends ObservableModel {
 	public void setId(int id){
 		delayChange();
 		fromRequirementModule = true;
-		this.id = id;
+		// Make Id one more than the id in the 
+		// Requirement Manager
+		this.id = id + 1;
 	}
 	
 	/**
@@ -368,6 +370,11 @@ public class Requirement extends ObservableModel {
 			wasChanged = true;
 		}
 		
+		if(fromRequirementModule != toCopyFrom.fromRequirementModule) {
+			fromRequirementModule = toCopyFrom.fromRequirementModule;
+			wasChanged = true;
+		}
+		
 		if (finalEstimate != toCopyFrom.finalEstimate) {
 			finalEstimate = toCopyFrom.finalEstimate;
 			wasChanged = true;
@@ -377,14 +384,27 @@ public class Requirement extends ObservableModel {
 			description = toCopyFrom.description;
 			wasChanged = true;
 		}
+		
 		if(!name.equals(toCopyFrom.name)) {
 			name = toCopyFrom.name;
 			wasChanged = true;
 		}
+		
 		if(!votes.equals(toCopyFrom.votes)) {
 			votes = toCopyFrom.votes;
 			wasChanged = true;
 		}
+		
+		if(complete != toCopyFrom.complete) {
+			complete = toCopyFrom.complete;
+			wasChanged = true;
+		}
+		
+		if(finalEstimate != toCopyFrom.finalEstimate) {
+			finalEstimate = toCopyFrom.finalEstimate;
+			wasChanged = true;
+		}
+		
 		return wasChanged;
 	}
 	
