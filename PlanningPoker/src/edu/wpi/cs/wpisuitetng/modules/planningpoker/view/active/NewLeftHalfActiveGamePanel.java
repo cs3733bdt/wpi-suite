@@ -19,6 +19,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -51,6 +52,11 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 	private JButton endGameManuallyButton;
 	JScrollPane notePane;
 	private final Border defaultBorder = (new JTextField()).getBorder();
+	
+	private JLabel overallProgressLabel = new JLabel("Team's overall voting progress: ");
+	private final JProgressBar overallProgress = new JProgressBar(0, 1000);
+	private JButton testButton = new JButton("testYo");
+	
 	
 	private NewActiveGamePanel parentPanel;
 	/**
@@ -170,6 +176,21 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 				}
 		});
 		
+		newLeftView.add(overallProgressLabel);
+		
+		//updateOverallProgress();
+		overallProgress.setPreferredSize(new Dimension(320,25));//make the bar higher
+		overallProgress.setStringPainted(true);
+		newLeftView.add(overallProgress);
+		newLeftView.add(testButton);
+		
+		testButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				submitButtonPressed();
+			}
+		});
+		
 		/**
 		 * Add components to the container
 		 */
@@ -215,7 +236,14 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.NORTH, gameEndDate, 5, SpringLayout.SOUTH, gameCreatorLabel);	
 		layout.putConstraint(SpringLayout.WEST, gameEndDate, 5, SpringLayout.EAST, gameEndDateLabel);
 
-		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 25, SpringLayout.SOUTH, gameEndDateLabel);	
+		layout.putConstraint(SpringLayout.NORTH, overallProgressLabel, 15, SpringLayout.SOUTH, gameEndDate);	
+		layout.putConstraint(SpringLayout.WEST, overallProgressLabel, 5, SpringLayout.WEST, newLeftView);
+
+		layout.putConstraint(SpringLayout.NORTH, overallProgress, 5, SpringLayout.SOUTH, overallProgressLabel);	
+		layout.putConstraint(SpringLayout.WEST, overallProgress, 5, SpringLayout.WEST, newLeftView);
+		layout.putConstraint(SpringLayout.EAST, overallProgress, -5, SpringLayout.EAST, newLeftView);
+		
+		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 20, SpringLayout.SOUTH, overallProgress);	
 		layout.putConstraint(SpringLayout.WEST, endGameManuallyNoteLabel, 5, SpringLayout.WEST, newLeftView);
 
 		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel1, 1, SpringLayout.SOUTH, endGameManuallyNoteLabel);	
@@ -229,8 +257,47 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.WEST, endGameManuallyButton, 5, SpringLayout.WEST, newLeftView);
 		layout.putConstraint(SpringLayout.SOUTH, endGameManuallyButton, -10, SpringLayout.SOUTH, newLeftView);
 
+		layout.putConstraint(SpringLayout.WEST, testButton, 10, SpringLayout.EAST, endGameManuallyButton);
+		layout.putConstraint(SpringLayout.SOUTH, testButton, -10, SpringLayout.SOUTH, newLeftView);
+
 		
 		this.getViewport().add(newLeftView);
+	}
+	
+	
+	
+	/**
+	 * Updates the overall progress bar.
+	 *
+	 */
+	private void updateOverallProgress() {
+		/*int votes = 0;
+		for (RequirementEstimate requirement : requirements) {
+			if (requirement.getVotes().containsKey(user)) {
+				votes++;
+			}
+		}
+		overallProgress.setValue(votes * 1000 / requirements.size());
+		overallProgress.setString("Personal voting progress: "+
+				Double.toString(votes*100 / requirements.size()) + "%");*/
+		/*int i = 0;
+		for(i = 0; i <= overallProgress.getMaximum(); i = i+20){
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			overallProgress.setValue(20);
+		}
+		*/
+	}
+	
+	public void submitButtonPressed() {
+		int i = overallProgress.getValue();
+		int numReqs = parentPanel.getReqTable().getRowCount();
+		int j = (overallProgress.getMaximum())/numReqs;
+		overallProgress.setValue(i + j);
 	}
 
 }

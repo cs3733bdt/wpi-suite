@@ -62,7 +62,7 @@ public class GameOverview extends JSplitPane {
 		panel.setLayout(layout);
 		JScrollPane scrollPanel = new JScrollPane(panel);
 		//scrollPanel.setMinimumSize(new Dimension(600, 450));
-		panel.setPreferredSize(new Dimension(610, 750)); //ADD HEIGHT AS 510
+		panel.setPreferredSize(new Dimension(610, 675)); //ADD HEIGHT AS 510
 		
 		// Adds introduction label
 		ppIntroLabel = new JLabel("What is Planning Poker?");
@@ -200,7 +200,7 @@ public class GameOverview extends JSplitPane {
 		//panel.add(playPane);
 		panel.add(playPlanPokerLabel);
 		panel.add(playPlanPokerExp);
-		//ADD THIS LINE BACK IN TO ADD VIDEO TUTORIAL panel.add(videoTutorial);
+		panel.add(videoTutorial);
 		
 		// Adjusts constraints on components
 		layout.putConstraint(SpringLayout.NORTH, ppIntroLabel, 10, SpringLayout.NORTH, panel);
@@ -224,7 +224,7 @@ public class GameOverview extends JSplitPane {
 		layout.putConstraint(SpringLayout.WEST, videoTutorial, 5, SpringLayout.WEST, panel);
 		
 		layout.putConstraint(SpringLayout.NORTH, createGameExp, 10, SpringLayout.SOUTH, createGameLabel);
-		//ADD THIS LINE AND REMOVE ABOVE LINE WHEN ADDING TUTORIAL BACK IN layout.putConstraint(SpringLayout.NORTH, createGameExp, 8, SpringLayout.SOUTH, videoTutorial);
+		layout.putConstraint(SpringLayout.NORTH, createGameExp, 8, SpringLayout.SOUTH, videoTutorial);
 		layout.putConstraint(SpringLayout.WEST, createGameExp, 5, SpringLayout.WEST, panel);
 		layout.putConstraint(SpringLayout.EAST, createGameExp, 600, SpringLayout.WEST, panel);
 		
