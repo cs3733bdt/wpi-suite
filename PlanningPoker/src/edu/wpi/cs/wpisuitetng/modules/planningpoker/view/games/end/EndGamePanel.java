@@ -90,23 +90,6 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
 		setDividerLocation(420);
 		
 	}
-	
-	public EndGamePanel(Game game, List<Requirement> selectedReqs) {
-		this.game = game;
-
-		rightHalf = new StatisticsPanel(game);
-		leftHalf = new EndGameLeftHalf(game, this);
-	
-		game.addObserver(this); //Makes this the observer for the game
-		active = game;
-		isEstimatePanelCreated = false;
-	
-		setLeftComponent(leftHalf);
-		setRightComponent(rightHalf);
-		
-		rightHalf.setMinimumSize(new Dimension(333, 500));
-		setDividerLocation(420);
-	}
 
 	public void updateRightHalf(Requirement req) {
 		rightHalf.reqClicked(req);
@@ -225,7 +208,7 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
 				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
 				
         //Set up the content pane.
-        frame.add(new EndGamePanel(new Game("name", "desc", false, true)));
+        frame.add(new EndGamePanel(new Game("name", "desc", new ArrayList<Requirement>(), false, true)));
         frame.setSize(400, 400);
 
         //Display the window.

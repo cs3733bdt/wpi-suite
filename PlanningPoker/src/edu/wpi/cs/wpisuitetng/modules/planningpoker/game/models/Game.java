@@ -13,7 +13,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import com.db4o.config.annotations.UpdatedDepth;
@@ -53,7 +55,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	/** The username of the game creator */
 	private String creator;
 	/** The list of requirements that need to be estimated */
-	//private List<Requirement> requirements = new ArrayList<>();
+	private transient List<Requirement> requirements = new ArrayList<>();
 	/** True if the game is complete, false otherwise */
 	private boolean complete;
 	/** True if the game is active and people can vote, false if people can't vote */
@@ -228,12 +230,14 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 * 
 	 */
 	public Game(String name, 
-			String description, 
+			String description,
+			List<Requirement> requirements,
 			boolean hasTimeLimit, 
 			boolean usesCards) {
 		this(); //Calls the default constructor
 		this.name = name;
 		this.description = description;
+		this.requirements = requirements;
 		this.hasTimeLimit = hasTimeLimit;
 		this.usesCards = usesCards;
 
@@ -251,10 +255,11 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 */
 	public Game(String name, 
 			String description, 
-			boolean hasTimeLimit, 
+			boolean hasTimeLimit,
+			List<Requirement> requirements,
 			boolean usesCards, 
 			Date creationTime) {
-		this(name, description, hasTimeLimit, usesCards);
+		this(name, description, requirements, hasTimeLimit, usesCards);
 		this.creationTime = creationTime;
 	}
 
@@ -623,4 +628,19 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		fbn.sendFacebookNotifications();
 
 	}
+
+	/**
+	 * @return the requirements
+	 */
+	public List<Requirement> getRequirements() {
+		return requirements;
+	}
+
+	/**
+	 * @param requirements the requirements to set
+	 */
+	public void setRequirements(List<Requirement> requirements) {
+		this.requirements = requirements;
+	}
+
 }

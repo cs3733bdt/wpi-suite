@@ -46,7 +46,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private Game currentGame;
-	private List<Requirement> currentReqs;// = new ArrayList<Requirement>();
 	private Requirement activeRequirement;
 	private JTextArea nameTextField;
 	private JScrollPane nameTextFieldPanel;
@@ -78,12 +77,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		currentGame = game;
 		build();
 	}
-	
-	NewRightHalfActiveGamePanel(final Game game, List<Requirement> Reqs) {
-		currentGame = game;
-		currentReqs = Reqs;
-		build();
-	}
 
 	public void build() {
 		Container rightView = new Container(); // Creates the container for
@@ -111,7 +104,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/*
 		 * Initializes a table's columns and rows and the table
 		 */
-		table = new RequirementTable(currentReqs,
+		table = new RequirementTable(currentGame.getRequirements(),
 				RequirementTableMode.ACTIVE);
 
 		/**

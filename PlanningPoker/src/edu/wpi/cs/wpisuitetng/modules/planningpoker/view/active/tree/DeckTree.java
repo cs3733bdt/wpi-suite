@@ -232,17 +232,18 @@ public class DeckTree extends JPanel implements MouseListener{
 								selectedReqs.add(r);
 							}
 						}
+						selectedGame.setRequirements(selectedReqs);
 						System.out.println("Setting view to game: " + 
 								selectedGame.toString());
 						if(selectedGame.isActive() &&
 								(!selectedGame.isComplete())){
-							ViewEventController.getInstance().joinGame(selectedGame, selectedReqs);
+							ViewEventController.getInstance().joinGame(selectedGame);
 						}
 						else if(!selectedGame.isComplete()){
 							ViewEventController.getInstance().editGame(selectedGame);
 						}
 						else{
-							ViewEventController.getInstance().viewEndGame(selectedGame, selectedReqs);
+							ViewEventController.getInstance().viewEndGame(selectedGame);
 						}
 					}
 					else if(node.getUserObject() instanceof String){
