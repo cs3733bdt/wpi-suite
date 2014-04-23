@@ -85,15 +85,26 @@ public class UserDeserializer implements JsonDeserializer<User> {
 		 
 		 User inflated = new User(name, username, password, email, facebookUsername, idNum);
 		 
+		 if(deflated.has("notificationPreferences")  && !deflated.get("notificationPreferences").getAsString().equals(""))
+		 {
+			String notificationPreferences = String.valueOf(deflated.get("notificationPreferences").getAsString());
+			 inflated.setNotificationPreferences(notificationPreferences);
+			 
+		 }
+		 else
+		 {
+			 inflated.setNotificationPreferences("");
+		 }
+		 
 		 if(deflated.has("carrier")  && !deflated.get("carrier").getAsString().equals(""))
 		 {
-			String carrier = String.valueOf(deflated.get("carrier").getAsString());
+			 String carrier = String.valueOf(deflated.get("carrier").getAsString());
 			 inflated.setCarrier(carrier);
 			 
 		 }
 		 else
 		 {
-			 inflated.setCarrier(null);
+			 inflated.setCarrier("--");
 		 }
 		 
 		 if(deflated.has("phoneNumber")  && !deflated.get("phoneNumber").getAsString().equals(""))

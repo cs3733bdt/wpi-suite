@@ -276,6 +276,14 @@ public class UserManager implements EntityManager<User> {
 			{
 				toUpdate.setEmail(changes.getEmail());
 			}
+			if ((changes.getFacebookUsername() != null))
+			{
+				toUpdate.setFacebookUsername(changes.getFacebookUsername());
+			}
+			if ((changes.getNotificationPreferences() != null))
+			{
+				toUpdate.setNotificationPreferences(changes.getNotificationPreferences());
+			} 
 			if ((changes.getPhoneNumber() != null))
 			{
 				toUpdate.setPhoneNumber(changes.getPhoneNumber());

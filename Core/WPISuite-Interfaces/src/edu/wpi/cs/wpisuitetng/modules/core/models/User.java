@@ -30,8 +30,9 @@ public class User extends AbstractModel
 	private String email;
 	private String facebookUsername;
 	private Role role;
-	private String carrier;
+	private String carrier = "--";
 	private String phoneNumber;
+	private String notificationPreferences;
 	
 	transient private String password; // excluded from serialization, still stored.
 	
@@ -49,11 +50,12 @@ public class User extends AbstractModel
 		this.username = username;
 		this.password = password;
 		this.idNum = idNum;
-		this.email = email;
+		this.email = "dicks";
 		this.facebookUsername = facebookUsername;
 		this.role = Role.USER;
 		this.phoneNumber = null;
-		this.carrier = null;
+		this.carrier = "--";
+		this.notificationPreferences= "";
 	}
 	
 	@Override
@@ -83,6 +85,10 @@ public class User extends AbstractModel
 				}
 				
 				if(this.facebookUsername != null && !this.facebookUsername.equals(((User)other).facebookUsername)) {
+					return false;
+				}
+				
+				if(this.notificationPreferences != null && !this.notificationPreferences.equals(((User)other).notificationPreferences)) {
 					return false;
 				}
 				
@@ -161,6 +167,11 @@ public class User extends AbstractModel
 	public String getCarrier(){
 		return carrier;
 	}
+	
+	public String getNotificationPreferences(){
+		return notificationPreferences;
+	}
+	
 	
 	/* database interaction */
 	public void save()
@@ -281,6 +292,11 @@ public class User extends AbstractModel
 	
 	public User setCarrier(String carrier){
 		this.carrier = carrier;
+		return this;
+	}
+	
+	public User setNotificationPreferences(String newPreferences) {
+		notificationPreferences = newPreferences;
 		return this;
 	}
 	

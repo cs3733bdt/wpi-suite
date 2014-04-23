@@ -43,6 +43,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableMode
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.user.controllers.RetrieveUserController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.user.controllers.UpdateUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
@@ -84,12 +85,13 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	boolean hasEmail;
 	boolean hasFaceBook;
 
-	RetrieveUserController userController;
+	RetrieveUserController getUserController;
+	UpdateUserController updateUserController;
+	
 
 	public PreferencesPanel() {
 		//Get the instance of the user controller to get current user data.
-		userController = RetrieveUserController.getInstance();
-
+		InitializeControllers();
 		build();
 	}
 
@@ -329,11 +331,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		//Create and add drop down menu for carriers
 		String[] items = { "Verizon", "AT&T", "T-Mobile", "Sprint", "U.S. Cellular", "--"};
 		carrierDropDown = new JComboBox<String>(items);
-		if (getUserCarrier() == -1) {
+		try{
+		carrierDropDown.setSelectedIndex(getUserCarrierIndex());
+		}catch(NullPointerException e){
 			carrierDropDown.setSelectedIndex(5);
-		}
-		else {
-			carrierDropDown.setSelectedIndex(getUserCarrier());
 		}
 		carrierDropDown.addActionListener(new ActionListener() {
 
@@ -485,24 +486,70 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 
 	
 	public void updateEmailButtonPressed() {
-		// TODO Auto-generated method stub
+		User newUser = getUserController.getCurrentUser();
+		newUser.setEmail(emailField.getText());
+		updateUserController.updateUser(newUser);
 		
 	}
 	public void updateFacebookButtonPressed() {
-		// TODO Auto-generated method stub
+		User newUser = getUserController.getCurrentUser();
+		newUser.setFacebookUsername(facebookField.getText());
+		updateUserController.updateUser(newUser);
 		
 	}
 	public void updateMobileButtonPressed() {
-		// TODO Auto-generated method stub
-		
+		User newUser = getUserController.getCurrentUser();
+		newUser.setPhoneNumber(mobileField.getText());
+		updateUserController.updateUser(newUser);
 	}
 	public void updateCarrierButtonPressed() {
-		// TODO Auto-generated method stub
+		User newUser = getUserController.getCurrentUser();
+		int carrierIndex = carrierDropDown.getSelectedIndex();
+		String carrier;
 		
+		switch(carrierIndex){
+		case 0:
+			carrier = "VERIZON";
+			break;
+		case 1:
+			carrier = "ATT";
+			break;
+		case 2:
+			carrier = "TMOBILE";
+			break;
+		case 3:
+			carrier = "SPRINT";
+			break;
+		case 4:
+			carrier = "USCELLULAR";
+			break;
+		case 5:
+			carrier = "--";
+			break;
+		default:
+			carrier = "--";
+			break;
+		}
+		newUser.setCarrier(carrier);
+		updateUserController.updateUser(newUser);
 	}
-
 	
-
+	public void updateNotificationPreferences(){
+		User newUser = getUserController.getCurrentUser();
+		String newPreferences = "";
+		if(emailCheckBox.isSelected()){
+			newPreferences.concat("E");
+		}
+		if(facebookCheckBox.isSelected()){
+			newPreferences.concat("F");
+		}
+		if(mobileCheckBox.isSelected()){
+			newPreferences.concat("M");
+		}
+		newUser.setNotificationPreferences(newPreferences);
+		updateUserController.updateUser(newUser);
+	}
+	
 	private void addKeyListenerTo(JComponent component){
 		component.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {
@@ -522,6 +569,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			}
 		});
 	}
+	
+	private void InitializeControllers() {
+		getUserController = RetrieveUserController.getInstance();
+		updateUserController = UpdateUserController.getInstance();
+	}
 
 	/**
 	 * Waits for a successful request to get the current user,
@@ -536,7 +588,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		//that the request has completed.
 		String userEmail;
 		try{
-			userEmail = userController.getCurrentUser().getEmail();
+			userEmail = getUserController.getCurrentUser().getEmail();
 			if (userEmail == null) {
 				hasEmail = false;
 				return "";
@@ -552,7 +604,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 				// TODO Auto-generated catch block
 				//e1.printStackTrace();
 			}
-			userEmail = userController.getCurrentUser().getEmail();
+			userEmail = getUserController.getCurrentUser().getEmail();
 			if (userEmail == null) {
 				hasEmail = false;
 				return "";
@@ -568,7 +620,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	 * @return returns the phone number of the user currently logged in
 	 */
 	private String getUserMobile() {
-		String number = userController.getCurrentUser().getPhoneNumber();
+		String number = getUserController.getCurrentUser().getPhoneNumber();
 		if (number == null) {
 			hasNumber = false;
 			return "";
@@ -582,13 +634,9 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	/**
 	 * @return returns the carrier of the user currently logged in
 	 */
-	private int getUserCarrier() {
+	private int getUserCarrierIndex() {
 		int carrierNum;	
-		String carrier = userController.getCurrentUser().getCarrier(); //TODO fix: this throws a null pointer exception
-		if (carrier == null) {
-			carrier = "noCarrier";
-			hasCarrier = false;
-		}
+		String carrier = getUserController.getCurrentUser().getCarrier(); //TODO fix: this throws a null pointer exception
 		switch(carrier) {
 		case "ATT":
 			carrierNum = 1;
@@ -610,8 +658,12 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			carrierNum = 4;
 			hasCarrier = true;
 			break;
+		case "--":
+			carrierNum = 5;
+			hasCarrier = false;
+			break;
 		default:
-			carrierNum = -1;
+			carrierNum = 5;
 			break;
 		} 
 		return carrierNum;
@@ -621,7 +673,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	 * @return returns the facebook username of the user currently logged in
 	 */
 	private String getUserFacebookUsername() {
-		String facebookName = userController.getCurrentUser().getFacebookUsername();
+		String facebookName = getUserController.getCurrentUser().getFacebookUsername();
 		if (facebookName == null) {
 			hasFaceBook = false;
 			return "";
@@ -656,20 +708,25 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	}
 
 	public void initializeCheckBoxes() {
-		if (!hasFaceBook || !verifyFacebookField())  {
-			if (facebookCheckBox.isSelected()) {
-				facebookCheckBox.doClick();	
+		try{
+			String preferences = getUserController.getCurrentUser().getNotificationPreferences();
+			//E: Email preference
+			if(preferences.contains("E")){
+				emailCheckBox.setSelected(true);
 			}
-		}
-		if (!hasNumber || !hasCarrier || !verifyMobileField() || !verifyCarrierField()) {
-			if (mobileCheckBox.isSelected()) {
-				mobileCheckBox.doClick();
+			//F: Facebook preference
+			if(preferences.contains("F")){
+				facebookCheckBox.setSelected(true);
 			}
-		}
-		if (!hasEmail || !verifyEmailField()) {
-			if (emailCheckBox.isSelected()) {
-				emailCheckBox.doClick();
+			//M: Mobile preference
+			if(preferences.contains("M")){
+				mobileCheckBox.setSelected(true);
 			}
+			
+		}catch(NullPointerException e){
+			emailCheckBox.setSelected(false);
+			facebookCheckBox.setSelected(false);
+			mobileCheckBox.setSelected(false);
 		}
 	}
 
@@ -693,17 +750,18 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	 * the user selected the option to be notified through email
 	 */
 	public void emailCheckBoxListener() {
-		if (!emailCheckBox.isSelected()) {
-			emailOffNotify.setVisible(true);
-
-			emailField.setEnabled(false);
-			updateEmailButton.setEnabled(false);
-		}
-		else {
+		if (emailCheckBox.isSelected()) {
 			emailOffNotify.setVisible(false);
 
 			emailField.setEnabled(true);
-			reValidateEmailUpdateButton();
+			updateNotificationPreferences();
+			//reValidateEmailUpdateButton();
+		}
+		else {
+			emailOffNotify.setVisible(true);
+
+			emailField.setEnabled(false);
+			updateEmailButton.setEnabled(false);	
 		}
 	}
 	
@@ -722,7 +780,8 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			facebookOffNotify.setVisible(false);
 
 			facebookField.setEnabled(true);
-			reValidateFacebookUpdateButton();
+			updateNotificationPreferences();
+			//reValidateFacebookUpdateButton();
 		}
 	}
 	
@@ -747,22 +806,23 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			carrierDropDown.setEnabled(true);
 			updateCarrierButton.setEnabled(true);
 			updateMobileButton.setEnabled(true);
-			reValidateMobileUpdateButton(); //TODO fix this method to include both update buttons
+			updateNotificationPreferences();
+			//reValidateMobileUpdateButton(); //TODO fix this method to include both update buttons
 		}
 	}
 
 	public void reValidateEmailPanel() {
-		emailCheckBoxListener();
+		//emailCheckBoxListener();
 		reValidateEmailUpdateButton();
 	}
 
 	public void reValidateFacebookPanel() {
-		facebookCheckBoxListener();
+		//facebookCheckBoxListener();
 		reValidateFacebookUpdateButton();
 	}
 
 	public void reValidateMobilePanel() {
-		mobileCheckBoxListener();
+		//mobileCheckBoxListener();
 		validateCarrierUpdateButton(); 
 		reValidateMobileUpdateButton();
 	}
@@ -795,13 +855,14 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	}
 
 	public boolean verifyCarrierField() {
-		String selectedItem = carrierDropDown.getItemAt(carrierDropDown.getSelectedIndex());
+		/*String selectedItem = carrierDropDown.getItemAt(carrierDropDown.getSelectedIndex());
 		if (selectedItem.equals(getUserCarrier()) || selectedItem.equals("--")) {
 			return false;
 		}
 		else {
 			return true;
-		}
+		}*/
+		return true;
 	}
 
 	private void carrierDropDownChanged() {
