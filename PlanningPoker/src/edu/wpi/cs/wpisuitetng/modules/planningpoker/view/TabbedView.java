@@ -312,6 +312,11 @@ public class TabbedView extends JTabbedPane {
 			Component toBeRemoved = getComponentAt(i);
 			
 			System.out.println(toBeRemoved.getClass().getName());
+			
+			if((toBeRemoved instanceof DeckOverview) || toBeRemoved instanceof GameOverview)
+			{
+				continue;
+			}
 
 			if(toBeRemoved instanceof IActiveGamePanel)
 			{
@@ -319,7 +324,6 @@ public class TabbedView extends JTabbedPane {
 				this.listOfActiveGamePanels.remove(toBeRemoved);
 			}
 			
-
 			if(toBeRemoved instanceof ICreateGamePanel)
 			{
 				if(!((ICreateGamePanel)toBeRemoved).readyToRemove()) continue;
@@ -350,6 +354,11 @@ public class TabbedView extends JTabbedPane {
 			Component toBeRemoved = getComponentAt(i);
 			if(toBeRemoved == selected){
 				continue;}
+			
+			if((toBeRemoved instanceof DeckOverview) || toBeRemoved instanceof GameOverview)
+			{
+				continue;
+			}
 
 			if(toBeRemoved instanceof IActiveGamePanel){
 				if(!((IActiveGamePanel)toBeRemoved).readyToRemove()){continue;}

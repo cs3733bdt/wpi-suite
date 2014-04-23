@@ -66,10 +66,6 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	 * Retrieves a single requirement from the database
 	 * @param s the session
 	 * @param id the id number of the requirement to retrieve
-	
-	
-	
-	
 	 * @return the requirement matching the given id * 
 	 * @throws NotFoundException * @throws NotFoundException * @throws NotFoundException
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String)
@@ -96,9 +92,6 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	/**
 	 * Retrieves all requirements from the database
 	 * @param s the session
-	
-	
-	
 	 * @return array of all stored requirements * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session) * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session) * 
@@ -123,7 +116,6 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	 * Ensures that a user is of the specified role
 	 * @param session the session
 	 * @param role the role being verified
-	
 	 * @throws WPISuiteException user isn't authorized for the given role
 	 */
 	private void ensureRole(Session session, Role role) throws WPISuiteException {
@@ -137,10 +129,6 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	 * Deletes a requirement from the database
 	 * @param s the session
 	 * @param id the id of the requirement to delete
-	
-	
-	
-	
 	 * @return true if the deletion was successful * 
 	 * @throws WPISuiteException * @throws WPISuiteException * @throws WPISuiteException
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteEntity(Session, String)
@@ -153,9 +141,6 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	
 	/**
 	 * Deletes all requirements from the database
-	 * @param s the session
-	
-	
 	 * @throws WPISuiteException * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteAll(Session) * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#deleteAll(Session)
@@ -168,10 +153,6 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	
 	/**
 	 * Returns the number of requirements in the database
-	
-	
-	
-	
 	 * @return number of requirements stored * 
 	 * @throws WPISuiteException * @throws WPISuiteException * @throws WPISuiteException
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#Count()
@@ -185,9 +166,6 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	 * Method update.
 	 * @param session Session
 	 * @param content String
-	
-	
-	
 	 * @return Requirement * @throws WPISuiteException * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#update(Session, String) * 
 	 * @throws WPISuiteException
@@ -224,9 +202,6 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	 * Method advancedGet.
 	 * @param arg0 Session
 	 * @param arg1 String[]
-	
-	
-	
 	 * @return String * @throws NotImplementedException * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedGet(Session, String[]) * 
 	 * @throws NotImplementedException
@@ -242,9 +217,6 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	 * @param arg0 Session
 	 * @param arg1 String
 	 * @param arg2 String
-	
-	
-	
 	 * @return String * @throws NotImplementedException * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPost(Session, String, String) * 
 	 * @throws NotImplementedException
@@ -261,9 +233,6 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	 * @param arg0 Session
 	 * @param arg1 String[]
 	 * @param arg2 String
-	
-	
-	
 	 * @return String * @throws NotImplementedException * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#advancedPut(Session, String[], String) * 
 	 * @throws NotImplementedException
