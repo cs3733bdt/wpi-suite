@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.db4o.config.annotations.UpdatedDepth;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -29,6 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
  * @author tianchanggu & jmwetzel
  *
  */
+@UpdatedDepth(value=2)
 public class Requirement extends ObservableModel {
 	/**
 	 * The ID of the requirement from the Requirement Manager
@@ -219,7 +221,7 @@ public class Requirement extends ObservableModel {
 	 * Setter for the final estimate
 	 */
 	public void setFinalEstimate(int newEstimate) {
-		this.finalEstimate = newEstimate;
+		finalEstimate = newEstimate;
 	}
 	
 	/**

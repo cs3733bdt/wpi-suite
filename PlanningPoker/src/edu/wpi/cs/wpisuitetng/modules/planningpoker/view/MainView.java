@@ -17,8 +17,6 @@ import java.awt.GridBagLayout;*/
 
 import javax.swing.JPanel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
-
 /**
  * The primary panel for viewing planning poker games and sessions.
  * This panel shows the tabs for the games

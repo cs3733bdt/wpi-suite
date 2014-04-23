@@ -16,11 +16,9 @@ import java.util.UUID;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
 /**
  * Holds all of the information for a deck.
@@ -47,7 +45,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		identity = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
-		this.owner = ConfigManager.getInstance().getConfig().getUserName();
+		owner = ConfigManager.getInstance().getConfig().getUserName();
 		this.cards = cards;
 	}
 	
@@ -55,7 +53,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		this.identity = identity;
 		this.name = name;
 		this.description = description;
-		this.owner = ConfigManager.getInstance().getConfig().getUserName();
+		owner = ConfigManager.getInstance().getConfig().getUserName();
 		this.cards = cards;
 	}
 	
