@@ -14,6 +14,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import javax.swing.AbstractListModel;
 
@@ -237,5 +238,16 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 */
 	public List<Requirement> getRequirements() {
 		return requirements;
+	}
+
+	public Requirement getRequirementById(UUID id) {
+		for (Requirement r : requirements) {
+			if (r.getIdentity().equals(id)) {
+				return r;
+			}
+		}
+		System.err.println("Could not fine a game with idenity: " + id);
+
+		return null;
 	}
 }

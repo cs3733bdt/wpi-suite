@@ -4,8 +4,11 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.UpdateRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
+import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 
 /**
  * @author andrew
@@ -13,36 +16,41 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  */
 public class UpdateRequirementRequestObserver implements RequestObserver {
 
-	public UpdateRequirementRequestObserver(
-			UpdateRequirementController updateRequirementController) {
-		// TODO Auto-generated constructor stub
+	private final UpdateRequirementController controller;
+	
+	public UpdateRequirementRequestObserver(UpdateRequirementController controller) {
+		this.controller = controller;
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
 	@Override
 	public void responseSuccess(IRequest iReq) {
-		// TODO Auto-generated method stub
-
+		final ResponseModel response = iReq.getResponse();
+		
+		// The Requirement that got updated
+		Requirement requirement = Requirement.fromJSON(response.getBody());
+		
+		Requirement realReq = RequirementModel.getInstance().getRequirementById(requirement.getIdentity());
+		
+		System.out.println("The request to update a Requirement has succeeded!");
 	}
 
-	/* (non-Javadoc)
+	/**
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		// TODO Auto-generated method stub
-
+		System.err.println("Response Error: " + iReq.getResponse().getStatusMessage());
 	}
-
-	/* (non-Javadoc)
+	
+	/**
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(edu.wpi.cs.wpisuitetng.network.models.IRequest, java.lang.Exception)
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		// TODO Auto-generated method stub
-
+		System.err.println("The request to update a game failed with exception: "
+				+ exception.getMessage());
 	}
-
 }

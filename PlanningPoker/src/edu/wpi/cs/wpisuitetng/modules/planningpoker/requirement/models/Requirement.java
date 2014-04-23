@@ -410,4 +410,9 @@ public class Requirement extends ObservableModel {
 		return 0;
 	}
 
+	public static Requirement fromJSON(String json) {
+			final Gson parser = new Gson();
+			return parser.fromJson(json, Requirement.class);
+	}
+
 }
