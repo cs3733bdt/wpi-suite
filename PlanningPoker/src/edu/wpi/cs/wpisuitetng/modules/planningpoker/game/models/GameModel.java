@@ -12,13 +12,11 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-import javax.swing.AbstractListModel;
-
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
+import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.UpdateGameController;
@@ -34,8 +32,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  * @author dstapply jonathanleitschuh
  */
 @SuppressWarnings({ "serial" })
-public class GameModel extends AbstractListModel<Game> implements
-AbstractModelObserver {
+public class GameModel extends AbstractStorageModel<Game> {
 
 	/** Stores the singleton instance of this model */
 	private static GameModel instance;
@@ -43,17 +40,13 @@ AbstractModelObserver {
 	/** Stores the next ID */
 	private final int nextID;
 
-	/** List of available games */
-	private final List<Game> games;
-
-	private boolean serverUpdating = false;
 
 	/**
 	 * Constructs an empty list of games for the project. This is private in
 	 * order to prevent multiple instantiations of this.
 	 */
 	private GameModel() {
-		games = new ArrayList<Game>();
+		super(new ArrayList<Game>());
 		nextID = 0;
 	}
 
@@ -70,28 +63,13 @@ AbstractModelObserver {
 	}
 
 	/**
-	 * Gets a game at the specified location
-	 * 
-	 * @param the index to retrieve
-	 */
-	@Override
-	public Game getElementAt(int arg0) {
-		return games.get(arg0);
-	}
-
-	@Override
-	public int getSize() {
-		return games.size();
-	}
-
-	/**
 	 * Adds a Game to the data model games
 	 * 
-	 * @param newGame game to be added to the games ArrayList
+	 * @param newGame
+	 *            game to be added to the games ArrayList
 	 */
 	public synchronized void addGame(Game newGame) {
-		while (serverUpdating) {}
-		games.add(newGame);
+		add(newGame);
 		try {
 			AddGameController.getInstance().addGame(newGame);
 		} catch (Exception e) {
@@ -99,30 +77,23 @@ AbstractModelObserver {
 					+ newGame.getName());
 		}
 		try { // Prevents a null pointer exception when the running tests (the
-			// JPanel's aren't instantiated)
+				// JPanel's aren't instantiated)
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
 			System.err.println("No view output attached");
 		}
-		newGame.addObserver(this);
-		this.fireIntervalAdded(this, 0, 0);
 	}
 
 	/**
 	 * Empties the model of games and resets the model back to the default
 	 * state.
 	 */
+	@Override
 	public synchronized void emptyModel() {
-		int oldSize = getSize();
-		Iterator<Game> iterator = games.iterator();
-		while (iterator.hasNext()) {
-			iterator.next();
-			iterator.remove();
-		}
-		this.fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));
+		super.emptyModel();
 		try { // Prevents a null pointer exception when the running tests (the
-			// JPanel's aren't instantiated)
+				// JPanel's aren't instantiated)
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
@@ -135,27 +106,19 @@ AbstractModelObserver {
 	 * This is used when a database add fails so that the model reflects the
 	 * database properly
 	 * 
-	 * @param toRemove The game to remove from the model
+	 * @param toRemove
+	 *            The game to remove from the model
 	 */
 	public void removeGameFromModel(Game toRemove) {
-		int index = 0;
-		Iterator<Game> iterator = games.iterator();
-		while (iterator.hasNext()) {
-			Game game = iterator.next();
-			if (game.equals(toRemove)) {
-				game.deleteObservers();
-				iterator.remove();
-				this.fireIntervalRemoved(this, index, index);
-			}
-			index++;
-		}
+		removeFromModel(toRemove);
 	}
 
 	/**
 	 * Adds all of the list of games to the model Used by the database
 	 * controller construct the game model initially.
 	 * 
-	 * @param newGames The games to be added to the model
+	 * @param newGames
+	 *            The games to be added to the model
 	 */
 	public synchronized void addGames(Game[] newGames) {
 		updateGames(newGames);
@@ -166,75 +129,30 @@ AbstractModelObserver {
 	 * UUID's between the model and the list of games the values for the games
 	 * will be updated using the server's values.
 	 * 
-	 * @param allGames the list of games already in the model
+	 * @param allGames
+	 *            the list of games already in the model
 	 */
 	public synchronized void updateGames(Game[] allGames) {
-		boolean changes = false;
+		boolean changes = updateModels(allGames);
 
-		if (!isUpdating()) {
-			serverUpdating = true;
-
-			int startingSize = getSize();
-			for (Game aGame : allGames) { // Iterates over the new model
-				boolean found = false; // Has this Game been found in the list
-				// GAME EXIST IN THE MODEL
-				for (Game modelGame : games) { // Iterates over the existing
-					// model
-					if (aGame.identify(modelGame)) { // Compares the UUID's of
-						// the two objects to
-						// see if they should be
-						// the same
-						found = true; // This game has been found in the list
-						// aGame.deleteObservers();
-						aGame.addObserver(this);
-						modelGame.copyFrom(aGame);
-						changes = true;
-					}
-				}
-
-				// GAME DOES NOT EXIST YET ADD TO MODEL
-				if (!found) { // If the game is not found then
-					changes = true; // There were changes to the model
-					startingSize++; // This Game will be added to the model so
-					// increase the starting size
-					// aGame.deleteObservers();
-					aGame.addObserver(this); // Add an observer on this game
-					games.add(aGame); // Adds this game to the list of games in
-					// this list
-					System.out.print("Updating the model");
-					System.out
-					.println("\tNEW GAME FOUND BEING ADDED TO MODEL: "
-							+ aGame.getName());
-				}
-			}
-			this.fireIntervalAdded(this, startingSize - 1, getSize() - 1); // Fires
-			// the
-			// event
-			// listeners
-			// on
-			// this
-			// list.
-
-			if (changes) { // Only repaint game tree if the model has changed
-				try { // This is used to prevent the a null pointer exception
+		if (changes) { // Only repaint game tree if the model has changed
+			try { // This is used to prevent the a null pointer exception
 					// when running test cases (the JPanel's aren't
 					// instantiated)
-					ViewEventController.getInstance().refreshGameTable(); // Currently
-					// serves
-					// no
-					// purpose
-					ViewEventController.getInstance().refreshGameTree(); // Refreshes
-					// the
-					// active
-					// table
-				} catch (Exception e) {
-					System.err
-					.println("ViewEventController not fully initiallized");
-				}
-			} else {
+				ViewEventController.getInstance().refreshGameTable(); // Currently
+				// serves
+				// no
+				// purpose
+				ViewEventController.getInstance().refreshGameTree(); // Refreshes
+				// the
+				// active
+				// table
+			} catch (Exception e) {
+				System.err
+						.println("ViewEventController not fully initiallized");
 			}
+		} else {
 		}
-		serverUpdating = false;
 	}
 
 	@Override
@@ -248,7 +166,7 @@ AbstractModelObserver {
 	 * @return the list of games
 	 */
 	public List<Game> getGames() {
-		return games;
+		return list;
 	}
 
 	/**
@@ -257,8 +175,10 @@ AbstractModelObserver {
 	 * <code>notifyObservers</code> method to have all the object's observers
 	 * notified of the change.
 	 * 
-	 * @param o the observable object.
-	 * @param arg an argument passed to the <code>notifyObservers</code> method.
+	 * @param o
+	 *            the observable object.
+	 * @param arg
+	 *            an argument passed to the <code>notifyObservers</code> method.
 	 */
 	@Override
 	public void update(ObservableModel o, Object arg) {
@@ -275,43 +195,26 @@ AbstractModelObserver {
 			}
 		} else {
 			System.err
-			.println("GAME MODEL ATTEMPTED TO UPDATE SOMETHING NOT A GAME");
+					.println("GAME MODEL ATTEMPTED TO UPDATE SOMETHING NOT A GAME");
 		}
 
-	}
-
-	/**
-	 * checks to see if the game is updating
-	 * @return true if this game model is updating
-	 * 
-	 */
-	public boolean isUpdating() {
-		for (Game g : games) {
-			if (g.hasChanged()) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/**
 	 * Gets the game with the UUID passed.
-	 * @param id the UUID of the game to get
+	 * 
+	 * @param id
+	 *            the UUID of the game to get
 	 * @return return game with UUID
+	 * @throws NotFoundException 
 	 */
-	public Game getGameById(UUID id) {
-		for (Game g : games) {
-			if (g.getIdentity().equals(id)) {
-				return g;
-			}
-		}
-		System.err.println("Could not fine a game with idenity: " + id);
-
-		return null;
+	public Game getGameById(UUID id) throws NotFoundException {
+		return getModelById(id);
 	}
 
 	/**
 	 * checks to see if the server is updating the game
+	 * 
 	 * @return true if the server is updating the game model
 	 */
 	public boolean isServerUpdating() {

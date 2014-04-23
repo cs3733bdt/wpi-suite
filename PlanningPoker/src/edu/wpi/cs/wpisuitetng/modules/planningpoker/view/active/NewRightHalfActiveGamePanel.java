@@ -28,6 +28,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -47,6 +48,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private Game currentGame;
 	private Requirement activeRequirement;
 	private JTextArea nameTextField;
+	private JScrollPane nameTextFieldPanel;
 	private JTextArea descriptionTextField;
 	private JButton submitButton;
 	private final Border defaultBorder = (new JTextField()).getBorder();
@@ -58,7 +60,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private int sum;
 	private JLabel previousEst;
 	private JLabel counterLabel;
-	private JTextField estText = new JTextField();
+	private JPanel estimateWithTextPanel;
+	private JTextField estText = new JTextField(6);
 	private JTextArea counter = new JTextArea();
 	private JLabel errorField = new JLabel();
 	private JScrollPane descriptionPanel;
@@ -115,7 +118,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					nameTextField.setText(activeRequirement.getName());
 					descriptionTextField.setText(activeRequirement
 							.getDescription());
-					estText.setText("Estimate Here");
+					//estText.setText("Estimate Here");
 
 					previousEst.setText("Your saved estimate is: "
 							+ activeRequirement.userVote());
@@ -145,6 +148,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		nameTextField.setText("");
 		nameTextField.setBorder(defaultBorder);
 		nameTextField.setEditable(false);
+		nameTextField.setLineWrap(true);
+		
+		nameTextFieldPanel = new JScrollPane(nameTextField);
 
 		descriptionTextField = new JTextArea(3, 30); // Initializes the textarea
 		// for the game
@@ -153,6 +159,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		// description
 		descriptionTextField.setBorder(defaultBorder);
 		descriptionTextField.setEditable(false);
+		descriptionTextField.setLineWrap(true);
 
 		descriptionPanel = new JScrollPane(descriptionTextField);
 		descriptionPanel
@@ -166,7 +173,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		largeFont = new Font("Serif", Font.BOLD, 20);
 
-		counterLabel = new JLabel("Your current estimate total: " + 0);
+		counterLabel = new JLabel("Your current selected estimate is: " + 0);
 		counterLabel.setFont(largeFont);
 
 		previousEst = new JLabel();
@@ -204,7 +211,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		 * = customDeck; useDefaultDeck = false; }
 		 */
 		if (useDefaultDeck) {
-			deck.add("0?");
+			deck.add("?");
 		}
 
 		cardsPanel = new ActiveCardsPanel(deck, this);
@@ -248,23 +255,27 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/**
 		 * The text area where the user types their estimate
 		 */
-		estText.setText("Estimate Here");
-		estText.setMinimumSize(new Dimension(100, 50));
-		estText.setPreferredSize(new Dimension(100, 50));
-		estText.addMouseListener(new MouseAdapter() {
+		//estText.setText("Estimate Here");
+		//estText.setMinimumSize(new Dimension(100, 50));
+		//estText.setPreferredSize(new Dimension(100, 50));
+		estimateWithTextPanel = new JPanel();
+		JLabel estLabel = new JLabel("Enter your estimate: ");
+		estimateWithTextPanel.add(estLabel);
+		estimateWithTextPanel.add(estText);
+		/*estText.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				estText.setText("");
 			}
-		});
+		});*/
 		addKeyListenerTo(estText);
 
-		rightView.add(estText);
-		layout.putConstraint(SpringLayout.WEST, estText, 5, SpringLayout.WEST,
+		rightView.add(estimateWithTextPanel);
+		layout.putConstraint(SpringLayout.WEST, estimateWithTextPanel, 5, SpringLayout.WEST,
 				rightView);
-		layout.putConstraint(SpringLayout.EAST, estText, -5, SpringLayout.EAST,
-				rightView);
-		layout.putConstraint(SpringLayout.NORTH, estText, 20,
+		/*layout.putConstraint(SpringLayout.EAST, estText, -5, SpringLayout.EAST,
+				rightView);*/
+		layout.putConstraint(SpringLayout.NORTH, estimateWithTextPanel, 10,
 				SpringLayout.SOUTH, descriptionPanel);
 
 		rightView.add(counterLabel);
@@ -281,7 +292,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		addMouseListenerTo(submitButton);
 
 		if (currentGame.doesUseCards()) {
-			estText.setVisible(false);
+			estimateWithTextPanel.setVisible(false);
 			submitButton.setEnabled(true);
 		} else {
 			cardsPanel.setVerifyInputWhenFocusTarget(false);
@@ -299,7 +310,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		rightView.add(nameLabel); // Adds name label to the container
 		rightView.add(tablePanel); // Adds description field to the container
 		rightView.add(reqLabel);
-		rightView.add(nameTextField);
+		rightView.add(nameTextFieldPanel);
 		rightView.add(desLabel);
 		rightView.add(descriptionPanel);
 		rightView.add(previousEst);
@@ -308,13 +319,13 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		rightView.add(errorField);
 
 		reqLabel.setVisible(false);
-		nameTextField.setVisible(false);
+		nameTextFieldPanel.setVisible(false);
 		desLabel.setVisible(false);
 		descriptionPanel.setVisible(false);
 		counterLabel.setVisible(false);
 		previousEst.setVisible(false);
 		submitButton.setVisible(false);
-		estText.setVisible(false);
+		estimateWithTextPanel.setVisible(false);
 
 		layout.putConstraint(SpringLayout.WEST, nameLabel, 5,
 				SpringLayout.WEST, rightView);
@@ -337,17 +348,17 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.NORTH, reqLabel, 10,
 				SpringLayout.SOUTH, tablePanel);
 
-		layout.putConstraint(SpringLayout.WEST, nameTextField, 5,
+		layout.putConstraint(SpringLayout.WEST, nameTextFieldPanel, 5,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, nameTextField, -5,
+		layout.putConstraint(SpringLayout.EAST, nameTextFieldPanel, -5,
 				SpringLayout.EAST, rightView);
-		layout.putConstraint(SpringLayout.NORTH, nameTextField, 0,
+		layout.putConstraint(SpringLayout.NORTH, nameTextFieldPanel, 0,
 				SpringLayout.SOUTH, reqLabel);
 
 		layout.putConstraint(SpringLayout.WEST, desLabel, 5, SpringLayout.WEST,
 				rightView);
 		layout.putConstraint(SpringLayout.NORTH, desLabel, 5,
-				SpringLayout.SOUTH, nameTextField);
+				SpringLayout.SOUTH, nameTextFieldPanel);
 
 		layout.putConstraint(SpringLayout.WEST, descriptionPanel, 5,
 				SpringLayout.WEST, rightView);
@@ -356,29 +367,49 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.NORTH, descriptionPanel, 0,
 				SpringLayout.SOUTH, desLabel);
 
-		layout.putConstraint(SpringLayout.WEST, previousEst, 5,
+		layout.putConstraint(SpringLayout.WEST, previousEst, 10,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, previousEst, 5,
+		layout.putConstraint(SpringLayout.EAST, previousEst, -10,
 				SpringLayout.EAST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, previousEst, -40,
-				SpringLayout.NORTH, submitButton);
+		layout.putConstraint(SpringLayout.SOUTH, previousEst, -2,
+				SpringLayout.NORTH, counterLabel);
 
-		layout.putConstraint(SpringLayout.WEST, counterLabel, 5,
+		layout.putConstraint(SpringLayout.WEST, counterLabel, 10,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, counterLabel, 5,
+		layout.putConstraint(SpringLayout.EAST, counterLabel, -10,
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.SOUTH, counterLabel, -7,
 				SpringLayout.NORTH, submitButton);
-
+		
 		layout.putConstraint(SpringLayout.WEST, submitButton, 5,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, submitButton, -10,
-				SpringLayout.SOUTH, rightView);
 
 		layout.putConstraint(SpringLayout.WEST, errorField, 120,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
-				SpringLayout.SOUTH, rightView);
+		
+		if(!currentGame.doesUseCards()) {
+			layout.putConstraint(SpringLayout.NORTH, previousEst, 10,
+					SpringLayout.SOUTH, estimateWithTextPanel);
+			
+			layout.putConstraint(SpringLayout.SOUTH, submitButton, -10,
+					SpringLayout.SOUTH, rightView);
+			
+			layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
+					SpringLayout.SOUTH, rightView);
+			
+			rightView.setPreferredSize(new Dimension(300, 430)); // Sets the size of
+			// the view
+
+revalidate();
+repaint();
+		}
+		else {			
+			layout.putConstraint(SpringLayout.SOUTH, submitButton, -10,
+					SpringLayout.SOUTH, rightView);
+			
+			layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
+					SpringLayout.SOUTH, rightView);
+		}
 
 		// TODO: make this into a method
 		activeRequirement = table.getSelectedReq();
@@ -393,8 +424,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 
 	}
-	
-	
 
 	private Font makeFont(int i) {
 		// TODO Auto-generated method stub
@@ -415,7 +444,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	 */
 	public void updateSum() {
 		sum = cardsPanel.getSum();
-		counterLabel.setText("Your current estimate total: " + sum);
+		counterLabel.setText("Your current selected estimate is: " + sum);
 	}
 
 	/**
@@ -576,13 +605,13 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	 */
 	private void setFieldsVisible(boolean visible) {
 		reqLabel.setVisible(visible);
-		nameTextField.setVisible(visible);
+		nameTextFieldPanel.setVisible(visible);
 		desLabel.setVisible(visible);
 		previousEst.setVisible(visible);
 		descriptionPanel.setVisible(visible);
 		submitButton.setVisible(visible);
-		if (getGame().doesUseCards() == false) {
-			estText.setVisible(visible);
+		if (!getGame().doesUseCards()) {
+			estimateWithTextPanel.setVisible(visible);
 		} else {
 			counterLabel.setVisible(visible);
 			cardScrollPanel.setVisible(true);

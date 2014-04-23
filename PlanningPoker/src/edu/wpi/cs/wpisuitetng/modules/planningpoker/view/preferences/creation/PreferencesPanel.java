@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation;
 
 
@@ -26,6 +36,13 @@ import javax.swing.SpringLayout;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
+/**
+ * used to display user preferences, allowing the user to
+ * edit their facebook email, and mobile phone number and
+ * select how they wanted to be contacted
+ * @author Bobby Drop Tables
+ *
+ */
 public class PreferencesPanel extends JScrollPane implements IDataField {
 	
 	JPanel emailPanel;
@@ -445,7 +462,12 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		return null;
 	}
 
-	public Font makeFont(int size) {
+	/**
+	 * Creates a font to be used for later
+	 * @param size The size of the font
+	 * @return font to be used 
+	 */
+		public Font makeFont(int size) {
 		
 		//create a dummy JTextArea
 		JTextArea editingArea = new JTextArea();
@@ -479,6 +501,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		return true;
 	}
 	
+	/**
+	 * displays the option to update the user's email if 
+	 * the user selected the option to be notified through email
+	 */
 	public void emailCheckBoxListener() {
 		if (!emailCheckBox.isSelected()) {
 			emailOffNotify.setVisible(true);
@@ -494,6 +520,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		}
 	}
 	
+	/**
+	 * displays the option to update the user's facebook if 
+	 * the user selected the option to be notified through facebook
+	 */
 	public void facebookCheckBoxListener() {
 		if (!facebookCheckBox.isSelected()) {
 			facebookOffNotify.setVisible(true);
@@ -509,6 +539,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		}
 	}
 	
+	/**
+	 * displays the option to update the user's phone number if 
+	 * the user selected the option to be notified through texts
+	 */
 	public void mobileCheckBoxListener() {
 		if (!mobileCheckBox.isSelected()) {
 			mobileOffNotify.setVisible(true);
