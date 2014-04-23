@@ -31,15 +31,15 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requireme
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
-
+/**
+ * 
+ * @author Bobby Drop Tables
+ *
+ */
 public class EndGameLeftHalf extends JScrollPane {
 	private Game ended;
 	private EndGamePanel parent;
-	
-	private JTextArea descriptionTextField;
-	
-	
-	
+
 	private JLabel gameNameLabel;
 	private NameJTextField gameName;
 	private JLabel gameDescLabel;
@@ -52,12 +52,20 @@ public class EndGameLeftHalf extends JScrollPane {
 	
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
+	/**
+	 * constructor for the left half of end game
+	 * @param game the statistics of this game will be displayed
+	 * @param parent the main end game panel
+	 */
 	public EndGameLeftHalf(final Game game, EndGamePanel parent){
 		this.parent = parent;
 		ended = game;
 		build();
 	}
 	
+	/**
+	 * builds the left half of end game panel
+	 */
 	public void build(){
 		// Creates the container to hold all the components
 		// and sets the container's layout to be SpringLayout
@@ -114,20 +122,6 @@ public class EndGameLeftHalf extends JScrollPane {
 		
 		table = new RequirementTable(ended.getRequirements(), RequirementTableMode.ENDED);
 		JScrollPane tablePanel = new JScrollPane(table);
-		
-		
-//		String[] columnNames = { "Requirement", "Description"};
-//		Object[][] data = {};
-//		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
-//		table.setBorder(defaultBorder);
-//		JScrollPane tablePanel = new JScrollPane(table);
-//		/**
-//		 * Display the requirement list in the table
-//		 */
-//		for (Requirement r : ended.getRequirements()) {
-//			table.getTableModel().addRow(new Object[] { r.getName(),
-//					r.getDescription() });
-//		}
 		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
