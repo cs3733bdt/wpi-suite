@@ -20,7 +20,6 @@ import org.junit.Test;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
@@ -71,21 +70,21 @@ public class MainViewTest {
 	
 	@Test
 	public void numberOfTabs() {
-		assertEquals(2, tabs.getTabCount());
+		assertEquals(1, tabs.getTabCount());
 		
 		tabs.addTab(activeGame.getName(),createGameTab);
-		assertEquals(3, tabs.getTabCount());
+		assertEquals(2, tabs.getTabCount());
 		
 		tabs.addTab("EndGame 1", endGameTab);
-		assertEquals(4, tabs.getTabCount());
+		assertEquals(3, tabs.getTabCount());
 		
 		vec.createGame();
-		assertEquals(5, tabs.getTabCount());
+		assertEquals(4, tabs.getTabCount());
 		vec.createDeck();
-		assertEquals(6, tabs.getTabCount());
+		assertEquals(5, tabs.getTabCount());
 		
 		vec.removeTab(endGameTab);
-		assertEquals(5, tabs.getTabCount());
+		assertEquals(4, tabs.getTabCount());
 		
 		vec.closeOthers();
 		assertEquals(1, tabs.getTabCount());

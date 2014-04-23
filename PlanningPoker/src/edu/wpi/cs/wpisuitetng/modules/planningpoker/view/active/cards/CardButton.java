@@ -25,8 +25,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActi
 
 /**
  * creates all of the buttons to be used for the estimation
+ * 
  * @author Justin Canas
- *
+ * 
  */
 public class CardButton extends JToggleButton implements Accessible {
 	JToggleButton button;
@@ -35,51 +36,53 @@ public class CardButton extends JToggleButton implements Accessible {
 
 	/**
 	 * creates the buttons based on the deck
-	 * @param cardNum the index of the card
-	 * @param passedDeck the deck of cards to be used
-	 * @param passedCardsPanel the panel that displays the cards
-	 * @param passedEstimatePanel the panel that displays the estimates
+	 * 
+	 * @param cardNum
+	 *            the index of the card
+	 * @param passedDeck
+	 *            the deck of cards to be used
+	 * @param passedCardsPanel
+	 *            the panel that displays the cards
+	 * @param passedEstimatePanel
+	 *            the panel that displays the estimates
 	 */
 
-	public CardButton(int cardNum, List<String> passedDeck, ActiveCardsPanel passedCardsPanel, NewRightHalfActiveGamePanel panel2){
-		this.deck = passedDeck;
-		this.panel = passedCardsPanel;
+	public CardButton(int cardNum, List<String> passedDeck,
+			ActiveCardsPanel passedCardsPanel,
+			NewRightHalfActiveGamePanel panel2) {
 		deck = passedDeck;
 		panel = passedCardsPanel;
-		
-		//Initialize the Button and the number on the button
+		deck = passedDeck;
+		panel = passedCardsPanel;
+
+		// Initialize the Button and the number on the button
 		String buttonNum;
-		boolean isIDK = (cardNum == (deck.size() - 1)); 		
-		
-		//if the button isn't the idk button
-		if (!isIDK) {
-			buttonNum = deck.get(cardNum);
-			//button = new JToggleButton(buttonNum);
-			try {
-				Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
-				setIcon(new ImageIcon(frontImg));
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			}
-			//Set the Button's tooltiptext and position it correctly
-			setText(deck.get(cardNum));
-			setToolTipText("Add " + buttonNum + " to the total");
+
+		buttonNum = deck.get(cardNum);
+		// button = new JToggleButton(buttonNum);
+		try {
+			Image frontImg = ImageIO.read(getClass().getResource(
+					"card_front.png"));
+			setIcon(new ImageIcon(frontImg));
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
-		else {
-			setText("0?");
-			setToolTipText("I don't know what to estimate");
-		}
-	
-		 setHorizontalTextPosition(SwingConstants.CENTER);
-		 setVerticalAlignment(SwingConstants.CENTER);
-		 
-		 //Add the action listener to the button
-		addActionListener(new CardActionListenerRefactor(cardNum, deck, this, passedCardsPanel, panel2));
+		// Set the Button's tooltiptext and position it correctly
+		setText(deck.get(cardNum));
+		setToolTipText("Add " + buttonNum + " to the total");
+
+		setHorizontalTextPosition(SwingConstants.CENTER);
+		setVerticalAlignment(SwingConstants.CENTER);
+
+		// Add the action listener to the button
+		addActionListener(new CardActionListenerRefactor(cardNum, deck, this,
+				passedCardsPanel, panel2));
 		panel.add(this);
 	}
 
 	/**
 	 * getter for the value of the card
+	 * 
 	 * @return the value of the card
 	 */
 	public String getValue() {

@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Component;
 import java.awt.Image;
@@ -27,8 +27,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ClosableTabComponent;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.DeckOverview;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.GameOverview;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
@@ -64,7 +66,9 @@ public class TabbedView extends JTabbedPane {
 	public TabbedView(){
 		
 		addTab("Game Overview", gameOverview);
-		addTab("Deck Overview", deckOverview);
+		
+		//ADD THIS LINE TO ADD DECK OVERVIEW BACK addTab("Deck Overview", deckOverview);
+		 
 	    //this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
 		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
 	    
@@ -310,14 +314,18 @@ public class TabbedView extends JTabbedPane {
 			Component toBeRemoved = getComponentAt(i);
 			
 			System.out.println(toBeRemoved.getClass().getName());
+			
+			if((toBeRemoved instanceof DeckOverview) || toBeRemoved instanceof GameOverview)
+			{
+				continue;
+			}
 
 			if(toBeRemoved instanceof IActiveGamePanel)
 			{
 				if(!((IActiveGamePanel)toBeRemoved).readyToRemove()) continue;
-				this.listOfActiveGamePanels.remove(toBeRemoved);
+				listOfActiveGamePanels.remove(toBeRemoved);
 			}
 			
-
 			if(toBeRemoved instanceof ICreateGamePanel)
 			{
 				if(!((ICreateGamePanel)toBeRemoved).readyToRemove()) continue;
@@ -348,6 +356,11 @@ public class TabbedView extends JTabbedPane {
 			Component toBeRemoved = getComponentAt(i);
 			if(toBeRemoved == selected){
 				continue;}
+			
+			if((toBeRemoved instanceof DeckOverview) || toBeRemoved instanceof GameOverview)
+			{
+				continue;
+			}
 
 			if(toBeRemoved instanceof IActiveGamePanel){
 				if(!((IActiveGamePanel)toBeRemoved).readyToRemove()){continue;}

@@ -240,15 +240,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				importReqsPanel.setVisible(false);
 				addReqButton.setEnabled(true);
 				importReqButton.setEnabled(true);
-				editReqButton.setEnabled(true);
-				removeReqButton.setEnabled(true);
 				globalRow = -1;
 				submitAddReqButton.setEnabled(false);
-				enableButtons();
-				if(currentTable.getRowCount() == 0){
-					editReqButton.setEnabled(false);
-					removeReqButton.setEnabled(false);
-				}
+				//enableButtons();
 			}
 		});
 		
@@ -300,13 +294,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				importReqsPanel.setVisible(false);
 				addReqButton.setEnabled(true);
 				importReqButton.setEnabled(true);
-				editReqButton.setEnabled(true);
-				removeReqButton.setEnabled(true);
-				enableButtons();
-				if(currentTable.getRowCount() == 0){
-					editReqButton.setEnabled(false);
-					removeReqButton.setEnabled(false);
-				}
+				//enableButtons();
 			}
 		});
 		
@@ -541,11 +529,17 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		currentTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (currentTable.getSelectedRowCount() > 1){
+				if(currentTable.getSelectedRowCount() == 0) {
 					editReqButton.setEnabled(false);
+					removeReqButton.setEnabled(false);
+				}
+				else if (currentTable.getSelectedRowCount() > 1){
+					editReqButton.setEnabled(false);
+					removeReqButton.setEnabled(true);
 				}
 				else {
 					editReqButton.setEnabled(true);
+					removeReqButton.setEnabled(true);
 				}
 			}
 		});
@@ -587,7 +581,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		
 		// Add the imported requirements to the table
 		for (Requirement r: requirements) {
-			System.err.println("Imported Requirement: " + r.toJSON());
 			if (r.getFromRequirementModule()) {
 				// Don't allow duplicate requirements
 				if (!r.existsIn(this.requirements))
@@ -595,13 +588,12 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			}
 		}
 		
-		if(importTable.getRowCount() == 0){
+		if(importTable.getRowCount() == 0) {
 			submitImportReqButton.setEnabled(false);
 			importErrorLabel.setText("No requirements to be imported. Please click cancel.");
 			importErrorLabel.setForeground(Color.red);
-			
 		}
-		else{
+		else {
 			submitImportReqButton.setEnabled(true);
 			importErrorLabel.setText("");
 		}
@@ -618,8 +610,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			submitAddReqButton.setEnabled(false);
 			addReqButton.setEnabled(true);
 			importReqButton.setEnabled(true);
-			removeReqButton.setEnabled(true);
-			editReqButton.setEnabled(true);
 			globalRow = -1;
 			parent.updateButtons();
 			displayError("");
@@ -653,8 +643,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	private void enableButtons() {
 		addReqButton.setEnabled(true);
 		importReqButton.setEnabled(true);
-		removeReqButton.setEnabled(true);
-		editReqButton.setEnabled(true);
+/*		removeReqButton.setEnabled(true);
+		editReqButton.setEnabled(true);*/
 	}
 	
 	private void disableButtons() {
@@ -794,14 +784,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		}
 	}
 	
-	private void removeRequirement(){
+	private void removeRequirement() {
 		if(currentTable.getSelectedRowCount() != 0) {
 			while(currentTable.getSelectedRowCount() > 0) {
 				int[] rows = currentTable.getSelectedRows();
 				// Remove requirement from requirements list
 				for (int i = 0; i < requirements.size(); i++) {
 					if (requirements.get(i).getName().equals(currentTable.getValueAt(rows[0], 0))) {
-						System.err.println("Removing Requirement: " + requirements.get(i).toJSON());
 						requirements.remove(requirements.get(i));
 					}
 				}
@@ -810,7 +799,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			if(currentTable.getTableModel().getRowCount() == 0){
 				removeReqButton.setEnabled(false);
 				editReqButton.setEnabled(false);
-				
 			}
 			parent.updateButtons();
 		}

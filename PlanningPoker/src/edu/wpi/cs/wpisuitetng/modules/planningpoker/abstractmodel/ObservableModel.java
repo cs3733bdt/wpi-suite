@@ -53,12 +53,12 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 public abstract class ObservableModel extends AbstractModel {
 	//These datatypes were made transient so that they are not parsed by the gson converter
     private transient boolean changed = false; // $codepro.audit.disable transientFieldInNonSerializable
-    private transient Vector<AbstractModelObserver> obs; // $codepro.audit.disable transientFieldInNonSerializable
+    private transient Vector<IModelObserver> obs; // $codepro.audit.disable transientFieldInNonSerializable
 
     /** Construct an Observable with zero Observers. */
 
     public ObservableModel() {
-        obs = new Vector<AbstractModelObserver>();
+        obs = new Vector<IModelObserver>();
     }
 
     /**
@@ -70,7 +70,7 @@ public abstract class ObservableModel extends AbstractModel {
      * @param   o   an observer to be added.
      * @throws NullPointerException if the parameter o is null.
      */
-    public synchronized void addObserver(AbstractModelObserver o) {
+    public synchronized void addObserver(IModelObserver o) {
         if (o == null)
             throw new NullPointerException();
         if (!obs.contains(o)) {
@@ -83,7 +83,7 @@ public abstract class ObservableModel extends AbstractModel {
      * Passing <CODE>null</CODE> to this method will have no effect.
      * @param   o   the observer to be deleted.
      */
-    public synchronized void deleteObserver(AbstractModelObserver o) {
+    public synchronized void deleteObserver(IModelObserver o) {
     		obs.removeElement(o);
     }
 
@@ -147,7 +147,7 @@ public abstract class ObservableModel extends AbstractModel {
         }
 
         for (int i = arrLocal.length-1; i>=0; i--)
-            ((AbstractModelObserver)arrLocal[i]).update(this, arg);
+            ((IModelObserver)arrLocal[i]).update(this, arg);
         
         clearChanged();
     }
@@ -209,7 +209,7 @@ public abstract class ObservableModel extends AbstractModel {
      * @param i
      * @return the observer
      */
-    protected synchronized AbstractModelObserver getObserver(int i){
+    protected synchronized IModelObserver getObserver(int i){
     	return obs.get(i);
     }
 }
