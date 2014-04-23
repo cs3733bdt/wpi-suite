@@ -57,7 +57,7 @@ public class Requirement extends ObservableModel {
 
 	/** boolean for whether the requirement has been voted on by all users */
 	private boolean complete = false;
-	
+	/** The final estimate for this requirement. This is -1 if a final estimate has not been submitted yet. */
 	private int finalEstimate = -1;
 	/**
 	 * The basic constructor for a game
@@ -67,7 +67,6 @@ public class Requirement extends ObservableModel {
 	public Requirement() {
 		name = description = "";
 		identity = UUID.randomUUID();
-		
 	}
 
 	/**
@@ -101,12 +100,13 @@ public class Requirement extends ObservableModel {
 	
 	/**
 	 * Checks if this requirement exists in list of requirements passed
+	 * **Specifically for requirements from requirement manager
 	 * @param requirements List of requirements to check
 	 * @return True if the requirement exists in the list
 	 */
 	public boolean existsIn(List<Requirement> requirements) {
 		for (Requirement r: requirements) {
-			if (id == r.getId())
+			if (r.getFromRequirementModule() && id == r.getId())
 				return true;
 		}
 		return false;
@@ -219,7 +219,7 @@ public class Requirement extends ObservableModel {
 	 * Setter for the final estimate
 	 */
 	public void setFinalEstimate(int newEstimate) {
-		this.finalEstimate = newEstimate;
+		finalEstimate = newEstimate;
 	}
 	
 	/**

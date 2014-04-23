@@ -191,11 +191,11 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		layout.putConstraint(SpringLayout.WEST, finalEstimateBox, 5, SpringLayout.EAST, finalEstimateLabel);
 		
 		//Constraints on the final estimate Button
-		layout.putConstraint(SpringLayout.WEST, finalEstimateButton, 30, SpringLayout.WEST, overviewPanel); 
+		layout.putConstraint(SpringLayout.WEST, finalEstimateButton, 5, SpringLayout.WEST, overviewPanel); 
 		layout.putConstraint(SpringLayout.NORTH, finalEstimateButton, 5, SpringLayout.SOUTH, finalEstimateLabel); 
 		
 		//Constraints on the final estimate display
-		layout.putConstraint(SpringLayout.WEST, finalEstimateDisplay, 60, SpringLayout.WEST, finalEstimateBox); 
+		layout.putConstraint(SpringLayout.EAST, finalEstimateDisplay, -20, SpringLayout.EAST, overviewPanel); 
 		layout.putConstraint(SpringLayout.NORTH, finalEstimateDisplay, 15, SpringLayout.SOUTH, votePanel); 
 			
 		
@@ -314,7 +314,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 				min = Votes.get(i);
 			}
 		}
-		this.minEstimate = min;
+		minEstimate = min;
 		return min;
 	}
 	
@@ -330,7 +330,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 				max = Votes.get(i);
 			}
 		}
-		this.maxEstimate = max;
+		maxEstimate = max;
 		return max;
 	}
 	

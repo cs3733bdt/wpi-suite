@@ -52,7 +52,6 @@ public class RetrieveRequirementRequestObserver implements RequestObserver {
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
 	@Override
-	
 	public void responseError(IRequest iReq) {
 		fail(iReq, null);
 	}
