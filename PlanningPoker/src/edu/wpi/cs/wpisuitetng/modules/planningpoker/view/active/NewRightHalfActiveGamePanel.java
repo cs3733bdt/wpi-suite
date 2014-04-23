@@ -71,6 +71,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private JScrollPane cardScrollPanel;
 	private RequirementTable table;
 	private Font largeFont;
+	private JButton clearButton;
 
 	NewRightHalfActiveGamePanel(final Game game) {
 		currentGame = game;
@@ -217,7 +218,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		cardsPanel = new ActiveCardsPanel(deck, this);
 		
 		// adds the button to clear all entered estimates
-		JButton clearButton = new JButton("Clear");
+		clearButton = new JButton("Clear");
 		clearButton.setToolTipText("Clear all Estimates");
 		
 		rightView.add(clearButton);
@@ -235,11 +236,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				}
 			}
 		});
-
-		if (!getGame().doesUseCards()) {
-			clearButton.setVisible(false);
-		}
-
 
 		// added below
 		if (getGame().doesUseCards()) {
@@ -355,6 +351,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		desLabel.setVisible(false);
 		descriptionPanel.setVisible(false);
 		counterLabel.setVisible(false);
+		clearButton.setVisible(false);
 		previousEst.setVisible(false);
 		submitButton.setVisible(false);
 		estimateWithTextPanel.setVisible(false);
@@ -398,14 +395,14 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, descriptionPanel, 0,
 				SpringLayout.SOUTH, desLabel);
-		//TODO
+		
 		layout.putConstraint(SpringLayout.WEST, previousEst, 10,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, previousEst, 5,
 				SpringLayout.SOUTH, clearButton);
 		
 		
-		//TODO
+		
 		layout.putConstraint(SpringLayout.WEST, counterLabel, 10,
 				SpringLayout.WEST, rightView);
 		layout.putConstraint(SpringLayout.EAST, counterLabel, -10,
@@ -440,8 +437,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			layout.putConstraint(SpringLayout.NORTH, submitButton, 5,
 					SpringLayout.SOUTH, cardScrollPanel);
 			
-			layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
-					SpringLayout.SOUTH, rightView);
+			layout.putConstraint(SpringLayout.NORTH, errorField, 8,
+					SpringLayout.SOUTH, cardScrollPanel);
 		}
 
 		// TODO: make this into a method
@@ -452,9 +449,6 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		this.getViewport().add(rightView); // Sets the rightview to be the
 											// entire container which has
 											// everything contained within it
-		
-		setFieldsVisible(true);
-
 
 	}
 
@@ -647,8 +641,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			estimateWithTextPanel.setVisible(visible);
 		} else {
 			counterLabel.setVisible(visible);
-			cardScrollPanel.setVisible(true);
-			cardsPanel.setVisible(true);
+			clearButton.setVisible(visible);
+			cardScrollPanel.setVisible(visible);
+			cardsPanel.setVisible(visible);
 		}
 	}
 

@@ -368,6 +368,11 @@ public class Requirement extends ObservableModel {
 			wasChanged = true;
 		}
 		
+		if(fromRequirementModule != toCopyFrom.fromRequirementModule) {
+			fromRequirementModule = toCopyFrom.fromRequirementModule;
+			wasChanged = true;
+		}
+		
 		if (finalEstimate != toCopyFrom.finalEstimate) {
 			finalEstimate = toCopyFrom.finalEstimate;
 			wasChanged = true;
@@ -377,16 +382,25 @@ public class Requirement extends ObservableModel {
 			description = toCopyFrom.description;
 			wasChanged = true;
 		}
+		
 		if(!name.equals(toCopyFrom.name)) {
 			name = toCopyFrom.name;
 			wasChanged = true;
 		}
+		
 		if(!votes.equals(toCopyFrom.votes)) {
 			for(Vote v : toCopyFrom.votes){
 				addVote(v);
 			}
 			wasChanged = true;
 		}
+		
+		if(complete != toCopyFrom.complete) {
+			complete = toCopyFrom.complete;
+			wasChanged = true;
+		}
+		
+		
 		return wasChanged;
 	}
 	
