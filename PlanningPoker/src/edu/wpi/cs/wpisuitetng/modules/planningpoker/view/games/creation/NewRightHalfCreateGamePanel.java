@@ -59,12 +59,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		IDataField {
 	private NewAddRequirementsPanel reqPanel; // initialize new add requirements
 												// panel
-	private NewAddReqImportReqPanel importPanel; // initialize the panel with
-													// the buttons
-													// "Add Requirement" and
-													// "Import Requirements"
-	private NewCreateGamePanel parent; // initialize variable to hold panel
-										// above this panel
+	private NewAddReqImportReqPanel importPanel; // initialize the panel with the buttons Add Requirement" and "Import Requirements"
+	private NewCreateGamePanel parent; // initialize variable to hold panel above this panel
 
 	private List<Requirement> requirements = new ArrayList<Requirement>();
 
@@ -75,10 +71,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 
 	private final Border defaultPanelBorder = (new JPanel()).getBorder();
 
-	private int globalRow = -1; // this Variable is used to keep track of when
-								// the submit or update
-								// button is grayed out as well as which row is
-								// being updated when the edit button is pressed
+	private int globalRow = -1; // this Variable is used to keep track of when the submit or update button is grayed out as well as which row is being updated when the edit button is pressed
 
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
@@ -133,12 +126,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	}
 
 	private void build() {
-		Container rightView = new Container(); // Creates the container for
-												// everything in the view
-		SpringLayout layout = new SpringLayout(); // Creates the layout to be
-													// used: Spring Layout
-		rightView.setLayout(layout); // Sets the container to have the spring
-										// layout
+		Container rightView = new Container(); // Creates the container for everything in the view
+		SpringLayout layout = new SpringLayout(); // Creates the layout to be used: Spring Layout
+		rightView.setLayout(layout); // Sets the container to have the spring layout
 
 		currentTable = new RequirementTable(new ArrayList<Requirement>(),
 				RequirementTableMode.CREATE);
@@ -259,9 +249,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		SpringLayout importLayout = new SpringLayout();
 		importReqsPanel.setLayout(importLayout);
 
-		JLabel importReq = new JLabel("Import Requirements"); // Creates the
-																// label import
-																// requirement
+		JLabel importReq = new JLabel("Import Requirements"); // Creates the label import requirement
 		importReq.setFont(labelFont); // Sets the label font
 
 		importTable = new RequirementTable(new ArrayList<Requirement>(),
@@ -330,11 +318,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		/**
 		 * Formats the buttons underneath the panels
 		 */
-		JButton testButton = new JButton("tttttttttttttttttt"); // Don't change
-																// text, it
-																// determines
-																// button
-																// width...
+		JButton testButton = new JButton("tttttttttttttttttt"); // Don't change text, it determines button width...
 		Dimension buttonD = testButton.getPreferredSize();
 		importReqButton.setPreferredSize(buttonD);
 		editReqButton.setPreferredSize(buttonD);
@@ -354,190 +338,129 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 
 		// IN THE CURRENT REQ PANEL
 		// the tile with respect to the panel
-		currentLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER,
-				currentReqs, 5, SpringLayout.HORIZONTAL_CENTER,
-				currentReqsPanel);
+		currentLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER,currentReqs, 5, SpringLayout.HORIZONTAL_CENTER,currentReqsPanel);
+		
 		// Table with respect to the title
-		currentLayout.putConstraint(SpringLayout.NORTH, tablePanel2, 5,
-				SpringLayout.SOUTH, currentReqs);
+		currentLayout.putConstraint(SpringLayout.NORTH, tablePanel2, 5, SpringLayout.SOUTH, currentReqs);
+		
 		// table with respect panel
-		currentLayout.putConstraint(SpringLayout.WEST, tablePanel2, 5,
-				SpringLayout.WEST, currentReqsPanel);
-		currentLayout.putConstraint(SpringLayout.EAST, tablePanel2, -5,
-				SpringLayout.EAST, currentReqsPanel);
-		currentLayout.putConstraint(SpringLayout.SOUTH, tablePanel2, -5,
-				SpringLayout.SOUTH, currentReqsPanel);
+		currentLayout.putConstraint(SpringLayout.WEST, tablePanel2, 5, SpringLayout.WEST, currentReqsPanel);
+		currentLayout.putConstraint(SpringLayout.EAST, tablePanel2, -5, SpringLayout.EAST, currentReqsPanel);
+		currentLayout.putConstraint(SpringLayout.SOUTH, tablePanel2, -5, SpringLayout.SOUTH, currentReqsPanel);
 
 		// IN RIGHT VEIW CONTAINER
 		// currentPanel with respect to the container
-		layout.putConstraint(SpringLayout.NORTH, currentReqsPanel, 5,
-				SpringLayout.NORTH, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -50,
-				SpringLayout.SOUTH, rightView);
-		layout.putConstraint(SpringLayout.WEST, currentReqsPanel, 5,
-				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, currentReqsPanel, -5,
-				SpringLayout.EAST, rightView);
+		layout.putConstraint(SpringLayout.NORTH, currentReqsPanel, 5, SpringLayout.NORTH, rightView);
+		layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -50,	SpringLayout.SOUTH, rightView);
+		layout.putConstraint(SpringLayout.WEST, currentReqsPanel, 5, SpringLayout.WEST, rightView);
+		layout.putConstraint(SpringLayout.EAST, currentReqsPanel, -5, SpringLayout.EAST, rightView);
 
 		// addreq button
-		layout.putConstraint(SpringLayout.SOUTH, addReqButton, -5,
-				SpringLayout.SOUTH, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5,
-				SpringLayout.NORTH, addReqButton);
-		layout.putConstraint(SpringLayout.WEST, addReqButton, 10,
-				SpringLayout.WEST, rightView);
+		layout.putConstraint(SpringLayout.SOUTH, addReqButton, -5, SpringLayout.SOUTH, rightView);
+		layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, addReqButton);
+		layout.putConstraint(SpringLayout.WEST, addReqButton, 10, SpringLayout.WEST, rightView);
+		
 		// importreq button
-		layout.putConstraint(SpringLayout.SOUTH, importReqButton, -5,
-				SpringLayout.SOUTH, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5,
-				SpringLayout.NORTH, importReqButton);
-		layout.putConstraint(SpringLayout.WEST, importReqButton, 5,
-				SpringLayout.EAST, addReqButton);
+		layout.putConstraint(SpringLayout.SOUTH, importReqButton, -5, SpringLayout.SOUTH, rightView);
+		layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, importReqButton);
+		layout.putConstraint(SpringLayout.WEST, importReqButton, 5, SpringLayout.EAST, addReqButton);
+		
 		// removereq button
-		layout.putConstraint(SpringLayout.SOUTH, removeReqButton, -5,
-				SpringLayout.SOUTH, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5,
-				SpringLayout.NORTH, removeReqButton);
-		layout.putConstraint(SpringLayout.EAST, removeReqButton, -10,
-				SpringLayout.EAST, rightView);
+		layout.putConstraint(SpringLayout.SOUTH, removeReqButton, -5, SpringLayout.SOUTH, rightView);
+		layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, removeReqButton);
+		layout.putConstraint(SpringLayout.EAST, removeReqButton, -10, SpringLayout.EAST, rightView);
+		
 		// currentPanel with respect to the button
-		layout.putConstraint(SpringLayout.SOUTH, addReqButton, -5,
-				SpringLayout.SOUTH, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5,
-				SpringLayout.NORTH, addReqButton);
-		layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5,
-				SpringLayout.NORTH, addReqButton);
+		layout.putConstraint(SpringLayout.SOUTH, addReqButton, -5, SpringLayout.SOUTH, rightView);
+		layout.putConstraint(SpringLayout.SOUTH, currentReqsPanel, -5, SpringLayout.NORTH, addReqButton);
+		layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -5, SpringLayout.NORTH, addReqButton);
+		
 		// edit req button
-		layout.putConstraint(SpringLayout.SOUTH, editReqButton, -5,
-				SpringLayout.SOUTH, rightView);
-		layout.putConstraint(SpringLayout.EAST, editReqButton, -5,
-				SpringLayout.WEST, removeReqButton);
+		layout.putConstraint(SpringLayout.SOUTH, editReqButton, -5, SpringLayout.SOUTH, rightView);
+		layout.putConstraint(SpringLayout.EAST, editReqButton, -5, SpringLayout.WEST, removeReqButton);
 
 		// CREATE REQS PANEL
 		// createPanel with respect to the container
-		layout.putConstraint(SpringLayout.NORTH, createReqsPanel, 5,
-				SpringLayout.NORTH, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -50,
-				SpringLayout.SOUTH, rightView);
-		layout.putConstraint(SpringLayout.WEST, createReqsPanel, 5,
-				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, createReqsPanel, -5,
-				SpringLayout.EAST, rightView);
+		layout.putConstraint(SpringLayout.NORTH, createReqsPanel, 5, SpringLayout.NORTH, rightView);
+		layout.putConstraint(SpringLayout.SOUTH, createReqsPanel, -50, SpringLayout.SOUTH, rightView);
+		layout.putConstraint(SpringLayout.WEST, createReqsPanel, 5, SpringLayout.WEST, rightView);
+		layout.putConstraint(SpringLayout.EAST, createReqsPanel, -5, SpringLayout.EAST, rightView);
 
 		// create Reqs label
-		createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER,
-				createReqsLabel, 5, SpringLayout.HORIZONTAL_CENTER,
-				createReqsPanel);
-		createLayout.putConstraint(SpringLayout.NORTH, createReqsLabel, 5,
-				SpringLayout.NORTH, parent);
+		createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, createReqsLabel, 5, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.NORTH, createReqsLabel, 5, SpringLayout.NORTH, parent);
 
 		// update Reqs Label/
-		createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER,
-				updateReqsLabel, 5, SpringLayout.HORIZONTAL_CENTER,
-				createReqsPanel);
-		createLayout.putConstraint(SpringLayout.NORTH, updateReqsLabel, 5,
-				SpringLayout.NORTH, parent);
+		createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, updateReqsLabel, 5, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.NORTH, updateReqsLabel, 5, SpringLayout.NORTH, parent);
 
 		// req name label with respect to create panel
-		createLayout.putConstraint(SpringLayout.WEST, reqName, 5,
-				SpringLayout.WEST, createReqsPanel);
-		createLayout.putConstraint(SpringLayout.NORTH, reqName, 5,
-				SpringLayout.SOUTH, createReqsLabel);
+		createLayout.putConstraint(SpringLayout.WEST, reqName, 5, SpringLayout.WEST, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.NORTH, reqName, 5, SpringLayout.SOUTH, createReqsLabel);
+		
 		// req name label with respect to the text box
-		createLayout.putConstraint(SpringLayout.NORTH, nameArea, 5,
-				SpringLayout.SOUTH, reqName);
+		createLayout.putConstraint(SpringLayout.NORTH, nameArea, 5, SpringLayout.SOUTH, reqName);
+		
 		// name text box with respect to the create panel
-		createLayout.putConstraint(SpringLayout.WEST, nameArea, 5,
-				SpringLayout.WEST, createReqsPanel);
-		createLayout.putConstraint(SpringLayout.EAST, nameArea, -5,
-				SpringLayout.EAST, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.WEST, nameArea, 5, SpringLayout.WEST, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.EAST, nameArea, -5, SpringLayout.EAST, createReqsPanel);
 
 		// desc label with respect to name area
-		createLayout.putConstraint(SpringLayout.NORTH, reqDesc, 5,
-				SpringLayout.SOUTH, nameArea);
+		createLayout.putConstraint(SpringLayout.NORTH, reqDesc, 5, SpringLayout.SOUTH, nameArea);
+		
 		// desc label with respect to create panel
-		createLayout.putConstraint(SpringLayout.WEST, reqDesc, 5,
-				SpringLayout.WEST, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.WEST, reqDesc, 5, SpringLayout.WEST, createReqsPanel);
+		
 		// desc label with respect to the desc text box
-		createLayout.putConstraint(SpringLayout.NORTH, descPane, 5,
-				SpringLayout.SOUTH, reqDesc);
+		createLayout.putConstraint(SpringLayout.NORTH, descPane, 5, SpringLayout.SOUTH, reqDesc);
+		
 		// desc text box with respect to the create panel
-		createLayout.putConstraint(SpringLayout.WEST, descPane, 5,
-				SpringLayout.WEST, createReqsPanel);
-		createLayout.putConstraint(SpringLayout.EAST, descPane, -5,
-				SpringLayout.EAST, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.WEST, descPane, 5, SpringLayout.WEST, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.EAST, descPane, -5, SpringLayout.EAST, createReqsPanel);
 
 		// position submit button with respect to createReqPanel
-		createLayout.putConstraint(SpringLayout.SOUTH, submitAddReqButton, -18,
-				SpringLayout.SOUTH, createReqsPanel);
-		createLayout.putConstraint(SpringLayout.WEST, submitAddReqButton, 5,
-				SpringLayout.WEST, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.SOUTH, submitAddReqButton, -18, SpringLayout.SOUTH, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.WEST, submitAddReqButton, 5, SpringLayout.WEST, createReqsPanel);
 
 		// position update button with respect to createReqPanel
-		createLayout.putConstraint(SpringLayout.SOUTH, updateAddReqButton, -18,
-				SpringLayout.SOUTH, createReqsPanel);
-		createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER,
-				updateAddReqButton, 5, SpringLayout.HORIZONTAL_CENTER,
-				createReqsPanel);
+		createLayout.putConstraint(SpringLayout.SOUTH, updateAddReqButton, -18, SpringLayout.SOUTH, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, updateAddReqButton, 5, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
 
 		// position cancel button with respect to createReqPanel
-		createLayout.putConstraint(SpringLayout.SOUTH, cancelRequirementButton,
-				-18, SpringLayout.SOUTH, createReqsPanel);
-		createLayout.putConstraint(SpringLayout.EAST, cancelRequirementButton,
-				-5, SpringLayout.EAST, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.SOUTH, cancelRequirementButton, -18, SpringLayout.SOUTH, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.EAST, cancelRequirementButton, -5, SpringLayout.EAST, createReqsPanel);
 
 		// postion error label with respect to creaReqPanel
-		createLayout.putConstraint(SpringLayout.SOUTH, errorLabel, 0,
-				SpringLayout.SOUTH, createReqsPanel);
-		createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorLabel,
-				1, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.SOUTH, errorLabel, 0, SpringLayout.SOUTH, createReqsPanel);
+		createLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorLabel, 1, SpringLayout.HORIZONTAL_CENTER, createReqsPanel);
 
 		// anchor descPane to the top of the submit button
-		createLayout.putConstraint(SpringLayout.SOUTH, descPane, -8,
-				SpringLayout.NORTH, submitAddReqButton);
+		createLayout.putConstraint(SpringLayout.SOUTH, descPane, -8, SpringLayout.NORTH, submitAddReqButton);
 
 		// IMPORT REQS PANEL
-		layout.putConstraint(SpringLayout.NORTH, importReqsPanel, 5,
-				SpringLayout.NORTH, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, importReqsPanel, -36,
-				SpringLayout.SOUTH, rightView);
-		layout.putConstraint(SpringLayout.WEST, importReqsPanel, 5,
-				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.EAST, importReqsPanel, -5,
-				SpringLayout.EAST, rightView);
+		layout.putConstraint(SpringLayout.NORTH, importReqsPanel, 5, SpringLayout.NORTH, rightView);
+		layout.putConstraint(SpringLayout.SOUTH, importReqsPanel, -36, SpringLayout.SOUTH, rightView);
+		layout.putConstraint(SpringLayout.WEST, importReqsPanel, 5, SpringLayout.WEST, rightView);
+		layout.putConstraint(SpringLayout.EAST, importReqsPanel, -5, SpringLayout.EAST, rightView);
 
-		importLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, importReq,
-				5, SpringLayout.HORIZONTAL_CENTER, importReqsPanel);
-		importLayout.putConstraint(SpringLayout.NORTH, importReq, 5,
-				SpringLayout.NORTH, importReqsPanel);
+		importLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, importReq, 5, SpringLayout.HORIZONTAL_CENTER, importReqsPanel);
+		importLayout.putConstraint(SpringLayout.NORTH, importReq, 5, SpringLayout.NORTH, importReqsPanel);
 
-		importLayout.putConstraint(SpringLayout.NORTH, tablePanel, 5,
-				SpringLayout.SOUTH, importReq);
-		importLayout.putConstraint(SpringLayout.WEST, tablePanel, 5,
-				SpringLayout.WEST, importReqsPanel);
-		importLayout.putConstraint(SpringLayout.EAST, tablePanel, -5,
-				SpringLayout.EAST, importReqsPanel);
-		importLayout.putConstraint(SpringLayout.SOUTH, tablePanel, 5,
-				SpringLayout.NORTH, submitImportReqButton);
+		importLayout.putConstraint(SpringLayout.NORTH, tablePanel, 5, SpringLayout.SOUTH, importReq);
+		importLayout.putConstraint(SpringLayout.WEST, tablePanel, 5, SpringLayout.WEST, importReqsPanel);
+		importLayout.putConstraint(SpringLayout.EAST, tablePanel, -5, SpringLayout.EAST, importReqsPanel);
+		importLayout.putConstraint(SpringLayout.SOUTH, tablePanel, 5, SpringLayout.NORTH, submitImportReqButton);
 
-		importLayout.putConstraint(SpringLayout.SOUTH, submitImportReqButton,
-				-5, SpringLayout.SOUTH, importReqsPanel);
-		importLayout.putConstraint(SpringLayout.WEST, submitImportReqButton, 5,
-				SpringLayout.WEST, importReqsPanel);
+		importLayout.putConstraint(SpringLayout.SOUTH, submitImportReqButton, -5, SpringLayout.SOUTH, importReqsPanel);
+		importLayout.putConstraint(SpringLayout.WEST, submitImportReqButton, 5, SpringLayout.WEST, importReqsPanel);
 
-		importLayout.putConstraint(SpringLayout.SOUTH, cancelImportReqButton,
-				-5, SpringLayout.SOUTH, importReqsPanel);
-		importLayout.putConstraint(SpringLayout.EAST, cancelImportReqButton,
-				-5, SpringLayout.EAST, importReqsPanel);
+		importLayout.putConstraint(SpringLayout.SOUTH, cancelImportReqButton, -5, SpringLayout.SOUTH, importReqsPanel);
+		importLayout.putConstraint(SpringLayout.EAST, cancelImportReqButton, -5, SpringLayout.EAST, importReqsPanel);
 
-		importLayout.putConstraint(SpringLayout.NORTH, importErrorLabel, 2,
-				SpringLayout.NORTH, submitImportReqButton);
-		importLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER,
-				importErrorLabel, 0, SpringLayout.HORIZONTAL_CENTER,
-				importReqsPanel);
+		importLayout.putConstraint(SpringLayout.NORTH, importErrorLabel, 2, SpringLayout.NORTH, submitImportReqButton);
+		importLayout.putConstraint(SpringLayout.HORIZONTAL_CENTER, importErrorLabel, 0, SpringLayout.HORIZONTAL_CENTER, importReqsPanel);
 
-		importLayout.putConstraint(SpringLayout.SOUTH, tablePanel, -20,
-				SpringLayout.NORTH, submitImportReqButton);
+		importLayout.putConstraint(SpringLayout.SOUTH, tablePanel, -20, SpringLayout.NORTH, submitImportReqButton);
 
 		/**
 		 * Set the minimum size and add components to the viewport of the
@@ -635,10 +558,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 						String selectedName = null;
 						boolean hasImported = false;
 						for (int i = 0; i < rows.length; i++) {
-							selectedName = (String) currentTable.getValueAt(
-									rows[i], 0);
-							if (RequirementModel.getInstance().getRequirement(
-									selectedName) != null) {
+							selectedName = (String) currentTable.getValueAt(rows[i], 0);
+							if (RequirementModel.getInstance().getRequirement(selectedName) != null) {
 								hasImported = true;
 							}
 						}
@@ -673,8 +594,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		}
 
 		// Add the Requirements from the Requirement Manager to the model
-		RetrieveRequirementController controller = RetrieveRequirementController
-				.getInstance();
+		RetrieveRequirementController controller = RetrieveRequirementController.getInstance();
 		controller.retrieveRequirements();
 
 		// Sleep the thread for a little bit to ensure that
@@ -694,9 +614,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		for (Requirement r : requirements) {
 			if (r.getFromRequirementModule()) {
 				// Don't allow duplicate requirements
-				if (!r.existsIn(this.requirements))
-					importTable.getTableModel().addRow(
-							new Object[] { r.getName(), r.getDescription() });
+				if (!r.existsIn(this.requirements)){
+					importTable.getTableModel().addRow(new Object[] { r.getName(), r.getDescription() });
+				}
 			}
 		}
 
@@ -712,8 +632,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 
 	private void submitButtonPressed() {
 		if (validateNameAndDesc(true, true)) {
-			addRequirement(new Requirement(nameArea.getText(),
-					descArea.getText()));
+			addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
 			nameArea.setText("");
 			descArea.setText("");
 			createReqsPanel.setVisible(false);
@@ -732,8 +651,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		if (globalRow != -1) {
 			int[] rows = currentTable.getSelectedRows();
 			for (int i = 0; i < requirements.size(); i++) {
-				if (requirements.get(i).getName()
-						.equals(currentTable.getValueAt(rows[0], 0))) {
+				if (requirements.get(i).getName().equals(currentTable.getValueAt(rows[0], 0))) {
 					System.out.println(requirements.get(i).getName());
 					requirements.get(i).setName(nameArea.getText());
 					requirements.get(i).setDescription(descArea.getText());
@@ -773,8 +691,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		int[] rows = importTable.getSelectedRows();
 		for (int i = 0; i < rows.length; i++) {
 			String selectedName = (String) importTable.getValueAt(rows[i], 0);
-			addRequirement(RequirementModel.getInstance().getRequirement(
-					selectedName));
+			addRequirement(RequirementModel.getInstance().getRequirement(selectedName));
 		}
 
 		parent.updateButtons();
@@ -792,8 +709,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		boolean nameValid = false;
 		boolean uniqueName = false;
 
-		if (checkduplicateReq(new Requirement(nameArea.getText(),
-				descArea.getText()))) {
+		if (checkduplicateReq(new Requirement(nameArea.getText(), descArea.getText()))) {
 			uniqueName = false;
 			displayError("A requirement already exists with that name");
 		} else {
@@ -890,9 +806,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	 */
 	public void addRequirement(Requirement requirement) {
 		if (!checkduplicateReq(requirement)) {
-			currentTable.getTableModel().addRow(
-					new Object[] { requirement.getName(),
-							requirement.getDescription() });
+			currentTable.getTableModel().addRow(new Object[] { requirement.getName(), requirement.getDescription() });
 			requirements.add(requirement);
 		} else {
 			displayError("Duplicate Requirement Added");
@@ -907,8 +821,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 				int[] rows = currentTable.getSelectedRows();
 				// Remove requirement from requirements list
 				for (int i = 0; i < requirements.size(); i++) {
-					if (requirements.get(i).getName()
-							.equals(currentTable.getValueAt(rows[0], 0))) {
+					if (requirements.get(i).getName().equals(currentTable.getValueAt(rows[0], 0))) {
 						requirements.remove(requirements.get(i));
 					}
 				}
@@ -939,19 +852,15 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	}
 
 	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
+	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
 		parent.getLeftHalf().getBoxName().setBorder(defaultTextFieldBorder);
-		parent.getLeftHalf().getBoxDescription()
-				.setBorder(defaultTextAreaBorder);
-		parent.getLeftHalf().getEndDateField()
-				.setBorder((new JXDatePicker()).getBorder());
+		parent.getLeftHalf().getBoxDescription().setBorder(defaultTextAreaBorder);
+		parent.getLeftHalf().getEndDateField().setBorder((new JXDatePicker()).getBorder());
 
 		if (requirements.size() <= 0) {
 			if (warningField != null) {
 				if (showLabel) {
-					warningField
-							.setText("At least one requirement is needed to start a game");
+					warningField.setText("At least one requirement is needed to start a game");
 				}
 				if (showBox) {
 					currentReqsPanel.setBorder(errorBorder);
@@ -1001,10 +910,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		} else {
 			updateAddReqButton.setEnabled(false);
 			validateNameAndDesc(true, false);
-			if (errorLabel.getText().equals(
-					"A requirement already exists with that name")) {
-				if (nameArea.getText().equals(
-						(String) currentTable.getValueAt(globalRow, 0))) {
+			if (errorLabel.getText().equals("A requirement already exists with that name")) {
+				if (nameArea.getText().equals((String) currentTable.getValueAt(globalRow, 0))) {
 					updateAddReqButton.setEnabled(true);
 					displayError("");
 				}
@@ -1028,8 +935,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		String currentName = (String) currentTable.getValueAt(globalRow, 0);
 		String updateDesc = descArea.getText();
 		String currentDesc = (String) currentTable.getValueAt(globalRow, 1);
-		return (!(currentName.equals(updateName)))
-				|| (!(currentDesc.equals(updateDesc)));
+		return (!(currentName.equals(updateName)))|| (!(currentDesc.equals(updateDesc)));
 	}
 
 }
