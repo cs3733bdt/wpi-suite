@@ -29,6 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableMode
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 
 /**
@@ -530,6 +531,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public void update(ObservableModel o, Object arg) {
 		if (o instanceof Requirement){
 			makeChanged();
+			UpdateRequirementController.getInstance().updateRequirement((Requirement) o);
 			notifyObservers(arg);
 		}
 		System.out.println("Game: " + name + " has " + countObservers() + " observers");
