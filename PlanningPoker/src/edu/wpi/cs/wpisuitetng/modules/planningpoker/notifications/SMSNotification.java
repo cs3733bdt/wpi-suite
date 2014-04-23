@@ -114,7 +114,7 @@ public class SMSNotification {
 		if(users[0] != null) {
 			for (int i = 0; i < users.length; i++) {
 				// TODO implement verify if email format
-				if (users[i].getEmail() != null)
+				if (users[i].getEmail() != null && users[i].getNotificationPreferences().contains("M"))
 					sendSMS(login(), users[i]);
 				else
 					System.err.println(users[i].getName() + " doesn't have an email Stored.");

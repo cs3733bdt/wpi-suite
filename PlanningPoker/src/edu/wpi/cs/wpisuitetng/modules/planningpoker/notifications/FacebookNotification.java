@@ -99,7 +99,7 @@ public class FacebookNotification {
 			// Send facebook notifications
 			for (int i = 0; i < users.length; i++) {
 				// Make sure users have a username stored
-				if (users[i].getFacebookUsername() != null)
+				if (users[i].getFacebookUsername() != null && users[i].getNotificationPreferences().contains("F"))
 					sendFacebookNotification(connection, users[i]);
 				else
 					System.err.println(users[i].getName() 
