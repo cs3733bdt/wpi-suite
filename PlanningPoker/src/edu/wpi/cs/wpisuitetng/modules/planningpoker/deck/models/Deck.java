@@ -47,7 +47,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		identity = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
-		this.owner = ConfigManager.getInstance().getConfig().getUserName();
+		owner = ConfigManager.getInstance().getConfig().getUserName();
 		this.cards = cards;
 	}
 	
@@ -55,7 +55,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		this.identity = identity;
 		this.name = name;
 		this.description = description;
-		this.owner = ConfigManager.getInstance().getConfig().getUserName();
+		owner = ConfigManager.getInstance().getConfig().getUserName();
 		this.cards = cards;
 	}
 	
