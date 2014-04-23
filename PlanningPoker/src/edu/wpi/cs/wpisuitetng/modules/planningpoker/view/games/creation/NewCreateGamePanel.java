@@ -87,6 +87,11 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 
 	}
 	
+	/**
+	 * Creates a NewCreateGamePanel with a game's information on it
+	 * @param game The game to be created
+	 * @param withError sees if there is an error or not
+	 */
 	public NewCreateGamePanel(Game game, boolean withError) {
 		this(game);
 		if (withError) {
@@ -203,7 +208,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	
 	/**
 	 * Called by the 'Launch Game' action listener
-	 * @return
+	 * @return true if the game was launched/started sucessfully
 	 */
 	public boolean LaunchGamePressed() {
 		if(validateField(true, true)){
@@ -221,7 +226,6 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	
 	/**
 	 * Adds the game to the model and to the server and sets it to inactive
-	 * @param endDate 
 	 */
 	public void  saveGame(){	
 		if(currentGame == null){
@@ -266,19 +270,22 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		currentGame.notifyObservers();
 	}
 	
+	/**
+	 * sets buttons to be enabled or disabled depending on if conditions were met
+	 */
 	public void updateButtons(){
 		if(validateField(true, false)){
 			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
 		}
 		else{
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
 		}
 		
 		if(leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true, false)){
 			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
 		}
 		else{
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
 		}
 
 	}

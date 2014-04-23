@@ -33,6 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateG
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.IEndedGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation.PreferencesPanel;
 
 /**
  * This class sets the main view when the user goes to the PlanningPoker tab 
@@ -53,6 +54,9 @@ public class TabbedView extends JTabbedPane {
 	private List<ICreateGamePanel> listOfCreateGamePanels = new ArrayList<ICreateGamePanel>();
 	private List<IActiveGamePanel> listOfActiveGamePanels = new ArrayList<IActiveGamePanel>();
 	private List<IEndedGamePanel>  listOfEndedGamePanels = new ArrayList<IEndedGamePanel>();
+	
+	private PreferencesPanel preferencesPanel;
+	private boolean hasPreferencesTab=false;
 	
 	/**
 	 * Adds Main View of the planning poker panel when the user goes to the planning poker tab
@@ -198,6 +202,23 @@ public class TabbedView extends JTabbedPane {
 		repaint();
 	}
 	
+	public void openPreferencesTab(){
+		if(!hasPreferencesTab){
+			preferencesPanel = new PreferencesPanel();
+			addTab("Preferences", null, preferencesPanel, "Preferences");
+			setSelectedComponent(preferencesPanel);
+			hasPreferencesTab = true;
+			invalidate();
+			repaint();
+			return;
+		}
+		
+		setSelectedComponent(preferencesPanel);
+		invalidate();
+		repaint();
+		
+	}
+	
 	/**
 	 * Shows the ended game.
 	 * Displays the End Game Panel
@@ -264,7 +285,13 @@ public class TabbedView extends JTabbedPane {
 			if(!((IEndedGamePanel)comp).readyToRemove()) return;
 			listOfEndedGamePanels.remove(comp);
 		}
+		if (comp instanceof PreferencesPanel){
+			//TODO Implement preferences like other panels to use readyToRemove
+			//if(!((IEndedGamePanel)comp).readyToRemove()) return;
+			hasPreferencesTab = false;	
+		}
 		remove(comp);
+		setSelectedComponent(gameOverview);
 	}
 	
 	/**

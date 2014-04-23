@@ -108,6 +108,22 @@ public class ViewEventController {
 		getTabbedView().setSelectedComponent(newDeck);
 	}
 	
+	public void editPreferences() {
+		getTabbedView().openPreferencesTab();
+		getTabbedView().invalidate();
+		getTabbedView().repaint();
+		
+	}
+	
+//	public void openHelp() {
+//		Component selectedComponent = getTabbedView().getSelectedComponent();
+//		switch(selectedComponent.getClass().toString()) {
+//	//	case(newPreferencesPanel)
+//		 
+//		}
+//		HelpPanel newHelpPanel = new HelpPanel
+//	}
+	
 	/**
 	 * Creates an EditGamePanel instance, adds a tab representing 
 	 * that panel, and switches to that new panel

@@ -96,8 +96,8 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		Container newLeftView = new Container();
 		SpringLayout layout = new SpringLayout();
 		newLeftView.setLayout(layout);
-		setMinimumSize(new Dimension(310, 110));			//Sets the minimum size of the left half view
-		newLeftView.setPreferredSize(new Dimension(315, 518));		//Sets the size of the view
+		setMinimumSize(new Dimension(325, 110));			//Sets the minimum size of the left half view
+		newLeftView.setPreferredSize(new Dimension(305, 445));		//Sets the size of the view
 		
 		revalidate();
 		repaint();
@@ -154,7 +154,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 
 		// Creates a scroll pane to hold the text area for end game note
 		notePane = new JScrollPane(endGameManuallyNote);
-		notePane.setPreferredSize(new Dimension(200, 133));
+		notePane.setPreferredSize(new Dimension(200, 110));
 
 		// Creates end game button
 		endGameManuallyButton = new JButton();
@@ -203,10 +203,10 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.WEST, descPane, 5, SpringLayout.WEST, newLeftView);
 		layout.putConstraint(SpringLayout.EAST, descPane, -5, SpringLayout.EAST, newLeftView);
 
-		layout.putConstraint(SpringLayout.NORTH, gameCreatorName, 15, SpringLayout.SOUTH, descPane);
+		layout.putConstraint(SpringLayout.NORTH, gameCreatorName, 10, SpringLayout.SOUTH, descPane);
 		layout.putConstraint(SpringLayout.WEST, gameCreatorName, 14, SpringLayout.EAST, gameCreatorLabel);
 
-		layout.putConstraint(SpringLayout.NORTH, gameCreatorLabel, 15, SpringLayout.SOUTH, descPane);
+		layout.putConstraint(SpringLayout.NORTH, gameCreatorLabel, 10, SpringLayout.SOUTH, descPane);
 		layout.putConstraint(SpringLayout.WEST, gameCreatorLabel, 5, SpringLayout.WEST, newLeftView);
 
 		layout.putConstraint(SpringLayout.NORTH, gameEndDateLabel, 5, SpringLayout.SOUTH, gameCreatorLabel);
@@ -215,7 +215,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.NORTH, gameEndDate, 5, SpringLayout.SOUTH, gameCreatorLabel);	
 		layout.putConstraint(SpringLayout.WEST, gameEndDate, 5, SpringLayout.EAST, gameEndDateLabel);
 
-		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 50, SpringLayout.SOUTH, gameEndDateLabel);	
+		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 25, SpringLayout.SOUTH, gameEndDateLabel);	
 		layout.putConstraint(SpringLayout.WEST, endGameManuallyNoteLabel, 5, SpringLayout.WEST, newLeftView);
 
 		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel1, 1, SpringLayout.SOUTH, endGameManuallyNoteLabel);	
@@ -224,6 +224,7 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.NORTH, notePane, 5, SpringLayout.SOUTH, endGameManuallyNoteLabel1);	
 		layout.putConstraint(SpringLayout.WEST, notePane, 5, SpringLayout.WEST, newLeftView);
 		layout.putConstraint(SpringLayout.EAST, notePane, -5, SpringLayout.EAST, newLeftView);
+		layout.putConstraint(SpringLayout.SOUTH, notePane, -10, SpringLayout.NORTH, endGameManuallyButton);
 		
 		layout.putConstraint(SpringLayout.WEST, endGameManuallyButton, 5, SpringLayout.WEST, newLeftView);
 		layout.putConstraint(SpringLayout.SOUTH, endGameManuallyButton, -10, SpringLayout.SOUTH, newLeftView);

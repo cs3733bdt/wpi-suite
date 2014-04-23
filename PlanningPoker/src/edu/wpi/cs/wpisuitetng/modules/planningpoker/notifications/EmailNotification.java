@@ -11,6 +11,8 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -26,7 +28,6 @@ import com.sun.mail.util.MailConnectException;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-
 /**
  * This is a class that will send out email notifications
  * whenever a game is successfully created.
@@ -94,6 +95,7 @@ public class EmailNotification {
 		return session;
 	}
 	
+	
 	/**
 	 * This method implements the sendEmail method to 
 	 * send email notifications to all the users on a team
@@ -159,7 +161,7 @@ public class EmailNotification {
 					to));
 
 			// Set Subject: header field
-			message.setSubject("Voting is Required for game: " + g.getName());
+			message.setSubject("Planning Poker Game: " + g.getName());
 
 			// If the game doesn't have requirements, say that instead
 			// of printing null requirements.
@@ -204,14 +206,15 @@ public class EmailNotification {
 	 */
 	private String generateCreateGameMessage(){
 		String reqs = "";
-		
 		for(Requirement r : g.getRequirements()){
 			reqs = reqs + r.toString();
 		}
 		
-		return "Game Description: " + g.getDescription() + "\n\n"
+		return "Voting is required for game: " + g.getName() + "\n\n"
+				+ "Game Description: " + g.getDescription() + "\n\n"
 				+ "\nGame Ending : " + g.getEndDate().toString()
-				+ "\nGame Requirements: " + reqs;
+				+ "\nGame Requirements: " + reqs + "\n\n" + 
+				"Bobby Drop Tables \nWPI Suite";
 	}
 	
 	/**
@@ -220,7 +223,91 @@ public class EmailNotification {
 	 * @return String representing message to be sent on game end.
 	 */
 	private String generateEndGameMessage(){
-		//TODO
-		return "Needs updating...";
+		String stats = "";
+		ArrayList<Integer> voteArray = new ArrayList<Integer>();
+		
+		for(Requirement r : g.getRequirements()) {
+			
+			for(int i=0; i < r.getVotes().size(); i++) {
+				voteArray.add(r.getVotes().get(i).getVoteNumber());
+			}
+			
+			stats += "Requirement: " + r.getName() + "\n" +
+					"Mean: " + mean(voteArray) + "\n" +
+					"Median: " + median(voteArray) + "\n" + 
+					"Standard Deviation: " + stDev(voteArray) + "\n\n";
+			voteArray.clear();
+		}
+
+		return "Game: " + g.getName() + " has ended.\n\n"
+				+ "Game Description: " + g.getDescription() + "\n\n"
+		+ "Game Statistics: " + stats + "\n\n"
+		+ "Bobby Drop Tables \nWPI Suite";
+	}
+	/**
+	 * calculates the mean of votes of a requirement
+	 * @param m the array list which contains the vote values
+	 * @return the mean of votes
+	 */
+	private double mean(ArrayList<Integer> Votes) {
+	    double sum = 0;
+	    for (int i = 0; i < Votes.size(); i++) {
+	        sum += Votes.get(i);
+	    }
+	    return sum / ((double)Votes.size());
+	}
+	/**
+	 * calculates the median of votes of a requirement
+	 * @param Votes the array list which contains the vote values
+	 * @return the median of votes
+	 */
+	public double median(ArrayList<Integer> Votes) {
+		double median = 0;
+		if (Votes.size() == 0) {
+			median = 0;
+		}
+		else if (Votes.size() == 1) {
+			median = Votes.get(0);
+		}
+		else {
+			double[] a = new double[Votes.size()];
+			for (int i = 0; i < Votes.size(); i++) {
+				a[i] = Votes.get(i);
+			}
+			Arrays.sort(a);
+			int mid = a.length/2;
+		
+			if (a.length % 2 == 0) {
+				median = (a[mid] + a[mid - 1])/2.0;
+			}
+			else {
+				median = a[mid];
+			}		
+		}
+		return median;
+	}
+	/**
+	 * calculates the standard deviation of votes of a requirement
+	 * @param Votes the array list which contains the vote values
+	 * @return the standard deviation of votes
+	 */
+	private double stDev(ArrayList<Integer> Votes) {
+		double stDev = 0;
+		double mean = mean(Votes);
+		ArrayList<Double> numMinusMeanSquared = new ArrayList<Double>(); 
+		
+		for (int i = 0; i < Votes.size(); i++) {
+			numMinusMeanSquared.add(Math.pow((Votes.get(i)-mean), 2)); 
+		}
+		
+		double sum = 0;
+		
+		for(int j = 0; j < numMinusMeanSquared.size(); j++) {
+			sum += numMinusMeanSquared.get(j);
+		}
+				
+		double variance = (sum / (double) numMinusMeanSquared.size());
+		stDev = Math.sqrt(variance) ;
+		return stDev;
 	}
 }

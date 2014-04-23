@@ -65,7 +65,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	private boolean notifiedOfCreation;
 	/** True if the users of the game have been notified of game complete */
 	private boolean notifiedOfCompletion;
-	
+
 	/**
 	 * Copies all of the values from the given Game to this Game.
 	 * @param toCopyFrom the Game to copy from
@@ -74,49 +74,49 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public boolean copyFrom(Game toCopyFrom) {
 		boolean needsUpdate = false;		//Triggers if there was a change to to the UUID
 		boolean wasChanged = false;			//True if there were any changes made
-		
+
 		if(!name.equals(toCopyFrom.name)){
 			name = toCopyFrom.name;
 			needsUpdate = true;
 			wasChanged = true;
 		}
-		
+
 		if(!description.equals(toCopyFrom.description)){
 			description = toCopyFrom.description;
 			needsUpdate = true;
 			wasChanged = true;
 		}
-		
+
 		if(hasTimeLimit != toCopyFrom.hasTimeLimit){
 			hasTimeLimit = toCopyFrom.hasTimeLimit;
 			needsUpdate = true;
 			wasChanged = true;
 		}
-		
+
 		if(usesCards != toCopyFrom.usesCards){
 			usesCards = toCopyFrom.usesCards;
 			needsUpdate = true;
 			wasChanged = true;
 		}
-		
+
 		if(!creationTime.equals(toCopyFrom.creationTime)){
 			creationTime = toCopyFrom.creationTime;
 			needsUpdate = true;
 			wasChanged = true;
 		}
-		
+
 		if(!creator.equals(toCopyFrom.creator)){
 			creator = toCopyFrom.creator;
 			needsUpdate = true;
 			wasChanged = true;
 		}
-		
+
 		if(!endDate.equals(toCopyFrom.endDate)){
 			endDate = toCopyFrom.endDate;
 			needsUpdate = true;
 			wasChanged = true;
 		}
-		
+
 		if(active != toCopyFrom.active) {
 			active = toCopyFrom.active;
 			needsUpdate = true;
@@ -125,7 +125,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		
 		if(!requirements.equals(toCopyFrom.requirements)){
 			boolean changes = false;
-			
+
 			//REMOVES REQUIREMENTS THAT HAVE BEEN REMOVED FROM THIS GAME
 			Iterator<Requirement> existingReq = requirements.iterator();
 			while(existingReq.hasNext()){
@@ -142,8 +142,8 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 				}
 			}
 			//END REMOVE REQUIREMENTS
-			
-											
+
+
 			for(Requirement serverReq: toCopyFrom.requirements){//Iterate over the new requirements
 				boolean found = false;							 
 				for(Requirement req : requirements){//Iterate over the existing requirements list
@@ -161,47 +161,46 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 					requirements.add(serverReq);//Add to the list of server requirements
 				}
 			}
-			
+
 			if(changes){											
 				wasChanged = true;
 			}
 			needsUpdate = true;
 		}
-		
+
 		if(complete != toCopyFrom.complete){
 			complete = toCopyFrom.complete;
 			needsUpdate = true;
 			wasChanged = true;
 		}
-		
+
 		if(notifiedOfCreation != toCopyFrom.notifiedOfCreation) {
 			notifiedOfCreation = toCopyFrom.notifiedOfCreation;
 			needsUpdate = true;
 			wasChanged = true;
 		}
-		
+
 		if(notifiedOfCompletion != toCopyFrom.notifiedOfCompletion) {
 			notifiedOfCompletion = toCopyFrom.notifiedOfCompletion;
 			needsUpdate = true;
 			wasChanged = true;
 		}
-		
+
 		if(identity.equals(toCopyFrom.identity)){
 			needsUpdate = false;
 		} else {
 			identity = toCopyFrom.identity;
 			needsUpdate = true;
 		}
-		
+
 		if(needsUpdate){
 			makeChanged();
 			notifyObservers();
 		}
-		
-		
+
 		return wasChanged;
 	}
-	
+
 	/**
 	 * The basic constructor for a game
 	 * Sets all of the default values for a game class
@@ -219,7 +218,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		notifiedOfCompletion = false;
 		identity = UUID.randomUUID();
 	}
-	
+
 	/**
 	 * Constructs a Game without a creation time
 	 * @param name the name of the game
@@ -246,7 +245,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		this.usesCards = usesCards;
 
 	}
-	
+
 	/**
 	 * Constructs a Game with a creation time
 	 * @param name the name of the game
@@ -266,7 +265,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		this(name, description, requirements, hasTimeLimit, usesCards);
 		this.creationTime = creationTime;
 	}
-	
+
 	/**
 	 * Gets the universally unique identifier for this game
 	 * @return the uuid of the game
@@ -276,7 +275,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		makeChanged();
 		identity = identifier;
 	}
-	
+
 	/**
 	 * Gets the Identifier for this game
 	 * @return the UUID for this class
@@ -284,7 +283,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public UUID getIdentity(){
 		return identity;
 	}
-	
+
 	/**
 	 * Gets the name of this game
 	 * @return the name of the game
@@ -292,9 +291,9 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public String getName(){
 		return name;
 	}
-	
 
-	
+
+
 	/**
 	 * Sets the name of a game
 	 * @param newName
@@ -306,7 +305,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			name = newName;
 		}
 	}
-	
+
 	/**
 	 * Is this this game completed
 	 * @return true if the game is complete
@@ -325,7 +324,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			complete = true;
 		}
 	}
-	
+
 	/**
 	 * Does this game use cards to estimate
 	 * @return true if this game uses cards
@@ -333,7 +332,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public boolean doesUseCards(){
 		return usesCards;
 	}
-	
+
 	/**
 	 * displays a given set of cards
 	 * @param newUsesCards cards to be displayed
@@ -345,7 +344,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			usesCards = newUsesCards;
 		}
 	}
-	
+
 	/**
 	 * Gets the description of the game
 	 * @return the description of the game
@@ -353,7 +352,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public String getDescription() {
 		return description;
 	}
-	
+
 	/**
 	 * sets the description box to a certain value to be displayed
 	 * @param newDescription new value for the description boxS
@@ -365,7 +364,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			description = newDescription;
 		}
 	}
-	
+
 	/**
 	 * Sets the project for the game and it's requirements
 	 */
@@ -378,7 +377,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		// Set game's project
 		super.setProject(p);
 	}
-	
+
 	/**
 	 * Gets the list of requirements for this game
 	 * *WARNING* ADDING ELEMENTS TO THIS ARRAY WILL MAKE THEM UNTRACKABLE 
@@ -388,7 +387,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	final public List<Requirement> getRequirements(){
 		return requirements;
 	}
-	
+
 	/**
 	 * TODO: add documentation
 	 * @param newReqs
@@ -403,7 +402,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			}
 		}
 	}
-	
+
 	/**
 	 * Gets the username of the creator of the game
 	 * @return the list of requirements for the game
@@ -411,7 +410,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public String getCreator() {
 		return creator;
 	}
-	
+
 	/**
 	 * Sets the creator of the game.
 	 * @param creator the creator's username
@@ -423,7 +422,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			this.creator = creator;
 		}
 	}
-	
+
 	/**
 	 * Get the number of all users
 	 * @return the number of all users
@@ -431,7 +430,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public int getUsers(){
 		return getProject().getTeam().length;
 	}
-	
+
 	/**
 	 * Gets the creating time and date of the game
 	 * @return a Formated Date String
@@ -439,10 +438,10 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public String getCreationTime() {
 		// Format the date-time stamp
 		DateFormat dateFormat = new SimpleDateFormat("MM/dd/yy hh:mm a");
-		
+
 		return dateFormat.format(creationTime);
 	}
-	
+
 	/**
 	 * Gets the active boolean
 	 * @return true if game is active, false otherwise
@@ -450,7 +449,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public boolean isActive(){
 		return active;
 	}
-	
+
 	/**
 	 * sets whether the game is active
 	 * @param newActive true if the game is active, false if it is inactive
@@ -462,7 +461,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			active = newActive;
 		}
 	}
-	
+
 	@Override
 	public String toString(){
 		return name;
@@ -477,7 +476,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public String toJSON() {
 		return new Gson().toJson(this, Game.class);
 	}
-	
+
 	/**
 	 * Returns an instance of Game constructed using the given
 	 * Game encoded as a JSON string.
@@ -486,8 +485,8 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 * @return the Game contained in the given JSON
 	 */
 	public static Game fromJSON(String json) {
-	    final Gson parser = new Gson();
-	    return parser.fromJson(json, Game.class);
+		final Gson parser = new Gson();
+		return parser.fromJson(json, Game.class);
 	}
 
 	/**
@@ -498,8 +497,8 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 * @return an array of Game deserialzied from the given json string
 	 */
 	public static Game[] fromJsonArray(String json) {
-	    final Gson parser = new Gson();
-	    return parser.fromJson(json, Game[].class);
+		final Gson parser = new Gson();
+		return parser.fromJson(json, Game[].class);
 	}
 
 	@Override
@@ -541,7 +540,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public Date getEndDate() {
 		return endDate;
 	}
-	
+
 	/**
 	 * set the endDate of a game to a given Date
 	 * @param endDate the new end date
@@ -552,7 +551,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			this.endDate = endDate;
 		}
 	}
-	
+
 	/**
 	 * Checks if the user is the creator of the current game
 	 * @param user user to check
@@ -561,7 +560,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public boolean isCreator(String user) {
 		return creator.equals(user);
 	}
-	
+
 	/**
 	 * Checks if users have been notified after game creation
 	 * @return True if users have been notified after game creation
@@ -609,7 +608,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	private void delayChange(){
 		while(GameModel.getInstance().isServerUpdating()){} // $codepro.audit.disable emptyWhileStatement
 	}
-	
+
 	@Override
 	public synchronized void addObserver(IModelObserver o){
 		for(Requirement r : requirements){
@@ -617,8 +616,8 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		}
 		super.addObserver(o);
 	}
-	
-	
+
+
 	/**
 	 * hasChanged in the super class does not check if the 
 	 * requirements has been changed. This method is to check
@@ -631,7 +630,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	{
 		if(super.hasChanged())
 			return true;
-		
+
 		for(Requirement requirement: requirements)
 		{
 			if(requirement.hasChanged())
@@ -645,18 +644,18 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 * to the team associated with this game.
 	 */
 	public void sendNotifications() {
-		
+
 		// Notify all team users via email
 		EmailNotification en = new EmailNotification(this);
 		en.sendEmails();
-		
+
 		// Notify all team users via text message
 		SMSNotification sms = new SMSNotification(this);
 		sms.sendSMSMessages();
-				
+
 		// Notify all team users via facebook message
 		FacebookNotification fbn = new FacebookNotification(this);
 		fbn.sendFacebookNotifications();
-		
+
 	}
 }

@@ -73,7 +73,11 @@ public class DeckOverview extends JSplitPane {
 		
 		// Adds text area describing planning poker
 		ppExplanation = new JTextArea();
-		ppExplanation.setText("Are you serious? A deck of cards is literally just a deck of cards. Have you never seen a deck of cards before??? Learn to play. ya dingus!");
+		ppExplanation.setText("A Deck in Planning Poker is a set of cards that is "
+				+ "used when voting on requirements. On each card is a number "
+				+ "that when selected, is added to a total. The user can continue "
+				+ "adding cards to their total and then submit their estimation"
+				+ "for the requirement.");
 		
 		ppExplanation.setEditable(false);
 		ppExplanation.setBackground(null);
@@ -86,12 +90,16 @@ public class DeckOverview extends JSplitPane {
 		expPane.setBorder(null);
 		
 		// Adds label
-		ppWhyLabel = new JLabel("Why use a new deck?");
+		ppWhyLabel = new JLabel("Why use a custom deck?");
 		ppWhyLabel.setFont(bigFont);
 		
 		// Adds text area describing the main reasons of using planning poker
 		ppWhyExp = new JTextArea();
-		ppWhyExp.setText("BECAUSE IT LOOKS SO MUCH COOLER WHEN YOU MAKE IT YOURSELF!!!!");
+		ppWhyExp.setText("By creating a custom deck, you can have any "
+				+ "number of cards for the estimation. You can also assign "
+				+ "any integer value to each card, giving voters more variety "
+				+ "when voting on requirements. You can also choose the color "
+				+ "of the back of the cards for more variety.");
 		
 		ppWhyExp.setEditable(false);
 		ppWhyExp.setBackground(null);
@@ -145,8 +153,8 @@ public class DeckOverview extends JSplitPane {
 		panel.add(ppWhyExp);
 		panel.add(createDeckLabel);
 		//panel.add(createPane);
-		panel.add(videoTutorial);
 		panel.add(createDeckExp);
+		panel.add(videoTutorial);
 		
 		// Adjusts constraints on components
 		layout.putConstraint(SpringLayout.NORTH, ppIntroLabel, 10, SpringLayout.NORTH, panel);
