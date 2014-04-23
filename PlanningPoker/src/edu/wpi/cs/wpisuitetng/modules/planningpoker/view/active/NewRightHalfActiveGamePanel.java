@@ -610,7 +610,7 @@ repaint();
 		previousEst.setVisible(visible);
 		descriptionPanel.setVisible(visible);
 		submitButton.setVisible(visible);
-		if (getGame().doesUseCards() == false) {
+		if (!getGame().doesUseCards()) {
 			estimateWithTextPanel.setVisible(visible);
 		} else {
 			counterLabel.setVisible(visible);
