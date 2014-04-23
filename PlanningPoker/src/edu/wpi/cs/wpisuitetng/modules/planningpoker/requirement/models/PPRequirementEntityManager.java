@@ -183,6 +183,7 @@ public class PPRequirementEntityManager implements EntityManager<Requirement> {
 		List<Model> oldRequirements = db.retrieve(Requirement.class, 
 				"identity", updatedRequirement.getIdentity(), session.getProject());
 		if(oldRequirements.size() < 1 || oldRequirements.get(0) == null) {
+			System.err.println("The requiremnent with the id: " + updatedRequirement.getId() + " does not exist");
 			throw new BadRequestException("Requirement with ID does not exist.");
 		}
 				
