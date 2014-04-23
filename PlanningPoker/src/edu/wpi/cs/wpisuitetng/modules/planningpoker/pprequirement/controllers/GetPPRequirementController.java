@@ -13,7 +13,11 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.exceptions.DBModelNotInstantiatedException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers.GetPPRequirementRequestObserver;
@@ -30,7 +34,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  *
  */
 public class GetPPRequirementController implements ActionListener {
-
+	List<PPRequirement> fromDB = null;
+	
 	private GetPPRequirementRequestObserver observer;
 	private static GetPPRequirementController instance;
 
@@ -90,6 +95,7 @@ public class GetPPRequirementController implements ActionListener {
 	 */
 	public void receivedRequirements(PPRequirement[] requirements) {
 		PPRequirementModel rModel = PPRequirementModel.getInstance();
+		fromDB = new ArrayList<PPRequirement>(Arrays.asList(requirements));
 		// Make sure requirements exist in the Requirement Manager
 		if (requirements != null) {
 			for (PPRequirement r: requirements) {
@@ -100,4 +106,12 @@ public class GetPPRequirementController implements ActionListener {
 			}
 		}
 	}
+	
+	public List<PPRequirement> getAllReqsOnServer() throws DBModelNotInstantiatedException{
+		if(fromDB != null){
+			return fromDB;
+		}
+		throw new DBModelNotInstantiatedException();
+	}
+	
 }
