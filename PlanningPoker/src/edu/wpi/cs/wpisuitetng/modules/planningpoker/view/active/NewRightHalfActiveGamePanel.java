@@ -179,7 +179,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		previousEst = new JLabel();
 
-		Requirement firstRequirement = table.getSelectedReq();
+		PPRequirement firstRequirement = table.getSelectedReq();
 		
 		previousEst.setText("Your saved estimate is: " + firstRequirement.userVote());
 		
