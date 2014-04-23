@@ -67,7 +67,6 @@ public class Requirement extends ObservableModel {
 	public Requirement() {
 		name = description = "";
 		identity = UUID.randomUUID();
-		
 	}
 
 	/**
