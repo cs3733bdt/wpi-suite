@@ -179,12 +179,10 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		previousEst = new JLabel();
 
-		if (activeRequirement != null) {
-			previousEst.setText("Your saved estimate is: "
-					+ activeRequirement.userVote());
-		} else {
-			previousEst.setText("Your saved estimate is: " + 0);
-		}
+		Requirement firstRequirement = table.getSelectedReq();
+		
+		previousEst.setText("Your saved estimate is: " + firstRequirement.userVote());
+		
 		previousEst.setFont(largeFont);
 
 		sum = 0;
@@ -446,6 +444,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		nameTextField.setText(activeRequirement.getName());
 		descriptionTextField.setText(activeRequirement.getDescription());
 
+		setFieldsVisible(true);
+		
 		this.getViewport().add(rightView); // Sets the rightview to be the
 											// entire container which has
 											// everything contained within it
