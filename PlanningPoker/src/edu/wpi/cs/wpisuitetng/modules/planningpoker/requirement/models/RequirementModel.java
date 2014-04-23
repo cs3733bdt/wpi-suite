@@ -12,13 +12,14 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-import javax.swing.AbstractListModel;
-
+import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.UpdateRequirementController;
 
 
 //import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
@@ -30,12 +31,17 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddR
  *
  */
 @SuppressWarnings("serial")
-public class RequirementModel extends AbstractListModel<Requirement>{
+public class RequirementModel extends AbstractStorageModel<Requirement>{
 	
+	protected RequirementModel() {
+		super(new ArrayList<Requirement>());
+		nextID = 0;
+		// TODO Auto-generated constructor stub
+	}
+
 	/**
 	 * The list in which all the requirements for a single project are contained
 	 */
-	private List<Requirement> requirements;
 	private int nextID; // the next available ID number for the requirements that are added.
 	
 	//the static object to allow the requirement model to be 
@@ -44,10 +50,10 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	/**
 	 * Constructs an empty list of requirements for the project
 	 */
-	private RequirementModel (){
+	/*private RequirementModel (){
 		requirements = new ArrayList<Requirement>();
 		nextID = 0;
-	}
+	}*/
 	
 	/**
 	 * @return the instance of the requirement model singleton.
@@ -58,7 +64,6 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 		{
 			instance = new RequirementModel();
 		}
-		
 		return instance;
 	}
 	
@@ -69,7 +74,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 */
 	public void addRequirement(Requirement newReq){
 		// add the requirement
-		requirements.add(newReq);
+		add(newReq);
 		try{
 			AddRequirementController.getInstance().addRequirement(newReq);
 			/*
@@ -83,72 +88,13 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	}
 	
 	/**
-	 * Returns the Requirement with the given ID
-	 * 
-	 * @param id The ID number of the requirement to be returned
-	
-	 * @return the requirement for the id or null if the requirement is not found
-	 */
-	public Requirement getRequirement(int id)
-	{
-		Requirement temp = null;
-		// iterate through list of requirements until id is found
-		for (int i=0; i < requirements.size(); i++){
-			temp = requirements.get(i);
-			if (temp.getId() == id){
-				break;
-			}
-		}
-		return temp;
-	}
-	
-	/**
-	 * Gets a requirement from the list of requirements
-	 * by the name of the requirement
-	 * @param name the name of the requirement
-	 * @return the requirement with given name
-	 */
-	public Requirement getRequirement(String name) {
-		Requirement req = null;
-		for (Requirement r: requirements) {
-			if (r.getName().equals(name))
-				req = r;
-		}
-		return req;
-	}
-	
-	/**
 	 * Removes the requirement with the given ID
 	 * 
 	 * @param removeId The ID number of the requirement to be removed 
 	 * from the list of requirements in the project
 	 */
-	public void removeRequirement(int removeId){
-		// iterate through list of requirements until id of project is found
-		for (int i=0; i < requirements.size(); i++){
-			if (requirements.get(i).getId() == removeId){
-				// remove the id
-				requirements.remove(i);
-				break;
-			}
-		}
-	}
-
-	/**
-	 * Provides the number of elements in the list of requirements for the project. This
-	 * function is called internally by the JList in NewRequirementPanel. Returns elements
-	 * in reverse order, so the newest requirement is returned first.
-	 * 
-	
-	
-	
-	 * @return the number of requirements in the project * 
-	 * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize() * 
-	 * @see javax.swing.ListModel#getSize()
-	 */
-	@Override
-	public int getSize() {
-		return requirements.size();
+	public void removeRequirementFromModel(Requirement toRemove){
+		removeFromModel(toRemove);
 	}
 	
 	/**
@@ -164,24 +110,6 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	}
 
 	/**
-	 * This function takes an index and finds the requirement in the list of requirements
-	 * for the project. Used internally by the JList in NewRequirementModel.
-	 * 
-	 * @param index The index of the requirement to be returned
-	
-	
-	
-	 * @return the requirement associated with the provided index * 
-	 * @see javax.swing.ListModel#getElementAt(int) * 
-	 * @see javax.swing.ListModel#getElementAt(int) * 
-	 * @see javax.swing.ListModel#getElementAt(int)
-	 */
-	@Override
-	public Requirement getElementAt(int index) {
-		return requirements.get(requirements.size() - 1 - index);
-	}
-
-	/**
 	 * Removes all requirements from this model
 	 * 
 	 * NOTE: One cannot simply construct a new instance of
@@ -189,7 +117,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * references to it. Hence, we manually remove each requirement
 	 * from the model.
 	 */
-	public void emptyModel() {
+	/*public void emptyModel() {
 		int oldSize = getSize();
 		Iterator<Requirement> iterator = requirements.iterator();
 		while (iterator.hasNext()) {
@@ -197,7 +125,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 			iterator.remove();
 		}
 		fireIntervalRemoved(this, 0, Math.max(oldSize - 1, 0));
-	}
+	}*/
 	
 	/**
 	 * Adds the given array of requirements to the list
@@ -205,18 +133,46 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * @param requirements the array of requirements to add
 	 */
 	public void addRequirements(Requirement[] requirements) {
-		for (int i = 0; i < requirements.length; i++) {
+		updateRequirements(requirements);
+		/*for (int i = 0; i < requirements.length; i++) {
 			if (!this.requirements.contains(requirements[i].getId())) {
 				this.requirements.add(requirements[i]);
 				if(requirements[i].getId() >= nextID) nextID = requirements[i].getId() + 1;
 			}
 		}
-		fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
+		fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));*/
 		/*
 		ViewEventController.getInstance().refreshTable();
 		ViewEventController.getInstance().refreshTree();
 		*/
 	}
+	
+	private synchronized void updateRequirements(Requirement[] requirements) {
+		boolean changes = updateModels(requirements);
+
+		if (changes) { // Only repaint game tree if the model has changed
+		} else {
+		}
+	}
+
+	/*public void addRequirements(List<Requirement> requirements, UUID gameID) {
+		for (Requirement r : requirements) {
+			if (!this.requirements.contains(r.getId())) {
+				r.setGameID(gameID);
+				this.requirements.add(r);
+				if(r.getId() >= nextID) nextID = r.getId() + 1;
+				add(r);
+				try {
+					AddRequirementController.getInstance().addRequirement(r);
+				} catch (Exception e) {
+					System.err.println("WARNING: FAILED TO ADD GAME TO SERVER: "
+							+ r.getName());
+				}
+
+			}
+		}
+		fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
+	}*/
 	
 	/**
 	 * Checks if the list of requirements has a requirement with the id passed
@@ -224,10 +180,10 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * @return true if a requirement with id exists in the list of requirements
 	 */
 	public boolean contains(int id) {
-		for (Requirement r: requirements) {
+		/*for (Requirement r: requirements) {
 			if (r.getId() == id)
 				return true;
-		}
+		}*/
 		return false;
 	}
 
@@ -237,17 +193,31 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * @return the requirements held within the requirementmodel.
 	 */
 	public List<Requirement> getRequirements() {
-		return requirements;
+		return list;
 	}
 
-	public Requirement getRequirementById(UUID id) {
-		for (Requirement r : requirements) {
-			if (r.getIdentity().equals(id)) {
-				return r;
-			}
-		}
-		System.err.println("Could not fine a game with idenity: " + id);
+	public Requirement getRequirementById(UUID id) throws NotFoundException {
+		return getModelById(id);
+	}
 
-		return null;
+	@Override
+	public void update(ObservableModel o, Object arg) {
+		System.out.println("I'm here with: " + o.toString());
+		if (o instanceof Requirement) {
+			try {
+				UpdateRequirementController.getInstance().updateRequirement((Requirement) o);
+				System.out.println("A game is being updated: "
+						+ ((Requirement) o).getName());
+			} catch (Exception e) {
+				System.err.println("The network has not been instantiated");
+			}
+		} else {
+			System.err
+					.println("GAME MODEL ATTEMPTED TO UPDATE SOMETHING NOT A GAME");
+		}
+	}
+	
+	public boolean isServerUpdating() {
+		return serverUpdating;
 	}
 }

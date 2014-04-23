@@ -13,10 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
 import java.util.UUID;
 
 import com.db4o.config.annotations.UpdatedDepth;
@@ -56,7 +53,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	/** The username of the game creator */
 	private String creator;
 	/** The list of requirements that need to be estimated */
-	private List<Requirement> requirements = new ArrayList<>();
+	//private List<Requirement> requirements = new ArrayList<>();
 	/** True if the game is complete, false otherwise */
 	private boolean complete;
 	/** True if the game is active and people can vote, false if people can't vote */
@@ -125,7 +122,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			wasChanged = true;
 		}
 		
-		if(!requirements.equals(toCopyFrom.requirements)){
+		/*if(!requirements.equals(toCopyFrom.requirements)){
 			boolean changes = false;
 
 			//REMOVES REQUIREMENTS THAT HAVE BEEN REMOVED FROM THIS GAME
@@ -168,7 +165,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 				wasChanged = true;
 			}
 			needsUpdate = true;
-		}
+		}*/
 
 		if(complete != toCopyFrom.complete){
 			complete = toCopyFrom.complete;
@@ -232,18 +229,12 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 */
 	public Game(String name, 
 			String description, 
-			List<Requirement> requirements,
 			boolean hasTimeLimit, 
 			boolean usesCards) {
 		this(); //Calls the default constructor
 		this.name = name;
 		this.description = description;
 		this.hasTimeLimit = hasTimeLimit;
-		this.requirements = requirements;
-		for(Requirement req : this.requirements){
-			req.addObserver(this);
-			req.setProject(getProject());
-		}
 		this.usesCards = usesCards;
 
 	}
@@ -260,11 +251,10 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 */
 	public Game(String name, 
 			String description, 
-			List<Requirement> requirements, 
 			boolean hasTimeLimit, 
 			boolean usesCards, 
 			Date creationTime) {
-		this(name, description, requirements, hasTimeLimit, usesCards);
+		this(name, description, hasTimeLimit, usesCards);
 		this.creationTime = creationTime;
 	}
 
@@ -373,36 +363,8 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	@Override
 	public void setProject(Project p) {
 		// Set requirements' project
-		for(Requirement r: requirements) {
-			r.setProject(p);
-		}
 		// Set game's project
 		super.setProject(p);
-	}
-
-	/**
-	 * Gets the list of requirements for this game
-	 * *WARNING* ADDING ELEMENTS TO THIS ARRAY WILL MAKE THEM UNTRACKABLE 
-	 * TO THE GAME AND PREVENT THEM FROM BEING ADDED TO THE SERVER
-	 * @return the list of requirements for the game
-	 */
-	final public List<Requirement> getRequirements(){
-		return requirements;
-	}
-
-	/**
-	 * TODO: add documentation
-	 * @param newReqs
-	 */
-	public void setRequirements(List<Requirement> newReqs){
-		if(requirements != newReqs){
-			makeChanged();
-			delayChange();
-			requirements = newReqs;
-			for(Requirement req : requirements){
-				req.addObserver(this);
-			}
-		}
 	}
 
 	/**
@@ -614,9 +576,9 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	@Override
 	public synchronized void addObserver(IModelObserver o){
-		for(Requirement r : requirements){
+		/*for(Requirement r : requirements){
 			r.addObserver(this);
-		}
+		}*/
 		super.addObserver(o);
 	}
 
@@ -634,11 +596,11 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		if(super.hasChanged())
 			return true;
 
-		for(Requirement requirement: requirements)
+		/*for(Requirement requirement: requirements)
 		{
 			if(requirement.hasChanged())
 				return true;
-		}
+		}*/
 		return false;
 	}
 

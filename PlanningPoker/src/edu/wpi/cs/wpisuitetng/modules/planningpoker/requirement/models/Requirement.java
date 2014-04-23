@@ -20,6 +20,8 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
@@ -31,7 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
  *
  */
 @UpdatedDepth(value=2)
-public class Requirement extends ObservableModel {
+public class Requirement extends ObservableModel implements IModelObserver, IStorageModel<Requirement>{
 	/**
 	 * The ID of the requirement from the Requirement Manager
 	 * Only used if the requirement is from the Requirement Manager
@@ -43,7 +45,12 @@ public class Requirement extends ObservableModel {
 	 * the Requirement was generated in the planning poker module
 	 */
 	private UUID identity;
-
+	
+	/**
+	 * Game UUID that this requirement is associated with
+	 */
+	private UUID gameID;
+	
 	/** the name of the requirement */
 	private String name;
 
@@ -415,6 +422,26 @@ public class Requirement extends ObservableModel {
 	public static Requirement fromJSON(String json) {
 			final Gson parser = new Gson();
 			return parser.fromJson(json, Requirement.class);
+	}
+
+	/**
+	 * @return the gameID
+	 */
+	public UUID getGameID() {
+		return gameID;
+	}
+
+	/**
+	 * @param gameID the gameID to set
+	 */
+	public void setGameID(UUID gameID) {
+		this.gameID = gameID;
+	}
+
+	@Override
+	public void update(ObservableModel o, Object arg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

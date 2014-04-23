@@ -118,7 +118,8 @@ public class GameModel extends AbstractStorageModel<Game> {
 	 * controller construct the game model initially.
 	 * 
 	 * @param newGames
-	 *            The games to be added to the model
+	 *            The games to be added to }
+		}the model
 	 */
 	public synchronized void addGames(Game[] newGames) {
 		updateGames(newGames);

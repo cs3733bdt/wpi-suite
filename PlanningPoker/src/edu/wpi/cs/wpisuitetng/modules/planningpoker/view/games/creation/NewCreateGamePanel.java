@@ -24,6 +24,7 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
@@ -248,6 +249,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 			currentGame = new Game();
 			setCurrentGame(true);
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
+			RequirementModel.getInstance().addRequirementsList(rightHalf.getRequirements(), currentGame.getIdentity()); //New Requirements get added to server
 		} else{
 			setCurrentGame(true);
 		}
@@ -264,7 +266,6 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		currentGame.setDescription(getBoxDescription().getText());
 		currentGame.setActive(active);
 		currentGame.setUsesCards(doesUseCards());
-		currentGame.setRequirements(getRequirements());
 		currentGame.setEndDate(getEndDateField().getEndDate());
 		currentGame.setCreator(ConfigManager.getConfig().getUserName());
 		currentGame.notifyObservers();
@@ -287,7 +288,6 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		else{
 			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
 		}
-
 	}
 
 	/**
