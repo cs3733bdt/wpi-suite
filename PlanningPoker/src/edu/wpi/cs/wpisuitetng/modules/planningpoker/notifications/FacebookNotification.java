@@ -177,8 +177,9 @@ public class FacebookNotification {
 	 * @return String representing message to be sent on game end.
 	 */
 	private String generateEndGameMessage(){
-		//TODO
-		return "Needs updating...";
+		return "Game: " + g.getName() + "has ended. Refer to the"
+				+ " email for game statistics.\n" +
+				"Bobby Drop Tables\nWPI Suite";
 	}
 }
 

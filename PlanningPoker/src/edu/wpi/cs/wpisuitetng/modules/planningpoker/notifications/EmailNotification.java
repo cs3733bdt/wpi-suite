@@ -244,6 +244,7 @@ public class EmailNotification {
 		+ "Game Statistics: " + stats + "\n\n"
 		+ "Bobby Drop Tables \nWPI Suite";
 	}
+	
 	/**
 	 * calculates the mean of votes of a requirement
 	 * @param m the array list which contains the vote values
@@ -256,6 +257,7 @@ public class EmailNotification {
 	    }
 	    return sum / ((double)Votes.size());
 	}
+	
 	/**
 	 * calculates the median of votes of a requirement
 	 * @param Votes the array list which contains the vote values
