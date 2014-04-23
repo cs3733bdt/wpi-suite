@@ -250,7 +250,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		// added above
 
-		this.JToggleButtonList = cardsPanel.getCardButtonArray();
+		JToggleButtonList = cardsPanel.getCardButtonArray();
 
 		/**
 		 * The text area where the user types their estimate

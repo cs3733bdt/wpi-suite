@@ -57,7 +57,7 @@ public class Requirement extends ObservableModel {
 
 	/** boolean for whether the requirement has been voted on by all users */
 	private boolean complete = false;
-	
+	/** The final estimate for this requirement. This is -1 if a final estimate has not been submitted yet. */
 	private int finalEstimate = -1;
 	/**
 	 * The basic constructor for a game
@@ -219,7 +219,7 @@ public class Requirement extends ObservableModel {
 	 * Setter for the final estimate
 	 */
 	public void setFinalEstimate(int newEstimate) {
-		this.finalEstimate = newEstimate;
+		finalEstimate = newEstimate;
 	}
 	
 	/**
