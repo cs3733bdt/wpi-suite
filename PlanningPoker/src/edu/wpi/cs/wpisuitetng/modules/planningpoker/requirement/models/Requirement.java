@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
  * @author tianchanggu & jmwetzel
  *
  */
-@UpdatedDepth(value=2)
+@UpdatedDepth(value=3)
 public class Requirement extends ObservableModel {
 	/**
 	 * The ID of the requirement from the Requirement Manager

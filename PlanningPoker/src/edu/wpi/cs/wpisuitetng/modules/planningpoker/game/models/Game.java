@@ -37,7 +37,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requireme
  * 
  * @author jonathanleitschuh
  */
-@UpdatedDepth(value=2)
+@UpdatedDepth(value=3)
 public class Game extends ObservableModel implements IModelObserver, IStorageModel<Game>{
 	
 	/** This is the best way to keep games unique so 
