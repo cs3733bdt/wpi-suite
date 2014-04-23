@@ -87,7 +87,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		});	
 		
 		contentPanel.add(createGameIcon);
-		contentPanel.add(createDeckIcon);
+		//ADD THIS LINE TO ADD CREATE DECK BUTTON BACK contentPanel.add(createDeckIcon);
 		//contentPanel.setOpaque(false);
 		
 		contentPanel.setOpaque(false);
