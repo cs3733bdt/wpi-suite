@@ -60,7 +60,7 @@ public class GameOverview extends JSplitPane {
 		panel.setLayout(layout);
 		JScrollPane scrollPanel = new JScrollPane(panel);
 		//scrollPanel.setMinimumSize(new Dimension(600, 450));
-		panel.setPreferredSize(new Dimension(610, 510));
+		panel.setPreferredSize(new Dimension(610, 450)); //ADD HEIGHT AS 510
 		
 		// Adds introduction label
 		ppIntroLabel = new JLabel("What is Planning Poker?");
@@ -81,8 +81,7 @@ public class GameOverview extends JSplitPane {
 				+ "instead of speaking them aloud. The cards are revealed, and the "
 				+ "estimates are then discussed. By hiding the figures in this way, "
 				+ "the group can avoid the cognitive bias of anchoring, where the "
-				+ "first number spoken aloud sets a precedent for subsequent estimates. \n[TAKEN FROM"
-				+ " WIKIPEDIA]");
+				+ "first number spoken aloud sets a precedent for subsequent estimates.");
 		
 		ppExplanation.setEditable(false);
 		ppExplanation.setBackground(null);
@@ -105,7 +104,7 @@ public class GameOverview extends JSplitPane {
 				+ "and influence the other participants' sizing. Planning poker should force "
 				+ "people to think independently and propose their numbers simultaneously. "
 				+ "This is accomplished by requiring that all participants show their card "
-				+ "at the same time. [TAKEN FROM WIKIPEDIA]");
+				+ "at the same time.");
 		
 		ppWhyExp.setEditable(false);
 		ppWhyExp.setBackground(null);
@@ -169,7 +168,7 @@ public class GameOverview extends JSplitPane {
 		panel.add(createGameLabel);
 		//panel.add(createPane);
 		panel.add(createGameExp);
-		panel.add(videoTutorial);
+		//ADD THIS LINE BACK IN TO ADD VIDEO TUTORIAL panel.add(videoTutorial);
 		
 		// Adjusts constraints on components
 		layout.putConstraint(SpringLayout.NORTH, ppIntroLabel, 10, SpringLayout.NORTH, panel);
@@ -179,20 +178,21 @@ public class GameOverview extends JSplitPane {
 		layout.putConstraint(SpringLayout.WEST, ppExplanation, 5, SpringLayout.WEST, panel);
 		layout.putConstraint(SpringLayout.EAST, ppExplanation, 600, SpringLayout.WEST, panel);
 		
-		layout.putConstraint(SpringLayout.NORTH, ppWhyLabel, 40, SpringLayout.SOUTH, ppExplanation);
+		layout.putConstraint(SpringLayout.NORTH, ppWhyLabel, 28, SpringLayout.SOUTH, ppExplanation); //CHANGE BACK TO 40
 		layout.putConstraint(SpringLayout.WEST, ppWhyLabel, 5, SpringLayout.WEST, panel);
 		
 		layout.putConstraint(SpringLayout.NORTH, ppWhyExp, 10, SpringLayout.SOUTH, ppWhyLabel);
 		layout.putConstraint(SpringLayout.WEST, ppWhyExp, 5, SpringLayout.WEST, panel);
 		layout.putConstraint(SpringLayout.EAST, ppWhyExp, 600, SpringLayout.WEST, panel);
 		
-		layout.putConstraint(SpringLayout.NORTH, createGameLabel, 40, SpringLayout.SOUTH, ppWhyExp);
+		layout.putConstraint(SpringLayout.NORTH, createGameLabel, 28, SpringLayout.SOUTH, ppWhyExp); //CHANGE BACK TO 40
 		layout.putConstraint(SpringLayout.WEST, createGameLabel, 5, SpringLayout.WEST, panel);
 		
 		layout.putConstraint(SpringLayout.NORTH, videoTutorial, 8, SpringLayout.SOUTH, createGameLabel);
 		layout.putConstraint(SpringLayout.WEST, videoTutorial, 5, SpringLayout.WEST, panel);
 		
-		layout.putConstraint(SpringLayout.NORTH, createGameExp, 8, SpringLayout.SOUTH, videoTutorial);
+		layout.putConstraint(SpringLayout.NORTH, createGameExp, 10, SpringLayout.SOUTH, createGameLabel);
+		//ADD THIS LINE AND REMOVE ABOVE LINE WHEN ADDING TUTORIAL BACK IN layout.putConstraint(SpringLayout.NORTH, createGameExp, 8, SpringLayout.SOUTH, videoTutorial);
 		layout.putConstraint(SpringLayout.WEST, createGameExp, 5, SpringLayout.WEST, panel);
 		layout.putConstraint(SpringLayout.EAST, createGameExp, 600, SpringLayout.WEST, panel);
 		
