@@ -50,7 +50,7 @@ public class User extends AbstractModel
 		this.username = username;
 		this.password = password;
 		this.idNum = idNum;
-		this.email = "dicks";
+		this.email = email;
 		this.facebookUsername = facebookUsername;
 		this.role = Role.USER;
 		this.phoneNumber = null;
