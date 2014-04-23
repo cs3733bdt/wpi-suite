@@ -11,9 +11,6 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models;
 
-import java.lang.annotation.Documented;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -22,8 +19,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-import com.db4o.config.annotations.*;
-
+import com.db4o.config.annotations.UpdatedDepth;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
