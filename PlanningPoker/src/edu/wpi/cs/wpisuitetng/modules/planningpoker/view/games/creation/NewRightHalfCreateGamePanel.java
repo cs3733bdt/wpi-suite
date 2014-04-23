@@ -240,15 +240,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				importReqsPanel.setVisible(false);
 				addReqButton.setEnabled(true);
 				importReqButton.setEnabled(true);
-				editReqButton.setEnabled(true);
-				removeReqButton.setEnabled(true);
 				globalRow = -1;
 				submitAddReqButton.setEnabled(false);
-				enableButtons();
-				if(currentTable.getRowCount() == 0){
-					editReqButton.setEnabled(false);
-					removeReqButton.setEnabled(false);
-				}
+				//enableButtons();
 			}
 		});
 		
@@ -300,13 +294,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				importReqsPanel.setVisible(false);
 				addReqButton.setEnabled(true);
 				importReqButton.setEnabled(true);
-				editReqButton.setEnabled(true);
-				removeReqButton.setEnabled(true);
-				enableButtons();
-				if(currentTable.getRowCount() == 0){
-					editReqButton.setEnabled(false);
-					removeReqButton.setEnabled(false);
-				}
+				//enableButtons();
 			}
 		});
 		
@@ -541,11 +529,17 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		currentTable.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (currentTable.getSelectedRowCount() > 1){
+				if(currentTable.getSelectedRowCount() == 0) {
 					editReqButton.setEnabled(false);
+					removeReqButton.setEnabled(false);
+				}
+				else if (currentTable.getSelectedRowCount() > 1){
+					editReqButton.setEnabled(false);
+					removeReqButton.setEnabled(true);
 				}
 				else {
 					editReqButton.setEnabled(true);
+					removeReqButton.setEnabled(true);
 				}
 			}
 		});
@@ -616,8 +610,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			submitAddReqButton.setEnabled(false);
 			addReqButton.setEnabled(true);
 			importReqButton.setEnabled(true);
-			removeReqButton.setEnabled(true);
-			editReqButton.setEnabled(true);
 			globalRow = -1;
 			parent.updateButtons();
 			displayError("");
@@ -651,8 +643,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 	private void enableButtons() {
 		addReqButton.setEnabled(true);
 		importReqButton.setEnabled(true);
-		removeReqButton.setEnabled(true);
-		editReqButton.setEnabled(true);
+/*		removeReqButton.setEnabled(true);
+		editReqButton.setEnabled(true);*/
 	}
 	
 	private void disableButtons() {

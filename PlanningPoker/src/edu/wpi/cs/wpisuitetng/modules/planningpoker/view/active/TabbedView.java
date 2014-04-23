@@ -321,7 +321,7 @@ public class TabbedView extends JTabbedPane {
 			if(toBeRemoved instanceof IActiveGamePanel)
 			{
 				if(!((IActiveGamePanel)toBeRemoved).readyToRemove()) continue;
-				this.listOfActiveGamePanels.remove(toBeRemoved);
+				listOfActiveGamePanels.remove(toBeRemoved);
 			}
 			
 			if(toBeRemoved instanceof ICreateGamePanel)
