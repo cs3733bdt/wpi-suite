@@ -215,6 +215,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 			launchGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
+			ViewEventController.getInstance().joinGame(currentGame);
 			System.out.println("Launch Game Pressed Passed.");
 			return true;
 		} else {
