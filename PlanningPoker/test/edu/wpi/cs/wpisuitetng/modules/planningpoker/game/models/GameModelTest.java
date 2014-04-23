@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.models;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

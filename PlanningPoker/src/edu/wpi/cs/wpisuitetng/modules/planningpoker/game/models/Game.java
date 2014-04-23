@@ -22,7 +22,8 @@ import java.util.UUID;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
@@ -35,8 +36,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requireme
  * @author jonathanleitschuh
  */
 
-public class Game extends ObservableModel implements AbstractModelObserver{
-
+public class Game extends ObservableModel implements IModelObserver, IStorageModel<Game>{
+	
 	/** This is the best way to keep games unique so 
 	 *  that you are not relying upon data that can change */
 	private UUID identity;
@@ -64,8 +65,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	private boolean notifiedOfCreation;
 	/** True if the users of the game have been notified of game complete */
 	private boolean notifiedOfCompletion;
-	/** Final estimate submitted by the owner of the game. -1 if it has not been set yet. */
-	private int finalEstimate;
 
 	/**
 	 * Copies all of the values from the given Game to this Game.
@@ -123,13 +122,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 			needsUpdate = true;
 			wasChanged = true;
 		}
-
-		if (finalEstimate != toCopyFrom.finalEstimate) {
-			finalEstimate = toCopyFrom.finalEstimate;
-			needsUpdate = true;
-			wasChanged = true;
-		}
-
+		
 		if(!requirements.equals(toCopyFrom.requirements)){
 			boolean changes = false;
 
@@ -223,7 +216,6 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		complete = false;
 		notifiedOfCreation = false;
 		notifiedOfCompletion = false;
-		finalEstimate = -1;
 		identity = UUID.randomUUID();
 	}
 
@@ -618,7 +610,7 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 	}
 
 	@Override
-	public synchronized void addObserver(AbstractModelObserver o){
+	public synchronized void addObserver(IModelObserver o){
 		for(Requirement r : requirements){
 			r.addObserver(this);
 		}
@@ -665,17 +657,5 @@ public class Game extends ObservableModel implements AbstractModelObserver{
 		FacebookNotification fbn = new FacebookNotification(this);
 		fbn.sendFacebookNotifications();
 
-	}
-
-	public int getFinalEstimate() {
-		return finalEstimate;
-	}
-
-	public void setFinalEstimate(int newValue) {
-		if(finalEstimate != newValue){
-			makeChanged();
-			delayChange();
-			finalEstimate = newValue;
-		}
 	}
 }

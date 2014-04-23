@@ -9,9 +9,10 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers;
 
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.UpdateGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
@@ -25,7 +26,7 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  * 
  * @author Chris Knapp
  */
-public class UpdateGameRequestObserver implements RequestObserver {
+public class UpdateDeckRequestObserver implements RequestObserver {
 	/** We don't actually use the controller,
 	 * in the defect tracker they use it to print
 	 * error messages.
@@ -36,7 +37,7 @@ public class UpdateGameRequestObserver implements RequestObserver {
 	 * Constructs an observer for updating games controller
 	 * @param controller updateGameController to be observed
 	 */
-	public UpdateGameRequestObserver(UpdateGameController controller) {
+	public UpdateDeckRequestObserver(UpdateGameController controller) {
 		this.controller = controller;
 	}
 	
@@ -48,43 +49,10 @@ public class UpdateGameRequestObserver implements RequestObserver {
 		final ResponseModel response = iReq.getResponse();
 		
 		// The game that got updated
-		Game game = Game.fromJSON(response.getBody());
+		Deck game = Deck.fromJSON(response.getBody());
 		
-		// Send out email, text, and facebook notifications on game creation
-		if (!game.isNotifiedOfCreation() && game.isActive()) {
-			Game realGame;
-			try {
-				realGame = GameModel.getInstance().getGameById(game.getIdentity());
-				// Set the project of the game, without this it throws a null pointer
-				// if the game is created/added on an update call
-				realGame.setProject(game.getProject());
-				// Set notified before sending notifications to remove looping possibility
-				realGame.setNotifiedOfCreation(true);
-				// Finally send
-				realGame.sendNotifications();
-			} catch (NotFoundException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				System.err.println(game.getName() + ": Does not exist");
-			}
-		// Send out email, text, and facebook notifications on game completion
-		} else if (!game.isNotifiedOfCompletion() && game.isComplete()) {
-			// TODO make a different method for sending completion text
-			Game realGame;
-			try {
-				realGame = GameModel.getInstance().getGameById(game.getIdentity());
-				// Set notified before sending notifications to remove looping possibility
-				realGame.setNotifiedOfCreation(true);
-				// Finally Send
-				realGame.sendNotifications();
-			} catch (NotFoundException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				System.err.println(game.getName() + ": Does not exist");
-			}
-		}
 		
-		System.out.println("The request to update a game has succeeded!");
+		System.out.println("The request to update a deck has succeeded!");
 	}
 	
 	/**

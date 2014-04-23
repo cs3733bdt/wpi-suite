@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 /**
  * Sends text message to a user via email
  * 
- * @author doruk
+ * @author Bobby Drop Tables
  */
 public class SMSNotification {
 	
@@ -229,7 +229,8 @@ public class SMSNotification {
 	 */
 	private String generateCreateGameMessage(){
 		return "Voting is Required for game: " + g.getName() +
-		"\nGame Ending : " + g.getEndDate().toString();
+		"\nGame Ending : " + g.getEndDate().toString() + "\n" +
+				"Bobby Drop Tables\nWPI Suite";
 	}
 	
 	/**
@@ -238,7 +239,8 @@ public class SMSNotification {
 	 * @return String representing message to be sent on game end.
 	 */
 	private String generateEndGameMessage(){
-		//TODO
-		return "Needs updating...";
+		return "Game: " + g.getName() + "has ended. Refer to the"
+				+ " email for game statistics.\n" +
+				"Bobby Drop Tables\nWPI Suite";					
 	}
 }
