@@ -132,8 +132,8 @@ public class EndGameLeftHalf extends JScrollPane {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() == 1) {}
-				if (e.getClickCount() == 2) {
+				if (e.getClickCount() == 2) {}
+				if (e.getClickCount() == 1) {
 					JTable target = (JTable) e.getSource();
 					int row = target.getSelectedRow();
 					String selectedName = (String) target.getValueAt(row, 0);
