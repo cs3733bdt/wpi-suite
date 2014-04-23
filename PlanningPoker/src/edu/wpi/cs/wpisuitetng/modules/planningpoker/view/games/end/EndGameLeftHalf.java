@@ -33,7 +33,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 public class EndGameLeftHalf extends JScrollPane {
-	private Game ended;
+	private Game endGame;
+	private List<Requirement> reqList;
 	private EndGamePanel parent;
 	
 	private JTextArea descriptionTextField;
@@ -54,7 +55,14 @@ public class EndGameLeftHalf extends JScrollPane {
 	
 	public EndGameLeftHalf(final Game game, EndGamePanel parent){
 		this.parent = parent;
-		ended = game;
+		endGame = game;
+		build();
+	}
+	
+	public EndGameLeftHalf(final Game game, final List<Requirement> reqList, EndGamePanel parent){
+		this.parent = parent;
+		endGame = game;
+		this.reqList = reqList;
 		build();
 	}
 	
@@ -74,7 +82,7 @@ public class EndGameLeftHalf extends JScrollPane {
 
 		// Initializes and sets properties of game name label
 		gameName = new NameJTextField(30);						
-		gameName.setText(ended.getName());				
+		gameName.setText(endGame.getName());				
 		gameName.setBorder(defaultBorder);						
 		gameName.setEditable(false); 
 		gameName.setBackground(Color.WHITE);
@@ -84,7 +92,7 @@ public class EndGameLeftHalf extends JScrollPane {
 
 		// Initializes and sets game description display area
 		gameDesc = new JTextArea();
-		gameDesc.setText(ended.getDescription());
+		gameDesc.setText(endGame.getDescription());
 		gameDesc.setEditable(false);
 		gameDesc.setBorder(defaultBorder);
 		gameDesc.setLineWrap(true);									
@@ -100,16 +108,16 @@ public class EndGameLeftHalf extends JScrollPane {
 		gameEndDateLabel = new JLabel("End date: ");			
 
 		// Initializes and sets game creator name
-		gameCreatorName = new JLabel(ended.getCreator());		
+		gameCreatorName = new JLabel(endGame.getCreator());		
 		
 		// Initializes and sets game end date
-		gameEndDate = new JLabel(ended.getEndDate().toString());	
+		gameEndDate = new JLabel(endGame.getEndDate().toString());	
 		
 		/**
 		 * Initializes a table's columns and rows and the table
 		 */
 		
-		table = new RequirementTable(ended.getRequirements(), RequirementTableMode.ENDED);
+		table = new RequirementTable(reqList, RequirementTableMode.ENDED);
 		JScrollPane tablePanel = new JScrollPane(table);
 		
 		
@@ -133,7 +141,7 @@ public class EndGameLeftHalf extends JScrollPane {
 					int row = target.getSelectedRow();
 					String selectedName = (String) target.getValueAt(row, 0);
 					String selectedDesc = (String) target.getValueAt(row, 1);
-					for (Requirement r : ended.getRequirements()) {
+					for (Requirement r : reqList) {
 						if (selectedName.equals(r.getName())
 								&& selectedDesc.equals(r.getDescription())) {
 							parent.updateRightHalf(r);
@@ -200,7 +208,7 @@ public class EndGameLeftHalf extends JScrollPane {
 	}
 	
 	public List<Requirement> getRequirements() {
-		return ended.getRequirements();
+		return reqList;
 	}
 	
 }

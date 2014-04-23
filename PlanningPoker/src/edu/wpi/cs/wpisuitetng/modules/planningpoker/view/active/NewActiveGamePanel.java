@@ -12,15 +12,15 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.swing.JSplitPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 
@@ -45,6 +45,18 @@ public class NewActiveGamePanel extends JSplitPane implements IModelObserver, IA
 		
 	}
 	
+	public NewActiveGamePanel(Game game, List<Requirement> Reqs) {
+		game.addObserver(this);	
+		currentGame = game;
+		
+		leftHalf = new NewLeftHalfActiveGamePanel(currentGame, this);
+		rightHalf = new NewRightHalfActiveGamePanel(currentGame, Reqs);
+		
+		setRightComponent(rightHalf);
+		setLeftComponent(leftHalf);
+		setDividerLocation(400);
+	}
+
 	public void endGame(){
 		Date date = new Date();
 		currentGame.setEndDate(date);

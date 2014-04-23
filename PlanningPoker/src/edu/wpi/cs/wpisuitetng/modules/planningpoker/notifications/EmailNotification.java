@@ -27,7 +27,6 @@ import com.sun.mail.util.MailConnectException;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 /**
  * This is a class that will send out email notifications
  * whenever a game is successfully created.
@@ -166,7 +165,7 @@ public class EmailNotification {
 			// If the game doesn't have requirements, say that instead
 			// of printing null requirements.
 			// Then set the actual message.
-			if (!g.getRequirements().isEmpty()) {
+			/*if (!g.getRequirements().isEmpty()) {
 				if(!g.isComplete()){
 					message.setText(generateCreateGameMessage());
 				} else {
@@ -175,7 +174,7 @@ public class EmailNotification {
 				
 			} else {
 				message.setText("There are no current requirements.");
-			}
+			}*/
 			
 			try {
 				// Send message
@@ -206,14 +205,14 @@ public class EmailNotification {
 	 */
 	private String generateCreateGameMessage(){
 		String reqs = "";
-		for(Requirement r : g.getRequirements()){
+		/*for(Requirement r : g.getRequirements()){
 			reqs = reqs + r.toString();
-		}
+		}*/
 		
 		return "Voting is required for game: " + g.getName() + "\n\n"
 				+ "Game Description: " + g.getDescription() + "\n\n"
 				+ "\nGame Ending : " + g.getEndDate().toString()
-				+ "\nGame Requirements: " + reqs + "\n\n" + 
+				+ /*"\nGame Requirements: " + reqs + "\n\n" + */
 				"Bobby Drop Tables \nWPI Suite";
 	}
 	
@@ -226,7 +225,7 @@ public class EmailNotification {
 		String stats = "";
 		ArrayList<Integer> voteArray = new ArrayList<Integer>();
 		
-		for(Requirement r : g.getRequirements()) {
+		/*for(Requirement r : g.getRequirements()) {
 			
 			for(int i=0; i < r.getVotes().size(); i++) {
 				voteArray.add(r.getVotes().get(i).getVoteNumber());
@@ -237,7 +236,7 @@ public class EmailNotification {
 					"Median: " + median(voteArray) + "\n" + 
 					"Standard Deviation: " + stDev(voteArray) + "\n\n";
 			voteArray.clear();
-		}
+		}*/
 
 		return "Game: " + g.getName() + " has ended.\n\n"
 				+ "Game Description: " + g.getDescription() + "\n\n"

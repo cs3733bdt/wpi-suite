@@ -27,6 +27,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.DeckOverview;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.GameOverview;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
@@ -167,6 +168,8 @@ public class TabbedView extends JTabbedPane {
 		}
 		
 		//Game not found in the active game list
+		
+		
 		NewActiveGamePanel viewGame = new NewActiveGamePanel(game);
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 		
@@ -383,4 +386,78 @@ public class TabbedView extends JTabbedPane {
 		repaint();
 
 	}
+
+	public void joinGame(Game selectedGame, List<Requirement> selectedReqs) {
+		//Attempt to find the game in the active panels list
+		for(IActiveGamePanel gameSearch : listOfActiveGamePanels){
+			if(selectedGame.equals(gameSearch.getGame())){
+				setSelectedComponent((Component)gameSearch);
+				invalidate();
+				repaint();
+				return; //The game has been found and made active. Done!
+			}
+		}
+		
+		//Game not found in the active game list
+		
+		
+		NewActiveGamePanel viewGame = new NewActiveGamePanel(selectedGame, selectedReqs);
+		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
+		
+		addTab(getTabName(selectedGame), viewGame);
+		
+		listOfActiveGamePanels.add(viewGame);
+		
+		setSelectedComponent(viewGame);
+		invalidate();
+		repaint();
+	}
+
+	public void viewEndGame(Game game, List<Requirement> selectedReqs) {
+		//Attempt to find the game in the active panels list
+		for(IEndedGamePanel gameSearch : listOfEndedGamePanels){
+			if(game.equals(gameSearch.getGame())){
+				setSelectedComponent((Component) gameSearch);
+				invalidate();
+				repaint();
+				return; //The game has been found and made active. Done!
+			}
+		}
+		
+		//Game not found in the active game list
+		EndGamePanel viewGame = new EndGamePanel(game, selectedReqs);
+		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
+		
+		addTab(getTabName(game),  viewGame);
+		
+		
+		listOfEndedGamePanels.add(viewGame);
+		
+		setSelectedComponent(viewGame);
+		invalidate();
+		repaint();		
+	}
+
+	public void editGame(Game game, List<Requirement> selectedReqs) {
+		NewCreateGamePanel newGame = new NewCreateGamePanel(game, selectedReqs);
+		
+		//FIND THE CURRENT EDIT GAME PANEL
+		for(ICreateGamePanel gameSearch : listOfCreateGamePanels){
+			if(game.equals(gameSearch.getGame())){			//If found then make it the active
+				setSelectedComponent((Component)gameSearch);
+				invalidate();
+				repaint();
+				return;
+			}
+		}
+		
+		addTab(getTabName(game), newGame);
+
+		listOfCreateGamePanels.add((ICreateGamePanel) newGame);
+
+		setSelectedComponent(newGame);
+		invalidate();
+		repaint();		
+	}
+	
 }

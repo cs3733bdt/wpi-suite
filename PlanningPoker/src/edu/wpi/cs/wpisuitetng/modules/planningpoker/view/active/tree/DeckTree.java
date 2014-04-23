@@ -19,6 +19,7 @@ import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -36,6 +37,8 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
@@ -60,6 +63,8 @@ public class DeckTree extends JPanel implements MouseListener{
 	boolean isInactiveCollapsed = true;
 	boolean isActiveCollapsed = true;
 	boolean isHistoryCollapsed = true;
+	
+	private List<Requirement> reqList = new ArrayList<Requirement>();
 	
 	/**
 	 * Constructor for a GameTree
@@ -88,6 +93,9 @@ public class DeckTree extends JPanel implements MouseListener{
 		
 		List<Game> gameList = 
 				sortGames(GameModel.getInstance().getGames());//retrieve list of all games
+		reqList = 
+				RequirementModel.getInstance().getRequirements();//retrieve list of reqs
+		
 		System.out.println("Numb Games: " + gameList.size());
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
@@ -217,17 +225,24 @@ public class DeckTree extends JPanel implements MouseListener{
 						(DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
 				if(node != null) {
 					if(node.getUserObject() instanceof Game){ //Confirm that this is a game
-						System.out.println("Setting view to game: " + 
-								((Game)node.getUserObject()).toString());
-						if(((Game)node.getUserObject()).isActive() &&
-								(!((Game)node.getUserObject()).isComplete())){
-							ViewEventController.getInstance().joinGame((Game)node.getUserObject());
+						Game selectedGame = (Game) node.getUserObject();
+						List<Requirement> selectedReqs = new ArrayList<Requirement>();
+						for(Requirement r : reqList) {
+							if(r.getGameID().equals(selectedGame.getIdentity())) {
+								selectedReqs.add(r);
+							}
 						}
-						else if(!((Game)node.getUserObject()).isComplete()){
-							ViewEventController.getInstance().editGame((Game)node.getUserObject());
+						System.out.println("Setting view to game: " + 
+								selectedGame.toString());
+						if(selectedGame.isActive() &&
+								(!selectedGame.isComplete())){
+							ViewEventController.getInstance().joinGame(selectedGame, selectedReqs);
+						}
+						else if(!selectedGame.isComplete()){
+							ViewEventController.getInstance().editGame(selectedGame);
 						}
 						else{
-							ViewEventController.getInstance().viewEndGame((Game)node.getUserObject());
+							ViewEventController.getInstance().viewEndGame(selectedGame, selectedReqs);
 						}
 					}
 					else if(node.getUserObject() instanceof String){

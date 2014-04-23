@@ -3,6 +3,7 @@
  */
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers;
 
+import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
@@ -32,7 +33,12 @@ public class UpdateRequirementRequestObserver implements RequestObserver {
 		// The Requirement that got updated
 		Requirement requirement = Requirement.fromJSON(response.getBody());
 		
-		Requirement realReq = RequirementModel.getInstance().getRequirementById(requirement.getIdentity());
+		try {
+			Requirement realReq = RequirementModel.getInstance().getRequirementById(requirement.getIdentity());
+		} catch (NotFoundException e) {
+			// TODO Auto-generated catch block
+			System.err.println(requirement.getName() + ": Does not exist");
+		}
 		
 		System.out.println("The request to update a Requirement has succeeded!");
 	}

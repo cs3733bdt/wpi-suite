@@ -580,9 +580,9 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 						boolean hasImported = false;
 						for (int i = 0; i < rows.length; i++) {
 							selectedName = (String) currentTable.getValueAt(rows[i], 0);
-							if (RequirementModel.getInstance().getRequirement(selectedName) != null) {
+							/*if (RequirementModel.getInstance().getRequirement(selectedName) != null) {
 								hasImported = true;
-							}
+							}*/
 						}
 						if (hasImported) {
 							editReqButton.setEnabled(false);
@@ -712,7 +712,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		int[] rows = importTable.getSelectedRows();
 		for (int i = 0; i < rows.length; i++) {
 			String selectedName = (String) importTable.getValueAt(rows[i], 0);
-			addRequirement(RequirementModel.getInstance().getRequirement(selectedName));
+			//addRequirement(RequirementModel.getInstance().getRequirement(selectedName));
 		}
 
 		parent.updateButtons();
@@ -785,7 +785,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	 */
 	public void buildFields() {
 		if (parent.getGame() != null) {
-			for (Requirement r : parent.getGame().getRequirements()) {
+			for (Requirement r : parent.getCurrentReqs()) {
 				addRequirement(r);
 			}
 		}

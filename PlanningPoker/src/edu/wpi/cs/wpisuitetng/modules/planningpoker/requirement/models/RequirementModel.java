@@ -132,7 +132,10 @@ public class RequirementModel extends AbstractStorageModel<Requirement>{
 	 * 
 	 * @param requirements the array of requirements to add
 	 */
-	public void addRequirements(Requirement[] requirements) {
+	public void addRequirements(Requirement[] requirements, UUID gameID) {
+		for(Requirement r : requirements) {
+			r.setGameID(gameID);
+		}
 		updateRequirements(requirements);
 		/*for (int i = 0; i < requirements.length; i++) {
 			if (!this.requirements.contains(requirements[i].getId())) {

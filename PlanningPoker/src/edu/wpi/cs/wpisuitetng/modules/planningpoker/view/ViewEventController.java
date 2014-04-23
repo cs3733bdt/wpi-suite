@@ -11,9 +11,12 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import java.util.List;
+
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CreateDeckPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
@@ -221,6 +224,25 @@ public class ViewEventController {
 	public void setGameOverviewTree(GameTree gameTree) {
 		this.gameTree = gameTree;
 		
+	}
+
+	public void joinGame(Game selectedGame, List<Requirement> selectedReqs) {
+		getTabbedView().joinGame(selectedGame, selectedReqs);
+		getTabbedView().invalidate();
+		getTabbedView().repaint();
+	}
+
+	public void editGame(Game selectedGame, List<Requirement> selectedReqs) {
+		getTabbedView().editGame(selectedGame, selectedReqs);
+		getTabbedView().invalidate();
+		getTabbedView().repaint();
+	}
+
+	public void viewEndGame(Game selectedGame, List<Requirement> selectedReqs) {
+		getTabbedView().viewEndGame(selectedGame, selectedReqs);
+		getTabbedView().invalidate();
+		getTabbedView().repaint();
+
 	}
 
 

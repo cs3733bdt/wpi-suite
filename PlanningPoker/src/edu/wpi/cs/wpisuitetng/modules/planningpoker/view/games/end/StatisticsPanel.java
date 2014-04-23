@@ -78,6 +78,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 //	private JLabel yourLabel = new JLabel("Your Estimate: 0");
 	
 	Container overviewPanel = new Container();
+	private List<Requirement> selectedReqs;
  
 	/**
 	 * If the ArrayList passed in is empty it will use the default deck
@@ -90,7 +91,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		overviewPanel.setLayout(layout);
 
 		activeGame = game;
-		activeRequirement = game.getRequirements().get(0); //default to first requirement //TODO dependent on the click
+		//activeRequirement = game.getRequirements().get(0); //default to first requirement //TODO dependent on the click
 		
 		JLabel descLabel = new JLabel("Description");
 		JLabel statLabel = new JLabel("Statistics");
@@ -147,7 +148,143 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		/**
 		 * Creates and adds the user story text area to the view.
 		 */
-		userStoryDesc.setText(game.getRequirements().get(0).getDescription());
+		//userStoryDesc.setText(game.getRequirements().get(0).getDescription());
+		userStoryDesc.setEditable(false);
+		userStoryDesc.setLineWrap(true);
+		
+		descPanel.setPreferredSize(new Dimension(580, 100));
+		statsPanel.setPreferredSize(new Dimension(580, 60));
+		
+		//Label for Desc
+		layout.putConstraint(SpringLayout.NORTH, descLabel, 5, SpringLayout.NORTH, overviewPanel); //Anchor user Story to the top of panel
+		layout.putConstraint(SpringLayout.WEST, descLabel, 5, SpringLayout.WEST, overviewPanel);
+		
+		//Constraints on the userStory Desc
+		layout.putConstraint(SpringLayout.NORTH, descPanel, 5, SpringLayout.SOUTH, descLabel); 
+		layout.putConstraint(SpringLayout.WEST, descPanel, 5, SpringLayout.WEST, overviewPanel);
+		layout.putConstraint(SpringLayout.EAST, descPanel, -5, SpringLayout.EAST, overviewPanel); 
+		
+		//Constraints on the stats Label
+		layout.putConstraint(SpringLayout.NORTH, statLabel, 5, SpringLayout.SOUTH, descPanel); 
+		layout.putConstraint(SpringLayout.WEST, statLabel, 5, SpringLayout.WEST, overviewPanel);
+		layout.putConstraint(SpringLayout.EAST, statLabel, -5, SpringLayout.EAST, overviewPanel); 
+	
+		
+		//Constraints on the statsPanel
+		layout.putConstraint(SpringLayout.NORTH, statsPanel, 5, SpringLayout.SOUTH, statLabel); //anchor top of stats panel to bottom of user story
+		layout.putConstraint(SpringLayout.WEST, statsPanel, 5, SpringLayout.WEST, overviewPanel);  //Anchor stats Panel to the left side of panel
+		layout.putConstraint(SpringLayout.EAST, statsPanel, -5, SpringLayout.EAST, overviewPanel); //Anchor user Story to the left side of panel
+		
+		//Constraints on the vote Label
+		layout.putConstraint(SpringLayout.NORTH, votesLabel, 5, SpringLayout.SOUTH, statsPanel); 
+		layout.putConstraint(SpringLayout.WEST, votesLabel, 5, SpringLayout.WEST, overviewPanel);
+		layout.putConstraint(SpringLayout.EAST, votesLabel, -5, SpringLayout.EAST, overviewPanel); 
+		
+		//Constraints on the votePanel
+		layout.putConstraint(SpringLayout.NORTH, votePanel, 5, SpringLayout.SOUTH, votesLabel); 
+		layout.putConstraint(SpringLayout.WEST, votePanel, 5, SpringLayout.WEST, overviewPanel);  
+		layout.putConstraint(SpringLayout.EAST, votePanel, -5, SpringLayout.EAST, overviewPanel); 
+		layout.putConstraint(SpringLayout.SOUTH, votePanel, -60, SpringLayout.SOUTH, overviewPanel);
+
+		//Constraints on the final estimate label
+		layout.putConstraint(SpringLayout.WEST, finalEstimateLabel, 5, SpringLayout.WEST, overviewPanel); 
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateLabel, 5, SpringLayout.SOUTH, votePanel); 
+
+		//Constraints on the final estimate box
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateBox, 5, SpringLayout.SOUTH, votePanel);
+		layout.putConstraint(SpringLayout.WEST, finalEstimateBox, 5, SpringLayout.EAST, finalEstimateLabel);
+		
+		//Constraints on the final estimate Button
+		layout.putConstraint(SpringLayout.WEST, finalEstimateButton, 5, SpringLayout.WEST, overviewPanel); 
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateButton, 5, SpringLayout.SOUTH, finalEstimateLabel); 
+		
+		//Constraints on the final estimate message
+		layout.putConstraint(SpringLayout.WEST, finalEstimateMessage, 5, SpringLayout.EAST, finalEstimateButton); 
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateMessage, 8, SpringLayout.SOUTH, finalEstimateBox); 
+		
+		//Constraints on the final estimate display
+		layout.putConstraint(SpringLayout.EAST, finalEstimateDisplay, -20, SpringLayout.EAST, overviewPanel); 
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateDisplay, 5, SpringLayout.SOUTH, votePanel); 
+			
+		
+		int[] test = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //5.5 //TODO fix
+		int[] test2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}; //6
+		
+		System.out.println("Median test1 should be 5.5:" + median(test));
+		System.out.println("Median test2:" + median(test2));
+		
+		repaint();
+		invalidate();
+		revalidate();
+		
+		setViewportView(overviewPanel);
+	}
+	
+	public StatisticsPanel(Game game, List<Requirement> selectedReqs) {
+		
+		SpringLayout layout = new SpringLayout();
+		overviewPanel.setLayout(layout);
+
+		activeGame = game;
+		this.selectedReqs = selectedReqs;
+		activeRequirement = selectedReqs.get(0); //default to first requirement //TODO dependent on the click
+		
+		JLabel descLabel = new JLabel("Description");
+		JLabel statLabel = new JLabel("Statistics");
+		JLabel votesLabel = new JLabel("Votes by User");
+		
+		Object[] row = makeStatRow(activeRequirement);
+		
+		statTable = initializeStatTable();
+		voteTable = initializeVoteTable();
+		statTable.getTableModel().addRow(row);
+		fillVoteTable(activeRequirement);
+		
+		JScrollPane statsPanel = new JScrollPane(statTable);
+		JScrollPane votePanel = new JScrollPane(voteTable);
+		JScrollPane descPanel = new JScrollPane(userStoryDesc);
+		
+		finalEstimateLabel = new JLabel("Enter a Final Estimate here:");
+		finalEstimateBox = new JTextField(4);
+		addKeyListenerTo(finalEstimateBox);
+		finalEstimateButton = new JButton("Submit Final Estimate");
+		finalEstimateButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				finalEstimateButtonPressed();		
+			}
+		});
+		
+		validateSubmitButton();
+		finalEstimateDisplay = new JLabel();
+		int currFinalEstimate = activeRequirement.getFinalEstimate();
+		if (currFinalEstimate == -1) {
+			finalEstimateDisplay.setText("Your Current Final Estimate is: --");
+		}
+		else {
+			finalEstimateDisplay.setText("Your Current Final Estimate is: " + currFinalEstimate);
+		}
+		finalEstimateDisplay.setFont(makeFont(12));
+		
+		overviewPanel.add(descLabel);
+		overviewPanel.add(statLabel);
+		overviewPanel.add(votesLabel);
+		
+		overviewPanel.add(finalEstimateLabel);
+		overviewPanel.add(finalEstimateBox);
+		overviewPanel.add(finalEstimateButton);
+		overviewPanel.add(finalEstimateDisplay);
+		isUserCreator(); //sets visibility for the above 4 components
+		
+		overviewPanel.add(descPanel);
+		overviewPanel.add(statsPanel);
+		overviewPanel.add(votePanel);
+		overviewPanel.add(finalEstimateMessage);
+		
+		/**
+		 * Creates and adds the user story text area to the view.
+		 */
+		userStoryDesc.setText(selectedReqs.get(0).getDescription());
 		userStoryDesc.setEditable(false);
 		userStoryDesc.setLineWrap(true);
 		
@@ -473,9 +610,9 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	
 	private void finalEstimateButtonPressed() {
 		int newEstimate = Integer.parseInt(finalEstimateBox.getText());
-		for (int i = 0; i < activeGame.getRequirements().size(); i++) {
-			if (activeGame.getRequirements().get(i).identify(activeRequirement)) {
-				activeGame.getRequirements().get(i).setFinalEstimate(newEstimate);
+		for (int i = 0; i < selectedReqs.size(); i++) {
+			if (selectedReqs.get(i).identify(activeRequirement)) {
+				selectedReqs.get(i).setFinalEstimate(newEstimate);
 				finalEstimateMessage.setForeground(Color.BLUE);
 				finalEstimateMessage.setText("Final estimate submitted successfully!");
 			}

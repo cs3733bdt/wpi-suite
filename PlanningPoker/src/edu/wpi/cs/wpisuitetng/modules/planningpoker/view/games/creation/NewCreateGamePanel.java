@@ -42,6 +42,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 											// remove because no changes have
 											// happened
 	private Game currentGame;
+	private List<Requirement> currentReqs;
 	
 	/**
 	 * Creates a NewCreateGamePanel with the game setting the fields for the panel.
@@ -106,6 +107,36 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		}
 	}
 	
+	public NewCreateGamePanel(Game game, List<Requirement> selectedReqs) {
+		currentGame = game;
+		setCurrentReqs(selectedReqs);
+		leftHalf = new NewLeftHalfCreateGamePanel(this);
+		rightHalf = new NewRightHalfCreateGamePanel(this);
+		
+		
+		setLeftComponent(leftHalf);
+		setRightComponent(rightHalf);
+		rightHalf.setMinimumSize(new Dimension(333, 500));
+		setDividerLocation(420);
+		
+		if(game == null){
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+			leftHalf.getErrorField().setText("Name is required");
+		}
+		else if(!validateField(true, false)){
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+		}
+		else{
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
+		}
+		
+		revalidate();
+		repaint();
+	}
+
+
 	public static void main(String args[]){
 		JFrame frame = new JFrame("Demo");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -216,7 +247,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 			launchGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
-			ViewEventController.getInstance().joinGame(currentGame);
+			ViewEventController.getInstance().joinGame(currentGame, rightHalf.getRequirements());
 			System.out.println("Launch Game Pressed Passed.");
 			return true;
 		} else {
@@ -250,7 +281,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 			currentGame = new Game();
 			setCurrentGame(true);
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
-			RequirementModel.getInstance().addRequirementsList(rightHalf.getRequirements(), currentGame.getIdentity()); //New Requirements get added to server
+			RequirementModel.getInstance().addRequirements(rightHalf.getRequirements().toArray(new Requirement[1]), currentGame.getIdentity()); //New Requirements get added to server
 		} else{
 			setCurrentGame(true);
 		}
@@ -321,5 +352,21 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 
 	public NewRightHalfCreateGamePanel getRightHalf() {
 		return rightHalf;
+	}
+
+
+	/**
+	 * @return the currentReqs
+	 */
+	public List<Requirement> getCurrentReqs() {
+		return currentReqs;
+	}
+
+
+	/**
+	 * @param currentReqs the currentReqs to set
+	 */
+	public void setCurrentReqs(List<Requirement> currentReqs) {
+		this.currentReqs = currentReqs;
 	}	
 }
