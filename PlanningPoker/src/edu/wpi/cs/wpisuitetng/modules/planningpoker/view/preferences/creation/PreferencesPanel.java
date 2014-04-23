@@ -554,15 +554,12 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		component.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {
 				if (emailField.isFocusOwner()) {
-					System.out.println("Here:");
 					reValidateEmailUpdateButton();
 				}
 				else if(facebookField.isFocusOwner()) {
-					System.out.println("Here:");
 					reValidateFacebookUpdateButton();
 				}
 				else if(mobileField.isFocusOwner()) {
-					System.out.println("Here:");
 					reValidateMobileUpdateButton();
 				}
 				else {}
@@ -757,6 +754,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			emailOffNotify.setVisible(false);
 
 			emailField.setEnabled(true);
+			updateEmailButton.setEnabled(true);
 			//reValidateEmailUpdateButton();
 		}
 		else {
@@ -783,6 +781,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			facebookOffNotify.setVisible(false);
 
 			facebookField.setEnabled(true);
+			updateFacebookButton.setEnabled(true);
 			
 			//reValidateFacebookUpdateButton();
 		}
