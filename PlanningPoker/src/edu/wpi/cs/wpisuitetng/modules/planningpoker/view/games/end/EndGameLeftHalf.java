@@ -64,9 +64,6 @@ public class EndGameLeftHalf extends JScrollPane {
 		Container newLeftView = new Container();
 		SpringLayout layout = new SpringLayout();
 		newLeftView.setLayout(layout);
-		
-		revalidate();
-		repaint();
 
 		/**
 		 * Create and/or initialize components
@@ -198,6 +195,8 @@ public class EndGameLeftHalf extends JScrollPane {
 		
 		this.getViewport().add(newLeftView);
 		
+		revalidate();
+		repaint();
 	}
 	
 	public List<Requirement> getRequirements() {

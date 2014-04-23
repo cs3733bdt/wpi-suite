@@ -17,7 +17,7 @@ import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeCellRenderer;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 
 
 /**
@@ -25,44 +25,42 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
  * @author Bobby Drop Tables
  */
 public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
-	Icon requirementIcon;
-	Icon iterationIcon;
+	Icon gameIcon;
 
-	/*public CustomTreeCellRenderer() {
-		requirementIcon = new RequirementIcon();
-		iterationIcon = new IterationIcon();
-	}*/
+	public CustomTreeCellRenderer() {
+		super();
+		gameIcon = new GameIcon();
+	}
 
 	/**
 	 * Method getTreeCellRendererComponent.
 	 * 
-	 * @param tree JTree
-	 * @param value Object
-	 * @param sel boolean
-	 * @param expanded boolean
-	 * @param leaf boolean
-	 * @param row int
-	 * @param hasFocus boolean
-	 * @return Component that the renderer uses to draw the file
-	 * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(JTree, Object, boolean, boolean, boolean, int, boolean) */
-	@Override
-	public Component getTreeCellRendererComponent(JTree tree, Object value, boolean sel, boolean expanded, boolean leaf, int row, boolean hasFocus) {
+	 * @param tree
+	 *            JTree
+	 * @param value
+	 *            Object
+	 * @param sel
+	 *            boolean
+	 * @param expanded
+	 *            boolean
+	 * @param leaf
+	 *            boolean
+	 * @param row
+	 *            int
+	 * @param hasFocus
+	 *            boolean
+	
+	
+	 * @return Component * @see javax.swing.tree.TreeCellRenderer#getTreeCellRendererComponent(JTree,
+	 *      Object, boolean, boolean, boolean, int, boolean) */
+	public Component getTreeCellRendererComponent(JTree tree, Object value,
+			boolean sel, boolean expanded, boolean leaf, int row,
+			boolean hasFocus) {
 
-		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf, row, hasFocus);
+		super.getTreeCellRendererComponent(tree, value, sel, expanded, leaf,
+				row, hasFocus);
 		DefaultMutableTreeNode node = (DefaultMutableTreeNode) value;
-
-		if (node.getUserObject() instanceof Game) {
-			setIcon(requirementIcon);
-		} else {
-			setIcon(iterationIcon);
-			/*
-			DefaultMutableTreeNode firstLeaf = ((DefaultMutableTreeNode) tree
-					.getModel().getRoot());
-			tree.setSelectionPath(new TreePath(firstLeaf.getPath()));
-			String label = firstLeaf.toString(); //Does not work
-
-			setToolTipText("" + value);*/
-		}
+		setIcon(gameIcon);
 		return this; 
 	}
 }
