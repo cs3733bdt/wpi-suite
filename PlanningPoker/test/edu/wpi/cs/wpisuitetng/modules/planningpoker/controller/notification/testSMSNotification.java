@@ -16,7 +16,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
 /**
  * @author doruk
@@ -30,12 +30,12 @@ public class testSMSNotification {
 	String[] support1;
 	Project p;
 	SMSNotification sms;
-	List<Requirement> reqs;
+	List<PPRequirement> reqs;
 	
 	@Before
 	public void setUp()
 	{
-		reqs = new ArrayList<Requirement>();
+		reqs = new ArrayList<PPRequirement>();
 		g = new Game("Email Test Game", "Email Test Game Description", reqs, false, false);
 		u1 = new User("testuser1", "user1", "pass", "paleondires@wpi.edu", "peter.leondires", 1123);
 		u1.setCarrier("VERIZON");

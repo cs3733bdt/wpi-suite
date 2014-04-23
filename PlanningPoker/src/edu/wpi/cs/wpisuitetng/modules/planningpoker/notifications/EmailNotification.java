@@ -27,7 +27,7 @@ import com.sun.mail.util.MailConnectException;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 /**
  * This is a class that will send out email notifications
  * whenever a game is successfully created.
@@ -206,7 +206,7 @@ public class EmailNotification {
 	 */
 	private String generateCreateGameMessage(){
 		String reqs = "";
-		for(Requirement r : g.getRequirements()){
+		for(PPRequirement r : g.getRequirements()){
 			reqs = reqs + r.toString();
 		}
 		
@@ -226,7 +226,7 @@ public class EmailNotification {
 		String stats = "";
 		ArrayList<Integer> voteArray = new ArrayList<Integer>();
 		
-		for(Requirement r : g.getRequirements()) {
+		for(PPRequirement r : g.getRequirements()) {
 			
 			for(int i=0; i < r.getVotes().size(); i++) {
 				voteArray.add(r.getVotes().get(i).getVoteNumber());

@@ -27,7 +27,7 @@ import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
@@ -133,7 +133,7 @@ public class EndGameLeftHalf extends JScrollPane {
 					int row = target.getSelectedRow();
 					String selectedName = (String) target.getValueAt(row, 0);
 					String selectedDesc = (String) target.getValueAt(row, 1);
-					for (Requirement r : ended.getRequirements()) {
+					for (PPRequirement r : ended.getRequirements()) {
 						if (selectedName.equals(r.getName())
 								&& selectedDesc.equals(r.getDescription())) {
 							parent.updateRightHalf(r);
@@ -199,7 +199,7 @@ public class EndGameLeftHalf extends JScrollPane {
 		repaint();
 	}
 	
-	public List<Requirement> getRequirements() {
+	public List<PPRequirement> getRequirements() {
 		return ended.getRequirements();
 	}
 	

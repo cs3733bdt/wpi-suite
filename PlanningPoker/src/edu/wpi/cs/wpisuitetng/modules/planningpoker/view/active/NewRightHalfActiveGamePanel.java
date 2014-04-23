@@ -38,7 +38,7 @@ import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.ActiveCardsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton;
@@ -46,7 +46,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private Game currentGame;
-	private Requirement activeRequirement;
+	private PPRequirement activeRequirement;
 	private JTextArea nameTextField;
 	private JScrollPane nameTextFieldPanel;
 	private JTextArea descriptionTextField;
@@ -179,7 +179,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		previousEst = new JLabel();
 
-		Requirement firstRequirement = table.getSelectedReq();
+		PPRequirement firstRequirement = table.getSelectedReq();
 		
 		previousEst.setText("Your saved estimate is: " + firstRequirement.userVote());
 		
@@ -503,7 +503,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	 * 
 	 * @return activeRequirement
 	 */
-	public Requirement getRequirement() {
+	public PPRequirement getRequirement() {
 		return activeRequirement;
 	}
 

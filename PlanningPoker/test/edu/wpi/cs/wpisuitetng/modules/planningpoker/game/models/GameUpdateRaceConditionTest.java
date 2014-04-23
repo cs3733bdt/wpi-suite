@@ -21,7 +21,7 @@ import org.junit.Test;
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 /**
@@ -37,13 +37,13 @@ public class GameUpdateRaceConditionTest {
 	
 	private int j;
 	
-	Requirement req1;
+	PPRequirement req1;
 	
 	Vote vote1, vote2, vote3, vote4, vote5, vote6, vote7, vote8, vote9, vote10, vote11, vote12,
 	vote13, vote14, vote15, vote16, vote17, vote18, vote19, vote20, vote21, vote22, vote23, vote24,
 	vote25, vote26, vote27, vote28, vote29, vote30;
 	
-	List<Requirement> reqList;
+	List<PPRequirement> reqList;
 	
 	final GameModel model = GameModel.getInstance();
 	
@@ -69,7 +69,7 @@ public class GameUpdateRaceConditionTest {
 		@Override
 		public void run()
 		{
-			Requirement reqModel1 = model.getGames().get(0).getRequirements().get(0);
+			PPRequirement reqModel1 = model.getGames().get(0).getRequirements().get(0);
 			while(!updateStarted){} // $codepro.audit.disable emptyWhileStatement
 			reqModel1.addVote(vote1);
 			reqModel1.addVote(vote2);
@@ -139,10 +139,10 @@ public class GameUpdateRaceConditionTest {
 	@Test(timeout=20000)
 	public void testRaceConditionVoteAndUpdate()
 	{
-		req1 = new Requirement("Req1", "Desc1");
+		req1 = new PPRequirement("Req1", "Desc1");
 		project200 = new Project("project 1", "200");	
 		//req1.setProject(project200);
-		reqList = new ArrayList<Requirement>();		
+		reqList = new ArrayList<PPRequirement>();		
 		reqList.add(req1);
 		User Jeremy =  new User("Jeremy", "Jim", "", "generic.email", "fbtest", 144);
 			
@@ -150,25 +150,25 @@ public class GameUpdateRaceConditionTest {
 		
 		game1 = new Game("Game1", "Description",  reqList, false, false);
 		game1.setProject(project200);
-		game2 = new Game("Game2", "With a name2", new ArrayList<Requirement>(), true, true);
-		game3 = new Game("Game3", "With a name3", new ArrayList<Requirement>(), false, false);
-		game4 = new Game("Game4", "With a name4", new ArrayList<Requirement>(), true, true);
-		game5= new Game("Game5", "With a name5", new ArrayList<Requirement>(), false, false);
-		game6 = new Game("Game6", "With a name6", new ArrayList<Requirement>(), true, true);
-		game7 = new Game("Game7", "With a name7", new ArrayList<Requirement>(), false, false);
-		game8 = new Game("Game8", "With a name8", new ArrayList<Requirement>(), true, true);
-		game9 = new Game("Game9", "With a name9", new ArrayList<Requirement>(), false, false);
-		game10 = new Game("Game10", "With a name10", new ArrayList<Requirement>(), true, true);
-		game11 = new Game("Game11", "With a name11", new ArrayList<Requirement>(), false, false);
-		game12 = new Game("Game12", "With a name12", new ArrayList<Requirement>(), true, true);
-		game13 = new Game("Game13", "With a name13", new ArrayList<Requirement>(), false, false);
-		game14 = new Game("Game14", "With a name14", new ArrayList<Requirement>(), true, true);
-		game15 = new Game("Game15", "With a name15", new ArrayList<Requirement>(), false, false);
-		game16 = new Game("Game16", "With a name16", new ArrayList<Requirement>(), true, true);
-		game17 = new Game("Game17", "With a name17", new ArrayList<Requirement>(), false, false);
-		game18 = new Game("Game18", "With a name18", new ArrayList<Requirement>(), true, true);
-		game19 = new Game("Game19", "With a name19", new ArrayList<Requirement>(), false, false);
-		game20 = new Game("Game20", "With a name20", new ArrayList<Requirement>(), true, true);
+		game2 = new Game("Game2", "With a name2", new ArrayList<PPRequirement>(), true, true);
+		game3 = new Game("Game3", "With a name3", new ArrayList<PPRequirement>(), false, false);
+		game4 = new Game("Game4", "With a name4", new ArrayList<PPRequirement>(), true, true);
+		game5= new Game("Game5", "With a name5", new ArrayList<PPRequirement>(), false, false);
+		game6 = new Game("Game6", "With a name6", new ArrayList<PPRequirement>(), true, true);
+		game7 = new Game("Game7", "With a name7", new ArrayList<PPRequirement>(), false, false);
+		game8 = new Game("Game8", "With a name8", new ArrayList<PPRequirement>(), true, true);
+		game9 = new Game("Game9", "With a name9", new ArrayList<PPRequirement>(), false, false);
+		game10 = new Game("Game10", "With a name10", new ArrayList<PPRequirement>(), true, true);
+		game11 = new Game("Game11", "With a name11", new ArrayList<PPRequirement>(), false, false);
+		game12 = new Game("Game12", "With a name12", new ArrayList<PPRequirement>(), true, true);
+		game13 = new Game("Game13", "With a name13", new ArrayList<PPRequirement>(), false, false);
+		game14 = new Game("Game14", "With a name14", new ArrayList<PPRequirement>(), true, true);
+		game15 = new Game("Game15", "With a name15", new ArrayList<PPRequirement>(), false, false);
+		game16 = new Game("Game16", "With a name16", new ArrayList<PPRequirement>(), true, true);
+		game17 = new Game("Game17", "With a name17", new ArrayList<PPRequirement>(), false, false);
+		game18 = new Game("Game18", "With a name18", new ArrayList<PPRequirement>(), true, true);
+		game19 = new Game("Game19", "With a name19", new ArrayList<PPRequirement>(), false, false);
+		game20 = new Game("Game20", "With a name20", new ArrayList<PPRequirement>(), true, true);
 		gameList[0] = game1;
 		gameList[1] = game2;
 		gameList[2] = game3;

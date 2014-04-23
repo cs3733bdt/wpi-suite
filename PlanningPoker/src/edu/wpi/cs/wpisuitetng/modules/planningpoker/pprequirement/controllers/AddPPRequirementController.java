@@ -9,10 +9,10 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers.AddRequirementRequestObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers.AddPPRequirementRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -24,26 +24,26 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author tianchanggu
  *
  */
-public class AddRequirementController{
+public class AddPPRequirementController{
 	
-	private static AddRequirementController instance;
-	private AddRequirementRequestObserver observer;
+	private static AddPPRequirementController instance;
+	private AddPPRequirementRequestObserver observer;
 	
 	/**
 	 * Construct an AddRequirementController for the given model, view pair
 	 */
-	private AddRequirementController() {
-		observer = new AddRequirementRequestObserver(this);
+	private AddPPRequirementController() {
+		observer = new AddPPRequirementRequestObserver(this);
 	}
 	
 	/**
 	 * @return the instance of the AddRequirementController or creates one if it does not exist.
 	 */
-	public static AddRequirementController getInstance()
+	public static AddPPRequirementController getInstance()
 	{
 		if(instance == null)
 		{
-			instance = new AddRequirementController();
+			instance = new AddPPRequirementController();
 		}
 		
 		return instance;
@@ -53,7 +53,7 @@ public class AddRequirementController{
 	 * This method adds a requirement to the server.
 	 * @param newRequirement is the requirement to be added to the server.
 	 */
-	public void addRequirement(Requirement newRequirement) 
+	public void addRequirement(PPRequirement newRequirement) 
 	{
 		final Request request = 
 				Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.PUT);

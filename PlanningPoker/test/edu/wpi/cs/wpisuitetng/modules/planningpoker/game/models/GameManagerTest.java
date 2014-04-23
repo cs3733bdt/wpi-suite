@@ -24,7 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -71,9 +71,9 @@ public class GameManagerTest {
 
 		existingUser = new User("steve", "steve", "1234", "", "fbTest", 2);
 		
-		game1 = new Game("Game 1", "First", new ArrayList<Requirement>(), false, false);
-		game2 = new Game("Game 2", "Second", new ArrayList<Requirement>(), true, false);
-		game3 = new Game("Game 3", "Third", new ArrayList<Requirement>(), false, false);
+		game1 = new Game("Game 1", "First", new ArrayList<PPRequirement>(), false, false);
+		game2 = new Game("Game 2", "Second", new ArrayList<PPRequirement>(), true, false);
+		game3 = new Game("Game 3", "Third", new ArrayList<PPRequirement>(), false, false);
 		
 		defaultSession = new Session(existingUser, testProject,  mockSsid);
 
