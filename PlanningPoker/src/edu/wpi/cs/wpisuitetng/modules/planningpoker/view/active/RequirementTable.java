@@ -20,11 +20,11 @@ import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
 public class RequirementTable extends JTable{
 	
-	List<Requirement> reqList;
+	List<PPRequirement> reqList;
 	RequirementTableMode mode;
 	String[] columnNames;
 	
@@ -36,7 +36,7 @@ public class RequirementTable extends JTable{
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	Object[][] data = {};
 	
-	public RequirementTable(List<Requirement> reqList, RequirementTableMode mode) {
+	public RequirementTable(List<PPRequirement> reqList, RequirementTableMode mode) {
 		this.reqList = reqList;
 		this.mode = mode;
 		build();
@@ -72,7 +72,7 @@ public class RequirementTable extends JTable{
 			getColumnModel().getColumn(3).setMinWidth(100);
 			getColumnModel().getColumn(3).setMaxWidth(150);
 			
-			for(Requirement r: reqList) {
+			for(PPRequirement r: reqList) {
 				getTableModel().addRow(new Object[]{r.getName(), r.getDescription(),
 						r.userVote(), r.displayComplete()});
 			}
@@ -97,7 +97,7 @@ public class RequirementTable extends JTable{
 			getColumnModel().getColumn(1).setMinWidth(100);
 			getColumnModel().getColumn(1).setMaxWidth(800);
 			
-			for(Requirement r: reqList) {
+			for(PPRequirement r: reqList) {
 				getTableModel().addRow(new Object[]{r.getName(), r.getDescription()});
 			}
 			
@@ -136,9 +136,9 @@ public class RequirementTable extends JTable{
 	 * 
 	 * @return multiple requirements that are selected by the user
 	 */
-	public List<Requirement> getSelectedReqs() {
+	public List<PPRequirement> getSelectedReqs() {
 		
-		List<Requirement> listOfReqs = new ArrayList<Requirement>();
+		List<PPRequirement> listOfReqs = new ArrayList<PPRequirement>();
 		
 		for(Integer i: this.getSelectedRows()) {
 			listOfReqs.add(reqList.get(i));
@@ -146,7 +146,7 @@ public class RequirementTable extends JTable{
 		return listOfReqs;
 	}
 	
-	public Requirement getSelectedReq() throws IndexOutOfBoundsException{
+	public PPRequirement getSelectedReq() throws IndexOutOfBoundsException{
 		
 		return reqList.get(getSelectedRow());
 		

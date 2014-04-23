@@ -9,14 +9,14 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers.RetrieveRequirementRequestObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers.RetrievePPRequirementRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -28,17 +28,17 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author tianchanggu
  *
  */
-public class RetrieveRequirementController implements ActionListener {
+public class RetrievePPRequirementController implements ActionListener {
 
-	private RetrieveRequirementRequestObserver observer;
-	private static RetrieveRequirementController instance;
+	private RetrievePPRequirementRequestObserver observer;
+	private static RetrievePPRequirementController instance;
 
 	/**
 	 * Constructs the controller given a RequirementModel
 	 */
-	private RetrieveRequirementController() {
+	private RetrievePPRequirementController() {
 		
-		observer = new RetrieveRequirementRequestObserver(this);
+		observer = new RetrievePPRequirementRequestObserver(this);
 	}
 	
 	/**
@@ -46,11 +46,11 @@ public class RetrieveRequirementController implements ActionListener {
 	 * @return the instance of the RetrieveRequirementsController or creates one if it does not
 	 * exist.
 	 */
-	public static RetrieveRequirementController getInstance()
+	public static RetrievePPRequirementController getInstance()
 	{
 		if(instance == null)
 		{
-			instance = new RetrieveRequirementController();
+			instance = new RetrievePPRequirementController();
 		}
 		
 		return instance;
@@ -87,11 +87,11 @@ public class RetrieveRequirementController implements ActionListener {
 	 * 
 	 * @param requirements array of requirements received from the server
 	 */
-	public void receivedRequirements(Requirement[] requirements) {
-		RequirementModel rModel = RequirementModel.getInstance();
+	public void receivedRequirements(PPRequirement[] requirements) {
+		PPRequirementModel rModel = PPRequirementModel.getInstance();
 		// Make sure requirements exist in the Requirement Manager
 		if (requirements != null) {
-			for (Requirement r: requirements) {
+			for (PPRequirement r: requirements) {
 				// Only add requirements to the model if they
 				// don't already exist there
 				if (!rModel.contains(r.getId()))

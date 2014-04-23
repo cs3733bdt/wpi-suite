@@ -23,7 +23,7 @@ import org.jdesktop.swingx.JXDatePicker;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
@@ -295,7 +295,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 * Gets the requirements for this panel
 	 * @return the requirements that have been created for this game.
 	 */
-	private List<Requirement> getRequirements() {
+	private List<PPRequirement> getRequirements() {
 		return rightHalf.getRequirements();
 	}
 

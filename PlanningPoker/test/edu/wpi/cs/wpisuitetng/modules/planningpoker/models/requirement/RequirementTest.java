@@ -26,8 +26,8 @@ import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.StatisticsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
@@ -37,17 +37,17 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
  *
  */
 public class RequirementTest {
-	Requirement req1;
-	Requirement req2;
-	Requirement req3;
+	PPRequirement req1;
+	PPRequirement req2;
+	PPRequirement req3;
 	
-	Requirement req2Dupe;
-	Requirement req3Dupe;
+	PPRequirement req2Dupe;
+	PPRequirement req3Dupe;
 	
 	Vote vote1;
 	
-	List<Requirement> reqList;
-	List<Requirement> emptyList;
+	List<PPRequirement> reqList;
+	List<PPRequirement> emptyList;
 	List<Vote> req1Votes;
 	
 	Game game1;
@@ -58,24 +58,24 @@ public class RequirementTest {
 
 	@Before
 	public void setUp() throws Exception {
-		req1 = new Requirement("Req1", "Desc1");
-		req2 = new Requirement("Req2", "Desc2");
+		req1 = new PPRequirement("Req1", "Desc1");
+		req2 = new PPRequirement("Req2", "Desc2");
 		req2.setId(2);
-		req3 = new Requirement("Req3", "Desc3");
+		req3 = new PPRequirement("Req3", "Desc3");
 		
 		vote1 = new Vote ("Steve", 7);		
 		req1Votes = new ArrayList<Vote>();
 		req1Votes.add(vote1);
 		req1.addVote(vote1);
 		
-		req2Dupe = new Requirement("Req2 Dupe", "DescDupe2");
+		req2Dupe = new PPRequirement("Req2 Dupe", "DescDupe2");
 		req2Dupe.setId(req2.getId());
 		
-		req3Dupe = new Requirement("Req3 Dupe", "DescDupe2");
+		req3Dupe = new PPRequirement("Req3 Dupe", "DescDupe2");
 		req3Dupe.setId(req3.getId());
 		
-		reqList = new ArrayList<Requirement>();
-		emptyList = new ArrayList<Requirement>();
+		reqList = new ArrayList<PPRequirement>();
+		emptyList = new ArrayList<PPRequirement>();
 		reqList.add(req1);
 		reqList.add(req2);
 		
@@ -112,9 +112,9 @@ public class RequirementTest {
 	
 	@Test
 	public void testStatistics() {
-		req1 = new Requirement("Req1", "Desc1");
-		reqList = new ArrayList<Requirement>();
-		ArrayList<Requirement> reqList2 = new ArrayList<Requirement>();
+		req1 = new PPRequirement("Req1", "Desc1");
+		reqList = new ArrayList<PPRequirement>();
+		ArrayList<PPRequirement> reqList2 = new ArrayList<PPRequirement>();
 		
 		req1.addVote(new Vote("Justin", 1));
 		req1.addVote(new Vote("Phil", 10));
@@ -143,8 +143,8 @@ public class RequirementTest {
 	
 	@Test
 	public void testCopyFrom(){
-		Requirement copyTo = 
-				new Requirement(req1.getName() + " copy", req1.getDescription() + " copy");
+		PPRequirement copyTo = 
+				new PPRequirement(req1.getName() + " copy", req1.getDescription() + " copy");
 		copyTo.addVote(new Vote("Steve", 20));
 		assertTrue(copyTo.copyFrom(req1)); //Should return true because changes were made
 		assertFalse(copyTo.copyFrom(req1)); //Should return false; no changes are made to the class
@@ -168,6 +168,6 @@ public class RequirementTest {
 
 	@Test
 	public void testGetInstance(){
-		assertNotNull(RequirementModel.getInstance());
+		assertNotNull(PPRequirementModel.getInstance());
 	}
 }

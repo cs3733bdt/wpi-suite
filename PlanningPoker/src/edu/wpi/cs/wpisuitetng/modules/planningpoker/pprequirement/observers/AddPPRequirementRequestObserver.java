@@ -9,10 +9,10 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.AddPPRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -23,15 +23,15 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  * @author tianchanggu
  *
  */
-public class AddRequirementRequestObserver implements RequestObserver {
+public class AddPPRequirementRequestObserver implements RequestObserver {
 	
-	private AddRequirementController controller;
+	private AddPPRequirementController controller;
 	
 	/**
 	 * Constructs the observer given an AddRequirementController
 	 * @param controller the controller used to add requirements
 	 */
-	public AddRequirementRequestObserver(AddRequirementController controller) {
+	public AddPPRequirementRequestObserver(AddPPRequirementController controller) {
 		this.controller = controller;
 	}
 	
@@ -47,7 +47,7 @@ public class AddRequirementRequestObserver implements RequestObserver {
 		final ResponseModel response = iReq.getResponse();
 		
 		// Parse the requirement out of the response body
-		final Requirement requirement = Requirement.fromJson(response.getBody());	
+		final PPRequirement requirement = PPRequirement.fromJson(response.getBody());	
 		
 		System.out.println("The request to add a requirement succeeded.");
 		

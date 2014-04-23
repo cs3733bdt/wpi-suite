@@ -14,7 +14,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
@@ -37,7 +37,7 @@ public class GameModelTest {
 		GameModel model = GameModel.getInstance();
 		Game object = new Game("Test Game", 
 				"Test Description", 
-				new ArrayList<Requirement>(), 
+				new ArrayList<PPRequirement>(), 
 				true, 
 				false);
 		
@@ -59,9 +59,9 @@ public class GameModelTest {
 		GameModel model = GameModel.getInstance();
 		model.emptyModel();
 		assertEquals(0, model.getSize());
-		Game game1 = new Game("Game", "With a name", new ArrayList<Requirement>(), false, true);
-		Game game2 = new Game("Game2", "With a name2", new ArrayList<Requirement>(), true, true);
-		Game game3 = new Game("Game3", "With a name3", new ArrayList<Requirement>(), false, false);
+		Game game1 = new Game("Game", "With a name", new ArrayList<PPRequirement>(), false, true);
+		Game game2 = new Game("Game2", "With a name2", new ArrayList<PPRequirement>(), true, true);
+		Game game3 = new Game("Game3", "With a name3", new ArrayList<PPRequirement>(), false, false);
 		Game[] gameList = new Game[3];
 		gameList[0] = game1;
 		gameList[1] = game2;
@@ -78,7 +78,7 @@ public class GameModelTest {
 		
 		Game game4 = new Game("An updated game", 
 				"Overwriting an existing",
-				new ArrayList<Requirement>(), 
+				new ArrayList<PPRequirement>(), 
 				false, 
 				true);
 		game4.setIdentifier(game1.getIdentity());
@@ -98,9 +98,9 @@ public class GameModelTest {
 		
 		model.emptyModel();
 		
-		List<Requirement> reqs = new ArrayList<Requirement>();
+		List<PPRequirement> reqs = new ArrayList<PPRequirement>();
 		
-		Requirement req = new Requirement("Requirement", "Description");
+		PPRequirement req = new PPRequirement("Requirement", "Description");
 		
 		req.addVote(new Vote("Steve", 10));
 		req.addVote(new Vote("Paul", 27));
@@ -110,8 +110,8 @@ public class GameModelTest {
 		Game game1 = new Game("Game", "With a name", reqs, false, true);
 		assertEquals(3, req.getVoteCount());
 		
-		Game game2 = new Game("Game2", "With a name2", new ArrayList<Requirement>(), true, true);
-		Game game3 = new Game("Game3", "With a name3", new ArrayList<Requirement>(), true, false);
+		Game game2 = new Game("Game2", "With a name2", new ArrayList<PPRequirement>(), true, true);
+		Game game3 = new Game("Game3", "With a name3", new ArrayList<PPRequirement>(), true, false);
 		
 		
 		Game[] gameList = new Game[3];
@@ -125,11 +125,11 @@ public class GameModelTest {
 		
 		
 		
-		List<Requirement> reqs2 = new ArrayList<Requirement>();
+		List<PPRequirement> reqs2 = new ArrayList<PPRequirement>();
 		
-		reqs2.add(new Requirement("RequirementChanged", "DescriptionChanged"));
+		reqs2.add(new PPRequirement("RequirementChanged", "DescriptionChanged"));
 		
-		Requirement req2 = new Requirement("Requirement With New Votes",
+		PPRequirement req2 = new PPRequirement("Requirement With New Votes",
 										"Description With New Votes");
 		req2.setIdentity(req.getIdentity());
 		
@@ -162,7 +162,7 @@ public class GameModelTest {
 		assertEquals(1, model.getElementAt(0).getRequirements().size());
 		assertEquals(ConfigManager.getInstance().getConfig().getUserName(), model.getElementAt(0).getCreator());
 		assertEquals("Game", model.getElementAt(0).getName());
-		Requirement reqFromGame = model.getElementAt(0).getRequirements().get(0);
+		PPRequirement reqFromGame = model.getElementAt(0).getRequirements().get(0);
 		assertEquals(3, reqFromGame.getVoteCount());
 		
 		model.updateGames(gameList);  //CHANGES TO THE MODEL
@@ -175,13 +175,13 @@ public class GameModelTest {
 		assertTrue(model.getElementAt(0).isComplete());
 		
 		
-		Requirement fromModel = model.getElementAt(0).getRequirements().get(1);
+		PPRequirement fromModel = model.getElementAt(0).getRequirements().get(1);
 		assertEquals("RequirementChanged", fromModel.getName());
 		assertEquals("DescriptionChanged", fromModel.getDescription());
 		assertEquals(0, fromModel.getVoteCount());
 		
 		
-		Requirement fromModel2 = model.getElementAt(0).getRequirements().get(0);
+		PPRequirement fromModel2 = model.getElementAt(0).getRequirements().get(0);
 		assertEquals("Requirement With New Votes", fromModel2.getName());
 		assertEquals("Description With New Votes", fromModel2.getDescription());
 		assertEquals(3, fromModel2.getVoteCount());

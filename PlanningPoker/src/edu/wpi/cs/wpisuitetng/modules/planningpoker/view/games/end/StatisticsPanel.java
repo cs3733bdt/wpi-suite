@@ -33,7 +33,7 @@ import javax.swing.SpringLayout;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
@@ -43,7 +43,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
  */
 public class StatisticsPanel extends JScrollPane implements IDataField {
 	Game activeGame;
-	Requirement activeRequirement;
+	PPRequirement activeRequirement;
 	
 	/**
 	 * Set the userStoryDesc equal to the description of the requirement being
@@ -244,7 +244,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		return numVotes;
 	}
 	
-	public Object[] makeStatRow(Requirement requirement) {
+	public Object[] makeStatRow(PPRequirement requirement) {
 		ArrayList<Integer> voteData = requirementToVotes(requirement); 
 		Object[] row = new Object[] {mean(voteData), stDev(voteData), median(voteData), max(voteData), min(voteData), numVotes(voteData)};
 		return row;
@@ -291,7 +291,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param requirement
 	 * @return an arrayList of the vote numbers from the passed requirement
 	 */
-	public ArrayList<Integer> requirementToVotes(Requirement requirement) {
+	public ArrayList<Integer> requirementToVotes(PPRequirement requirement) {
 		List<Vote> Votes = requirement.getVotes();
 		ArrayList<Integer> voteArray = new ArrayList<Integer>();
 		for (int i = 0; i < Votes.size(); i++) {
@@ -300,7 +300,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		return voteArray;
 	}
 	
-	public ArrayList<String> requirementToNames(Requirement requirement) {
+	public ArrayList<String> requirementToNames(PPRequirement requirement) {
 		List<Vote> Votes = requirement.getVotes();
 		ArrayList<String> nameArray = new ArrayList<String>();
 		for (int i = 0; i < Votes.size(); i++) {
@@ -411,7 +411,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	}
 	
 	
-	public void fillVoteTable(Requirement requirement) {
+	public void fillVoteTable(PPRequirement requirement) {
 		ArrayList<String> nameArray = requirementToNames(requirement);
 		ArrayList<Integer> voteArray = requirementToVotes(requirement);
 				for (int i = 0; i < nameArray.size(); i++) {
@@ -420,7 +420,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 				}
 	}
 	
-	public void reqClicked(Requirement req) {
+	public void reqClicked(PPRequirement req) {
 		activeRequirement = req;
 		userStoryDesc.setText(req.getDescription());
 		while (voteTable.getTableModel().getRowCount() > 0) {

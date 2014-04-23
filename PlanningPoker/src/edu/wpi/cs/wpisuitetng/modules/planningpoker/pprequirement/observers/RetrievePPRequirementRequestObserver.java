@@ -9,10 +9,10 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.RetrieveRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -22,15 +22,15 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * @author tianchanggu
  *
  */
-public class RetrieveRequirementRequestObserver implements RequestObserver {
+public class RetrievePPRequirementRequestObserver implements RequestObserver {
 	
-	private RetrieveRequirementController controller;
+	private RetrievePPRequirementController controller;
 	
 	/**
 	 * Constructs the observer given a RetrieveRequirementsController
 	 * @param controller the controller used to retrieve requirements
 	 */
-	public RetrieveRequirementRequestObserver(RetrieveRequirementController controller) {
+	public RetrievePPRequirementRequestObserver(RetrievePPRequirementController controller) {
 		this.controller = controller;
 	}
 
@@ -42,7 +42,7 @@ public class RetrieveRequirementRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		// Convert the JSON array of requirements to a Requirement object array
-		Requirement[] requirements = Requirement.fromJsonArray(iReq.getResponse().getBody());
+		PPRequirement[] requirements = PPRequirement.fromJsonArray(iReq.getResponse().getBody());
 
 		// Pass these Requirements to the controller
 		controller.receivedRequirements(requirements);
@@ -63,7 +63,7 @@ public class RetrieveRequirementRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		Requirement[] errorRequirement = { new Requirement("Error", "error desc") };
+		PPRequirement[] errorRequirement = { new PPRequirement("Error", "error desc") };
 		controller.receivedRequirements(errorRequirement);
 	}
 

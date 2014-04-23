@@ -29,7 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableMode
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
 /**
  * Basic Game class that contains the data to be store for a Game
@@ -55,7 +55,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	/** The username of the game creator */
 	private String creator;
 	/** The list of requirements that need to be estimated */
-	private List<Requirement> requirements = new ArrayList<>();
+	private List<PPRequirement> requirements = new ArrayList<>();
 	/** True if the game is complete, false otherwise */
 	private boolean complete;
 	/** True if the game is active and people can vote, false if people can't vote */
@@ -128,11 +128,11 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			boolean changes = false;
 
 			//REMOVES REQUIREMENTS THAT HAVE BEEN REMOVED FROM THIS GAME
-			Iterator<Requirement> existingReq = requirements.iterator();
+			Iterator<PPRequirement> existingReq = requirements.iterator();
 			while(existingReq.hasNext()){
 				boolean found = false;
-				Requirement comp = existingReq.next();
-				for(Requirement serverReq : toCopyFrom.requirements){
+				PPRequirement comp = existingReq.next();
+				for(PPRequirement serverReq : toCopyFrom.requirements){
 					if(serverReq.identify(comp)){
 						found = true;
 					}
@@ -145,9 +145,9 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			//END REMOVE REQUIREMENTS
 
 
-			for(Requirement serverReq: toCopyFrom.requirements){//Iterate over the new requirements
+			for(PPRequirement serverReq: toCopyFrom.requirements){//Iterate over the new requirements
 				boolean found = false;							 
-				for(Requirement req : requirements){//Iterate over the existing requirements list
+				for(PPRequirement req : requirements){//Iterate over the existing requirements list
 					if(serverReq.identify(req)){	//If this requirement is found
 						found = true;
 						if(req.copyFrom(serverReq)){//Copy the data over
@@ -231,7 +231,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 */
 	public Game(String name, 
 			String description, 
-			List<Requirement> requirements,
+			List<PPRequirement> requirements,
 			boolean hasTimeLimit, 
 			boolean usesCards) {
 		this(); //Calls the default constructor
@@ -239,7 +239,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		this.description = description;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
-		for(Requirement req : this.requirements){
+		for(PPRequirement req : this.requirements){
 			req.addObserver(this);
 			req.setProject(getProject());
 		}
@@ -259,7 +259,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 */
 	public Game(String name, 
 			String description, 
-			List<Requirement> requirements, 
+			List<PPRequirement> requirements, 
 			boolean hasTimeLimit, 
 			boolean usesCards, 
 			Date creationTime) {
@@ -372,7 +372,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	@Override
 	public void setProject(Project p) {
 		// Set requirements' project
-		for(Requirement r: requirements) {
+		for(PPRequirement r: requirements) {
 			r.setProject(p);
 		}
 		// Set game's project
@@ -385,7 +385,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 * TO THE GAME AND PREVENT THEM FROM BEING ADDED TO THE SERVER
 	 * @return the list of requirements for the game
 	 */
-	final public List<Requirement> getRequirements(){
+	final public List<PPRequirement> getRequirements(){
 		return requirements;
 	}
 
@@ -393,12 +393,12 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 * TODO: add documentation
 	 * @param newReqs
 	 */
-	public void setRequirements(List<Requirement> newReqs){
+	public void setRequirements(List<PPRequirement> newReqs){
 		if(requirements != newReqs){
 			makeChanged();
 			delayChange();
 			requirements = newReqs;
-			for(Requirement req : requirements){
+			for(PPRequirement req : requirements){
 				req.addObserver(this);
 			}
 		}
@@ -528,7 +528,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	@Override
 	public void update(ObservableModel o, Object arg) {
-		if (o instanceof Requirement){
+		if (o instanceof PPRequirement){
 			makeChanged();
 			notifyObservers(arg);
 		}
@@ -612,7 +612,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	@Override
 	public synchronized void addObserver(IModelObserver o){
-		for(Requirement r : requirements){
+		for(PPRequirement r : requirements){
 			r.addObserver(this);
 		}
 		super.addObserver(o);
@@ -632,7 +632,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		if(super.hasChanged())
 			return true;
 
-		for(Requirement requirement: requirements)
+		for(PPRequirement requirement: requirements)
 		{
 			if(requirement.hasChanged())
 				return true;

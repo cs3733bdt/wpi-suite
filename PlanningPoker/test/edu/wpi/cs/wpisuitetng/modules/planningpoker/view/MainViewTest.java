@@ -18,7 +18,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
@@ -42,12 +42,12 @@ public class MainViewTest {
 	private NewCreateGamePanel createGameTab;
 	private EndGamePanel endGameTab;
 	private Game activeGame;
-	private ArrayList<Requirement> reqs;
+	private ArrayList<PPRequirement> reqs;
 	
 	@Before
 	public void setUp() throws Exception {
-		reqs = new ArrayList<Requirement>();
-		reqs.add(new Requirement("Test Req1", "Test Desc1"));
+		reqs = new ArrayList<PPRequirement>();
+		reqs.add(new PPRequirement("Test Req1", "Test Desc1"));
 		
 		activeGame = new Game("ActiveGame1", "This is active game1",
 				reqs, true, true);

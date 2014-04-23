@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -17,7 +17,7 @@ import java.util.List;
 
 import javax.swing.AbstractListModel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.AddPPRequirementController;
 
 
 //import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
@@ -29,33 +29,33 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddR
  *
  */
 @SuppressWarnings("serial")
-public class RequirementModel extends AbstractListModel<Requirement>{
+public class PPRequirementModel extends AbstractListModel<PPRequirement>{
 	
 	/**
 	 * The list in which all the requirements for a single project are contained
 	 */
-	private List<Requirement> requirements;
+	private List<PPRequirement> requirements;
 	private int nextID; // the next available ID number for the requirements that are added.
 	
 	//the static object to allow the requirement model to be 
-	private static RequirementModel instance; 
+	private static PPRequirementModel instance; 
 
 	/**
 	 * Constructs an empty list of requirements for the project
 	 */
-	private RequirementModel (){
-		requirements = new ArrayList<Requirement>();
+	private PPRequirementModel (){
+		requirements = new ArrayList<PPRequirement>();
 		nextID = 0;
 	}
 	
 	/**
 	 * @return the instance of the requirement model singleton.
 	 */
-	public static RequirementModel getInstance()
+	public static PPRequirementModel getInstance()
 	{
 		if(instance == null)
 		{
-			instance = new RequirementModel();
+			instance = new PPRequirementModel();
 		}
 		
 		return instance;
@@ -66,11 +66,11 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * 
 	 * @param newReq The requirement to be added to the list of requirements in the project
 	 */
-	public void addRequirement(Requirement newReq){
+	public void addRequirement(PPRequirement newReq){
 		// add the requirement
 		requirements.add(newReq);
 		try{
-			AddRequirementController.getInstance().addRequirement(newReq);
+			AddPPRequirementController.getInstance().addRequirement(newReq);
 			/*
 			ViewEventController.getInstance().refreshTable();
 			ViewEventController.getInstance().refreshTree();
@@ -88,9 +88,9 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	
 	 * @return the requirement for the id or null if the requirement is not found
 	 */
-	public Requirement getRequirement(int id)
+	public PPRequirement getRequirement(int id)
 	{
-		Requirement temp = null;
+		PPRequirement temp = null;
 		// iterate through list of requirements until id is found
 		for (int i=0; i < requirements.size(); i++){
 			temp = requirements.get(i);
@@ -107,9 +107,9 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * @param name the name of the requirement
 	 * @return the requirement with given name
 	 */
-	public Requirement getRequirement(String name) {
-		Requirement req = null;
-		for (Requirement r: requirements) {
+	public PPRequirement getRequirement(String name) {
+		PPRequirement req = null;
+		for (PPRequirement r: requirements) {
 			if (r.getName().equals(name))
 				req = r;
 		}
@@ -176,7 +176,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * @see javax.swing.ListModel#getElementAt(int)
 	 */
 	@Override
-	public Requirement getElementAt(int index) {
+	public PPRequirement getElementAt(int index) {
 		return requirements.get(requirements.size() - 1 - index);
 	}
 
@@ -190,7 +190,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 */
 	public void emptyModel() {
 		int oldSize = getSize();
-		Iterator<Requirement> iterator = requirements.iterator();
+		Iterator<PPRequirement> iterator = requirements.iterator();
 		while (iterator.hasNext()) {
 			iterator.next();
 			iterator.remove();
@@ -203,7 +203,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * 
 	 * @param requirements the array of requirements to add
 	 */
-	public void addRequirements(Requirement[] requirements) {
+	public void addRequirements(PPRequirement[] requirements) {
 		for (int i = 0; i < requirements.length; i++) {
 			if (!this.requirements.contains(requirements[i].getId())) {
 				this.requirements.add(requirements[i]);
@@ -223,7 +223,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	 * @return true if a requirement with id exists in the list of requirements
 	 */
 	public boolean contains(int id) {
-		for (Requirement r: requirements) {
+		for (PPRequirement r: requirements) {
 			if (r.getId() == id)
 				return true;
 		}
@@ -235,7 +235,7 @@ public class RequirementModel extends AbstractListModel<Requirement>{
 	
 	 * @return the requirements held within the requirementmodel.
 	 */
-	public List<Requirement> getRequirements() {
+	public List<PPRequirement> getRequirements() {
 		return requirements;
 	}
 }

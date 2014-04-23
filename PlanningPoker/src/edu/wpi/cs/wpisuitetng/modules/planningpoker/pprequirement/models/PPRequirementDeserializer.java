@@ -1,7 +1,7 @@
 /**
  * 
  */
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models;
 
 import java.lang.reflect.Type;
 
@@ -14,10 +14,10 @@ import com.google.gson.JsonParseException;
 /**
  *
  */
-public class RequirementDeserializer implements JsonDeserializer<Requirement> {
+public class PPRequirementDeserializer implements JsonDeserializer<PPRequirement> {
 
 	@Override
-	public Requirement deserialize(JsonElement requirementElement, Type requirementType,
+	public PPRequirement deserialize(JsonElement requirementElement, Type requirementType,
 			JsonDeserializationContext context) throws JsonParseException {
 		 JsonObject deflated = requirementElement.getAsJsonObject();
 		 
@@ -39,7 +39,7 @@ public class RequirementDeserializer implements JsonDeserializer<Requirement> {
 			 description = deflated.get("description").getAsString();
 		 }
 		 
-		 Requirement inflated = new Requirement(name, description);
+		 PPRequirement inflated = new PPRequirement(name, description);
 		 
 		 inflated.setId(Integer.parseInt(id));
 		 
