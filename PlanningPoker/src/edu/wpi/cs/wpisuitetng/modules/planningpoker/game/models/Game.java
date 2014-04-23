@@ -11,6 +11,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models;
 
+import java.lang.annotation.Documented;
+import java.lang.annotation.Retention;
+import java.lang.annotation.Target;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +21,8 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+
+import com.db4o.config.annotations.*;
 
 import com.google.gson.Gson;
 
@@ -35,7 +40,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requireme
  * 
  * @author jonathanleitschuh
  */
-
+@UpdatedDepth(value=2)
 public class Game extends ObservableModel implements IModelObserver, IStorageModel<Game>{
 	
 	/** This is the best way to keep games unique so 
