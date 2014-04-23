@@ -124,7 +124,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			wasChanged = true;
 		}
 		
-		/*if(!requirements.equals(toCopyFrom.requirements)){
+		if(!requirements.equals(toCopyFrom.requirements)){
 			boolean changes = false;
 
 			//REMOVES REQUIREMENTS THAT HAVE BEEN REMOVED FROM THIS GAME
@@ -167,7 +167,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 				wasChanged = true;
 			}
 			needsUpdate = true;
-		}*/
+		}
 
 		if(complete != toCopyFrom.complete){
 			complete = toCopyFrom.complete;
