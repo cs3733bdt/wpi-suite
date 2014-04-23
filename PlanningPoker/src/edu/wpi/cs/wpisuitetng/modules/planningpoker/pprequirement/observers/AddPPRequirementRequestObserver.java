@@ -47,7 +47,7 @@ public class AddPPRequirementRequestObserver implements RequestObserver {
 		final ResponseModel response = iReq.getResponse();
 		
 		// Parse the requirement out of the response body
-		final PPRequirement requirement = PPRequirement.fromJson(response.getBody());	
+		final PPRequirement requirement = PPRequirement.fromJSON(response.getBody());	
 		
 		System.out.println("The request to add a requirement succeeded.");
 		
