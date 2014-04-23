@@ -26,9 +26,11 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.exceptions.DBModelNotInstantiatedException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.GetPPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
 /**
@@ -143,10 +145,12 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 				}
 			}
 			//END REMOVE REQUIREMENTS
+			
+			List<PPRequirement> fromDB = getRequirementsFromDB(toCopyFrom.requirements);
 
-
-			for(PPRequirement serverReq: toCopyFrom.requirements){//Iterate over the new requirements
-				boolean found = false;							 
+			for(PPRequirement serverReq: fromDB){//Iterate over the new requirements
+				boolean found = false;
+				
 				for(PPRequirement req : requirements){//Iterate over the existing requirements list
 					if(serverReq.identify(req)){	//If this requirement is found
 						found = true;
@@ -200,6 +204,14 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		}
 
 		return wasChanged;
+	}
+
+	private List<PPRequirement> getRequirementsFromDB(List<PPRequirement> match) {
+		try {
+			return GetPPRequirementController.getInstance().getAllReqsOnServer();
+		} catch (DBModelNotInstantiatedException e) {
+			return match;
+		}
 	}
 
 	/**
