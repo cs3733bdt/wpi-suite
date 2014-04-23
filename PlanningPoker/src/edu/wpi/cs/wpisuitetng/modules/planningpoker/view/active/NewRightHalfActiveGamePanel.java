@@ -173,7 +173,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		largeFont = new Font("Serif", Font.BOLD, 20);
 
-		counterLabel = new JLabel("Your current estimate total: " + 0);
+		counterLabel = new JLabel("Your current selected estimate is: " + 0);
 		counterLabel.setFont(largeFont);
 
 		previousEst = new JLabel();
@@ -211,7 +211,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		 * = customDeck; useDefaultDeck = false; }
 		 */
 		if (useDefaultDeck) {
-			deck.add("0?");
+			deck.add("?");
 		}
 
 		cardsPanel = new ActiveCardsPanel(deck, this);
@@ -424,8 +424,6 @@ repaint();
 
 
 	}
-	
-	
 
 	private Font makeFont(int i) {
 		// TODO Auto-generated method stub
@@ -446,7 +444,7 @@ repaint();
 	 */
 	public void updateSum() {
 		sum = cardsPanel.getSum();
-		counterLabel.setText("Your current estimate total: " + sum);
+		counterLabel.setText("Your current selected estimate is: " + sum);
 	}
 
 	/**
