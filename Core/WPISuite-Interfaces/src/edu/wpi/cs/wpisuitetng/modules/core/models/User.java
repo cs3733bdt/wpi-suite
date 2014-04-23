@@ -55,7 +55,6 @@ public class User extends AbstractModel
 		this.role = Role.USER;
 		this.phoneNumber = null;
 		this.carrier = "--";
-		this.save();
 	}
 	
 	@Override
@@ -322,6 +321,15 @@ public class User extends AbstractModel
 		return gson.fromJson(json, User.class);
 	} */
 	
+	/**
+	 * Mimicks fromJSON used in requirement manager, to parse user from
+	 * a string. 
+	 * 
+	 * Use this fromJSON because original(above) was not including some of the fields we added.
+	 * 
+	 * @param json json string to parse user from
+	 * @return returns a user parsed from the json string
+	 */
 	public static User fromJSON(String json) {
 		final Gson parser = new Gson();
 		return parser.fromJson(json, User.class);
