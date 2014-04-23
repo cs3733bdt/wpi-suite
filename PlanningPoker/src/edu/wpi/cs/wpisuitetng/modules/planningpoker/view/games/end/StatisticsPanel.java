@@ -11,6 +11,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -58,6 +59,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	private JTextField finalEstimateBox;
 	private JButton finalEstimateButton;
 	private JLabel finalEstimateDisplay;
+	private JLabel finalEstimateMessage = new JLabel("");
 	
 	private int minEstimate;
 	private int maxEstimate;
@@ -125,7 +127,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		else {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: " + currFinalEstimate);
 		}
-		finalEstimateDisplay.setFont(makeFont());
+		finalEstimateDisplay.setFont(makeFont(12));
 		
 		overviewPanel.add(descLabel);
 		overviewPanel.add(statLabel);
@@ -140,6 +142,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		overviewPanel.add(descPanel);
 		overviewPanel.add(statsPanel);
 		overviewPanel.add(votePanel);
+		overviewPanel.add(finalEstimateMessage);
 		
 		/**
 		 * Creates and adds the user story text area to the view.
@@ -194,9 +197,13 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		layout.putConstraint(SpringLayout.WEST, finalEstimateButton, 5, SpringLayout.WEST, overviewPanel); 
 		layout.putConstraint(SpringLayout.NORTH, finalEstimateButton, 5, SpringLayout.SOUTH, finalEstimateLabel); 
 		
+		//Constraints on the final estimate message
+		layout.putConstraint(SpringLayout.WEST, finalEstimateMessage, 5, SpringLayout.EAST, finalEstimateButton); 
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateMessage, 8, SpringLayout.SOUTH, finalEstimateBox); 
+		
 		//Constraints on the final estimate display
 		layout.putConstraint(SpringLayout.EAST, finalEstimateDisplay, -20, SpringLayout.EAST, overviewPanel); 
-		layout.putConstraint(SpringLayout.NORTH, finalEstimateDisplay, 15, SpringLayout.SOUTH, votePanel); 
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateDisplay, 5, SpringLayout.SOUTH, votePanel); 
 			
 		
 		int[] test = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //5.5 //TODO fix
@@ -425,6 +432,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		Object[] row = makeStatRow(req);
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(req);
+		finalEstimateMessage.setText("");
+		finalEstimateBox.setText("");
 		}
 	
 	public void isUserCreator() {
@@ -467,6 +476,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		for (int i = 0; i < activeGame.getRequirements().size(); i++) {
 			if (activeGame.getRequirements().get(i).identify(activeRequirement)) {
 				activeGame.getRequirements().get(i).setFinalEstimate(newEstimate);
+				finalEstimateMessage.setForeground(Color.BLUE);
+				finalEstimateMessage.setText("Final estimate submitted successfully!");
 			}
 		}
 		ViewEventController.getInstance().refreshGameTable();
@@ -504,19 +515,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		return false;
 	}
 
-	public Font makeFont() {
-		/**
-		 * Creates a new font for use later
-		 */
-		//create a dummy JTextArea
-		JTextArea editingArea = new JTextArea();
-		// get the current font
-		Font f = editingArea.getFont();
-		// create a new, larger font from the current font
-		Font newFont = new Font(f.getFontName(), f.getStyle(), f.getSize()+8);		
-		//set the bigger font for userStoryDesc
-		Font bigFont = newFont;
-		return bigFont;
+	public Font makeFont(int fontSize) {
+		return new Font("Serif", Font.BOLD, fontSize);
 	}
 	
 	
