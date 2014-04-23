@@ -31,7 +31,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  * @author tianchanggu
  *
  */
-public class RequirementEntityManager implements EntityManager<Requirement> {
+public class PPRequirementEntityManager implements EntityManager<Requirement> {
 
 	/** The database */
 	Data db;
@@ -44,7 +44,7 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	 * 
 	 * @param db a reference to the persistent database
 	 */
-	public RequirementEntityManager(Data db) {
+	public PPRequirementEntityManager(Data db) {
 		this.db = db; 
 	}
 
@@ -96,9 +96,6 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 	/**
 	 * Retrieves all requirements from the database
 	 * @param s the session
-	
-	
-	
 	 * @return array of all stored requirements * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session) * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session) * 
@@ -203,7 +200,7 @@ public class RequirementEntityManager implements EntityManager<Requirement> {
 		 * then save the original Requirement again.
 		 */
 		List<Model> oldRequirements = db.retrieve(Requirement.class, 
-				"id", updatedRequirement.getId(), session.getProject());
+				"identity", updatedRequirement.getIdentity(), session.getProject());
 		if(oldRequirements.size() < 1 || oldRequirements.get(0) == null) {
 			throw new BadRequestException("Requirement with ID does not exist.");
 		}
