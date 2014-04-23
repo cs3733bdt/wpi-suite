@@ -21,6 +21,7 @@ import com.google.gson.GsonBuilder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
@@ -191,6 +192,12 @@ public class PPRequirement extends ObservableModel {
 	 */
 	public void addVote(Vote vote) {
 		delayChange();	//Holds the code until the server is finished re-populating the model
+		addNoDelay(vote);
+		hasChanged();
+		notifyObservers(vote);
+	}
+	
+	private void addNoDelay(Vote vote){
 		for(int i = 0; i < votes.size(); i++) {
 			if(vote.getUsername().equals(votes.get(i).getUsername())) {	//Has person voted?
 				votes.get(i).setVoteNumber(vote.getVoteNumber());		//Update their vote
@@ -207,9 +214,6 @@ public class PPRequirement extends ObservableModel {
 		} else {
 			System.err.println("THE PROJECT IN THE REQUIREMENT WAS NULL: ADD VOTE METHOD");
 		}
-		
-		hasChanged();
-		notifyObservers(vote);
 	}
 	
 	/**
@@ -279,7 +283,7 @@ public class PPRequirement extends ObservableModel {
 	 * 
 	 * @param json JSON-encoded Requirement to deserialize
 	 * @return the Requirement contained in the given JSON */
-	public static PPRequirement fromJson(String json) {
+	public static PPRequirement fromRequirmentsManagerJSON(String json) {
 		Gson gson;
 		GsonBuilder builder = new GsonBuilder();
 		// Use our custom deserializer
@@ -289,6 +293,11 @@ public class PPRequirement extends ObservableModel {
 		return gson.fromJson(json, PPRequirement.class);
 	}
 	
+	public static PPRequirement fromJSON(String json){
+		final Gson parser = new Gson();
+		return parser.fromJson(json, PPRequirement.class);
+	}
+	
 	/**
 	 * Returns an array of Requirements parsed from the given JSON-encoded
 	 * string.
@@ -296,6 +305,18 @@ public class PPRequirement extends ObservableModel {
 	 * @param json string containing a JSON-encoded array of Requirement
 	 * @return an array of Requirement deserialized from the given JSON string */
 	public static PPRequirement[] fromJsonArray(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, PPRequirement[].class);
+	}
+	
+	
+	/**
+	 * Returns an array of Requirements parsed from the given JSON-encoded
+	 * string.
+	 * 
+	 * @param json string containing a JSON-encoded array of Requirement
+	 * @return an array of Requirement deserialized from the given JSON string */
+	public static PPRequirement[] fromRequirmentsManagerJsonArray(String json) {
 		Gson gson;
 		GsonBuilder builder = new GsonBuilder();
 		// Use our custom deserializer
@@ -304,6 +325,7 @@ public class PPRequirement extends ObservableModel {
 		
 		return gson.fromJson(json, PPRequirement[].class);
 	}
+	
 
 	/**
 	 * Method identify.
@@ -391,7 +413,9 @@ public class PPRequirement extends ObservableModel {
 		}
 		
 		if(!votes.equals(toCopyFrom.votes)) {
-			votes = toCopyFrom.votes;
+			for(Vote vote : toCopyFrom.votes){
+				addNoDelay(vote);
+			}
 			wasChanged = true;
 		}
 		
