@@ -382,7 +382,9 @@ public class Requirement extends ObservableModel {
 			wasChanged = true;
 		}
 		if(!votes.equals(toCopyFrom.votes)) {
-			votes = toCopyFrom.votes;
+			for(Vote v : toCopyFrom.votes){
+				addVote(v);
+			}
 			wasChanged = true;
 		}
 		return wasChanged;
