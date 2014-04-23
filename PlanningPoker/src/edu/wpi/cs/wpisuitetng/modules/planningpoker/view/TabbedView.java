@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import java.awt.Component;
 import java.awt.Image;
@@ -27,8 +27,10 @@ import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ClosableTabComponent;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.DeckOverview;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.GameOverview;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
