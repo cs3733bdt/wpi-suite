@@ -43,6 +43,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requireme
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
@@ -71,14 +72,14 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 			.createLineBorder(Color.RED);
 
     //THIS IS THE REQUIREMENT NAME FIELD THAT WILL BE NEEDED FOR CONTROLLER
-	private JTextField nameArea = new NameJTextField(30);	
+	private NameJTextField nameArea = new NameJTextField(30);	
 		
 	//THIS IS THE REQUIREMENT DESCRIPTION FIELD THAT WILL BE NEEDED FOR CONTROLLER
 	private JTextArea descArea = new JTextArea();
     
-    private JLabel errorLabel = new JLabel();
+    private ErrorLabel errorLabel = new ErrorLabel();
     
-    private JLabel importErrorLabel = new JLabel();
+    private ErrorLabel importErrorLabel = new ErrorLabel();
     
     private RequirementTable importTable;
     
@@ -504,7 +505,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 				updateAddReqButton.setEnabled(false);
 				updateReqsLabel.setVisible(false);
 				createReqsLabel.setVisible(true);
-				displayError("A name must be entered");
+				displayError("Name is required");
 				disableButtons();
 			}
 		});
@@ -695,7 +696,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		}
 		
 		if(descArea.getText().equals("")){
-			displayError("A description must be entered");
+			displayError("Description is required");
 			if(showBox){
 				descArea.setBorder(errorBorder);
 			}
@@ -707,17 +708,18 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements IDataFie
 		}
 		
 		if(nameArea.getText().equals("")){
-			displayError("A name must be entered");
+			displayError("Name is required");
 			if(showBox){
 				nameArea.setBorder(errorBorder);
 			}
 			descArea.setBorder(defaultTextAreaBorder);
 			nameValid = false;
 		}
-		else{
+		else {
 			nameArea.setBorder(defaultTextFieldBorder);
 			nameValid = true;
 		}
+		nameValid = nameArea.validateField(errorLabel, showLabel, showBox);
 		
 		if(nameValid && descriptionValid && uniqueName){
 			errorLabel.setText("");
