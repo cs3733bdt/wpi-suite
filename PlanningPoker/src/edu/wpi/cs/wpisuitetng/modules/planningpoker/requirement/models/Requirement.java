@@ -219,7 +219,7 @@ public class Requirement extends ObservableModel {
 	 * Setter for the final estimate
 	 */
 	public void setFinalEstimate(int newEstimate) {
-		finalEstimate = newEstimate;
+		this.finalEstimate = newEstimate;
 	}
 	
 	/**

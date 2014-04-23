@@ -314,7 +314,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 				min = Votes.get(i);
 			}
 		}
-		minEstimate = min;
+		this.minEstimate = min;
 		return min;
 	}
 	
@@ -330,7 +330,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 				max = Votes.get(i);
 			}
 		}
-		maxEstimate = max;
+		this.maxEstimate = max;
 		return max;
 	}
 	

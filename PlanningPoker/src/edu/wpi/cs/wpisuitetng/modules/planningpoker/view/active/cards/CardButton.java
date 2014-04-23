@@ -50,8 +50,8 @@ public class CardButton extends JToggleButton implements Accessible {
 	public CardButton(int cardNum, List<String> passedDeck,
 			ActiveCardsPanel passedCardsPanel,
 			NewRightHalfActiveGamePanel panel2) {
-		deck = passedDeck;
-		panel = passedCardsPanel;
+		this.deck = passedDeck;
+		this.panel = passedCardsPanel;
 		deck = passedDeck;
 		panel = passedCardsPanel;
 

@@ -50,8 +50,8 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 
 	public ActiveCardsPanel(ArrayList<String> passedDeck,
 			NewRightHalfActiveGamePanel passedPanel) {
-		panel = passedPanel;
-		deck = passedDeck;
+		this.panel = passedPanel;
+		this.deck = passedDeck;
 
 		int cardsPerRow = 11;
 

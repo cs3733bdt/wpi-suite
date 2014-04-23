@@ -12,6 +12,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import javax.swing.JSplitPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
@@ -42,6 +46,9 @@ public class NewActiveGamePanel extends JSplitPane implements IModelObserver, IA
 	}
 	
 	public void endGame(){
+		Date date = new Date();
+		currentGame.setEndDate(date);
+		
 		currentGame.makeComplete();
 		currentGame.notifyObservers();
 		ViewEventController.getInstance().removeTab(this);
