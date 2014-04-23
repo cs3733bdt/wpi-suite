@@ -538,13 +538,13 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		User newUser = getUserController.getCurrentUser();
 		String newPreferences = "";
 		if(emailCheckBox.isSelected()){
-			newPreferences.concat("E");
+			newPreferences= newPreferences + "E";
 		}
 		if(facebookCheckBox.isSelected()){
-			newPreferences.concat("F");
+			newPreferences= newPreferences + "F";
 		}
 		if(mobileCheckBox.isSelected()){
-			newPreferences.concat("M");
+			newPreferences= newPreferences + "M";;
 		}
 		newUser.setNotificationPreferences(newPreferences);
 		updateUserController.updateUser(newUser);
@@ -710,6 +710,9 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	public void initializeCheckBoxes() {
 		try{
 			String preferences = getUserController.getCurrentUser().getNotificationPreferences();
+			emailCheckBox.setSelected(false);
+			facebookCheckBox.setSelected(false);
+			mobileCheckBox.setSelected(false);
 			//E: Email preference
 			if(preferences.contains("E")){
 				emailCheckBox.setSelected(true);
@@ -754,7 +757,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			emailOffNotify.setVisible(false);
 
 			emailField.setEnabled(true);
-			updateNotificationPreferences();
 			//reValidateEmailUpdateButton();
 		}
 		else {
@@ -763,6 +765,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			emailField.setEnabled(false);
 			updateEmailButton.setEnabled(false);	
 		}
+		updateNotificationPreferences();
 	}
 	
 	/**
@@ -780,9 +783,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			facebookOffNotify.setVisible(false);
 
 			facebookField.setEnabled(true);
-			updateNotificationPreferences();
+			
 			//reValidateFacebookUpdateButton();
 		}
+		updateNotificationPreferences();
 	}
 	
 	/**
@@ -806,9 +810,9 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			carrierDropDown.setEnabled(true);
 			updateCarrierButton.setEnabled(true);
 			updateMobileButton.setEnabled(true);
-			updateNotificationPreferences();
 			//reValidateMobileUpdateButton(); //TODO fix this method to include both update buttons
 		}
+		updateNotificationPreferences();
 	}
 
 	public void reValidateEmailPanel() {

@@ -55,7 +55,7 @@ public class User extends AbstractModel
 		this.role = Role.USER;
 		this.phoneNumber = null;
 		this.carrier = "--";
-		this.notificationPreferences= "";
+		this.save();
 	}
 	
 	@Override
