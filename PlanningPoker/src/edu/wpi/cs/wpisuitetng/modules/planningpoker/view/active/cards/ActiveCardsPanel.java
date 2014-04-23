@@ -31,8 +31,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
 /**
  * creates the panel that displays all of the buttons and adds a clear button
+ * 
  * @author Bobby Drop Tables
- *
+ * 
  */
 public class ActiveCardsPanel extends JPanel implements IDataField {
 
@@ -41,31 +42,31 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	private final List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
 
-	//initialized array to remember what buttons were pressed if "0?" button is pressed
+	// initialized array to remember what buttons were pressed if "0?" button is
+	// pressed
 
-    private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
-    private NewRightHalfActiveGamePanel panel;
-	
-	public ActiveCardsPanel(ArrayList<String> passedDeck, NewRightHalfActiveGamePanel passedPanel) {
+	private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
+	private NewRightHalfActiveGamePanel panel;
+
+	public ActiveCardsPanel(ArrayList<String> passedDeck,
+			NewRightHalfActiveGamePanel passedPanel) {
 		this.panel = passedPanel;
 		this.deck = passedDeck;
-		
-		int cardsPerRow = 11;
-		
 
-		this.setPreferredSize(new Dimension(525, 
-				(68 * (Math.round(deck.size() / cardsPerRow)) ) ) ); 
+		int cardsPerRow = 11;
+
+		this.setPreferredSize(new Dimension(525, (68 * (Math.round(deck.size()
+				/ cardsPerRow)))));
 		for (int i = 0; i < (deck.size()); i++) {
 			JToggleButtonList.add(new CardButton(i, deck, this, panel));
-		}//idk button is part of array
+		}// idk button is part of array
 
-
-		//adds the button to clear all entered estimates
-		JButton clearButton = new JButton("Clr");
+		// adds the button to clear all entered estimates
+		JButton clearButton = new JButton("Clear");
 		clearButton.setToolTipText("Clear all Estimates");
-		add(clearButton); 
+		add(clearButton);
 
-		//action Listener for the clear button 
+		// action Listener for the clear button
 		clearButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -77,128 +78,144 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 					ex.printStackTrace();
 				}
 			}
-		});	
-		
+		});
+
 		if (!panel.getGame().doesUseCards()) {
 			clearButton.setVisible(false);
 		}
-	
+
 	}
 
-public int getCount() {
-	return 0;
-}
+	public int getCount() {
+		return 0;
+	}
 
-public void clearCards() throws IOException {
-	Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
-	for (int i = 0; i < (deck.size()-1); i++){
-		if (JToggleButtonList.get(i).isSelected()){
-			JToggleButtonList.get(i).doClick();
-			JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+	public void clearCards() throws IOException {
+		Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
+		for (int i = 0; i < (deck.size() - 1); i++) {
+			if (JToggleButtonList.get(i).isSelected()) {
+				JToggleButtonList.get(i).doClick();
+				JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+			}
+		}
+		if (JToggleButtonList.get(deck.size() - 1).isSelected()) {
+			JToggleButtonList.get(deck.size() - 1).doClick();
 		}
 	}
-	if (JToggleButtonList.get(deck.size()-1).isSelected()) {
-		JToggleButtonList.get(deck.size()-1).doClick();
+
+	/**
+	 * Increase total sum by amount entered
+	 * 
+	 * @param cardValue
+	 *            the amount to be added
+	 */
+	public void addToCardSum(int cardValue) {
+		sum += cardValue;
+		counterLabel.setText("Your current estimate total: " + sum);
+		System.out.println(sum);
 	}
-}
 
-/**
- * Increase total sum by amount entered
- * @param cardValue the amount to be added
- */
-public void addToCardSum(int cardValue) {
-	sum += cardValue;
-	counterLabel.setText("Your current estimate total: " + sum);
-	System.out.println(sum);
-}
-
-/**
- * Decrease total sum by amount entered
- * @param cardValue the amount to be subtracted
- */
-public void decToCardSum(int cardValue) {
-	sum -= cardValue;
-	counterLabel.setText("Your current estimate total: " + sum);
-	System.out.println(sum);
-}
-
-/**
- * Clicks all the buttons. Used for testing
- */
-public void doClicks() {
-	for (int i = 0; i < JToggleButtonList.size(); i++) {
-		JToggleButtonList.get(i).doClick();
+	/**
+	 * Decrease total sum by amount entered
+	 * 
+	 * @param cardValue
+	 *            the amount to be subtracted
+	 */
+	public void decToCardSum(int cardValue) {
+		sum -= cardValue;
+		counterLabel.setText("Your current estimate total: " + sum);
+		System.out.println(sum);
 	}
-}
 
-/**
- * gets the total of all the cards in the deck
- * @return sum of all the cards in deck
- */
-public int getMaxSum() {
-	int sum = 0;
-	for (int i = 0; i < deck.size(); i++) {
-		sum += Integer.parseInt(deck.get(i));
+	/**
+	 * Clicks all the buttons. Used for testing
+	 */
+	public void doClicks() {
+		for (int i = 0; i < JToggleButtonList.size(); i++) {
+			JToggleButtonList.get(i).doClick();
+		}
 	}
-	return sum;
-}
 
-/**
- * getter for the sum
- * @return the sum of the cards
- */
-public int getSum() {
-	return sum;
-}
+	/**
+	 * gets the total of all the cards in the deck
+	 * 
+	 * @return sum of all the cards in deck
+	 */
+	public int getMaxSum() {
+		int sum = 0;
+		for (int i = 0; i < deck.size(); i++) {
+			sum += Integer.parseInt(deck.get(i));
+		}
+		return sum;
+	}
 
-/**
- * getter for all of the buttons
- * @return a list of buttons in the panel
- */
-public List<CardButton> getCardButtonArray() {
-	return JToggleButtonList; 
-}
-/**
- * adds an element to the array of buttons to be remembered when the "0?" button is unpress
- * @param elt element to be added
- **/
-public void memoryArrayAddElt(int elt) {
-	memoryArray.add(elt);
-}
+	/**
+	 * getter for the sum
+	 * 
+	 * @return the sum of the cards
+	 */
+	public int getSum() {
+		return sum;
+	}
 
-/**
- * getter for size of the memory array
- * @return size of the memory array
- **/
-public int memoryArrayGetSize() {
-	return memoryArray.size();
-}
+	/**
+	 * getter for all of the buttons
+	 * 
+	 * @return a list of buttons in the panel
+	 */
+	public List<CardButton> getCardButtonArray() {
+		return JToggleButtonList;
+	}
 
-/**
- * clears memory array; use after the values stored in the array are restored
- **/
-public void memoryArrayClear() {
-	memoryArray.clear();
-}
+	/**
+	 * adds an element to the array of buttons to be remembered when the "0?"
+	 * button is unpress
+	 * 
+	 * @param elt
+	 *            element to be added
+	 **/
+	public void memoryArrayAddElt(int elt) {
+		memoryArray.add(elt);
+	}
 
-/**
- * adds index of the button to be remembered to the memory array
- * @param elt element to be searched for in the memory array
- * @return the index of the element in the memory array
- **/
-public int memoryArrayGetElt(int elt) {
-	return memoryArray.get(elt);
-}
+	/**
+	 * getter for size of the memory array
+	 * 
+	 * @return size of the memory array
+	 **/
+	public int memoryArrayGetSize() {
+		return memoryArray.size();
+	}
 
-@Override
-public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
-	return false;
-}
+	/**
+	 * clears memory array; use after the values stored in the array are
+	 * restored
+	 **/
+	public void memoryArrayClear() {
+		memoryArray.clear();
+	}
 
-@Override
-public boolean hasChanges() {
-	// TODO Auto-generated method stub
-	return false;
-}
+	/**
+	 * adds index of the button to be remembered to the memory array
+	 * 
+	 * @param elt
+	 *            element to be searched for in the memory array
+	 * @return the index of the element in the memory array
+	 **/
+	public int memoryArrayGetElt(int elt) {
+		return memoryArray.get(elt);
+	}
+
+	@Override
+	public boolean validateField(IErrorView warningField, boolean showLabel,
+			boolean showBox) {
+		return false;
+	}
+
+	@Override
+	public boolean hasChanges() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 
 }
