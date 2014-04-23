@@ -16,10 +16,6 @@ import java.awt.event.ActionListener;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.RetrieveRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers.RetrieveRequirementRequestObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.user.observers.RetrieveUserRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
