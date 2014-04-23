@@ -84,7 +84,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	private JTextArea descArea = new JTextArea();
 
 	private ErrorLabel errorLabel = new ErrorLabel();
-
+	
 	private ErrorLabel importErrorLabel = new ErrorLabel();
 
 	private RequirementTable importTable;
@@ -262,6 +262,27 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 							submitImportReqButton.setEnabled(false);
 						} else {
 							submitImportReqButton.setEnabled(true);
+						}
+						boolean duplicateName = false;
+						int[] rows = importTable.getSelectedRows();
+						String selectedName = null;
+						for (int i = 0; i < rows.length; i++) {
+							selectedName = (String) importTable.getValueAt(rows[i], 0);
+							for (int j = 0; j < requirements.size(); j++) {
+								String reqName = requirements.get(j).getName();
+								if (selectedName.equals(reqName)) {
+									duplicateName = true;
+								}
+							}
+						}
+						if(duplicateName){
+							submitImportReqButton.setEnabled(false);
+							importErrorLabel.setForeground(Color.RED);
+							importErrorLabel.setText("The name of a selected requirement is already taken");
+						}
+						else{
+							submitImportReqButton.setEnabled(true);
+							importErrorLabel.setText("");
 						}
 					}
 				});
