@@ -28,6 +28,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
@@ -59,7 +60,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private int sum;
 	private JLabel previousEst;
 	private JLabel counterLabel;
-	private JTextField estText = new JTextField();
+	private JPanel estimateWithTextPanel;
+	private JTextField estText = new JTextField(6);
 	private JTextArea counter = new JTextArea();
 	private JLabel errorField = new JLabel();
 	private JScrollPane descriptionPanel;
@@ -116,7 +118,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					nameTextField.setText(activeRequirement.getName());
 					descriptionTextField.setText(activeRequirement
 							.getDescription());
-					estText.setText("Estimate Here");
+					//estText.setText("Estimate Here");
 
 					previousEst.setText("Your saved estimate is: "
 							+ activeRequirement.userVote());
@@ -253,23 +255,27 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		/**
 		 * The text area where the user types their estimate
 		 */
-		estText.setText("Estimate Here");
-		estText.setMinimumSize(new Dimension(100, 50));
-		estText.setPreferredSize(new Dimension(100, 50));
-		estText.addMouseListener(new MouseAdapter() {
+		//estText.setText("Estimate Here");
+		//estText.setMinimumSize(new Dimension(100, 50));
+		//estText.setPreferredSize(new Dimension(100, 50));
+		estimateWithTextPanel = new JPanel();
+		JLabel estLabel = new JLabel("Enter your estimate: ");
+		estimateWithTextPanel.add(estLabel);
+		estimateWithTextPanel.add(estText);
+		/*estText.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
 				estText.setText("");
 			}
-		});
+		});*/
 		addKeyListenerTo(estText);
 
-		rightView.add(estText);
-		layout.putConstraint(SpringLayout.WEST, estText, 5, SpringLayout.WEST,
+		rightView.add(estimateWithTextPanel);
+		layout.putConstraint(SpringLayout.WEST, estimateWithTextPanel, 5, SpringLayout.WEST,
 				rightView);
-		layout.putConstraint(SpringLayout.EAST, estText, -5, SpringLayout.EAST,
-				rightView);
-		layout.putConstraint(SpringLayout.NORTH, estText, 20,
+		/*layout.putConstraint(SpringLayout.EAST, estText, -5, SpringLayout.EAST,
+				rightView);*/
+		layout.putConstraint(SpringLayout.NORTH, estimateWithTextPanel, 10,
 				SpringLayout.SOUTH, descriptionPanel);
 
 		rightView.add(counterLabel);
@@ -286,7 +292,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		addMouseListenerTo(submitButton);
 
 		if (currentGame.doesUseCards()) {
-			estText.setVisible(false);
+			estimateWithTextPanel.setVisible(false);
 			submitButton.setEnabled(true);
 		} else {
 			cardsPanel.setVerifyInputWhenFocusTarget(false);
@@ -319,7 +325,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		counterLabel.setVisible(false);
 		previousEst.setVisible(false);
 		submitButton.setVisible(false);
-		estText.setVisible(false);
+		estimateWithTextPanel.setVisible(false);
 
 		layout.putConstraint(SpringLayout.WEST, nameLabel, 5,
 				SpringLayout.WEST, rightView);
@@ -374,16 +380,36 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.SOUTH, counterLabel, -7,
 				SpringLayout.NORTH, submitButton);
-
+		
 		layout.putConstraint(SpringLayout.WEST, submitButton, 5,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, submitButton, -10,
-				SpringLayout.SOUTH, rightView);
 
 		layout.putConstraint(SpringLayout.WEST, errorField, 120,
 				SpringLayout.WEST, rightView);
-		layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
-				SpringLayout.SOUTH, rightView);
+		
+		if(!currentGame.doesUseCards()) {
+			layout.putConstraint(SpringLayout.NORTH, previousEst, 10,
+					SpringLayout.SOUTH, estimateWithTextPanel);
+			
+			layout.putConstraint(SpringLayout.SOUTH, submitButton, -10,
+					SpringLayout.SOUTH, rightView);
+			
+			layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
+					SpringLayout.SOUTH, rightView);
+			
+			rightView.setPreferredSize(new Dimension(300, 430)); // Sets the size of
+			// the view
+
+revalidate();
+repaint();
+		}
+		else {			
+			layout.putConstraint(SpringLayout.SOUTH, submitButton, -10,
+					SpringLayout.SOUTH, rightView);
+			
+			layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
+					SpringLayout.SOUTH, rightView);
+		}
 
 		// TODO: make this into a method
 		activeRequirement = table.getSelectedReq();
@@ -587,7 +613,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		descriptionPanel.setVisible(visible);
 		submitButton.setVisible(visible);
 		if (getGame().doesUseCards() == false) {
-			estText.setVisible(visible);
+			estimateWithTextPanel.setVisible(visible);
 		} else {
 			counterLabel.setVisible(visible);
 			cardScrollPanel.setVisible(true);
