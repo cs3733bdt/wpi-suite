@@ -54,7 +54,4 @@ public class Vote {
 	public void setVoteNumber(int newVote) {
 		voteNumber = newVote;
 	}
-	
-	
-	
 }
