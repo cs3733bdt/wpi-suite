@@ -28,6 +28,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.StatisticsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 /**
@@ -110,6 +111,37 @@ public class RequirementTest {
 	}
 	
 	@Test
+	public void testStatistics() {
+		req1 = new Requirement("Req1", "Desc1");
+		reqList = new ArrayList<Requirement>();
+		ArrayList<Requirement> reqList2 = new ArrayList<Requirement>();
+		
+		req1.addVote(new Vote("Justin", 1));
+		req1.addVote(new Vote("Phil", 10));
+		req1.addVote(new Vote("Sam", 5));
+		req1.addVote(new Vote("Bill", 4));
+		reqList.add(req1);
+		
+		double computedMean = ((1.0 + 10.0 + 5.0 + 4.0) / 4.0);
+		
+		game1 = new Game("Game 1", "Description",  reqList, false, false);
+
+		StatisticsPanel statPanel = new StatisticsPanel(game1);
+		ArrayList<Integer> votesAmounts = statPanel.requirementToVotes(req1);
+		statPanel.makeStatRow(req1);
+		
+		
+		assertEquals((double)req1.getVoteCount(), statPanel.getStat("numVotes"), 0);
+		assertEquals( computedMean, statPanel.getStat("mean"), 0);
+		assertEquals(1.0,statPanel.getStat("min"),0);
+		assertEquals(10.0,statPanel.getStat("max"),0);
+		assertEquals(4.5,statPanel.getStat("median"),0);
+		assertEquals(3.24,statPanel.getStat("stDev"),0.1);
+		
+		
+	}
+	
+	@Test
 	public void testCopyFrom(){
 		Requirement copyTo = 
 				new Requirement(req1.getName() + " copy", req1.getDescription() + " copy");
@@ -120,6 +152,7 @@ public class RequirementTest {
 		assertEquals(copyTo.getName(), req1.getName());
 		assertEquals(copyTo.getDescription(), req1.getDescription());
 		assertEquals(copyTo.getVoteCount(), req1.getVoteCount());
+		
 	}
 	
 	@Test

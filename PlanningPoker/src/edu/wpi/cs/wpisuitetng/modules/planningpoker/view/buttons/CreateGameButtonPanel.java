@@ -44,7 +44,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
-		setPreferredSize(new Dimension(400,50)); 
+		setPreferredSize(new Dimension(170 ,50)); //SWITCH WIDTH TO 400
 		
 		
 	   try {
@@ -64,14 +64,6 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}	   
-		
-	   try {
-	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));
-	        createDeckIcon.setIcon(new ImageIcon(img));
-		    
-		} catch (IOException ex) {
-			ex.printStackTrace();
-		}
 	   
 		// the action listener for the Create Game Icon
 		createGameIcon.addActionListener(new ActionListener() {
@@ -95,7 +87,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		});	
 		
 		contentPanel.add(createGameIcon);
-		contentPanel.add(createDeckIcon);
+		//ADD THIS LINE TO ADD CREATE DECK BUTTON BACK contentPanel.add(createDeckIcon);
 		//contentPanel.setOpaque(false);
 		
 		contentPanel.setOpaque(false);
@@ -104,7 +96,6 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 	}
 	/**
 	 * getter for the create game icon
-	
 	 * @return the create game icon 
 	 */
 	public JButton getCreateGameIcon() {

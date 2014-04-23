@@ -11,6 +11,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers;
 
+import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.UpdateGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
@@ -51,9 +52,9 @@ public class UpdateGameRequestObserver implements RequestObserver {
 		
 		// Send out email, text, and facebook notifications on game creation
 		if (!game.isNotifiedOfCreation() && game.isActive()) {
-			Game realGame = GameModel.getInstance().getGameById(game.getIdentity());
-			// Make sure game exists
-			if (!realGame.equals(null)) {
+			Game realGame;
+			try {
+				realGame = GameModel.getInstance().getGameById(game.getIdentity());
 				// Set the project of the game, without this it throws a null pointer
 				// if the game is created/added on an update call
 				realGame.setProject(game.getProject());
@@ -61,20 +62,24 @@ public class UpdateGameRequestObserver implements RequestObserver {
 				realGame.setNotifiedOfCreation(true);
 				// Finally send
 				realGame.sendNotifications();
-			} else {
+			} catch (NotFoundException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
 				System.err.println(game.getName() + ": Does not exist");
 			}
 		// Send out email, text, and facebook notifications on game completion
 		} else if (!game.isNotifiedOfCompletion() && game.isComplete()) {
 			// TODO make a different method for sending completion text
-			Game realGame = GameModel.getInstance().getGameById(game.getIdentity());
-			// Make sure game exists
-			if (!realGame.equals(null)) {
+			Game realGame;
+			try {
+				realGame = GameModel.getInstance().getGameById(game.getIdentity());
 				// Set notified before sending notifications to remove looping possibility
 				realGame.setNotifiedOfCreation(true);
 				// Finally Send
 				realGame.sendNotifications();
-			} else {
+			} catch (NotFoundException e) {
+				// TODO Auto-generated catch block
+				//e.printStackTrace();
 				System.err.println(game.getName() + ": Does not exist");
 			}
 		}

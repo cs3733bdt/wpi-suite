@@ -50,12 +50,7 @@ public class ActiveStatisticsTable extends JTable
 	
 	@Override
 	public boolean isCellEditable(int row, int column){
-		if (row != 1) {
-			return true;
-		}
-		else { 
-			return false; 
-		}
+		return false;
 	}
 
 	/**

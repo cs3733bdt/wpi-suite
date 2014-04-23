@@ -11,6 +11,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -19,6 +20,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -26,12 +29,7 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
@@ -61,12 +59,14 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	private JTextField finalEstimateBox;
 	private JButton finalEstimateButton;
 	private JLabel finalEstimateDisplay;
+	private JLabel finalEstimateMessage = new JLabel("");
 	
 	private int minEstimate;
 	private int maxEstimate;
 	private double mean;
 	private double stDev;
 	private double median;
+	private int numVotes;
 	
 	private ActiveStatisticsTable statTable;	
 	
@@ -120,14 +120,14 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		
 		validateSubmitButton();
 		finalEstimateDisplay = new JLabel();
-		int currFinalEstimate = activeGame.getFinalEstimate();
+		int currFinalEstimate = activeRequirement.getFinalEstimate();
 		if (currFinalEstimate == -1) {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: --");
 		}
 		else {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: " + currFinalEstimate);
 		}
-		finalEstimateDisplay.setFont(makeFont());
+		finalEstimateDisplay.setFont(makeFont(12));
 		
 		overviewPanel.add(descLabel);
 		overviewPanel.add(statLabel);
@@ -142,6 +142,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		overviewPanel.add(descPanel);
 		overviewPanel.add(statsPanel);
 		overviewPanel.add(votePanel);
+		overviewPanel.add(finalEstimateMessage);
 		
 		/**
 		 * Creates and adds the user story text area to the view.
@@ -150,8 +151,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		userStoryDesc.setEditable(false);
 		userStoryDesc.setLineWrap(true);
 		
-		
-		userStoryDesc.setPreferredSize(new Dimension(580, 150));
 		descPanel.setPreferredSize(new Dimension(580, 100));
 		statsPanel.setPreferredSize(new Dimension(580, 60));
 		
@@ -195,12 +194,16 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		layout.putConstraint(SpringLayout.WEST, finalEstimateBox, 5, SpringLayout.EAST, finalEstimateLabel);
 		
 		//Constraints on the final estimate Button
-		layout.putConstraint(SpringLayout.WEST, finalEstimateButton, 30, SpringLayout.WEST, overviewPanel); 
+		layout.putConstraint(SpringLayout.WEST, finalEstimateButton, 5, SpringLayout.WEST, overviewPanel); 
 		layout.putConstraint(SpringLayout.NORTH, finalEstimateButton, 5, SpringLayout.SOUTH, finalEstimateLabel); 
 		
+		//Constraints on the final estimate message
+		layout.putConstraint(SpringLayout.WEST, finalEstimateMessage, 5, SpringLayout.EAST, finalEstimateButton); 
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateMessage, 8, SpringLayout.SOUTH, finalEstimateBox); 
+		
 		//Constraints on the final estimate display
-		layout.putConstraint(SpringLayout.WEST, finalEstimateDisplay, 60, SpringLayout.WEST, finalEstimateBox); 
-		layout.putConstraint(SpringLayout.NORTH, finalEstimateDisplay, 15, SpringLayout.SOUTH, votePanel); 
+		layout.putConstraint(SpringLayout.EAST, finalEstimateDisplay, -20, SpringLayout.EAST, overviewPanel); 
+		layout.putConstraint(SpringLayout.NORTH, finalEstimateDisplay, 5, SpringLayout.SOUTH, votePanel); 
 			
 		
 		int[] test = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //5.5 //TODO fix
@@ -236,10 +239,34 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		median = median(voteData);
 	}
 	
-	private Object[] makeStatRow(Requirement requirement) {
+	public int numVotes(ArrayList<Integer> voteData) {
+		numVotes = voteData.size();
+		return numVotes;
+	}
+	
+	public Object[] makeStatRow(Requirement requirement) {
 		ArrayList<Integer> voteData = requirementToVotes(requirement); 
-		Object[] row = new Object[] {mean(voteData), stDev(voteData), median(voteData), max(voteData), min(voteData), voteData.size()};
+		Object[] row = new Object[] {mean(voteData), stDev(voteData), median(voteData), max(voteData), min(voteData), numVotes(voteData)};
 		return row;
+	}
+	/**Pass it the name of the stat you want in string form (mean, stDev, min, max, numVotes, median) */
+	public double getStat(String stat) {
+		switch (stat) {
+		case "mean":
+			return mean;
+		case "stDev":
+			return stDev;
+		case "min":
+			return (double)minEstimate;
+		case "max":
+			return (double)maxEstimate;
+		case "numVotes":
+			return (double)numVotes;
+		case "median":
+			return median;
+		default:
+			return -1.0;
+		}
 	}
 
 	/**
@@ -264,7 +291,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param requirement
 	 * @return an arrayList of the vote numbers from the passed requirement
 	 */
-	private ArrayList<Integer> requirementToVotes(Requirement requirement) {
+	public ArrayList<Integer> requirementToVotes(Requirement requirement) {
 		List<Vote> Votes = requirement.getVotes();
 		ArrayList<Integer> voteArray = new ArrayList<Integer>();
 		for (int i = 0; i < Votes.size(); i++) {
@@ -294,7 +321,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 				min = Votes.get(i);
 			}
 		}
-	
+		minEstimate = min;
 		return min;
 	}
 	
@@ -310,19 +337,19 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 				max = Votes.get(i);
 			}
 		}
-	
+		maxEstimate = max;
 		return max;
 	}
 	
-	static double mean(ArrayList<Integer> a) {
+	double mean(ArrayList<Integer> a) {
 		double sum = 0;
 		int i;
 		
 		for(i = 0; i < a.size(); i++) {
 			sum += a.get(i);
 		}
-		
-		return sum/a.size();
+		mean = sum/ ((double)a.size());
+		return mean;
 	}
 	
 	private double stDev(ArrayList<Integer> a) {
@@ -341,16 +368,16 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		}
 				
 		double variance = (sum / (double) numMinusMeanSquared.size());
-		
-		return Math.sqrt(variance);
+		stDev = Math.sqrt(variance) ;
+		return stDev;
 	}
 
-	public static double median(ArrayList<Integer> Votes) {
+	public double median(ArrayList<Integer> Votes) {
 		if (Votes.size() == 0) {
-			return 0;
+			median = 0;
 		}
-		if (Votes.size() == 1) {
-			return Votes.get(0);
+		else if (Votes.size() == 1) {
+			median = Votes.get(0);
 		}
 		else {
 			double[] a = new double[Votes.size()];
@@ -359,18 +386,19 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			}
 			Arrays.sort(a);
 			int mid = a.length/2;
+		
 			if (a.length % 2 == 0) {
-				return (a[mid] + a[mid - 1])/2.0;
+				median = (a[mid] + a[mid - 1])/2.0;
 			}
 			else {
-				return a[mid];
+				median = a[mid];
 			}		
 		}
+		return median;
 	}
 	
 	
-	public static double median(int[] a) {
-		double median;
+	public double median(int[] a) {
 		Arrays.sort(a);
 		int mid = a.length/2;
 		if (a.length % 2 == 0) {
@@ -404,6 +432,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		Object[] row = makeStatRow(req);
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(req);
+		finalEstimateMessage.setText("");
+		finalEstimateBox.setText("");
 		}
 	
 	public void isUserCreator() {
@@ -443,7 +473,13 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	
 	private void finalEstimateButtonPressed() {
 		int newEstimate = Integer.parseInt(finalEstimateBox.getText());
-		activeGame.setFinalEstimate(newEstimate);
+		for (int i = 0; i < activeGame.getRequirements().size(); i++) {
+			if (activeGame.getRequirements().get(i).identify(activeRequirement)) {
+				activeGame.getRequirements().get(i).setFinalEstimate(newEstimate);
+				finalEstimateMessage.setForeground(Color.BLUE);
+				finalEstimateMessage.setText("Final estimate submitted successfully!");
+			}
+		}
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 		finalEstimateDisplay.setText("Your Current Final Estimate is: " + newEstimate);
@@ -479,19 +515,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		return false;
 	}
 
-	public Font makeFont() {
-		/**
-		 * Creates a new font for use later
-		 */
-		//create a dummy JTextArea
-		JTextArea editingArea = new JTextArea();
-		// get the current font
-		Font f = editingArea.getFont();
-		// create a new, larger font from the current font
-		Font newFont = new Font(f.getFontName(), f.getStyle(), f.getSize()+8);		
-		//set the bigger font for userStoryDesc
-		Font bigFont = newFont;
-		return bigFont;
+	public Font makeFont(int fontSize) {
+		return new Font("Serif", Font.BOLD, fontSize);
 	}
 	
 	

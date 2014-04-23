@@ -10,6 +10,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers;
 
+import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
@@ -59,18 +60,20 @@ public class AddGameRequestObserver implements RequestObserver {
 		
 		// Send out email, text, and facebook notifications on game creation
 		if (!game.isNotifiedOfCreation() && game.isActive()) {
-			Game realGame = GameModel.getInstance().getGameById(game.getIdentity());
-			// getGameByName will return null if a game with that name doesn't exist yet
-			// So do a null check
-			if (!realGame.equals(null)) {
+			Game realGame;
+			try {
+				realGame = GameModel.getInstance().getGameById(game.getIdentity());
+				// getGameByName will return null if a game with that name doesn't exist yet
 				// Have to set Project because it doesn't have it yet
 				// and will throw a null pointer
 				realGame.setProject(game.getProject());
 				// Set notified before sending notifications, to ensure no looping
 				realGame.setNotifiedOfCreation(true);
 				realGame.sendNotifications();
-			} else {
+			} catch (NotFoundException e) {
+				// TODO Auto-generated catch block
 				System.err.println(game.getName() + ": Does not exist");
+				//e.printStackTrace();
 			}
 		}
 		

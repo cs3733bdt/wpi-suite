@@ -43,7 +43,7 @@ public class RetrieveRequirementRequestObserver implements RequestObserver {
 	public void responseSuccess(IRequest iReq) {
 		// Convert the JSON array of requirements to a Requirement object array
 		Requirement[] requirements = Requirement.fromJsonArray(iReq.getResponse().getBody());
-		
+
 		// Pass these Requirements to the controller
 		controller.receivedRequirements(requirements);
 	}

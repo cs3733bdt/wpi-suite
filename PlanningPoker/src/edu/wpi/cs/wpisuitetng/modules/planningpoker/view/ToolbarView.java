@@ -11,6 +11,8 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import javax.swing.SpringLayout;
+
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CreateGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.HelpButtonPanel;
@@ -33,11 +35,23 @@ public class ToolbarView extends DefaultToolbarView {
 	 * @param visible returns true if the card is visible
 	 */
 	public ToolbarView(boolean visible){
+		SpringLayout layout = new SpringLayout();
+		setLayout(layout);
 		addGroup(createGameButton);
-		addGroup(helpButton);
+		//ADD THIS BACK WHEN THE HELP BUTTON IS FUNCTIONAL addGroup(helpButton);
 		addGroup(preferencesButton);
 	    //this.setBorder(BorderFactory.createLineBorder(Color.blue, 2)); // add a border so you can see the panel
-	    repaint();
+	    
+		layout.putConstraint(SpringLayout.WEST, createGameButton, 5, SpringLayout.WEST, this); 					//Adds the name label to the far left
+		layout.putConstraint(SpringLayout.WEST, preferencesButton, 5, SpringLayout.EAST, createGameButton); 					//Adds the name label to the far top
+		
+		layout.putConstraint(SpringLayout.NORTH, createGameButton, 5, SpringLayout.NORTH, this); 					//Adds the name label to the far left
+		layout.putConstraint(SpringLayout.SOUTH, createGameButton, -5, SpringLayout.SOUTH, this); 					//Adds the name label to the far top
+		
+		layout.putConstraint(SpringLayout.NORTH, preferencesButton, 5, SpringLayout.NORTH, this); 					//Adds the name label to the far left
+		layout.putConstraint(SpringLayout.SOUTH, preferencesButton, -5, SpringLayout.SOUTH, this); 
+		
+		repaint();
 	    
 	}
 }

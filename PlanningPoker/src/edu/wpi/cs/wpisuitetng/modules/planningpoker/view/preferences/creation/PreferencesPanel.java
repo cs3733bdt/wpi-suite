@@ -1,3 +1,13 @@
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation;
 
 
@@ -7,13 +17,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -39,6 +47,13 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
+/**
+ * used to display user preferences, allowing the user to
+ * edit their facebook email, and mobile phone number and
+ * select how they wanted to be contacted
+ * @author Bobby Drop Tables
+ *
+ */
 public class PreferencesPanel extends JScrollPane implements IDataField {
 
 	JPanel emailPanel;
@@ -215,96 +230,81 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 				facebookCheckBoxListener();	
 			}
 		});
-
-		reValidateFacebookPanel();
-		facebookPanel.add(facebookCheckBox);
-
-		//Add the facebook Panel to the view
-		view.add(facebookPanel);
-
-		/**
-		 * Code for the mobile settings panel */
-
-		//Create and add the mobile preferences panel
-		mobilePanel = new JPanel();
-		SpringLayout mobileLayout = new SpringLayout();
-		mobilePanel.setLayout(mobileLayout);
-		mobilePanel.setBorder((new JTextField()).getBorder());
-		mobilePanel.setPreferredSize(new Dimension(600, 140));
-
-		//Create and add the mobile heading Label
-		JLabel mobilePanelLabel = new JLabel("Mobile Preferences");
-		mobilePanelLabel.setFont(makeFont(9));
-		mobilePanel.add(mobilePanelLabel);
-
-		//Create and add the "you are not receiving mobile notifications" warning message. 
-		mobileOffNotify = new JLabel("*You are not receiving mobile notifications");
-		mobileOffNotify.setForeground(Color.blue);
-		if (!receivingMobile()) {
-			mobileOffNotify.setVisible(true);
-		}
-		else {
-			mobileOffNotify.setVisible(false);
-		}
-		mobilePanel.add(mobileOffNotify);
-
-		//Create and add the user mobile label to the panel
-		JLabel userMobileLabel = new JLabel("Your Phone Number:");
-		mobilePanel.add(userMobileLabel);
-
-		//Create, configure, and add the user mobile text box
-		mobileField = new JTextField(50);
-		mobileField.setEditable(true);
-		mobileField.setFocusable(true);
-		addKeyListenerTo(mobileField);
-		mobileField.setText("555-555-5555");
-		mobilePanel.add(mobileField);
-
-		/**
-		 * TODO autopopulate mobile field with user's number.
-		 */
-		mobileField.setText(getUserMobile());
-
-		//Create the update mobile button
-		updateMobileButton = new JButton("Update Mobile Number");
-		updateMobileButton.setEnabled(false);
-		mobilePanel.add(updateMobileButton);
-
-		//Create the update carrier button
-		updateCarrierButton = new JButton("Update Carrier");
-		updateCarrierButton.setEnabled(false);
-		mobilePanel.add(updateCarrierButton);
-
-		//Create and add the user carrier label to the panel
-		JLabel userCarrierLabel = new JLabel("Your Carrier:");
-		mobilePanel.add(userCarrierLabel);
-
-		//Create and add drop down menu for carriers
-		String[] items = { "Verizon", "AT&T", "T-Mobile", "Sprint", "U.S. Cellular", "--"};
-		carrierDropDown = new JComboBox<String>(items);
-		if (getUserCarrier() == -1) {
-			carrierDropDown.setSelectedIndex(5);
-		}
-		else {
-			carrierDropDown.setSelectedIndex(getUserCarrier());
-		}
-		carrierDropDown.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				carrierDropDownChanged();
-
-			}
-		});
-
-		mobilePanel.add(carrierDropDown);
-
-		//Create and add the checkbox for receiving mobile notifications
-		mobileCheckBox = new JCheckBox("Receive Mobile notifications", true);
-		//TODO make this field initialize to the correct toggled state. Do that by modifying the constant "true" above
-
-		mobileCheckBox.addActionListener(new ActionListener() {
-
+	    	
+    	reValidateFacebookPanel();
+    	facebookPanel.add(facebookCheckBox);
+    
+    	//Add the facebook Panel to the view
+    	view.add(facebookPanel);
+    	
+    	/**
+    	 * Code for the mobile settings panel */
+    	
+    	//Create and add the mobile preferences panel
+    	mobilePanel = new JPanel();
+    	SpringLayout mobileLayout = new SpringLayout();
+    	mobilePanel.setLayout(mobileLayout);
+    	mobilePanel.setBorder((new JTextField()).getBorder());
+    	mobilePanel.setPreferredSize(new Dimension(600, 140));
+    	
+    	//Create and add the mobile heading Label
+    	JLabel mobilePanelLabel = new JLabel("Mobile Preferences");
+    	mobilePanelLabel.setFont(makeFont(9));
+    	mobilePanel.add(mobilePanelLabel);
+    	
+    	//Create and add the "you are not receiving mobile notifications" warning message. 
+    	mobileOffNotify = new JLabel("*You are not receiving mobile notifications");
+    	mobileOffNotify.setForeground(Color.blue);
+    	if (!receivingMobile()) {
+    		mobileOffNotify.setVisible(true);
+    	}
+    	else {
+    		mobileOffNotify.setVisible(false);
+    	}
+    	mobilePanel.add(mobileOffNotify);
+    	
+    	//Create and add the user mobile label to the panel
+    	JLabel userMobileLabel = new JLabel("Your Phone Number:");
+    	mobilePanel.add(userMobileLabel);
+    	
+    	//Create, configure, and add the user mobile text box
+    	mobileField = new JTextField(50);
+    	mobileField.setEditable(true);
+    	mobileField.setFocusable(true);
+    	addKeyListenerTo(mobileField);
+    	mobileField.setText("555-555-5555");
+    	mobilePanel.add(mobileField);
+    	
+    	/**
+    	 * TODO autopopulate mobile field with user's number.
+    	 */
+    	
+    	//Create the update mobile button
+    	updateMobileButton = new JButton("Update Number");
+    	updateMobileButton.setEnabled(false);
+    	mobilePanel.add(updateMobileButton);
+    	
+    	//Create the update carrier button
+    	updateCarrierButton = new JButton("Update Carrier");
+    	updateCarrierButton.setEnabled(false);
+    	mobilePanel.add(updateCarrierButton);
+    	
+    	//Create and add the user carrier label to the panel
+    	JLabel userCarrierLabel = new JLabel("Your Carrier:");
+    	mobilePanel.add(userCarrierLabel);
+    	
+    	//Create and add drop down menu for carriers
+    	String[] items = { "Verizon", "AT&T", "T-Mobile", "Sprint", "U.S. Cellular"};
+    	carrierDropDown = new JComboBox<String>(items);
+    	carrierDropDown.setSelectedIndex(getUserCarrier());
+    	mobilePanel.add(carrierDropDown);
+    	
+    	//Create and add the checkbox for receiving mobile notifications
+    	mobileCheckBox = new JCheckBox("Receive Mobile notifications", true);
+    	//TODO make this field initialize to the correct toggled state. Do that by modifying the constant "true" above
+    	
+    	mobileCheckBox.addActionListener(new ActionListener() {
+			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				mobileCheckBoxListener();	
@@ -565,8 +565,12 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		}
 	}
 
+	/**
+	 * Creates a font to be used for later
+	 * @param size The size of the font
+	 * @return font to be used 
+	 */
 	public Font makeFont(int size) {
-
 		//create a dummy JTextArea
 		JTextArea editingArea = new JTextArea();
 		// get the current font
@@ -617,6 +621,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		return true;
 	}
 
+	/**
+	 * displays the option to update the user's email if 
+	 * the user selected the option to be notified through email
+	 */
 	public void emailCheckBoxListener() {
 		if (!emailCheckBox.isSelected()) {
 			emailOffNotify.setVisible(true);
@@ -631,7 +639,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			reValidateEmailUpdateButton();
 		}
 	}
-
+	
+	/**
+	 * displays the option to update the user's facebook if 
+	 * the user selected the option to be notified through facebook
+	 */
 	public void facebookCheckBoxListener() {
 		if (!facebookCheckBox.isSelected()) {
 			facebookOffNotify.setVisible(true);
@@ -646,10 +658,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			reValidateFacebookUpdateButton();
 		}
 	}
-
-
-
-
+	
+	/**
+	 * displays the option to update the user's phone number if 
+	 * the user selected the option to be notified through texts
+	 */
 	public void mobileCheckBoxListener() {
 		if (!mobileCheckBox.isSelected()) {
 			mobileOffNotify.setVisible(true);

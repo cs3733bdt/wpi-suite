@@ -11,16 +11,12 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
-import java.awt.Component;
-
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.TabbedView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CreateDeckPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation.PreferencesPanel;
 
 /**
  * @author jonathanleitschuh
