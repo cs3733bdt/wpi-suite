@@ -73,8 +73,10 @@ public abstract class ObservableModel extends AbstractModel {
     public synchronized void addObserver(IModelObserver o) {
         if (o == null)
             throw new NullPointerException();
-        if (!obs.contains(o)) {
-            obs.addElement(o);
+        if(obs != null){
+        	if (!obs.contains(o)) {
+        		obs.addElement(o);
+        	}
         }
     }
 
