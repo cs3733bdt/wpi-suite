@@ -86,8 +86,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		rightView.setLayout(layout); // Sets the container to have the spring
 										// layout
 
-		setMinimumSize(new Dimension(310, 110)); // Sets the minimum size of the
-													// left half view
+		setMinimumSize(new Dimension(425, 110)); // Sets the minimum size of the
+													// right half view
 		rightView.setPreferredSize(new Dimension(300, 518)); // Sets the size of
 																// the view
 
@@ -446,7 +446,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		nameTextField.setText(activeRequirement.getName());
 		descriptionTextField.setText(activeRequirement.getDescription());
 
-		this.getViewport().add(rightView); // Sets the rightview to be the
+		getViewport().add(rightView); // Sets the rightview to be the
 											// entire container which has
 											// everything contained within it
 
