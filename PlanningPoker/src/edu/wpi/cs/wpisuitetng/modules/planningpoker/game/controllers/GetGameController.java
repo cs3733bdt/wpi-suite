@@ -18,6 +18,7 @@ import javax.swing.Timer;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers.GetGameRequestObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.GetPPRequirementController;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -61,6 +62,7 @@ public class GetGameController implements ActionListener {
 	@Override
 	public synchronized void actionPerformed(ActionEvent e) {
 	    // Send a request to the core to read/get this Game
+		GetPPRequirementController.getInstance().retrieveRequirements();;
 	    final Request request = 
 	    		Network.getInstance().makeRequest("planningpoker/game", HttpMethod.GET);
 	    // add an observer to process the response
