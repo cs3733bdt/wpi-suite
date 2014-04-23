@@ -43,7 +43,7 @@ public class ToolbarView extends DefaultToolbarView {
 	    //this.setBorder(BorderFactory.createLineBorder(Color.blue, 2)); // add a border so you can see the panel
 	    
 		layout.putConstraint(SpringLayout.WEST, createGameButton, 5, SpringLayout.WEST, this); 					//Adds the name label to the far left
-		layout.putConstraint(SpringLayout.EAST, preferencesButton, -5, SpringLayout.EAST, this); 					//Adds the name label to the far top
+		layout.putConstraint(SpringLayout.WEST, preferencesButton, 5, SpringLayout.EAST, createGameButton); 					//Adds the name label to the far top
 		
 		layout.putConstraint(SpringLayout.NORTH, createGameButton, 5, SpringLayout.NORTH, this); 					//Adds the name label to the far left
 		layout.putConstraint(SpringLayout.SOUTH, createGameButton, -5, SpringLayout.SOUTH, this); 					//Adds the name label to the far top

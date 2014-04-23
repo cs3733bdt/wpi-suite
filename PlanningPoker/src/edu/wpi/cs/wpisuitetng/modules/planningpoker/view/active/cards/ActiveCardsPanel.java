@@ -61,29 +61,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 			JToggleButtonList.add(new CardButton(i, deck, this, panel));
 		}// idk button is part of array
 
-		// adds the button to clear all entered estimates
-		JButton clearButton = new JButton("Clear");
-		clearButton.setToolTipText("Clear all Estimates");
-		add(clearButton);
-
-		// action Listener for the clear button
-		clearButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				memoryArray.clear();
-				try {
-					clearCards();
-					sum = 0;
-				} catch (IOException ex) {
-					ex.printStackTrace();
-				}
-			}
-		});
-
-		if (!panel.getGame().doesUseCards()) {
-			clearButton.setVisible(false);
-		}
-
+	
 	}
 
 	public int getCount() {
@@ -156,6 +134,10 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public int getSum() {
 		return sum;
+	}
+	
+	public void clearSum() {
+		sum = 0;
 	}
 
 	/**

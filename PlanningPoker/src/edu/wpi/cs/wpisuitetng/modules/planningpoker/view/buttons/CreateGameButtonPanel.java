@@ -44,7 +44,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
-		setPreferredSize(new Dimension(400,50)); 
+		setPreferredSize(new Dimension(170 ,50)); //SWITCH WIDTH TO 400
 		
 		
 	   try {
