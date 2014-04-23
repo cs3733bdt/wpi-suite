@@ -52,7 +52,7 @@ public class PPRequirement extends ObservableModel {
 
 	
 	/** If this requirement came from the requirement manager module*/
-	private boolean fromRequirementModule;
+	private boolean fromRequirementModule = false;
 	
 	/** list of votes for this requirement */
 	private List<Vote> votes = new ArrayList<Vote>();
@@ -126,12 +126,20 @@ public class PPRequirement extends ObservableModel {
 	 * sets the id of the requirement
 	 * @param id value to set the id to
 	 */
-	public void setId(int id){
+	public void setIdPlusOne(int id){
 		delayChange();
 		fromRequirementModule = true;
 		// Make Id one more than the id in the 
 		// Requirement Manager
 		this.id = id + 1;
+	}
+	
+	public void setId(int id){
+		delayChange();
+		fromRequirementModule = true;
+		// Make Id one more than the id in the 
+		// Requirement Manager
+		this.id = id;
 	}
 	
 	/**
@@ -279,7 +287,7 @@ public class PPRequirement extends ObservableModel {
 	 * 
 	 * @param json JSON-encoded Requirement to deserialize
 	 * @return the Requirement contained in the given JSON */
-	public static PPRequirement fromJson(String json) {
+	public static PPRequirement fromJSON(String json) {
 		Gson gson;
 		GsonBuilder builder = new GsonBuilder();
 		// Use our custom deserializer
