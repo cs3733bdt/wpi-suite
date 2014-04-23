@@ -70,6 +70,10 @@ public class NewActiveGamePanel extends JSplitPane implements IModelObserver, IA
 		return true;
 	}
 	
+	public RequirementTable getReqTable(){
+		return rightHalf.getReqTable();
+	}
+	
 	/*
 	public static void main(String args[]){
 		JFrame frame = new JFrame("Demo");

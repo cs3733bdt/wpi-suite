@@ -67,7 +67,7 @@ public class TabbedView extends JTabbedPane {
 		
 		addTab("Game Overview", gameOverview);
 		
-		//ADD THIS LINE TO ADD DECK OVERVIEW BACK addTab("Deck Overview", deckOverview);
+		addTab("Deck Overview", deckOverview);
 		 
 	    //this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
 		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);

@@ -672,5 +672,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			submitButton.setEnabled(false);
 		}
 	}
+	
+	public RequirementTable getReqTable(){
+		return table;
+	}
 
 }
