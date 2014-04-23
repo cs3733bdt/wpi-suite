@@ -138,6 +138,14 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		updateEmailButton = new JButton("Update Email");
 		updateEmailButton.setEnabled(false);
 		emailPanel.add(updateEmailButton);
+		
+		updateEmailButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e){
+				updateEmailButtonPressed();
+			}
+		});
 
 		//Create and add the checkbox for receiving emails
 		emailCheckBox = new JCheckBox("Receive Email notifications", true);
@@ -203,6 +211,14 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		updateFacebookButton = new JButton("Update facebook");
 		updateFacebookButton.setEnabled(false);
 		facebookPanel.add(updateFacebookButton);
+		
+		updateFacebookButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e){
+				updateFacebookButtonPressed();
+			}
+		});
 
 		//Create and add the checkbox for receiving facebooks
 		facebookCheckBox = new JCheckBox("Receive facebook notifications", true);
@@ -269,11 +285,27 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		updateMobileButton = new JButton("Update Mobile Number");
 		updateMobileButton.setEnabled(false);
 		mobilePanel.add(updateMobileButton);
+		
+		updateMobileButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e){
+				updateMobileButtonPressed();
+			}
+		});
 
 		//Create the update carrier button
 		updateCarrierButton = new JButton("Update Carrier");
 		updateCarrierButton.setEnabled(false);
 		mobilePanel.add(updateCarrierButton);
+		
+		updateCarrierButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e){
+				updateCarrierButtonPressed();
+			}
+		});
 
 		//Create and add the user carrier label to the panel
 		JLabel userCarrierLabel = new JLabel("Your Carrier:");
@@ -435,6 +467,26 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		revalidate();
 		repaint();
 	}
+
+	
+	public void updateEmailButtonPressed() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void updateFacebookButtonPressed() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void updateMobileButtonPressed() {
+		// TODO Auto-generated method stub
+		
+	}
+	public void updateCarrierButtonPressed() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 	private void addKeyListenerTo(JComponent component){
 		component.addKeyListener(new KeyAdapter(){
