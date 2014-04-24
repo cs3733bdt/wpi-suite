@@ -16,6 +16,8 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
@@ -53,10 +55,14 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	private JTextField numCards;
 	private JButton submitNumCards;
 	
+	private JComboBox<String> colorDropDown;
+	
 	private JTextField cardValue;
 	
 	private JRadioButton singleSelection;
 	private JRadioButton multipleSelection;
+	
+	private JPanel cardsPanel;
 	
 	private JButton saveButton;
 	
@@ -65,6 +71,16 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	private final Border defaultTextFieldBorder = (new JTextField()).getBorder();
 	
 	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
+	
+	private final CardImage cardRed = new CardImage("red");
+	
+	private final CardImage cardBlue = new CardImage("blue");
+	
+	private final CardImage cardGreen = new CardImage("green");
+	
+	private final CardImage cardPurple = new CardImage("purple");
+	
+	private final CardImage cardYellow = new CardImage("yellow");
 	
 	public CreateDeckPanel(){
 		
@@ -139,7 +155,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		JLabel colorLabel = new JLabel("Select Card Color * ");
 		JPanel colorLabelPanel = new JPanel();
 		colorLabelPanel.add(colorLabel);
-		JComboBox<String> colorDropDown = new JComboBox<String>();	
+		colorDropDown = new JComboBox<String>();	
+		colorDropDown.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		        chooseCardColor();
+		    }
+		});
 		colorDropDown.addItem("Red (Default)");
 		colorDropDown.addItem("Blue");
 		colorDropDown.addItem("Green");
@@ -160,9 +181,23 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		numCardsAndColorAndSelectedTypePanel.add(colorPanel);
 		
 		/* Card panel for the cards to appear in. Get rid of border when something actually appears */
-		JPanel cardsPanel = new JPanel();
+		cardsPanel = new JPanel();
 		cardsPanel.setPreferredSize(new Dimension(10, 400));
 		cardsPanel.setBorder(nameTextField.getBorder());
+		cardsPanel.add(cardRed);
+		cardRed.setVisible(true);
+		
+		cardsPanel.add(cardBlue);
+		cardBlue.setVisible(false);
+		
+		cardsPanel.add(cardGreen);
+		cardGreen.setVisible(false);
+		
+		cardsPanel.add(cardPurple);
+		cardPurple.setVisible(false);
+		
+		cardsPanel.add(cardYellow);
+		cardYellow.setVisible(false);
 		
 		/* Not currently in use. Re-add this if the card-value setting method is desired below the card panel */
 		JPanel valuePanel = new JPanel();
@@ -278,6 +313,10 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		return numCards;
 	}
 	
+	public JComboBox<String> getColorDropDown(){
+		return colorDropDown;
+	}
+	
 	/**
 	 * Checks all fields to determine if they are prepared to be removed.
 	 * If a field is invalid the it warns the user with a notification and by highlighting
@@ -369,4 +408,44 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		}
 		return false;
 	}
+	
+	public void chooseCardColor(){
+		String color = (String)getColorDropDown().getSelectedItem();
+		if(color == "Red (Default)"){
+			cardRed.setVisible(true);
+			cardBlue.setVisible(false);
+			cardGreen.setVisible(false);
+			cardPurple.setVisible(false);
+			cardYellow.setVisible(false);
+		}
+		if(color == "Blue"){
+			cardBlue.setVisible(true);
+			cardRed.setVisible(false);
+			cardGreen.setVisible(false);
+			cardPurple.setVisible(false);
+			cardYellow.setVisible(false);
+		}
+		if(color == "Green"){
+			cardGreen.setVisible(true);
+			cardRed.setVisible(false);
+			cardBlue.setVisible(false);
+			cardPurple.setVisible(false);
+			cardYellow.setVisible(false);
+		}
+		if(color == "Purple"){
+			cardPurple.setVisible(true);
+			cardRed.setVisible(false);
+			cardBlue.setVisible(false);
+			cardGreen.setVisible(false);
+			cardYellow.setVisible(false);
+		}
+		if(color == "Yellow"){
+			cardYellow.setVisible(true);
+			cardRed.setVisible(false);
+			cardBlue.setVisible(false);
+			cardGreen.setVisible(false);
+			cardPurple.setVisible(false);
+		}
+	}
+	
 }
