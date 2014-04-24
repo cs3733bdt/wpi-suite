@@ -62,7 +62,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	private JRadioButton singleSelection;
 	private JRadioButton multipleSelection;
 	
-	private JPanel cardsPanel;
+	private final JPanel cardsPanel = new JPanel();
 	
 	private JButton saveButton;
 	
@@ -141,6 +141,14 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		numCards.setText("1");
 		addKeyListenerTo(numCards);
 		submitNumCards = new JButton("Submit");
+		submitNumCards.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	displayNumCards();
+		    	
+		        cardsPanel.revalidate();
+		        cardsPanel.repaint();
+		    }
+		});
 		JPanel numPanel = new JPanel();
 		numPanel.setLayout(new BorderLayout());
 		numPanel.add(numLabelPanel, BorderLayout.PAGE_START);
@@ -181,13 +189,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		numCardsAndColorAndSelectedTypePanel.add(colorPanel);
 		
 		/* Card panel for the cards to appear in. Get rid of border when something actually appears */
-		cardsPanel = new JPanel();
 		cardsPanel.setPreferredSize(new Dimension(10, 400));
 		cardsPanel.setBorder(nameTextField.getBorder());
 		cardsPanel.add(cardRed);
 		cardRed.setVisible(true);
 		
-		cardsPanel.add(cardBlue);
+		/*cardsPanel.add(cardBlue);
 		cardBlue.setVisible(false);
 		
 		cardsPanel.add(cardGreen);
@@ -197,7 +204,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		cardPurple.setVisible(false);
 		
 		cardsPanel.add(cardYellow);
-		cardYellow.setVisible(false);
+		cardYellow.setVisible(false);*/
 		
 		/* Not currently in use. Re-add this if the card-value setting method is desired below the card panel */
 		JPanel valuePanel = new JPanel();
@@ -317,6 +324,10 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		return colorDropDown;
 	}
 	
+	public JPanel getCardsPanel(){
+		return cardsPanel;
+	}
+	
 	/**
 	 * Checks all fields to determine if they are prepared to be removed.
 	 * If a field is invalid the it warns the user with a notification and by highlighting
@@ -409,43 +420,74 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		return false;
 	}
 	
-	public void chooseCardColor(){
+	public String chooseCardColor(){
 		String color = (String)getColorDropDown().getSelectedItem();
+		int numCardsPresent = cardsPanel.getComponentCount();
+		cardsPanel.removeAll();
 		if(color == "Red (Default)"){
-			cardRed.setVisible(true);
+			 for(int i=0; i < numCardsPresent; i++){
+				 cardsPanel.add(new CardImage("red"));
+			 }
+			/*cardRed.setVisible(true);
 			cardBlue.setVisible(false);
 			cardGreen.setVisible(false);
 			cardPurple.setVisible(false);
-			cardYellow.setVisible(false);
+			cardYellow.setVisible(false);*/
 		}
 		if(color == "Blue"){
-			cardBlue.setVisible(true);
+			for(int i=0; i < numCardsPresent; i++){
+				 cardsPanel.add(new CardImage("blue"));
+			 }
+			/*cardBlue.setVisible(true);
 			cardRed.setVisible(false);
 			cardGreen.setVisible(false);
 			cardPurple.setVisible(false);
-			cardYellow.setVisible(false);
+			cardYellow.setVisible(false);*/
 		}
 		if(color == "Green"){
-			cardGreen.setVisible(true);
+			for(int i=0; i < numCardsPresent; i++){
+				 cardsPanel.add(new CardImage("green"));
+			 }
+			/*cardGreen.setVisible(true);
 			cardRed.setVisible(false);
 			cardBlue.setVisible(false);
 			cardPurple.setVisible(false);
-			cardYellow.setVisible(false);
+			cardYellow.setVisible(false);*/
 		}
 		if(color == "Purple"){
-			cardPurple.setVisible(true);
+			for(int i=0; i < numCardsPresent; i++){
+				 cardsPanel.add(new CardImage("purple"));
+			 }
+			/*cardPurple.setVisible(true);
 			cardRed.setVisible(false);
 			cardBlue.setVisible(false);
 			cardGreen.setVisible(false);
-			cardYellow.setVisible(false);
+			cardYellow.setVisible(false);*/
 		}
 		if(color == "Yellow"){
-			cardYellow.setVisible(true);
+			for(int i=0; i < numCardsPresent; i++){
+				 cardsPanel.add(new CardImage("yellow"));
+			 }
+			/*cardYellow.setVisible(true);
 			cardRed.setVisible(false);
 			cardBlue.setVisible(false);
 			cardGreen.setVisible(false);
-			cardPurple.setVisible(false);
+			cardPurple.setVisible(false);*/
 		}
+		cardsPanel.revalidate();
+        cardsPanel.repaint();
+        return color;
+	}
+	
+	public void displayNumCards(){
+		int numCardsSubmitted = Integer.parseInt(getNumCards().getText());
+		cardsPanel.removeAll();
+        for(int i=0; i < numCardsSubmitted; i++){		// Here, we are creating the correct number of components in the cards panel,
+			cardsPanel.add(new JLabel("countLabel"));   // so that when chooseCardColor() is called it creates the correct number of
+		}												// the correct color of cards.
+        chooseCardColor();
+        cardsPanel.revalidate();
+        cardsPanel.repaint();
 	}
 	
 }
