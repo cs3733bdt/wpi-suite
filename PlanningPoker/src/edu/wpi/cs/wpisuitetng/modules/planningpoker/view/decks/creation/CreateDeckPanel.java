@@ -144,11 +144,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		submitNumCards.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		    	displayNumCards();
-		    	
 		        cardsPanel.revalidate();
 		        cardsPanel.repaint();
 		    }
 		});
+		addMouseListenerToNumberOfCardsSubmitButton(submitNumCards);
+		
 		JPanel numPanel = new JPanel();
 		numPanel.setLayout(new BorderLayout());
 		numPanel.add(numLabelPanel, BorderLayout.PAGE_START);
@@ -193,18 +194,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		cardsPanel.setBorder(nameTextField.getBorder());
 		cardsPanel.add(cardRed);
 		cardRed.setVisible(true);
-		
-		/*cardsPanel.add(cardBlue);
-		cardBlue.setVisible(false);
-		
-		cardsPanel.add(cardGreen);
-		cardGreen.setVisible(false);
-		
-		cardsPanel.add(cardPurple);
-		cardPurple.setVisible(false);
-		
-		cardsPanel.add(cardYellow);
-		cardYellow.setVisible(false);*/
 		
 		/* Not currently in use. Re-add this if the card-value setting method is desired below the card panel */
 		JPanel valuePanel = new JPanel();
@@ -420,63 +409,47 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		return false;
 	}
 	
-	public String chooseCardColor(){
+	/** 
+	 * This method makes sure that the color selected in the dropdown is the color being display on all the cards
+	 * It does this by checking how many components are in the card panel, then once it has stored this number,
+	 * it removes all the components in the card panel. It then generates the number of cards of the correct color
+	 * (since it now knows the color) that was equal to the previously recorded number of components in the panel.
+	 * @return
+	 */
+	public void chooseCardColor(){
 		String color = (String)getColorDropDown().getSelectedItem();
 		int numCardsPresent = cardsPanel.getComponentCount();
 		cardsPanel.removeAll();
+		/* Later, when real functionality occurs, we will need a way of storing the cards 
+		 * being generated, so we can later tell if one is selected or not.
+		 * This will be necessary when assigning values to each card. */
 		if(color == "Red (Default)"){
 			 for(int i=0; i < numCardsPresent; i++){
 				 cardsPanel.add(new CardImage("red"));
 			 }
-			/*cardRed.setVisible(true);
-			cardBlue.setVisible(false);
-			cardGreen.setVisible(false);
-			cardPurple.setVisible(false);
-			cardYellow.setVisible(false);*/
 		}
 		if(color == "Blue"){
 			for(int i=0; i < numCardsPresent; i++){
 				 cardsPanel.add(new CardImage("blue"));
 			 }
-			/*cardBlue.setVisible(true);
-			cardRed.setVisible(false);
-			cardGreen.setVisible(false);
-			cardPurple.setVisible(false);
-			cardYellow.setVisible(false);*/
 		}
 		if(color == "Green"){
 			for(int i=0; i < numCardsPresent; i++){
 				 cardsPanel.add(new CardImage("green"));
 			 }
-			/*cardGreen.setVisible(true);
-			cardRed.setVisible(false);
-			cardBlue.setVisible(false);
-			cardPurple.setVisible(false);
-			cardYellow.setVisible(false);*/
 		}
 		if(color == "Purple"){
 			for(int i=0; i < numCardsPresent; i++){
-				 cardsPanel.add(new CardImage("purple"));
+				cardsPanel.add(new CardImage("purple"));
 			 }
-			/*cardPurple.setVisible(true);
-			cardRed.setVisible(false);
-			cardBlue.setVisible(false);
-			cardGreen.setVisible(false);
-			cardYellow.setVisible(false);*/
 		}
 		if(color == "Yellow"){
 			for(int i=0; i < numCardsPresent; i++){
 				 cardsPanel.add(new CardImage("yellow"));
 			 }
-			/*cardYellow.setVisible(true);
-			cardRed.setVisible(false);
-			cardBlue.setVisible(false);
-			cardGreen.setVisible(false);
-			cardPurple.setVisible(false);*/
 		}
 		cardsPanel.revalidate();
         cardsPanel.repaint();
-        return color;
 	}
 	
 	public void displayNumCards(){
@@ -488,6 +461,17 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
         chooseCardColor();
         cardsPanel.revalidate();
         cardsPanel.repaint();
+	}
+	
+	private void addMouseListenerToNumberOfCardsSubmitButton(JComponent component){
+		component.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent arg0) {
+					if(!submitNumCards.isEnabled()){
+						errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 25");
+					}
+					else{}//it will perform the action listener
+			}
+		});
 	}
 	
 }

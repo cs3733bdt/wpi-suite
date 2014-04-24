@@ -13,7 +13,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JLabel;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 
 /**
@@ -30,8 +30,10 @@ public class CardImage extends JPanel{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-			add(picLabel);
+			JButton picButton = new JButton(new ImageIcon(myPicture));
+			picButton.setBorderPainted(false);
+			picButton.setContentAreaFilled(false);
+			add(picButton);
 		}
 		
 		if(color == "blue"){
@@ -42,8 +44,10 @@ public class CardImage extends JPanel{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-			add(picLabel);
+			JButton picButton = new JButton(new ImageIcon(myPicture));
+			picButton.setBorderPainted(false);
+			picButton.setContentAreaFilled(false);
+			add(picButton);
 		}
 		
 		if(color == "green"){
@@ -54,8 +58,10 @@ public class CardImage extends JPanel{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-			add(picLabel);
+			JButton picButton = new JButton(new ImageIcon(myPicture));
+			picButton.setBorderPainted(false);
+			picButton.setContentAreaFilled(false);
+			add(picButton);
 		}
 		
 		if(color == "purple"){
@@ -66,8 +72,10 @@ public class CardImage extends JPanel{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-			add(picLabel);
+			JButton picButton = new JButton(new ImageIcon(myPicture));
+			picButton.setBorderPainted(false);
+			picButton.setContentAreaFilled(false);
+			add(picButton);
 		}
 		
 		if(color == "yellow"){
@@ -78,8 +86,10 @@ public class CardImage extends JPanel{
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			JLabel picLabel = new JLabel(new ImageIcon(myPicture));
-			add(picLabel);
+			JButton picButton = new JButton(new ImageIcon(myPicture));
+			picButton.setBorderPainted(false);
+			picButton.setContentAreaFilled(false);
+			add(picButton);
 		}
 	
 	}
