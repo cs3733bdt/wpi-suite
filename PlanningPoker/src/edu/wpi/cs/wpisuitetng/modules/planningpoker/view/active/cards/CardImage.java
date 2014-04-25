@@ -1,3 +1,5 @@
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards;
+
 /*******************************************************************************
 * Copyright (c) 2012-2014 -- WPI Suite
 *
@@ -6,7 +8,6 @@
 * which accompanies this distribution, and is available at
 * http://www.eclipse.org/legal/epl-v10.html
 *******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation;
 
 import java.awt.Color;
 import java.awt.image.BufferedImage;

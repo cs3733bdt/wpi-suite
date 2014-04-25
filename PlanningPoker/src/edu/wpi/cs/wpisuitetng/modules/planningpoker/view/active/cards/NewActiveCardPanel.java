@@ -15,6 +15,11 @@ import java.awt.Dimension;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +27,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -36,11 +42,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CardImag
  * @author Bobby Drop Tables
  * 
  */
-public class ActiveCardsPanel extends JPanel implements IDataField {
+public class NewActiveCardPanel extends JPanel implements IDataField {
 
 	private int sum = 0;
 	private final List<String> deck;
-	private final List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
 	private List<CardImage> CardImageList = new ArrayList<CardImage>();
 
@@ -50,7 +55,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
 	private NewRightHalfActiveGamePanel panel;
 
-	public ActiveCardsPanel(ArrayList<String> passedDeck,
+	public NewActiveCardPanel(ArrayList<String> passedDeck,
 			NewRightHalfActiveGamePanel passedPanel) {
 		panel = passedPanel;
 		deck = passedDeck;
@@ -60,7 +65,8 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 		this.setPreferredSize(new Dimension(525, (68 * (Math.round(deck.size()
 				/ cardsPerRow)))));
 		for (int i = 0; i < (deck.size()); i++) {
-			JToggleButtonList.add(new CardButton(i, deck, this, panel));
+			CardImageList.add(new CardImage("red"));
+			
 		}// idk button is part of array
 
 	
@@ -73,13 +79,13 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	public void clearCards() throws IOException {
 		Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
 		for (int i = 0; i < (deck.size() - 1); i++) {
-			if (JToggleButtonList.get(i).isSelected()) {
-				JToggleButtonList.get(i).doClick();
-				JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+			if (CardImageList.get(i).isSelected()) {
+				CardImageList.get(i).doClick();
+				CardImageList.get(i).setIcon(new ImageIcon(frontImg));
 			}
 		}
-		if (JToggleButtonList.get(deck.size() - 1).isSelected()) {
-			JToggleButtonList.get(deck.size() - 1).doClick();
+		if (CardImageList.get(deck.size() - 1).isSelected()) {
+			CardImageList.get(deck.size() - 1).doClick();
 		}
 	}
 
@@ -160,6 +166,21 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 **/
 	public void memoryArrayAddElt(int elt) {
 		memoryArray.add(elt);
+	}
+	
+	private void addCardImageMouseListenerTo(JComponent component){
+		component.addMouseListener(new MouseAdapter(){
+				
+			@Override
+			public void mousePressed(MouseEvent e) {
+				mousePressedOnCard();
+
+			}
+		});
+	}
+	
+	public void mousePressedOnCard(int Index) {
+		
 	}
 
 	/**
