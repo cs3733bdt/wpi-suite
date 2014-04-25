@@ -23,8 +23,8 @@ import org.jdesktop.swingx.JXDatePicker;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
@@ -42,7 +42,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 											// remove because no changes have
 											// happened
 	private Game currentGame;
-	private List<Requirement> currentReqs;
+	private List<PPRequirement> currentReqs;
 	
 	/**
 	 * Creates a NewCreateGamePanel with the game setting the fields for the panel.
@@ -53,7 +53,6 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		currentGame = game;
 		leftHalf = new NewLeftHalfCreateGamePanel(this);
 		rightHalf = new NewRightHalfCreateGamePanel(this);
-		
 		
 		setLeftComponent(leftHalf);
 		setRightComponent(rightHalf);
@@ -107,7 +106,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		}
 	}
 	
-	public NewCreateGamePanel(Game game, List<Requirement> selectedReqs) {
+	public NewCreateGamePanel(Game game, List<PPRequirement> selectedReqs) {
 		currentGame = game;
 		setCurrentReqs(selectedReqs);
 		leftHalf = new NewLeftHalfCreateGamePanel(this);
@@ -281,7 +280,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 			currentGame = new Game();
 			setCurrentGame(true);
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
-			RequirementModel.getInstance().addRequirements(rightHalf.getRequirements().toArray(new Requirement[1]), currentGame.getIdentity()); //New Requirements get added to server
+			PPRequirementModel.getInstance().addRequirements(rightHalf.getRequirements().toArray(new PPRequirement[1]), currentGame.getIdentity()); //New Requirements get added to server
 		} else{
 			setCurrentGame(true);
 		}
@@ -326,7 +325,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 * Gets the requirements for this panel
 	 * @return the requirements that have been created for this game.
 	 */
-	private List<Requirement> getRequirements() {
+	private List<PPRequirement> getRequirements() {
 		return rightHalf.getRequirements();
 	}
 
@@ -358,7 +357,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	/**
 	 * @return the currentReqs
 	 */
-	public List<Requirement> getCurrentReqs() {
+	public List<PPRequirement> getCurrentReqs() {
 		return currentReqs;
 	}
 
@@ -366,7 +365,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	/**
 	 * @param currentReqs the currentReqs to set
 	 */
-	public void setCurrentReqs(List<Requirement> currentReqs) {
+	public void setCurrentReqs(List<PPRequirement> currentReqs) {
 		this.currentReqs = currentReqs;
 	}	
 }

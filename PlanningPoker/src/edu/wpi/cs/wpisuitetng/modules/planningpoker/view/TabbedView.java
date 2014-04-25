@@ -31,6 +31,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.DeckOverview;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.GameOverview;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CreateDeckPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
@@ -67,7 +68,7 @@ public class TabbedView extends JTabbedPane {
 		
 		addTab("Game Overview", gameOverview);
 		
-		//ADD THIS LINE TO ADD DECK OVERVIEW BACK addTab("Deck Overview", deckOverview);
+		addTab("Deck Overview", deckOverview);
 		 
 	    //this.setBorder(BorderFactory.createLineBorder(Color.green, 2));
 		setTabLayoutPolicy(SCROLL_TAB_LAYOUT);
@@ -282,22 +283,28 @@ public class TabbedView extends JTabbedPane {
 		if (comp instanceof ICreateGamePanel){
 			if(!((ICreateGamePanel) comp).readyToRemove()) return;
 			listOfCreateGamePanels.remove(comp);
+			setSelectedComponent(gameOverview);
 		}
 		if (comp instanceof IActiveGamePanel) {
 			if(!((IActiveGamePanel) comp).readyToRemove()) return;
 			listOfActiveGamePanels.remove(comp);
+			setSelectedComponent(gameOverview);
 		}
 		if (comp instanceof IEndedGamePanel){
 			if(!((IEndedGamePanel)comp).readyToRemove()) return;
 			listOfEndedGamePanels.remove(comp);
+			setSelectedComponent(gameOverview);
 		}
 		if (comp instanceof PreferencesPanel){
 			//TODO Implement preferences like other panels to use readyToRemove
 			//if(!((IEndedGamePanel)comp).readyToRemove()) return;
-			hasPreferencesTab = false;	
+			hasPreferencesTab = false;
+			setSelectedComponent(gameOverview);
+		}
+		if (comp instanceof CreateDeckPanel){
+			setSelectedComponent(deckOverview);
 		}
 		remove(comp);
-		setSelectedComponent(gameOverview);
 	}
 	
 	/**

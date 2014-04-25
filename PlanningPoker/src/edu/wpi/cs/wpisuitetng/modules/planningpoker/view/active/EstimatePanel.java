@@ -37,7 +37,7 @@ import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.ActiveCardsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton;
@@ -50,7 +50,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
  */
 public class EstimatePanel extends JPanel{
 	Game activeGame;
-	Requirement activeRequirement;	
+	PPRequirement activeRequirement;	
 	
 	private List<String> deck = new ArrayList<String>();
 	ActiveCardsPanel cardsPanel;
@@ -91,7 +91,7 @@ public class EstimatePanel extends JPanel{
 	 * @param requirement the requirement to be added
 	 * @param deck2 the deck of cards that can be added to the game
 	 **/
-	public EstimatePanel(Game game, Requirement requirement, List<String> deck2){ //add a deck of cards as a parameter
+	public EstimatePanel(Game game, PPRequirement requirement, List<String> deck2){ //add a deck of cards as a parameter
 
 		super(new GridBagLayout());
 
@@ -392,7 +392,7 @@ public class EstimatePanel extends JPanel{
 	 * getter for the requirement field
 	 * @return activeRequirement
 	 */
-	public Requirement getRequirement(){
+	public PPRequirement getRequirement(){
 		return activeRequirement;
 	}
 	

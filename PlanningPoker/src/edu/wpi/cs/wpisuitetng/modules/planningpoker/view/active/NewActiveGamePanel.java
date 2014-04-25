@@ -20,7 +20,6 @@ import javax.swing.JSplitPane;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 
@@ -80,6 +79,10 @@ public class NewActiveGamePanel extends JSplitPane implements IModelObserver, IA
 	public boolean readyToRemove() {
 		// TODO Auto-generated method stub
 		return true;
+	}
+	
+	public RequirementTable getReqTable(){
+		return rightHalf.getReqTable();
 	}
 	
 	/*

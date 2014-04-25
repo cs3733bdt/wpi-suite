@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models;
 
 import java.util.List;
 
@@ -31,7 +31,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
  * @author tianchanggu
  *
  */
-public class PPRequirementEntityManager implements EntityManager<Requirement> {
+public class PPRequirementEntityManager implements EntityManager<PPRequirement> {
 
 	/** The database */
 	Data db;
@@ -54,8 +54,8 @@ public class PPRequirementEntityManager implements EntityManager<Requirement> {
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#makeEntity(edu.wpi.cs.wpisuitetng.Session, java.lang.String)
 	 */
 	@Override
-	public Requirement makeEntity(Session s, String content) throws WPISuiteException {
-		final Requirement newRequirement = Requirement.fromJson(content);
+	public PPRequirement makeEntity(Session s, String content) throws WPISuiteException {
+		final PPRequirement newRequirement = PPRequirement.fromJSON(content);
 		if(!db.save(newRequirement, s.getProject())) {
 			throw new WPISuiteException();
 		}
@@ -71,15 +71,15 @@ public class PPRequirementEntityManager implements EntityManager<Requirement> {
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getEntity(Session, String)
 	 */
 	@Override
-	public Requirement[] getEntity(Session s, String id) throws NotFoundException {
+	public PPRequirement[] getEntity(Session s, String id) throws NotFoundException {
 		final int intId = Integer.parseInt(id);
 		if(intId < 1) {
 			throw new NotFoundException();
 		}
-		Requirement[] requirements = null;
+		PPRequirement[] requirements = null;
 		try {
-			requirements = db.retrieve(Requirement.class, 
-					"id", intId, s.getProject()).toArray(new Requirement[0]);
+			requirements = db.retrieve(PPRequirement.class, 
+					"id", intId, s.getProject()).toArray(new PPRequirement[0]);
 		} catch (WPISuiteException e) {
 			e.printStackTrace();
 		}
@@ -98,8 +98,8 @@ public class PPRequirementEntityManager implements EntityManager<Requirement> {
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#getAll(Session)
 	 */
 	@Override
-	public Requirement[] getAll(Session s) {
-		return db.retrieveAll(new Requirement(), s.getProject()).toArray(new Requirement[0]);
+	public PPRequirement[] getAll(Session s) {
+		return db.retrieveAll(new PPRequirement(), s.getProject()).toArray(new PPRequirement[0]);
 	}
 
 	/**
@@ -108,7 +108,7 @@ public class PPRequirementEntityManager implements EntityManager<Requirement> {
 	 * @param model the model to be saved
 	 */
 	@Override
-	public void save(Session s, Requirement model) {
+	public void save(Session s, PPRequirement model) {
 		db.save(model, s.getProject());
 	}
 	
@@ -148,7 +148,7 @@ public class PPRequirementEntityManager implements EntityManager<Requirement> {
 	@Override
 	public void deleteAll(Session s) throws WPISuiteException {
 		ensureRole(s, Role.ADMIN);
-		db.deleteAll(new Requirement(), s.getProject());
+		db.deleteAll(new PPRequirement(), s.getProject());
 	}
 	
 	/**
@@ -159,7 +159,7 @@ public class PPRequirementEntityManager implements EntityManager<Requirement> {
 	 */
 	@Override
 	public int Count() throws WPISuiteException {
-		return db.retrieveAll(new Requirement()).size();
+		return db.retrieveAll(new PPRequirement()).size();
 	}
 
 	/**
@@ -172,22 +172,22 @@ public class PPRequirementEntityManager implements EntityManager<Requirement> {
 	 * @see edu.wpi.cs.wpisuitetng.modules.EntityManager#update(Session, String)
 	 */
 	@Override
-	public Requirement update(Session session, String content) throws WPISuiteException {
+	public PPRequirement update(Session session, String content) throws WPISuiteException {
 		
-		Requirement updatedRequirement = Requirement.fromJson(content);
+		PPRequirement updatedRequirement = PPRequirement.fromJSON(content);
 		/*
 		 * Because of the disconnected objects problem in db4o, we can't just save Requirements.
 		 * We have to get the original defect from db4o, copy properties from updatedRequirement,
 		 * then save the original Requirement again.
 		 */
-		List<Model> oldRequirements = db.retrieve(Requirement.class, 
-				"identity", updatedRequirement.getIdentity(), session.getProject());
+		List<Model> oldRequirements = db.retrieve(PPRequirement.class, 
+				"id", updatedRequirement.getId(), session.getProject());
 		if(oldRequirements.size() < 1 || oldRequirements.get(0) == null) {
 			System.err.println("The requiremnent with the id: " + updatedRequirement.getId() + " does not exist");
 			throw new BadRequestException("Requirement with ID does not exist.");
 		}
 				
-		Requirement existingRequirement = (Requirement)oldRequirements.get(0);		
+		PPRequirement existingRequirement = (PPRequirement)oldRequirements.get(0);		
 
 		// copy values to old requirement and fill in our changeset appropriately
 		existingRequirement.copyFrom(updatedRequirement);

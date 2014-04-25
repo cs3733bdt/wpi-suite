@@ -23,7 +23,6 @@ import javax.mail.internet.MimeMessage;
 
 import com.sun.mail.util.MailConnectException;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
@@ -114,7 +113,7 @@ public class SMSNotification {
 		if(users[0] != null) {
 			for (int i = 0; i < users.length; i++) {
 				// TODO implement verify if email format
-				if (users[i].getEmail() != null)
+				if (users[i].getEmail() != null && users[i].getNotificationPreferences().contains("M"))
 					sendSMS(login(), users[i]);
 				else
 					System.err.println(users[i].getName() + " doesn't have an email Stored.");
@@ -134,21 +133,21 @@ public class SMSNotification {
 	 */
 	public String appendCarrier(User user) {
 		String numberWithCarrier = user.getPhoneNumber();
-		Carrier c = user.getCarrier();
-		switch(c) {
-		case ATT:
+		String carrier = user.getCarrier();
+		switch(carrier) {
+		case "ATT":
 			numberWithCarrier += "@txt.att.net";
 			break;
-		case VERIZON:
+		case "VERIZON":
 			numberWithCarrier += "@vtext.com";
 			break;
-		case TMOBILE:
+		case "TMOBILE":
 			numberWithCarrier += "@tmomail.net";
 			break;
-		case SPRINT:
+		case "SPRINT":
 			numberWithCarrier += "@messaging.sprintpcs.com";
 			break;
-		case USCELLULAR:
+		case "USCELLULAR":
 			numberWithCarrier += "@email.uscc.net";
 			break;
 		default:

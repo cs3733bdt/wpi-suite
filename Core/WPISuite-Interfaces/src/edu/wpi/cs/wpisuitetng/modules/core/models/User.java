@@ -30,8 +30,9 @@ public class User extends AbstractModel
 	private String email;
 	private String facebookUsername;
 	private Role role;
-	private Carrier carrier;
+	private String carrier = "--";
 	private String phoneNumber;
+	private String notificationPreferences;
 	
 	transient private String password; // excluded from serialization, still stored.
 	
@@ -53,7 +54,7 @@ public class User extends AbstractModel
 		this.facebookUsername = facebookUsername;
 		this.role = Role.USER;
 		this.phoneNumber = null;
-		this.carrier = null;
+		this.carrier = "--";
 	}
 	
 	@Override
@@ -83,6 +84,10 @@ public class User extends AbstractModel
 				}
 				
 				if(this.facebookUsername != null && !this.facebookUsername.equals(((User)other).facebookUsername)) {
+					return false;
+				}
+				
+				if(this.notificationPreferences != null && !this.notificationPreferences.equals(((User)other).notificationPreferences)) {
 					return false;
 				}
 				
@@ -158,9 +163,14 @@ public class User extends AbstractModel
 	public String getPhoneNumber(){
 		return phoneNumber;
 	}
-	public Carrier getCarrier(){
+	public String getCarrier(){
 		return carrier;
 	}
+	
+	public String getNotificationPreferences(){
+		return notificationPreferences;
+	}
+	
 	
 	/* database interaction */
 	public void save()
@@ -279,8 +289,13 @@ public class User extends AbstractModel
 		return this;
 	}
 	
-	public User setCarrier(Carrier c){
-		this.carrier = c;
+	public User setCarrier(String carrier){
+		this.carrier = carrier;
+		return this;
+	}
+	
+	public User setNotificationPreferences(String newPreferences) {
+		notificationPreferences = newPreferences;
 		return this;
 	}
 	
@@ -294,7 +309,7 @@ public class User extends AbstractModel
 		this.role = r;
 	}
 
-	
+	/*
 	public static User fromJSON(String json) {
 		// build the custom serializer/deserializer
 		Gson gson;
@@ -304,6 +319,25 @@ public class User extends AbstractModel
 		gson = builder.create();
 		
 		return gson.fromJson(json, User.class);
+	} */
+	
+	/**
+	 * Mimicks fromJSON used in requirement manager, to parse user from
+	 * a string. 
+	 * 
+	 * Use this fromJSON because original(above) was not including some of the fields we added.
+	 * 
+	 * @param json json string to parse user from
+	 * @return returns a user parsed from the json string
+	 */
+	public static User fromJSON(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, User.class);
+	}
+	
+	public static User[] fromJsonArray(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, User[].class);
 	}
 
 	@Override

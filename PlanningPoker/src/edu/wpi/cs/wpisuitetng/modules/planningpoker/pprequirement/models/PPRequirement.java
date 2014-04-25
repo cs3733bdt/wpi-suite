@@ -8,7 +8,7 @@
  *
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models;
 
 
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
  *
  */
 @UpdatedDepth(value=2)
-public class Requirement extends ObservableModel implements IModelObserver, IStorageModel<Requirement>{
+public class PPRequirement extends ObservableModel implements IModelObserver, IStorageModel<PPRequirement>{
 	/**
 	 * The ID of the requirement from the Requirement Manager
 	 * Only used if the requirement is from the Requirement Manager
@@ -59,7 +59,7 @@ public class Requirement extends ObservableModel implements IModelObserver, ISto
 
 	
 	/** If this requirement came from the requirement manager module*/
-	private boolean fromRequirementModule;
+	private boolean fromRequirementModule = false;
 	
 	/** list of votes for this requirement */
 	private List<Vote> votes = new ArrayList<Vote>();
@@ -73,7 +73,7 @@ public class Requirement extends ObservableModel implements IModelObserver, ISto
 	 * Sets all of the default values for a game class
 	 * 
 	 */
-	public Requirement() {
+	public PPRequirement() {
 		name = description = "";
 		identity = UUID.randomUUID();
 	}
@@ -84,7 +84,7 @@ public class Requirement extends ObservableModel implements IModelObserver, ISto
 	 * @param name The name of the requirement
 	 * @param description A short description of the requirement
 	 */
-	public Requirement(String name, String description) {
+	public PPRequirement(String name, String description) {
 		this();
 		this.name = name;
 		this.description = description;
@@ -113,8 +113,8 @@ public class Requirement extends ObservableModel implements IModelObserver, ISto
 	 * @param requirements List of requirements to check
 	 * @return True if the requirement exists in the list
 	 */
-	public boolean existsIn(List<Requirement> requirements) {
-		for (Requirement r: requirements) {
+	public boolean existsIn(List<PPRequirement> requirements) {
+		for (PPRequirement r: requirements) {
 			if (r.getFromRequirementModule() && id == r.getId())
 				return true;
 		}
@@ -133,12 +133,20 @@ public class Requirement extends ObservableModel implements IModelObserver, ISto
 	 * sets the id of the requirement
 	 * @param id value to set the id to
 	 */
-	public void setId(int id){
+	public void setIdPlusOne(int id){
 		delayChange();
 		fromRequirementModule = true;
 		// Make Id one more than the id in the 
 		// Requirement Manager
 		this.id = id + 1;
+	}
+	
+	public void setId(int id){
+		delayChange();
+		fromRequirementModule = true;
+		// Make Id one more than the id in the 
+		// Requirement Manager
+		this.id = id;
 	}
 	
 	/**
@@ -277,7 +285,7 @@ public class Requirement extends ObservableModel implements IModelObserver, ISto
 	 */
 	@Override
 	public String toJSON() {
-		return new Gson().toJson(this, Requirement.class);
+		return new Gson().toJson(this, PPRequirement.class);
 	}
 	
 	/**
@@ -286,14 +294,14 @@ public class Requirement extends ObservableModel implements IModelObserver, ISto
 	 * 
 	 * @param json JSON-encoded Requirement to deserialize
 	 * @return the Requirement contained in the given JSON */
-	public static Requirement fromJson(String json) {
+	public static PPRequirement fromJSON(String json) {
 		Gson gson;
 		GsonBuilder builder = new GsonBuilder();
 		// Use our custom deserializer
-		builder.registerTypeAdapter(Requirement.class, new RequirementDeserializer());
+		builder.registerTypeAdapter(PPRequirement.class, new PPRequirementDeserializer());
 		gson = builder.create();
 		
-		return gson.fromJson(json, Requirement.class);
+		return gson.fromJson(json, PPRequirement.class);
 	}
 	
 	/**
@@ -302,14 +310,14 @@ public class Requirement extends ObservableModel implements IModelObserver, ISto
 	 * 
 	 * @param json string containing a JSON-encoded array of Requirement
 	 * @return an array of Requirement deserialized from the given JSON string */
-	public static Requirement[] fromJsonArray(String json) {
+	public static PPRequirement[] fromJsonArray(String json) {
 		Gson gson;
 		GsonBuilder builder = new GsonBuilder();
 		// Use our custom deserializer
-		builder.registerTypeAdapter(Requirement.class, new RequirementDeserializer());
+		builder.registerTypeAdapter(PPRequirement.class, new PPRequirementDeserializer());
 		gson = builder.create();
 		
-		return gson.fromJson(json, Requirement[].class);
+		return gson.fromJson(json, PPRequirement[].class);
 	}
 
 	/**
@@ -326,7 +334,7 @@ public class Requirement extends ObservableModel implements IModelObserver, ISto
 		if(o.getClass() != this.getClass()) {
 			return false;
 		}
-		Requirement comp = (Requirement)o;
+		PPRequirement comp = (PPRequirement)o;
 		
 		if(fromRequirementModule) {
 			if(id != comp.id) {
@@ -365,7 +373,7 @@ public class Requirement extends ObservableModel implements IModelObserver, ISto
 	 * @param toCopyFrom the requirement to copy from.
 	 * @return true if copyFrom succeeded, false if it did not
 	 */
-	public boolean copyFrom(Requirement toCopyFrom) {
+	public boolean copyFrom(PPRequirement toCopyFrom) {
 		boolean wasChanged = false;
 		if(id != toCopyFrom.id){
 			id = toCopyFrom.id;
@@ -439,10 +447,10 @@ public class Requirement extends ObservableModel implements IModelObserver, ISto
 		return 0;
 	}
 
-	public static Requirement fromJSON(String json) {
+	/*public static Requirement fromJSON(String json) {
 			final Gson parser = new Gson();
 			return parser.fromJson(json, Requirement.class);
-	}
+	}*/
 
 	/**
 	 * @return the gameID

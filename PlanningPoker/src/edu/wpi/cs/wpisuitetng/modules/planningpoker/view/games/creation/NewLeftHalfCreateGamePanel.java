@@ -24,7 +24,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -40,6 +39,7 @@ import javax.swing.border.Border;
 import org.jdesktop.swingx.JXDatePicker;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewLaunchGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewSaveGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
@@ -53,7 +53,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * Used to input the Games name, description, end date, whether it uses cards
  */
 public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataField{
-		
+	private NewCreateGamePanel parent;
+	
 	private NameJTextField nameTextField;
 	private DescriptionJTextArea descriptionTextField;
 	
@@ -65,8 +66,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	private NewSaveGameButtonPanel saveGameButton;
 	private NewLaunchGameButtonPanel launchGameButton;
 	//TODO: IMPLEMENT A CANCELGAMEBUTTONPANEL CLASS
-	//private NewCancelGameButton cancelGameButton;
-	private JButton cancelGameButton = new JButton("Cancel Game");
+	private CancelButton cancelGameButton;
 	
 	/** Shows the names of the errors */
 	private ErrorLabel errorField;
@@ -79,7 +79,6 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	    
 	private final Border defaultDateBorder = (new JXDatePicker()).getBorder();	
 	
-	private NewCreateGamePanel parent;
 	
 	/**
 	 * Builds the left half of the CreateGamePanel
@@ -90,6 +89,14 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		game = mainPanel.getGame();
 		build();
 		buildFields();
+		
+		nameTextField.requestFocus();
+		if(game != null){
+			nameTextField.select(game.getName().length(), game.getName().length());;
+		}
+		else{
+			nameTextField.select(0,0);
+		}
 	}
 	
 	/**
@@ -108,6 +115,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		 */
 		JLabel nameLabel = new JLabel("Name * ");						//Creates the Label for the Name
 		nameTextField = new NameJTextField(30);							//Initializes the text field for the game name and sets the size to 30
+		nameTextField.setFocusable(true);
 		
 		JLabel descLabel = new JLabel("Description * ");				//Creates the label for the Description
 		
@@ -143,12 +151,12 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		
 		saveGameButton = new NewSaveGameButtonPanel(parent);				//Creates a save game button
 		launchGameButton = new NewLaunchGameButtonPanel(parent);		//Creates a launch game button
-		//cancelGameButton = new NewCancelGameButtonPanel(this);		//TODO implement this
+		cancelGameButton = new CancelButton("Cancel Game", parent);		//TODO implement this
 		
 		JPanel buttonPanel = new JPanel();								//Creates a panel for the buttons
 		buttonPanel.add(saveGameButton);								//Adds the save button to the panel
 		buttonPanel.add(launchGameButton);								//Adds the launch button to the panel
-		//buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel		
+		buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel		
 		
 		
 		addMouseListenerTo(buttonPanel);							//Adds MouseListener to validate on mouse click
@@ -315,6 +323,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		
 		isEndDateValid = getEndDateField().validateField(errorField, showLabel, showBox);
 		if (!isEndDateValid) {
+			
 			getBoxDescription().setBorder(defaultTextAreaBorder);
 			getBoxName().setBorder(defaultTextFieldBorder);
 			parent.getRightHalf().getCurrentReqsPanel().setBorder((new JPanel().getBorder()));

@@ -117,7 +117,7 @@ public class EmailNotification {
 			// Send email to each user
 			for (int i = 0; i < users.length; i++) {
 				// TODO implement verify if email format
-				if (users[i].getEmail() != null)
+				if (users[i].getEmail() != null && users[i].getNotificationPreferences().contains("E"))
 					sendEmail(login(), users[i]);
 				else
 					System.err.println(users[i].getName() + " doesn't have an email Stored.");
@@ -205,7 +205,8 @@ public class EmailNotification {
 	 */
 	private String generateCreateGameMessage(){
 		String reqs = "";
-		/*for(Requirement r : g.getRequirements()){
+		/*
+		for(PPRequirement r : g.getRequirements()){
 			reqs = reqs + r.toString();
 		}*/
 		
@@ -225,7 +226,7 @@ public class EmailNotification {
 		String stats = "";
 		ArrayList<Integer> voteArray = new ArrayList<Integer>();
 		
-		/*for(Requirement r : g.getRequirements()) {
+		/*for(PPRequirement r : g.getRequirements()) {
 			
 			for(int i=0; i < r.getVotes().size(); i++) {
 				voteArray.add(r.getVotes().get(i).getVoteNumber());

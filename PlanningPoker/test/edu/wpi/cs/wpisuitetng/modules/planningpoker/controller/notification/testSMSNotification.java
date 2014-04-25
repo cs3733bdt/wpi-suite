@@ -16,7 +16,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
 /**
  * @author doruk
@@ -30,15 +30,15 @@ public class testSMSNotification {
 	String[] support1;
 	Project p;
 	SMSNotification sms;
-	List<Requirement> reqs;
+	List<PPRequirement> reqs;
 	
 	@Before
 	public void setUp()
 	{
-		reqs = new ArrayList<Requirement>();
+		reqs = new ArrayList<PPRequirement>();
 		g = new Game("Email Test Game", "Email Test Game Description", reqs, false, false);
 		u1 = new User("testuser1", "user1", "pass", "paleondires@wpi.edu", "peter.leondires", 1123);
-		u1.setCarrier(Carrier.VERIZON);
+		u1.setCarrier("VERIZON");
 		u1.setPhoneNumber("1234567890");
 		team1 = new User[3];
 		team1[0] = u1;
@@ -66,7 +66,7 @@ public class testSMSNotification {
 		/**
 		 *  Commented out to prevent spam. Works as of 4/8/14
 		 *  u1.setPhoneNumber("");
-		 *  u1.setCarrier(Carrier.VERIZON);
+		 *  u1.setCarrier("VERIZON");
 		 *  sms.sendSMS(sms.login(), u1);
 		 */
 	}
@@ -77,7 +77,7 @@ public class testSMSNotification {
 		/**
 		 *  Commented out to prevent spam. Works as of 4/8/14
 		 *  u1.setPhoneNumber("");
-		 *  u1.setCarrier(Carrier.TMOBILE);
+		 *  u1.setCarrier("TMOBILE");
 		 *  sms.sendSMS(sms.login(), u1);
 		 */
 	}
@@ -88,7 +88,7 @@ public class testSMSNotification {
 		/**
 		 *  Commented out to prevent spam. Works as of 4/8/14
 		 *  u1.setPhoneNumber("");
-		 *  u1.setCarrier(Carrier.SPRINT);
+		 *  u1.setCarrier("SPRINT");
 		 *  sms.sendSMS(sms.login(), u1);
 		 */
 	}
@@ -99,7 +99,7 @@ public class testSMSNotification {
 		/**
 		 *  Commented out to prevent spam. Works as of 4/8/14
 		 *  u1.setPhoneNumber("");
-		 *  u1.setCarrier(Carrier.ATT);
+		 *  u1.setCarrier("ATT");
 		 *  sms.sendSMS(sms.login(), u1);
 		 */
 	}
@@ -110,7 +110,7 @@ public class testSMSNotification {
 		/**
 		 *  Commented out to prevent spam. Works as of 4/8/14
 		 *  u1.setPhoneNumber("");
-		 *  u1.setCarrier(Carrier.USCELLULAR);
+		 *  u1.setCarrier("USCELLULAR");
 		 *  sms.sendSMS(sms.login(), u1);
 		 */
 	}

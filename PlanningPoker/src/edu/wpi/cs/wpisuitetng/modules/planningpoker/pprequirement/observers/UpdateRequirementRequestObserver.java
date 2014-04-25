@@ -1,12 +1,10 @@
 /**
  * 
  */
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers;
 
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.UpdateRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.UpdatePPRequirementController;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -17,9 +15,9 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  */
 public class UpdateRequirementRequestObserver implements RequestObserver {
 
-	private final UpdateRequirementController controller;
+	private final UpdatePPRequirementController controller;
 	
-	public UpdateRequirementRequestObserver(UpdateRequirementController controller) {
+	public UpdateRequirementRequestObserver(UpdatePPRequirementController controller) {
 		this.controller = controller;
 	}
 

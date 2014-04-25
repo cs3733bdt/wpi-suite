@@ -41,9 +41,9 @@ import javax.swing.event.ListSelectionListener;
 
 import org.jdesktop.swingx.JXDatePicker;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.RetrieveRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
@@ -62,7 +62,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	private NewAddReqImportReqPanel importPanel; // initialize the panel with the buttons Add Requirement" and "Import Requirements"
 	private NewCreateGamePanel parent; // initialize variable to hold panel above this panel
 
-	private List<Requirement> requirements = new ArrayList<Requirement>();
+	private List<PPRequirement> requirements = new ArrayList<PPRequirement>();
 
 	private final Border defaultTextFieldBorder = (new JTextField())
 			.getBorder();
@@ -100,15 +100,15 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 
 	private JPanel importReqsPanel = new JPanel();
 
-	private JButton addReqButton = new JButton("Add Requirement");
+	private JButton addReqButton = new JButton("Create Requirement");
 
 	private JButton editReqButton = new JButton("Edit");
 
 	private JButton updateAddReqButton = new JButton("Update");
 
-	private JButton submitAddReqButton = new JButton("Submit");
+	private JButton submitAddReqButton = new JButton("Create");
 
-	private JButton importReqButton = new JButton("Import");
+	private JButton importReqButton = new JButton("Import Requirements");
 
 	private JButton removeReqButton = new JButton("Remove");
 
@@ -130,7 +130,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		SpringLayout layout = new SpringLayout(); // Creates the layout to be used: Spring Layout
 		rightView.setLayout(layout); // Sets the container to have the spring layout
 
-		currentTable = new RequirementTable(new ArrayList<Requirement>(),
+		currentTable = new RequirementTable(new ArrayList<PPRequirement>(),
 				RequirementTableMode.CREATE);
 		Font labelFont = makeFont();
 
@@ -252,7 +252,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		JLabel importReq = new JLabel("Import Requirements"); // Creates the label import requirement
 		importReq.setFont(labelFont); // Sets the label font
 
-		importTable = new RequirementTable(new ArrayList<Requirement>(),
+		importTable = new RequirementTable(new ArrayList<PPRequirement>(),
 				RequirementTableMode.ENDED);
 		importTable.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener() {
@@ -294,7 +294,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		/**
 		 * Creates a new button to import the requirements to the game
 		 */
-		submitImportReqButton = new JButton("Submit");
+		submitImportReqButton = new JButton("Import");
 		submitImportReqButton.setEnabled(false);
 		submitImportReqButton.addActionListener(new ActionListener() {
 			@Override
@@ -341,7 +341,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		 */
 		JButton testButton = new JButton("tttttttttttttttttt"); // Don't change text, it determines button width...
 		Dimension buttonD = testButton.getPreferredSize();
-		importReqButton.setPreferredSize(buttonD);
 		editReqButton.setPreferredSize(buttonD);
 		removeReqButton.setPreferredSize(buttonD);
 
@@ -529,6 +528,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 				updateAddReqButton.setEnabled(false);
 				updateReqsLabel.setVisible(false);
 				createReqsLabel.setVisible(true);
+				nameArea.requestFocus();
+				nameArea.select(0, 0);
 				displayError("Name is required");
 				disableButtons();
 			}
@@ -548,6 +549,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 				addReqButton.setEnabled(false);
 				importReqButton.setEnabled(false);
 				removeReqButton.setEnabled(false);
+				submitImportReqButton.setEnabled(false);
 				disableButtons();
 			}
 		});
@@ -581,6 +583,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 						for (int i = 0; i < rows.length; i++) {
 							selectedName = (String) currentTable.getValueAt(rows[i], 0);
 							/*if (RequirementModel.getInstance().getRequirement(selectedName) != null) {
+							selectedName = (String) currentTable.getValueAt(
+									rows[i], 0);
+							if (PPRequirementModel.getInstance().getRequirement(
+									selectedName) != null) {
 								hasImported = true;
 							}*/
 						}
@@ -615,7 +621,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		}
 
 		// Add the Requirements from the Requirement Manager to the model
-		RetrieveRequirementController controller = RetrieveRequirementController.getInstance();
+		RetrievePPRequirementController controller = RetrievePPRequirementController.getInstance();
 		controller.retrieveRequirements();
 
 		// Sleep the thread for a little bit to ensure that
@@ -628,11 +634,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		}
 
 		// Get the requirements from the model
-		List<Requirement> requirements = RequirementModel.getInstance()
-				.getRequirements();
+		List<PPRequirement> requirements = PPRequirementModel.getInstance().getRequirements();
 
 		// Add the imported requirements to the table
-		for (Requirement r : requirements) {
+		for (PPRequirement r : requirements) {
 			if (r.getFromRequirementModule()) {
 				// Don't allow duplicate requirements
 				if (!r.existsIn(this.requirements)){
@@ -653,7 +658,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 
 	private void submitButtonPressed() {
 		if (validateNameAndDesc(true, true)) {
-			addRequirement(new Requirement(nameArea.getText(), descArea.getText()));
+			addRequirement(new PPRequirement(nameArea.getText(), descArea.getText()));
 			nameArea.setText("");
 			descArea.setText("");
 			createReqsPanel.setVisible(false);
@@ -708,11 +713,10 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	}
 
 	private void submitImportButtonPressed() {
-
 		int[] rows = importTable.getSelectedRows();
 		for (int i = 0; i < rows.length; i++) {
 			String selectedName = (String) importTable.getValueAt(rows[i], 0);
-			//addRequirement(RequirementModel.getInstance().getRequirement(selectedName));
+			//addRequirement(PPRequirementModel.getInstance().getRequirement(selectedName));
 		}
 
 		parent.updateButtons();
@@ -730,7 +734,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		boolean nameValid = false;
 		boolean uniqueName = false;
 
-		if (checkduplicateReq(new Requirement(nameArea.getText(), descArea.getText()))) {
+		if (checkduplicateReq(new PPRequirement(nameArea.getText(), descArea.getText()))) {
 			uniqueName = false;
 			displayError("A requirement already exists with that name");
 		} else {
@@ -785,13 +789,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	 */
 	public void buildFields() {
 		if (parent.getGame() != null) {
-			for (Requirement r : parent.getCurrentReqs()) {
+			for (PPRequirement r : parent.getCurrentReqs()) {
 				addRequirement(r);
 			}
 		}
 	}
 
-	public List<Requirement> getRequirements() {
+	public List<PPRequirement> getRequirements() {
 		return requirements;
 	}
 
@@ -825,7 +829,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	 * @param requirement
 	 *            The requirement to be added to the game
 	 */
-	public void addRequirement(Requirement requirement) {
+	public void addRequirement(PPRequirement requirement) {
 		if (!checkduplicateReq(requirement)) {
 			currentTable.getTableModel().addRow(new Object[] { requirement.getName(), requirement.getDescription() });
 			requirements.add(requirement);
@@ -860,8 +864,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	 * @param requirement
 	 * @return true if the requirement is already in the table
 	 */
-	private boolean checkduplicateReq(Requirement requirement) {
-		List<Requirement> reqList = requirements;
+	private boolean checkduplicateReq(PPRequirement requirement) {
+		List<PPRequirement> reqList = requirements;
 		String reqName;
 		for (int i = 0; i < reqList.size(); i++) {
 			reqName = reqList.get(i).getName();

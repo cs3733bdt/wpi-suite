@@ -9,7 +9,7 @@
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +18,8 @@ import java.util.UUID;
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.UpdateRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.AddPPRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.UpdatePPRequirementController;
 
 
 //import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
@@ -31,10 +31,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.Upda
  *
  */
 @SuppressWarnings("serial")
-public class RequirementModel extends AbstractStorageModel<Requirement>{
+public class PPRequirementModel extends AbstractStorageModel<PPRequirement>{
 	
-	protected RequirementModel() {
-		super(new ArrayList<Requirement>());
+	protected PPRequirementModel() {
+		super(new ArrayList<PPRequirement>());
 		nextID = 0;
 		// TODO Auto-generated constructor stub
 	}
@@ -45,24 +45,24 @@ public class RequirementModel extends AbstractStorageModel<Requirement>{
 	private int nextID; // the next available ID number for the requirements that are added.
 	
 	//the static object to allow the requirement model to be 
-	private static RequirementModel instance; 
+	private static PPRequirementModel instance; 
 
 	/**
 	 * Constructs an empty list of requirements for the project
 	 */
-	/*private RequirementModel (){
-		requirements = new ArrayList<Requirement>();
+	/*private PPRequirementModel (){
+		requirements = new ArrayList<PPRequirement>();
 		nextID = 0;
 	}*/
 	
 	/**
 	 * @return the instance of the requirement model singleton.
 	 */
-	public static RequirementModel getInstance()
+	public static PPRequirementModel getInstance()
 	{
 		if(instance == null)
 		{
-			instance = new RequirementModel();
+			instance = new PPRequirementModel();
 		}
 		return instance;
 	}
@@ -72,11 +72,11 @@ public class RequirementModel extends AbstractStorageModel<Requirement>{
 	 * 
 	 * @param newReq The requirement to be added to the list of requirements in the project
 	 */
-	public void addRequirement(Requirement newReq){
+	public void addRequirement(PPRequirement newReq){
 		// add the requirement
 		add(newReq);
 		try{
-			AddRequirementController.getInstance().addRequirement(newReq);
+			AddPPRequirementController.getInstance().addRequirement(newReq);
 			/*
 			ViewEventController.getInstance().refreshTable();
 			ViewEventController.getInstance().refreshTree();
@@ -88,12 +88,47 @@ public class RequirementModel extends AbstractStorageModel<Requirement>{
 	}
 	
 	/**
+	 * Returns the Requirement with the given ID
+	 * 
+	 * @param id The ID number of the requirement to be returned
+	
+	 * @return the requirement for the id or null if the requirement is not found
+	 */
+	/*public PPRequirement getRequirement(int id)
+	{
+		PPRequirement temp = null;
+		// iterate through list of requirements until id is found
+		for (int i=0; i < requirements.size(); i++){
+			temp = requirements.get(i);
+			if (temp.getId() == id){
+				break;
+			}
+		}
+		return temp;
+	}*/
+	
+	/**
+	 * Gets a requirement from the list of requirements
+	 * by the name of the requirement
+	 * @param name the name of the requirement
+	 * @return the requirement with given name
+	 */
+	/*public PPRequirement getRequirement(String name) {
+		PPRequirement req = null;
+		for (PPRequirement r: requirements) {
+			if (r.getName().equals(name))
+				req = r;
+		}
+		return req;
+	}*/
+	
+	/**
 	 * Removes the requirement with the given ID
 	 * 
 	 * @param removeId The ID number of the requirement to be removed 
 	 * from the list of requirements in the project
 	 */
-	public void removeRequirementFromModel(Requirement toRemove){
+	public void removeRequirementFromModel(PPRequirement toRemove){
 		removeFromModel(toRemove);
 	}
 	
@@ -110,6 +145,24 @@ public class RequirementModel extends AbstractStorageModel<Requirement>{
 	}
 
 	/**
+	 * This function takes an index and finds the requirement in the list of requirements
+	 * for the project. Used internally by the JList in NewRequirementModel.
+	 * 
+	 * @param index The index of the requirement to be returned
+	
+	
+	
+	 * @return the requirement associated with the provided index * 
+	 * @see javax.swing.ListModel#getElementAt(int) * 
+	 * @see javax.swing.ListModel#getElementAt(int) * 
+	 * @see javax.swing.ListModel#getElementAt(int)
+	 */
+	/*@Override
+	public PPRequirement getElementAt(int index) {
+		return requirements.get(requirements.size() - 1 - index);
+	}*/
+
+	/**
 	 * Removes all requirements from this model
 	 * 
 	 * NOTE: One cannot simply construct a new instance of
@@ -119,7 +172,7 @@ public class RequirementModel extends AbstractStorageModel<Requirement>{
 	 */
 	/*public void emptyModel() {
 		int oldSize = getSize();
-		Iterator<Requirement> iterator = requirements.iterator();
+		Iterator<PPRequirement> iterator = requirements.iterator();
 		while (iterator.hasNext()) {
 			iterator.next();
 			iterator.remove();
@@ -132,12 +185,13 @@ public class RequirementModel extends AbstractStorageModel<Requirement>{
 	 * 
 	 * @param requirements the array of requirements to add
 	 */
-	public void addRequirements(Requirement[] requirements, UUID gameID) {
-		for(Requirement r : requirements) {
+	public void addRequirements(PPRequirement[] requirements, UUID gameID) {
+		for(PPRequirement r : requirements) {
 			r.setGameID(gameID);
 		}
 		updateRequirements(requirements);
 		/*for (int i = 0; i < requirements.length; i++) {
+		for (int i = 0; i < requirements.length; i++) {
 			if (!this.requirements.contains(requirements[i].getId())) {
 				this.requirements.add(requirements[i]);
 				if(requirements[i].getId() >= nextID) nextID = requirements[i].getId() + 1;
@@ -150,8 +204,8 @@ public class RequirementModel extends AbstractStorageModel<Requirement>{
 		*/
 	}
 	
-	private synchronized void updateRequirements(Requirement[] requirements) {
-		boolean changes = updateModels(requirements);
+	private synchronized void updateRequirements(PPRequirement[] allRequirements) {
+		boolean changes = updateModels(allRequirements);
 
 		if (changes) { // Only repaint game tree if the model has changed
 		} else {
@@ -182,35 +236,35 @@ public class RequirementModel extends AbstractStorageModel<Requirement>{
 	 * @param id the id that is being checked
 	 * @return true if a requirement with id exists in the list of requirements
 	 */
-	public boolean contains(int id) {
-		/*for (Requirement r: requirements) {
+	/*public boolean contains(int id) {
+		for (PPRequirement r: requirements) {
 			if (r.getId() == id)
 				return true;
-		}*/
+		}
 		return false;
-	}
+	}*/
 
 	/**
 	 * Returns the list of the requirements
 	
 	 * @return the requirements held within the requirementmodel.
 	 */
-	public List<Requirement> getRequirements() {
+	public List<PPRequirement> getRequirements() {
 		return list;
 	}
 
-	public Requirement getRequirementById(UUID id) throws NotFoundException {
+	public PPRequirement getRequirementById(UUID id) throws NotFoundException {
 		return getModelById(id);
 	}
 
 	@Override
 	public void update(ObservableModel o, Object arg) {
 		System.out.println("I'm here with: " + o.toString());
-		if (o instanceof Requirement) {
+		if (o instanceof PPRequirement) {
 			try {
-				UpdateRequirementController.getInstance().updateRequirement((Requirement) o);
+				UpdatePPRequirementController.getInstance().updatePPRequirement((PPRequirement) o);
 				System.out.println("A game is being updated: "
-						+ ((Requirement) o).getName());
+						+ ((PPRequirement) o).getName());
 			} catch (Exception e) {
 				System.err.println("The network has not been instantiated");
 			}

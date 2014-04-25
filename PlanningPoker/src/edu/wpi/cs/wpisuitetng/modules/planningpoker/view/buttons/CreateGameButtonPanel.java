@@ -44,7 +44,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
-		setPreferredSize(new Dimension(170 ,50)); //SWITCH WIDTH TO 400
+		setPreferredSize(new Dimension(400 ,50));
 		
 		
 	   try {
@@ -87,7 +87,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		});	
 		
 		contentPanel.add(createGameIcon);
-		//ADD THIS LINE TO ADD CREATE DECK BUTTON BACK contentPanel.add(createDeckIcon);
+		contentPanel.add(createDeckIcon);
 		//contentPanel.setOpaque(false);
 		
 		contentPanel.setOpaque(false);

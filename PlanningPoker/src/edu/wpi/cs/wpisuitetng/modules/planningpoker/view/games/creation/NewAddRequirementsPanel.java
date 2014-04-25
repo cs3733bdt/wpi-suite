@@ -22,7 +22,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
 public class NewAddRequirementsPanel extends JPanel {
 	
@@ -439,7 +439,7 @@ public class NewAddRequirementsPanel extends JPanel {
 		return currentReqsPanel;
 	}
 
-	public void addRequirement(Requirement requirement){
+	public void addRequirement(PPRequirement requirement){
 		//table2.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 	}
 	

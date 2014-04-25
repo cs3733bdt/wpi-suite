@@ -23,7 +23,7 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.Deck;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
@@ -45,10 +45,10 @@ public class GameTest {
 
 	@Test
 	public void testJSONConversion() {
-		List<Requirement> reqList = new ArrayList<Requirement>();
+		List<PPRequirement> reqList = new ArrayList<PPRequirement>();
 		
 		Game object = new Game("Game A", "Test description", reqList, true, false);
-		Requirement req = new Requirement("Test Requirement", "Test description");
+		PPRequirement req = new PPRequirement("Test Requirement", "Test description");
 		
 		reqList.add(req);
 		//Test existing object
@@ -80,11 +80,11 @@ public class GameTest {
 		// create two games, one with fields initialized, one without
 		Game game1 = new Game("Game A",
 				"Test description", 
-				new ArrayList<Requirement>(), 
+				new ArrayList<PPRequirement>(), 
 				true, 
 				false);
-		List<Requirement> removeList = new ArrayList<Requirement>();
-		removeList.add(new Requirement("Requirement", "Description"));
+		List<PPRequirement> removeList = new ArrayList<PPRequirement>();
+		removeList.add(new PPRequirement("Requirement", "Description"));
 		Game game2 = new Game("Game B", "A Description to be removed", removeList, false, true);
 		
 		
@@ -100,8 +100,8 @@ public class GameTest {
 		assertEquals(game2.isComplete(), false);
 		assertEquals(game2.doesUseCards(), false);
 		
-		List<Requirement> keepList = new ArrayList<Requirement>();
-		keepList.add(new Requirement("Requirement One", "Description One"));
+		List<PPRequirement> keepList = new ArrayList<PPRequirement>();
+		keepList.add(new PPRequirement("Requirement One", "Description One"));
 		game1 = new Game(game1.getName(), 
 				game1.getDescription(), 
 				keepList, 
@@ -122,7 +122,7 @@ public class GameTest {
 		Game game2 = new Game();
 		Game game3 = new Game();
 		Game game4 = new Game();
-		Requirement req1 = new Requirement();
+		PPRequirement req1 = new PPRequirement();
 		
 		// Set game3 and game4 to have identical UUIDs
 		game4.setIdentifier(game3.getIdentity());
@@ -145,10 +145,10 @@ public class GameTest {
 	
 	@Test
 	public void testCheckActive(){
-		Game game1 = new Game("Game 1", "Description", new ArrayList<Requirement>(), true, true);
+		Game game1 = new Game("Game 1", "Description", new ArrayList<PPRequirement>(), true, true);
 		Game game2 = new Game("Game 2", 
 				"Other Description", 
-				new ArrayList<Requirement>(), 
+				new ArrayList<PPRequirement>(), 
 				false, 
 				false);
 		game2.makeComplete();

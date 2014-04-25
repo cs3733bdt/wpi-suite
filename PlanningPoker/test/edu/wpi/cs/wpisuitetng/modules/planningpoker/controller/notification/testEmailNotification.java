@@ -19,7 +19,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
 /**
  * @author dstapply
@@ -34,13 +34,13 @@ public class testEmailNotification {
 	String[] support1;
 	Project p;
 	EmailNotification en;
-	List<Requirement> reqs;
+	List<PPRequirement> reqs;
 	
 	@Before
 	public void setUp()
 	{
 		team1 = new User[4];
-		reqs = new ArrayList<Requirement>();
+		reqs = new ArrayList<PPRequirement>();
 		g = new Game("Game A", "Test description", reqs, true, false);
 		u1 = new User("testuser1", "user1", "pass", "paleondires@wpi.edu", "peter.leondires", 1123);
 		u2 = new User("testuser2", "user2", "pass", "cs3733bdt@wpi.edu", "fbTest", 1291);

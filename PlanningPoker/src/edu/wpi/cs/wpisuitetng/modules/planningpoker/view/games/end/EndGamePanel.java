@@ -25,7 +25,7 @@ import javax.swing.border.Border;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 /**
  * used to display the completed game and requirements within it
  * @author TomPaolillo
@@ -90,8 +90,8 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
 		setDividerLocation(420);
 		
 	}
-
-	public void updateRightHalf(Requirement req) {
+	
+	public void updateRightHalf(PPRequirement req) {
 		rightHalf.reqClicked(req);
 		return;		
 	}
@@ -200,8 +200,8 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         
-        List<Requirement> reqs = new ArrayList<Requirement>();
-        reqs.add(new Requirement("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
+        List<PPRequirement> reqs = new ArrayList<PPRequirement>();
+        reqs.add(new PPRequirement("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
 				"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
 				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"

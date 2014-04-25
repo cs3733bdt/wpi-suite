@@ -1,25 +1,25 @@
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers;
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers.UpdateRequirementRequestObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers.UpdateRequirementRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
-public class UpdateRequirementController {
-	private static UpdateRequirementController instance;
+public class UpdatePPRequirementController {
+	private static UpdatePPRequirementController instance;
 	private UpdateRequirementRequestObserver observer;
 	
-	private UpdateRequirementController() {
+	private UpdatePPRequirementController() {
 		observer = new UpdateRequirementRequestObserver(this);
 	}
 	
 	/**
 	 * @return a new instance of an UpdateGameController
 	 */
-	public static UpdateRequirementController getInstance() {
+	public static UpdatePPRequirementController getInstance() {
 		if(instance == null) {
-			instance = new UpdateRequirementController();
+			instance = new UpdatePPRequirementController();
 		}
 		return instance;
 	}
@@ -29,7 +29,7 @@ public class UpdateRequirementController {
 	 * @param newGame Game to be updated
 	 * TODO: Need model for game data
 	 */
-	public void updateRequirement(Requirement newReq) {
+	public void updatePPRequirement(PPRequirement newReq) {
 		System.out.println("Updating " + newReq.getName() + " to server");
 		// Update request
 		Request request = Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.POST);

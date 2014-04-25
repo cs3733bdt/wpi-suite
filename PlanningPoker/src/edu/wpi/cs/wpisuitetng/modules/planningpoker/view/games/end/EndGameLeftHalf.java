@@ -27,14 +27,13 @@ import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 public class EndGameLeftHalf extends JScrollPane {
 	private Game endGame;
-	private List<Requirement> reqList;
+	private List<PPRequirement> reqList;
 	private EndGamePanel parent;
 	
 	private JTextArea descriptionTextField;
@@ -59,7 +58,7 @@ public class EndGameLeftHalf extends JScrollPane {
 		build();
 	}
 	
-	public EndGameLeftHalf(final Game game, final List<Requirement> reqList, EndGamePanel parent){
+	public EndGameLeftHalf(final Game game, final List<PPRequirement> reqList, EndGamePanel parent){
 		this.parent = parent;
 		endGame = game;
 		this.reqList = reqList;
@@ -117,7 +116,7 @@ public class EndGameLeftHalf extends JScrollPane {
 		 * Initializes a table's columns and rows and the table
 		 */
 		
-		table = new RequirementTable(reqList, RequirementTableMode.ENDED);
+//		/table = new RequirementTable(reqList, RequirementTableMode.ENDED);
 		JScrollPane tablePanel = new JScrollPane(table);
 		
 		
@@ -141,7 +140,7 @@ public class EndGameLeftHalf extends JScrollPane {
 					int row = target.getSelectedRow();
 					String selectedName = (String) target.getValueAt(row, 0);
 					String selectedDesc = (String) target.getValueAt(row, 1);
-					for (Requirement r : reqList) {
+					for (PPRequirement r : reqList) {
 						if (selectedName.equals(r.getName())
 								&& selectedDesc.equals(r.getDescription())) {
 							parent.updateRightHalf(r);
@@ -207,7 +206,7 @@ public class EndGameLeftHalf extends JScrollPane {
 		repaint();
 	}
 	
-	public List<Requirement> getRequirements() {
+	public List<PPRequirement> getRequirements() {
 		return reqList;
 	}
 	
