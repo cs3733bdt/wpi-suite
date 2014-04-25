@@ -119,7 +119,12 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					nameTextField.setText(activeRequirement.getName());
 					descriptionTextField.setText(activeRequirement
 							.getDescription());
-					//estText.setText("Estimate Here");
+					
+					estText.setText("");
+					estText.setBorder(new JTextField().getBorder());
+					errorField.setText("");
+					estText.requestFocus();
+					estText.select(0, 0);
 
 					previousEst.setText("Your saved estimate is: "
 							+ activeRequirement.userVote());
@@ -520,6 +525,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			if (validateField(true)) {
 				submitButton();
 				System.out.println("Submit Vote Pressed Passed.");
+				estText.requestFocus();
+				estText.select(estText.getText().length(), estText.getText().length());
 			} else {
 				System.out.println("Submit Vote Pressed Failed.");
 			}
