@@ -241,7 +241,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		this.requirements = requirements;
 		this.hasTimeLimit = hasTimeLimit;
 		for(PPRequirement req : this.requirements){
-			req.addObserver(this);
+			//req.addObserver(this);
 			req.setProject(getProject());
 		}
 		this.usesCards = usesCards;

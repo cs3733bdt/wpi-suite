@@ -79,7 +79,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 //	private JLabel yourLabel = new JLabel("Your Estimate: 0");
 	
 	Container overviewPanel = new Container();
-	private List<PPRequirement> selectedReqs;
  
 	/**
 	 * If the ArrayList passed in is empty it will use the default deck
@@ -97,6 +96,14 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		JLabel descLabel = new JLabel("Description");
 		JLabel statLabel = new JLabel("Statistics");
 		JLabel votesLabel = new JLabel("Votes by User");
+		
+		if(activeRequirement == null) {
+			System.out.println("shits busted");
+			activeRequirement = activeGame.getRequirements().get(0);
+		}
+		if(activeGame.getRequirements().get(0) == null) {
+			System.out.println("shits very busted");
+		}
 		
 		Object[] row = makeStatRow(activeRequirement);
 		
@@ -481,6 +488,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	
 	private void finalEstimateButtonPressed() {
 		int newEstimate = Integer.parseInt(finalEstimateBox.getText());
+		List<PPRequirement> selectedReqs = activeGame.getRequirements();
 		for (int i = 0; i < selectedReqs.size(); i++) {
 			if (selectedReqs.get(i).identify(activeRequirement)) {
 				selectedReqs.get(i).setFinalEstimate(newEstimate);
