@@ -14,7 +14,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -658,5 +660,18 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		FacebookNotification fbn = new FacebookNotification(this);
 		fbn.sendFacebookNotifications();
 
+	}
+	
+	public boolean hasEnded() {
+		Calendar rightNow = Calendar.getInstance();
+		Calendar gameEnd = new GregorianCalendar();
+		gameEnd.setTime(getEndDate());
+		
+		if(rightNow.after(gameEnd)) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }
