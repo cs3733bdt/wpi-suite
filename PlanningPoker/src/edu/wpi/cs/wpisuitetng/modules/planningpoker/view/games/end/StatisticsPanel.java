@@ -67,6 +67,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	private double stDev;
 	private double median;
 	private int numVotes;
+	int currFinalEstimate;
 	
 	private ActiveStatisticsTable statTable;	
 	
@@ -120,9 +121,9 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		
 		validateSubmitButton();
 		finalEstimateDisplay = new JLabel();
-		int currFinalEstimate = activeRequirement.getFinalEstimate();
+		currFinalEstimate = activeRequirement.getFinalEstimate();
 		if (currFinalEstimate == -1) {
-			finalEstimateDisplay.setText("Your Current Final Estimate is: --");
+			finalEstimateDisplay.setText("Your Current Final Estimate is: " + mean);
 		}
 		else {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: " + currFinalEstimate);
@@ -415,7 +416,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		ArrayList<String> nameArray = requirementToNames(requirement);
 		ArrayList<Integer> voteArray = requirementToVotes(requirement);
 				for (int i = 0; i < nameArray.size(); i++) {
-					System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@Name:" + nameArray.get(i) + "Vote:" + voteArray.get(i));
 					voteTable.getTableModel().addRow(new Object[]{nameArray.get(i),voteArray.get(i)});
 				}
 	}
@@ -432,6 +432,14 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		Object[] row = makeStatRow(req);
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(req);
+		
+		if (currFinalEstimate == -1) {
+			finalEstimateDisplay.setText("Your Current Final Estimate is: " + mean);
+		}
+		else {
+			finalEstimateDisplay.setText("Your Current Final Estimate is: " + currFinalEstimate);
+		}
+		
 		finalEstimateMessage.setText("");
 		finalEstimateBox.setText("");
 		}
@@ -462,7 +470,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	}
 
 	private void validateSubmitButton() {
-		String text = finalEstimateBox.getText();
 		if (verifyFinalEstimateField()) {
 			finalEstimateButton.setEnabled(true);
 		}

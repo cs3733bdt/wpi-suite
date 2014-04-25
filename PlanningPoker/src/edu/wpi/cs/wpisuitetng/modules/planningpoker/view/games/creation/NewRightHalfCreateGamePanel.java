@@ -528,6 +528,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 				updateAddReqButton.setEnabled(false);
 				updateReqsLabel.setVisible(false);
 				createReqsLabel.setVisible(true);
+				nameArea.requestFocus();
+				nameArea.select(0, 0);
 				displayError("Name is required");
 				disableButtons();
 			}

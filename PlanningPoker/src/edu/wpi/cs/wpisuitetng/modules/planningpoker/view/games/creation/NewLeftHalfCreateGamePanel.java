@@ -99,6 +99,14 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		game = mainPanel.getGame();
 		build();
 		buildFields();
+		
+		nameTextField.requestFocus();
+		if(game != null){
+			nameTextField.select(game.getName().length(), game.getName().length());;
+		}
+		else{
+			nameTextField.select(0,0);
+		}
 	}
 	
 	/**
@@ -117,6 +125,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		 */
 		JLabel nameLabel = new JLabel("Name * ");						//Creates the Label for the Name
 		nameTextField = new NameJTextField(30);							//Initializes the text field for the game name and sets the size to 30
+		nameTextField.setFocusable(true);
 		
 		JLabel descLabel = new JLabel("Description * ");				//Creates the label for the Description
 		
@@ -361,6 +370,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		
 		isEndDateValid = getEndDateField().validateField(errorField, showLabel, showBox);
 		if (!isEndDateValid) {
+			
 			getBoxDescription().setBorder(defaultTextAreaBorder);
 			getBoxName().setBorder(defaultTextFieldBorder);
 			parent.getRightHalf().getCurrentReqsPanel().setBorder((new JPanel().getBorder()));
