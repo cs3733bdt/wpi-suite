@@ -42,7 +42,6 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 											// remove because no changes have
 											// happened
 	private Game currentGame;
-	private List<PPRequirement> currentReqs;
 	
 	/**
 	 * Creates a NewCreateGamePanel with the game setting the fields for the panel.
@@ -355,17 +354,9 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 
 
 	/**
-	 * @return the currentReqs
-	 */
-	public List<PPRequirement> getCurrentReqs() {
-		return currentReqs;
-	}
-
-
-	/**
 	 * @param currentReqs the currentReqs to set
 	 */
 	public void setCurrentReqs(List<PPRequirement> currentReqs) {
-		this.currentReqs = currentReqs;
+		//this.currentReqs = currentReqs;
 	}	
 }

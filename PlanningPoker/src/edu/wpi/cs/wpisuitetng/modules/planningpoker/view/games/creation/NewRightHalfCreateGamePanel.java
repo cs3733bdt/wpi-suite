@@ -789,7 +789,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	 */
 	public void buildFields() {
 		if (parent.getGame() != null) {
-			for (PPRequirement r : parent.getCurrentReqs()) {
+			for (PPRequirement r : parent.getGame().getRequirements()) {
 				addRequirement(r);
 			}
 		}

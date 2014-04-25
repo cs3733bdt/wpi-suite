@@ -63,6 +63,13 @@ public class GameTest {
 		String jsonMessage = object.toJSON(); //Test conversion to jSON
 		Game newObject = Game.fromJSON(jsonMessage); //Test conversion back from jSON
 		
+		String jsonRequirements = req.toJSON();
+		PPRequirement newReq = PPRequirement.fromJSON(jsonRequirements);
+		List<PPRequirement> newReqList = new ArrayList<PPRequirement>();
+		newReqList.add(newReq);
+		newObject.setRequirements(newReqList);
+
+		
 		assertEquals(newObject.getName(), "Game A");
 		assertEquals(newObject.getDescription(), "Test description");
 		assertEquals(newObject.getCreator(), ConfigManager.getInstance().getConfig().getUserName());
@@ -156,7 +163,6 @@ public class GameTest {
 		boolean complete2 = game2.isComplete();
 		assertFalse(complete1);
 		assertTrue(complete2);
-		
 	}
 	
 	@Test
