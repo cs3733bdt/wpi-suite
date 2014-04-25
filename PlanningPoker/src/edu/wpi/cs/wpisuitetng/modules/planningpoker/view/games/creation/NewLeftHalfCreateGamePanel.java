@@ -419,4 +419,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		});
 	}
 	
+	public String dateToString(){
+		return endDateField.toString();
+	}
 }
