@@ -72,7 +72,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	JTextField mobileField;
 	JButton updateMobileButton;
 	JCheckBox mobileCheckBox;
-	JButton updateCarrierButton;
 	JComboBox<String> carrierDropDown;
 
 	JLabel facebookOffNotify;
@@ -311,19 +310,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			}
 		});
 
-		//Create the update carrier button
-		updateCarrierButton = new JButton("Update Carrier");
-		updateCarrierButton.setEnabled(false);
-		mobilePanel.add(updateCarrierButton);
-		
-		updateCarrierButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e){
-				updateCarrierButtonPressed();
-			}
-		});
-
 		//Create and add the user carrier label to the panel
 		JLabel userCarrierLabel = new JLabel("Your Carrier:");
 		mobilePanel.add(userCarrierLabel);
@@ -340,7 +326,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				carrierDropDownChanged();
 
 			}
 		});
@@ -459,16 +444,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		mobileLayout.putConstraint(SpringLayout.NORTH, mobileField, 5, SpringLayout.SOUTH, mobileOffNotify);
 		mobileLayout.putConstraint(SpringLayout.WEST, mobileField, 5, SpringLayout.EAST, userMobileLabel);
 		mobileLayout.putConstraint(SpringLayout.EAST, mobileField, -5, SpringLayout.EAST, mobilePanel);
-		
-		//    	mobileLayout.putConstraint(SpringLayout.EAST, mobileField, -5, SpringLayout.WEST, updateMobileButton);
-		//    
+ 
 		//Constraints for the mobile update button
 		mobileLayout.putConstraint(SpringLayout.EAST, updateMobileButton, 0, SpringLayout.EAST, mobileField);
 		mobileLayout.putConstraint(SpringLayout.NORTH, updateMobileButton, 5, SpringLayout.SOUTH, mobileField);
-
-		//Constraints for the carrier update button
-		mobileLayout.putConstraint(SpringLayout.WEST, updateCarrierButton, 5, SpringLayout.EAST, carrierDropDown);
-		mobileLayout.putConstraint(SpringLayout.NORTH, updateCarrierButton, 5, SpringLayout.SOUTH, mobileField);
 
 		//Put constraints on the mobile carrier label
 		mobileLayout.putConstraint(SpringLayout.NORTH, userCarrierLabel, 5, SpringLayout.SOUTH, userMobileLabel);
@@ -504,10 +483,16 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	public void updateMobileButtonPressed() {
 		User newUser = getUserController.getCurrentUser();
 		newUser.setPhoneNumber(mobileField.getText());
+		newUser.setCarrier(getCarrierFromIndex());
 		updateUserController.updateUser(newUser);
 	}
-	public void updateCarrierButtonPressed() {
-		User newUser = getUserController.getCurrentUser();
+	
+	/**
+	 * This method returns a string representing the currently selected 
+	 * carrier by getting the carrier drop down's selected index
+	 * @return returns a string representing the currently selected carrier
+	 */
+	public String getCarrierFromIndex() {
 		int carrierIndex = carrierDropDown.getSelectedIndex();
 		String carrier;
 		
@@ -534,8 +519,8 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			carrier = "--";
 			break;
 		}
-		newUser.setCarrier(carrier);
-		updateUserController.updateUser(newUser);
+
+		return carrier;
 	}
 	
 	public void updateNotificationPreferences(){
@@ -633,7 +618,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	}
 
 	/**
-	 * @return returns the carrier of the user currently logged in
+	 * @return returns the drop down index for the carrier of the user currently logged in
 	 */
 	private int getUserCarrierIndex() {
 		int carrierNum;	
@@ -802,7 +787,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 
 			mobileField.setEnabled(false);
 			carrierDropDown.setEnabled(false);
-			updateCarrierButton.setEnabled(false);
 			updateMobileButton.setEnabled(false);
 		}
 		else {
@@ -811,7 +795,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 
 			mobileField.setEnabled(true);
 			carrierDropDown.setEnabled(true);
-			updateCarrierButton.setEnabled(true);
 			updateMobileButton.setEnabled(true);
 			//reValidateMobileUpdateButton(); //TODO fix this method to include both update buttons
 		}
@@ -830,7 +813,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 
 	public void reValidateMobilePanel() {
 		//mobileCheckBoxListener();
-		validateCarrierUpdateButton(); 
 		reValidateMobileUpdateButton();
 	}
 
@@ -852,15 +834,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		}
 	}
 
-	public void validateCarrierUpdateButton() {
-		if (verifyCarrierField()) {
-			updateCarrierButton.setEnabled(true);
-		}
-		else {
-			updateCarrierButton.setEnabled(false);
-		}
-	}
-
 	public boolean verifyCarrierField() {
 		/*String selectedItem = carrierDropDown.getItemAt(carrierDropDown.getSelectedIndex());
 		if (selectedItem.equals(getUserCarrier()) || selectedItem.equals("--")) {
@@ -871,12 +844,12 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		}*/
 		return true;
 	}
-
+	/*
 	private void carrierDropDownChanged() {
 		validateCarrierUpdateButton();
 
 	}
-
+	*/
 	public void reValidateMobileUpdateButton() {
 		if (verifyMobileField()) {
 			updateMobileButton.setEnabled(true);
