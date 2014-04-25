@@ -236,13 +236,13 @@ public class PPRequirementModel extends AbstractStorageModel<PPRequirement>{
 	 * @param id the id that is being checked
 	 * @return true if a requirement with id exists in the list of requirements
 	 */
-	/*public boolean contains(int id) {
-		for (PPRequirement r: requirements) {
+	public boolean contains(int id) {
+		for (PPRequirement r: getRequirements()) {
 			if (r.getId() == id)
 				return true;
 		}
 		return false;
-	}*/
+	}
 
 	/**
 	 * Returns the list of the requirements

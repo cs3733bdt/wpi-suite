@@ -13,7 +13,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 
 import java.util.Date;
-import java.util.List;
 
 import javax.swing.JSplitPane;
 
@@ -44,18 +43,6 @@ public class NewActiveGamePanel extends JSplitPane implements IModelObserver, IA
 		
 	}
 	
-	public NewActiveGamePanel(Game game, List<Requirement> Reqs) {
-		game.addObserver(this);	
-		currentGame = game;
-		
-		leftHalf = new NewLeftHalfActiveGamePanel(currentGame, this);
-		rightHalf = new NewRightHalfActiveGamePanel(currentGame);
-		
-		setRightComponent(rightHalf);
-		setLeftComponent(leftHalf);
-		setDividerLocation(400);
-	}
-
 	public void endGame(){
 		Date date = new Date();
 		currentGame.setEndDate(date);

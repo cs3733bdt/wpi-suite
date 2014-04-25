@@ -5,6 +5,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers;
 
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.UpdatePPRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -29,10 +31,10 @@ public class UpdateRequirementRequestObserver implements RequestObserver {
 		final ResponseModel response = iReq.getResponse();
 		
 		// The Requirement that got updated
-		Requirement requirement = Requirement.fromJSON(response.getBody());
+		PPRequirement requirement = PPRequirement.fromJSON(response.getBody());
 		
 		try {
-			Requirement realReq = RequirementModel.getInstance().getRequirementById(requirement.getIdentity());
+			PPRequirement realReq = PPRequirementModel.getInstance().getRequirementById(requirement.getIdentity());
 		} catch (NotFoundException e) {
 			// TODO Auto-generated catch block
 			System.err.println(requirement.getName() + ": Does not exist");

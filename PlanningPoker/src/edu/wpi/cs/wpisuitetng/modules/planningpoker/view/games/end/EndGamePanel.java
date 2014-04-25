@@ -208,7 +208,7 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
 				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
 				
         //Set up the content pane.
-        frame.add(new EndGamePanel(new Game("name", "desc", new ArrayList<Requirement>(), false, true)));
+        frame.add(new EndGamePanel(new Game("name", "desc", new ArrayList<PPRequirement>(), false, true)));
         frame.setSize(400, 400);
 
         //Display the window.
