@@ -114,14 +114,11 @@ public class ViewEventController {
 		
 	}
 	
-//	public void openHelp() {
-//		Component selectedComponent = getTabbedView().getSelectedComponent();
-//		switch(selectedComponent.getClass().toString()) {
-//	//	case(newPreferencesPanel)
-//		 
-//		}
-//		HelpPanel newHelpPanel = new HelpPanel
-//	}
+	public void openHelp() {
+		getTabbedView().openHelpTab();
+		getTabbedView().invalidate();
+		getTabbedView().repaint();
+	}
 	
 	/**
 	 * Creates an EditGamePanel instance, adds a tab representing 

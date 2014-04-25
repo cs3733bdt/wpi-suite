@@ -25,6 +25,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.ToolbarGroupView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
  * creates a help button that the user can use if they need help with Planning Poker
@@ -58,7 +59,8 @@ public class HelpButtonPanel extends ToolbarGroupView {
 		helpIcon.addActionListener(new ActionListener() {
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			JOptionPane.showMessageDialog(null, "This is not functional yet.", "Dummy Button", 1);
+			//JOptionPane.showMessageDialog(null, "This is not functional yet.", "Dummy Button", 1);
+			ViewEventController.getInstance().openHelp();
 		}
 		});
 				
