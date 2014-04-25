@@ -211,7 +211,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		facebookPanel.add(facebookOffNotify);
 
 		//Create and add the user facebook label to the panel
-		JLabel userfacebookLabel = new JLabel("Your facebook:");
+		JLabel userfacebookLabel = new JLabel("Your Facebook Username:");
 		facebookPanel.add(userfacebookLabel);
 
 		//Create, configure, and add the user facebook text box
@@ -225,7 +225,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		facebookField.setText(getUserFacebookUsername());
 
 		//Create the update facebook button
-		updateFacebookButton = new JButton("Update facebook");
+		updateFacebookButton = new JButton("Update Facebook Username");
 		updateFacebookButton.setEnabled(false);
 		facebookPanel.add(updateFacebookButton);
 		
@@ -238,7 +238,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		});
 
 		//Create and add the checkbox for receiving facebooks
-		facebookCheckBox = new JCheckBox("Receive facebook notifications", true);
+		facebookCheckBox = new JCheckBox("Receive Facebook notifications", true);
 		//TODO make this field initialize to the correct toggled state. Do that by modifying the constant "true" above
 
 		facebookCheckBox.addActionListener(new ActionListener() {
