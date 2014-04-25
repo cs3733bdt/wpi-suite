@@ -52,8 +52,6 @@ public class CardButton extends JToggleButton implements Accessible {
 			NewRightHalfActiveGamePanel panel2) {
 		deck = passedDeck;
 		panel = passedCardsPanel;
-		deck = passedDeck;
-		panel = passedCardsPanel;
 
 		// Initialize the Button and the number on the button
 		String buttonNum;
@@ -64,6 +62,8 @@ public class CardButton extends JToggleButton implements Accessible {
 			Image frontImg = ImageIO.read(getClass().getResource(
 					"card_front.png"));
 			setIcon(new ImageIcon(frontImg));
+			setBorderPainted(false);
+			setContentAreaFilled(false);			
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
