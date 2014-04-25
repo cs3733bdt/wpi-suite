@@ -63,7 +63,7 @@ public class TabbedView extends JTabbedPane {
 	private List<ICreateGamePanel> listOfCreateGamePanels = new ArrayList<ICreateGamePanel>();
 	private List<IActiveGamePanel> listOfActiveGamePanels = new ArrayList<IActiveGamePanel>();
 	private List<IEndedGamePanel>  listOfEndedGamePanels  = new ArrayList<IEndedGamePanel>();
-	private List<IHelpPanel>       listOfHelpPanels       = new ArrayList<IHelpPanel>();  
+	private ArrayList<IHelpPanel>       listOfHelpPanels       = new ArrayList<IHelpPanel>();  
 
 	private PreferencesPanel preferencesPanel;
 	private boolean hasPreferencesTab=false;
@@ -400,7 +400,7 @@ public class TabbedView extends JTabbedPane {
 		}
 		if (comp instanceof IHelpPanel) {
 			if (!((IHelpPanel)comp).readyToRemove()) return;
-			listOfHelpPanels.remove(comp);
+			removeHelpPanel((IHelpPanel)comp);
 			setSelectedComponent(gameOverview);
 		}
 		remove(comp);
@@ -489,5 +489,36 @@ public class TabbedView extends JTabbedPane {
 		}
 		repaint();
 
+	}
+	
+	public void removeHelpPanel(IHelpPanel comp) {
+		int panelToRemoveIndex = comp.getIdentifierIndex(); 
+		for (int i = 0; i <  listOfHelpPanels.size(); i++) {
+			if (listOfHelpPanels.get(i).getIdentifierIndex() == panelToRemoveIndex) {
+				listOfHelpPanels.remove(i);
+				resetBoolean(panelToRemoveIndex);
+			}
+		}
+	}
+	
+	public void resetBoolean(int index) {
+		if (index == activeGameIndex) {
+			hasActiveGameHelp=false;
+		}
+		else if (index == createDeckIndex) {
+			hasCreateDeckHelp=false;
+		}
+		else if (index == createGameIndex) {
+			hasCreateGameHelp = false;
+		}
+		else if (index == endGameIndex) {
+			hasEndGameHelp = false;
+		}
+		else if (index == preferenceIndex) {
+			hasPreferencesHelp = false;
+		}
+		else {
+			return;
+		}
 	}
 }
