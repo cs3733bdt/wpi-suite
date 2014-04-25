@@ -37,6 +37,8 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
@@ -62,7 +64,7 @@ public class DeckTree extends JPanel implements MouseListener{
 	boolean isActiveCollapsed = true;
 	boolean isHistoryCollapsed = true;
 	
-	private List<Requirement> reqList = new ArrayList<Requirement>();
+	private List<PPRequirement> reqList = new ArrayList<PPRequirement>();
 	
 	/**
 	 * Constructor for a GameTree
@@ -92,7 +94,7 @@ public class DeckTree extends JPanel implements MouseListener{
 		List<Game> gameList = 
 				sortGames(GameModel.getInstance().getGames());//retrieve list of all games
 		reqList = 
-				RequirementModel.getInstance().getRequirements();//retrieve list of reqs
+				PPRequirementModel.getInstance().getRequirements();//retrieve list of reqs
 		
 		System.out.println("Numb Games: " + gameList.size());
 		for (Game game: gameList){
@@ -224,8 +226,8 @@ public class DeckTree extends JPanel implements MouseListener{
 				if(node != null) {
 					if(node.getUserObject() instanceof Game){ //Confirm that this is a game
 						Game selectedGame = (Game) node.getUserObject();
-						List<Requirement> selectedReqs = new ArrayList<Requirement>();
-						for(Requirement r : reqList) {
+						List<PPRequirement> selectedReqs = new ArrayList<PPRequirement>();
+						for(PPRequirement r : reqList) {
 							if(r.getGameID().equals(selectedGame.getIdentity())) {
 								selectedReqs.add(r);
 							}
