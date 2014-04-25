@@ -41,7 +41,7 @@ public class DeckModelTest {
 		Deck objectReturned = model.getElementAt(0);
 		assertEquals("Test Deck", objectReturned.getName());
 		assertEquals("Test Description", objectReturned.getDescription());
-		assertEquals(ConfigManager.getInstance().getConfig().getUserName(), objectReturned.getOwner());	
+		assertEquals(ConfigManager.getConfig().getUserName(), objectReturned.getOwner());	
 		
 		model.emptyModel();
 		assertEquals(0, model.getSize());
