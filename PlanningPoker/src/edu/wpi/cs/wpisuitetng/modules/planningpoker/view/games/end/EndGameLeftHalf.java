@@ -33,7 +33,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
 
 public class EndGameLeftHalf extends JScrollPane {
 	private Game endGame;
-	private List<PPRequirement> reqList;
 	private EndGamePanel parent;
 	
 	private JTextArea descriptionTextField;
@@ -55,13 +54,6 @@ public class EndGameLeftHalf extends JScrollPane {
 	public EndGameLeftHalf(final Game game, EndGamePanel parent){
 		this.parent = parent;
 		endGame = game;
-		build();
-	}
-	
-	public EndGameLeftHalf(final Game game, final List<PPRequirement> reqList, EndGamePanel parent){
-		this.parent = parent;
-		endGame = game;
-		this.reqList = reqList;
 		build();
 	}
 	
@@ -140,7 +132,7 @@ public class EndGameLeftHalf extends JScrollPane {
 					int row = target.getSelectedRow();
 					String selectedName = (String) target.getValueAt(row, 0);
 					String selectedDesc = (String) target.getValueAt(row, 1);
-					for (PPRequirement r : reqList) {
+					for (PPRequirement r : endGame.getRequirements()) {
 						if (selectedName.equals(r.getName())
 								&& selectedDesc.equals(r.getDescription())) {
 							parent.updateRightHalf(r);
@@ -207,7 +199,7 @@ public class EndGameLeftHalf extends JScrollPane {
 	}
 	
 	public List<PPRequirement> getRequirements() {
-		return reqList;
+		return endGame.getRequirements();
 	}
 	
 }
