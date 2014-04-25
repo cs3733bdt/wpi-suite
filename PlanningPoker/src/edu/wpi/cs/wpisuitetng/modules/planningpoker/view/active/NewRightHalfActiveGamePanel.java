@@ -137,6 +137,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				}
 			}
 		});
+		
+		table.setRowSelectionInterval(0, 0); //start table at beginning
 
 		JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel
@@ -577,6 +579,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	 * add vote and display success message when the button is pressed
 	 */
 	public void submitButton() {
+		//gets the the currently selected table index
+		getNextRow();
+		
 		String currentUser = ConfigManager.getConfig().getUserName(); // Gets
 																		// the
 																		// currently
@@ -676,5 +681,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	public RequirementTable getReqTable(){
 		return table;
 	}
-
+	
+	public void getNextRow() {
+		table.setRowSelectionInterval(0, 0);
+	}
 }
