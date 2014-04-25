@@ -21,76 +21,37 @@ import javax.swing.JPanel;
 */
 public class CardImage extends JPanel{
 	
-	public CardImage(String color){
-		if(color == "red"){
-			BufferedImage myPicture = null;
-			try {
+	public CardImage(ColorEnum color){
+		BufferedImage myPicture = null;
+		try {
+			switch (color) {
+			case RED:
 				myPicture = ImageIO.read(getClass().getResource("card_back.png"));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			JButton picButton = new JButton(new ImageIcon(myPicture));
-			picButton.setBorderPainted(false);
-			picButton.setContentAreaFilled(false);
-			add(picButton);
-		}
-		
-		if(color == "blue"){
-			BufferedImage myPicture = null;
-			try {
+				break;
+
+			case BLUE:
 				myPicture = ImageIO.read(getClass().getResource("card_back_blue.png"));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			JButton picButton = new JButton(new ImageIcon(myPicture));
-			picButton.setBorderPainted(false);
-			picButton.setContentAreaFilled(false);
-			add(picButton);
-		}
-		
-		if(color == "green"){
-			BufferedImage myPicture = null;
-			try {
+				break;
+
+			case GREEN:
 				myPicture = ImageIO.read(getClass().getResource("card_back_green.png"));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			JButton picButton = new JButton(new ImageIcon(myPicture));
-			picButton.setBorderPainted(false);
-			picButton.setContentAreaFilled(false);
-			add(picButton);
-		}
-		
-		if(color == "purple"){
-			BufferedImage myPicture = null;
-			try {
+				break;
+
+			case PURPLE:
 				myPicture = ImageIO.read(getClass().getResource("card_back_purple.png"));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			JButton picButton = new JButton(new ImageIcon(myPicture));
-			picButton.setBorderPainted(false);
-			picButton.setContentAreaFilled(false);
-			add(picButton);
-		}
-		
-		if(color == "yellow"){
-			BufferedImage myPicture = null;
-			try {
+				break;
+
+			case YELLOW:
 				myPicture = ImageIO.read(getClass().getResource("card_back_yellow.png"));
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				break;
 			}
-			JButton picButton = new JButton(new ImageIcon(myPicture));
-			picButton.setBorderPainted(false);
-			picButton.setContentAreaFilled(false);
-			add(picButton);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-	
+		JButton picButton = new JButton(new ImageIcon(myPicture));
+		picButton.setBorderPainted(false);
+		picButton.setContentAreaFilled(false);
+		add(picButton);	
 	}
 }

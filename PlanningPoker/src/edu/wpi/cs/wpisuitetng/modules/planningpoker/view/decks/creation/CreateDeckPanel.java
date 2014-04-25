@@ -76,15 +76,15 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	
 	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
 	
-	private final CardImage cardRed = new CardImage("red");
+	private final CardImage cardRed = new CardImage(ColorEnum.RED);
 	
-	private final CardImage cardBlue = new CardImage("blue");
+	private final CardImage cardBlue = new CardImage(ColorEnum.BLUE);
 	
-	private final CardImage cardGreen = new CardImage("green");
+	private final CardImage cardGreen = new CardImage(ColorEnum.GREEN);
 	
-	private final CardImage cardPurple = new CardImage("purple");
+	private final CardImage cardPurple = new CardImage(ColorEnum.PURPLE);
 	
-	private final CardImage cardYellow = new CardImage("yellow");
+	private final CardImage cardYellow = new CardImage(ColorEnum.YELLOW);
 	
 	public CreateDeckPanel(){
 		
@@ -438,27 +438,27 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		 * This will be necessary when assigning values to each card. */
 		if(color == "Red (Default)"){
 			 for(int i=0; i < numCardsPresent; i++){
-				 cardsPanel.add(new CardImage("red"));
+				 cardsPanel.add(new CardImage(ColorEnum.RED));
 			 }
 		}
 		if(color == "Blue"){
 			for(int i=0; i < numCardsPresent; i++){
-				 cardsPanel.add(new CardImage("blue"));
+				 cardsPanel.add(new CardImage(ColorEnum.BLUE));
 			 }
 		}
 		if(color == "Green"){
 			for(int i=0; i < numCardsPresent; i++){
-				 cardsPanel.add(new CardImage("green"));
+				 cardsPanel.add(new CardImage(ColorEnum.GREEN));
 			 }
 		}
 		if(color == "Purple"){
 			for(int i=0; i < numCardsPresent; i++){
-				cardsPanel.add(new CardImage("purple"));
+				cardsPanel.add(new CardImage(ColorEnum.PURPLE));
 			 }
 		}
 		if(color == "Yellow"){
 			for(int i=0; i < numCardsPresent; i++){
-				 cardsPanel.add(new CardImage("yellow"));
+				 cardsPanel.add(new CardImage(ColorEnum.YELLOW));
 			 }
 		}
 		cardsPanel.revalidate();
