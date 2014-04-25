@@ -13,15 +13,12 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards;
 
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -105,14 +102,6 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 		System.out.println(sum);
 	}
 
-	/**
-	 * Clicks all the buttons. Used for testing
-	 */
-	public void doClicks() {
-		for (int i = 0; i < JToggleButtonList.size(); i++) {
-			JToggleButtonList.get(i).doClick();
-		}
-	}
 
 	/**
 	 * gets the total of all the cards in the deck
@@ -191,6 +180,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	@Override
 	public boolean validateField(IErrorView warningField, boolean showLabel,
 			boolean showBox) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 
