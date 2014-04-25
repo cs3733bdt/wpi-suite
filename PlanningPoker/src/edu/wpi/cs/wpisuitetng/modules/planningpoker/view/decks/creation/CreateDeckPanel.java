@@ -34,6 +34,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
@@ -140,6 +141,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		numCards = new NameJTextField(5);
 		numCards.setText("1");
 		addKeyListenerTo(numCards);
+		addMouseListenerToNumberOfCardsTextEntry(numCards);
 		submitNumCards = new JButton("Submit");
 		submitNumCards.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
@@ -190,8 +192,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		numCardsAndColorAndSelectedTypePanel.add(colorPanel);
 		
 		/* Card panel for the cards to appear in. Get rid of border when something actually appears */
-		cardsPanel.setPreferredSize(new Dimension(10, 400));
-		cardsPanel.setBorder(nameTextField.getBorder());
+		JScrollPane cardScrollPane = new JScrollPane(cardsPanel);
+		
+		cardsPanel.setPreferredSize(new Dimension(10, 600));
 		cardsPanel.add(cardRed);
 		cardRed.setVisible(true);
 		
@@ -217,7 +220,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		view.add(descriptionLabel);
 		view.add(descriptionScroll);
 		view.add(numCardsAndColorAndSelectedTypePanel);
-		view.add(cardsPanel);
+		view.add(cardScrollPane);
 		//view.add(valuePanel);
 		view.add(saveButton);
 		view.add(errorField);
@@ -238,20 +241,20 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		layout.putConstraint(SpringLayout.WEST, numCardsAndColorAndSelectedTypePanel, 0, SpringLayout.WEST, view);
 		layout.putConstraint(SpringLayout.NORTH, numCardsAndColorAndSelectedTypePanel, 10, SpringLayout.SOUTH, nameLabel);
 		
-		layout.putConstraint(SpringLayout.WEST, cardsPanel, 10, SpringLayout.WEST, view);
-		layout.putConstraint(SpringLayout.EAST, cardsPanel, -10, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.NORTH, cardsPanel, 10, SpringLayout.SOUTH, numCardsAndColorAndSelectedTypePanel);
-		layout.putConstraint(SpringLayout.SOUTH, cardsPanel, -45, SpringLayout.SOUTH, view);
+		layout.putConstraint(SpringLayout.WEST, cardScrollPane, 10, SpringLayout.WEST, view);
+		layout.putConstraint(SpringLayout.EAST, cardScrollPane, -10, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.NORTH, cardScrollPane, 10, SpringLayout.SOUTH, numCardsAndColorAndSelectedTypePanel);
+		layout.putConstraint(SpringLayout.SOUTH, cardScrollPane, -45, SpringLayout.SOUTH, view);
 			
 		/*layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, valuePanel, 5, SpringLayout.HORIZONTAL_CENTER, view);
 		layout.putConstraint(SpringLayout.NORTH, valuePanel, 10, SpringLayout.SOUTH, cardsPanel);
 		*/
 		
 		layout.putConstraint(SpringLayout.WEST, saveButton, 10, SpringLayout.WEST, view);
-		layout.putConstraint(SpringLayout.NORTH, saveButton, 10, SpringLayout.SOUTH, cardsPanel);
+		layout.putConstraint(SpringLayout.NORTH, saveButton, 10, SpringLayout.SOUTH, cardScrollPane);
 		
 		layout.putConstraint(SpringLayout.WEST, errorField, 10, SpringLayout.EAST, saveButton);
-		layout.putConstraint(SpringLayout.NORTH, errorField, 10, SpringLayout.SOUTH, cardsPanel);
+		layout.putConstraint(SpringLayout.NORTH, errorField, 10, SpringLayout.SOUTH, cardScrollPane);
 		
 		revalidate();
 		repaint();
@@ -470,6 +473,14 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 						errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 25");
 					}
 					else{}//it will perform the action listener
+			}
+		});
+	}
+	
+	private void addMouseListenerToNumberOfCardsTextEntry(JComponent component){
+		component.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent arg0) {
+				getNumCards().selectAll();
 			}
 		});
 	}
