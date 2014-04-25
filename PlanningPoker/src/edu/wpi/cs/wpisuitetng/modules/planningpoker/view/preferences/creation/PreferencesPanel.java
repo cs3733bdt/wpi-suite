@@ -175,7 +175,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			}
 		});
 
-		reValidateEmailPanel();
+		//reValidateEmailPanel();
 		emailPanel.add(emailCheckBox);
 
 		//Add the email Panel to the view
@@ -248,7 +248,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			}
 		});
 
-		reValidateFacebookPanel();
+		//reValidateFacebookPanel();
 		facebookPanel.add(facebookCheckBox);
 
 		//Add the facebook Panel to the view
@@ -326,7 +326,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				reValidateMobileUpdateButton();
 			}
 		});
 
@@ -344,7 +344,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			}
 		});
 
-		reValidateMobilePanel();
+		//reValidateMobilePanel();
 		mobilePanel.add(mobileCheckBox);
 
 		//Add the mobile Panel to the view
@@ -585,7 +585,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			}
 		}catch(NullPointerException e){
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(300);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				//e1.printStackTrace();
@@ -717,6 +717,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			facebookCheckBox.setSelected(false);
 			mobileCheckBox.setSelected(false);
 		}
+		reValidateEmailUpdateButton();
+		reValidateFacebookUpdateButton();
+		reValidateMobileUpdateButton();
+		
 	}
 
 	public boolean receivingEmail() {
@@ -741,10 +745,9 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	public void emailCheckBoxListener() {
 		if (emailCheckBox.isSelected()) {
 			emailOffNotify.setVisible(false);
-
 			emailField.setEnabled(true);
 			updateEmailButton.setEnabled(true);
-			//reValidateEmailUpdateButton();
+			reValidateEmailUpdateButton();
 		}
 		else {
 			emailOffNotify.setVisible(true);
@@ -772,7 +775,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			facebookField.setEnabled(true);
 			updateFacebookButton.setEnabled(true);
 			
-			//reValidateFacebookUpdateButton();
+			reValidateFacebookUpdateButton();
 		}
 		updateNotificationPreferences();
 	}
@@ -796,28 +799,18 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			mobileField.setEnabled(true);
 			carrierDropDown.setEnabled(true);
 			updateMobileButton.setEnabled(true);
-			//reValidateMobileUpdateButton(); //TODO fix this method to include both update buttons
+			reValidateMobileUpdateButton();
 		}
 		updateNotificationPreferences();
 	}
 
-	public void reValidateEmailPanel() {
-		//emailCheckBoxListener();
-		reValidateEmailUpdateButton();
-	}
-
-	public void reValidateFacebookPanel() {
-		//facebookCheckBoxListener();
-		reValidateFacebookUpdateButton();
-	}
-
-	public void reValidateMobilePanel() {
-		//mobileCheckBoxListener();
-		reValidateMobileUpdateButton();
-	}
-
+	
+	/**
+	 * Enable/Disable the email update button based on
+	 * the email field's current input, and if notifications are requested
+	 */
 	public void reValidateEmailUpdateButton() {
-		if (verifyEmailField()) {
+		if (verifyEmailField() && emailCheckBox.isSelected()) {
 			updateEmailButton.setEnabled(true);
 		}
 		else {
@@ -825,8 +818,12 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		}
 	}
 
+	/**
+	 * Enable/Disable the facebook update button based on
+	 * the facebook field's current input, and if notifications are requested
+	 */
 	public void reValidateFacebookUpdateButton() {
-		if (verifyFacebookField()) {
+		if (verifyFacebookField() && facebookCheckBox.isSelected()) {
 			updateFacebookButton.setEnabled(true);
 		}
 		else {
@@ -834,24 +831,13 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		}
 	}
 
-	public boolean verifyCarrierField() {
-		/*String selectedItem = carrierDropDown.getItemAt(carrierDropDown.getSelectedIndex());
-		if (selectedItem.equals(getUserCarrier()) || selectedItem.equals("--")) {
-			return false;
-		}
-		else {
-			return true;
-		}*/
-		return true;
-	}
-	/*
-	private void carrierDropDownChanged() {
-		validateCarrierUpdateButton();
-
-	}
-	*/
+	/**
+	 * Enable/Disable the mobile update button based on
+	 * the mobile field's current input, the carrier selection, 
+	 * and if notifications are requested
+	 */
 	public void reValidateMobileUpdateButton() {
-		if (verifyMobileField()) {
+		if (verifyMobileField() && verifyCarrierField() && mobileCheckBox.isSelected()) {
 			updateMobileButton.setEnabled(true);
 		}
 		else {
@@ -883,7 +869,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 				atCount++;
 				atIndex = i;
 				atSubstring = text.substring(i+1);
-				//	System.out.println("Atsubstring:" + atSubstring);
 			}	
 		}
 		if (atCount == 1 && atIndex != 0 && atIndex != -1 && atIndex+1 != text.length() ) {
@@ -893,7 +878,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		//Code for checking the at substring
 		boolean atSubstringBool = true;
 		if (atSubstring.length() < 3) {
-			System.out.println("The length of the at substring is too short");
 			atSubstringBool = false;
 		}
 
@@ -903,27 +887,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		for (int i = 0; i < text.length(); i++) {
 			currChar = Character.toString(text.charAt(i));
 			if (forbiddenChars.contains(currChar)) {
-				System.out.println("ForbiddenChar present:" + currChar);
 				forbiddenCharsBool = false;
 			}
 		}
 
-		//Checking dot substring
-		String dotSubstring;
-		boolean dotSubstringBool = true;
-		//	    for (int i = 0; i < text.length(); i++) {
-		//			currChar = Character.toString(text.charAt(i));
-		//			if (currChar.equals(".")) {
-		//				dotSubstring = text.substring(i + 1);
-		//				if (dotSubstring.length() != 3 || i <= atIndex + 1) {
-		//					dotSubstringBool = false;
-		//				}
-		//			}
-		//			
-		//	    }
-
-
-		return atBoolean && forbiddenCharsBool && atSubstringBool && dotSubstringBool;
+		return atBoolean && forbiddenCharsBool && atSubstringBool;
 	}
 
 	/**
@@ -941,12 +909,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 
 		//Code for checking forbidden character
 		String forbiddenChars = "()<>[]\\:,;!#$%&'@*+-/=?^_`{}| ~\" ";
-		//boolean forbiddenCharsBool = true;
 		String currChar;
 		for (int i = 0; i < text.length(); i++) {
 			currChar = Character.toString(text.charAt(i));
 			if (forbiddenChars.contains(currChar)) {
-				System.out.println("ForbiddenChar present:" + currChar);
 				return false;
 			}
 		}
@@ -1001,6 +967,17 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		}
 		return (matcher1Boolean || matcher2Boolean || matcher3Boolean || matcher4Boolean || 
 				matcher5Boolean || matcher6Boolean || matcher7Boolean || matcher8Boolean);
+	}
+	
+	/**
+	 * @return return false if the carrier drop down has "--" selected,
+	 * otherwise a valid carrier has been selected, return true.
+	 */
+	private boolean verifyCarrierField(){
+		if(carrierDropDown.getSelectedIndex()==5)
+			return false;
+		else
+			return true;
 	}
 
 	@Override
