@@ -41,6 +41,7 @@ import org.jdesktop.swingx.JXDatePicker;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelGameOrDeckButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewLaunchGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewSaveGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
@@ -74,9 +75,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	
 	private NewSaveGameButtonPanel saveGameButton;
 	private NewLaunchGameButtonPanel launchGameButton;
-	//TODO: IMPLEMENT A CANCELGAMEBUTTONPANEL CLASS
-	//private NewCancelGameButton cancelGameButton;
-	private JButton cancelGameButton = new JButton("Cancel Game");
+	private CancelGameOrDeckButton cancelGameButton;
 	
 	/** Shows the names of the errors */
 	private ErrorLabel errorField;
@@ -184,15 +183,14 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		deckDropDownPanel.add(deckDropDownLabel);
 		deckDropDownPanel.add(deckDropDown);
 		
-		saveGameButton = new NewSaveGameButtonPanel(parent);				//Creates a save game button
+		saveGameButton = new NewSaveGameButtonPanel(parent);			//Creates a save game button
 		launchGameButton = new NewLaunchGameButtonPanel(parent);		//Creates a launch game button
-		//cancelGameButton = new NewCancelGameButtonPanel(this);		//TODO implement this
+		cancelGameButton = new CancelGameOrDeckButton();				//Creates a cancel button
 		
 		JPanel buttonPanel = new JPanel();								//Creates a panel for the buttons
 		buttonPanel.add(saveGameButton);								//Adds the save button to the panel
 		buttonPanel.add(launchGameButton);								//Adds the launch button to the panel
-		//buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel		
-		
+		buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel		
 		
 		addMouseListenerTo(buttonPanel);							//Adds MouseListener to validate on mouse click
 		addMouseListenerTo(saveGameButton.getSaveGameButton());		//Adds MouseListener to validate on mouse click

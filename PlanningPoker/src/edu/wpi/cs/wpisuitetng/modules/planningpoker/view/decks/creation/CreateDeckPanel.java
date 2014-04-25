@@ -38,6 +38,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelGameOrDeckButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
@@ -64,6 +65,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	private JRadioButton multipleSelection;
 	
 	private final JPanel cardsPanel = new JPanel();
+	
+	private CancelGameOrDeckButton cancelDeckButton;
 	
 	private JButton saveButton;
 	
@@ -209,6 +212,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		saveButton = new JButton("Save Deck");
 		saveButton.setEnabled(false);
 		
+		/*cancel button */
+		cancelDeckButton = new CancelGameOrDeckButton();
+		
 		errorField = new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
@@ -223,6 +229,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		view.add(cardScrollPane);
 		//view.add(valuePanel);
 		view.add(saveButton);
+		view.add(cancelDeckButton);
 		view.add(errorField);
 		
 		/* Sets the layout constraints for each component */
@@ -253,7 +260,10 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		layout.putConstraint(SpringLayout.WEST, saveButton, 10, SpringLayout.WEST, view);
 		layout.putConstraint(SpringLayout.NORTH, saveButton, 10, SpringLayout.SOUTH, cardScrollPane);
 		
-		layout.putConstraint(SpringLayout.WEST, errorField, 10, SpringLayout.EAST, saveButton);
+		layout.putConstraint(SpringLayout.WEST, cancelDeckButton, 10, SpringLayout.EAST, saveButton);
+		layout.putConstraint(SpringLayout.NORTH, cancelDeckButton, 10, SpringLayout.SOUTH, cardScrollPane);
+		
+		layout.putConstraint(SpringLayout.WEST, errorField, 10, SpringLayout.EAST, cancelDeckButton);
 		layout.putConstraint(SpringLayout.NORTH, errorField, 10, SpringLayout.SOUTH, cardScrollPane);
 		
 		revalidate();
