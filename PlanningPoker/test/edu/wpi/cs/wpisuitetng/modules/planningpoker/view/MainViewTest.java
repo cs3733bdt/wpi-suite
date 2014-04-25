@@ -70,33 +70,33 @@ public class MainViewTest {
 	
 	@Test
 	public void numberOfTabs() {
-		assertEquals(1, tabs.getTabCount());
+		assertEquals(2, tabs.getTabCount());
 		
 		tabs.addTab(activeGame.getName(),createGameTab);
+		assertEquals(3, tabs.getTabCount());
+		
+		tabs.addTab("EndGame 1", endGameTab);
+		assertEquals(4, tabs.getTabCount());
+		
+		vec.createGame();
+		assertEquals(5, tabs.getTabCount());
+		vec.createDeck();
+		assertEquals(6, tabs.getTabCount());
+		
+		vec.removeTab(endGameTab);
+		assertEquals(5, tabs.getTabCount());
+		
+		vec.closeOthers();
 		assertEquals(2, tabs.getTabCount());
 		
 		tabs.addTab("EndGame 1", endGameTab);
 		assertEquals(3, tabs.getTabCount());
 		
-		vec.createGame();
-		assertEquals(4, tabs.getTabCount());
-		vec.createDeck();
-		assertEquals(5, tabs.getTabCount());
-		
-		vec.removeTab(endGameTab);
-		assertEquals(4, tabs.getTabCount());
-		
-		vec.closeOthers();
-		assertEquals(1, tabs.getTabCount());
-		
-		tabs.addTab("EndGame 1", endGameTab);
-		assertEquals(2, tabs.getTabCount());
-		
 		vec.closeAllTabs();
-		assertEquals(1, tabs.getTabCount());
+		assertEquals(2, tabs.getTabCount());
 		
 		tabs.addTab(activeGame.getName(),activeGameTab);
-		assertEquals(2, tabs.getTabCount());
+		assertEquals(3, tabs.getTabCount());
 		
 	}
 	

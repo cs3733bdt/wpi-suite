@@ -43,6 +43,7 @@ public class GameTest {
 		GameModel.getInstance().emptyModel();
 	}
 
+	@SuppressWarnings("static-access")
 	@Test
 	public void testJSONConversion() {
 		List<PPRequirement> reqList = new ArrayList<PPRequirement>();
@@ -81,6 +82,7 @@ public class GameTest {
 		
 	}
 	
+	@SuppressWarnings("static-access")
 	@Test
 	public void testCopyContentsOfOneGameToAnother() {
 		

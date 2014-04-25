@@ -129,7 +129,6 @@ public class RequirementTest {
 		game1 = new Game("Game 1", "Description",  reqList, false, false);
 
 		StatisticsPanel statPanel = new StatisticsPanel(game1);
-		//ArrayList<Integer> votesAmounts = statPanel.requirementToVotes(req1);
 		statPanel.makeStatRow(req1);
 		
 		

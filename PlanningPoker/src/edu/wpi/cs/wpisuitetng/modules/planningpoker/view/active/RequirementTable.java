@@ -24,15 +24,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequi
 
 public class RequirementTable extends JTable{
 	
-	List<PPRequirement> reqList;
-	RequirementTableMode mode;
-	String[] columnNames;
+	private List<PPRequirement> reqList;
+	private RequirementTableMode mode;
+	private String[] columnNames;
 	
 	private DefaultTableModel tableModel = null;
-	private boolean initialized;
-	private boolean isInEditMode;
-	private final boolean changedByRefresh = false;	
-	private final Border paddingBorder = BorderFactory.createEmptyBorder(0, 4, 0, 0);
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	Object[][] data = {};
 	
@@ -46,8 +42,7 @@ public class RequirementTable extends JTable{
 	 * Build one of three different tables depending on the mode 
 	 * parameter passed to RequirementTable.
 	 */
-	
-	public void build() {
+	private void build() {
 		
 		switch(mode) {
 		case ACTIVE:
