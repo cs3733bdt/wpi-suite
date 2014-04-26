@@ -385,9 +385,14 @@ public class PPRequirement extends ObservableModel implements IModelObserver, IS
 			wasChanged = true;
 		}
 		
-		if(!gameID.equals(toCopyFrom.gameID)) {
-			gameID = toCopyFrom.gameID;
-			wasChanged = true;
+		try {
+			if(!gameID.equals(toCopyFrom.gameID)) {
+				gameID = toCopyFrom.gameID;
+				wasChanged = true;
+			}
+		} catch(NullPointerException e) {
+			e.printStackTrace();
+			System.err.println("Requirement: " + getName() + ", has a null gameID");
 		}
 		
 		if(fromRequirementModule != toCopyFrom.fromRequirementModule) {

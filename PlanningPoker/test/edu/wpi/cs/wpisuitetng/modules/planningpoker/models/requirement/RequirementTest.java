@@ -116,6 +116,7 @@ public class RequirementTest {
 	@Test
 	public void testStatistics() {
 		req1 = new PPRequirement("Req1", "Desc1");
+		req1.setGameID(game1.getIdentity());
 		reqList = new ArrayList<PPRequirement>();
 		
 		req1.addVote(new Vote("Justin", 1));
@@ -146,6 +147,7 @@ public class RequirementTest {
 	public void testCopyFrom(){
 		PPRequirement copyTo = 
 				new PPRequirement(req1.getName() + " copy", req1.getDescription() + " copy");
+		copyTo.setGameID(game1.getIdentity());
 		copyTo.addVote(new Vote("Steve", 20));
 		assertTrue(copyTo.copyFrom(req1)); //Should return true because changes were made
 		assertFalse(copyTo.copyFrom(req1)); //Should return false; no changes are made to the class

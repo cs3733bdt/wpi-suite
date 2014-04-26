@@ -196,8 +196,8 @@ public class PPRequirementModel extends AbstractStorageModel<PPRequirement>{
 				this.requirements.add(requirements[i]);
 				if(requirements[i].getId() >= nextID) nextID = requirements[i].getId() + 1;
 			}
-		}
-		fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));*/
+		}*/
+		fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
 		/*
 		ViewEventController.getInstance().refreshTable();
 		ViewEventController.getInstance().refreshTree();
