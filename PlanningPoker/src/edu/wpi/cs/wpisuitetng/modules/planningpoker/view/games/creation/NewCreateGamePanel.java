@@ -317,6 +317,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		if(currentGame == null){
 			currentGame = new Game();
 			setCurrentGame(true);
+			currentGame.setRequirements(rightHalf.getRequirements()); //Set Requirements in Game
 			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
 			PPRequirementModel.getInstance().addRequirements(rightHalf.getRequirements().toArray(new PPRequirement[1]), currentGame.getIdentity()); //New Requirements get added to server
 		} else{

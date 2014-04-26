@@ -207,7 +207,8 @@ public class GameTree extends JPanel implements MouseListener{
 				RetrievePPRequirementController.getInstance().retrievePPRequirements();
 				List<PPRequirement> addingReqList = PPRequirementModel.getInstance().getRequirements();
 				List<Game> addingGameList = GameModel.getInstance().getGames();
-				
+				System.out.println("List of Requirements: " + addingReqList);
+				System.out.println("List of Games: " + addingGameList);
 				for(Game emptyGame : addingGameList) {
 					List<PPRequirement> emptyGameReqs = new ArrayList<PPRequirement>();
 					for(PPRequirement r : addingReqList) {
@@ -217,6 +218,8 @@ public class GameTree extends JPanel implements MouseListener{
 					}
 					emptyGame.setRequirements(emptyGameReqs);
 				}
+				
+				
 				
 				GameModel.getInstance().updateGames(addingGameList.toArray(new Game[1]));
 				
