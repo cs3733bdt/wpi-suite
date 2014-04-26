@@ -255,29 +255,5 @@ public class NewAddEndDatePanel extends JPanel implements IDataField {
 	public boolean hasChanges() {
 		// TODO Auto-generated method stub
 		return false;
-<<<<<<< HEAD
-	}	
-	
-	public String toString(){
-		try {
-			return endDate.toString()+
-				Integer.toString(getHours())+
-				Integer.toString(getMinutes())+
-						Integer.toString(AmPmSelection.getSelectedIndex());
-		}
-		catch(NullPointerException e) {
-		return "";
-=======
-	}
-
-	public String toString() {
-		try {
-			return endDate.toString() + Integer.toString(getHours())
-					+ Integer.toString(getMinutes())
-					+ Integer.toString(AmPmSelection.getSelectedIndex());
-		} catch (NullPointerException e) {
-			return "";
->>>>>>> 6a094e898a032ca8b329b2da8c66d4fb1d58c683
-		}
 	}
 }
