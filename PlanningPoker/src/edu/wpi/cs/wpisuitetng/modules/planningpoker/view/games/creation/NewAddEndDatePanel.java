@@ -28,35 +28,38 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
 /**
- * This is where the graphical elements and calculation are done for 
- * allowing users to select an end date for their Planning Poker games
+ * This is where the graphical elements and calculation are done for allowing
+ * users to select an end date for their Planning Poker games
+ * 
  * @author BDT
  */
-public class NewAddEndDatePanel extends JPanel implements IDataField{
+public class NewAddEndDatePanel extends JPanel implements IDataField {
 
 	Calendar dateMaker;
 	Date endDate;
-	
+
 	private final JXDatePicker datePicker = new JXDatePicker(new Date());
-	private final String[] hourArray = 
-		{"1","2","3","4","5","6","7","8","9","10","11","12"} ;
-	private final String[] minuteArray = {"00","15","30","45"};
-	private final String[] AmPmArray = {"AM","PM"};
+	private final String[] hourArray = { "1", "2", "3", "4", "5", "6", "7",
+			"8", "9", "10", "11", "12" };
+	private final String[] minuteArray = { "00", "15", "30", "45" };
+	private final String[] AmPmArray = { "AM", "PM" };
 	private final JComboBox<String> hourSelection = new JComboBox<>(hourArray);
-	private final JComboBox<String> minuteSelection = new JComboBox<>(minuteArray);
+	private final JComboBox<String> minuteSelection = new JComboBox<>(
+			minuteArray);
 	private final JComboBox<String> AmPmSelection = new JComboBox<>(AmPmArray);
 	private final JLabel endDateSelection = new JLabel("End Date * ");
-	
-	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
+
+	private final Border errorBorder = BorderFactory
+			.createLineBorder(Color.RED);
 	private final Border defaultBorder = (new JXDatePicker()).getBorder();
-	
-	
+
 	/**
-	 * Only constructor for AddEndDatePanel
-	 * Creates graphical elements required for creation of an end date
+	 * Only constructor for AddEndDatePanel Creates graphical elements required
+	 * for creation of an end date
+	 * 
 	 * @param view
 	 */
-	public NewAddEndDatePanel(final NewLeftHalfCreateGamePanel view){
+	public NewAddEndDatePanel(final NewLeftHalfCreateGamePanel view) {
 		add(endDateSelection);
 		add(datePicker);
 		add(hourSelection);
@@ -64,54 +67,62 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 		add(AmPmSelection);
 		dateMaker = new GregorianCalendar();
 	}
-	
+
 	/**
 	 * @return Date the end date selected in the DatePicker and drop down menus
 	 */
-	public Date getEndDate(){
+	public Date getEndDate() {
 		endDate = datePicker.getDate();
 		dateMaker.setTime(endDate);
 		dateMaker.set(Calendar.HOUR, getHours());
-		dateMaker.set(Calendar.MINUTE, getMinutes());		
+		dateMaker.set(Calendar.MINUTE, getMinutes());
 		endDate = dateMaker.getTime();
 		return endDate;
 	}
-	
+
 	private int getMinutes() {
 		int index = minuteSelection.getSelectedIndex();
 		int minutes;
-		
-		switch(index) {
-		case 0: minutes = 0;
-				break;
-		case 1: minutes = 15;
-				break;
-		case 2: minutes = 30;
-				break;
-		case 3: minutes = 45;
-				break;
-		default: minutes = 0;
-				 break;
+
+		switch (index) {
+		case 0:
+			minutes = 0;
+			break;
+		case 1:
+			minutes = 15;
+			break;
+		case 2:
+			minutes = 30;
+			break;
+		case 3:
+			minutes = 45;
+			break;
+		default:
+			minutes = 0;
+			break;
 		}
 		return minutes;
 	}
-	
+
 	private int getHours() {
 		int index;
 		int hours;
 		int isAMPM;
-		
+
 		index = hourSelection.getSelectedIndex();
 		isAMPM = AmPmSelection.getSelectedIndex();
-		
-		switch(isAMPM){
-		case 0: dateMaker.set(Calendar.AM_PM, Calendar.AM);
-				break;
-		case 1: dateMaker.set(Calendar.AM_PM, Calendar.PM);
-				break;
-		default: break;
+
+		switch (isAMPM) {
+		case 0:
+			dateMaker.set(Calendar.AM_PM, Calendar.AM);
+			break;
+		case 1:
+			dateMaker.set(Calendar.AM_PM, Calendar.PM);
+			break;
+		default:
+			break;
 		}
-		
+
 		switch (index) {
 		case 0:
 			hours = 1;
@@ -153,11 +164,10 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 			hours = 1;
 			break;
 		}
-		
+
 		return hours;
 	}
 
-	
 	public JXDatePicker getDatePicker() {
 		return datePicker;
 	}
@@ -173,44 +183,50 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 	public JComboBox<String> getAmPmSelection() {
 		return AmPmSelection;
 	}
-	
-	private void setDate(Date oldDate){
+
+	private void setDate(Date oldDate) {
 		datePicker.setDate(oldDate);
 	}
-	
-	private void setHour(String oldHour){
-		if(oldHour.equals("0")){
+
+	private void setHour(String oldHour) {
+		if (oldHour.equals("0")) {
 			hourSelection.setSelectedIndex(11);
-		}
-		else{
+		} else {
 			hourSelection.setSelectedItem(oldHour);
 		}
 	}
-	
-	private void setMinute(String oldMinute){
+
+	private void setMinute(String oldMinute) {
 		minuteSelection.setSelectedItem(oldMinute);
 	}
-	
-	private void setAMPM(String oldAMPM){
+
+	private void setAMPM(String oldAMPM) {
 		AmPmSelection.setSelectedItem(oldAMPM);
 	}
-	
+
 	/**
 	 * Sets the defaults for the graphical elements displayed for the end date
-	 * @param oldDate Date to be displayed for the DatePicker
-	 * @param oldHour String to set the hour drop down menu
-	 * @param oldMinute String to set the minute drop down menu
-	 * @param oldAMPM String to set the AMPM drop down menu
+	 * 
+	 * @param oldDate
+	 *            Date to be displayed for the DatePicker
+	 * @param oldHour
+	 *            String to set the hour drop down menu
+	 * @param oldMinute
+	 *            String to set the minute drop down menu
+	 * @param oldAMPM
+	 *            String to set the AMPM drop down menu
 	 */
-	public void setDateAndTime(Date oldDate, String oldHour, String oldMinute, String oldAMPM){
+	public void setDateAndTime(Date oldDate, String oldHour, String oldMinute,
+			String oldAMPM) {
 		setDate(oldDate);
 		setHour(oldHour);
 		setMinute(oldMinute);
-		setAMPM(oldAMPM);		
+		setAMPM(oldAMPM);
 	}
 
 	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
+	public boolean validateField(IErrorView warningField, boolean showLabel,
+			boolean showBox) {
 		// TODO Auto-generated method stub
 		boolean isEndDateValid = false;
 		endDate = getEndDate();
@@ -218,20 +234,20 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 		Calendar currentCalendar = new GregorianCalendar();
 		endCalendar.setTime(endDate);
 		currentCalendar.setTime(new Date());
-		
-		if(endDate.compareTo(new Date()) >= 0) {
+
+		if (endDate.compareTo(new Date()) >= 0) {
 			isEndDateValid = true;
 			this.setBorder(defaultBorder);
 		} else {
 			isEndDateValid = false;
-			if(showLabel){
+			if (showLabel) {
 				warningField.setText("End Time is too early to start a game");
 			}
-			if(showBox){
+			if (showBox) {
 				this.setBorder(errorBorder);
 			}
 		}
-		
+
 		return isEndDateValid;
 	}
 
@@ -239,12 +255,15 @@ public class NewAddEndDatePanel extends JPanel implements IDataField{
 	public boolean hasChanges() {
 		// TODO Auto-generated method stub
 		return false;
-	}	
-	
-	public String toString(){
-		return endDate.toString()+
-				Integer.toString(getHours())+
-				Integer.toString(getMinutes())+
-						Integer.toString(AmPmSelection.getSelectedIndex());
+	}
+
+	public String toString() {
+		try {
+			return endDate.toString() + Integer.toString(getHours())
+					+ Integer.toString(getMinutes())
+					+ Integer.toString(AmPmSelection.getSelectedIndex());
+		} catch (NullPointerException e) {
+			return "";
+		}
 	}
 }
