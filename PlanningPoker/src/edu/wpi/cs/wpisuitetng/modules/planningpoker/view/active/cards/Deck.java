@@ -24,7 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 public class Deck implements IDataField {
 	
 	//The deck variable holds the list of Strings, each string corresponding to a card in the deck
-	private ArrayList<String> Deck = new ArrayList<String>();
+	private ArrayList<String> deck = new ArrayList<String>();
 	
 	//set to true if there is an error with the created deck
 	private boolean errorBit = false;
@@ -59,10 +59,10 @@ public class Deck implements IDataField {
 	 * Constructs a default deck from the passed Deck
 	 * @param Deck an ArrayList of strings, each string corresponding to a card in the created Deck object
 	 */
-	public Deck(ArrayList<String> Deck) {
+	public Deck(ArrayList<String> deck) {
 		isDefaultDeck = false;
-		numCards = Deck.size();
-		this.Deck = Deck;
+		numCards = deck.size();
+		this.deck = deck;
 	}
 	
 	
@@ -81,11 +81,11 @@ public class Deck implements IDataField {
 		int firstnum = 0;
 		int secondnum = 1;
 		int currnum;
-		Deck.add(Integer.toString(secondnum));
+		deck.add(Integer.toString(secondnum));
 		
 		for (int i = 0; i < numLoops; i++) {
 			currnum = firstnum + secondnum;
-			Deck.add(Integer.toString(currnum));
+			deck.add(Integer.toString(currnum));
 			firstnum = secondnum;
 			secondnum = currnum;
 		}
@@ -105,7 +105,7 @@ public class Deck implements IDataField {
 	}
 	
 	public int get(int index) {
-		return Integer.parseInt(Deck.get(index));
+		return Integer.parseInt(deck.get(index));
 	}
 	
 	
