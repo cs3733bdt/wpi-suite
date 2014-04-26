@@ -22,6 +22,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -85,6 +86,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	private final CardImage cardPurple = new CardImage(ColorEnum.PURPLE);
 	
 	private final CardImage cardYellow = new CardImage(ColorEnum.YELLOW);
+	
+	private ArrayList<CardImage> cards = new ArrayList<CardImage>();
 	
 	public CreateDeckPanel(){
 		
@@ -197,8 +200,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		/* Card panel for the cards to appear in. Get rid of border when something actually appears */
 		JScrollPane cardScrollPane = new JScrollPane(cardsPanel);
 		
-		cardsPanel.setPreferredSize(new Dimension(10, 480));
+		cardsPanel.setPreferredSize(new Dimension(10, 520));
 		cardsPanel.add(cardRed);
+		cards.add(cardRed);
 		cardRed.setVisible(true);
 		
 		/* Not currently in use. Re-add this if the card-value setting method is desired below the card panel */
@@ -433,34 +437,41 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		String color = (String)getColorDropDown().getSelectedItem();
 		int numCardsPresent = cardsPanel.getComponentCount();
 		cardsPanel.removeAll();
+		cards.removeAll(cards);
 		/* Later, when real functionality occurs, we will need a way of storing the cards 
 		 * being generated, so we can later tell if one is selected or not.
 		 * This will be necessary when assigning values to each card. */
 		if(color == "Red (Default)"){
 			 for(int i=0; i < numCardsPresent; i++){
 				 cardsPanel.add(new CardImage(ColorEnum.RED));
+				 cards.add(new CardImage(ColorEnum.RED));
 			 }
 		}
 		if(color == "Blue"){
 			for(int i=0; i < numCardsPresent; i++){
-				 cardsPanel.add(new CardImage(ColorEnum.BLUE));
+				cardsPanel.add(new CardImage(ColorEnum.BLUE));
+				cards.add(new CardImage(ColorEnum.BLUE));
 			 }
 		}
 		if(color == "Green"){
 			for(int i=0; i < numCardsPresent; i++){
-				 cardsPanel.add(new CardImage(ColorEnum.GREEN));
+				cardsPanel.add(new CardImage(ColorEnum.GREEN));
+				cards.add(new CardImage(ColorEnum.GREEN));
 			 }
 		}
 		if(color == "Purple"){
 			for(int i=0; i < numCardsPresent; i++){
 				cardsPanel.add(new CardImage(ColorEnum.PURPLE));
+				cards.add(new CardImage(ColorEnum.PURPLE));
 			 }
 		}
 		if(color == "Yellow"){
 			for(int i=0; i < numCardsPresent; i++){
 				 cardsPanel.add(new CardImage(ColorEnum.YELLOW));
+				 cards.add(new CardImage(ColorEnum.YELLOW));
 			 }
 		}
+		System.out.print(cards.size());
 		cardsPanel.revalidate();
         cardsPanel.repaint();
 	}
