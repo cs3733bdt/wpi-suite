@@ -102,14 +102,6 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 		System.out.println(sum);
 	}
 
-	/**
-	 * Clicks all the buttons. Used for testing
-	 */
-	public void doClicks() {
-		for (int i = 0; i < JToggleButtonList.size(); i++) {
-			JToggleButtonList.get(i).doClick();
-		}
-	}
 
 	/**
 	 * gets the total of all the cards in the deck
@@ -188,6 +180,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	@Override
 	public boolean validateField(IErrorView warningField, boolean showLabel,
 			boolean showBox) {
+		// TODO Auto-generated method stub
 		return false;
 	}
 

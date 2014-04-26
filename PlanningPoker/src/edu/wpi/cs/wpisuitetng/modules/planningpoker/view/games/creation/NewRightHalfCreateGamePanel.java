@@ -962,5 +962,13 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		String currentDesc = (String) currentTable.getValueAt(globalRow, 1);
 		return (!(currentName.equals(updateName)))|| (!(currentDesc.equals(updateDesc)));
 	}
+	
+	public boolean isNameAreaEmpty() {
+		return nameArea.getText().equals("");
+	}
+	
+	public boolean isDescAreaEmpty() {
+		return descArea.getText().equals("");
+	}
 
 }
