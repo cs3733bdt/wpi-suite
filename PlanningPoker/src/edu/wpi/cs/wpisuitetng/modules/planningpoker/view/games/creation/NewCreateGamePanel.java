@@ -12,6 +12,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JFrame;
@@ -41,6 +42,12 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 											// remove because no changes have
 											// happened
 	private Game currentGame;
+	
+	private String savedName;
+	private String savedDescription;
+	private boolean useCards;
+	private String savedEndDate;
+	private List<PPRequirement> savedRequirements=new ArrayList<PPRequirement>();
 	
 	/**
 	 * Creates a NewCreateGamePanel with the game setting the fields for the panel.
@@ -73,6 +80,13 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		revalidate();
 		repaint();
 		
+		savedName=getBoxName().getText();
+		savedDescription=getBoxDescription().getText();
+		useCards=leftHalf.doesUseCards();
+		savedEndDate=leftHalf.dateToString();
+		for(PPRequirement p:rightHalf.getRequirements()){
+			savedRequirements.add(p);
+		}
 	}
 	
 	
@@ -128,7 +142,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 * @return whether the CreateGamePanel as a whole is ready to be removed.
 	 */
 	public boolean readyToRemove() {
-		if (readyToClose)
+		if (readyToClose || noChange())
 			return true;
 
 		// TODO Check fields to see if this window has unsaved changes
@@ -138,7 +152,6 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		else {
 			readyToRemove = true;
 		}
-		
 
 		if (readyToRemove) {
 			return true;
@@ -158,7 +171,14 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 						!(rightHalf.getRequirements().isEmpty()) ); 
 	}
 
-
+	private boolean noChange(){
+		return ((savedName.equals(getBoxName().getText())) 
+				&&(savedDescription.equals(getBoxDescription().getText()))
+				&&(useCards==(leftHalf.doesUseCards()))
+				&&(savedEndDate.equals(leftHalf.dateToString()))
+				&&(rightHalf.getRequirements().equals(savedRequirements)));
+	}
+	
 	/**
 	 * Checks to see if all of this panels sub elements are valid to be saved or launched
 	 * @param whether or not to show the error
