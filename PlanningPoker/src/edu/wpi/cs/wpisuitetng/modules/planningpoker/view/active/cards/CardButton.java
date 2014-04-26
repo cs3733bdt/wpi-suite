@@ -33,7 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActi
  */
 public class CardButton extends JToggleButton implements Accessible {
 	JToggleButton button;
-	List<String> deck;
+	Deck deck;
 	ActiveCardsPanel panel;
 
 	/**
@@ -49,7 +49,7 @@ public class CardButton extends JToggleButton implements Accessible {
 	 *            the panel that displays the estimates
 	 */
 
-	public CardButton(int cardNum, List<String> passedDeck,
+	public CardButton(int cardNum, Deck passedDeck,
 			ActiveCardsPanel passedCardsPanel,
 			NewRightHalfActiveGamePanel panel2) {
 		deck = passedDeck;
@@ -70,8 +70,13 @@ public class CardButton extends JToggleButton implements Accessible {
 			ex.printStackTrace();
 		}
 		// Set the Button's tooltiptext and position it correctly
+		if (cardNum != deck.size() -1) {
+			setToolTipText("Add " + buttonNum + " to the total");
+		}
+		else {
+			setToolTipText("I don't know what to estimate");
+		}
 		setText(deck.get(cardNum));
-		setToolTipText("Add " + buttonNum + " to the total");
 
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setVerticalAlignment(SwingConstants.CENTER);

@@ -42,6 +42,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequi
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.ActiveCardsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 public class NewRightHalfActiveGamePanel extends JScrollPane {
@@ -54,7 +55,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
-	private ArrayList<String> deck = new ArrayList<String>();
+	private Deck deck;
 	private List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	private ActiveCardsPanel cardsPanel;
 	private int sum;
@@ -198,27 +199,27 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		boolean useDefaultDeck;
 		// if (customDeck.size() == 0) {
 		// generate fibonachi sequence
-		int firstnum = 0;
-		int secondnum = 1;
-		int currnum;
-		deck.add(Integer.toString(secondnum));
+//		int firstnum = 0;
+//		int secondnum = 1;
+//		int currnum;
+		deck = new Deck();
 		// Default value is 6.
-		int Fibcount = 6; // if this is 6, the highest number generated will be
-							// 13
-		for (int i = 0; i < Fibcount; i++) {
-			currnum = firstnum + secondnum;
-			deck.add("" + currnum + "");
-			firstnum = secondnum;
-			secondnum = currnum;
-		}
+//		int Fibcount = 6; // if this is 6, the highest number generated will be
+//							// 13
+//		for (int i = 0; i < Fibcount; i++) {
+//			currnum = firstnum + secondnum;
+//			deck.add("" + currnum + "");
+//			firstnum = secondnum;
+//			secondnum = currnum;
+//		}
 		useDefaultDeck = true;
 		/*
 		 * } This branch will be run if a custom deck is to be used else { deck
 		 * = customDeck; useDefaultDeck = false; }
 		 */
-		if (useDefaultDeck) {
-			deck.add("?");
-		}
+//		if (useDefaultDeck) {
+////			deck.add("?");
+//		}
 
 		cardsPanel = new ActiveCardsPanel(deck, this);
 		
