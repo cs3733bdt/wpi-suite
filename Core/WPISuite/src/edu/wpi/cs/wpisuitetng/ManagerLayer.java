@@ -78,7 +78,7 @@ public class ManagerLayer {
 		map.put("requirementmanager" + "requirement", new RequirementEntityManager(data));
 		map.put("requirementmanager" + "iteration", new IterationEntityManager(data));
 		map.put("planningpoker" + "game", new GameEntityManager(data));
-		map.put("planningpoker" + "requirement", new PPRequirementEntityManager(data));
+		map.put("planningpoker" + "pprequirement", new PPRequirementEntityManager(data));
 		
 		//add just your module to this list
 		String[] fullModuleList = {"core","defecttracker","postboard","requirementmanager","planningpoker"};
