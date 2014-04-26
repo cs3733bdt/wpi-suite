@@ -197,7 +197,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		/* Card panel for the cards to appear in. Get rid of border when something actually appears */
 		JScrollPane cardScrollPane = new JScrollPane(cardsPanel);
 		
-		cardsPanel.setPreferredSize(new Dimension(10, 600));
+		cardsPanel.setPreferredSize(new Dimension(10, 480));
 		cardsPanel.add(cardRed);
 		cardRed.setVisible(true);
 		
@@ -384,13 +384,13 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	}
 	
 	/**
-	 * Checks to make sure the number of cards inputted is 1-25
+	 * Checks to make sure the number of cards inputted is 1-24
 	 * @return
 	 */
 	public boolean verifyNumberOfCards() {
 		String text = getNumCards().getText();
 		String allowedChars = "123456789";
-		String allowedChars1 = "012345";
+		String allowedChars1 = "01234";
 		String allowedChars2 = "0123456789";
 		if (text.length() == 0) {
 			return false;
@@ -401,7 +401,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 				return true;
 			}
 		}
-		/* Checks to see if the number is 10-25 */
+		/* Checks to see if the number is 10-24 */
 		if (text.length() == 2){
 			if(text.charAt(0) == '2'){
 				if(allowedChars1.contains(Character.toString(text.charAt(1)))){
@@ -480,7 +480,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		component.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent arg0) {
 					if(!submitNumCards.isEnabled()){
-						errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 25");
+						errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 24");
 					}
 					else{}//it will perform the action listener
 			}
