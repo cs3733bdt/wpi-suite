@@ -398,26 +398,3 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		return true;
 	}
 }
-// if (!savedRequirements.contains(p)) {
-// return false;
-// }
-// else if ((!(p.getName().equals //check the name is not the same
-// (savedRequirements.get(savedRequirements.indexOf(p)).getName()))
-// ||(!(p.getDescription().equals //check the description is not the same
-// (savedRequirements.get(savedRequirements.indexOf(p)).getDescription()))))){
-// return false;
-// }
-// }
-// for (PPRequirement q : savedRequirements) {
-// if (!rightHalf.getRequirements().contains(q)) {
-// return false;
-// }
-// else if ((!(q.getName().equals //check the name is not the same
-// (rightHalf.getRequirements().get(rightHalf.getRequirements().indexOf(q)).getName()))
-// ||(!(q.getDescription().equals //check the description is not the same
-// (rightHalf.getRequirements().get(rightHalf.getRequirements().indexOf(q)).getDescription()))))){
-// return false;
-// }
-// }
-// return true;
-// }
