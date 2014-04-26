@@ -226,13 +226,6 @@ public class DeckTree extends JPanel implements MouseListener{
 				if(node != null) {
 					if(node.getUserObject() instanceof Game){ //Confirm that this is a game
 						Game selectedGame = (Game) node.getUserObject();
-						List<PPRequirement> selectedReqs = new ArrayList<PPRequirement>();
-						for(PPRequirement r : reqList) {
-							if(r.getGameID().equals(selectedGame.getIdentity())) {
-								selectedReqs.add(r);
-							}
-						}
-						selectedGame.setRequirements(selectedReqs);
 						System.out.println("Setting view to game: " + 
 								selectedGame.toString());
 						if(selectedGame.isActive() &&

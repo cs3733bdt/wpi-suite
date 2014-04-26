@@ -101,6 +101,11 @@ public class GameModelTest {
 		
 		reqs.add(req);
 		Game game1 = new Game("Game", "With a name", reqs, false, true);
+		for(PPRequirement r : game1.getRequirements()) {
+			r.setGameID(game1.getIdentity());
+		}
+		
+		
 		assertEquals(3, req.getVoteCount());
 		
 		Game game2 = new Game("Game2", "With a name2", new ArrayList<PPRequirement>(), true, true);
@@ -134,6 +139,9 @@ public class GameModelTest {
 		assertEquals(3, req2.getVoteCount());
 		
 		Game game1Changed = new Game("Game1 Changed", "DescriptionChanged", reqs2, true, false);
+		for(PPRequirement r : game1Changed.getRequirements()) {
+			r.setGameID(game1Changed.getIdentity());
+		}
 		game1Changed.setIdentifier(game1.getIdentity()); //Make this game 'equivalent' to the other
 		game1Changed.makeComplete();
 		
