@@ -93,10 +93,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		
 		nameTextField.requestFocus();
 		if(game != null){
-			nameTextField.select(game.getName().length(), game.getName().length());;
-		}
-		else{
-			nameTextField.select(0,0);
+			nameTextField.select(game.getName().length(), game.getName().length());
 		}
 	}
 	
