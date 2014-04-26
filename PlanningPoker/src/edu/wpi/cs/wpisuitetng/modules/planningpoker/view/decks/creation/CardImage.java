@@ -21,7 +21,10 @@ import javax.swing.JPanel;
 */
 public class CardImage extends JPanel{
 	
+	ColorEnum color;
+	
 	public CardImage(ColorEnum color){
+		this.color = color;
 		BufferedImage myPicture = null;
 		try {
 			switch (color) {
@@ -53,5 +56,9 @@ public class CardImage extends JPanel{
 		picButton.setBorderPainted(false);
 		picButton.setContentAreaFilled(false);
 		add(picButton);	
+	}
+	
+	public ColorEnum getColor(){
+		return color;
 	}
 }
