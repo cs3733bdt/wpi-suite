@@ -95,8 +95,8 @@ public class SMSNotification {
 	}
 	
 	/**
-	 * This method implements the sendEmail method to 
-	 * send email notifications to all the users on a team
+	 * This method implements the sendSMSMessage method to 
+	 * send text notifications to all the users on a team
 	 */
 	public void sendSMSMessages() {
 		// Get the users that are expected to play the game
@@ -114,10 +114,14 @@ public class SMSNotification {
 		if(users[0] != null) {
 			for (int i = 0; i < users.length; i++) {
 				// TODO implement verify if email format
-				if (users[i].getEmail() != null && users[i].getNotificationPreferences().contains("M"))
-					sendSMS(login(), users[i]);
+				if(users[i].getNotificationPreferences().contains("M")){
+					if (users[i].getPhoneNumber() != null)
+						sendSMS(login(), users[i]);
+					else
+						System.err.println(users[i].getName() + " doesn't have an phone number Stored.");
+				}
 				else
-					System.err.println(users[i].getName() + " doesn't have an email Stored.");
+					System.err.println(users[i].getName() + " doesn't want to receive text notifications");
 			}
 		} else {
 			System.out.println("Project: " 

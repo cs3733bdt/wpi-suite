@@ -99,11 +99,16 @@ public class FacebookNotification {
 			// Send facebook notifications
 			for (int i = 0; i < users.length; i++) {
 				// Make sure users have a username stored
-				if (users[i].getFacebookUsername() != null && users[i].getNotificationPreferences().contains("F"))
-					sendFacebookNotification(connection, users[i]);
+				if(users[i].getNotificationPreferences().contains("F")){
+					if (users[i].getFacebookUsername() != null)
+						sendFacebookNotification(connection, users[i]);
+					else{
+						System.err.println(users[i].getName() 
+								+ " doesn't have a facebook Username Stored.");
+					}
+				}
 				else
-					System.err.println(users[i].getName() 
-							+ " doesn't have a facebook Username Stored.");
+					System.err.println(users[i].getName() + " doesn't want to receive facebook notifications");
 			}
 		} else {
 			System.err.println("There are no users on the team of Project: "

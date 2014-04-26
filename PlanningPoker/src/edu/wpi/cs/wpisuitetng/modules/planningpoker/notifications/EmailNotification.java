@@ -118,10 +118,13 @@ public class EmailNotification {
 			// Send email to each user
 			for (int i = 0; i < users.length; i++) {
 				// TODO implement verify if email format
-				if (users[i].getEmail() != null && users[i].getNotificationPreferences().contains("E"))
-					sendEmail(login(), users[i]);
+				if(users[i].getNotificationPreferences().contains("E"))
+					if (users[i].getEmail() != null )
+						sendEmail(login(), users[i]);
+					else
+						System.err.println(users[i].getName() + " doesn't have an email Stored.");
 				else
-					System.err.println(users[i].getName() + " doesn't have an email Stored.");
+					System.err.println(users[i].getName() + " doesnt want to receive email notifications.");
 			}
 		} else {
 			System.out.println("Project: " + g.getProject().getName() 
