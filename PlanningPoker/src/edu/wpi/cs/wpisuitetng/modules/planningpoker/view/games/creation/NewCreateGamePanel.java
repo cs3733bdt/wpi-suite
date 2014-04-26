@@ -185,7 +185,9 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		return ((savedName.equals(getBoxName().getText()))
 				&& (savedDescription.equals(getBoxDescription().getText()))
 				&& (useCards == (leftHalf.doesUseCards()))
-				&& (savedEndDate.equals(leftHalf.dateToString())) && (sameReqLists()));
+				&& (savedEndDate.equals(leftHalf.dateToString())) && (sameReqLists())
+				&& (rightHalf.isDescAreaEmpty())
+				&& (rightHalf.isNameAreaEmpty()));
 	}
 
 	/**
