@@ -143,7 +143,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			}
 		});
 		
-		//table.setRowSelectionInterval(0, 0); //start table at beginning
+		table.setRowSelectionInterval(0, 0); //start table at beginning
 
 		JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel

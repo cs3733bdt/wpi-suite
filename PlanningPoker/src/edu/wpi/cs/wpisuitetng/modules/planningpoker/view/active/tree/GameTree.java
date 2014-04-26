@@ -110,8 +110,6 @@ public class GameTree extends JPanel implements MouseListener{
 		
 		List<Game> gameList = 
 				sortGames(GameModel.getInstance().getGames());//retrieve list of all games		
-		reqList = 
-				PPRequirementModel.getInstance().getRequirements();//retrieve list of reqs
 
 		System.out.println("Numb Games: " + gameList.size());
 		for (Game game: gameList){
@@ -207,6 +205,21 @@ public class GameTree extends JPanel implements MouseListener{
 			try{
 				GetGameController.getInstance().retrieveGames();
 				RetrievePPRequirementController.getInstance().retrievePPRequirements();
+				List<PPRequirement> addingReqList = PPRequirementModel.getInstance().getRequirements();
+				List<Game> addingGameList = GameModel.getInstance().getGames();
+				
+				for(Game emptyGame : addingGameList) {
+					List<PPRequirement> emptyGameReqs = new ArrayList<PPRequirement>();
+					for(PPRequirement r : addingReqList) {
+						if(r.getIdentity().equals(emptyGame.getIdentity())) {
+							emptyGameReqs.add(r);
+						}
+					}
+					emptyGame.setRequirements(emptyGameReqs);
+				}
+				
+				GameModel.getInstance().updateGames(addingGameList.toArray(new Game[1]));
+				
 				initialized = true;
 			} catch (Exception e){
 				System.err.println("Problem instantiating the Game Model. " + e);
@@ -255,13 +268,6 @@ public class GameTree extends JPanel implements MouseListener{
 				if(node != null) {
 					if(node.getUserObject() instanceof Game){ //Confirm that this is a game
 						Game selectedGame = (Game)node.getUserObject();
-						List<PPRequirement> selectedReqs = new ArrayList<PPRequirement>();
-						for(PPRequirement r : reqList) {
-							if(r.getGameID().equals(selectedGame.getIdentity())) {
-								selectedReqs.add(r);
-							}
-						}
-						selectedGame.setRequirements(selectedReqs);
 						System.out.println("Setting view to game: " + 
 								selectedGame.toString());
 						if(selectedGame.isActive() &&
