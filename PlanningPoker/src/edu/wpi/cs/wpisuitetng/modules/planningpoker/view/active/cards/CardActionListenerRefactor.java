@@ -38,7 +38,7 @@ public class CardActionListenerRefactor implements ActionListener {
 	int size;
 	JToggleButton button;
 	int index;
-	List<String> deck;
+	Deck deck;
 	ActiveCardsPanel cardsPanel;
 	NewRightHalfActiveGamePanel estimatePanel;
 
@@ -57,7 +57,7 @@ public class CardActionListenerRefactor implements ActionListener {
 	 *            the estimate before the action occurs
 	 */
 
-	public CardActionListenerRefactor(int index, List<String> deckUsed,
+	public CardActionListenerRefactor(int index, Deck deckUsed,
 			JToggleButton passedButton, ActiveCardsPanel passedCardsPanel,
 			NewRightHalfActiveGamePanel panel2) {
 		size = deckUsed.size();
