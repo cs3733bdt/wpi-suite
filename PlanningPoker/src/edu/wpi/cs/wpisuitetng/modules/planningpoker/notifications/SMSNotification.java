@@ -23,7 +23,6 @@ import javax.mail.internet.MimeMessage;
 
 import com.sun.mail.util.MailConnectException;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
@@ -232,7 +231,7 @@ public class SMSNotification {
 	 * @return String representing message to be sent on game creation.
 	 */
 	private String generateCreateGameMessage(){
-		return "Voting is Required for game: " + g.getName() +
+		return "Voting is required for game: " + g.getName() +
 		"\nGame Ending : " + g.getEndDate().toString() + "\n" +
 				"Bobby Drop Tables\nWPI Suite";
 	}
@@ -243,7 +242,7 @@ public class SMSNotification {
 	 * @return String representing message to be sent on game end.
 	 */
 	private String generateEndGameMessage(){
-		return "Game: " + g.getName() + "has ended. Refer to the"
+		return "Game: " + g.getName() + " has ended. \nRefer to the"
 				+ " email for game statistics.\n" +
 				"Bobby Drop Tables\nWPI Suite";					
 	}

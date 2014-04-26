@@ -163,16 +163,15 @@ public class EmailNotification {
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(
 					to));
 
-			// Set Subject: header field
-			message.setSubject("Planning Poker Game: " + g.getName());
-
 			// If the game doesn't have requirements, say that instead
 			// of printing null requirements.
 			// Then set the actual message.
 			if (!g.getRequirements().isEmpty()) {
 				if(!g.isComplete()){
+					message.setSubject("Planning Poker Game: " + g.getName() + " has begun!");
 					message.setText(generateCreateGameMessage());
 				} else {
+					message.setSubject("Planning Poker Game: " + g.getName() + " has ended!");
 					message.setText(generateEndGameMessage());
 				}
 				
@@ -214,9 +213,9 @@ public class EmailNotification {
 		}
 		
 		return "Voting is required for game: " + g.getName() + "\n\n"
-				+ "Game Description: " + g.getDescription() + "\n\n"
+				+ "Game Description: " + g.getDescription() + "\n"
 				+ "\nGame Ending : " + g.getEndDate().toString()
-				+ "\nGame Requirements: " + reqs + "\n\n" + 
+				+ "\n\nGame Requirements: " + reqs + "\n\n" + 
 				"Bobby Drop Tables \nWPI Suite";
 	}
 	
@@ -235,7 +234,7 @@ public class EmailNotification {
 				voteArray.add(r.getVotes().get(i).getVoteNumber());
 			}
 			
-			stats += "Requirement: " + r.getName() + "\n" +
+			stats += "\nRequirement: " + r.getName() + "\n" +
 					"Mean: " + mean(voteArray) + "\n" +
 					"Median: " + median(voteArray) + "\n" + 
 					"Standard Deviation: " + stDev(voteArray) + "\n\n";
