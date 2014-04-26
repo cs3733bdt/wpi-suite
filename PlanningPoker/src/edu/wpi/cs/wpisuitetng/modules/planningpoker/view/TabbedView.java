@@ -281,17 +281,23 @@ public class TabbedView extends JTabbedPane {
 		if (comp instanceof ICreateGamePanel){
 			if(!((ICreateGamePanel) comp).readyToRemove()) return;
 			listOfCreateGamePanels.remove(comp);
-			setSelectedComponent(gameOverview);
+			if (comp.equals(getSelectedComponent())) {
+				setSelectedComponent(gameOverview);
+			}
 		}
 		if (comp instanceof IActiveGamePanel) {
 			if(!((IActiveGamePanel) comp).readyToRemove()) return;
 			listOfActiveGamePanels.remove(comp);
-			setSelectedComponent(gameOverview);
+			if (comp.equals(getSelectedComponent())) {
+				setSelectedComponent(gameOverview);
+			}
 		}
 		if (comp instanceof IEndedGamePanel){
 			if(!((IEndedGamePanel)comp).readyToRemove()) return;
 			listOfEndedGamePanels.remove(comp);
-			setSelectedComponent(gameOverview);
+			if (comp.equals(getSelectedComponent())) {
+				setSelectedComponent(gameOverview);
+			}
 		}
 		if (comp instanceof PreferencesPanel){
 			//TODO Implement preferences like other panels to use readyToRemove
@@ -300,7 +306,9 @@ public class TabbedView extends JTabbedPane {
 			setSelectedComponent(gameOverview);
 		}
 		if (comp instanceof CreateDeckPanel){
-			setSelectedComponent(deckOverview);
+			if (comp.equals(getSelectedComponent())) {
+				setSelectedComponent(gameOverview);
+			}
 		}
 		remove(comp);
 	}

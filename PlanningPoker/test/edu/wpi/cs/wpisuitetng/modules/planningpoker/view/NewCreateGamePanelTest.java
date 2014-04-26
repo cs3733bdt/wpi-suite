@@ -67,7 +67,7 @@ public class NewCreateGamePanelTest {
 	
 	@Test
 	public void CreateGameServerConnectionLostTest() {
-		createGameTab = new NewCreateGamePanel(null, true);
+		createGameTab = new NewCreateGamePanel(activeGame, true);
 		
 	}
 }

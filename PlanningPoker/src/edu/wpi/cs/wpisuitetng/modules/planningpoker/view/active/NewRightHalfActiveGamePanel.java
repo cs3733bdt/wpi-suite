@@ -223,7 +223,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		cardsPanel = new ActiveCardsPanel(deck, this);
 		
 		// adds the button to clear all entered estimates
-		clearButton = new JButton("Clear");
+		clearButton = new JButton("Clear Vote");
 		clearButton.setToolTipText("Clear all Estimates");
 		
 		rightView.add(clearButton);
@@ -262,7 +262,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					rightView);
 			
 			layout.putConstraint(SpringLayout.NORTH, clearButton, 5, SpringLayout.SOUTH, cardScrollPanel);
-			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, clearButton, 0, SpringLayout.HORIZONTAL_CENTER, rightView);
+			layout.putConstraint(SpringLayout.WEST, clearButton, 115, SpringLayout.WEST, rightView);
 			
 
 			cardScrollPanel.setVisible(false);
@@ -315,7 +315,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		submitButton = new JButton();
 		submitButton.setSize(10, 5);
-		submitButton.setText("SUBMIT");
+		submitButton.setText("Submit Vote");
 		submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

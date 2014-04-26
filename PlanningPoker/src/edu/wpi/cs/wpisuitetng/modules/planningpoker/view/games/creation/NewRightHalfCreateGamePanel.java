@@ -62,32 +62,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	private NewAddReqImportReqPanel importPanel; // initialize the panel with the buttons Add Requirement" and "Import Requirements"
 	private NewCreateGamePanel parent; // initialize variable to hold panel above this panel
 
-	private List<PPRequirement> requirements = new ArrayList<PPRequirement>(){
-		public boolean equals(Object o){
-			if(this == o ){
-				return true;
-			}
-			if(o==null){
-				return false;
-			}
-			if(getClass() !=o.getClass()){
-				return false;
-			}
-			@SuppressWarnings("unchecked")
-			List<PPRequirement> comp = (List<PPRequirement>) o;
-			for(PPRequirement p:this){
-				if(!comp.contains(p)){
-					return false;
-				}
-			}
-			for(PPRequirement p:comp){
-				if(!this.contains(p)){
-					return false;
-				}
-			}
-			return true;
-		}
-};
+	private List<PPRequirement> requirements = new ArrayList<PPRequirement>();
 
 	private final Border defaultTextFieldBorder = (new JTextField())
 			.getBorder();
@@ -987,6 +962,14 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		String updateDesc = descArea.getText();
 		String currentDesc = (String) currentTable.getValueAt(globalRow, 1);
 		return (!(currentName.equals(updateName)))|| (!(currentDesc.equals(updateDesc)));
+	}
+	
+	public boolean isNameAreaEmpty() {
+		return nameArea.getText().equals("");
+	}
+	
+	public boolean isDescAreaEmpty() {
+		return descArea.getText().equals("");
 	}
 
 }
