@@ -247,7 +247,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		if (getGame().doesUseCards()) {
 			cardScrollPanel = new JScrollPane(cardsPanel);
 			// cardPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			cardScrollPanel.setPreferredSize(new Dimension(100, 100));
+			cardScrollPanel.setPreferredSize(new Dimension(400, 120));
 			rightView.add(cardScrollPanel);
 			layout.putConstraint(SpringLayout.WEST, cardScrollPanel, 5,
 					SpringLayout.WEST, rightView);
@@ -255,9 +255,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardScrollPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
-			layout.putConstraint(SpringLayout.NORTH, counterLabel, 5,
-					SpringLayout.SOUTH, cardScrollPanel);
-			cardScrollPanel.getHorizontalScrollBar().setValue(200);
+			cardScrollPanel.getHorizontalScrollBar().setValue((cardScrollPanel.getHorizontalScrollBar().getMaximum())/2);
 			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER,
 					cardScrollPanel, 0, SpringLayout.HORIZONTAL_CENTER,
 					rightView);
@@ -415,7 +413,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, counterLabel, 5,
 				SpringLayout.SOUTH, previousEst);
-		
+
 		layout.putConstraint(SpringLayout.WEST, submitButton, 5,
 				SpringLayout.WEST, rightView);
 
