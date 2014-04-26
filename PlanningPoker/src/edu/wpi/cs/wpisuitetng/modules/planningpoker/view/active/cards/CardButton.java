@@ -11,6 +11,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.List;
@@ -20,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
 
@@ -60,10 +62,10 @@ public class CardButton extends JToggleButton implements Accessible {
 		// button = new JToggleButton(buttonNum);
 		try {
 			Image frontImg = ImageIO.read(getClass().getResource(
-					"card_front.png"));
+					"card_front_bigger.png"));
 			setIcon(new ImageIcon(frontImg));
-			setBorderPainted(false);
-			setContentAreaFilled(false);
+			setBorder(new EmptyBorder(0,0,0,0));
+//			setContentAreaFilled(false);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}

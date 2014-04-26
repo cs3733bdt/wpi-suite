@@ -72,7 +72,7 @@ public class CardActionListenerRefactor implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			Image frontImg = ImageIO.read(getClass().getResource(
-					"card_front.png"));
+					"card_front_bigger.png"));
 			Image backImg = ImageIO.read(getClass()
 					.getResource("card_back.png"));
 			// if the button is the I don't know button
