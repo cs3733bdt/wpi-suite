@@ -80,7 +80,17 @@ public class RetrievePPRequirementController implements ActionListener {
 		request.addObserver(observer); 
 		request.send();
 	}
-
+	
+	/**
+	 * Sends an HTTP request to retrieve all pprequirements
+	 */
+	public void retrievePPRequirements() {
+		final Request request = 
+				Network.getInstance().makeRequest("planningpoker/pprequirement", HttpMethod.GET);
+		request.addObserver(observer); 
+		request.send();
+	}
+	
 	/**
 	 * Add the given requirements to the local model (they were received from the core).
 	 * This method is called by the RetrieveRequirementsRequestObserver
@@ -95,6 +105,25 @@ public class RetrievePPRequirementController implements ActionListener {
 				// Only add requirements to the model if they
 				// don't already exist there
 				if (!rModel.contains(r.getId()))
+					rModel.addRequirement(r);
+			}
+		}
+	}
+	
+	/**
+	 * Add the given requirements to the local model (they were received from the core).
+	 * This method is called by the RetrieveRequirementsRequestObserver
+	 * 
+	 * @param requirements array of requirements received from the server
+	 */
+	public void receivedPPRequirements(PPRequirement[] requirements) {
+		PPRequirementModel rModel = PPRequirementModel.getInstance();
+		// Make sure requirements exist in the Requirement Manager
+		if (requirements != null) {
+			for (PPRequirement r: requirements) {
+				// Only add requirements to the model if they
+				// don't already exist there
+				if (!rModel.contains(r.getIdentity()))
 					rModel.addRequirement(r);
 			}
 		}

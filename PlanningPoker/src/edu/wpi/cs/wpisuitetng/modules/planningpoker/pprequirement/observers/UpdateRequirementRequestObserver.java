@@ -36,7 +36,6 @@ public class UpdateRequirementRequestObserver implements RequestObserver {
 		try {
 			PPRequirement realReq = PPRequirementModel.getInstance().getRequirementById(requirement.getIdentity());
 		} catch (NotFoundException e) {
-			// TODO Auto-generated catch block
 			System.err.println(requirement.getName() + ": Does not exist");
 		}
 		

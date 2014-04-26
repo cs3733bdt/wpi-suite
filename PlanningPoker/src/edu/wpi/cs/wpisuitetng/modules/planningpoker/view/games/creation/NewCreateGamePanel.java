@@ -274,7 +274,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	/**
 	 * Adds the game to the model and to the server and sets it to active
 	 */
-	public void  launchGame(){
+	public void launchGame(){
 		if(currentGame == null){
 			currentGame = new Game();
 			setCurrentGame(true);

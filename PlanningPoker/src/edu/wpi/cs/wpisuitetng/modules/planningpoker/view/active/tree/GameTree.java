@@ -37,6 +37,7 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
@@ -197,6 +198,7 @@ public class GameTree extends JPanel implements MouseListener{
 		if(!initialized){
 			try{
 				GetGameController.getInstance().retrieveGames();
+				RetrievePPRequirementController.getInstance().retrievePPRequirements();
 				initialized = true;
 			} catch (Exception e){
 				System.err.println("Problem instantiating the Game Model. " + e);

@@ -94,18 +94,18 @@ public class PPRequirementModel extends AbstractStorageModel<PPRequirement>{
 	
 	 * @return the requirement for the id or null if the requirement is not found
 	 */
-	/*public PPRequirement getRequirement(int id)
+	public PPRequirement getRequirement(int id)
 	{
 		PPRequirement temp = null;
 		// iterate through list of requirements until id is found
-		for (int i=0; i < requirements.size(); i++){
-			temp = requirements.get(i);
+		for (int i=0; i < getRequirements().size(); i++){
+			temp = getRequirements().get(i);
 			if (temp.getId() == id){
 				break;
 			}
 		}
 		return temp;
-	}*/
+	}
 	
 	/**
 	 * Gets a requirement from the list of requirements
@@ -113,14 +113,14 @@ public class PPRequirementModel extends AbstractStorageModel<PPRequirement>{
 	 * @param name the name of the requirement
 	 * @return the requirement with given name
 	 */
-	/*public PPRequirement getRequirement(String name) {
+	public PPRequirement getRequirement(String name) {
 		PPRequirement req = null;
-		for (PPRequirement r: requirements) {
+		for (PPRequirement r: getRequirements()) {
 			if (r.getName().equals(name))
 				req = r;
 		}
 		return req;
-	}*/
+	}
 	
 	/**
 	 * Removes the requirement with the given ID
@@ -239,6 +239,19 @@ public class PPRequirementModel extends AbstractStorageModel<PPRequirement>{
 	public boolean contains(int id) {
 		for (PPRequirement r: getRequirements()) {
 			if (r.getId() == id)
+				return true;
+		}
+		return false;
+	}
+	
+	/**
+	 * Checks if the list of requirements has a requirement with the uuid passed
+	 * @param uuid the uuid that is being checked
+	 * @return true if a requirement with uuid exists in the list of requirements
+	 */
+	public boolean contains(UUID uuid) {
+		for (PPRequirement r: getRequirements()) {
+			if (r.getIdentity() == uuid)
 				return true;
 		}
 		return false;

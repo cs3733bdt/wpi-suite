@@ -44,8 +44,16 @@ public class RetrievePPRequirementRequestObserver implements RequestObserver {
 		// Convert the JSON array of requirements to a Requirement object array
 		PPRequirement[] requirements = PPRequirement.fromJsonArray(iReq.getResponse().getBody());
 
+		for (PPRequirement r: requirements)
+			System.out.println("Retrieve requirement: " + r.toJSON());
+		
 		// Pass these Requirements to the controller
-		controller.receivedRequirements(requirements);
+		if (requirements[0].getFromRequirementModule())
+			// Update model from Requirements Manager
+			controller.receivedRequirements(requirements);
+		else
+			// Update model from our module
+			controller.receivedPPRequirements(requirements);
 	}
 
 	/**

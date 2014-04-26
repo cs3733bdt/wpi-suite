@@ -716,7 +716,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		int[] rows = importTable.getSelectedRows();
 		for (int i = 0; i < rows.length; i++) {
 			String selectedName = (String) importTable.getValueAt(rows[i], 0);
-			//addRequirement(PPRequirementModel.getInstance().getRequirement(selectedName));
+			addRequirement(PPRequirementModel.getInstance().getRequirement(selectedName));
 		}
 
 		parent.updateButtons();

@@ -385,6 +385,11 @@ public class PPRequirement extends ObservableModel implements IModelObserver, IS
 			wasChanged = true;
 		}
 		
+		if(!gameID.equals(toCopyFrom.gameID)) {
+			gameID = toCopyFrom.gameID;
+			wasChanged = true;
+		}
+		
 		if(fromRequirementModule != toCopyFrom.fromRequirementModule) {
 			fromRequirementModule = toCopyFrom.fromRequirementModule;
 			wasChanged = true;
@@ -412,11 +417,6 @@ public class PPRequirement extends ObservableModel implements IModelObserver, IS
 		
 		if(complete != toCopyFrom.complete) {
 			complete = toCopyFrom.complete;
-			wasChanged = true;
-		}
-		
-		if(finalEstimate != toCopyFrom.finalEstimate) {
-			finalEstimate = toCopyFrom.finalEstimate;
 			wasChanged = true;
 		}
 		

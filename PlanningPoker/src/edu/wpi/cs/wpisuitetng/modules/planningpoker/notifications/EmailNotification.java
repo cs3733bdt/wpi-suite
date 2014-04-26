@@ -111,13 +111,12 @@ public class EmailNotification {
 			e.printStackTrace();
 			System.err.println("Could not set the list 'users' to the list 'team'.");
 		}
-		
+		System.err.println("Users Length: " + users.length);
 		//Check to see if no users are attached to this project
-		if(users[0] != null) {
+		if(users.length != 0) {
 			// Send email to each user
 			for (int i = 0; i < users.length; i++) {
-				// TODO implement verify if email format
-				if (users[i].getEmail() != null && users[i].getNotificationPreferences().contains("E"))
+				if (users[i].getEmail() != null /*&& users[i].getNotificationPreferences().contains("E")*/)
 					sendEmail(login(), users[i]);
 				else
 					System.err.println(users[i].getName() + " doesn't have an email Stored.");
