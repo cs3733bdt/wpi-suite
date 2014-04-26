@@ -229,6 +229,14 @@ public class GameTree extends JPanel implements MouseListener{
 		int x = e.getX();
 		int y = e.getY();
 		
+		for (Game game: sortGames(GameModel.getInstance().getGames())) {
+			if(!game.isComplete() && game.isActive()) {
+				if(game.hasEnded()) {
+					refresh();
+				}
+			}
+		}
+		
 		//System.out.println("Single Click Detected");
 		
 		if(e.getClickCount() == 2){

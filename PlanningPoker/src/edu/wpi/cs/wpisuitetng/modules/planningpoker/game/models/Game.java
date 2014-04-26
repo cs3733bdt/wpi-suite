@@ -674,6 +674,8 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		gameEnd.setTime(getEndDate());
 		
 		if(rightNow.after(gameEnd)) {
+			makeChanged();
+			delayChange();
 			makeComplete();
 			return true;
 		}
