@@ -63,30 +63,30 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	private NewCreateGamePanel parent; // initialize variable to hold panel above this panel
 
 	private List<PPRequirement> requirements = new ArrayList<PPRequirement>(){
-		public boolean equals(Object o){
-			if(this == o ){
-				return true;
-			}
-			if(o==null){
-				return false;
-			}
-			if(getClass() !=o.getClass()){
-				return false;
-			}
-			@SuppressWarnings("unchecked")
-			List<PPRequirement> comp = (List<PPRequirement>) o;
-			for(PPRequirement p:this){
-				if(!comp.contains(p)){
-					return false;
-				}
-			}
-			for(PPRequirement p:comp){
-				if(!this.contains(p)){
-					return false;
-				}
-			}
-			return true;
-		}
+//		public boolean equals(Object o){
+//			if(this == o ){
+//				return true;
+//			}
+//			if(o==null){
+//				return false;
+//			}
+//			if(getClass() !=o.getClass()){
+//				return false;
+//			}
+//			@SuppressWarnings("unchecked")
+//			List<PPRequirement> comp = (List<PPRequirement>) o;
+//			for(PPRequirement p:this){
+//				if(!comp.contains(p)){
+//					return false;
+//				}
+//			}
+//			for(PPRequirement p:comp){
+//				if(!this.contains(p)){
+//					return false;
+//				}
+//			}
+//			return true;
+//		}
 };
 
 	private final Border defaultTextFieldBorder = (new JTextField())
