@@ -662,6 +662,12 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	}
 	
+	/**
+	 * Checks if the current game has passed its deadline and sets it as
+	 * complete if so
+	 * 
+	 * @return returns true if the game has passed its deadline, false otherwise
+	 */
 	public boolean hasEnded() {
 		Calendar rightNow = Calendar.getInstance();
 		Calendar gameEnd = new GregorianCalendar();
