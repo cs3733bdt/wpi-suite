@@ -188,6 +188,7 @@ public class GameTest {
 	public void testHasEnded() {
 		Calendar testCal = Calendar.getInstance();
 		game1.setEndDate(testCal.getTime());
+		assertFalse(game1.hasEnded());
 		try{
 			TimeUnit.SECONDS.sleep(1);
 		} catch(InterruptedException e){
