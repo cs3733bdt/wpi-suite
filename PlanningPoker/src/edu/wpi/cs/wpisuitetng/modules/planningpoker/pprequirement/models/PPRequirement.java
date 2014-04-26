@@ -223,7 +223,7 @@ public class PPRequirement extends ObservableModel implements IModelObserver, IS
 			System.err.println("THE PROJECT IN THE REQUIREMENT WAS NULL: ADD VOTE METHOD");
 		}
 		
-		hasChanged();
+		makeChanged();
 		notifyObservers(vote);
 	}
 	
