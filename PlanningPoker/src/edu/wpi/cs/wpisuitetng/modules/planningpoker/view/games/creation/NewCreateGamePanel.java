@@ -33,77 +33,89 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * Used to create a new Planning Poker game using the input of the user.
  */
 public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
-	private NewLeftHalfCreateGamePanel leftHalf = new NewLeftHalfCreateGamePanel(this);
-	private NewRightHalfCreateGamePanel rightHalf = new NewRightHalfCreateGamePanel(this);
-	
-	
+	private NewLeftHalfCreateGamePanel leftHalf = new NewLeftHalfCreateGamePanel(
+			this);
+	private NewRightHalfCreateGamePanel rightHalf = new NewRightHalfCreateGamePanel(
+			this);
+
 	private boolean readyToClose = false;
 	private boolean readyToRemove = true; // The window starts off ready to
 											// remove because no changes have
 											// happened
 	private Game currentGame;
-	
+
 	private String savedName;
 	private String savedDescription;
 	private boolean useCards;
 	private String savedEndDate;
-	private List<PPRequirement> savedRequirements=new ArrayList<PPRequirement>();
-	
+	private List<PPRequirement> savedRequirements = new ArrayList<PPRequirement>();
+
 	/**
-	 * Creates a NewCreateGamePanel with the game setting the fields for the panel.
-	 * This is used to edit an existing game in the model that has not yet been made active
-	 * @param game the game that we are editing
+	 * Creates a NewCreateGamePanel with the game setting the fields for the
+	 * panel. This is used to edit an existing game in the model that has not
+	 * yet been made active
+	 * 
+	 * @param game
+	 *            the game that we are editing
 	 */
 	public NewCreateGamePanel(Game game) {
 		currentGame = game;
 		leftHalf = new NewLeftHalfCreateGamePanel(this);
 		rightHalf = new NewRightHalfCreateGamePanel(this);
-		
+
 		setLeftComponent(leftHalf);
 		setRightComponent(rightHalf);
 		rightHalf.setMinimumSize(new Dimension(333, 500));
 		setDividerLocation(420);
-		
-		if(game == null){
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+
+		if (game == null) {
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
+					.setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
+					.setEnabled(false);
 			leftHalf.getErrorField().setText("Name is required");
+		} else if (!validateField(true, false)) {
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
+					.setEnabled(false);
+		} else {
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
+					.setEnabled(true);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
+					.setEnabled(true);
 		}
-		else if(!validateField(true, false)){
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
-		}
-		else{
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
-		}
-		
+
 		revalidate();
 		repaint();
-		
-		savedName=getBoxName().getText();
-		savedDescription=getBoxDescription().getText();
-		useCards=leftHalf.doesUseCards();
-		savedEndDate=leftHalf.dateToString();
-		for(PPRequirement p:rightHalf.getRequirements()){
-			savedRequirements.add(p);
+
+		savedName = getBoxName().getText();
+		savedDescription = getBoxDescription().getText();
+		useCards = leftHalf.doesUseCards();
+		savedEndDate = leftHalf.dateToString();
+		for (PPRequirement p : rightHalf.getRequirements()) {
+			PPRequirement temp = new PPRequirement();
+			temp.setName(p.getName());
+			temp.setDescription(p.getDescription());
+			savedRequirements.add(temp);
 		}
 	}
-	
-	
+
 	/**
-	 * Creates a NewCreateGamePanel
-	 * This is equivalent to calling NewCreateGamePanel(null)
+	 * Creates a NewCreateGamePanel This is equivalent to calling
+	 * NewCreateGamePanel(null)
 	 */
-	public NewCreateGamePanel(){
+	public NewCreateGamePanel() {
 		this(null);
 		currentGame = null;
 
 	}
-	
+
 	/**
 	 * Creates a NewCreateGamePanel with a game's information on it
-	 * @param game The game to be created
-	 * @param withError sees if there is an error or not
+	 * 
+	 * @param game
+	 *            The game to be created
+	 * @param withError
+	 *            sees if there is an error or not
 	 */
 	public NewCreateGamePanel(Game game, boolean withError) {
 		this(game);
@@ -117,25 +129,24 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 							"Network Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-	
-	public static void main(String args[]){
+
+	public static void main(String args[]) {
 		JFrame frame = new JFrame("Demo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //Set up the content pane.
-        frame.add(new NewCreateGamePanel(new Game()));
-        frame.setMinimumSize(new Dimension(300, 300));
+		// Set up the content pane.
+		frame.add(new NewCreateGamePanel(new Game()));
+		frame.setMinimumSize(new Dimension(300, 300));
 
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
+		// Display the window.
+		frame.pack();
+		frame.setVisible(true);
 	}
-	
-	public Game getGame(){
+
+	public Game getGame() {
 		return currentGame;
 	}
 
-	
 	/**
 	 * Checks to see if the panel has unsaved changes
 	 * 
@@ -146,10 +157,9 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 			return true;
 
 		// TODO Check fields to see if this window has unsaved changes
-		if (containsData()) { 
+		if (containsData()) {
 			readyToRemove = false;
-		}
-		else {
+		} else {
 			readyToRemove = true;
 		}
 
@@ -164,54 +174,59 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		}
 
 	}
-	
+
 	private boolean containsData() {
-		return ( !(getBoxName().getText().isEmpty()) || 
-					!(getBoxDescription().getText().isEmpty()) ||
-						!(rightHalf.getRequirements().isEmpty()) ); 
+		return (!(getBoxName().getText().isEmpty())
+				|| !(getBoxDescription().getText().isEmpty()) || !(rightHalf
+					.getRequirements().isEmpty()));
 	}
 
-	private boolean noChange(){
-		return ((savedName.equals(getBoxName().getText())) 
-				&&(savedDescription.equals(getBoxDescription().getText()))
-				&&(useCards==(leftHalf.doesUseCards()))
-				&&(savedEndDate.equals(leftHalf.dateToString()))
-				&&(rightHalf.getRequirements().equals(savedRequirements)));
+	private boolean noChange() {
+		return ((savedName.equals(getBoxName().getText()))
+				&& (savedDescription.equals(getBoxDescription().getText()))
+				&& (useCards == (leftHalf.doesUseCards()))
+				&& (savedEndDate.equals(leftHalf.dateToString())) && (sameReqLists()));
 	}
-	
+
 	/**
-	 * Checks to see if all of this panels sub elements are valid to be saved or launched
-	 * @param whether or not to show the error
+	 * Checks to see if all of this panels sub elements are valid to be saved or
+	 * launched
+	 * 
+	 * @param whether
+	 *            or not to show the error
 	 * @return true when the all of this panel's sub elements are valid
 	 */
-	public boolean validateField(boolean showLabel, boolean showBox){
+	public boolean validateField(boolean showLabel, boolean showBox) {
 		boolean rightPanelValid;
 		boolean leftPanelValid;
-		if(showLabel && showBox){
-			rightPanelValid = rightHalf.validateField(leftHalf.getErrorField(), true, true);
+		if (showLabel && showBox) {
+			rightPanelValid = rightHalf.validateField(leftHalf.getErrorField(),
+					true, true);
 			leftPanelValid = leftHalf.validateField(null, true, true);
-		}
-		else if(showLabel && !showBox){
-			rightPanelValid = rightHalf.validateField(leftHalf.getErrorField(), true, false);
+		} else if (showLabel && !showBox) {
+			rightPanelValid = rightHalf.validateField(leftHalf.getErrorField(),
+					true, false);
 			leftPanelValid = leftHalf.validateField(null, true, false);
-		}
-		else{
-			rightPanelValid = rightHalf.validateField(leftHalf.getErrorField(), false, false);
+		} else {
+			rightPanelValid = rightHalf.validateField(leftHalf.getErrorField(),
+					false, false);
 			leftPanelValid = leftHalf.validateField(null, false, false);
 			leftHalf.getErrorField().setText("");
 		}
-		
+
 		return leftPanelValid && rightPanelValid;
 	}
-	
 
 	/**
 	 * Triggered when the save game button is pressed using the mouse listener
+	 * 
 	 * @return true when a game is sucsessfully added
 	 */
 	public boolean SaveGamePressed() {
-		if(leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true, true)){
-			leftHalf.getEndDateField().setBorder((new JXDatePicker()).getBorder());
+		if (leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true,
+				true)) {
+			leftHalf.getEndDateField().setBorder(
+					(new JXDatePicker()).getBorder());
 			leftHalf.getErrorField().setText("");
 			saveGame();
 			readyToClose = true;
@@ -222,15 +237,16 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 			System.out.println("Add Game Pressed Failed.");
 			return false;
 		}
-		
+
 	}
-	
+
 	/**
 	 * Called by the 'Launch Game' action listener
+	 * 
 	 * @return true if the game was launched/started sucessfully
 	 */
 	public boolean LaunchGamePressed() {
-		if(validateField(true, true)){
+		if (validateField(true, true)) {
 			launchGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
@@ -241,45 +257,49 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 			System.out.println("Launch Game Pressed Failed.");
 			return false;
 		}
-		
+
 	}
-	
+
 	/**
 	 * Adds the game to the model and to the server and sets it to inactive
 	 */
-	public void  saveGame(){	
-		if(currentGame == null){
+	public void saveGame() {
+		if (currentGame == null) {
 			currentGame = new Game();
 			setCurrentGame(false);
-			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
+			GameModel.getInstance().addGame(currentGame); // New Game gets added
+															// to the server
 			System.out.println("Launch Game Pressed Passed.");
-		} else{
+		} else {
 			setCurrentGame(false);
 		}
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 	}
-	
+
 	/**
 	 * Adds the game to the model and to the server and sets it to active
 	 */
-	public void  launchGame(){
-		if(currentGame == null){
+	public void launchGame() {
+		if (currentGame == null) {
 			currentGame = new Game();
 			setCurrentGame(true);
-			GameModel.getInstance().addGame(currentGame);		//New Game gets added to the server
-		} else{
+			GameModel.getInstance().addGame(currentGame); // New Game gets added
+															// to the server
+		} else {
 			setCurrentGame(true);
 		}
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 	}
-	
+
 	/**
 	 * Constructs the current game with the data from the fields in this panel
-	 * @param active Whether to make this game active or not
+	 * 
+	 * @param active
+	 *            Whether to make this game active or not
 	 */
-	private void setCurrentGame(boolean active){
+	private void setCurrentGame(boolean active) {
 		currentGame.setName(getBoxName().getText());
 		currentGame.setDescription(getBoxDescription().getText());
 		currentGame.setActive(active);
@@ -289,29 +309,34 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		currentGame.setCreator(ConfigManager.getConfig().getUserName());
 		currentGame.notifyObservers();
 	}
-	
+
 	/**
-	 * sets buttons to be enabled or disabled depending on if conditions were met
+	 * sets buttons to be enabled or disabled depending on if conditions were
+	 * met
 	 */
-	public void updateButtons(){
-		if(validateField(true, false)){
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
+	public void updateButtons() {
+		if (validateField(true, false)) {
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
+					.setEnabled(true);
+		} else {
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
+					.setEnabled(false);
 		}
-		else{
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
-		}
-		
-		if(leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true, false)){
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
-		}
-		else{
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+
+		if (leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true,
+				false)) {
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
+					.setEnabled(true);
+		} else {
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
+					.setEnabled(false);
 		}
 
 	}
 
 	/**
 	 * Gets the requirements for this panel
+	 * 
 	 * @return the requirements that have been created for this game.
 	 */
 	private List<PPRequirement> getRequirements() {
@@ -325,12 +350,12 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	private NameJTextField getBoxName() {
 		return leftHalf.getBoxName();
 	}
-	
-	private NewAddEndDatePanel getEndDateField(){
+
+	private NewAddEndDatePanel getEndDateField() {
 		return leftHalf.getEndDateField();
 	}
-	
-	private boolean doesUseCards(){
+
+	private boolean doesUseCards() {
 		return leftHalf.doesUseCards();
 	}
 
@@ -340,5 +365,57 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 
 	public NewRightHalfCreateGamePanel getRightHalf() {
 		return rightHalf;
-	}	
+	}
+
+	/**
+	 * 
+	 * @return true if the requirement lists are the same
+	 */
+	private boolean sameReqLists() {
+		if (savedRequirements == rightHalf.getRequirements()) {
+			return true;
+		}
+		if (rightHalf.getRequirements() == null) {
+			return false;
+		}
+		if (rightHalf.getRequirements().size() != savedRequirements.size()){
+			return false;
+		}
+		for (PPRequirement p : rightHalf.getRequirements()) {
+			boolean sameElement = false;
+			for (PPRequirement q : savedRequirements) {
+				if ((p.getName().equals(q.getName())) // check the name is the same
+						&& (p.getDescription().equals(q.getDescription()))) {// check the description is the same
+					sameElement=true;
+				}
+			}
+			if (!sameElement){
+				return false;
+			}
+		}
+		return true;
+	}
 }
+// if (!savedRequirements.contains(p)) {
+// return false;
+// }
+// else if ((!(p.getName().equals //check the name is not the same
+// (savedRequirements.get(savedRequirements.indexOf(p)).getName()))
+// ||(!(p.getDescription().equals //check the description is not the same
+// (savedRequirements.get(savedRequirements.indexOf(p)).getDescription()))))){
+// return false;
+// }
+// }
+// for (PPRequirement q : savedRequirements) {
+// if (!rightHalf.getRequirements().contains(q)) {
+// return false;
+// }
+// else if ((!(q.getName().equals //check the name is not the same
+// (rightHalf.getRequirements().get(rightHalf.getRequirements().indexOf(q)).getName()))
+// ||(!(q.getDescription().equals //check the description is not the same
+// (rightHalf.getRequirements().get(rightHalf.getRequirements().indexOf(q)).getDescription()))))){
+// return false;
+// }
+// }
+// return true;
+// }
