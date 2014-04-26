@@ -10,10 +10,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
-
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.swing.JSplitPane;
@@ -22,8 +18,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-
-
 
 public class NewActiveGamePanel extends JSplitPane implements IModelObserver, IActiveGamePanel{
 	Game currentGame;
@@ -74,26 +68,4 @@ public class NewActiveGamePanel extends JSplitPane implements IModelObserver, IA
 		return rightHalf.getReqTable();
 	}
 	
-	/*
-	public static void main(String args[]){
-		JFrame frame = new JFrame("Demo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        ArrayList<Requirement> reqs = new ArrayList<Requirement>();
-        reqs.add(new Requirement("test", "test"));
-        Game testGame;
-        testGame = new Game("Test Name", "Test Description", reqs, false, true);
-        testGame.setCreator("Doruk");
-        //User currentUser;
-        //currentUser = new User("Doruk","Doruk", "123", "blank", "blank", 5);
-        
-        //Set up the content pane.
-        frame.add(new NewActiveGamePanel(testGame));
-        frame.setMinimumSize(new Dimension(1000, 600));
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-	}
-	*/
 }

@@ -28,6 +28,7 @@ public class NewActiveGamePanelTest {
 	private ArrayList<PPRequirement> reqs;
 	private NewRightHalfActiveGamePanel rightHalf;
 	private GameTree gameTree;
+
 	
 	
 	@Before
@@ -42,15 +43,20 @@ public class NewActiveGamePanelTest {
 		
 		activeGamePanel = new NewActiveGamePanel(activeGame);
 		rightHalf = (NewRightHalfActiveGamePanel) activeGamePanel.getRightComponent();
+		
 	}
 	
 	@Test
 	public void activeGamePanelGetRequirementsTest() {
 		rightHalf.submitButton();
 		rightHalf.submitButtonPressed();
-		assertEquals("Test Req1", rightHalf.getReqTable().getSelectedReq().getName());
+		assertEquals("Test Req1", activeGamePanel.getReqTable().getSelectedReq().getName());
 		assertEquals("Test Req1", rightHalf.getRequirement().getName());
 	}
 	
-	
+	@Test 
+	public void activeGamePanelGetGameTest() {
+		assertEquals("ActiveGame1",activeGamePanel.getGame().getName());
+	}
+		
 }
