@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
@@ -34,7 +35,7 @@ public class ActiveCardsPanelTest {
 	NewRightHalfActiveGamePanel rightHalf;
 	ArrayList<PPRequirement> reqs;
 	Game game;
-	ArrayList<String> passedDeck;
+	ArrayList<Integer> passedDeck;
 	
 	
 	@Before
@@ -43,14 +44,14 @@ public class ActiveCardsPanelTest {
 		reqs = new ArrayList<PPRequirement>();
 		reqs.add(new PPRequirement("Test Req1", "Test Desc1"));
 		
-		passedDeck = new ArrayList<String>();
-		passedDeck.add("5");
-		passedDeck.add("10");
-		passedDeck.add("20");
-		passedDeck.add("25");
-		passedDeck.add("50");
+		passedDeck = new ArrayList<Integer>();
+		passedDeck.add(5);
+		passedDeck.add(10);
+		passedDeck.add(20);
+		passedDeck.add(25);
+		passedDeck.add(50);
 		
-		Deck deck = new Deck(passedDeck);
+		Deck deck = new Deck("Test deck", "Test description",  passedDeck, true);
 		
 		game = new Game("ActiveGame1", "This is active game1",
 				reqs, true, true);

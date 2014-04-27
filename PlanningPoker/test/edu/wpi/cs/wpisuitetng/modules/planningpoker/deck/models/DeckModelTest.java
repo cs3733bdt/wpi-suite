@@ -32,7 +32,7 @@ public class DeckModelTest {
 		DeckModel model = DeckModel.getInstance();
 		Integer[] cards = {1, 2, 3, 4};
 		List<Integer> deckNumbers = new ArrayList<Integer>(Arrays.asList(cards));
-		Deck object = new Deck("Test Deck", "Test Description", deckNumbers);
+		Deck object = new Deck("Test Deck", "Test Description", deckNumbers, true);
 		model.emptyModel();
 		assertEquals(0, model.getSize());
 		model.addDeck(object);
@@ -54,7 +54,7 @@ public class DeckModelTest {
 		assertEquals(0, model.getSize());
 		Deck[] deckList = new Deck[3];
 		for(int i = 0; i < deckList.length; i++){	//Create a new deck for each index in the array
-			deckList[i] = new Deck("Deck"+Integer.toString(i), "Description " + Integer.toString(i), new ArrayList<Integer>());
+			deckList[i] = new Deck("Deck"+Integer.toString(i), "Description " + Integer.toString(i), new ArrayList<Integer>(), true);
 		}
 		
 		model.addDecks(deckList);//Add this set of decks to the model
@@ -75,7 +75,7 @@ public class DeckModelTest {
 		assertEquals(0, model.getSize());
 		Deck[] deckList = new Deck[3];
 		for(int i = 0; i < 3; i++){	//Create a new deck for each index in the array
-			deckList[i] = new Deck("Deck"+Integer.toString(i), "Description " + Integer.toString(i), new ArrayList<Integer>());
+			deckList[i] = new Deck("Deck"+Integer.toString(i), "Description " + Integer.toString(i), new ArrayList<Integer>(), true);
 		}
 		
 		model.addDecks(deckList);//Add this set of decks to the model
