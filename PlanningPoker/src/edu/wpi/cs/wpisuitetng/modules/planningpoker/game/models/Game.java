@@ -221,7 +221,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		notifiedOfCreation = false;
 		notifiedOfCompletion = false;
 		identity = UUID.randomUUID();
-		validVote = true;
+		
 	}
 
 	/**

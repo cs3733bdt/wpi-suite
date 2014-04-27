@@ -471,22 +471,23 @@ public class EstimatePanel extends JPanel{
 			voteNumber = Integer.parseInt(estText.getText());
 		}
 		Vote vote = new Vote(currentUser, voteNumber);
-		getRequirement().addVote(vote);
 		
-		System.out.println("You voted: " + vote.getVoteNumber());
+		if(activeGame.isActive()){
+			getRequirement().addVote(vote);
 		
-		ViewEventController.getInstance().refreshGameTable();
-		ViewEventController.getInstance().refreshGameTree();
+			System.out.println("You voted: " + vote.getVoteNumber());
 		
-		getEstimateText().setBorder(defaultBorder);
+			ViewEventController.getInstance().refreshGameTable();
+			ViewEventController.getInstance().refreshGameTree();
 		
-		if (activeGame.isActive())
-				displaySuccess("   Vote Successful!");
+			getEstimateText().setBorder(defaultBorder);
+		
+			displaySuccess("   Vote Successful!");
+			}
 		else {
 			displayError("   Game has ended, vote not saved");
-	}
-		
-	}
+			}
+		}
 
 	public void displayError(String errorString) {
 		errorField.setForeground(Color.RED);
