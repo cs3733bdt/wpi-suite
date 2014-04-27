@@ -32,6 +32,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	private String description;
 	private String owner;
 	private List<Integer> cards;
+	private boolean isDefault = false;
 	//private Color cardColor;
 	
 	/**
@@ -45,7 +46,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		identity = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
-		owner = ConfigManager.getInstance().getConfig().getUserName();
+		owner = ConfigManager.getConfig().getUserName();
 		this.cards = cards;
 	}
 	
@@ -53,7 +54,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		this.identity = identity;
 		this.name = name;
 		this.description = description;
-		owner = ConfigManager.getInstance().getConfig().getUserName();
+		owner = ConfigManager.getConfig().getUserName();
 		this.cards = cards;
 	}
 	
