@@ -73,10 +73,12 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 	private RequirementTable table;
 	private Font largeFont;
 	private JButton clearButton;
+	private ActiveGamePanel parentPanel;
 
-	RightHalfActiveGamePanel(final Game game) {
+	RightHalfActiveGamePanel(final Game game, final ActiveGamePanel activeGamePanel) {
 		currentGame = game;
 		build();
+		parentPanel = activeGamePanel;
 	}
 
 	public void build() {
@@ -530,6 +532,10 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 				System.out.println("Submit Vote Pressed Failed.");
 			}
 		}
+		
+		if (allUsersVoted()){
+			parentPanel.endGame();
+		}
 	}
 
 	/**
@@ -690,5 +696,14 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 	
 	public void getNextRow() {
 		table.setRowSelectionInterval(0, 0);
+	}
+	
+	private boolean allUsersVoted(){
+		for (PPRequirement p:currentGame.getRequirements()){
+			if (p.getVoteCount() != currentGame.getUsers()){
+				return false;
+			}	
+		}
+		return true;
 	}
 }
