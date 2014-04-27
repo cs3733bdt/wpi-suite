@@ -673,12 +673,12 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		Calendar gameEnd = new GregorianCalendar();
 		gameEnd.setTime(getEndDate());
 		
-		if(rightNow.after(gameEnd)) {
+		if(isActive() && rightNow.after(gameEnd)) {
 			makeChanged();
 			delayChange();
 			makeComplete();
 			return true;
-		}
+			}
 		else {
 			return false;
 		}
