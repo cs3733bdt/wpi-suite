@@ -76,7 +76,6 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	
 	private NewSaveGameButtonPanel saveGameButton;
 	private NewLaunchGameButtonPanel launchGameButton;
-	//TODO: IMPLEMENT A CANCELGAMEBUTTONPANEL CLASS
 	private CancelButton cancelGameButton;
 	
 	/** Shows the names of the errors */
