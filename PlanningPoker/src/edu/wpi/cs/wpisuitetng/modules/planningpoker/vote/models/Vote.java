@@ -62,7 +62,7 @@ public class Vote {
 		return validVote;
 	}
 	
-	public boolean getValidVote() {
+	public boolean isValidVote() {
 		return validVote;
 	}
 }

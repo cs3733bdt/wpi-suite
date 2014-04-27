@@ -200,7 +200,7 @@ public class PPRequirement extends ObservableModel {
 	public void addVote(Vote vote) {
 		delayChange();	//Holds the code until the server is finished re-populating the model
 		for(int i = 0; i < votes.size(); i++) {
-			if(vote.getUsername().equals(votes.get(i).getUsername())) {	//Has person voted?
+			if(vote.getUsername().equals(votes.get(i).getUsername()) && vote.isValidVote()) {	//Has person voted?
 				votes.get(i).setVoteNumber(vote.getVoteNumber());		//Update their vote
 				hasChanged();										//Acknowledge change
 				notifyObservers(votes.get(i));						//Run update in game class
