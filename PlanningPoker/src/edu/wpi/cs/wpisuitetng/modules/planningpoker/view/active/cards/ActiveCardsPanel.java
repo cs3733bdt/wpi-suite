@@ -47,11 +47,12 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
 	private NewRightHalfActiveGamePanel parent;
 
-	public ActiveCardsPanel(NewRightHalfActiveGamePanel passedPanel) {
+	public ActiveCardsPanel(Deck passedDeck,
+			NewRightHalfActiveGamePanel passedPanel) {
 		parent = passedPanel;
-		deck = passedPanel.getGame().getDeck();
+		deck = passedDeck;
 
-		int cardsPerRow = 11;
+		int cardsPerRow = 10;
 
 		this.setPreferredSize(new Dimension(525, (68 * (Math.round(deck.getSize()
 				/ cardsPerRow)))));

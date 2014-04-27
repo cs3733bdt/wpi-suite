@@ -11,6 +11,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.List;
@@ -20,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Card;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
@@ -33,6 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActi
 public class CardButton extends JToggleButton implements Accessible {
 	JToggleButton button;
 	String cardText;
+	Card card;
 	ActiveCardsPanel panel;
 
 	/**
@@ -49,6 +52,8 @@ public class CardButton extends JToggleButton implements Accessible {
 	 */
 
 	public CardButton(Card card, ActiveCardsPanel passedCardsPanel) {
+		
+		this.card = card;
 		// Initialize the Button and the number on the button
 		String buttonNum = card.getText();
 		cardText = card.getText();
@@ -58,12 +63,20 @@ public class CardButton extends JToggleButton implements Accessible {
 			Image frontImg = ImageIO.read(getClass().getResource(
 					"card_front.png"));
 			setIcon(new ImageIcon(frontImg));
+			setBorder(new EmptyBorder(0,0,0,0));
+//			setContentAreaFilled(false);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 		// Set the Button's tooltiptext and position it correctly
-		setText(cardText);
-		setToolTipText("Add " + buttonNum + " to the total");
+
+		if (Integer.parseInt(card.getText()) != card.getDeckSize() -1) {
+			setToolTipText("Add " + buttonNum + " to the total");
+		}
+		else {
+			setToolTipText("I don't know what to estimate");
+		}
+		setText(card.getText());
 
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setVerticalAlignment(SwingConstants.CENTER);
