@@ -150,7 +150,7 @@ public class PPRequirement extends ObservableModel {
 	 * @param id value to set the id to
 	 */
 	public void setIdPlusOne(int id){
-		delayChange();
+		delayChange("setIdPlusOne");
 		makeChanged();
 		fromRequirementModule = true;
 		// Make Id one more than the id in the 
@@ -159,7 +159,7 @@ public class PPRequirement extends ObservableModel {
 	}
 	
 	public void setId(int id){
-		delayChange();
+		delayChange("setId");
 		fromRequirementModule = true;
 		makeChanged();
 		// Make Id one more than the id in the 
@@ -172,7 +172,7 @@ public class PPRequirement extends ObservableModel {
 	 * @param identity value to set the identity to
 	 */
 	public void setIdentity(UUID identity){
-		delayChange();
+		delayChange("setUUID");
 		fromRequirementModule = false;
 		this.identity = identity;
 	}
@@ -223,7 +223,7 @@ public class PPRequirement extends ObservableModel {
 	 * @param vote the votes to set          
 	 */
 	public void addVote(Vote vote) {
-		delayChange();	//Holds the code until the server is finished re-populating the model
+		delayChange("addVote");	//Holds the code until the server is finished re-populating the model
 		addNoDelay(vote);
 		notifyObservers(vote);
 	}
@@ -273,10 +273,11 @@ public class PPRequirement extends ObservableModel {
 	public void save() {}
 	
 	/**
-	 * sets the requirement to completed
+	 * Sets the requirement to completed
 	 */
 	private void makeComplete() {
-		delayChange();
+		//DO NOT PUT DELAYCHANGE IN THIS METHOD
+		//IT WILL CAUSE AN INFINITE LOOP!
 		complete = true;
 		makeChanged();
 	}
@@ -470,10 +471,11 @@ public class PPRequirement extends ObservableModel {
 	 * hold the code while the game model is updating
 	 * prevent race-time condition for fields setting/overriding
 	 */
-	private void delayChange() {
+	private void delayChange(String methodCalled) {
 		while(GameModel.getInstance().isServerUpdating()) {
 			try {
 				Thread.sleep(5);
+				System.out.println("Looping in the reqirement: " + methodCalled);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
