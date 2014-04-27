@@ -62,6 +62,41 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		this.hasIdontKnow = hasIdontKnow;
 	}
 	
+	public Deck(){
+		identity = UUID.randomUUID();
+		this.name = "Default";
+		this.description = "Default Deck";
+		this.owner = ConfigManager.getConfig().getUserName();
+		this.hasIdontKnow = true;
+		buildDefaultDeck(7);
+	}
+	
+	
+	/**
+	 * @param numCards number of Cards to be added. 0 returns an error. 
+	 */
+	private void buildDefaultDeck(int numCards) {
+		int numLoops;
+		if (numCards == 0) {
+			//errorBit = true; //this should throw an exception
+			return;
+		}
+		else { 
+			numLoops = numCards - 1;
+		}
+		int firstnum = 0;
+		int secondnum = 1;
+		int currnum;
+		cards.add(secondnum);
+		
+		for (int i = 0; i < numLoops; i++) {
+			currnum = firstnum + secondnum;
+			cards.add(currnum);
+			firstnum = secondnum;
+			secondnum = currnum;
+		}
+	}
+	
 	/**
 	 * Gets the identity of this Deck
 	 * @return the unique UUID for this deck
