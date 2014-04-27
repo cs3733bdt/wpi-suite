@@ -31,7 +31,7 @@ public class NewActiveGamePanel extends JSplitPane implements IModelObserver, IA
 		currentGame = game;
 		
 		leftHalf = new NewLeftHalfActiveGamePanel(currentGame, this);
-		rightHalf = new NewRightHalfActiveGamePanel(currentGame);
+		rightHalf = new NewRightHalfActiveGamePanel(currentGame,this);
 		
 		setRightComponent(rightHalf);
 		setLeftComponent(leftHalf);
