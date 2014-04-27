@@ -21,6 +21,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Card;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
 
 /**
@@ -38,8 +39,8 @@ public class CardActionListenerRefactor implements ActionListener {
 	int size;
 	JToggleButton button;
 	int index;
-	List<String> deck;
 	ActiveCardsPanel cardsPanel;
+	Card card;
 	NewRightHalfActiveGamePanel estimatePanel;
 
 	/**
@@ -57,14 +58,12 @@ public class CardActionListenerRefactor implements ActionListener {
 	 *            the estimate before the action occurs
 	 */
 
-	public CardActionListenerRefactor(int index, List<String> deckUsed,
-			JToggleButton passedButton, ActiveCardsPanel passedCardsPanel,
-			NewRightHalfActiveGamePanel panel2) {
-		size = deckUsed.size();
+	public CardActionListenerRefactor(Card card,
+			JToggleButton passedButton, ActiveCardsPanel passedCardsPanel) {
+		size = card.getDeckSize();
+		this.card = card;
 		cardsPanel = passedCardsPanel;
-		estimatePanel = panel2;
-		deck = deckUsed;
-		this.index = index;
+		estimatePanel = passedCardsPanel.getParentPanel();
 		button = passedButton;
 	}
 
@@ -78,7 +77,7 @@ public class CardActionListenerRefactor implements ActionListener {
 			// if the button is the I don't know button
 			if (index == (size - 1)) {
 				if (button.isSelected()) { // if the IDK button is toggled on
-					for (int i = 0; i < (deck.size() - 1); i++) {
+					for (int i = 0; i < (size - 1); i++) {
 						if (cardsPanel.getCardButtonArray().get(i).isSelected()) {
 							cardsPanel.memoryArrayAddElt(i);
 							cardsPanel.getCardButtonArray().get(i).doClick();
@@ -102,10 +101,10 @@ public class CardActionListenerRefactor implements ActionListener {
 						cardsPanel.getCardButtonArray().get(size - 1).doClick();
 					}
 					button.setIcon(new ImageIcon(backImg));
-					addToCardSum(Integer.parseInt(deck.get(index)));
+					addToCardSum(Integer.parseInt(card.getText()));
 				} else { // if button is toggled off
 					button.setIcon(new ImageIcon(frontImg));
-					decToCardSum(Integer.parseInt(deck.get(index)));
+					decToCardSum(Integer.parseInt(card.getText()));
 				}
 			}
 		} catch (IOException ex) {

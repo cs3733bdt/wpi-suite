@@ -10,6 +10,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -32,6 +33,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	private String description;
 	private String owner;
 	private List<Integer> cards;
+	private boolean hasIdontKnow = true;
 	private boolean isDefault = false;
 	//private Color cardColor;
 	
@@ -42,20 +44,22 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	 * @param owner the user who created this deck
 	 * @param cards the numbers on this deck
 	 */
-	public Deck(String name, String description, List<Integer> cards){
+	public Deck(String name, String description, List<Integer> cards, boolean hasIdontKnow){
 		identity = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
 		owner = ConfigManager.getConfig().getUserName();
 		this.cards = cards;
+		this.hasIdontKnow = hasIdontKnow;
 	}
 	
-	private Deck(String name, String description, List<Integer> cards, UUID identity){
+	private Deck(String name, String description, List<Integer> cards, UUID identity, boolean hasIdontKnow){
 		this.identity = identity;
 		this.name = name;
 		this.description = description;
 		owner = ConfigManager.getConfig().getUserName();
 		this.cards = cards;
+		this.hasIdontKnow = hasIdontKnow;
 	}
 	
 	/**
@@ -137,7 +141,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	}
 	
 	public static Deck makeDeckSameID(String name, String description, List<Integer> cards, Deck identifyingDeck){
-		return new Deck(name, description, cards, identifyingDeck.identity);	
+		return new Deck(name, description, cards, identifyingDeck.identity, true);	
 	}
 
 	@Override
@@ -164,8 +168,19 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		
 	}
 
-	public List<Integer> getCards() {
-		return cards;
+	public List<Card> getCards() {
+		List<Card> returnedCards = new ArrayList<Card>();
+		for(Integer i: cards){
+			returnedCards.add(new Card(Integer.toString(i), this));
+		}
+		if(hasIdontKnow){
+			returnedCards.add(new Card("?", this));
+		}
+		return returnedCards;
+	}
+	
+	public int getSize(){
+		return cards.size();
 	}
 
 }

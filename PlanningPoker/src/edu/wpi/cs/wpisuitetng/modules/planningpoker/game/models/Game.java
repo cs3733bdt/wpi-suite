@@ -25,6 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.exceptions.DBModelNotInstantiatedException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
@@ -67,6 +68,8 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	private boolean notifiedOfCreation;
 	/** True if the users of the game have been notified of game complete */
 	private boolean notifiedOfCompletion;
+	/** Holds the deck for this game */
+	private Deck deck;
 
 	/**
 	 * Copies all of the values from the given Game to this Game.
@@ -189,6 +192,13 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			needsUpdate = true;
 			wasChanged = true;
 		}
+		
+		if(!deck.equals(toCopyFrom.deck)){
+			if(deck.copyFrom(toCopyFrom.deck)){
+				wasChanged = true;
+				needsUpdate = true;
+			}
+		}
 
 		if(identity.equals(toCopyFrom.identity)){
 			needsUpdate = false;
@@ -198,6 +208,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		}
 
 		if(needsUpdate){
+			System.err.println("WARNING! THERE WAS A COPY OVER FOR TWO NON MATCHING UUID GAMES!");
 			makeChanged();
 			notifyObservers();
 		}
@@ -687,5 +698,9 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		FacebookNotification fbn = new FacebookNotification(this);
 		fbn.sendFacebookNotifications();
 
+	}
+
+	public Deck getDeck() {
+		return deck;
 	}
 }

@@ -21,6 +21,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Card;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
 
 /**
@@ -31,7 +32,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActi
  */
 public class CardButton extends JToggleButton implements Accessible {
 	JToggleButton button;
-	List<String> deck;
+	String cardText;
 	ActiveCardsPanel panel;
 
 	/**
@@ -47,18 +48,11 @@ public class CardButton extends JToggleButton implements Accessible {
 	 *            the panel that displays the estimates
 	 */
 
-	public CardButton(int cardNum, List<String> passedDeck,
-			ActiveCardsPanel passedCardsPanel,
-			NewRightHalfActiveGamePanel panel2) {
-		deck = passedDeck;
-		panel = passedCardsPanel;
-		deck = passedDeck;
-		panel = passedCardsPanel;
-
+	public CardButton(Card card, ActiveCardsPanel passedCardsPanel) {
 		// Initialize the Button and the number on the button
-		String buttonNum;
+		String buttonNum = card.getText();
+		cardText = card.getText();
 
-		buttonNum = deck.get(cardNum);
 		// button = new JToggleButton(buttonNum);
 		try {
 			Image frontImg = ImageIO.read(getClass().getResource(
@@ -68,15 +62,15 @@ public class CardButton extends JToggleButton implements Accessible {
 			ex.printStackTrace();
 		}
 		// Set the Button's tooltiptext and position it correctly
-		setText(deck.get(cardNum));
+		setText(cardText);
 		setToolTipText("Add " + buttonNum + " to the total");
 
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setVerticalAlignment(SwingConstants.CENTER);
 
 		// Add the action listener to the button
-		addActionListener(new CardActionListenerRefactor(cardNum, deck, this,
-				passedCardsPanel, panel2));
+		addActionListener(new CardActionListenerRefactor(card, this,
+				passedCardsPanel));
 		panel.add(this);
 	}
 
