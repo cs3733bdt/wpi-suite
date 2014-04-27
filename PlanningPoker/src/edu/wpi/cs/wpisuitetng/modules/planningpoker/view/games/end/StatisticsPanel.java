@@ -69,9 +69,9 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	private int numVotes;
 	int currFinalEstimate;
 	
-	private ActiveStatisticsTable statTable;	
+	private EndGameTable statTable;	
 	
-	private ActiveVotesTable voteTable;
+	private EndGameTable voteTable;
 //	
 //	private JLabel minLabel = new JLabel("Minimum Estimate: 0");
 //	private JLabel maxLabel = new JLabel("Maximum Estimate: 0");
@@ -99,8 +99,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		
 		Object[] row = makeStatRow(activeRequirement);
 		
-		statTable = initializeStatTable();
-		voteTable = initializeVoteTable();
+		statTable = new EndGameTable(EndGameTableMode.STATISTIC);
+		voteTable = new EndGameTable(EndGameTableMode.VOTE);
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(activeRequirement);
 		
@@ -270,24 +270,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		}
 	}
 
-	/**
-	 * Instantiates the active stats table
-	 * @return the table containing the statistics
-	 */
-	private ActiveStatisticsTable initializeStatTable() {
-		String[] columnNames2 = {"Mean", "Standard Deviation", "Median", "Max", "Min","Num Votes" };
-		Object[][] data2 = {};
-		return new ActiveStatisticsTable(data2, columnNames2);
-	}
-	
-	private ActiveVotesTable initializeVoteTable() {
-		String[] columnNames2 = {"User Name", "Estimate"};
-		Object[][] data2 = {};
-		return new ActiveVotesTable(data2, columnNames2);
-	}
-	
-	
-	
 	/**
 	 * @param requirement
 	 * @return an arrayList of the vote numbers from the passed requirement

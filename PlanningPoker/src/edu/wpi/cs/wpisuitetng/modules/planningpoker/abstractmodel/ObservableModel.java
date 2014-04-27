@@ -71,6 +71,9 @@ public abstract class ObservableModel extends AbstractModel {
      * @throws NullPointerException if the parameter o is null.
      */
     public synchronized void addObserver(IModelObserver o) {
+    	if(obs == null){
+    		obs = new Vector<IModelObserver>();
+    	}
         if (o == null)
             throw new NullPointerException();
         if (!obs.contains(o)) {
@@ -122,6 +125,9 @@ public abstract class ObservableModel extends AbstractModel {
      * @see     java.util.Observer#update(java.util.Observable, java.lang.Object)
      */
     public void notifyObservers(Object arg) {
+    	if(obs == null){
+    		obs = new Vector<IModelObserver>();
+    	}
         /*
          * a temporary array buffer, used as a snapshot of the state of
          * current Observers.
