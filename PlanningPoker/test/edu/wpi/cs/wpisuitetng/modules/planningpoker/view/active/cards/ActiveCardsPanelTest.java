@@ -50,13 +50,14 @@ public class ActiveCardsPanelTest {
 		passedDeck.add("25");
 		passedDeck.add("50");
 		
+		Deck deck = new Deck(passedDeck);
 		
 		game = new Game("ActiveGame1", "This is active game1",
 				reqs, true, true);
 		
 		activeGameTab = new NewActiveGamePanel(game);
 		rightHalf = (NewRightHalfActiveGamePanel) activeGameTab.getRightComponent();
-		activeCardsPanel = new ActiveCardsPanel(passedDeck, rightHalf);
+		activeCardsPanel = new ActiveCardsPanel(deck, rightHalf);
 	}
 	
 	@Test
