@@ -20,6 +20,7 @@ public class Vote {
 
 	private final String username;
 	private int voteNumber;
+	private boolean validVote;
 	
 	/**
 	 * Constructor for a vote 
@@ -29,6 +30,7 @@ public class Vote {
 	public Vote(String username, int voteNumber){
 		this.username = username;
 		this.voteNumber = voteNumber;
+		this.validVote = true;
 	}
 
 	/**
@@ -53,5 +55,14 @@ public class Vote {
 	 */
 	public void setVoteNumber(int newVote) {
 		voteNumber = newVote;
+	}
+	
+	public boolean setValidVote() {
+		validVote = !validVote;
+		return validVote;
+	}
+	
+	public boolean getValidVote() {
+		return validVote;
 	}
 }
