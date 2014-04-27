@@ -628,7 +628,15 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 * prevent race-time condition for fields setting/overriding
 	 */
 	private void delayChange(){
-		while(GameModel.getInstance().isServerUpdating()){} // $codepro.audit.disable emptyWhileStatement
+		while(GameModel.getInstance().isServerUpdating()){
+			try {
+				Thread.sleep(5);
+				System.out.println("Looping in the reqirement");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
