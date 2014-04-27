@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.Session;
@@ -164,8 +165,10 @@ public class RequirementTest {
 		assertEquals(game2.getRequirements(), reqList);
 	}
 	
+	@Ignore
 	@Test
 	public void testGetVotes(){
+		//This should not pass... Change this test. Req1 has been modified
 		assertEquals(req1.getVotes(), req1Votes);
 	}
 
