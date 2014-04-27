@@ -19,7 +19,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-import com.db4o.config.annotations.UpdatedDepth;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
@@ -30,7 +29,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.exceptions.DBModelNotInstant
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.GetPPRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.PPRequirmentHolder;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.UpdatePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
 /**
@@ -38,7 +38,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequi
  * 
  * @author jonathanleitschuh
  */
-@UpdatedDepth(value=2)
 public class Game extends ObservableModel implements IModelObserver, IStorageModel<Game>{
 	
 	/** This is the best way to keep games unique so 
@@ -208,8 +207,17 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	private List<PPRequirement> getRequirementsFromDB(List<PPRequirement> match) {
 		try {
-			return GetPPRequirementController.getInstance().getAllReqsOnServer();
+			List<PPRequirement> newReq = new ArrayList<PPRequirement>();
+			for(PPRequirement req : PPRequirmentHolder.getInstance().getRequirments()){
+				for(PPRequirement reqMatch : match){
+					if(req.identify(reqMatch)){
+						newReq.add(req);
+					}
+				}
+			}
+			return newReq;
 		} catch (DBModelNotInstantiatedException e) {
+			System.out.println("The GetPPRequirmentController was null");
 			return match;
 		}
 	}
@@ -406,7 +414,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 * @param newReqs
 	 */
 	public void setRequirements(List<PPRequirement> newReqs){
-		if(requirements != newReqs){
+		if(!requirements.equals(newReqs)){
 			makeChanged();
 			delayChange();
 			requirements = newReqs;
@@ -541,6 +549,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	@Override
 	public void update(ObservableModel o, Object arg) {
 		if (o instanceof PPRequirement){
+			UpdatePPRequirementController.getInstance().updateRequirement((PPRequirement)o);
 			makeChanged();
 			notifyObservers(arg);
 		}
