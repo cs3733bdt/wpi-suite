@@ -42,8 +42,8 @@ import org.jdesktop.swingx.JXDatePicker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewLaunchGameButtonPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewSaveGameButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.LaunchGameButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
@@ -54,11 +54,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * The Left Half panel for the NewCreateGamePanel
  * Used to input the Games name, description, end date, whether it uses cards
  */
-public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataField{
+public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		
 	private Container leftView;
 	private SpringLayout layout;
-	private NewCreateGamePanel parent;
+	private CreateGamePanel parent;
 	
 	private NameJTextField nameTextField;
 	private DescriptionJTextArea descriptionTextField;
@@ -68,14 +68,14 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	private JRadioButton cardsButton = new JRadioButton("Estimate With Cards");
 	private JRadioButton textEntryButton = new JRadioButton("Estimate With Text Entry");
 	
-	private NewAddEndDatePanel endDateField;
+	private AddEndDatePanel endDateField;
 	
 	private JPanel deckDropDownPanel;
 	
 	private JComboBox<String> deckDropDown;	
 	
-	private NewSaveGameButtonPanel saveGameButton;
-	private NewLaunchGameButtonPanel launchGameButton;
+	private SaveGameButtonPanel saveGameButton;
+	private LaunchGameButtonPanel launchGameButton;
 	private CancelButton cancelGameButton;
 	
 	/** Shows the names of the errors */
@@ -94,7 +94,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	 * Builds the left half of the CreateGamePanel
 	 * @param mainPanel the main panel this half is located on
 	 */
-	public NewLeftHalfCreateGamePanel(NewCreateGamePanel mainPanel) {
+	public LeftHalfCreateGamePanel(CreateGamePanel mainPanel) {
 		parent = mainPanel;
 		game = mainPanel.getGame();
 		build();
@@ -156,7 +156,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		    }
 		});
 		
-		endDateField = new NewAddEndDatePanel(this);					//Creates an end date panel
+		endDateField = new AddEndDatePanel(this);					//Creates an end date panel
 		
 		addKeyListenerTo(endDateField.getDatePicker());
 		addActionListenerTo(endDateField.getDatePicker());			//Adds ActionListener to update when a selection is made
@@ -189,8 +189,8 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		deckDropDownPanel.add(deckDropDownLabel);
 		deckDropDownPanel.add(deckDropDown);
 		
-		saveGameButton = new NewSaveGameButtonPanel(parent);			//Creates a save game button
-		launchGameButton = new NewLaunchGameButtonPanel(parent);		//Creates a launch game button
+		saveGameButton = new SaveGameButtonPanel(parent);			//Creates a save game button
+		launchGameButton = new LaunchGameButtonPanel(parent);		//Creates a launch game button
 		cancelGameButton = new CancelButton("Cancel Game", parent);		//TODO implement this
 		
 		JPanel buttonPanel = new JPanel();								//Creates a panel for the buttons
@@ -297,7 +297,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	 * Gets the end date field for this panel
 	 * @return the current end date field
 	 */
-	public NewAddEndDatePanel getEndDateField(){
+	public AddEndDatePanel getEndDateField(){
 		return endDateField;
 	}
 	
@@ -344,11 +344,11 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	
 	
 	
-	public NewSaveGameButtonPanel getSaveGameButtonPanel() {
+	public SaveGameButtonPanel getSaveGameButtonPanel() {
 		return saveGameButton;
 	}
 
-	public NewLaunchGameButtonPanel getLaunchGameButtonPanel() {
+	public LaunchGameButtonPanel getLaunchGameButtonPanel() {
 		return launchGameButton;
 	}
 

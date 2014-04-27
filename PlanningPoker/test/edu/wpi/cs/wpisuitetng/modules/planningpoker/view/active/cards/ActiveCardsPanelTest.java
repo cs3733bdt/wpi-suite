@@ -20,8 +20,8 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;
 
 /**
  * @author Bobby Drop Tables
@@ -30,8 +30,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActi
 public class ActiveCardsPanelTest {
 
 	ActiveCardsPanel activeCardsPanel;
-	NewActiveGamePanel activeGameTab;
-	NewRightHalfActiveGamePanel rightHalf;
+	ActiveGamePanel activeGameTab;
+	RightHalfActiveGamePanel rightHalf;
 	ArrayList<PPRequirement> reqs;
 	Game game;
 	ArrayList<String> passedDeck;
@@ -55,8 +55,8 @@ public class ActiveCardsPanelTest {
 		game = new Game("ActiveGame1", "This is active game1",
 				reqs, true, true);
 		
-		activeGameTab = new NewActiveGamePanel(game);
-		rightHalf = (NewRightHalfActiveGamePanel) activeGameTab.getRightComponent();
+		activeGameTab = new ActiveGamePanel(game);
+		rightHalf = (RightHalfActiveGamePanel) activeGameTab.getRightComponent();
 		activeCardsPanel = new ActiveCardsPanel(deck, rightHalf);
 	}
 	

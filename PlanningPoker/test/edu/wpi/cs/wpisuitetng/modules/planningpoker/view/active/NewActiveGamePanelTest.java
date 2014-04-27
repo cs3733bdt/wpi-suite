@@ -23,10 +23,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 
 public class NewActiveGamePanelTest {
 	
-	private NewActiveGamePanel activeGamePanel;
+	private ActiveGamePanel activeGamePanel;
 	private Game activeGame;
 	private ArrayList<PPRequirement> reqs;
-	private NewRightHalfActiveGamePanel rightHalf;
+	private RightHalfActiveGamePanel rightHalf;
 	private GameTree gameTree;
 
 	
@@ -41,8 +41,8 @@ public class NewActiveGamePanelTest {
 		
 		gameTree = GameTree.getInstance();
 		
-		activeGamePanel = new NewActiveGamePanel(activeGame);
-		rightHalf = (NewRightHalfActiveGamePanel) activeGamePanel.getRightComponent();
+		activeGamePanel = new ActiveGamePanel(activeGame);
+		rightHalf = (RightHalfActiveGamePanel) activeGamePanel.getRightComponent();
 		
 	}
 	

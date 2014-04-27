@@ -45,7 +45,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
-public class NewRightHalfActiveGamePanel extends JScrollPane {
+public class RightHalfActiveGamePanel extends JScrollPane {
 	private Game currentGame;
 	private PPRequirement activeRequirement;
 	private JTextArea nameTextField;
@@ -74,7 +74,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private Font largeFont;
 	private JButton clearButton;
 
-	NewRightHalfActiveGamePanel(final Game game) {
+	RightHalfActiveGamePanel(final Game game) {
 		currentGame = game;
 		build();
 	}
