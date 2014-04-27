@@ -480,7 +480,7 @@ public class EstimatePanel extends JPanel{
 		
 		getEstimateText().setBorder(defaultBorder);
 		
-		if (vote.isValidVote())
+		if (activeGame.isActive())
 				displaySuccess("   Vote Successful!");
 		else {
 			displayError("   Game has ended, vote not saved");

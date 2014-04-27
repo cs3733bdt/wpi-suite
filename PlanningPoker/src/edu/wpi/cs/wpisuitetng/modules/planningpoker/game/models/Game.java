@@ -32,6 +32,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotificat
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
 
 /**
  * Basic Game class that contains the data to be store for a Game
@@ -220,6 +221,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		notifiedOfCreation = false;
 		notifiedOfCompletion = false;
 		identity = UUID.randomUUID();
+		validVote = true;
 	}
 
 	/**
@@ -677,6 +679,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			makeChanged();
 			delayChange();
 			makeComplete();
+			active = false;
 			return true;
 			}
 		else {

@@ -21,6 +21,7 @@ import com.google.gson.GsonBuilder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
@@ -61,6 +62,8 @@ public class PPRequirement extends ObservableModel {
 	private boolean complete = false;
 	/** The final estimate for this requirement. This is -1 if a final estimate has not been submitted yet. */
 	private int finalEstimate = -1;
+	
+	
 	/**
 	 * The basic constructor for a game
 	 * Sets all of the default values for a game class
@@ -200,7 +203,7 @@ public class PPRequirement extends ObservableModel {
 	public void addVote(Vote vote) {
 		delayChange();	//Holds the code until the server is finished re-populating the model
 		for(int i = 0; i < votes.size(); i++) {
-			if(vote.getUsername().equals(votes.get(i).getUsername()) && vote.isValidVote()) {	//Has person voted? Is vote valid?
+			if(vote.getUsername().equals(votes.get(i).getUsername()) && Game.isActive()) {	//Has person voted? Is game active?
 				votes.get(i).setVoteNumber(vote.getVoteNumber());		//Update their vote
 				hasChanged();										//Acknowledge change
 				notifyObservers(votes.get(i));						//Run update in game class

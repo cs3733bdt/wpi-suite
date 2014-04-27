@@ -10,6 +10,9 @@
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
  
 /**
  * used to record user votes for a game
@@ -18,9 +21,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models;
  */
 public class Vote {
 
+	private Game activeGame;
 	private final String username;
 	private int voteNumber;
-	private boolean validVote;
 	
 	/**
 	 * Constructor for a vote 
@@ -30,7 +33,6 @@ public class Vote {
 	public Vote(String username, int voteNumber){
 		this.username = username;
 		this.voteNumber = voteNumber;
-		this.validVote = true;
 	}
 
 	/**
@@ -56,13 +58,5 @@ public class Vote {
 	public void setVoteNumber(int newVote) {
 		voteNumber = newVote;
 	}
-	
-	public boolean setValidVote() {
-		validVote = !validVote;
-		return validVote;
-	}
-	
-	public boolean isValidVote() {
-		return validVote;
-	}
+
 }
