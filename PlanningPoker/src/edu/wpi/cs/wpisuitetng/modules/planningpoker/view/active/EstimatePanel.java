@@ -479,12 +479,12 @@ public class EstimatePanel extends JPanel{
 		ViewEventController.getInstance().refreshGameTree();
 		
 		getEstimateText().setBorder(defaultBorder);
-		if vote.isValidVote(){
-			displaySuccess("   Vote Successful!");
-		};
+		
+		if (vote.isValidVote())
+				displaySuccess("   Vote Successful!");
 		else {
-			displaySuccess("   Game has ended, vote not saved")
-		}
+			displayError("   Game has ended, vote not saved");
+	}
 		
 	}
 
