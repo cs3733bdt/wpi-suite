@@ -15,13 +15,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.db4o.config.annotations.UpdatedDepth;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
@@ -31,7 +29,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
  * @author tianchanggu & jmwetzel
  *
  */
-@UpdatedDepth(value=2)
 public class PPRequirement extends ObservableModel {
 	/**
 	 * The ID of the requirement from the Requirement Manager
@@ -56,7 +53,32 @@ public class PPRequirement extends ObservableModel {
 	private boolean fromRequirementModule = false;
 	
 	/** list of votes for this requirement */
-	private List<Vote> votes = new ArrayList<Vote>();
+	private List<Vote> votes = new ArrayList<Vote>(){
+		public boolean equals(Object o){
+			if(this == o){
+				return true;
+			}
+			if(o == null){
+				return false;
+			}
+			if(getClass() != o.getClass()){
+				return false;
+			}
+			@SuppressWarnings("unchecked")
+			ArrayList<Vote> comp = (ArrayList<Vote>)o;
+			for(Vote v : this){
+				if(!comp.contains(v)){
+					return false;
+				}
+			}
+			for(Vote v : comp){
+				if(!this.contains(v)){
+					return false;
+				}
+			}
+			return true;
+		}
+	};
 
 	/** boolean for whether the requirement has been voted on by all users */
 	private boolean complete = false;
@@ -129,6 +151,7 @@ public class PPRequirement extends ObservableModel {
 	 */
 	public void setIdPlusOne(int id){
 		delayChange();
+		makeChanged();
 		fromRequirementModule = true;
 		// Make Id one more than the id in the 
 		// Requirement Manager
@@ -138,6 +161,7 @@ public class PPRequirement extends ObservableModel {
 	public void setId(int id){
 		delayChange();
 		fromRequirementModule = true;
+		makeChanged();
 		// Make Id one more than the id in the 
 		// Requirement Manager
 		this.id = id;
@@ -201,23 +225,26 @@ public class PPRequirement extends ObservableModel {
 	public void addVote(Vote vote) {
 		delayChange();	//Holds the code until the server is finished re-populating the model
 		addNoDelay(vote);
-		hasChanged();
 		notifyObservers(vote);
 	}
 	
 	private void addNoDelay(Vote vote){
-		for(int i = 0; i < votes.size(); i++) {
-			if(vote.getUsername().equals(votes.get(i).getUsername())) {	//Has person voted?
-				votes.get(i).setVoteNumber(vote.getVoteNumber());		//Update their vote
-				hasChanged();										//Acknowledge change
-				notifyObservers(votes.get(i));						//Run update in game class
-				return;													//Exit this class
+		boolean found = false;
+		for(Vote v : votes) {
+			if(vote.getUsername().equals(v.getUsername())) {	//Has person voted?
+				v.setVoteNumber(vote.getVoteNumber());		//Update their vote
+				makeChanged();
+				found = true;												//Exit this class
 			}
 		}
-		votes.add(vote);
+		if(!found){
+			votes.add(vote);
+			makeChanged();
+		}
 		if(getProject() != null){
 			if(votes.size() == getProject().getTeam().length) {
 				makeComplete();
+				makeChanged();
 			}
 		} else {
 			System.err.println("THE PROJECT IN THE REQUIREMENT WAS NULL: ADD VOTE METHOD");
@@ -248,11 +275,10 @@ public class PPRequirement extends ObservableModel {
 	/**
 	 * sets the requirement to completed
 	 */
-	public void makeComplete() {
+	private void makeComplete() {
 		delayChange();
 		complete = true;
 		makeChanged();
-		notifyObservers();
 	}
 
 	/**
@@ -370,8 +396,8 @@ public class PPRequirement extends ObservableModel {
 	 */
 	@Override
 	public String toString() {
-		String n = "\nName: " + name + 
-				"\nDescription: " + description + '\n';
+		String n = "[Name: " + name + 
+				" Description: " + description + " Votes: " + getVoteCount() + "]";
 		return n;
 	}
 	
@@ -445,7 +471,14 @@ public class PPRequirement extends ObservableModel {
 	 * prevent race-time condition for fields setting/overriding
 	 */
 	private void delayChange() {
-		while(GameModel.getInstance().isServerUpdating()) {} // $codepro.audit.disable emptyWhileStatement
+		while(GameModel.getInstance().isServerUpdating()) {
+			try {
+				Thread.sleep(5);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**
