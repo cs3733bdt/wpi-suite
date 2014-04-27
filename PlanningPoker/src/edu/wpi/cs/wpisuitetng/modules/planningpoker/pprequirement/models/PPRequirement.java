@@ -485,7 +485,7 @@ public class PPRequirement extends ObservableModel {
 	
 	/**
 	 * 
-	 * @return the number of vote if the user already voted, otherwise return 0;
+	 * @return the value of vote if the user already voted, otherwise return 0;
 	 */
 	public int userVote() {
 		String currentUser = ConfigManager.getConfig().getUserName();

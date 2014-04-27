@@ -22,6 +22,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -34,9 +35,11 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelGameOrDeckButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
@@ -62,7 +65,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	private JRadioButton singleSelection;
 	private JRadioButton multipleSelection;
 	
-	private JPanel cardsPanel;
+	private final JPanel cardsPanel = new JPanel();
+	
+	private CancelGameOrDeckButton cancelDeckButton;
 	
 	private JButton saveButton;
 	
@@ -72,15 +77,17 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	
 	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
 	
-	private final CardImage cardRed = new CardImage("red");
+	private final CardImage cardRed = new CardImage(ColorEnum.RED);
 	
-	private final CardImage cardBlue = new CardImage("blue");
+	private final CardImage cardBlue = new CardImage(ColorEnum.BLUE);
 	
-	private final CardImage cardGreen = new CardImage("green");
+	private final CardImage cardGreen = new CardImage(ColorEnum.GREEN);
 	
-	private final CardImage cardPurple = new CardImage("purple");
+	private final CardImage cardPurple = new CardImage(ColorEnum.PURPLE);
 	
-	private final CardImage cardYellow = new CardImage("yellow");
+	private final CardImage cardYellow = new CardImage(ColorEnum.YELLOW);
+	
+	private ArrayList<CardImage> cards = new ArrayList<CardImage>();
 	
 	public CreateDeckPanel(){
 		
@@ -140,7 +147,17 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		numCards = new NameJTextField(5);
 		numCards.setText("1");
 		addKeyListenerTo(numCards);
+		addMouseListenerToNumberOfCardsTextEntry(numCards);
 		submitNumCards = new JButton("Submit");
+		submitNumCards.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	displayNumCards();
+		        cardsPanel.revalidate();
+		        cardsPanel.repaint();
+		    }
+		});
+		addMouseListenerToNumberOfCardsSubmitButton(submitNumCards);
+		
 		JPanel numPanel = new JPanel();
 		numPanel.setLayout(new BorderLayout());
 		numPanel.add(numLabelPanel, BorderLayout.PAGE_START);
@@ -181,23 +198,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		numCardsAndColorAndSelectedTypePanel.add(colorPanel);
 		
 		/* Card panel for the cards to appear in. Get rid of border when something actually appears */
-		cardsPanel = new JPanel();
-		cardsPanel.setPreferredSize(new Dimension(10, 400));
-		cardsPanel.setBorder(nameTextField.getBorder());
+		JScrollPane cardScrollPane = new JScrollPane(cardsPanel);
+		
+		cardsPanel.setPreferredSize(new Dimension(10, 520));
 		cardsPanel.add(cardRed);
+		cards.add(cardRed);
 		cardRed.setVisible(true);
-		
-		cardsPanel.add(cardBlue);
-		cardBlue.setVisible(false);
-		
-		cardsPanel.add(cardGreen);
-		cardGreen.setVisible(false);
-		
-		cardsPanel.add(cardPurple);
-		cardPurple.setVisible(false);
-		
-		cardsPanel.add(cardYellow);
-		cardYellow.setVisible(false);
 		
 		/* Not currently in use. Re-add this if the card-value setting method is desired below the card panel */
 		JPanel valuePanel = new JPanel();
@@ -210,6 +216,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		saveButton = new JButton("Save Deck");
 		saveButton.setEnabled(false);
 		
+		/*cancel button */
+		cancelDeckButton = new CancelGameOrDeckButton();
+		
 		errorField = new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
@@ -221,9 +230,10 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		view.add(descriptionLabel);
 		view.add(descriptionScroll);
 		view.add(numCardsAndColorAndSelectedTypePanel);
-		view.add(cardsPanel);
+		view.add(cardScrollPane);
 		//view.add(valuePanel);
 		view.add(saveButton);
+		view.add(cancelDeckButton);
 		view.add(errorField);
 		
 		/* Sets the layout constraints for each component */
@@ -242,20 +252,23 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		layout.putConstraint(SpringLayout.WEST, numCardsAndColorAndSelectedTypePanel, 0, SpringLayout.WEST, view);
 		layout.putConstraint(SpringLayout.NORTH, numCardsAndColorAndSelectedTypePanel, 10, SpringLayout.SOUTH, nameLabel);
 		
-		layout.putConstraint(SpringLayout.WEST, cardsPanel, 10, SpringLayout.WEST, view);
-		layout.putConstraint(SpringLayout.EAST, cardsPanel, -10, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.NORTH, cardsPanel, 10, SpringLayout.SOUTH, numCardsAndColorAndSelectedTypePanel);
-		layout.putConstraint(SpringLayout.SOUTH, cardsPanel, -45, SpringLayout.SOUTH, view);
+		layout.putConstraint(SpringLayout.WEST, cardScrollPane, 10, SpringLayout.WEST, view);
+		layout.putConstraint(SpringLayout.EAST, cardScrollPane, -10, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.NORTH, cardScrollPane, 10, SpringLayout.SOUTH, numCardsAndColorAndSelectedTypePanel);
+		layout.putConstraint(SpringLayout.SOUTH, cardScrollPane, -45, SpringLayout.SOUTH, view);
 			
 		/*layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, valuePanel, 5, SpringLayout.HORIZONTAL_CENTER, view);
 		layout.putConstraint(SpringLayout.NORTH, valuePanel, 10, SpringLayout.SOUTH, cardsPanel);
 		*/
 		
 		layout.putConstraint(SpringLayout.WEST, saveButton, 10, SpringLayout.WEST, view);
-		layout.putConstraint(SpringLayout.NORTH, saveButton, 10, SpringLayout.SOUTH, cardsPanel);
+		layout.putConstraint(SpringLayout.NORTH, saveButton, 10, SpringLayout.SOUTH, cardScrollPane);
 		
-		layout.putConstraint(SpringLayout.WEST, errorField, 10, SpringLayout.EAST, saveButton);
-		layout.putConstraint(SpringLayout.NORTH, errorField, 10, SpringLayout.SOUTH, cardsPanel);
+		layout.putConstraint(SpringLayout.WEST, cancelDeckButton, 10, SpringLayout.EAST, saveButton);
+		layout.putConstraint(SpringLayout.NORTH, cancelDeckButton, 10, SpringLayout.SOUTH, cardScrollPane);
+		
+		layout.putConstraint(SpringLayout.WEST, errorField, 10, SpringLayout.EAST, cancelDeckButton);
+		layout.putConstraint(SpringLayout.NORTH, errorField, 10, SpringLayout.SOUTH, cardScrollPane);
 		
 		revalidate();
 		repaint();
@@ -317,6 +330,10 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		return colorDropDown;
 	}
 	
+	public JPanel getCardsPanel(){
+		return cardsPanel;
+	}
+	
 	/**
 	 * Checks all fields to determine if they are prepared to be removed.
 	 * If a field is invalid the it warns the user with a notification and by highlighting
@@ -371,13 +388,13 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	}
 	
 	/**
-	 * Checks to make sure the number of cards inputted is 1-25
+	 * Checks to make sure the number of cards inputted is 1-24
 	 * @return
 	 */
 	public boolean verifyNumberOfCards() {
 		String text = getNumCards().getText();
 		String allowedChars = "123456789";
-		String allowedChars1 = "012345";
+		String allowedChars1 = "01234";
 		String allowedChars2 = "0123456789";
 		if (text.length() == 0) {
 			return false;
@@ -388,7 +405,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 				return true;
 			}
 		}
-		/* Checks to see if the number is 10-25 */
+		/* Checks to see if the number is 10-24 */
 		if (text.length() == 2){
 			if(text.charAt(0) == '2'){
 				if(allowedChars1.contains(Character.toString(text.charAt(1)))){
@@ -409,43 +426,84 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		return false;
 	}
 	
+	/** 
+	 * This method makes sure that the color selected in the dropdown is the color being display on all the cards
+	 * It does this by checking how many components are in the card panel, then once it has stored this number,
+	 * it removes all the components in the card panel. It then generates the number of cards of the correct color
+	 * (since it now knows the color) that was equal to the previously recorded number of components in the panel.
+	 * @return
+	 */
 	public void chooseCardColor(){
 		String color = (String)getColorDropDown().getSelectedItem();
+		int numCardsPresent = cardsPanel.getComponentCount();
+		cardsPanel.removeAll();
+		cards.removeAll(cards);
+		/* Later, when real functionality occurs, we will need a way of storing the cards 
+		 * being generated, so we can later tell if one is selected or not.
+		 * This will be necessary when assigning values to each card. */
 		if(color == "Red (Default)"){
-			cardRed.setVisible(true);
-			cardBlue.setVisible(false);
-			cardGreen.setVisible(false);
-			cardPurple.setVisible(false);
-			cardYellow.setVisible(false);
+			 for(int i=0; i < numCardsPresent; i++){
+				 cardsPanel.add(new CardImage(ColorEnum.RED));
+				 cards.add(new CardImage(ColorEnum.RED));
+			 }
 		}
 		if(color == "Blue"){
-			cardBlue.setVisible(true);
-			cardRed.setVisible(false);
-			cardGreen.setVisible(false);
-			cardPurple.setVisible(false);
-			cardYellow.setVisible(false);
+			for(int i=0; i < numCardsPresent; i++){
+				cardsPanel.add(new CardImage(ColorEnum.BLUE));
+				cards.add(new CardImage(ColorEnum.BLUE));
+			 }
 		}
 		if(color == "Green"){
-			cardGreen.setVisible(true);
-			cardRed.setVisible(false);
-			cardBlue.setVisible(false);
-			cardPurple.setVisible(false);
-			cardYellow.setVisible(false);
+			for(int i=0; i < numCardsPresent; i++){
+				cardsPanel.add(new CardImage(ColorEnum.GREEN));
+				cards.add(new CardImage(ColorEnum.GREEN));
+			 }
 		}
 		if(color == "Purple"){
-			cardPurple.setVisible(true);
-			cardRed.setVisible(false);
-			cardBlue.setVisible(false);
-			cardGreen.setVisible(false);
-			cardYellow.setVisible(false);
+			for(int i=0; i < numCardsPresent; i++){
+				cardsPanel.add(new CardImage(ColorEnum.PURPLE));
+				cards.add(new CardImage(ColorEnum.PURPLE));
+			 }
 		}
 		if(color == "Yellow"){
-			cardYellow.setVisible(true);
-			cardRed.setVisible(false);
-			cardBlue.setVisible(false);
-			cardGreen.setVisible(false);
-			cardPurple.setVisible(false);
+			for(int i=0; i < numCardsPresent; i++){
+				 cardsPanel.add(new CardImage(ColorEnum.YELLOW));
+				 cards.add(new CardImage(ColorEnum.YELLOW));
+			 }
 		}
+		System.out.print(cards.size());
+		cardsPanel.revalidate();
+        cardsPanel.repaint();
+	}
+	
+	public void displayNumCards(){
+		int numCardsSubmitted = Integer.parseInt(getNumCards().getText());
+		cardsPanel.removeAll();
+        for(int i=0; i < numCardsSubmitted; i++){		// Here, we are creating the correct number of components in the cards panel,
+			cardsPanel.add(new JLabel("countLabel"));   // so that when chooseCardColor() is called it creates the correct number of
+		}												// the correct color of cards.
+        chooseCardColor();
+        cardsPanel.revalidate();
+        cardsPanel.repaint();
+	}
+	
+	private void addMouseListenerToNumberOfCardsSubmitButton(JComponent component){
+		component.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent arg0) {
+					if(!submitNumCards.isEnabled()){
+						errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 24");
+					}
+					else{}//it will perform the action listener
+			}
+		});
+	}
+	
+	private void addMouseListenerToNumberOfCardsTextEntry(JComponent component){
+		component.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent arg0) {
+				getNumCards().selectAll();
+			}
+		});
 	}
 	
 }

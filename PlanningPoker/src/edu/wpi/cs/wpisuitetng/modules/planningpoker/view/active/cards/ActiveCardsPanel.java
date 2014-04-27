@@ -35,7 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 public class ActiveCardsPanel extends JPanel implements IDataField {
 
 	private int sum = 0;
-	private final List<String> deck;
+	private final Deck deck;
 	private final List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
 
@@ -45,14 +45,14 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
 	private NewRightHalfActiveGamePanel panel;
 
-	public ActiveCardsPanel(ArrayList<String> passedDeck,
+	public ActiveCardsPanel(Deck passedDeck,
 			NewRightHalfActiveGamePanel passedPanel) {
 		panel = passedPanel;
 		deck = passedDeck;
 
-		int cardsPerRow = 11;
+		int cardsPerRow = 10;
 
-		this.setPreferredSize(new Dimension(525, (68 * (Math.round(deck.size()
+		this.setPreferredSize(new Dimension(750, (68 * (Math.round(deck.size()
 				/ cardsPerRow)))));
 		for (int i = 0; i < (deck.size()); i++) {
 			JToggleButtonList.add(new CardButton(i, deck, this, panel));

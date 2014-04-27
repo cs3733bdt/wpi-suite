@@ -42,6 +42,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequi
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.ActiveCardsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 public class NewRightHalfActiveGamePanel extends JScrollPane {
@@ -54,7 +55,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
-	private ArrayList<String> deck = new ArrayList<String>();
+	private Deck deck;
 	private List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	private ActiveCardsPanel cardsPanel;
 	private int sum;
@@ -73,9 +74,12 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private Font largeFont;
 	private JButton clearButton;
 
-	NewRightHalfActiveGamePanel(final Game game) {
+	private NewActiveGamePanel parentPanel;
+	
+	NewRightHalfActiveGamePanel(final Game game,final NewActiveGamePanel activeGamePanel) {
 		currentGame = game;
 		build();
+		parentPanel = activeGamePanel;
 	}
 
 	public void build() {
@@ -198,27 +202,27 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		boolean useDefaultDeck;
 		// if (customDeck.size() == 0) {
 		// generate fibonachi sequence
-		int firstnum = 0;
-		int secondnum = 1;
-		int currnum;
-		deck.add(Integer.toString(secondnum));
+//		int firstnum = 0;
+//		int secondnum = 1;
+//		int currnum;
+		deck = new Deck();
 		// Default value is 6.
-		int Fibcount = 6; // if this is 6, the highest number generated will be
-							// 13
-		for (int i = 0; i < Fibcount; i++) {
-			currnum = firstnum + secondnum;
-			deck.add("" + currnum + "");
-			firstnum = secondnum;
-			secondnum = currnum;
-		}
+//		int Fibcount = 6; // if this is 6, the highest number generated will be
+//							// 13
+//		for (int i = 0; i < Fibcount; i++) {
+//			currnum = firstnum + secondnum;
+//			deck.add("" + currnum + "");
+//			firstnum = secondnum;
+//			secondnum = currnum;
+//		}
 		useDefaultDeck = true;
 		/*
 		 * } This branch will be run if a custom deck is to be used else { deck
 		 * = customDeck; useDefaultDeck = false; }
 		 */
-		if (useDefaultDeck) {
-			deck.add("?");
-		}
+//		if (useDefaultDeck) {
+////			deck.add("?");
+//		}
 
 		cardsPanel = new ActiveCardsPanel(deck, this);
 		
@@ -246,7 +250,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		if (getGame().doesUseCards()) {
 			cardScrollPanel = new JScrollPane(cardsPanel);
 			// cardPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			cardScrollPanel.setPreferredSize(new Dimension(100, 100));
+			cardScrollPanel.setPreferredSize(new Dimension(400, 120));
 			rightView.add(cardScrollPanel);
 			layout.putConstraint(SpringLayout.WEST, cardScrollPanel, 5,
 					SpringLayout.WEST, rightView);
@@ -254,9 +258,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardScrollPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
-			layout.putConstraint(SpringLayout.NORTH, counterLabel, 5,
-					SpringLayout.SOUTH, cardScrollPanel);
-			cardScrollPanel.getHorizontalScrollBar().setValue(200);
+			cardScrollPanel.getHorizontalScrollBar().setValue((cardScrollPanel.getHorizontalScrollBar().getMaximum())/2);
 			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER,
 					cardScrollPanel, 0, SpringLayout.HORIZONTAL_CENTER,
 					rightView);
@@ -414,7 +416,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, counterLabel, 5,
 				SpringLayout.SOUTH, previousEst);
-		
+
 		layout.putConstraint(SpringLayout.WEST, submitButton, 5,
 				SpringLayout.WEST, rightView);
 
@@ -530,6 +532,10 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			} else {
 				System.out.println("Submit Vote Pressed Failed.");
 			}
+		}
+		
+		if (allUsersVoted()){
+			parentPanel.endGame();
 		}
 	}
 
@@ -691,5 +697,14 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	
 	public void getNextRow() {
 		table.setRowSelectionInterval(0, 0);
+	}
+	
+	private boolean allUsersVoted(){
+		for (PPRequirement p:currentGame.getRequirements()){
+			if (p.getVoteCount() != currentGame.getUsers()){
+				return false;
+			}	
+		}
+		return true;
 	}
 }
