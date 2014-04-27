@@ -52,8 +52,6 @@ public class CardButton extends JToggleButton implements Accessible {
 			NewRightHalfActiveGamePanel panel2) {
 		deck = passedDeck;
 		panel = passedCardsPanel;
-		deck = passedDeck;
-		panel = passedCardsPanel;
 
 		// Initialize the Button and the number on the button
 		String buttonNum;

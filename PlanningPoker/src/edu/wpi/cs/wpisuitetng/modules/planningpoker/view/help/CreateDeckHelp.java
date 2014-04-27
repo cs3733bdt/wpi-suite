@@ -2,7 +2,11 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help;
 
 import java.awt.Container;
 import java.awt.Font;
+import java.awt.Image;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -62,6 +66,21 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 	@Override
 	public int getIdentifierIndex() {
 		return 4;
+	}
+	
+	@Override
+	public JLabel addImage(String image){
+		JLabel helpLabel = new JLabel();
+		
+		try {
+			Image imageToBeAdded = ImageIO.read(getClass().getResource(image));
+			ImageIcon helpImage = new ImageIcon(imageToBeAdded);
+			helpLabel = new JLabel(helpImage);
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		return helpLabel;
+		
 	}
 
 }
