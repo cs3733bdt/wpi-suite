@@ -25,7 +25,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 public class Deck implements IDataField {
 	
 	//The deck variable holds the list of Strings, each string corresponding to a card in the deck
-	private ArrayList<String> Deck = new ArrayList<String>();
+	private ArrayList<String> deck = new ArrayList<String>();
 	
 	//set to true if there is an error with the created deck
 	private boolean errorBit = false;
@@ -60,10 +60,10 @@ public class Deck implements IDataField {
 	 * Constructs a default deck from the passed Deck
 	 * @param Deck an ArrayList of strings, each string corresponding to a card in the created Deck object
 	 */
-	public Deck(ArrayList<String> Deck) {
+	public Deck(ArrayList<String> deck) {
 		isDefaultDeck = false;
-		numCards = Deck.size();
-		this.Deck = Deck;
+		numCards = deck.size();
+		this.deck = deck;
 	}
 	
 	
@@ -82,15 +82,15 @@ public class Deck implements IDataField {
 		int firstnum = 0;
 		int secondnum = 1;
 		int currnum;
-		Deck.add(Integer.toString(secondnum));
+		deck.add(Integer.toString(secondnum));
 		
 		for (int i = 0; i < numLoops; i++) {
 			currnum = firstnum + secondnum;
-			Deck.add(Integer.toString(currnum));
+			deck.add(Integer.toString(currnum));
 			firstnum = secondnum;
 			secondnum = currnum;
 		}
-		Deck.add("?");
+		deck.add("?");
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class Deck implements IDataField {
 	 */
 	public int intGet(int index) {
 		if (index != (size() -1)) {
-			return Integer.parseInt(Deck.get(index));
+			return Integer.parseInt(deck.get(index));
 		}
 		else {
 			return -1;
@@ -122,16 +122,16 @@ public class Deck implements IDataField {
 	 * @return the string at the index. works for any index
 	 */
 	public String get(int index) {
-		return Deck.get(index);
+		return deck.get(index);
 	}
 	
 	
 	public int size() {
-		return Deck.size();
+		return deck.size();
 	}
 	
 	public List<String> getDeck() {
-		return Deck;
+		return deck;
 	}
 	
 	

@@ -11,6 +11,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.GetPPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
@@ -22,15 +23,15 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
  * @author tianchanggu
  *
  */
-public class RetrievePPRequirementRequestObserver implements RequestObserver {
+public class GetPPRequirementRequestObserver implements RequestObserver {
 	
-	private RetrievePPRequirementController controller;
+	private GetPPRequirementController controller;
 	
 	/**
 	 * Constructs the observer given a RetrieveRequirementsController
 	 * @param controller the controller used to retrieve requirements
 	 */
-	public RetrievePPRequirementRequestObserver(RetrievePPRequirementController controller) {
+	public GetPPRequirementRequestObserver(GetPPRequirementController controller) {
 		this.controller = controller;
 	}
 
@@ -42,7 +43,7 @@ public class RetrievePPRequirementRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		// Convert the JSON array of requirements to a Requirement object array
-		PPRequirement[] requirements = PPRequirement.fromRequirmentsManagerJsonArray(iReq.getResponse().getBody());
+		PPRequirement[] requirements = PPRequirement.fromJsonArray(iReq.getResponse().getBody());
 
 		// Pass these Requirements to the controller
 		controller.receivedRequirements(requirements);

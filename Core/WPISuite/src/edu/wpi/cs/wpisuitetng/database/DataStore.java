@@ -69,8 +69,16 @@ public class DataStore implements Data {
 				config.common().objectClass(gameClass).updateDepth(3);
 			} catch (ClassNotFoundException e){
 				logger.log(Level.FINER, "The game class could not be loaded");
+				System.out.println("The game class could not be loaded");
 			}
 			
+			try{
+				Class reqClass = classLoader.loadClass("edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement");
+				config.common().objectClass(reqClass).updateDepth(3);
+			} catch (ClassNotFoundException e){
+				logger.log(Level.FINER, "The requirment class could not be loaded");
+				System.out.println("The requirement class could not be loaded");
+			}
 			
 			//Connect to the Database
 			server = Db4oClientServer.openServer(config, WPI_TNG_DB, PORT);

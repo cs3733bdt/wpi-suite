@@ -171,7 +171,7 @@ public class Project extends AbstractModel
 		
 			for(User u : this.team)
 			{
-				json += u.toJSON() + ",";
+
 			}
 			//remove that last comma
 			json = json.substring(0, json.length()-1);

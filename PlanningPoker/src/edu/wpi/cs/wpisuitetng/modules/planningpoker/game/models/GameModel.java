@@ -153,6 +153,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 			}
 		} else {
 		}
+		serverUpdating = false; //Duplicate just because we want to be sure that the lock disengages
 	}
 
 	@Override

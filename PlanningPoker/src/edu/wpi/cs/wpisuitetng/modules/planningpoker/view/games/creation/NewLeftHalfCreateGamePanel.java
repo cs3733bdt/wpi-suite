@@ -41,7 +41,7 @@ import org.jdesktop.swingx.JXDatePicker;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelGameOrDeckButton;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewLaunchGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewSaveGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
@@ -58,6 +58,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		
 	private Container leftView;
 	private SpringLayout layout;
+	private NewCreateGamePanel parent;
 	
 	private NameJTextField nameTextField;
 	private DescriptionJTextArea descriptionTextField;
@@ -75,7 +76,8 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	
 	private NewSaveGameButtonPanel saveGameButton;
 	private NewLaunchGameButtonPanel launchGameButton;
-	private CancelGameOrDeckButton cancelGameButton;
+	//TODO: IMPLEMENT A CANCELGAMEBUTTONPANEL CLASS
+	private CancelButton cancelGameButton;
 	
 	/** Shows the names of the errors */
 	private ErrorLabel errorField;
@@ -88,7 +90,6 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	    
 	private final Border defaultDateBorder = (new JXDatePicker()).getBorder();	
 	
-	private NewCreateGamePanel parent;
 	
 	/**
 	 * Builds the left half of the CreateGamePanel
@@ -102,10 +103,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		
 		nameTextField.requestFocus();
 		if(game != null){
-			nameTextField.select(game.getName().length(), game.getName().length());;
-		}
-		else{
-			nameTextField.select(0,0);
+			nameTextField.select(game.getName().length(), game.getName().length());
 		}
 	}
 	
@@ -194,7 +192,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		
 		saveGameButton = new NewSaveGameButtonPanel(parent);			//Creates a save game button
 		launchGameButton = new NewLaunchGameButtonPanel(parent);		//Creates a launch game button
-		cancelGameButton = new CancelGameOrDeckButton();				//Creates a cancel button
+		cancelGameButton = new CancelButton("Cancel Game", parent);		//TODO implement this
 		
 		JPanel buttonPanel = new JPanel();								//Creates a panel for the buttons
 		buttonPanel.add(saveGameButton);								//Adds the save button to the panel
@@ -486,5 +484,9 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 			revalidate();
 			repaint();
 		}
+	}
+	
+	public String dateToString(){
+		return endDateField.toString();
 	}
 }

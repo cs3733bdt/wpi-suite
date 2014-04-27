@@ -10,12 +10,10 @@ import static org.junit.Assert.assertTrue;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 /**
@@ -24,14 +22,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
  */
 public class GameModelTest {
 
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@Before
-	public void setUp() throws Exception {
-		ViewEventController viewCon = ViewEventController.getInstance();
-	}
 
+	@SuppressWarnings("static-access")
 	@Test
 	public void testAddGame() {
 		GameModel model = GameModel.getInstance();
@@ -90,6 +82,7 @@ public class GameModelTest {
 		assertEquals(0, model.getSize());
 	}
 	
+	@SuppressWarnings("static-access")
 	@Test
 	public void testUpdateGameListWithAllFields(){
 		GameModel model = GameModel.getInstance();
@@ -121,10 +114,7 @@ public class GameModelTest {
 		
 		//FINISHED CONSTRUCTING DATA PRIOR TO PUSHING TO SERVER
 		//IMITATES A INITIAL 'DATA' FROM THE SERVER
-		
-		
-		
-		
+	
 		List<PPRequirement> reqs2 = new ArrayList<PPRequirement>();
 		
 		reqs2.add(new PPRequirement("RequirementChanged", "DescriptionChanged"));
