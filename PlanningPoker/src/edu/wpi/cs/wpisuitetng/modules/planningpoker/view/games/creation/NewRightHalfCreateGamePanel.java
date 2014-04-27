@@ -100,15 +100,15 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 
 	private JPanel importReqsPanel = new JPanel();
 
-	private JButton addReqButton = new JButton("Add Requirement");
+	private JButton addReqButton = new JButton("Create Requirement");
 
 	private JButton editReqButton = new JButton("Edit");
 
 	private JButton updateAddReqButton = new JButton("Update");
 
-	private JButton submitAddReqButton = new JButton("Submit");
+	private JButton submitAddReqButton = new JButton("Create");
 
-	private JButton importReqButton = new JButton("Import");
+	private JButton importReqButton = new JButton("Import Requirements");
 
 	private JButton removeReqButton = new JButton("Remove");
 
@@ -294,7 +294,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		/**
 		 * Creates a new button to import the requirements to the game
 		 */
-		submitImportReqButton = new JButton("Submit");
+		submitImportReqButton = new JButton("Import");
 		submitImportReqButton.setEnabled(false);
 		submitImportReqButton.addActionListener(new ActionListener() {
 			@Override
@@ -341,7 +341,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		 */
 		JButton testButton = new JButton("tttttttttttttttttt"); // Don't change text, it determines button width...
 		Dimension buttonD = testButton.getPreferredSize();
-		importReqButton.setPreferredSize(buttonD);
 		editReqButton.setPreferredSize(buttonD);
 		removeReqButton.setPreferredSize(buttonD);
 
@@ -529,6 +528,8 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 				updateAddReqButton.setEnabled(false);
 				updateReqsLabel.setVisible(false);
 				createReqsLabel.setVisible(true);
+				nameArea.requestFocus();
+				nameArea.select(0, 0);
 				displayError("Name is required");
 				disableButtons();
 			}
@@ -548,6 +549,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 				addReqButton.setEnabled(false);
 				importReqButton.setEnabled(false);
 				removeReqButton.setEnabled(false);
+				submitImportReqButton.setEnabled(false);
 				disableButtons();
 			}
 		});
@@ -710,7 +712,6 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	}
 
 	private void submitImportButtonPressed() {
-
 		int[] rows = importTable.getSelectedRows();
 		for (int i = 0; i < rows.length; i++) {
 			String selectedName = (String) importTable.getValueAt(rows[i], 0);
@@ -961,6 +962,14 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		String updateDesc = descArea.getText();
 		String currentDesc = (String) currentTable.getValueAt(globalRow, 1);
 		return (!(currentName.equals(updateName)))|| (!(currentDesc.equals(updateDesc)));
+	}
+	
+	public boolean isNameAreaEmpty() {
+		return nameArea.getText().equals("");
+	}
+	
+	public boolean isDescAreaEmpty() {
+		return descArea.getText().equals("");
 	}
 
 }

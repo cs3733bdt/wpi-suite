@@ -90,9 +90,11 @@ public class ViewEventController {
 		 */
 		NewCreateGamePanel newGame = new NewCreateGamePanel();
 		getTabbedView().addTab("New Game", null, newGame, "New Game");
+		getTabbedView().setSelectedComponent(newGame);
+		newGame.getLeftHalf().getBoxName().requestFocus();
+		newGame.getLeftHalf().getBoxName().select(0,0);
 		getTabbedView().invalidate(); //force the tabbed pane to redraw.
 		getTabbedView().repaint();
-		getTabbedView().setSelectedComponent(newGame);
 	}
 	
 	/**
@@ -102,9 +104,11 @@ public class ViewEventController {
 	public void createDeck() {
 		CreateDeckPanel newDeck = new CreateDeckPanel();
 		getTabbedView().addTab("New Deck", null, newDeck, "New Deck");
+		getTabbedView().setSelectedComponent(newDeck);
+		newDeck.getBoxName().requestFocus();
+		newDeck.getBoxName().select(0,0);
 		getTabbedView().invalidate(); //force the tabbed pane to redraw.
 		getTabbedView().repaint();
-		getTabbedView().setSelectedComponent(newDeck);
 	}
 	
 	public void editPreferences() {

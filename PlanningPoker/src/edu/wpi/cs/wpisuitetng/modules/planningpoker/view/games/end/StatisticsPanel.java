@@ -67,10 +67,11 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	private double stDev;
 	private double median;
 	private int numVotes;
+	int currFinalEstimate;
 	
-	private ActiveStatisticsTable statTable;	
+	private EndGameTable statTable;	
 	
-	private ActiveVotesTable voteTable;
+	private EndGameTable voteTable;
 //	
 //	private JLabel minLabel = new JLabel("Minimum Estimate: 0");
 //	private JLabel maxLabel = new JLabel("Maximum Estimate: 0");
@@ -98,8 +99,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		
 		Object[] row = makeStatRow(activeRequirement);
 		
-		statTable = initializeStatTable();
-		voteTable = initializeVoteTable();
+		statTable = new EndGameTable(EndGameTableMode.STATISTIC);
+		voteTable = new EndGameTable(EndGameTableMode.VOTE);
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(activeRequirement);
 		
@@ -120,9 +121,9 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		
 		validateSubmitButton();
 		finalEstimateDisplay = new JLabel();
-		int currFinalEstimate = activeRequirement.getFinalEstimate();
+		currFinalEstimate = activeRequirement.getFinalEstimate();
 		if (currFinalEstimate == -1) {
-			finalEstimateDisplay.setText("Your Current Final Estimate is: --");
+			finalEstimateDisplay.setText("Your Current Final Estimate is: " + mean);
 		}
 		else {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: " + currFinalEstimate);
@@ -270,24 +271,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	}
 
 	/**
-	 * Instantiates the active stats table
-	 * @return the table containing the statistics
-	 */
-	private ActiveStatisticsTable initializeStatTable() {
-		String[] columnNames2 = {"Mean", "Standard Deviation", "Median", "Max", "Min","Num Votes" };
-		Object[][] data2 = {};
-		return new ActiveStatisticsTable(data2, columnNames2);
-	}
-	
-	private ActiveVotesTable initializeVoteTable() {
-		String[] columnNames2 = {"User Name", "Estimate"};
-		Object[][] data2 = {};
-		return new ActiveVotesTable(data2, columnNames2);
-	}
-	
-	
-	
-	/**
 	 * @param requirement
 	 * @return an arrayList of the vote numbers from the passed requirement
 	 */
@@ -415,7 +398,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		ArrayList<String> nameArray = requirementToNames(requirement);
 		ArrayList<Integer> voteArray = requirementToVotes(requirement);
 				for (int i = 0; i < nameArray.size(); i++) {
-					System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@Name:" + nameArray.get(i) + "Vote:" + voteArray.get(i));
 					voteTable.getTableModel().addRow(new Object[]{nameArray.get(i),voteArray.get(i)});
 				}
 	}
@@ -432,6 +414,14 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		Object[] row = makeStatRow(req);
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(req);
+		
+		if (currFinalEstimate == -1) {
+			finalEstimateDisplay.setText("Your Current Final Estimate is: " + mean);
+		}
+		else {
+			finalEstimateDisplay.setText("Your Current Final Estimate is: " + currFinalEstimate);
+		}
+		
 		finalEstimateMessage.setText("");
 		finalEstimateBox.setText("");
 		}
@@ -462,7 +452,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	}
 
 	private void validateSubmitButton() {
-		String text = finalEstimateBox.getText();
 		if (verifyFinalEstimateField()) {
 			finalEstimateButton.setEnabled(true);
 		}

@@ -119,7 +119,12 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					nameTextField.setText(activeRequirement.getName());
 					descriptionTextField.setText(activeRequirement
 							.getDescription());
-					//estText.setText("Estimate Here");
+					
+					estText.setText("");
+					estText.setBorder(new JTextField().getBorder());
+					errorField.setText("");
+					estText.requestFocus();
+					estText.select(0, 0);
 
 					previousEst.setText("Your saved estimate is: "
 							+ activeRequirement.userVote());
@@ -137,6 +142,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				}
 			}
 		});
+		
+		table.setRowSelectionInterval(0, 0); //start table at beginning
 
 		JScrollPane tablePanel = new JScrollPane(table);
 		tablePanel
@@ -216,7 +223,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		cardsPanel = new ActiveCardsPanel(deck, this);
 		
 		// adds the button to clear all entered estimates
-		clearButton = new JButton("Clear");
+		clearButton = new JButton("Clear Vote");
 		clearButton.setToolTipText("Clear all Estimates");
 		
 		rightView.add(clearButton);
@@ -255,7 +262,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					rightView);
 			
 			layout.putConstraint(SpringLayout.NORTH, clearButton, 5, SpringLayout.SOUTH, cardScrollPanel);
-			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, clearButton, 0, SpringLayout.HORIZONTAL_CENTER, rightView);
+			layout.putConstraint(SpringLayout.WEST, clearButton, 115, SpringLayout.WEST, rightView);
 			
 
 			cardScrollPanel.setVisible(false);
@@ -308,7 +315,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		submitButton = new JButton();
 		submitButton.setSize(10, 5);
-		submitButton.setText("SUBMIT");
+		submitButton.setText("Submit Vote");
 		submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -518,6 +525,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			if (validateField(true)) {
 				submitButton();
 				System.out.println("Submit Vote Pressed Passed.");
+				estText.requestFocus();
+				estText.select(estText.getText().length(), estText.getText().length());
 			} else {
 				System.out.println("Submit Vote Pressed Failed.");
 			}
@@ -577,6 +586,9 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	 * add vote and display success message when the button is pressed
 	 */
 	public void submitButton() {
+		//gets the the currently selected table index
+		getNextRow();
+		
 		String currentUser = ConfigManager.getConfig().getUserName(); // Gets
 																		// the
 																		// currently
@@ -676,5 +688,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	public RequirementTable getReqTable(){
 		return table;
 	}
-
+	
+	public void getNextRow() {
+		table.setRowSelectionInterval(0, 0);
+	}
 }

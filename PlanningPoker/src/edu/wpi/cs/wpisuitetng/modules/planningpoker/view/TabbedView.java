@@ -31,6 +31,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.DeckOverview;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.GameOverview;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CreateDeckPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
@@ -280,22 +281,36 @@ public class TabbedView extends JTabbedPane {
 		if (comp instanceof ICreateGamePanel){
 			if(!((ICreateGamePanel) comp).readyToRemove()) return;
 			listOfCreateGamePanels.remove(comp);
+			if (comp.equals(getSelectedComponent())) {
+				setSelectedComponent(gameOverview);
+			}
 		}
 		if (comp instanceof IActiveGamePanel) {
 			if(!((IActiveGamePanel) comp).readyToRemove()) return;
 			listOfActiveGamePanels.remove(comp);
+			if (comp.equals(getSelectedComponent())) {
+				setSelectedComponent(gameOverview);
+			}
 		}
 		if (comp instanceof IEndedGamePanel){
 			if(!((IEndedGamePanel)comp).readyToRemove()) return;
 			listOfEndedGamePanels.remove(comp);
+			if (comp.equals(getSelectedComponent())) {
+				setSelectedComponent(gameOverview);
+			}
 		}
 		if (comp instanceof PreferencesPanel){
 			//TODO Implement preferences like other panels to use readyToRemove
 			//if(!((IEndedGamePanel)comp).readyToRemove()) return;
-			hasPreferencesTab = false;	
+			hasPreferencesTab = false;
+			setSelectedComponent(gameOverview);
+		}
+		if (comp instanceof CreateDeckPanel){
+			if (comp.equals(getSelectedComponent())) {
+				setSelectedComponent(gameOverview);
+			}
 		}
 		remove(comp);
-		setSelectedComponent(gameOverview);
 	}
 	
 	/**
