@@ -36,13 +36,13 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.ActiveCardsPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 public class NewRightHalfActiveGamePanel extends JScrollPane {
@@ -488,8 +488,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	 */
 	public int getMaxSum() {
 		int sum = 0;
-		for (int i = 0; i < deck.size(); i++) {
-			sum += Integer.parseInt(deck.get(i));
+		for (int i = 0; i < deck.getSize()-1; i++) {
+			sum += Integer.parseInt(deck.getCards().get(i).getText());
 		}
 		return sum;
 	}
