@@ -95,23 +95,11 @@ public class GetPPRequirementController implements ActionListener {
 	 */
 	public void receivedRequirements(PPRequirement[] requirements) {
 		PPRequirementModel rModel = PPRequirementModel.getInstance();
-		fromDB = new ArrayList<PPRequirement>(Arrays.asList(requirements));
+		PPRequirmentHolder.getInstance().setRequirments( new ArrayList<PPRequirement>(Arrays.asList(requirements)) );
 		// Make sure requirements exist in the Requirement Manager
 		if (requirements != null) {
-			for (PPRequirement r: requirements) {
-				// Only add requirements to the model if they
-				// don't already exist there
-				if (!rModel.contains(r.getId()))
-					rModel.addRequirement(r);
-			}
+			rModel.addRequirements(requirements);
 		}
-	}
-	
-	public List<PPRequirement> getAllReqsOnServer() throws DBModelNotInstantiatedException{
-		if(fromDB != null){
-			return fromDB;
-		}
-		throw new DBModelNotInstantiatedException();
 	}
 	
 }
