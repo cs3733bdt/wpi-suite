@@ -37,8 +37,6 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  *
  */
 public class GameTest {
-
-	Game game1;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -47,7 +45,6 @@ public class GameTest {
 				new NetworkConfiguration("http://wpisuitetng"));
 		GameModel.getInstance().emptyModel();
 		
-		game1 = new Game("Game 1", "First", new ArrayList<PPRequirement>(), true, false);
 	}
 
 	@SuppressWarnings("static-access")
@@ -186,13 +183,16 @@ public class GameTest {
 	
 	@Test
 	public void testHasEnded() {
+		
+		Game game1 = new Game("Game 1", "First", new ArrayList<PPRequirement>(), true, false);
+		
 		Calendar testCal = Calendar.getInstance();
 		game1.setEndDate(testCal.getTime());
 		assertFalse(game1.hasEnded());
 		try{
 			TimeUnit.SECONDS.sleep(1);
 		} catch(InterruptedException e){
-			//things and stuff
+			//Handle exception
 		}
 		assertTrue(game1.hasEnded());
 		
