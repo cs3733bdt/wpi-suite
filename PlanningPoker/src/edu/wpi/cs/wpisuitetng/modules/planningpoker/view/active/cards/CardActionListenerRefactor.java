@@ -68,10 +68,8 @@ public class CardActionListenerRefactor implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
-			Image frontImg = ImageIO.read(getClass().getResource(
-					"card_front.png"));
-			Image backImg = ImageIO.read(getClass()
-					.getResource("card_back.png"));
+			Image frontImg = card.getFrontImage();
+			Image backImg = card.getBackImage();
 			// if the button is the I don't know button
 			if (index == (size - 1)) {
 				if (button.isSelected()) { // if the IDK button is toggled on
