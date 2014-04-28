@@ -719,7 +719,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			makeChanged();
 			delayChange();
 			makeComplete();
-			active = false;
+			setActive(false);
 			return true;
 			}
 		else {
