@@ -24,7 +24,7 @@ import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
-public class NewAddRequirementsPanel extends JPanel {
+public class AddRequirementsPanel extends JPanel {
 	
 	//THIS IS THE REQUIREMENT NAME FIELD THAT WILL BE NEEDED FOR CONTROLLER
 	private JTextField nameArea = new JTextField();
@@ -42,7 +42,7 @@ public class NewAddRequirementsPanel extends JPanel {
 	
 	//private ActiveGamesTable table2;
 	
-	public NewAddRequirementsPanel(/*final NewRightHalfCreateGamePanelOLD rightView*/) {
+	public AddRequirementsPanel(/*final NewRightHalfCreateGamePanelOLD rightView*/) {
 		
 		/*
 		 * Planned Changes:

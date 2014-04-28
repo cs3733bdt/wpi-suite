@@ -30,10 +30,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.DeckOverview;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.GameOverview;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CreateDeckPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.IEndedGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation.PreferencesPanel;
@@ -168,7 +168,7 @@ public class TabbedView extends JTabbedPane {
 		}
 		
 		//Game not found in the active game list
-		NewActiveGamePanel viewGame = new NewActiveGamePanel(game);
+		ActiveGamePanel viewGame = new ActiveGamePanel(game);
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 		
 		addTab(getTabName(game), viewGame);
@@ -186,7 +186,7 @@ public class TabbedView extends JTabbedPane {
 	 * @param game The game to be added
 	 */
 	public void editGame(Game game) {
-		NewCreateGamePanel newGame = new NewCreateGamePanel(game);
+		CreateGamePanel newGame = new CreateGamePanel(game);
 		
 		//FIND THE CURRENT EDIT GAME PANEL
 		for(ICreateGamePanel gameSearch : listOfCreateGamePanels){
@@ -307,7 +307,7 @@ public class TabbedView extends JTabbedPane {
 		}
 		if (comp instanceof CreateDeckPanel){
 			if (comp.equals(getSelectedComponent())) {
-				setSelectedComponent(gameOverview);
+				setSelectedComponent(deckOverview);
 			}
 		}
 		remove(comp);

@@ -22,7 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
@@ -43,10 +43,10 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	// pressed
 
 	private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
-	private NewRightHalfActiveGamePanel panel;
+	private RightHalfActiveGamePanel panel;
 
 	public ActiveCardsPanel(Deck passedDeck,
-			NewRightHalfActiveGamePanel passedPanel) {
+			RightHalfActiveGamePanel passedPanel) {
 		panel = passedPanel;
 		deck = passedDeck;
 

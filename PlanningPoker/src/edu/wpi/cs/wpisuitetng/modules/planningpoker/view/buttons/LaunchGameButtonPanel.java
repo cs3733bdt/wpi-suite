@@ -18,7 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 
 /**
  * 
@@ -26,9 +26,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreat
  *
  */
 
-public class NewLaunchGameButtonPanel extends JPanel{
+public class LaunchGameButtonPanel extends JPanel{
 	
-	private final NewCreateGamePanel parentPanel;
+	private final CreateGamePanel parentPanel;
 	
 	private JButton launchGameButton = new JButton("Start Game");	
 	
@@ -36,7 +36,7 @@ public class NewLaunchGameButtonPanel extends JPanel{
 	 * Creates the Launch GameButton and attaches it's respective action listener
 	 * @param panel the parent panel to call launch from
 	 */
-	public NewLaunchGameButtonPanel(NewCreateGamePanel panel){
+	public LaunchGameButtonPanel(CreateGamePanel panel){
 		SpringLayout layout = new SpringLayout(); 
 		setLayout(layout);
 		

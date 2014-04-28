@@ -23,7 +23,7 @@ import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;
 
 /**
  * creates all of the buttons to be used for the estimation
@@ -51,7 +51,7 @@ public class CardButton extends JToggleButton implements Accessible {
 
 	public CardButton(int cardNum, Deck passedDeck,
 			ActiveCardsPanel passedCardsPanel,
-			NewRightHalfActiveGamePanel panel2) {
+			RightHalfActiveGamePanel panel2) {
 		deck = passedDeck;
 		panel = passedCardsPanel;
 
