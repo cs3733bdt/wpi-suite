@@ -99,11 +99,16 @@ public class FacebookNotification {
 			// Send facebook notifications
 			for (int i = 0; i < users.length; i++) {
 				// Make sure users have a username stored
-				if (users[i].getFacebookUsername() != null && users[i].getNotificationPreferences().contains("F"))
-					sendFacebookNotification(connection, users[i]);
+				if(users[i].getNotificationPreferences().contains("F")){
+					if (users[i].getFacebookUsername() != null)
+						sendFacebookNotification(connection, users[i]);
+					else{
+						System.err.println(users[i].getName() 
+								+ " doesn't have a facebook Username Stored.");
+					}
+				}
 				else
-					System.err.println(users[i].getName() 
-							+ " doesn't have a facebook Username Stored.");
+					System.err.println(users[i].getName() + " doesn't want to receive facebook notifications");
 			}
 		} else {
 			System.err.println("There are no users on the team of Project: "
@@ -167,7 +172,7 @@ public class FacebookNotification {
 	 * @return String representing message to be sent on game creation.
 	 */
 	private String generateCreateGameMessage(){
-		return "Voting is Required for game: " + g.getName() +
+		return "Voting is required for game: " + g.getName() +
 		"\nGame Ending : " + g.getEndDate().toString();
 	}
 	
@@ -177,7 +182,7 @@ public class FacebookNotification {
 	 * @return String representing message to be sent on game end.
 	 */
 	private String generateEndGameMessage(){
-		return "Game: " + g.getName() + "has ended. Refer to the"
+		return "Game: " + g.getName() + " has ended. \nRefer to the"
 				+ " email for game statistics.\n" +
 				"Bobby Drop Tables\nWPI Suite";
 	}
