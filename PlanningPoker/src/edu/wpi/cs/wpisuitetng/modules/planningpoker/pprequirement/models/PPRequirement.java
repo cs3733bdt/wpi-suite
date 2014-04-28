@@ -291,7 +291,11 @@ public class PPRequirement extends ObservableModel {
 			return "*";
 		}
 		else{
-			return Integer.toString(votes.size());
+			if(getProject() != null && getProject().getTeam() != null){
+				return Integer.toString(votes.size())+"/"+getProject().getTeam().length;
+			} else{
+				return "0";
+			}
 		}
 	}
 	
@@ -485,7 +489,7 @@ public class PPRequirement extends ObservableModel {
 	
 	/**
 	 * 
-	 * @return the number of vote if the user already voted, otherwise return 0;
+	 * @return the value of vote if the user already voted, otherwise return 0;
 	 */
 	public int userVote() {
 		String currentUser = ConfigManager.getConfig().getUserName();

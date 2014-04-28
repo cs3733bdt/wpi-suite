@@ -11,6 +11,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards;
 
+import java.awt.Dimension;
 import java.awt.Image;
 import java.io.IOException;
 import java.util.List;
@@ -20,8 +21,10 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
+import javax.swing.border.EmptyBorder;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Card;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;
 
 /**
  * creates all of the buttons to be used for the estimation
@@ -31,8 +34,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActi
  */
 public class CardButton extends JToggleButton implements Accessible {
 	JToggleButton button;
-	List<String> deck;
-	ActiveCardsPanel panel;
+	String cardText;
+	Card card;
+	ActiveCardsPanel parent;
 
 	/**
 	 * creates the buttons based on the deck
@@ -46,38 +50,40 @@ public class CardButton extends JToggleButton implements Accessible {
 	 * @param passedEstimatePanel
 	 *            the panel that displays the estimates
 	 */
-
-	public CardButton(int cardNum, List<String> passedDeck,
-			ActiveCardsPanel passedCardsPanel,
-			NewRightHalfActiveGamePanel panel2) {
-		deck = passedDeck;
-		panel = passedCardsPanel;
-		deck = passedDeck;
-		panel = passedCardsPanel;
-
+	public CardButton(Card card, ActiveCardsPanel passedCardsPanel) {
+		parent = passedCardsPanel;
+		this.card = card;
 		// Initialize the Button and the number on the button
-		String buttonNum;
+		String buttonNum = card.getText();
+		cardText = card.getText();
 
-		buttonNum = deck.get(cardNum);
 		// button = new JToggleButton(buttonNum);
 		try {
-			Image frontImg = ImageIO.read(getClass().getResource(
-					"card_front.png"));
+			Image frontImg = card.getFrontImage();
 			setIcon(new ImageIcon(frontImg));
+			setBorder(new EmptyBorder(0,0,0,0));
+//			setContentAreaFilled(false);
 		} catch (IOException ex) {
 			ex.printStackTrace();
 		}
 		// Set the Button's tooltiptext and position it correctly
-		setText(deck.get(cardNum));
-		setToolTipText("Add " + buttonNum + " to the total");
+		
+		try{
+			Integer.getInteger(card.getText());
+			setToolTipText("Add " + buttonNum + " to the total");
+		} catch (NumberFormatException e){
+			setToolTipText("I don't know what to estimate");
+		}
+		
+		setText(card.getText());
 
 		setHorizontalTextPosition(SwingConstants.CENTER);
 		setVerticalAlignment(SwingConstants.CENTER);
 
 		// Add the action listener to the button
-		addActionListener(new CardActionListenerRefactor(cardNum, deck, this,
-				passedCardsPanel, panel2));
-		panel.add(this);
+		addActionListener(new CardActionListenerRefactor(card, this,
+				passedCardsPanel));
+		parent.add(this);
 	}
 
 	/**

@@ -22,7 +22,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Card;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
@@ -35,27 +38,27 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 public class ActiveCardsPanel extends JPanel implements IDataField {
 
 	private int sum = 0;
-	private final List<String> deck;
+	private final Deck deck;
 	private final List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
-	JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
+	private JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
+	private List<Integer> memoryArray = new ArrayList<Integer>();
 
 	// initialized array to remember what buttons were pressed if "0?" button is
 	// pressed
 
-	private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
-	private NewRightHalfActiveGamePanel panel;
+	private RightHalfActiveGamePanel parent;
 
-	public ActiveCardsPanel(ArrayList<String> passedDeck,
-			NewRightHalfActiveGamePanel passedPanel) {
-		panel = passedPanel;
+	public ActiveCardsPanel(Deck passedDeck,
+			RightHalfActiveGamePanel passedPanel) {
+		parent = passedPanel;
 		deck = passedDeck;
 
-		int cardsPerRow = 11;
+		int cardsPerRow = 10;
 
-		this.setPreferredSize(new Dimension(525, (68 * (Math.round(deck.size()
+		this.setPreferredSize(new Dimension(525, (68 * (Math.round(deck.getSize()
 				/ cardsPerRow)))));
-		for (int i = 0; i < (deck.size()); i++) {
-			JToggleButtonList.add(new CardButton(i, deck, this, panel));
+		for (Card c : deck.getCards()) {
+			JToggleButtonList.add(new CardButton(c, this));
 		}// idk button is part of array
 
 	
@@ -67,14 +70,14 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 
 	public void clearCards() throws IOException {
 		Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
-		for (int i = 0; i < (deck.size() - 1); i++) {
+		for (int i = 0; i < (deck.getSize() - 1); i++) {
 			if (JToggleButtonList.get(i).isSelected()) {
 				JToggleButtonList.get(i).doClick();
 				JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
 			}
 		}
-		if (JToggleButtonList.get(deck.size() - 1).isSelected()) {
-			JToggleButtonList.get(deck.size() - 1).doClick();
+		if (JToggleButtonList.get(deck.getSize() - 1).isSelected()) {
+			JToggleButtonList.get(deck.getSize() - 1).doClick();
 		}
 	}
 
@@ -86,10 +89,15 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public void addToCardSum(int cardValue) {
 		sum += cardValue;
-		counterLabel.setText("Your current estimate total: " + sum);
 		System.out.println(sum);
 	}
-
+	
+	public void addIDK() {
+		sum = 0;
+		parent.selectedIDK();
+		System.out.println("I don't know is selected.");
+	}
+	
 	/**
 	 * Decrease total sum by amount entered
 	 * 
@@ -98,7 +106,6 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public void decToCardSum(int cardValue) {
 		sum -= cardValue;
-		counterLabel.setText("Your current estimate total: " + sum);
 		System.out.println(sum);
 	}
 
@@ -110,8 +117,8 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public int getMaxSum() {
 		int sum = 0;
-		for (int i = 0; i < deck.size(); i++) {
-			sum += Integer.parseInt(deck.get(i));
+		for (int i = 0; i < deck.getSize(); i++) {
+			sum += Integer.parseInt(deck.getCards().get(i).getText());
 		}
 		return sum;
 	}
@@ -188,6 +195,10 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	public boolean hasChanges() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	public RightHalfActiveGamePanel getParentPanel(){
+		return parent;
 	}
 
 }

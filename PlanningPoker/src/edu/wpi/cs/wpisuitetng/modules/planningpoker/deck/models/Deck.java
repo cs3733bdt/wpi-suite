@@ -10,6 +10,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,6 +20,8 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CardImage;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorEnum;
 
 /**
  * Holds all of the information for a deck.
@@ -32,7 +35,9 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	private String description;
 	private String owner;
 	private List<Integer> cards;
-	//private Color cardColor;
+	private boolean hasIdontKnow = true;
+	private boolean isDefault = false;
+	private ColorEnum color;
 	
 	/**
 	 * Constructor for a Deck
@@ -41,20 +46,61 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	 * @param owner the user who created this deck
 	 * @param cards the numbers on this deck
 	 */
-	public Deck(String name, String description, List<Integer> cards){
+	public Deck(String name, String description, List<Integer> cards, boolean hasIdontKnow, ColorEnum color){
 		identity = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
-		owner = ConfigManager.getInstance().getConfig().getUserName();
+		owner = ConfigManager.getConfig().getUserName();
 		this.cards = cards;
+		this.color = color;
+		this.hasIdontKnow = hasIdontKnow;
 	}
 	
-	private Deck(String name, String description, List<Integer> cards, UUID identity){
+	private Deck(String name, String description, List<Integer> cards, UUID identity, boolean hasIdontKnow, ColorEnum color){
 		this.identity = identity;
 		this.name = name;
 		this.description = description;
-		owner = ConfigManager.getInstance().getConfig().getUserName();
+		owner = ConfigManager.getConfig().getUserName();
 		this.cards = cards;
+		this.color = color;
+		this.hasIdontKnow = hasIdontKnow;
+	}
+	
+	public Deck(){
+		identity = UUID.randomUUID();
+		this.name = "Default";
+		this.description = "Default Deck";
+		this.owner = "admin";
+		this.hasIdontKnow = true;
+		color = ColorEnum.BLUE;
+		cards = new ArrayList<Integer>();
+		buildDefaultDeck(7);
+	}
+	
+	
+	/**
+	 * @param numCards number of Cards to be added. 0 returns an error. 
+	 */
+	private void buildDefaultDeck(int numCards) {
+		int numLoops;
+		if (numCards == 0) {
+			//errorBit = true; //this should throw an exception
+			return;
+		}
+		else { 
+			numLoops = numCards - 1;
+		}
+		int firstnum = 0;
+		int secondnum = 1;
+		int currnum;
+		cards.add(secondnum);
+		
+		for (int i = 0; i < numLoops; i++) {
+			currnum = firstnum + secondnum;
+			cards.add(currnum);
+			firstnum = secondnum;
+			secondnum = currnum;
+		}
 	}
 	
 	/**
@@ -136,7 +182,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	}
 	
 	public static Deck makeDeckSameID(String name, String description, List<Integer> cards, Deck identifyingDeck){
-		return new Deck(name, description, cards, identifyingDeck.identity);	
+		return new Deck(name, description, cards, identifyingDeck.identity, true, identifyingDeck.color);	
 	}
 
 	@Override
@@ -163,8 +209,23 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		
 	}
 
-	public List<Integer> getCards() {
-		return cards;
+	public List<Card> getCards() {
+		List<Card> returnedCards = new ArrayList<Card>();
+		for(Integer i: cards){
+			returnedCards.add(new Card(Integer.toString(i), this));
+		}
+		if(hasIdontKnow){
+			returnedCards.add(new Card("?", this));
+		}
+		return returnedCards;
+	}
+	
+	public int getSize(){
+		return cards.size();
+	}
+
+	public ColorEnum getColor() {
+		return color;
 	}
 
 }

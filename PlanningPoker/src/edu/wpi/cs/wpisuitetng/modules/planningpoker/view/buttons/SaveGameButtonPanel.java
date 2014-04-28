@@ -18,7 +18,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 
 /**
  * 
@@ -26,12 +26,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreat
  *
  */
 
-public class NewSaveGameButtonPanel extends JPanel{
+public class SaveGameButtonPanel extends JPanel{
 	
 	private JButton saveGameButton = new JButton("Save Game");
-	NewCreateGamePanel parent;
+	CreateGamePanel parent;
 	
-	public NewSaveGameButtonPanel(NewCreateGamePanel panel){
+	public SaveGameButtonPanel(CreateGamePanel panel){
 		parent = panel;
 		
 		SpringLayout layout = new SpringLayout(); 
