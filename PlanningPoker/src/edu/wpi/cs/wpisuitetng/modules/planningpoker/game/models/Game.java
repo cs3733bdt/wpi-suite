@@ -21,6 +21,9 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
+
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
@@ -35,6 +38,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotificatio
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.PPRequirmentHolder;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.UpdatePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
 
 /**
@@ -716,6 +720,14 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		gameEnd.setTime(getEndDate());
 		
 		if(isActive() && rightNow.after(gameEnd)) {
+			if(ViewEventController.getInstance().getTabbedView().hasActiveGameOpen(this)) {
+				JOptionPane.showMessageDialog(
+					ViewEventController.getInstance().getTabbedView().getActiveGamePanel(this),
+					"Current game has expired and will now close.");
+				ViewEventController.getInstance().getTabbedView().removeTab(
+							(JComponent) ViewEventController.getInstance().getTabbedView().getActiveGamePanel(
+							this));
+			}
 			makeChanged();
 			delayChange();
 			makeComplete();

@@ -99,7 +99,6 @@ public class GetGameController implements ActionListener {
 	public synchronized void receivedGames(Game[] games) {
 		System.out.println("The size of the list returned from the server is: " + games.length);
 		for(Game game : games) {
-			game.hasEnded();
 			System.out.println("\t" + game.getName() + " " + game.getIdentity());
 		}
 	    // Make sure the response was not null
