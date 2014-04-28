@@ -95,7 +95,7 @@ public class DeckModelTest {
 		assertEquals(deckList.length, model.getSize());
 		assertEquals("New Deck Name", model.getElementAt(0).getName());
 		assertEquals("New Deck Description", model.getElementAt(0).getDescription());
-		assertEquals(4, model.getElementAt(0).getCards().size());
+		assertEquals(5, model.getElementAt(0).getCards().size());
 		
 	}
 	
