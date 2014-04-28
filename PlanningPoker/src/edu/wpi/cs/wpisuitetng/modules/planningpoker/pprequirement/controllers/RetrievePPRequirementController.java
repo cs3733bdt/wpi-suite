@@ -91,12 +91,7 @@ public class RetrievePPRequirementController implements ActionListener {
 		PPRequirementModel rModel = PPRequirementModel.getInstance();
 		// Make sure requirements exist in the Requirement Manager
 		if (requirements != null) {
-			for (PPRequirement r: requirements) {
-				// Only add requirements to the model if they
-				// don't already exist there
-				if (!rModel.contains(r.getId()))
-					rModel.addRequirement(r);
-			}
+			rModel.addRequirements(requirements);
 		}
 	}
 }

@@ -20,6 +20,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorEnum;
 
 public class DeckModelTest {
 
@@ -32,7 +33,7 @@ public class DeckModelTest {
 		DeckModel model = DeckModel.getInstance();
 		Integer[] cards = {1, 2, 3, 4};
 		List<Integer> deckNumbers = new ArrayList<Integer>(Arrays.asList(cards));
-		Deck object = new Deck("Test Deck", "Test Description", deckNumbers);
+		Deck object = new Deck("Test Deck", "Test Description", deckNumbers, true, ColorEnum.BLUE);
 		model.emptyModel();
 		assertEquals(0, model.getSize());
 		model.addDeck(object);
@@ -41,7 +42,7 @@ public class DeckModelTest {
 		Deck objectReturned = model.getElementAt(0);
 		assertEquals("Test Deck", objectReturned.getName());
 		assertEquals("Test Description", objectReturned.getDescription());
-		assertEquals(ConfigManager.getInstance().getConfig().getUserName(), objectReturned.getOwner());	
+		assertEquals(ConfigManager.getConfig().getUserName(), objectReturned.getOwner());	
 		
 		model.emptyModel();
 		assertEquals(0, model.getSize());
@@ -54,7 +55,7 @@ public class DeckModelTest {
 		assertEquals(0, model.getSize());
 		Deck[] deckList = new Deck[3];
 		for(int i = 0; i < deckList.length; i++){	//Create a new deck for each index in the array
-			deckList[i] = new Deck("Deck"+Integer.toString(i), "Description " + Integer.toString(i), new ArrayList<Integer>());
+			deckList[i] = new Deck("Deck"+Integer.toString(i), "Description " + Integer.toString(i), new ArrayList<Integer>(), true, ColorEnum.BLUE);
 		}
 		
 		model.addDecks(deckList);//Add this set of decks to the model
@@ -75,7 +76,7 @@ public class DeckModelTest {
 		assertEquals(0, model.getSize());
 		Deck[] deckList = new Deck[3];
 		for(int i = 0; i < 3; i++){	//Create a new deck for each index in the array
-			deckList[i] = new Deck("Deck"+Integer.toString(i), "Description " + Integer.toString(i), new ArrayList<Integer>());
+			deckList[i] = new Deck("Deck"+Integer.toString(i), "Description " + Integer.toString(i), new ArrayList<Integer>(), true, ColorEnum.BLUE);
 		}
 		
 		model.addDecks(deckList);//Add this set of decks to the model

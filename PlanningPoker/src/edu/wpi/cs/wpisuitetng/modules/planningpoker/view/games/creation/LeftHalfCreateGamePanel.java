@@ -40,8 +40,10 @@ import javax.swing.border.Border;
 import org.jdesktop.swingx.JXDatePicker;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewLaunchGameButtonPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.NewSaveGameButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.LaunchGameButtonPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
@@ -52,21 +54,29 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * The Left Half panel for the NewCreateGamePanel
  * Used to input the Games name, description, end date, whether it uses cards
  */
-public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataField{
+public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		
+	private Container leftView;
+	private SpringLayout layout;
+	private CreateGamePanel parent;
+	
 	private NameJTextField nameTextField;
 	private DescriptionJTextArea descriptionTextField;
+	
+	private JPanel estimateSelectionPanel;
 	
 	private JRadioButton cardsButton = new JRadioButton("Estimate With Cards");
 	private JRadioButton textEntryButton = new JRadioButton("Estimate With Text Entry");
 	
-	private NewAddEndDatePanel endDateField;
+	private AddEndDatePanel endDateField;
 	
-	private NewSaveGameButtonPanel saveGameButton;
-	private NewLaunchGameButtonPanel launchGameButton;
-	//TODO: IMPLEMENT A CANCELGAMEBUTTONPANEL CLASS
-	//private NewCancelGameButton cancelGameButton;
-	private JButton cancelGameButton = new JButton("Cancel Game");
+	private JPanel deckDropDownPanel;
+	
+	private JComboBox<String> deckDropDown;	
+	
+	private SaveGameButtonPanel saveGameButton;
+	private LaunchGameButtonPanel launchGameButton;
+	private CancelButton cancelGameButton;
 	
 	/** Shows the names of the errors */
 	private ErrorLabel errorField;
@@ -79,13 +89,12 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	    
 	private final Border defaultDateBorder = (new JXDatePicker()).getBorder();	
 	
-	private NewCreateGamePanel parent;
 	
 	/**
 	 * Builds the left half of the CreateGamePanel
 	 * @param mainPanel the main panel this half is located on
 	 */
-	public NewLeftHalfCreateGamePanel(NewCreateGamePanel mainPanel) {
+	public LeftHalfCreateGamePanel(CreateGamePanel mainPanel) {
 		parent = mainPanel;
 		game = mainPanel.getGame();
 		build();
@@ -93,10 +102,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		
 		nameTextField.requestFocus();
 		if(game != null){
-			nameTextField.select(game.getName().length(), game.getName().length());;
-		}
-		else{
-			nameTextField.select(0,0);
+			nameTextField.select(game.getName().length(), game.getName().length());
 		}
 	}
 	
@@ -107,8 +113,8 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	private void build(){
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
-		Container leftView = new Container(); 				//Creates the container for everything in the view
-		SpringLayout layout = new SpringLayout(); 			//Creates the layout to be used: Spring Layout
+		leftView = new Container(); 				//Creates the container for everything in the view
+		layout = new SpringLayout(); 			//Creates the layout to be used: Spring Layout
 		leftView.setLayout(layout);							//Sets the container to have the spring layout
 		
 		/**
@@ -129,7 +135,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		JScrollPane descPane = new JScrollPane(descriptionTextField);	//Creates the scrollPane for the description field
 		descPane.setPreferredSize(new Dimension(200, 200));				//Sets the preferred(which works as minimum for some reason) size of the description scroll pane
 		
-		JPanel estimateSelectionPanel = new JPanel();					//Creates the panel for the estimate radio buttons
+		estimateSelectionPanel = new JPanel();					//Creates the panel for the estimate radio buttons
 		estimateSelectionPanel.add(cardsButton);						//Adds the card option radio button to the panel
 		estimateSelectionPanel.add(textEntryButton);					//Adds the text option radio button to the panel
 		
@@ -139,26 +145,58 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		radioGroup.add(cardsButton);									//Adds the card option radio button to the group
 		radioGroup.add(textEntryButton);								//Adds the text option radio button to the group
 		
-		endDateField = new NewAddEndDatePanel(this);					//Creates an end date panel
+		cardsButton.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	setDeckOptionsVisibility();
+		    }
+		});
+		textEntryButton.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	setDeckOptionsVisibility();
+		    }
+		});
+		
+		endDateField = new AddEndDatePanel(this);					//Creates an end date panel
 		
 		addKeyListenerTo(endDateField.getDatePicker());
 		addActionListenerTo(endDateField.getDatePicker());			//Adds ActionListener to update when a selection is made
 		addActionListenerTo(endDateField.getHourSelection());			//Adds ActionListener to update when a selection is made
 		addActionListenerTo(endDateField.getMinuteSelection());		//Adds ActionListener to update when a selection is made
 		addActionListenerTo(endDateField.getAmPmSelection());			//Adds ActionListener to update when a selection is made
-
 		
+		deckDropDownPanel = new JPanel();
+		JLabel deckDropDownLabel = new JLabel("Deck");
 		
+		deckDropDown = new JComboBox<String>();
+		deckDropDown.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		        chooseDeck();
+		    }
+		});
+		/*
+		 * TODO:Actually add the decks available to the user into the dropdown
+		 * Will look something like this:
+		 * for(each deck in ArrayOfDecksBelongingToUser){
+		 * 		deckDropDown.addItem(deck.getName());
+		 * }
+		 */
+		deckDropDown.addItem("Deck 1");
+		deckDropDown.addItem("Deck 2");
+		deckDropDown.addItem("Deck 3");
+		deckDropDown.addItem("Deck 4");
+		deckDropDown.addItem("Deck 5");
 		
-		saveGameButton = new NewSaveGameButtonPanel(parent);				//Creates a save game button
-		launchGameButton = new NewLaunchGameButtonPanel(parent);		//Creates a launch game button
-		//cancelGameButton = new NewCancelGameButtonPanel(this);		//TODO implement this
+		deckDropDownPanel.add(deckDropDownLabel);
+		deckDropDownPanel.add(deckDropDown);
+		
+		saveGameButton = new SaveGameButtonPanel(parent);			//Creates a save game button
+		launchGameButton = new LaunchGameButtonPanel(parent);		//Creates a launch game button
+		cancelGameButton = new CancelButton("Cancel Game", parent);		//TODO implement this
 		
 		JPanel buttonPanel = new JPanel();								//Creates a panel for the buttons
 		buttonPanel.add(saveGameButton);								//Adds the save button to the panel
 		buttonPanel.add(launchGameButton);								//Adds the launch button to the panel
-		//buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel		
-		
+		buttonPanel.add(cancelGameButton);								//Adds the cancel button to the panel		
 		
 		addMouseListenerTo(buttonPanel);							//Adds MouseListener to validate on mouse click
 		addMouseListenerTo(saveGameButton.getSaveGameButton());		//Adds MouseListener to validate on mouse click
@@ -177,6 +215,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		leftView.add(descPane);							//Adds description field to the container
 		leftView.add(estimateSelectionPanel);			//Adds the panel with the radio buttons to the container
 		leftView.add(endDateField);						//Adds the end date field to the container
+		leftView.add(deckDropDownPanel);				//Adds the panel with the drop down menu of decks and label to the container
 		leftView.add(buttonPanel);						//Adds the panel with the buttons to the container
 		leftView.add(errorField);						//Adds the error field to the container
 		
@@ -201,10 +240,14 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		layout.putConstraint(SpringLayout.WEST, estimateSelectionPanel, 5, SpringLayout.WEST, leftView);		//Makes sure the left side of the panel stretches with the left side of the container
 		layout.putConstraint(SpringLayout.EAST, estimateSelectionPanel, 5, SpringLayout.EAST, leftView);		//Makes sure the right side of the panel stretches with the right side of the container
         
-		layout.putConstraint(SpringLayout.NORTH, endDateField, 10, SpringLayout.SOUTH, estimateSelectionPanel);	//Adds the end date field underneath the radio buttons panel
+		layout.putConstraint(SpringLayout.NORTH, deckDropDownPanel, 0, SpringLayout.SOUTH, estimateSelectionPanel);		//Adds the deck dropdown and label panel underneath the end date field
+		layout.putConstraint(SpringLayout.WEST, deckDropDownPanel, 5, SpringLayout.WEST, leftView);				//Makes sure the left side of the panel stretches with the left side of the container
+		layout.putConstraint(SpringLayout.EAST, deckDropDownPanel, -5, SpringLayout.EAST, leftView);			//Makes sure the right side of the panel stretches with the right side of the container
+		
+		layout.putConstraint(SpringLayout.NORTH, endDateField, 10, SpringLayout.SOUTH, deckDropDownPanel);		//Adds the end date field underneath the radio buttons panel
 		layout.putConstraint(SpringLayout.WEST, endDateField, 5, SpringLayout.WEST, leftView);					//Makes sure the left side of the panel stretches with the left side of the container
 		layout.putConstraint(SpringLayout.EAST, endDateField, -5, SpringLayout.EAST, leftView);					//Makes sure the right side of the panel stretches with the right side of the container
-        
+		
 		layout.putConstraint(SpringLayout.SOUTH, buttonPanel, -20, SpringLayout.SOUTH, leftView);				//Adds the button panel to the bottom of the container
 		layout.putConstraint(SpringLayout.WEST, buttonPanel, 5, SpringLayout.WEST, leftView);					//Makes sure the left side of the panel stretches with the left side of the container
 		layout.putConstraint(SpringLayout.EAST, buttonPanel, 5, SpringLayout.EAST, leftView);					//Makes sure the right side of the panel stretches with the right side of the container
@@ -213,7 +256,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorField, 5, SpringLayout.HORIZONTAL_CENTER, leftView);
 		
 		setMinimumSize(new Dimension(333, 115));			//Sets the minimum size of the left half view
-		leftView.setPreferredSize(new Dimension(410, 420));		//Sets the size of the view
+		leftView.setPreferredSize(new Dimension(410, 450));		//Sets the size of the view
 		
 		revalidate();
 		repaint();
@@ -254,7 +297,7 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	 * Gets the end date field for this panel
 	 * @return the current end date field
 	 */
-	public NewAddEndDatePanel getEndDateField(){
+	public AddEndDatePanel getEndDateField(){
 		return endDateField;
 	}
 	
@@ -301,11 +344,11 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 	
 	
 	
-	public NewSaveGameButtonPanel getSaveGameButtonPanel() {
+	public SaveGameButtonPanel getSaveGameButtonPanel() {
 		return saveGameButton;
 	}
 
-	public NewLaunchGameButtonPanel getLaunchGameButtonPanel() {
+	public LaunchGameButtonPanel getLaunchGameButtonPanel() {
 		return launchGameButton;
 	}
 
@@ -419,4 +462,30 @@ public class NewLeftHalfCreateGamePanel extends JScrollPane implements IDataFiel
 		});
 	}
 	
+	public void chooseDeck(){
+		String selectedDeckName = (String)deckDropDown.getSelectedItem();
+		System.out.print("Deck Selected = " + selectedDeckName + "\n");
+		//TODO: Actually then use the selected Deck...
+	}
+	
+	private void setDeckOptionsVisibility(){
+		if(cardsButton.isSelected()){
+			leftView.setPreferredSize(new Dimension(410, 455));
+			deckDropDownPanel.setVisible(true);
+			layout.putConstraint(SpringLayout.NORTH, endDateField, 10, SpringLayout.SOUTH, deckDropDownPanel);
+			revalidate();
+			repaint();
+		}
+		else {
+			leftView.setPreferredSize(new Dimension(410, 420));
+			deckDropDownPanel.setVisible(false);
+			layout.putConstraint(SpringLayout.NORTH, endDateField, 10, SpringLayout.SOUTH, estimateSelectionPanel);
+			revalidate();
+			repaint();
+		}
+	}
+	
+	public String dateToString(){
+		return endDateField.toString();
+	}
 }

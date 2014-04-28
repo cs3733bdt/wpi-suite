@@ -12,6 +12,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models;
 
 import java.util.List;
+import java.util.UUID;
 
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.database.Data;
@@ -72,14 +73,21 @@ public class PPRequirementEntityManager implements EntityManager<PPRequirement> 
 	 */
 	@Override
 	public PPRequirement[] getEntity(Session s, String id) throws NotFoundException {
-		final int intId = Integer.parseInt(id);
-		if(intId < 1) {
+		final UUID intId;
+		try{
+			intId = UUID.fromString(id);
+		} catch (IllegalArgumentException e){
 			throw new NotFoundException();
 		}
+		
+		if (id.equals("")) {
+			throw new NotFoundException();
+		}
+		
 		PPRequirement[] requirements = null;
 		try {
 			requirements = db.retrieve(PPRequirement.class, 
-					"id", intId, s.getProject()).toArray(new PPRequirement[0]);
+					"identity", intId, s.getProject()).toArray(new PPRequirement[0]);
 		} catch (WPISuiteException e) {
 			e.printStackTrace();
 		}
@@ -181,9 +189,13 @@ public class PPRequirementEntityManager implements EntityManager<PPRequirement> 
 		 * then save the original Requirement again.
 		 */
 		List<Model> oldRequirements = db.retrieve(PPRequirement.class, 
-				"id", updatedRequirement.getId(), session.getProject());
+				"identity", updatedRequirement.getIdentity(), session.getProject());
 		if(oldRequirements.size() < 1 || oldRequirements.get(0) == null) {
 			throw new BadRequestException("Requirement with ID does not exist.");
+		} else if (oldRequirements.size() > 1){
+			System.err.println("There are multiple requirements with this id on the server");
+		} else{
+			System.out.println("Update should be sucsessful");
 		}
 				
 		PPRequirement existingRequirement = (PPRequirement)oldRequirements.get(0);		

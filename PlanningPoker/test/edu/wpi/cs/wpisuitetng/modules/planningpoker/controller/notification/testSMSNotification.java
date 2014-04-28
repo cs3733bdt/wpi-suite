@@ -11,7 +11,6 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
-import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
@@ -42,7 +41,7 @@ public class testSMSNotification {
 		u1.setPhoneNumber("1234567890");
 		team1 = new User[3];
 		team1[0] = u1;
-
+		
 		support1 = new String[3];
 		support1[0] = "defecttracker";
 		support1[1] = "postboard";

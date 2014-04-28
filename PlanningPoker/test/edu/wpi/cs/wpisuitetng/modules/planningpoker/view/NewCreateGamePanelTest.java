@@ -21,7 +21,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 
 /**
  * Tests for NewCreateGamePanel
@@ -30,13 +30,13 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreat
  */
 public class NewCreateGamePanelTest {
 
-	NewCreateGamePanel createGameTab;
+	CreateGamePanel createGameTab;
 	Game activeGame;
 	private ArrayList<PPRequirement> reqs;
 	private GameTree gameTree;
 	private ViewEventController vec;
 	private ErrorLabel errorText;
-	NewCreateGamePanel createGameErrorTab;
+	CreateGamePanel createGameErrorTab;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -53,7 +53,7 @@ public class NewCreateGamePanelTest {
 		
 		
 		//createGameTab = new NewCreateGamePanel(null);
-		createGameTab = new NewCreateGamePanel(activeGame);
+		createGameTab = new CreateGamePanel(activeGame);
 		
 		
 	}
@@ -67,7 +67,7 @@ public class NewCreateGamePanelTest {
 	
 	@Test
 	public void CreateGameServerConnectionLostTest() {
-		createGameTab = new NewCreateGamePanel(null, true);
+		createGameTab = new CreateGamePanel(activeGame, true);
 		
 	}
 }

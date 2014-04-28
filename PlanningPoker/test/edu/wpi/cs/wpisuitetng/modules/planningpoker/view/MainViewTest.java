@@ -19,9 +19,9 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
 
 
@@ -38,8 +38,8 @@ public class MainViewTest {
 	private ToolbarView toolbar;
 	private GameTree gameTree;
 	private TabbedView tabs;
-	private NewActiveGamePanel activeGameTab;
-	private NewCreateGamePanel createGameTab;
+	private ActiveGamePanel activeGameTab;
+	private CreateGamePanel createGameTab;
 	private EndGamePanel endGameTab;
 	private Game activeGame;
 	private ArrayList<PPRequirement> reqs;
@@ -56,9 +56,9 @@ public class MainViewTest {
 		toolbar = new ToolbarView(true);
 		tabs = new TabbedView();
 		gameTree = GameTree.getInstance();
-		createGameTab = new NewCreateGamePanel(activeGame);
+		createGameTab = new CreateGamePanel(activeGame);
 		endGameTab = new EndGamePanel(activeGame);
-		activeGameTab = new NewActiveGamePanel(activeGame);
+		activeGameTab = new ActiveGamePanel(activeGame);
 		
 		
 		vec.setGameOverviewTree(gameTree);
@@ -70,33 +70,34 @@ public class MainViewTest {
 	
 	@Test
 	public void numberOfTabs() {
-		assertEquals(1, tabs.getTabCount());
+		int starting = 2;
+		assertEquals(starting, tabs.getTabCount());
 		
 		tabs.addTab(activeGame.getName(),createGameTab);
-		assertEquals(2, tabs.getTabCount());
+		assertEquals(starting+ 1, tabs.getTabCount());
 		
 		tabs.addTab("EndGame 1", endGameTab);
-		assertEquals(3, tabs.getTabCount());
+		assertEquals(starting + 2, tabs.getTabCount());
 		
 		vec.createGame();
-		assertEquals(4, tabs.getTabCount());
+		assertEquals(starting + 3, tabs.getTabCount());
 		vec.createDeck();
-		assertEquals(5, tabs.getTabCount());
+		assertEquals(starting + 4, tabs.getTabCount());
 		
 		vec.removeTab(endGameTab);
-		assertEquals(4, tabs.getTabCount());
+		assertEquals(starting + 3, tabs.getTabCount());
 		
 		vec.closeOthers();
-		assertEquals(1, tabs.getTabCount());
+		assertEquals(starting, tabs.getTabCount());
 		
 		tabs.addTab("EndGame 1", endGameTab);
-		assertEquals(2, tabs.getTabCount());
+		assertEquals(starting + 1, tabs.getTabCount());
 		
 		vec.closeAllTabs();
-		assertEquals(1, tabs.getTabCount());
+		assertEquals(starting, tabs.getTabCount());
 		
 		tabs.addTab(activeGame.getName(),activeGameTab);
-		assertEquals(2, tabs.getTabCount());
+		assertEquals(starting + 1, tabs.getTabCount());
 		
 	}
 	

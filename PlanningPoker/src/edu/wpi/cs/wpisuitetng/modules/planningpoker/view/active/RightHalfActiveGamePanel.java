@@ -36,6 +36,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
@@ -44,7 +45,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.ActiveCard
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.CardButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
-public class NewRightHalfActiveGamePanel extends JScrollPane {
+public class RightHalfActiveGamePanel extends JScrollPane {
 	private Game currentGame;
 	private PPRequirement activeRequirement;
 	private JTextArea nameTextField;
@@ -54,7 +55,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
-	private ArrayList<String> deck = new ArrayList<String>();
+	private Deck deck;
 	private List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	private ActiveCardsPanel cardsPanel;
 	private int sum;
@@ -72,10 +73,12 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	private RequirementTable table;
 	private Font largeFont;
 	private JButton clearButton;
+	private ActiveGamePanel parentPanel;
 
-	NewRightHalfActiveGamePanel(final Game game) {
+	RightHalfActiveGamePanel(final Game game, final ActiveGamePanel activeGamePanel) {
 		currentGame = game;
 		build();
+		parentPanel = activeGamePanel;
 	}
 
 	public void build() {
@@ -198,32 +201,32 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		boolean useDefaultDeck;
 		// if (customDeck.size() == 0) {
 		// generate fibonachi sequence
-		int firstnum = 0;
-		int secondnum = 1;
-		int currnum;
-		deck.add(Integer.toString(secondnum));
+//		int firstnum = 0;
+//		int secondnum = 1;
+//		int currnum;
+		deck = new Deck();
 		// Default value is 6.
-		int Fibcount = 6; // if this is 6, the highest number generated will be
-							// 13
-		for (int i = 0; i < Fibcount; i++) {
-			currnum = firstnum + secondnum;
-			deck.add("" + currnum + "");
-			firstnum = secondnum;
-			secondnum = currnum;
-		}
+//		int Fibcount = 6; // if this is 6, the highest number generated will be
+//							// 13
+//		for (int i = 0; i < Fibcount; i++) {
+//			currnum = firstnum + secondnum;
+//			deck.add("" + currnum + "");
+//			firstnum = secondnum;
+//			secondnum = currnum;
+//		}
 		useDefaultDeck = true;
 		/*
 		 * } This branch will be run if a custom deck is to be used else { deck
 		 * = customDeck; useDefaultDeck = false; }
 		 */
-		if (useDefaultDeck) {
-			deck.add("?");
-		}
+//		if (useDefaultDeck) {
+////			deck.add("?");
+//		}
 
 		cardsPanel = new ActiveCardsPanel(deck, this);
 		
 		// adds the button to clear all entered estimates
-		clearButton = new JButton("Clear");
+		clearButton = new JButton("Clear Vote");
 		clearButton.setToolTipText("Clear all Estimates");
 		
 		rightView.add(clearButton);
@@ -246,7 +249,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 		if (getGame().doesUseCards()) {
 			cardScrollPanel = new JScrollPane(cardsPanel);
 			// cardPanel.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-			cardScrollPanel.setPreferredSize(new Dimension(100, 100));
+			cardScrollPanel.setPreferredSize(new Dimension(400, 120));
 			rightView.add(cardScrollPanel);
 			layout.putConstraint(SpringLayout.WEST, cardScrollPanel, 5,
 					SpringLayout.WEST, rightView);
@@ -254,15 +257,13 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 					SpringLayout.EAST, rightView);
 			layout.putConstraint(SpringLayout.NORTH, cardScrollPanel, 20,
 					SpringLayout.SOUTH, descriptionPanel);
-			layout.putConstraint(SpringLayout.NORTH, counterLabel, 5,
-					SpringLayout.SOUTH, cardScrollPanel);
-			cardScrollPanel.getHorizontalScrollBar().setValue(200);
+			cardScrollPanel.getHorizontalScrollBar().setValue((cardScrollPanel.getHorizontalScrollBar().getMaximum())/2);
 			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER,
 					cardScrollPanel, 0, SpringLayout.HORIZONTAL_CENTER,
 					rightView);
 			
 			layout.putConstraint(SpringLayout.NORTH, clearButton, 5, SpringLayout.SOUTH, cardScrollPanel);
-			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, clearButton, 0, SpringLayout.HORIZONTAL_CENTER, rightView);
+			layout.putConstraint(SpringLayout.WEST, clearButton, 115, SpringLayout.WEST, rightView);
 			
 
 			cardScrollPanel.setVisible(false);
@@ -315,7 +316,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 
 		submitButton = new JButton();
 		submitButton.setSize(10, 5);
-		submitButton.setText("SUBMIT");
+		submitButton.setText("Submit Vote");
 		submitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -414,7 +415,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				SpringLayout.EAST, rightView);
 		layout.putConstraint(SpringLayout.NORTH, counterLabel, 5,
 				SpringLayout.SOUTH, previousEst);
-		
+
 		layout.putConstraint(SpringLayout.WEST, submitButton, 5,
 				SpringLayout.WEST, rightView);
 
@@ -486,8 +487,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	 */
 	public int getMaxSum() {
 		int sum = 0;
-		for (int i = 0; i < deck.size(); i++) {
-			sum += Integer.parseInt(deck.get(i));
+		for (int i = 0; i < deck.getSize()-1; i++) {
+			sum += Integer.parseInt(deck.getCards().get(i).getText());
 		}
 		return sum;
 	}
@@ -530,6 +531,10 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 			} else {
 				System.out.println("Submit Vote Pressed Failed.");
 			}
+		}
+		
+		if (allUsersVoted()){
+			parentPanel.endGame();
 		}
 	}
 
@@ -587,7 +592,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	 */
 	public void submitButton() {
 		//gets the the currently selected table index
-		getNextRow();
+		//getNextRow();
 		
 		String currentUser = ConfigManager.getConfig().getUserName(); // Gets
 																		// the
@@ -615,6 +620,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				+ activeRequirement.userVote());
 		table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(),
 				2);
+		table.setValueAt(activeRequirement.displayComplete(), table.getSelectedRow(),
+				3);
 	}
 
 	/**
@@ -691,5 +698,14 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	
 	public void getNextRow() {
 		table.setRowSelectionInterval(0, 0);
+	}
+	
+	private boolean allUsersVoted(){
+		for (PPRequirement p:currentGame.getRequirements()){
+			if (p.getVoteCount() != currentGame.getUsers()){
+				return false;
+			}	
+		}
+		return true;
 	}
 }
