@@ -24,7 +24,8 @@ import javax.swing.JPanel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Card;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
@@ -39,16 +40,16 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	private int sum = 0;
 	private final Deck deck;
 	private final List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
-	JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
+	private JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
+	private List<Integer> memoryArray = new ArrayList<Integer>();
 
 	// initialized array to remember what buttons were pressed if "0?" button is
 	// pressed
 
-	private ArrayList<Integer> memoryArray = new ArrayList<Integer>();
-	private NewRightHalfActiveGamePanel parent;
+	private RightHalfActiveGamePanel parent;
 
 	public ActiveCardsPanel(Deck passedDeck,
-			NewRightHalfActiveGamePanel passedPanel) {
+			RightHalfActiveGamePanel passedPanel) {
 		parent = passedPanel;
 		deck = passedDeck;
 
@@ -192,7 +193,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 		return false;
 	}
 	
-	public NewRightHalfActiveGamePanel getParentPanel(){
+	public RightHalfActiveGamePanel getParentPanel(){
 		return parent;
 	}
 

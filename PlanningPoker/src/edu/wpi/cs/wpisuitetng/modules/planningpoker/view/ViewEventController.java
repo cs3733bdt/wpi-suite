@@ -16,7 +16,7 @@ import javax.swing.JComponent;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CreateDeckPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.NewCreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 
 /**
  * @author jonathanleitschuh
@@ -88,7 +88,7 @@ public class ViewEventController {
 		 * AND ADD FOLLOWING LINE (NewCreateGamePanel newGame = new NewCreateGamePanel();)
 		 * WHEN READY TO SEE NEW CREATEGAMEPANEL IN JANEWAY. THEN DO FUN CONTROLLER CHANGES!
 		 */
-		NewCreateGamePanel newGame = new NewCreateGamePanel();
+		CreateGamePanel newGame = new CreateGamePanel();
 		getTabbedView().addTab("New Game", null, newGame, "New Game");
 		getTabbedView().setSelectedComponent(newGame);
 		newGame.getLeftHalf().getBoxName().requestFocus();
@@ -144,7 +144,7 @@ public class ViewEventController {
 	 * @param game
 	 */
 	public void updateGame(Game game, boolean serverError){
-		NewCreateGamePanel aGame = new NewCreateGamePanel(game, serverError);
+		CreateGamePanel aGame = new CreateGamePanel(game, serverError);
 		getTabbedView().addTab("New Game", null, aGame, "New Game");
 		getTabbedView().invalidate();
 		getTabbedView().repaint();

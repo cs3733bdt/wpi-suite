@@ -39,7 +39,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelGameOrDeckButton;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
@@ -67,7 +67,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	
 	private final JPanel cardsPanel = new JPanel();
 	
-	private CancelGameOrDeckButton cancelDeckButton;
+	private CancelButton cancelDeckButton;
 	
 	private JButton saveButton;
 	
@@ -217,7 +217,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		saveButton.setEnabled(false);
 		
 		/*cancel button */
-		cancelDeckButton = new CancelGameOrDeckButton();
+		cancelDeckButton = new CancelButton("Cancel Game", this);
 		
 		errorField = new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));

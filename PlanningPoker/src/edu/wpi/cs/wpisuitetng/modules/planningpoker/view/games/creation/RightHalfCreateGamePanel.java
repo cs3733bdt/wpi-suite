@@ -55,12 +55,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * The Right Half panel for the NewCreateGamePanel Used to import and add
  * requirements to the game
  */
-public class NewRightHalfCreateGamePanel extends JScrollPane implements
+public class RightHalfCreateGamePanel extends JScrollPane implements
 		IDataField {
-	private NewAddRequirementsPanel reqPanel; // initialize new add requirements
+	private AddRequirementsPanel reqPanel; // initialize new add requirements
 												// panel
-	private NewAddReqImportReqPanel importPanel; // initialize the panel with the buttons Add Requirement" and "Import Requirements"
-	private NewCreateGamePanel parent; // initialize variable to hold panel above this panel
+	private AddReqImportReqPanel importPanel; // initialize the panel with the buttons Add Requirement" and "Import Requirements"
+	private CreateGamePanel parent; // initialize variable to hold panel above this panel
 
 	private List<PPRequirement> requirements = new ArrayList<PPRequirement>();
 
@@ -119,7 +119,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	 * 
 	 * @param createGamePanel
 	 */
-	public NewRightHalfCreateGamePanel(NewCreateGamePanel createGamePanel) {
+	public RightHalfCreateGamePanel(CreateGamePanel createGamePanel) {
 		parent = createGamePanel;
 		build();
 		buildFields();
