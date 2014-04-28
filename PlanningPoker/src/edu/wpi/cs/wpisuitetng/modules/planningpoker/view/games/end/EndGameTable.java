@@ -60,13 +60,14 @@ public class EndGameTable extends JTable
 			
 			break;
 		case STATISTIC:
-			columnNames = new String[6];
+			columnNames = new String[7];
 			columnNames[0] = "Mean";
 			columnNames[1] = "Standard Deviation";
 			columnNames[2] = "Median";
 			columnNames[3] = "Max";
 			columnNames[4] = "Min";
 			columnNames[5] = "Num Votes";
+			columnNames[6] = "Number of IDKs";
 			
 			setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			setTableModel(new DefaultTableModel(data, columnNames));
