@@ -66,6 +66,23 @@ public class AddEndDatePanel extends JPanel implements IDataField {
 		add(minuteSelection);
 		add(AmPmSelection);
 		dateMaker = new GregorianCalendar();
+		
+		//Setting fields of date selection GUI elements to about 24 hours from creation
+		dateMaker.set(Calendar.DAY_OF_YEAR, dateMaker.get(Calendar.DAY_OF_YEAR)+1);
+		datePicker.setDate(dateMaker.getTime());
+		int currentHour = dateMaker.get(Calendar.HOUR);
+		if (currentHour == 0) {
+			hourSelection.setSelectedIndex(11);
+		} else {
+			hourSelection.setSelectedIndex(currentHour-1);
+		}
+		int currentMinute = dateMaker.get(Calendar.MINUTE);
+		minuteSelection.setSelectedIndex(currentMinute/5);
+		if(dateMaker.get(Calendar.AM_PM) == Calendar.AM) {
+			AmPmSelection.setSelectedIndex(0);
+		} else {
+			AmPmSelection.setSelectedIndex(1);
+		}
 	}
 
 	/**
