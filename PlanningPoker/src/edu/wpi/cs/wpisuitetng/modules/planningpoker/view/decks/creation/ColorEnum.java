@@ -9,5 +9,5 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation;
 
 public enum ColorEnum {
-    RED, BLUE, GREEN, PURPLE, YELLOW 
+    RED, BLUE, GREEN, PURPLE, YELLOW, FRONT
 }
