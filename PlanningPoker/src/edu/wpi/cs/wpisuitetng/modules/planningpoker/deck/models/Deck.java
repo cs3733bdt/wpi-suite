@@ -70,9 +70,10 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		identity = UUID.randomUUID();
 		this.name = "Default";
 		this.description = "Default Deck";
-		this.owner = ConfigManager.getConfig().getUserName();
+		this.owner = "admin";
 		this.hasIdontKnow = true;
 		color = ColorEnum.BLUE;
+		cards = new ArrayList<Integer>();
 		buildDefaultDeck(7);
 	}
 	
