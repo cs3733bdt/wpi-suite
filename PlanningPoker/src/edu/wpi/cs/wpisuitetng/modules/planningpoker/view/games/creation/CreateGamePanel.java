@@ -32,10 +32,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
 /**
  * Used to create a new Planning Poker game using the input of the user.
  */
-public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
-	private NewLeftHalfCreateGamePanel leftHalf = new NewLeftHalfCreateGamePanel(
+public class CreateGamePanel extends JSplitPane implements ICreateGamePanel {
+	private LeftHalfCreateGamePanel leftHalf = new LeftHalfCreateGamePanel(
 			this);
-	private NewRightHalfCreateGamePanel rightHalf = new NewRightHalfCreateGamePanel(
+	private RightHalfCreateGamePanel rightHalf = new RightHalfCreateGamePanel(
 			this);
 
 	private boolean readyToClose = false;
@@ -58,10 +58,10 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 * @param game
 	 *            the game that we are editing
 	 */
-	public NewCreateGamePanel(Game game) {
+	public CreateGamePanel(Game game) {
 		currentGame = game;
-		leftHalf = new NewLeftHalfCreateGamePanel(this);
-		rightHalf = new NewRightHalfCreateGamePanel(this);
+		leftHalf = new LeftHalfCreateGamePanel(this);
+		rightHalf = new RightHalfCreateGamePanel(this);
 
 		setLeftComponent(leftHalf);
 		setRightComponent(rightHalf);
@@ -103,7 +103,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 * Creates a NewCreateGamePanel This is equivalent to calling
 	 * NewCreateGamePanel(null)
 	 */
-	public NewCreateGamePanel() {
+	public CreateGamePanel() {
 		this(null);
 		currentGame = null;
 
@@ -117,7 +117,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 * @param withError
 	 *            sees if there is an error or not
 	 */
-	public NewCreateGamePanel(Game game, boolean withError) {
+	public CreateGamePanel(Game game, boolean withError) {
 		this(game);
 		if (withError) {
 			JOptionPane
@@ -135,7 +135,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		// Set up the content pane.
-		frame.add(new NewCreateGamePanel(new Game()));
+		frame.add(new CreateGamePanel(new Game()));
 		frame.setMinimumSize(new Dimension(300, 300));
 
 		// Display the window.
@@ -185,7 +185,9 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		return ((savedName.equals(getBoxName().getText()))
 				&& (savedDescription.equals(getBoxDescription().getText()))
 				&& (useCards == (leftHalf.doesUseCards()))
-				&& (savedEndDate.equals(leftHalf.dateToString())) && (sameReqLists()));
+				&& (savedEndDate.equals(leftHalf.dateToString())) && (sameReqLists())
+				&& (rightHalf.isDescAreaEmpty())
+				&& (rightHalf.isNameAreaEmpty()));
 	}
 
 	/**
@@ -351,7 +353,7 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		return leftHalf.getBoxName();
 	}
 
-	private NewAddEndDatePanel getEndDateField() {
+	private AddEndDatePanel getEndDateField() {
 		return leftHalf.getEndDateField();
 	}
 
@@ -359,11 +361,11 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		return leftHalf.doesUseCards();
 	}
 
-	public NewLeftHalfCreateGamePanel getLeftHalf() {
+	public LeftHalfCreateGamePanel getLeftHalf() {
 		return leftHalf;
 	}
 
-	public NewRightHalfCreateGamePanel getRightHalf() {
+	public RightHalfCreateGamePanel getRightHalf() {
 		return rightHalf;
 	}
 
@@ -396,26 +398,3 @@ public class NewCreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		return true;
 	}
 }
-// if (!savedRequirements.contains(p)) {
-// return false;
-// }
-// else if ((!(p.getName().equals //check the name is not the same
-// (savedRequirements.get(savedRequirements.indexOf(p)).getName()))
-// ||(!(p.getDescription().equals //check the description is not the same
-// (savedRequirements.get(savedRequirements.indexOf(p)).getDescription()))))){
-// return false;
-// }
-// }
-// for (PPRequirement q : savedRequirements) {
-// if (!rightHalf.getRequirements().contains(q)) {
-// return false;
-// }
-// else if ((!(q.getName().equals //check the name is not the same
-// (rightHalf.getRequirements().get(rightHalf.getRequirements().indexOf(q)).getName()))
-// ||(!(q.getDescription().equals //check the description is not the same
-// (rightHalf.getRequirements().get(rightHalf.getRequirements().indexOf(q)).getDescription()))))){
-// return false;
-// }
-// }
-// return true;
-// }

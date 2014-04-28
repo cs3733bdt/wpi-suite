@@ -55,39 +55,14 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * The Right Half panel for the NewCreateGamePanel Used to import and add
  * requirements to the game
  */
-public class NewRightHalfCreateGamePanel extends JScrollPane implements
+public class RightHalfCreateGamePanel extends JScrollPane implements
 		IDataField {
-	private NewAddRequirementsPanel reqPanel; // initialize new add requirements
+	private AddRequirementsPanel reqPanel; // initialize new add requirements
 												// panel
-	private NewAddReqImportReqPanel importPanel; // initialize the panel with the buttons Add Requirement" and "Import Requirements"
-	private NewCreateGamePanel parent; // initialize variable to hold panel above this panel
+	private AddReqImportReqPanel importPanel; // initialize the panel with the buttons Add Requirement" and "Import Requirements"
+	private CreateGamePanel parent; // initialize variable to hold panel above this panel
 
-	private List<PPRequirement> requirements = new ArrayList<PPRequirement>(){
-//		public boolean equals(Object o){
-//			if(this == o ){
-//				return true;
-//			}
-//			if(o==null){
-//				return false;
-//			}
-//			if(getClass() !=o.getClass()){
-//				return false;
-//			}
-//			@SuppressWarnings("unchecked")
-//			List<PPRequirement> comp = (List<PPRequirement>) o;
-//			for(PPRequirement p:this){
-//				if(!comp.contains(p)){
-//					return false;
-//				}
-//			}
-//			for(PPRequirement p:comp){
-//				if(!this.contains(p)){
-//					return false;
-//				}
-//			}
-//			return true;
-//		}
-};
+	private List<PPRequirement> requirements = new ArrayList<PPRequirement>();
 
 	private final Border defaultTextFieldBorder = (new JTextField())
 			.getBorder();
@@ -144,7 +119,7 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 	 * 
 	 * @param createGamePanel
 	 */
-	public NewRightHalfCreateGamePanel(NewCreateGamePanel createGamePanel) {
+	public RightHalfCreateGamePanel(CreateGamePanel createGamePanel) {
 		parent = createGamePanel;
 		build();
 		buildFields();
@@ -987,6 +962,14 @@ public class NewRightHalfCreateGamePanel extends JScrollPane implements
 		String updateDesc = descArea.getText();
 		String currentDesc = (String) currentTable.getValueAt(globalRow, 1);
 		return (!(currentName.equals(updateName)))|| (!(currentDesc.equals(updateDesc)));
+	}
+	
+	public boolean isNameAreaEmpty() {
+		return nameArea.getText().equals("");
+	}
+	
+	public boolean isDescAreaEmpty() {
+		return descArea.getText().equals("");
 	}
 
 }

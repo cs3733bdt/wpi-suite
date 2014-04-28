@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-import com.db4o.config.annotations.UpdatedDepth;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -30,7 +29,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
  * @author tianchanggu & jmwetzel
  *
  */
-@UpdatedDepth(value=2)
 public class PPRequirement extends ObservableModel {
 	/**
 	 * The ID of the requirement from the Requirement Manager
@@ -55,7 +53,32 @@ public class PPRequirement extends ObservableModel {
 	private boolean fromRequirementModule = false;
 	
 	/** list of votes for this requirement */
-	private List<Vote> votes = new ArrayList<Vote>();
+	private List<Vote> votes = new ArrayList<Vote>(){
+		public boolean equals(Object o){
+			if(this == o){
+				return true;
+			}
+			if(o == null){
+				return false;
+			}
+			if(getClass() != o.getClass()){
+				return false;
+			}
+			@SuppressWarnings("unchecked")
+			ArrayList<Vote> comp = (ArrayList<Vote>)o;
+			for(Vote v : this){
+				if(!comp.contains(v)){
+					return false;
+				}
+			}
+			for(Vote v : comp){
+				if(!this.contains(v)){
+					return false;
+				}
+			}
+			return true;
+		}
+	};
 
 	/** boolean for whether the requirement has been voted on by all users */
 	private boolean complete = false;
@@ -127,7 +150,8 @@ public class PPRequirement extends ObservableModel {
 	 * @param id value to set the id to
 	 */
 	public void setIdPlusOne(int id){
-		delayChange();
+		delayChange("setIdPlusOne");
+		makeChanged();
 		fromRequirementModule = true;
 		// Make Id one more than the id in the 
 		// Requirement Manager
@@ -135,8 +159,9 @@ public class PPRequirement extends ObservableModel {
 	}
 	
 	public void setId(int id){
-		delayChange();
+		delayChange("setId");
 		fromRequirementModule = true;
+		makeChanged();
 		// Make Id one more than the id in the 
 		// Requirement Manager
 		this.id = id;
@@ -147,7 +172,7 @@ public class PPRequirement extends ObservableModel {
 	 * @param identity value to set the identity to
 	 */
 	public void setIdentity(UUID identity){
-		delayChange();
+		delayChange("setUUID");
 		fromRequirementModule = false;
 		this.identity = identity;
 	}
@@ -198,26 +223,32 @@ public class PPRequirement extends ObservableModel {
 	 * @param vote the votes to set          
 	 */
 	public void addVote(Vote vote) {
-		delayChange();	//Holds the code until the server is finished re-populating the model
-		for(int i = 0; i < votes.size(); i++) {
-			if(vote.getUsername().equals(votes.get(i).getUsername())) {	//Has person voted?
-				votes.get(i).setVoteNumber(vote.getVoteNumber());		//Update their vote
-				hasChanged();										//Acknowledge change
-				notifyObservers(votes.get(i));						//Run update in game class
-				return;													//Exit this class
+		delayChange("addVote");	//Holds the code until the server is finished re-populating the model
+		addNoDelay(vote);
+		notifyObservers(vote);
+	}
+	
+	private void addNoDelay(Vote vote){
+		boolean found = false;
+		for(Vote v : votes) {
+			if(vote.getUsername().equals(v.getUsername())) {	//Has person voted?
+				v.setVoteNumber(vote.getVoteNumber());		//Update their vote
+				makeChanged();
+				found = true;												//Exit this class
 			}
 		}
-		votes.add(vote);
+		if(!found){
+			votes.add(vote);
+			makeChanged();
+		}
 		if(getProject() != null){
 			if(votes.size() == getProject().getTeam().length) {
 				makeComplete();
+				makeChanged();
 			}
 		} else {
 			System.err.println("THE PROJECT IN THE REQUIREMENT WAS NULL: ADD VOTE METHOD");
 		}
-		
-		hasChanged();
-		notifyObservers(vote);
 	}
 	
 	/**
@@ -242,13 +273,13 @@ public class PPRequirement extends ObservableModel {
 	public void save() {}
 	
 	/**
-	 * sets the requirement to completed
+	 * Sets the requirement to completed
 	 */
-	public void makeComplete() {
-		delayChange();
+	private void makeComplete() {
+		//DO NOT PUT DELAYCHANGE IN THIS METHOD
+		//IT WILL CAUSE AN INFINITE LOOP!
 		complete = true;
 		makeChanged();
-		notifyObservers();
 	}
 
 	/**
@@ -260,7 +291,11 @@ public class PPRequirement extends ObservableModel {
 			return "*";
 		}
 		else{
-			return Integer.toString(votes.size());
+			if(getProject() != null && getProject().getTeam() != null){
+				return Integer.toString(votes.size())+"/"+getProject().getTeam().length;
+			} else{
+				return "0";
+			}
 		}
 	}
 	
@@ -287,7 +322,7 @@ public class PPRequirement extends ObservableModel {
 	 * 
 	 * @param json JSON-encoded Requirement to deserialize
 	 * @return the Requirement contained in the given JSON */
-	public static PPRequirement fromJSON(String json) {
+	public static PPRequirement fromRequirmentsManagerJSON(String json) {
 		Gson gson;
 		GsonBuilder builder = new GsonBuilder();
 		// Use our custom deserializer
@@ -297,6 +332,11 @@ public class PPRequirement extends ObservableModel {
 		return gson.fromJson(json, PPRequirement.class);
 	}
 	
+	public static PPRequirement fromJSON(String json){
+		final Gson parser = new Gson();
+		return parser.fromJson(json, PPRequirement.class);
+	}
+	
 	/**
 	 * Returns an array of Requirements parsed from the given JSON-encoded
 	 * string.
@@ -304,6 +344,18 @@ public class PPRequirement extends ObservableModel {
 	 * @param json string containing a JSON-encoded array of Requirement
 	 * @return an array of Requirement deserialized from the given JSON string */
 	public static PPRequirement[] fromJsonArray(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, PPRequirement[].class);
+	}
+	
+	
+	/**
+	 * Returns an array of Requirements parsed from the given JSON-encoded
+	 * string.
+	 * 
+	 * @param json string containing a JSON-encoded array of Requirement
+	 * @return an array of Requirement deserialized from the given JSON string */
+	public static PPRequirement[] fromRequirmentsManagerJsonArray(String json) {
 		Gson gson;
 		GsonBuilder builder = new GsonBuilder();
 		// Use our custom deserializer
@@ -312,6 +364,7 @@ public class PPRequirement extends ObservableModel {
 		
 		return gson.fromJson(json, PPRequirement[].class);
 	}
+	
 
 	/**
 	 * Method identify.
@@ -348,8 +401,8 @@ public class PPRequirement extends ObservableModel {
 	 */
 	@Override
 	public String toString() {
-		String n = "\nName: " + name + 
-				"\nDescription: " + description + '\n';
+		String n = "[Name: " + name + 
+				" Description: " + description + " Votes: " + getVoteCount() + "]";
 		return n;
 	}
 	
@@ -399,7 +452,9 @@ public class PPRequirement extends ObservableModel {
 		}
 		
 		if(!votes.equals(toCopyFrom.votes)) {
-			votes = toCopyFrom.votes;
+			for(Vote vote : toCopyFrom.votes){
+				addNoDelay(vote);
+			}
 			wasChanged = true;
 		}
 		
@@ -420,13 +475,21 @@ public class PPRequirement extends ObservableModel {
 	 * hold the code while the game model is updating
 	 * prevent race-time condition for fields setting/overriding
 	 */
-	private void delayChange() {
-		while(GameModel.getInstance().isServerUpdating()) {} // $codepro.audit.disable emptyWhileStatement
+	private void delayChange(String methodCalled) {
+		while(GameModel.getInstance().isServerUpdating()) {
+			try {
+				Thread.sleep(5);
+				System.out.println("Looping in the reqirement: " + methodCalled);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	/**
 	 * 
-	 * @return the number of vote if the user already voted, otherwise return 0;
+	 * @return the value of vote if the user already voted, otherwise return 0;
 	 */
 	public int userVote() {
 		String currentUser = ConfigManager.getConfig().getUserName();

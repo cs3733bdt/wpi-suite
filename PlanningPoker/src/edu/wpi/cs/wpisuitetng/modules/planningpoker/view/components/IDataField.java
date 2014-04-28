@@ -12,9 +12,9 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 
 /**
- * TODO: add documentation
+ * This is meant to be implemented on GUI fields to make sure that data can be validated properly
+ * Please only apply this to GUI fields
  * @author Bobby Drop Tables
- *
  */
 public interface IDataField {
 	

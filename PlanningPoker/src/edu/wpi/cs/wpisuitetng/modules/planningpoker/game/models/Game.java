@@ -19,16 +19,19 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
 
-import com.db4o.config.annotations.UpdatedDepth;
 import com.google.gson.Gson;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.exceptions.DBModelNotInstantiatedException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.PPRequirmentHolder;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.UpdatePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
 /**
@@ -36,7 +39,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequi
  * 
  * @author jonathanleitschuh
  */
-@UpdatedDepth(value=2)
 public class Game extends ObservableModel implements IModelObserver, IStorageModel<Game>{
 	
 	/** This is the best way to keep games unique so 
@@ -66,6 +68,8 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	private boolean notifiedOfCreation;
 	/** True if the users of the game have been notified of game complete */
 	private boolean notifiedOfCompletion;
+	/** Holds the deck for this game */
+	private Deck deck;
 
 	/**
 	 * Copies all of the values from the given Game to this Game.
@@ -143,10 +147,12 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 				}
 			}
 			//END REMOVE REQUIREMENTS
+			
+			List<PPRequirement> fromDB = getRequirementsFromDB(toCopyFrom.requirements);
 
-
-			for(PPRequirement serverReq: toCopyFrom.requirements){//Iterate over the new requirements
-				boolean found = false;							 
+			for(PPRequirement serverReq: fromDB){//Iterate over the new requirements
+				boolean found = false;
+				
 				for(PPRequirement req : requirements){//Iterate over the existing requirements list
 					if(serverReq.identify(req)){	//If this requirement is found
 						found = true;
@@ -186,6 +192,13 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			needsUpdate = true;
 			wasChanged = true;
 		}
+		
+		if(!deck.equals(toCopyFrom.deck)){
+			if(deck.copyFrom(toCopyFrom.deck)){
+				wasChanged = true;
+				needsUpdate = true;
+			}
+		}
 
 		if(identity.equals(toCopyFrom.identity)){
 			needsUpdate = false;
@@ -195,11 +208,29 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		}
 
 		if(needsUpdate){
+			System.err.println("WARNING! THERE WAS A COPY OVER FOR TWO NON MATCHING UUID GAMES!");
 			makeChanged();
 			notifyObservers();
 		}
 
 		return wasChanged;
+	}
+
+	private List<PPRequirement> getRequirementsFromDB(List<PPRequirement> match) {
+		try {
+			List<PPRequirement> newReq = new ArrayList<PPRequirement>();
+			for(PPRequirement req : PPRequirmentHolder.getInstance().getRequirments()){
+				for(PPRequirement reqMatch : match){
+					if(req.identify(reqMatch)){
+						newReq.add(req);
+					}
+				}
+			}
+			return newReq;
+		} catch (DBModelNotInstantiatedException e) {
+			System.out.println("The GetPPRequirmentController was null");
+			return match;
+		}
 	}
 
 	/**
@@ -218,6 +249,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		notifiedOfCreation = false;
 		notifiedOfCompletion = false;
 		identity = UUID.randomUUID();
+		deck = new Deck();
 	}
 
 	/**
@@ -394,7 +426,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 * @param newReqs
 	 */
 	public void setRequirements(List<PPRequirement> newReqs){
-		if(requirements != newReqs){
+		if(!requirements.equals(newReqs)){
 			makeChanged();
 			delayChange();
 			requirements = newReqs;
@@ -529,6 +561,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	@Override
 	public void update(ObservableModel o, Object arg) {
 		if (o instanceof PPRequirement){
+			UpdatePPRequirementController.getInstance().updateRequirement((PPRequirement)o);
 			makeChanged();
 			notifyObservers(arg);
 		}
@@ -607,7 +640,15 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 * prevent race-time condition for fields setting/overriding
 	 */
 	private void delayChange(){
-		while(GameModel.getInstance().isServerUpdating()){} // $codepro.audit.disable emptyWhileStatement
+		while(GameModel.getInstance().isServerUpdating()){
+			try {
+				Thread.sleep(5);
+				System.out.println("Looping in the reqirement");
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
@@ -658,5 +699,9 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		FacebookNotification fbn = new FacebookNotification(this);
 		fbn.sendFacebookNotifications();
 
+	}
+
+	public Deck getDeck() {
+		return deck;
 	}
 }

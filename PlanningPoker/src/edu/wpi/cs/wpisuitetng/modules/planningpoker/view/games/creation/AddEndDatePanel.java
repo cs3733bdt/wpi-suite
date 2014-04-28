@@ -33,7 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
  * 
  * @author BDT
  */
-public class NewAddEndDatePanel extends JPanel implements IDataField {
+public class AddEndDatePanel extends JPanel implements IDataField {
 
 	Calendar dateMaker;
 	Date endDate;
@@ -41,7 +41,7 @@ public class NewAddEndDatePanel extends JPanel implements IDataField {
 	private final JXDatePicker datePicker = new JXDatePicker(new Date());
 	private final String[] hourArray = { "1", "2", "3", "4", "5", "6", "7",
 			"8", "9", "10", "11", "12" };
-	private final String[] minuteArray = { "00", "15", "30", "45" };
+	private final String[] minuteArray = { "00", "05", "10", "15", "20", "25","30", "35","40", "45", "50", "55"};
 	private final String[] AmPmArray = { "AM", "PM" };
 	private final JComboBox<String> hourSelection = new JComboBox<>(hourArray);
 	private final JComboBox<String> minuteSelection = new JComboBox<>(
@@ -59,7 +59,7 @@ public class NewAddEndDatePanel extends JPanel implements IDataField {
 	 * 
 	 * @param view
 	 */
-	public NewAddEndDatePanel(final NewLeftHalfCreateGamePanel view) {
+	public AddEndDatePanel(final LeftHalfCreateGamePanel view) {
 		add(endDateSelection);
 		add(datePicker);
 		add(hourSelection);
@@ -106,13 +106,37 @@ public class NewAddEndDatePanel extends JPanel implements IDataField {
 			minutes = 0;
 			break;
 		case 1:
-			minutes = 15;
+			minutes = 5;
 			break;
 		case 2:
-			minutes = 30;
+			minutes = 10;
 			break;
 		case 3:
+			minutes = 15;
+			break;
+		case 4:
+			minutes = 20;
+			break;
+		case 5:
+			minutes = 25;
+			break;
+		case 6:
+			minutes = 30;
+			break;
+		case 7:
+			minutes = 35;
+			break;
+		case 8:
+			minutes = 40;
+			break;
+		case 9:
 			minutes = 45;
+			break;
+		case 10:
+			minutes = 50;
+			break;
+		case 11:
+			minutes = 55;
 			break;
 		default:
 			minutes = 0;

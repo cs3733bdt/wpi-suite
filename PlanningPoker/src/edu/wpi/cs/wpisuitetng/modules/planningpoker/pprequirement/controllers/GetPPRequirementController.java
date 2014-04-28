@@ -13,9 +13,14 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.exceptions.DBModelNotInstantiatedException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers.GetPPRequirementRequestObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers.RetrievePPRequirementRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
@@ -28,17 +33,18 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author tianchanggu
  *
  */
-public class RetrievePPRequirementController implements ActionListener {
-
-	private RetrievePPRequirementRequestObserver observer;
-	private static RetrievePPRequirementController instance;
+public class GetPPRequirementController implements ActionListener {
+	List<PPRequirement> fromDB = null;
+	
+	private GetPPRequirementRequestObserver observer;
+	private static GetPPRequirementController instance;
 
 	/**
 	 * Constructs the controller given a RequirementModel
 	 */
-	private RetrievePPRequirementController() {
+	private GetPPRequirementController() {
 		
-		observer = new RetrievePPRequirementRequestObserver(this);
+		observer = new GetPPRequirementRequestObserver(this);
 	}
 	
 	/**
@@ -46,11 +52,11 @@ public class RetrievePPRequirementController implements ActionListener {
 	 * @return the instance of the RetrieveRequirementsController or creates one if it does not
 	 * exist.
 	 */
-	public static RetrievePPRequirementController getInstance()
+	public static GetPPRequirementController getInstance()
 	{
 		if(instance == null)
 		{
-			instance = new RetrievePPRequirementController();
+			instance = new GetPPRequirementController();
 		}
 		
 		return instance;
@@ -66,7 +72,7 @@ public class RetrievePPRequirementController implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		// Send a request to the core to save this requirement
 		final Request request = 
-				Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.GET);
+				Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.GET);
 		request.addObserver(observer); 
 		request.send();
 	}
@@ -76,7 +82,7 @@ public class RetrievePPRequirementController implements ActionListener {
 	 */
 	public void retrieveRequirements() {
 		final Request request = 
-				Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.GET);
+				Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.GET);
 		request.addObserver(observer); 
 		request.send();
 	}
@@ -89,9 +95,11 @@ public class RetrievePPRequirementController implements ActionListener {
 	 */
 	public void receivedRequirements(PPRequirement[] requirements) {
 		PPRequirementModel rModel = PPRequirementModel.getInstance();
+		PPRequirmentHolder.getInstance().setRequirments( new ArrayList<PPRequirement>(Arrays.asList(requirements)) );
 		// Make sure requirements exist in the Requirement Manager
 		if (requirements != null) {
 			rModel.addRequirements(requirements);
 		}
 	}
+	
 }
