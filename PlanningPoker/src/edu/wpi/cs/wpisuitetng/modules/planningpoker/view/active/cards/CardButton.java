@@ -59,8 +59,7 @@ public class CardButton extends JToggleButton implements Accessible {
 
 		// button = new JToggleButton(buttonNum);
 		try {
-			Image frontImg = ImageIO.read(getClass().getResource(
-					"card_front.png"));
+			Image frontImg = card.getFrontImage();
 			setIcon(new ImageIcon(frontImg));
 			setBorder(new EmptyBorder(0,0,0,0));
 //			setContentAreaFilled(false);
