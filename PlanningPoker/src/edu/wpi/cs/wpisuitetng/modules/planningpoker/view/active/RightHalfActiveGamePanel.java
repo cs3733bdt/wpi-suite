@@ -485,6 +485,11 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 		sum = cardsPanel.getSum();
 		counterLabel.setText("Your current selected estimate is: " + sum);
 	}
+	
+	public void selectedIDK() {
+		sum = -1;
+		counterLabel.setText("Your current selected estimate is I don't know");
+	}
 
 	/**
 	 * Returns the sum of all the cards
