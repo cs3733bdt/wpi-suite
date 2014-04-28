@@ -77,7 +77,7 @@ public class AddEndDatePanel extends JPanel implements IDataField {
 			hourSelection.setSelectedIndex(currentHour-1);
 		}
 		int currentMinute = dateMaker.get(Calendar.MINUTE);
-		minuteSelection.setSelectedIndex(currentMinute/15);
+		minuteSelection.setSelectedIndex(currentMinute/5);
 		if(dateMaker.get(Calendar.AM_PM) == Calendar.AM) {
 			AmPmSelection.setSelectedIndex(0);
 		} else {
