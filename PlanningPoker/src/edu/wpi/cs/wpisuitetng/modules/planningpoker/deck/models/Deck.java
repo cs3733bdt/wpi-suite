@@ -20,6 +20,8 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CardImage;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorEnum;
 
 /**
  * Holds all of the information for a deck.
@@ -35,7 +37,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	private List<Integer> cards;
 	private boolean hasIdontKnow = true;
 	private boolean isDefault = false;
-	//private Color cardColor;
+	private ColorEnum color;
 	
 	/**
 	 * Constructor for a Deck
@@ -44,21 +46,23 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	 * @param owner the user who created this deck
 	 * @param cards the numbers on this deck
 	 */
-	public Deck(String name, String description, List<Integer> cards, boolean hasIdontKnow){
+	public Deck(String name, String description, List<Integer> cards, boolean hasIdontKnow, ColorEnum color){
 		identity = UUID.randomUUID();
 		this.name = name;
 		this.description = description;
 		owner = ConfigManager.getConfig().getUserName();
 		this.cards = cards;
+		this.color = color;
 		this.hasIdontKnow = hasIdontKnow;
 	}
 	
-	private Deck(String name, String description, List<Integer> cards, UUID identity, boolean hasIdontKnow){
+	private Deck(String name, String description, List<Integer> cards, UUID identity, boolean hasIdontKnow, ColorEnum color){
 		this.identity = identity;
 		this.name = name;
 		this.description = description;
 		owner = ConfigManager.getConfig().getUserName();
 		this.cards = cards;
+		this.color = color;
 		this.hasIdontKnow = hasIdontKnow;
 	}
 	
@@ -68,6 +72,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		this.description = "Default Deck";
 		this.owner = ConfigManager.getConfig().getUserName();
 		this.hasIdontKnow = true;
+		color = ColorEnum.BLUE;
 		buildDefaultDeck(7);
 	}
 	
@@ -176,7 +181,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	}
 	
 	public static Deck makeDeckSameID(String name, String description, List<Integer> cards, Deck identifyingDeck){
-		return new Deck(name, description, cards, identifyingDeck.identity, true);	
+		return new Deck(name, description, cards, identifyingDeck.identity, true, identifyingDeck.color);	
 	}
 
 	@Override
@@ -216,6 +221,10 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	
 	public int getSize(){
 		return cards.size();
+	}
+
+	public ColorEnum getColor() {
+		return color;
 	}
 
 }
