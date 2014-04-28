@@ -185,6 +185,7 @@ public class GameTest {
 	public void testHasEnded() {
 		
 		Game game1 = new Game("Game 1", "First", new ArrayList<PPRequirement>(), true, false);
+		game1.setActive(true);
 		
 		Calendar testCal = Calendar.getInstance();
 		game1.setEndDate(testCal.getTime());
