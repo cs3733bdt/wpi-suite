@@ -92,16 +92,17 @@ public class CardActionListenerRefactor implements ActionListener {
 			} else { // otherwise, if it is a button other than the I don't know
 						// button
 				if (button.isSelected()) { // if button is toggled on
-					if (cardsPanel.getCardButtonArray().get(size - 1)
+					if (cardsPanel.getCardButtonArray().get(size)
 							.isSelected()) {
 						cardsPanel.memoryArrayClear();
-						cardsPanel.getCardButtonArray().get(size - 1).doClick();
+						cardsPanel.getCardButtonArray().get(size).doClick();
 					}
 					button.setIcon(new ImageIcon(backImg));
+
 					addToCardSum(Integer.parseInt(card.getText()));
 				} else { // if button is toggled off
 					button.setIcon(new ImageIcon(frontImg));
-					decToCardSum(Integer.parseInt(card.getText()));
+						decToCardSum(Integer.parseInt(card.getText()));
 				}
 			}
 		} catch (IOException ex) {

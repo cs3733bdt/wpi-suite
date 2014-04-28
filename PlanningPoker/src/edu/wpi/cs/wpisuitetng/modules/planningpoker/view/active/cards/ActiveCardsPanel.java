@@ -89,10 +89,15 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public void addToCardSum(int cardValue) {
 		sum += cardValue;
-		counterLabel.setText("Your current estimate total: " + sum);
 		System.out.println(sum);
 	}
-
+	
+	public void addIDK() {
+		sum = 0;
+		parent.selectedIDK();
+		System.out.println("I don't know is selected.");
+	}
+	
 	/**
 	 * Decrease total sum by amount entered
 	 * 
@@ -101,7 +106,6 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public void decToCardSum(int cardValue) {
 		sum -= cardValue;
-		counterLabel.setText("Your current estimate total: " + sum);
 		System.out.println(sum);
 	}
 

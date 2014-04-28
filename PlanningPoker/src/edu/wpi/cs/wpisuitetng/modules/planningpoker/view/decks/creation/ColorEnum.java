@@ -8,6 +8,14 @@
 *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation;
 
+/**
+ * The enum ColorEnum is used with all cards.
+ * The first 5 cases represent the card back color,
+ * which is chosen at deck creation time by the user.
+ * FRONT represents the card front, which will be the same for no matter which color is chosen.
+ * @author Team BobbyDropTables
+ *
+ */
 public enum ColorEnum {
     RED, BLUE, GREEN, PURPLE, YELLOW, FRONT
 }
