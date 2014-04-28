@@ -23,6 +23,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorEnum;
 
 /**
  * @author Bobby Drop Tables
@@ -51,7 +52,7 @@ public class ActiveCardsPanelTest {
 		passedDeck.add(25);
 		passedDeck.add(50);
 		
-		Deck deck = new Deck("Test deck", "Test description",  passedDeck, true);
+		Deck deck = new Deck("Test deck", "Test description",  passedDeck, true, ColorEnum.BLUE);
 		
 		game = new Game("ActiveGame1", "This is active game1",
 				reqs, true, true);
