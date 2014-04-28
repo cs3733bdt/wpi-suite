@@ -291,7 +291,11 @@ public class PPRequirement extends ObservableModel {
 			return "*";
 		}
 		else{
-			return Integer.toString(votes.size())+"/"+getProject().getTeam().length;
+			if(getProject() != null && getProject().getTeam() != null){
+				return Integer.toString(votes.size())+"/"+getProject().getTeam().length;
+			} else{
+				return "0";
+			}
 		}
 	}
 	
