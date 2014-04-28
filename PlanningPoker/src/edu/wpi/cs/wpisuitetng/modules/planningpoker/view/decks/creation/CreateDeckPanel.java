@@ -218,7 +218,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		saveButton.setEnabled(false);
 		
 		/*cancel button */
-		cancelDeckButton = new CancelButton("Cancel Game", this);
+		cancelDeckButton = new CancelButton("Cancel Deck", this);
 		
 		/* error label */
 		errorField = new ErrorLabel();
