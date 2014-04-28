@@ -19,19 +19,19 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableMode
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
-public class NewActiveGamePanel extends JSplitPane implements IModelObserver, IActiveGamePanel{
+public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActiveGamePanel{
 	Game currentGame;
 	
 	
-	NewLeftHalfActiveGamePanel leftHalf;
-	NewRightHalfActiveGamePanel rightHalf; 
+	LeftHalfActiveGamePanel leftHalf;
+	RightHalfActiveGamePanel rightHalf; 
 	
-	public NewActiveGamePanel(final Game game) {
+	public ActiveGamePanel(final Game game) {
 		game.addObserver(this);	
 		currentGame = game;
 		
-		leftHalf = new NewLeftHalfActiveGamePanel(currentGame, this);
-		rightHalf = new NewRightHalfActiveGamePanel(currentGame);
+		leftHalf = new LeftHalfActiveGamePanel(currentGame, this);
+		rightHalf = new RightHalfActiveGamePanel(currentGame, this);
 		
 		setRightComponent(rightHalf);
 		setLeftComponent(leftHalf);

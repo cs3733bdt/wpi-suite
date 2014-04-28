@@ -12,6 +12,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
@@ -89,6 +90,7 @@ public class Deck implements IDataField {
 			firstnum = secondnum;
 			secondnum = currnum;
 		}
+		deck.add("?");
 	}
 
 	/**
@@ -103,9 +105,33 @@ public class Deck implements IDataField {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	/**
+	 * @param index
+	 * @return the integer at the index. does not work for index size - 1 because it is a string. 
+	 */
+	public int intGet(int index) {
+		if (index != (size() -1)) {
+			return Integer.parseInt(deck.get(index));
+		}
+		else {
+			return -1;
+		}
+	}	
+	/**
+	 * @param index
+	 * @return the string at the index. works for any index
+	 */
+	public String get(int index) {
+		return deck.get(index);
+	}
 	
-	public int get(int index) {
-		return Integer.parseInt(deck.get(index));
+	
+	public int size() {
+		return deck.size();
+	}
+	
+	public List<String> getDeck() {
+		return deck;
 	}
 	
 	

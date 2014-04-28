@@ -33,7 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
  * 
  * @author BDT
  */
-public class NewAddEndDatePanel extends JPanel implements IDataField {
+public class AddEndDatePanel extends JPanel implements IDataField {
 
 	Calendar dateMaker;
 	Date endDate;
@@ -59,7 +59,7 @@ public class NewAddEndDatePanel extends JPanel implements IDataField {
 	 * 
 	 * @param view
 	 */
-	public NewAddEndDatePanel(final NewLeftHalfCreateGamePanel view) {
+	public AddEndDatePanel(final LeftHalfCreateGamePanel view) {
 		add(endDateSelection);
 		add(datePicker);
 		add(hourSelection);

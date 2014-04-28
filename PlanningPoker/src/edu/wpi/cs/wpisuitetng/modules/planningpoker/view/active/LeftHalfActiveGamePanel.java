@@ -35,7 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * @author Doruk Uzunoglu
  *
  */
-public class NewLeftHalfActiveGamePanel extends JScrollPane{
+public class LeftHalfActiveGamePanel extends JScrollPane{
 	
 	Game active;
 	private JLabel gameNameLabel;
@@ -58,12 +58,12 @@ public class NewLeftHalfActiveGamePanel extends JScrollPane{
 	private JButton testButton = new JButton("testYo");
 	
 	
-	private NewActiveGamePanel parentPanel;
+	private ActiveGamePanel parentPanel;
 	/**
 	 * Constructor for NewLeftHalfActiveGamePanel
 	 * @param game the current planning poker game session
 	 */
-	public NewLeftHalfActiveGamePanel(final Game game, final NewActiveGamePanel activeGamePanel) {
+	public LeftHalfActiveGamePanel(final Game game, final ActiveGamePanel activeGamePanel) {
 		active = game;
 		build();
 		isUserCreator();

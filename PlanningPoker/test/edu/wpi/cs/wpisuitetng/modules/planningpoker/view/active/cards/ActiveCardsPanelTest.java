@@ -18,10 +18,12 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewActiveGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorEnum;
 
 /**
  * @author Bobby Drop Tables
@@ -30,11 +32,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.NewRightHalfActi
 public class ActiveCardsPanelTest {
 
 	ActiveCardsPanel activeCardsPanel;
-	NewActiveGamePanel activeGameTab;
-	NewRightHalfActiveGamePanel rightHalf;
+	ActiveGamePanel activeGameTab;
+	RightHalfActiveGamePanel rightHalf;
 	ArrayList<PPRequirement> reqs;
 	Game game;
-	ArrayList<String> passedDeck;
+	ArrayList<Integer> passedDeck;
 	
 	
 	@Before
@@ -43,20 +45,21 @@ public class ActiveCardsPanelTest {
 		reqs = new ArrayList<PPRequirement>();
 		reqs.add(new PPRequirement("Test Req1", "Test Desc1"));
 		
-		passedDeck = new ArrayList<String>();
-		passedDeck.add("5");
-		passedDeck.add("10");
-		passedDeck.add("20");
-		passedDeck.add("25");
-		passedDeck.add("50");
+		passedDeck = new ArrayList<Integer>();
+		passedDeck.add(5);
+		passedDeck.add(10);
+		passedDeck.add(20);
+		passedDeck.add(25);
+		passedDeck.add(50);
 		
+		Deck deck = new Deck("Test deck", "Test description",  passedDeck, true, ColorEnum.BLUE);
 		
 		game = new Game("ActiveGame1", "This is active game1",
 				reqs, true, true);
 		
-		activeGameTab = new NewActiveGamePanel(game);
-		rightHalf = (NewRightHalfActiveGamePanel) activeGameTab.getRightComponent();
-		activeCardsPanel = new ActiveCardsPanel(passedDeck, rightHalf);
+		activeGameTab = new ActiveGamePanel(game);
+		rightHalf = (RightHalfActiveGamePanel) activeGameTab.getRightComponent();
+		activeCardsPanel = new ActiveCardsPanel(deck, rightHalf);
 	}
 	
 	@Test
