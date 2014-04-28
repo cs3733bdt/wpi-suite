@@ -600,7 +600,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			}
 		}catch(NullPointerException e){
 			try {
-				Thread.sleep(2000);
+				Thread.sleep(500);
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				//e1.printStackTrace();
