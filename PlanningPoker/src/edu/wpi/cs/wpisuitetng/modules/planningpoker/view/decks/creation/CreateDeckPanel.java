@@ -35,7 +35,6 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
@@ -52,42 +51,42 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  */
 public class CreateDeckPanel extends JScrollPane implements IDataField{
 	
-	private NameJTextField nameTextField;
-	private DescriptionJTextArea descriptionTextField;
+	private NameJTextField nameTextField;					//textfield for the deck name
+	private DescriptionJTextArea descriptionTextField;		//textarea for the deck description
 	
-	private JTextField numCards;
-	private JButton submitNumCards;
+	private JTextField numCards;							//textfield for the number of cards desired
+	private JButton submitNumCards;							//button to submit the number of cards desired and repaint the card panel with chosen number
 	
-	private JComboBox<String> colorDropDown;
+	private JComboBox<String> colorDropDown;				//dropdown to choose the card back color
 	
-	private JTextField cardValue;
+	//private JTextField cardValue;		//NOT CURRENTLY IN USE. NOT COMMENT BECAUSE IT MIGHT BE DESIRED LATER. NOT CURRENTLY ADDED TO VIEW
 	
-	private JRadioButton singleSelection;
-	private JRadioButton multipleSelection;
+	private JRadioButton singleSelection;					//radio button to only be able to select one card at a time. TODO: IMPLEMENT THIS
+	private JRadioButton multipleSelection;					//radio button to be able to select multiple cards at a time. TODO: IMPLEMENT THIS
 	
-	private final JPanel cardsPanel = new JPanel();
+	private final JPanel cardsPanel = new JPanel();			//panel to display the cards
 	
-	private CancelButton cancelDeckButton;
+	private CancelButton cancelDeckButton;					//cancel button to cancel the deck creation process. same as X in tab
 	
-	private JButton saveButton;
+	private JButton saveButton;								//save button to save deck to server
 	
-	private ErrorLabel errorField;
+	private ErrorLabel errorField;							//errorfield to display validation errors
 	
 	private final Border defaultTextFieldBorder = (new JTextField()).getBorder();
 	
 	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
 	
-	private final CardImage cardRed = new CardImage(ColorEnum.RED);
+	private final CardImage cardRed = new CardImage(ColorEnum.RED);		//an initial red card to be added to the view as a default starting deck
 	
-	private final CardImage cardBlue = new CardImage(ColorEnum.BLUE);
+	/*private final CardImage cardBlue = new CardImage(ColorEnum.BLUE);
 	
 	private final CardImage cardGreen = new CardImage(ColorEnum.GREEN);
 	
 	private final CardImage cardPurple = new CardImage(ColorEnum.PURPLE);
 	
-	private final CardImage cardYellow = new CardImage(ColorEnum.YELLOW);
+	private final CardImage cardYellow = new CardImage(ColorEnum.YELLOW);*/
 	
-	private ArrayList<CardImage> cards = new ArrayList<CardImage>();
+	private ArrayList<CardImage> cards = new ArrayList<CardImage>();	//array list to hold all the cards currently generated. TODO: IMPLEMENT THIS
 	
 	public CreateDeckPanel(){
 		
@@ -130,6 +129,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		ButtonGroup radioGroup = new ButtonGroup();
 		radioGroup.add(singleSelection);
 		radioGroup.add(multipleSelection);		
+		/* this panel holds the label and the two radio buttons */
 		JPanel radioButtonsPanel = new JPanel();
 		radioButtonsPanel.setLayout(new BorderLayout());
 		radioButtonsPanel.add(selectionLabelPanel, BorderLayout.PAGE_START);
@@ -157,7 +157,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		    }
 		});
 		addMouseListenerToNumberOfCardsSubmitButton(submitNumCards);
-		
+		/* this panel holds the label, the textfield, and the submit button */
 		JPanel numPanel = new JPanel();
 		numPanel.setLayout(new BorderLayout());
 		numPanel.add(numLabelPanel, BorderLayout.PAGE_START);
@@ -183,6 +183,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		colorDropDown.addItem("Green");
 		colorDropDown.addItem("Purple");
 		colorDropDown.addItem("Yellow");
+		/* this panel holds the label and the dropdown */
 		JPanel colorPanel = new JPanel();
 		colorPanel.setLayout(new BorderLayout());
 		colorPanel.add(colorLabelPanel, BorderLayout.PAGE_START);
@@ -197,20 +198,20 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		numCardsAndColorAndSelectedTypePanel.add(blankPanel2);
 		numCardsAndColorAndSelectedTypePanel.add(colorPanel);
 		
-		/* Card panel for the cards to appear in. Get rid of border when something actually appears */
+		/* Card panel and scrollPane for the cards to appear in */
 		JScrollPane cardScrollPane = new JScrollPane(cardsPanel);
 		
 		cardsPanel.setPreferredSize(new Dimension(10, 520));
-		cardsPanel.add(cardRed);
-		cards.add(cardRed);
+		cardsPanel.add(cardRed);	//adds initial card to panel
+		cards.add(cardRed);			//adds initial card to card list
 		cardRed.setVisible(true);
 		
 		/* Not currently in use. Re-add this if the card-value setting method is desired below the card panel */
-		JPanel valuePanel = new JPanel();
+		/*JPanel valuePanel = new JPanel();
 		JButton setCardValue = new JButton("Set Card Value");
 		cardValue = new NameJTextField(5);
 		valuePanel.add(cardValue);
-		valuePanel.add(setCardValue);
+		valuePanel.add(setCardValue);*/
 		
 		/* save button */
 		saveButton = new JButton("Save Deck");
@@ -219,6 +220,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		/*cancel button */
 		cancelDeckButton = new CancelButton("Cancel Game", this);
 		
+		/* error label */
 		errorField = new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
@@ -326,17 +328,25 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		return numCards;
 	}
 	
+	/**
+	 * Gets the dropdown which displays the color
+	 * @return colorDropDown
+	 */
 	public JComboBox<String> getColorDropDown(){
 		return colorDropDown;
 	}
 	
+	/**
+	 * Gets the panel which displays the card
+	 * @return cardsPanel
+	 */
 	public JPanel getCardsPanel(){
 		return cardsPanel;
 	}
 	
 	/**
 	 * Checks all fields to determine if they are prepared to be removed.
-	 * If a field is invalid the it warns the user with a notification and by highlighting
+	 * If a field is invalid then it warns the user with a notification and by highlighting
 	 * the offending box on the GUI.
 	 * @param warningField the field to output the errors to
 	 * @return true If all fields are valid and the window is ready to be removed
@@ -379,6 +389,10 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		return false;
 	}
 	
+	/**
+	 * Adds key listeners to validate all text entry
+	 * @param component whichever field needs to be validated
+	 */
 	private void addKeyListenerTo(JComponent component){
 		component.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {	
@@ -389,7 +403,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	
 	/**
 	 * Checks to make sure the number of cards inputted is 1-24
-	 * @return
+	 * @return true if a valid input
 	 */
 	public boolean verifyNumberOfCards() {
 		String text = getNumCards().getText();
@@ -431,7 +445,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	 * It does this by checking how many components are in the card panel, then once it has stored this number,
 	 * it removes all the components in the card panel. It then generates the number of cards of the correct color
 	 * (since it now knows the color) that was equal to the previously recorded number of components in the panel.
-	 * @return
+	 * TODO: if a card had a value label associated with it, this method should still associate the value with the new card.
+	 * TODO: if the number of cards generated is less than the number of cards that had values, some values have to be lost in an organized manner.
 	 */
 	public void chooseCardColor(){
 		String color = (String)getColorDropDown().getSelectedItem();
@@ -439,7 +454,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		cardsPanel.removeAll();
 		cards.removeAll(cards);
 		/* Later, when real functionality occurs, we will need a way of storing the cards 
-		 * being generated, so we can later tell if one is selected or not.
+		 * being generated, along with their values so we can later tell if one is selected or not.
 		 * This will be necessary when assigning values to each card. */
 		if(color == "Red (Default)"){
 			 for(int i=0; i < numCardsPresent; i++){
@@ -476,6 +491,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
         cardsPanel.repaint();
 	}
 	
+	/**
+	 * Displays the number of cards as selected by the user.
+	 * TODO: store label values previously associated with cards and keep the saved for the new cards
+	 * TODO: this would require changes made to chooseCardColor() since that is where the cards are really generated.
+	 */
 	public void displayNumCards(){
 		int numCardsSubmitted = Integer.parseInt(getNumCards().getText());
 		cardsPanel.removeAll();
@@ -487,6 +507,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
         cardsPanel.repaint();
 	}
 	
+	/**
+	 * Mouse listener for submit button for number of cards.
+	 * If the submit button is disabled, the error field will tell the user why.
+	 * @param component (this method should only be used with the submit button for the number of cards)
+	 */
 	private void addMouseListenerToNumberOfCardsSubmitButton(JComponent component){
 		component.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent arg0) {
@@ -498,6 +523,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		});
 	}
 	
+	/**
+	 * Mouse listener for number of cards textfield.
+	 * When the text field is clicked, it selects all of the text so that the user can easily overwrite their previous number.
+	 * @param component (this method should only be used with the textfield for the number of cards)
+	 */
 	private void addMouseListenerToNumberOfCardsTextEntry(JComponent component){
 		component.addMouseListener(new MouseAdapter(){
 			public void mouseClicked(MouseEvent arg0) {

@@ -88,10 +88,10 @@ public class MainViewTest {
 		assertEquals(starting + 3, tabs.getTabCount());
 		
 		vec.closeOthers();
-		assertEquals(starting, tabs.getTabCount());
+		assertEquals(starting +1, tabs.getTabCount());
 		
 		tabs.addTab("EndGame 1", endGameTab);
-		assertEquals(starting + 1, tabs.getTabCount());
+		assertEquals(starting + 2, tabs.getTabCount());
 		
 		vec.closeAllTabs();
 		assertEquals(starting, tabs.getTabCount());
