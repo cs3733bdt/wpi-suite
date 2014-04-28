@@ -95,7 +95,7 @@ public class RequirementTest {
 		assertEquals("Req1", req1.getName());
 		assertTrue(req1.identify(req1));
 		assertFalse(req1.identify(req2));
-		assertEquals("\nName: Req1\nDescription: Desc1\n", req1.toString());
+		assertEquals("[Name: Req1 Description: Desc1 Votes: 1]", req1.toString());
 		
 		assertEquals("Req2", req2.getName());
 		assertTrue(req2.identify(req2));
