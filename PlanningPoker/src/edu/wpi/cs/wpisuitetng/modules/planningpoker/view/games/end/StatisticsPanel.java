@@ -123,7 +123,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		finalEstimateDisplay = new JLabel();
 		currFinalEstimate = activeRequirement.getFinalEstimate();
 		if (currFinalEstimate == -1) {
-			finalEstimateDisplay.setText("Your Current Final Estimate is: " + mean);
+			finalEstimateDisplay.setText("Your Current Final Estimate is: " + (int)mean);
 		}
 		else {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: " + currFinalEstimate);
