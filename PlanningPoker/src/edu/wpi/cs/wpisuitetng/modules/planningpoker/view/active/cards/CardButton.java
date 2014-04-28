@@ -36,7 +36,7 @@ public class CardButton extends JToggleButton implements Accessible {
 	JToggleButton button;
 	String cardText;
 	Card card;
-	ActiveCardsPanel panel;
+	ActiveCardsPanel parent;
 
 	/**
 	 * creates the buttons based on the deck
@@ -51,7 +51,7 @@ public class CardButton extends JToggleButton implements Accessible {
 	 *            the panel that displays the estimates
 	 */
 	public CardButton(Card card, ActiveCardsPanel passedCardsPanel) {
-		
+		parent = passedCardsPanel;
 		this.card = card;
 		// Initialize the Button and the number on the button
 		String buttonNum = card.getText();
@@ -67,13 +67,14 @@ public class CardButton extends JToggleButton implements Accessible {
 			ex.printStackTrace();
 		}
 		// Set the Button's tooltiptext and position it correctly
-
-		if (Integer.parseInt(card.getText()) != card.getDeckSize() -1) {
+		
+		try{
+			Integer.getInteger(card.getText());
 			setToolTipText("Add " + buttonNum + " to the total");
-		}
-		else {
+		} catch (NumberFormatException e){
 			setToolTipText("I don't know what to estimate");
 		}
+		
 		setText(card.getText());
 
 		setHorizontalTextPosition(SwingConstants.CENTER);
@@ -82,7 +83,7 @@ public class CardButton extends JToggleButton implements Accessible {
 		// Add the action listener to the button
 		addActionListener(new CardActionListenerRefactor(card, this,
 				passedCardsPanel));
-		panel.add(this);
+		parent.add(this);
 	}
 
 	/**
