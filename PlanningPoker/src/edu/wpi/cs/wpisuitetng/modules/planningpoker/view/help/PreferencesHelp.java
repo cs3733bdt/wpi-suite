@@ -143,14 +143,14 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		
 		layout.putConstraint(SpringLayout.NORTH, facebookHelpExplanation, 20, SpringLayout.SOUTH, emailHelp);
 		layout.putConstraint(SpringLayout.EAST, facebookHelpExplanation, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, facebookHelpExplanation, 20, SpringLayout.EAST, emailHelp);
+		layout.putConstraint(SpringLayout.WEST, facebookHelpExplanation, 20, SpringLayout.EAST, facebookHelp);
 		
 		layout.putConstraint(SpringLayout.NORTH, mobileHelp, 20, SpringLayout.SOUTH, facebookHelp);
 		layout.putConstraint(SpringLayout.WEST, mobileHelp, 5, SpringLayout.WEST, view);
 		
 		layout.putConstraint(SpringLayout.NORTH, mobileHelpExplanation, 20, SpringLayout.SOUTH, facebookHelp);
 		layout.putConstraint(SpringLayout.EAST, mobileHelpExplanation, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, mobileHelpExplanation, 20, SpringLayout.EAST, facebookHelp);
+		layout.putConstraint(SpringLayout.WEST, mobileHelpExplanation, 20, SpringLayout.EAST, mobileHelp);
 		
 		setViewportView(view);
 		revalidate();
