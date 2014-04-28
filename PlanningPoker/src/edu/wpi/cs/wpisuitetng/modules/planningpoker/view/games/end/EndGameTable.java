@@ -66,7 +66,7 @@ public class EndGameTable extends JTable
 			columnNames[2] = "Median";
 			columnNames[3] = "Max";
 			columnNames[4] = "Min";
-			columnNames[5] = "Num Votes";
+			columnNames[5] = "Number of Votes";
 			columnNames[6] = "Number of IDKs";
 			
 			setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -74,6 +74,11 @@ public class EndGameTable extends JTable
 			setModel(getTableModel());
 					
 			setBorder(defaultBorder);
+			
+			getColumnModel().getColumn(1).setPreferredWidth(150);
+			getColumnModel().getColumn(5).setPreferredWidth(150);
+			getColumnModel().getColumn(6).setPreferredWidth(150);
+
 			
 		case GAME:
 			
