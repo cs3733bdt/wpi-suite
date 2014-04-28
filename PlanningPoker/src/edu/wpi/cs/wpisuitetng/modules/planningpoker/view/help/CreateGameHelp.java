@@ -55,7 +55,7 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 2500));
+		view.setPreferredSize(new Dimension(610, 1500));
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("Create Game Help");
