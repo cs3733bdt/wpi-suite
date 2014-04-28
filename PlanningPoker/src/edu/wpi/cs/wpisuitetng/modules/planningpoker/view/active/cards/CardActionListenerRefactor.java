@@ -71,19 +71,20 @@ public class CardActionListenerRefactor implements ActionListener {
 			Image frontImg = card.getFrontImage();
 			Image backImg = card.getBackImage();
 			// if the button is the I don't know button
-			if (index == (size - 1)) {
+			if (!card.isInteger()) {
 				if (button.isSelected()) { // if the IDK button is toggled on
-					for (int i = 0; i < (size - 1); i++) {
-						if (cardsPanel.getCardButtonArray().get(i).isSelected()) {
-							cardsPanel.memoryArrayAddElt(i);
-							cardsPanel.getCardButtonArray().get(i).doClick();
+					for (CardButton c : cardsPanel.getCardButtonArray()) {
+						if(!c.isInteger()){
+							if (c.isSelected()) {
+								cardsPanel.memoryArrayAddElt(c);
+								c.doClick();
+							}
+							button.setIcon(new ImageIcon(backImg));
 						}
-						button.setIcon(new ImageIcon(backImg));
 					}
 				} else { // if the IDK button is toggled off
-					for (int i = 0; i < cardsPanel.memoryArrayGetSize(); i++) {
-						cardsPanel.getCardButtonArray()
-								.get(cardsPanel.memoryArrayGetElt(i)).doClick();
+					for (CardButton c: cardsPanel.memoryArray()) {
+						c.doClick();
 					}
 					button.setIcon(new ImageIcon(frontImg));
 					cardsPanel.memoryArrayClear();
