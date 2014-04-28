@@ -291,7 +291,7 @@ public class PPRequirement extends ObservableModel {
 			return "*";
 		}
 		else{
-			return Integer.toString(votes.size());
+			return Integer.toString(votes.size())+"/"+getProject().getTeam().length;
 		}
 	}
 	

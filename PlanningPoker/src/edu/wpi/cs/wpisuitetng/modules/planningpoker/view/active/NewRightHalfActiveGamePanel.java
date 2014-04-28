@@ -593,7 +593,7 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 	 */
 	public void submitButton() {
 		//gets the the currently selected table index
-		getNextRow();
+		//getNextRow();
 		
 		String currentUser = ConfigManager.getConfig().getUserName(); // Gets
 																		// the
@@ -621,6 +621,8 @@ public class NewRightHalfActiveGamePanel extends JScrollPane {
 				+ activeRequirement.userVote());
 		table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(),
 				2);
+		table.setValueAt(activeRequirement.displayComplete(), table.getSelectedRow(),
+				3);
 	}
 
 	/**
