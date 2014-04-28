@@ -418,9 +418,6 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 
 		layout.putConstraint(SpringLayout.WEST, submitButton, 5,
 				SpringLayout.WEST, rightView);
-
-		layout.putConstraint(SpringLayout.WEST, errorField, 120,
-				SpringLayout.WEST, rightView);
 		
 		if(!currentGame.doesUseCards()) {
 			layout.putConstraint(SpringLayout.NORTH, previousEst, 10,
@@ -432,6 +429,11 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 			layout.putConstraint(SpringLayout.SOUTH, errorField, -15,
 					SpringLayout.SOUTH, rightView);
 			
+
+			layout.putConstraint(SpringLayout.WEST, errorField, 120,
+					SpringLayout.WEST, rightView);
+			
+			
 			
 			rightView.setPreferredSize(new Dimension(300, 430)); // Sets the size of
 			// the view
@@ -442,6 +444,8 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 		else {	
 			layout.putConstraint(SpringLayout.NORTH, submitButton, 5,
 					SpringLayout.SOUTH, cardScrollPanel);
+			
+			layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorField, 0, SpringLayout.HORIZONTAL_CENTER, rightView);
 			
 			layout.putConstraint(SpringLayout.NORTH, errorField, 8,
 					SpringLayout.SOUTH, cardScrollPanel);
@@ -480,6 +484,11 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 	public void updateSum() {
 		sum = cardsPanel.getSum();
 		counterLabel.setText("Your current selected estimate is: " + sum);
+	}
+	
+	public void selectedIDK() {
+		sum = -1;
+		counterLabel.setText("Your current selected estimate is I don't know");
 	}
 
 	/**

@@ -173,7 +173,7 @@ public class GameTest {
 		Deck Deck = new Deck(customDeck);
 		
 		for (int j = 0; j < i; j++) {
-			assertEquals(j,Deck.get(j));
+			assertEquals(Integer.toString(j),Deck.get(j));
 		}
 	}
 	
