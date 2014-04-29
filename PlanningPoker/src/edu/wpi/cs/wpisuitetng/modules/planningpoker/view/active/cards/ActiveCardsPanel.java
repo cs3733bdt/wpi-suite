@@ -41,7 +41,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	private final Deck deck;
 	private final List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	private JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
-	private List<Integer> memoryArray = new ArrayList<Integer>();
+	private List<CardButton> memoryArray = new ArrayList<CardButton>();
 
 	// initialized array to remember what buttons were pressed if "0?" button is
 	// pressed
@@ -152,7 +152,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 * @param elt
 	 *            element to be added
 	 **/
-	public void memoryArrayAddElt(int elt) {
+	public void memoryArrayAddElt(CardButton elt) {
 		memoryArray.add(elt);
 	}
 
@@ -180,8 +180,8 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 *            element to be searched for in the memory array
 	 * @return the index of the element in the memory array
 	 **/
-	public int memoryArrayGetElt(int elt) {
-		return memoryArray.get(elt);
+	public List<CardButton> memoryArray() {
+		return memoryArray;
 	}
 
 	@Override

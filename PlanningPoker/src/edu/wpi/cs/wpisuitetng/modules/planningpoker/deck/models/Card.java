@@ -36,6 +36,10 @@ public class Card {
 		return text;
 	}
 	
+	/**
+	 * Gets the text of the 
+	 * @return
+	 */
 	public String getText(){
 		return text;
 	}
@@ -58,5 +62,13 @@ public class Card {
 		return imageFront;
 	}
 	
+	public boolean isInteger(){
+		try{
+			Integer.parseInt(text);
+			return true;
+		} catch (NumberFormatException e){
+			return false;
+		}
+	}
 
 }

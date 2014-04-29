@@ -74,6 +74,7 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 	private Font largeFont;
 	private JButton clearButton;
 	private ActiveGamePanel parentPanel;
+	private int currentRow;
 
 	RightHalfActiveGamePanel(final Game game, final ActiveGamePanel activeGamePanel) {
 		currentGame = game;
@@ -119,6 +120,7 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 				if (e.getClickCount() == 1) {
 
 					activeRequirement = table.getSelectedReq();
+					currentRow=table.getSelectedRow();
 					nameTextField.setText(activeRequirement.getName());
 					descriptionTextField.setText(activeRequirement
 							.getDescription());
@@ -321,6 +323,10 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				submitButtonPressed();
+				
+				if (allUsersVoted()){
+					parentPanel.endGame();
+				}
 			}
 		});
 		addMouseListenerTo(submitButton);
@@ -490,7 +496,7 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 		sum = -1;
 		counterLabel.setText("Your current selected estimate is I don't know");
 	}
-
+	
 	/**
 	 * Returns the sum of all the cards
 	 */
@@ -542,8 +548,11 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 			}
 		}
 		
-		if (allUsersVoted()){
-			parentPanel.endGame();
+		try {
+			cardsPanel.clearCards();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
 	}
 
@@ -600,8 +609,6 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 	 * add vote and display success message when the button is pressed
 	 */
 	public void submitButton() {
-		//gets the the currently selected table index
-		//getNextRow();
 		
 		String currentUser = ConfigManager.getConfig().getUserName(); // Gets
 																		// the
@@ -625,6 +632,16 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 		getEstimateText().setBorder(defaultBorder);
 		displaySuccess("Vote Successful!");
 
+		updateSavedEstimateLabel();
+		
+		//gets the the currently selected table index
+		getNextRow();
+	}
+	
+	/**
+	 * update the saved estimate label
+	 */
+	public void updateSavedEstimateLabel() {
 		previousEst.setText("Your saved estimate is: "
 				+ activeRequirement.userVote());
 		table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(),
@@ -705,8 +722,20 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 		return table;
 	}
 	
-	public void getNextRow() {
-		table.setRowSelectionInterval(0, 0);
+	private void getNextRow() {
+		int nextRow;
+		if (currentRow<table.getRowCount()-1){
+			nextRow=currentRow+1;
+		}else{
+			nextRow=0;
+		}
+		table.setRowSelectionInterval(nextRow,nextRow);
+		activeRequirement = table.getSelectedReq();
+		currentRow=table.getSelectedRow();
+		nameTextField.setText(activeRequirement.getName());
+		descriptionTextField.setText(activeRequirement.getDescription());
+		counterLabel.setText("Your current selected estimate is: 0");
+		updateSavedEstimateLabel();
 	}
 	
 	private boolean allUsersVoted(){

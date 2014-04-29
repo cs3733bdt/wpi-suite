@@ -96,4 +96,13 @@ public class CardButton extends JToggleButton implements Accessible {
 	public String getValue() {
 		return getText();
 	}
+	
+	public boolean isInteger(){
+		try{
+			Integer.parseInt(getText());
+			return true;
+		} catch (NumberFormatException e){
+			return false;
+		}
+	}
 }

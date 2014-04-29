@@ -9,6 +9,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation;
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
@@ -27,6 +28,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
@@ -105,9 +107,9 @@ public class CardImage extends JPanel{
 		addKeyListenerToAddValueText(addValue);						//adds a key listener to the textfield (see method)
 		focusListenerAddValueText(addValue);						//adds a focus listener to the textfield (see method)
 		addValue.setPreferredSize(new Dimension(40, 18));			//sets the textfield to be the desired size.
-		addValue.setVisible(false);									//sets the textfield to be invisible at the start
+		addValue.setVisible(true);									//sets the textfield to be visible at the start
 		valueLabel.setVisible(false);								//sets the label to be invisible at the start
-		
+		valueLabel.setFont(makeFont(10));
 	}
 	
 	/**
@@ -155,6 +157,11 @@ public class CardImage extends JPanel{
 		component.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {	
 				if(arg0.getKeyCode() == 10){		//if enter is pressed
+					if(!validateAddValueField()){
+						//TODO: errorField.setText("The value for the card must be an integer between 1 and 999");
+						//TODO: but errorField is in CreateDeckPanel... HALP
+						return;
+					}
 					valueLabel.setText(addValue.getText());
 					valueLabel.setVisible(true);
 					addValue.setVisible(false);
@@ -174,11 +181,14 @@ public class CardImage extends JPanel{
 	private void focusListenerAddValueText(JComponent component){
 		component.addFocusListener(new FocusListener(){
 			public void focusLost(FocusEvent e) {
-				valueLabel.setText(addValue.getText());
-				valueLabel.setVisible(true);
-				addValue.setVisible(false);
-				revalidate();
-				repaint();
+				//valueLabel.setText(addValue.getText());
+				if(valueLabel.getText() != ""){
+					valueLabel.setVisible(true);
+					addValue.setVisible(false);
+					revalidate();
+					repaint();
+				}
+				else {}
 			}
 
 			@Override
@@ -187,6 +197,37 @@ public class CardImage extends JPanel{
 				
 			}
 		});
+	}
+	
+	private boolean validateAddValueField(){
+		int parsedText = Integer.parseInt(addValue.getText());
+		if(parsedText <= 999 && parsedText >= 1){
+			System.out.print(parsedText);
+			return true;
+		}
+		else {
+			return false;
+		}
+		
+	}
+	
+	public void setValueLabel(String value) {
+		valueLabel.setText(value);
+	}
+	
+	/**
+	 * Creates a new font for use later
+	 */
+	public Font makeFont(int size) {
+		// create a dummy JTextArea
+		JTextArea editingArea = new JTextArea();
+		// get the current font
+		Font f = editingArea.getFont();
+		// create a new, larger font from the current font
+		Font newFont = new Font(f.getFontName(), f.getStyle(), f.getSize() + size);
+		// set the bigger font for userStoryDesc
+		Font bigFont = newFont;
+		return bigFont;
 	}
 	
 }
