@@ -11,8 +11,8 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers.UpdateGameRequestObserver;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers.UpdateDeckRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -22,36 +22,36 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * 
  * @author Chris Knapp
  */
-public class UpdateGameController {
+public class UpdateDeckController {
 	
-	private static UpdateGameController instance;
-	private UpdateGameRequestObserver observer;
+	private static UpdateDeckController instance;
+	private UpdateDeckRequestObserver observer;
 	
-	private UpdateGameController() {
-		//observer = new UpdateGameRequestObserver(this);
+	private UpdateDeckController() {
+		observer = new UpdateDeckRequestObserver(this);
 	}
 	
 	/**
 	 * @return a new instance of an UpdateGameController
 	 */
-	public static UpdateGameController getInstance() {
+	public static UpdateDeckController getInstance() {
 		if(instance == null) {
-			instance = new UpdateGameController();
+			instance = new UpdateDeckController();
 		}
 		return instance;
 	}
 	
 	/**
 	 * updates a game with the same UUID on server
-	 * @param newGame Game to be updated
+	 * @param newDeck Game to be updated
 	 * TODO: Need model for game data
 	 */
-	public void updateGame(Game newGame) {
-		System.out.println("Updating " + newGame.getName() + " to server");
+	public void updateDeck(Deck newDeck) {
+		System.out.println("Updating " + newDeck.getName() + " to server");
 		// Update request
-		Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.POST);
+		Request request = Network.getInstance().makeRequest("planningpoker/deck", HttpMethod.POST);
 		// Set the game to update
-		request.setBody(newGame.toJSON());
+		request.setBody(newDeck.toJSON());
 		// Add observer to get response
 		request.addObserver(observer);
 		// Send the update request
