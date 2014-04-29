@@ -71,9 +71,7 @@ public class CardActionListenerRefactor implements ActionListener {
 			Image backImg = card.getBackImage();
 			// if the button is the I don't know button
 			if (!button.isInteger()) {
-				System.out.println("Button is not integer");
 				if (button.isSelected()) { // if the IDK button is toggled on
-					System.out.println("Button is selected");
 					for (CardButton c : cardsPanel.getCardButtonArray()) {
 						if(!button.equals(c)){	//If this is not the "?" button
 							if (c.isSelected()) { //If it is selected
@@ -85,7 +83,6 @@ public class CardActionListenerRefactor implements ActionListener {
 					button.setIcon(new ImageIcon(backImg)); //Swich image states
 					cardsPanel.memoryArrayAddElt(button); //Add this card to the memory array
 				} else { // if the IDK button is toggled off
-					System.out.println("Button is not selected");
 					for (CardButton c: cardsPanel.memoryArray()) {
 						if(!button.equals(c)){
 							c.doClick();
