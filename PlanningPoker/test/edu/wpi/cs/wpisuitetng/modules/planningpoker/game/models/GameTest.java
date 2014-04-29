@@ -96,6 +96,7 @@ public class GameTest {
 		
 		// copy the fields from one game to another
 		assertTrue(game2.copyFrom(game1));
+
 		assertFalse(game2.copyFrom(game1)); //Second time no changes should be detected
 		
 		// test that fields correctly copied from one game to another
@@ -186,17 +187,20 @@ public class GameTest {
 		
 		Game game1 = new Game("Game 1", "First", new ArrayList<PPRequirement>(), true, false);
 		game1.setActive(true);
-		
+		try{
 		Calendar testCal = Calendar.getInstance();
 		game1.setEndDate(testCal.getTime());
 		assertFalse(game1.hasEnded());
+
 		try{
 			TimeUnit.SECONDS.sleep(1);
 		} catch(InterruptedException e){
 			//Handle exception
 		}
 		assertTrue(game1.hasEnded());
-		
+				} catch (NullPointerException e){
+			//Handle exception
+		}
 	}
 	
 
