@@ -58,6 +58,6 @@ public class GetDeckRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-	    System.err.println("Failed to get games with exception: " + exception.getMessage());
+	    System.err.println("Failed to get deck with exception: " + exception.getMessage());
 	}
 }

@@ -62,7 +62,7 @@ public class GetDeckController implements ActionListener {
 	public synchronized void actionPerformed(ActionEvent e) {
 	    // Send a request to the core to read/get this Game
 	    final Request request = 
-	    		Network.getInstance().makeRequest("planningpoker/game", HttpMethod.GET);
+	    		Network.getInstance().makeRequest("planningpoker/deck", HttpMethod.GET);
 	    // add an observer to process the response
 	    //request.addObserver(observer); 
 	    // send the request
