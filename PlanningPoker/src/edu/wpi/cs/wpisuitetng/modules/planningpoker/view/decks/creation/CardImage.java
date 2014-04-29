@@ -103,11 +103,10 @@ public class CardImage extends JPanel{
 		add(picButton, c);											//adds the button to the card panel
 		
 		addKeyListenerToAddValueText(addValue);						//adds a key listener to the textfield (see method)
-		focusListenerAddValueText(addValue);						//adds a focus listener to the textfield (see method)
+		//focusListenerAddValueText(addValue);						//adds a focus listener to the textfield (see method)
 		addValue.setPreferredSize(new Dimension(40, 18));			//sets the textfield to be the desired size.
-		addValue.setVisible(false);									//sets the textfield to be invisible at the start
+		addValue.setVisible(true);									//sets the textfield to be visible at the start
 		valueLabel.setVisible(false);								//sets the label to be invisible at the start
-		
 	}
 	
 	/**
@@ -187,6 +186,10 @@ public class CardImage extends JPanel{
 				
 			}
 		});
+	}
+	
+	public void setValueLabel(String value) {
+		valueLabel.setText(value);
 	}
 	
 }
