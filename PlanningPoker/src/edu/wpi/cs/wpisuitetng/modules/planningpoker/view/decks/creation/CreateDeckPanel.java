@@ -153,6 +153,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		numCards = new NameJTextField(5);
 		numCards.setText("1");
 		addKeyListenerTo(numCards);
+		initializeArrayList(numCards.getText());
 		addMouseListenerToNumberOfCardsTextEntry(numCards);
 		submitNumCards = new JButton("Submit");
 		submitNumCards.addActionListener (new ActionListener () {
@@ -207,7 +208,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		/* Card panel and scrollPane for the cards to appear in */
 		JScrollPane cardScrollPane = new JScrollPane(cardsPanel);
 		
-		cardsPanel.setPreferredSize(new Dimension(10, 520));
+		cardsPanel.setPreferredSize(new Dimension(10, 450));
 		cardsPanel.add(cardRed);	//adds initial card to panel
 		cards.add(cardRed);			//adds initial card to card list
 		cardRed.setVisible(true);
@@ -286,6 +287,17 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		setViewportView(view);
 	}
 	
+	private void initializeArrayList(String text) {
+		if (text.isEmpty()) {
+			return;
+		}
+		int numCards = Integer.parseInt(text);
+		
+		for (int i = 0; i < numCards; i++) {
+			values.add(-1);
+		}
+	}
+
 	/**
 	 * Build a new font based on specified size
 	 * @param size is how much larger you want the font to be than a default font in a JTextArea
@@ -465,34 +477,19 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		 * being generated, along with their values so we can later tell if one is selected or not.
 		 * This will be necessary when assigning values to each card. */
 		if(color == "Red (Default)"){
-			 for(int i=0; i < numCardsPresent; i++){
-				 cardsPanel.add(new CardImage(ColorEnum.RED));
-				 cards.add(new CardImage(ColorEnum.RED));
-			 }
+			addCards(ColorEnum.RED, numCardsPresent);
 		}
 		if(color == "Blue"){
-			for(int i=0; i < numCardsPresent; i++){
-				cardsPanel.add(new CardImage(ColorEnum.BLUE));
-				cards.add(new CardImage(ColorEnum.BLUE));
-			 }
+			addCards(ColorEnum.BLUE, numCardsPresent);
 		}
 		if(color == "Green"){
-			for(int i=0; i < numCardsPresent; i++){
-				cardsPanel.add(new CardImage(ColorEnum.GREEN));
-				cards.add(new CardImage(ColorEnum.GREEN));
-			 }
+			addCards(ColorEnum.GREEN, numCardsPresent);
 		}
 		if(color == "Purple"){
-			for(int i=0; i < numCardsPresent; i++){
-				cardsPanel.add(new CardImage(ColorEnum.PURPLE));
-				cards.add(new CardImage(ColorEnum.PURPLE));
-			 }
+			addCards(ColorEnum.PURPLE, numCardsPresent);
 		}
 		if(color == "Yellow"){
-			for(int i=0; i < numCardsPresent; i++){
-				 cardsPanel.add(new CardImage(ColorEnum.YELLOW));
-				 cards.add(new CardImage(ColorEnum.YELLOW));
-			 }
+			addCards(ColorEnum.YELLOW, numCardsPresent);
 		}
 		System.out.print(cards.size());
 		cardsPanel.revalidate();
@@ -505,16 +502,41 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	 * TODO: this would require changes made to chooseCardColor() since that is where the cards are really generated.
 	 */
 	public void displayNumCards(){
+		int oldNumCards = values.size();
 		int numCardsSubmitted = Integer.parseInt(getNumCards().getText());
+		int difference = numCardsSubmitted - oldNumCards;
+		if(difference > 0){
+			for(int i = 0; i<= difference; i++) {
+				values.add(-1);
+			}
+		}
+		else if(difference < 0){
+			shortenArrayLengthBy(difference);
+		}
+		else { 
+			return;
+		}
 		cardsPanel.removeAll();
         for(int i=0; i < numCardsSubmitted; i++){		// Here, we are creating the correct number of components in the cards panel,
 			cardsPanel.add(new JLabel("countLabel"));   // so that when chooseCardColor() is called it creates the correct number of
-		}												// the correct color of cards.
-        chooseCardColor();
-        cardsPanel.revalidate();
-        cardsPanel.repaint();
+        }												// the correct color of cards.
+       chooseCardColor();
+       cardsPanel.revalidate();
+       cardsPanel.repaint();
 	}
-	
+
+
+	/**
+	 * Shortens the array of stored card values by difference
+	 * @param difference the amount of indexes to remove from the end of the array
+	 */
+	private void shortenArrayLengthBy(int difference) {
+		while(difference > 0) {
+			values.remove(values.size() - 1);
+			difference--;
+		}	
+	}
+
 	/**
 	 * Mouse listener for submit button for number of cards.
 	 * If the submit button is disabled, the error field will tell the user why.
@@ -542,6 +564,15 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 				getNumCards().selectAll();
 			}
 		});
+	}
+	
+	public void addCards(ColorEnum color, int numCardsPresent) {
+		for(int i=0; i < numCardsPresent; i++){
+			 cardsPanel.add(new CardImage(color));
+			 cards.add(new CardImage(color));
+			 String valueAtIndexI = Integer.toString(values.get(i));
+			 cards.get(i).setValueLabel(valueAtIndexI);
+		 }
 	}
 	
 }

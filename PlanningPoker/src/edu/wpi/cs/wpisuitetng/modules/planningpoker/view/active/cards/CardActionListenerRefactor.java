@@ -35,12 +35,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveG
 public class CardActionListenerRefactor implements ActionListener {
 
 	// Size is the size of the button array including the "IDK" button
-	int size;
-	JToggleButton button;
-	int index;
-	ActiveCardsPanel cardsPanel;
-	Card card;
-	RightHalfActiveGamePanel estimatePanel;
+	private int size;
+	private CardButton button;
+	private ActiveCardsPanel cardsPanel;
+	private Card card;
+	private RightHalfActiveGamePanel estimatePanel;
 
 	/**
 	 * sets the action listener for each button
@@ -57,7 +56,7 @@ public class CardActionListenerRefactor implements ActionListener {
 	 *            the estimate before the action occurs
 	 */
 	public CardActionListenerRefactor(Card card,
-			JToggleButton passedButton, ActiveCardsPanel passedCardsPanel) {
+			CardButton passedButton, ActiveCardsPanel passedCardsPanel) {
 		size = card.getDeckSize();
 		this.card = card;
 		cardsPanel = passedCardsPanel;
@@ -71,23 +70,30 @@ public class CardActionListenerRefactor implements ActionListener {
 			Image frontImg = card.getFrontImage();
 			Image backImg = card.getBackImage();
 			// if the button is the I don't know button
-			if (card.getText().equals("?")) {
+			if (!button.isInteger()) {
 				if (button.isSelected()) { // if the IDK button is toggled on
-					for (int i = 0; i < (size); i++) {
-						if (cardsPanel.getCardButtonArray().get(i).isSelected()) {
-							cardsPanel.memoryArrayAddElt(i);
-							cardsPanel.getCardButtonArray().get(i).doClick();
+					for (CardButton c : cardsPanel.getCardButtonArray()) {
+						if(!button.equals(c)){	//If this is not the "?" button
+							if (c.isSelected()) { //If it is selected
+								cardsPanel.memoryArrayAddElt(c);
+								c.doClick();
+							}
 						}
-						button.setIcon(new ImageIcon(backImg));
 					}
+					button.setIcon(new ImageIcon(backImg)); //Swich image states
+					cardsPanel.memoryArrayAddElt(button); //Add this card to the memory array
 				} else { // if the IDK button is toggled off
-					for (int i = 0; i < cardsPanel.memoryArrayGetSize(); i++) {
-						cardsPanel.getCardButtonArray()
-								.get(cardsPanel.memoryArrayGetElt(i)).doClick();
+					for (CardButton c: cardsPanel.memoryArray()) {
+						if(!button.equals(c)){
+							c.doClick();
+						} else {
+							button.setIcon(new ImageIcon(frontImg));
+						}
 					}
 					button.setIcon(new ImageIcon(frontImg));
 					cardsPanel.memoryArrayClear();
 				}
+				
 			} else { // otherwise, if it is a button other than the I don't know
 						// button
 				if (button.isSelected()) { // if button is toggled on

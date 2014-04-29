@@ -282,7 +282,7 @@ public class AddEndDatePanel extends JPanel implements IDataField {
 		} else {
 			isEndDateValid = false;
 			if (showLabel) {
-				warningField.setText("End Time is too early to start a game");
+				warningField.setText("End Time is set too early");
 			}
 			if (showBox) {
 				this.setBorder(errorBorder);

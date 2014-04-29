@@ -11,8 +11,8 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.UpdateDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.UpdateGameController;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -28,13 +28,13 @@ public class UpdateDeckRequestObserver implements RequestObserver {
 	 * in the defect tracker they use it to print
 	 * error messages.
 	 */
-	private final UpdateGameController controller;
+	private final UpdateDeckController controller;
 	
 	/**
 	 * Constructs an observer for updating games controller
 	 * @param controller updateGameController to be observed
 	 */
-	public UpdateDeckRequestObserver(UpdateGameController controller) {
+	public UpdateDeckRequestObserver(UpdateDeckController controller) {
 		this.controller = controller;
 	}
 	
@@ -65,7 +65,7 @@ public class UpdateDeckRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		System.err.println("The request to update a game failed with exception: "
+		System.err.println("The request to update a deck failed with exception: "
 				+ exception.getMessage());
 	}
 }

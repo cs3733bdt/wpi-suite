@@ -15,6 +15,8 @@ import java.util.List;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.AddDeckController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.UpdateDeckController;
 
 /**
  * Holds the all of the Decks for all users in the database
@@ -46,7 +48,8 @@ public class DeckModel extends AbstractStorageModel<Deck> {
 	}
 
 	public void addDeck(Deck deck) {
-		add(deck);	
+		add(deck);
+		AddDeckController.getInstance().addGame(deck);
 	}
 
 
@@ -66,7 +69,9 @@ public class DeckModel extends AbstractStorageModel<Deck> {
 	
 	@Override
 	public void update(ObservableModel o, Object arg) {
-		// TODO Auto-generated method stub
+		if(o instanceof Deck){
+			UpdateDeckController.getInstance().updateDeck((Deck) o);
+		}
 		
 	}
 
