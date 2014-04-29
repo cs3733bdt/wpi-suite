@@ -205,9 +205,12 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement>{
 	 */
 	public void addRequirements(PPRequirement[] requirements) {
 		for (int i = 0; i < requirements.length; i++) {
-			if (!this.requirements.contains(requirements[i].getId())) {
+			if (!this.requirements.contains(requirements[i].getId()) && !requirements[i].getFromRequirementModule()) {
 				this.requirements.add(requirements[i]);
 				if(requirements[i].getId() >= nextID) nextID = requirements[i].getId() + 1;
+			}
+			else if (requirements[i].getFromRequirementModule() && !requirements[i].existsIn(this.requirements)) {
+				this.requirements.add(requirements[i]);
 			}
 		}
 		fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));

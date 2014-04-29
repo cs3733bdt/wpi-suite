@@ -496,7 +496,7 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 		sum = -1;
 		counterLabel.setText("Your current selected estimate is I don't know");
 	}
-
+	
 	/**
 	 * Returns the sum of all the cards
 	 */
@@ -632,15 +632,22 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 		getEstimateText().setBorder(defaultBorder);
 		displaySuccess("Vote Successful!");
 
+		updateSavedEstimateLabel();
+		
+		//gets the the currently selected table index
+		getNextRow();
+	}
+	
+	/**
+	 * update the saved estimate label
+	 */
+	public void updateSavedEstimateLabel() {
 		previousEst.setText("Your saved estimate is: "
 				+ activeRequirement.userVote());
 		table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(),
 				2);
 		table.setValueAt(activeRequirement.displayComplete(), table.getSelectedRow(),
 				3);
-		
-		//gets the the currently selected table index
-		getNextRow();
 	}
 
 	/**
@@ -727,6 +734,8 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 		currentRow=table.getSelectedRow();
 		nameTextField.setText(activeRequirement.getName());
 		descriptionTextField.setText(activeRequirement.getDescription());
+		counterLabel.setText("Your current selected estimate is: 0");
+		updateSavedEstimateLabel();
 	}
 	
 	private boolean allUsersVoted(){
