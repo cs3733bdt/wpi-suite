@@ -69,19 +69,15 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel {
 		setDividerLocation(420);
 
 		if (game == null) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(false);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
 			leftHalf.getErrorField().setText("Name is required");
 		} else if (!validateField(true, false)) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
 		} else {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(true);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(true);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
 		}
 
 		revalidate();
@@ -318,20 +314,15 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel {
 	 */
 	public void updateButtons() {
 		if (validateField(true, false)) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(true);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
 		} else {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
 		}
-
-		if (leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true,
-				false)) {
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(true);
+		
+		if (validateField(true, false)) {
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
 		} else {
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
 		}
 
 	}
