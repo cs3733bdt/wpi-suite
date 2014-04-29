@@ -10,6 +10,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -141,6 +142,9 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 			serverUpdating = true;
 
 			int startingSize = getSize();
+			List<T> newModels = new ArrayList<T>();//Stores any new models for logging purposes
+			List<T> updatedModels = new ArrayList<T>(); //Stores any changed models for logging purposes
+			
 			for (T aModel : allModels) { // Iterates over the new model
 				boolean found = false; // Has this Game been found in the list
 				// GAME EXIST IN THE MODEL
@@ -153,7 +157,9 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 						found = true; // This game has been found in the list
 						// aGame.deleteObservers();
 						aModel.addObserver(this);
-						modelList.copyFrom(aModel);
+						if(modelList.copyFrom(aModel)){
+							updatedModels.add(aModel); //Stores this for logging purposes
+						}
 						changes = true;
 					}
 				}
@@ -167,12 +173,25 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 					aModel.addObserver(this); // Add an observer on this game
 					list.add(aModel); // Adds this game to the list of games in
 					// this list
-					logger.log(Level.INFO, "Updating the model");
-					logger.log(Level.INFO, "New Model Being added" + aModel.getName());
+					newModels.add(aModel); //Adds to the system logger output
 				}
 			}
 			this.fireIntervalAdded(this, startingSize - 1, getSize() - 1); // Fires
 			// the event listeners on this list.
+			
+			//Output the log of this interaction
+			StringBuilder log = new StringBuilder();
+			log.append("Model Updated\nAdditions:\n");
+			for(T a: newModels){
+				log.append("\t" + a.getName() + "\n");
+			}
+			log.append("Changes\n");
+			for(T a:updatedModels){
+				log.append("\t" + a.getName() + "\n");
+			}
+			logger.log(Level.INFO, log.toString());
+			
+			
 		}
 		serverUpdating = false;
 		return changes;
