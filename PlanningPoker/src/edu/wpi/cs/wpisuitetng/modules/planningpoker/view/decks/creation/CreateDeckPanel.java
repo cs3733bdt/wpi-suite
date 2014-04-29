@@ -182,6 +182,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		colorDropDown = new JComboBox<String>();	
 		colorDropDown.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
+				updateValueArray();
 		        chooseCardColor();
 		    }
 		});
