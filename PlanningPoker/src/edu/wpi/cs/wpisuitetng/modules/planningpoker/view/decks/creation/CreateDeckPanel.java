@@ -53,45 +53,80 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  */
 public class CreateDeckPanel extends JScrollPane implements IDataField{
 	
-	private NameJTextField nameTextField;					//textfield for the deck name
-	private DescriptionJTextArea descriptionTextField;		//textarea for the deck description
+	/**
+	 * textfield for the deck name
+	 */
+	private NameJTextField nameTextField;
+	/**
+	 * textarea for the deck description
+	 */
+	private DescriptionJTextArea descriptionTextField;
 	
-	private JTextField numCards;							//textfield for the number of cards desired
-	private JButton submitNumCards;							//button to submit the number of cards desired and repaint the card panel with chosen number
+	/**
+	 * textfield for the number of cards desired
+	 */
+	private JTextField numCards;
+	/**
+	 * button to submit the number of cards desired and repaint the card panel with chosen number
+	 */
+	private JButton submitNumCards;
 	
-	private JComboBox<String> colorDropDown;				//dropdown to choose the card back color
+	/**
+	 * dropdown to choose the card back color
+	 */
+	private JComboBox<String> colorDropDown;
 	
-	//private JTextField cardValue;		//NOT CURRENTLY IN USE. NOT COMMENT BECAUSE IT MIGHT BE DESIRED LATER. NOT CURRENTLY ADDED TO VIEW
+	/**
+	 * radio button to only be able to select one card at a time. TODO: IMPLEMENT THIS
+	 */
+	private JRadioButton singleSelection;
+	/**
+	 * radio button to be able to select multiple cards at a time. TODO: IMPLEMENT THIS
+	 */
+	private JRadioButton multipleSelection;
 	
-	private JRadioButton singleSelection;					//radio button to only be able to select one card at a time. TODO: IMPLEMENT THIS
-	private JRadioButton multipleSelection;					//radio button to be able to select multiple cards at a time. TODO: IMPLEMENT THIS
+	/**
+	 * panel to display the cards
+	 */
+	private final JPanel cardsPanel = new JPanel();
 	
-	private final JPanel cardsPanel = new JPanel();			//panel to display the cards
+	/**
+	 * cancel button to cancel the deck creation process. same as X in tab
+	 */
+	private CancelButton cancelDeckButton;
 	
-	private CancelButton cancelDeckButton;					//cancel button to cancel the deck creation process. same as X in tab
+	/**
+	 * save button to save deck to server
+	 */
+	private JButton saveButton;
 	
-	private JButton saveButton;								//save button to save deck to server
-	
-	private ErrorLabel errorField;							//errorfield to display validation errors
-	
+	/**
+	 * errorfield to display validation errors
+	 */
+	private ErrorLabel errorField;
+
 	private final Border defaultTextFieldBorder = (new JTextField()).getBorder();
 	
 	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
 	
-	private final CardImage cardRed = new CardImage(ColorEnum.RED);		//an initial red card to be added to the view as a default starting deck
+	/**
+	 * an initial red card to be added to the view as a default starting deck
+	 */
+	private final CardImage cardRed = new CardImage(ColorEnum.RED);
 	
-	/*private final CardImage cardBlue = new CardImage(ColorEnum.BLUE);
+	/**
+	 * array list to hold all the cards currently generated. TODO: IMPLEMENT THIS
+	 */
+	private ArrayList<CardImage> cards = new ArrayList<CardImage>();
+
+	/**
+	 * ArrayList to hold all of the label values so they can be refreshed when card number of color is changed
+	 */
+	private List<Integer> values = new ArrayList<Integer>(); 
 	
-	private final CardImage cardGreen = new CardImage(ColorEnum.GREEN);
-	
-	private final CardImage cardPurple = new CardImage(ColorEnum.PURPLE);
-	
-	private final CardImage cardYellow = new CardImage(ColorEnum.YELLOW);*/
-	
-	private ArrayList<CardImage> cards = new ArrayList<CardImage>();	//array list to hold all the cards currently generated. TODO: IMPLEMENT THIS
-	
-	private List<Integer> values = new ArrayList<Integer>();
-	
+	/**
+	 * The final deck to be saved to server
+	 */
 	private Deck deck;
 	
 	public CreateDeckPanel(){
@@ -213,13 +248,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		cards.add(cardRed);			//adds initial card to card list
 		cardRed.setVisible(true);
 		
-		/* Not currently in use. Re-add this if the card-value setting method is desired below the card panel */
-		/*JPanel valuePanel = new JPanel();
-		JButton setCardValue = new JButton("Set Card Value");
-		cardValue = new NameJTextField(5);
-		valuePanel.add(cardValue);
-		valuePanel.add(setCardValue);*/
-		
 		/* save button */
 		saveButton = new JButton("Save Deck");
 		saveButton.setEnabled(false);
@@ -240,7 +268,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		view.add(descriptionScroll);
 		view.add(numCardsAndColorAndSelectedTypePanel);
 		view.add(cardScrollPane);
-		//view.add(valuePanel);
 		view.add(saveButton);
 		view.add(cancelDeckButton);
 		view.add(errorField);
@@ -265,10 +292,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		layout.putConstraint(SpringLayout.EAST, cardScrollPane, -10, SpringLayout.EAST, view);
 		layout.putConstraint(SpringLayout.NORTH, cardScrollPane, 10, SpringLayout.SOUTH, numCardsAndColorAndSelectedTypePanel);
 		layout.putConstraint(SpringLayout.SOUTH, cardScrollPane, -45, SpringLayout.SOUTH, view);
-			
-		/*layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, valuePanel, 5, SpringLayout.HORIZONTAL_CENTER, view);
-		layout.putConstraint(SpringLayout.NORTH, valuePanel, 10, SpringLayout.SOUTH, cardsPanel);
-		*/
 		
 		layout.putConstraint(SpringLayout.WEST, saveButton, 10, SpringLayout.WEST, view);
 		layout.putConstraint(SpringLayout.NORTH, saveButton, 10, SpringLayout.SOUTH, cardScrollPane);
@@ -517,11 +540,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 				values.add(-1);
 			}
 		}
-		else if(difference < 0){
+		if(difference < 0){
 			shortenArrayLengthBy(difference);
-		}
-		else { 
-			return;
 		}
 		cardsPanel.removeAll();
         for(int i=0; i < numCardsSubmitted; i++){		// Here, we are creating the correct number of components in the cards panel,

@@ -12,6 +12,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -26,6 +28,7 @@ import org.jdesktop.swingx.JXDatePicker;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IValidateButtons;
 
 /**
  * This is where the graphical elements and calculation are done for allowing
@@ -243,6 +246,14 @@ public class AddEndDatePanel extends JPanel implements IDataField {
 
 	private void setAMPM(String oldAMPM) {
 		AmPmSelection.setSelectedItem(oldAMPM);
+	}
+	
+	public void addKeyListener(final IValidateButtons parent){
+		this.getDatePicker().addKeyListener(new KeyAdapter(){
+			public void keyReleased(KeyEvent arg0) {	
+				parent.updateButtons();
+			}
+		});
 	}
 
 	/**
