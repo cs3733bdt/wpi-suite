@@ -520,11 +520,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 				values.add(-1);
 			}
 		}
-		else if(difference < 0){
+		if(difference < 0){
 			shortenArrayLengthBy(difference);
-		}
-		else { 
-			return;
 		}
 		cardsPanel.removeAll();
         for(int i=0; i < numCardsSubmitted; i++){		// Here, we are creating the correct number of components in the cards panel,
