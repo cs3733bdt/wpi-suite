@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
@@ -39,6 +42,9 @@ public class GameModel extends AbstractStorageModel<Game> {
 
 	/** Stores the next ID */
 	private final int nextID;
+	
+	/** Stores the logger for the GameModel*/
+	private static Logger logger = Logger.getLogger(GameModel.class.getName());
 
 
 	/**
@@ -72,16 +78,18 @@ public class GameModel extends AbstractStorageModel<Game> {
 		add(newGame);
 		try {
 			AddGameController.getInstance().addGame(newGame);
-		} catch (Exception e) {
-			System.err.println("WARNING: FAILED TO ADD GAME TO SERVER: "
-					+ newGame.getName());
+		} catch (NullPointerException e) {
+			logger.log(Level.WARNING, "Game: " + newGame.getName() + " could not be added", e);
+		} catch (Exception e){
+			logger.log(Level.WARNING, "Game: " + newGame.getName() + " could not be added", e);
 		}
+		
 		try { // Prevents a null pointer exception when the running tests (the
 				// JPanel's aren't instantiated)
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
-			System.err.println("No view output attached");
+			logger.log(Level.WARNING, "ViewEventController not fully initiallized", e);
 		}
 	}
 
