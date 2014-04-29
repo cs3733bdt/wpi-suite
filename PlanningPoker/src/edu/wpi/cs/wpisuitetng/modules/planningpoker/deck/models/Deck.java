@@ -84,7 +84,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	private void buildDefaultDeck(int numCards) {
 		int numLoops;
 		if (numCards == 0) {
-			//errorBit = true; //this should throw an exception
+//			throw new EmptyDeckException(); //TODO implement proper catch in call heirarchy before uncommenting
 			return;
 		}
 		else { 

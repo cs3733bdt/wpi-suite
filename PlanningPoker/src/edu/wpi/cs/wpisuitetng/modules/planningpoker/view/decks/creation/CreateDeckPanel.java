@@ -537,7 +537,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 			values.remove(values.size() - 1);
 			difference--;
 		}
-		System.out.println("The current size of value array is" + Integer.toString(values.size()));
 	}
 
 	/**
@@ -575,7 +574,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 			 cardsPanel.add(newCard);
 			 cards.add(newCard);
 			 String valueAtIndexI = Integer.toString(values.get(i));
-			 System.out.println("Retreived and set Value: " + valueAtIndexI + " from index " + Integer.toString(i) + " in the value array" );
 			 if (!valueAtIndexI.equals("-1")) {
 				 newCard.setValueLabel(valueAtIndexI);
 			 }
@@ -588,7 +586,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	public void updateValueArray() {
 		for (int i = 0; i < cards.size(); i++) {
 			int value = cards.get(i).getCardValue();
-			System.out.println("Saving the value " + Integer.toString(value) + " to Index " + Integer.toString(i) + "of the value array");
 			values.set(i, value);
 		}
 	}
