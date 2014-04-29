@@ -205,13 +205,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		//Constraints on the final estimate display
 		layout.putConstraint(SpringLayout.EAST, finalEstimateDisplay, -20, SpringLayout.EAST, overviewPanel); 
 		layout.putConstraint(SpringLayout.NORTH, finalEstimateDisplay, 5, SpringLayout.SOUTH, votePanel); 
-			
-		
-		int[] test = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10 }; //5.5 //TODO fix
-		int[] test2 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11}; //6
-		
-		System.out.println("Median test1 should be 5.5:" + median(test));
-		System.out.println("Median test2:" + median(test2));
 		
 		repaint();
 		invalidate();
@@ -220,37 +213,33 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		setViewportView(overviewPanel);
 	}
 	
-//	private void initStats() {
-//		ArrayList<Integer> voteData = requirementToVotes(activeRequirement); 
-//		minEstimate = min(voteData);
-//		maxEstimate = max(voteData);
-//		mean = mean(voteData);
-//		stDev = stDev(voteData);
-//		median = median(voteData);
-//	}
-	private void initStats() {
-		System.out.println(activeRequirement.getVotes().size());
-		System.out.println(activeGame.getName());
-		
-		ArrayList<Integer> voteData = requirementToVotes(activeRequirement); 
-		minEstimate = min(voteData);
-		maxEstimate = max(voteData);
-		mean = mean(voteData);
-		stDev = stDev(voteData);
-		median = median(voteData);
-	}
-	
+	/**
+	 * 
+	 * @param voteData list of user's votes
+	 * @return the number of user votes
+	 */
 	public int numVotes(ArrayList<Integer> voteData) {
 		numVotes = voteData.size();
 		return numVotes;
 	}
-	
+	/**
+	 * 
+	 * @param requirement whose statistics are to be displayed
+	 * @return a row object to be displayed in the statistics table
+	 */
 	public Object[] makeStatRow(PPRequirement requirement) {
-		ArrayList<Integer> voteData = requirementToVotes(requirement); 
-		Object[] row = new Object[] {mean(voteData), stDev(voteData), median(voteData), max(voteData), min(voteData), numVotes(voteData)};
+		ArrayList<Integer> rawVoteData = requirementToVotes(requirement);
+		ArrayList<Integer> voteData = removeIDKs(rawVoteData);
+		
+		int idks = rawVoteData.size() - voteData.size();
+		
+		Object[] row = new Object[] {(float)mean(voteData), (float)stDev(voteData), median(voteData), max(voteData), min(voteData), numVotes(rawVoteData), idks};
 		return row;
 	}
-	/**Pass it the name of the stat you want in string form (mean, stDev, min, max, numVotes, median) */
+	/**
+	 * @param stat String input that determines what statistic to return
+	 * @return statistic based on the input
+	 */
 	public double getStat(String stat) {
 		switch (stat) {
 		case "mean":
@@ -282,7 +271,12 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		}
 		return voteArray;
 	}
-	
+
+	/**
+	 * 
+	 * @param requirement
+	 * @return an arrayList of usernames of users who have voted
+	 */
 	public ArrayList<String> requirementToNames(PPRequirement requirement) {
 		List<Vote> Votes = requirement.getVotes();
 		ArrayList<String> nameArray = new ArrayList<String>();
@@ -293,15 +287,31 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	}
 	
 	/**
-	 * @param Votes a list of the integer values for the votes for a given requirement
+	 * @param votes a list of the user's votes
+	 * @return a new array of votes that does not contain "I don't know" votes (zero votes)
+	 */
+	private ArrayList<Integer> removeIDKs(ArrayList<Integer> votes) {
+		
+		ArrayList<Integer> newVotes = new ArrayList<Integer>();
+		
+		for (int i = 0; i < votes.size(); i++) {
+			if (votes.get(i) != 0) {
+				newVotes.add(votes.get(i));
+			}
+		}
+		return newVotes;
+	}
+	
+	/**
+	 * @param votes a list of the integer values for the votes for a given requirement
 	 * @return the minimum of the array. will return -1 if the array is empty
 	 */
-	private int min(ArrayList<Integer> Votes) {
+	private int min(ArrayList<Integer> votes) {
 		int min = -1;
 		
-		for (int i = 0; i < Votes.size(); i++) {
-			if (Votes.get(i) < min || min == -1) {
-				min = Votes.get(i);
+		for (int i = 0; i < votes.size(); i++) {
+			if (votes.get(i) < min || min == -1) {
+				min = votes.get(i);
 			}
 		}
 		minEstimate = min;
@@ -309,22 +319,22 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	}
 	
 	/**
-	 * @param Votes a list of the integer values for the votes for a given requirement
+	 * @param votes a list of the integer values for the votes for a given requirement
 	 * @return the maximum of the array. will return -1 if the array is empty
 	 */
-	private int max(ArrayList<Integer> Votes) {
+	private int max(ArrayList<Integer> votes) {
 		int max = -1;
 		
-		for (int i = 0; i < Votes.size(); i++) {
-			if (Votes.get(i) > max) {
-				max = Votes.get(i);
+		for (int i = 0; i < votes.size(); i++) {
+			if (votes.get(i) > max) {
+				max = votes.get(i);
 			}
 		}
 		maxEstimate = max;
 		return max;
 	}
 	
-	double mean(ArrayList<Integer> a) {
+	private double mean(ArrayList<Integer> a) {
 		double sum = 0;
 		int i;
 		
@@ -355,17 +365,17 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		return stDev;
 	}
 
-	public double median(ArrayList<Integer> Votes) {
-		if (Votes.size() == 0) {
+	private double median(ArrayList<Integer> votes) {
+		if (votes.size() == 0) {
 			median = 0;
 		}
-		else if (Votes.size() == 1) {
-			median = Votes.get(0);
+		else if (votes.size() == 1) {
+			median = votes.get(0);
 		}
 		else {
-			double[] a = new double[Votes.size()];
-			for (int i = 0; i < Votes.size(); i++) {
-				a[i] = Votes.get(i);
+			double[] a = new double[votes.size()];
+			for (int i = 0; i < votes.size(); i++) {
+				a[i] = votes.get(i);
 			}
 			Arrays.sort(a);
 			int mid = a.length/2;
@@ -379,29 +389,25 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		}
 		return median;
 	}
-	
-	
-	public double median(int[] a) {
-		Arrays.sort(a);
-		int mid = a.length/2;
-		if (a.length % 2 == 0) {
-			median = ((a[mid] + a[mid - 1])/2);
-		}
-		else {
-			median = a[mid];
-		}		
-		return median;
-	}
-	
-	
+	/**
+	 * Fills the statistics table with the statistics associated with that requirement
+	 * @param requirement
+	 */
 	public void fillVoteTable(PPRequirement requirement) {
 		ArrayList<String> nameArray = requirementToNames(requirement);
 		ArrayList<Integer> voteArray = requirementToVotes(requirement);
 				for (int i = 0; i < nameArray.size(); i++) {
-					voteTable.getTableModel().addRow(new Object[]{nameArray.get(i),voteArray.get(i)});
+					if (voteArray.get(i) == 0) {
+						voteTable.getTableModel().addRow(new Object[]{nameArray.get(i),"I don't know"});
+					} else {
+						voteTable.getTableModel().addRow(new Object[]{nameArray.get(i),voteArray.get(i)});
+					}
 				}
 	}
-	
+	/**
+	 * Displays a final estimate if you are the creator of a game upon a requirement being clicked
+	 * @param req requirement which is clicked
+	 */
 	public void reqClicked(PPRequirement req) {
 		activeRequirement = req;
 		userStoryDesc.setText(req.getDescription());
@@ -426,6 +432,10 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		finalEstimateBox.setText("");
 		}
 	
+	/**
+	 * determines if the current user is the creator of the game and displays components related to the final estimate
+	 * if the user is the creator.
+	 */
 	public void isUserCreator() {
 		if(ConfigManager.getConfig().getUserName().equals(activeGame.getCreator())){
 			finalEstimateBox.setVisible(true);
@@ -458,7 +468,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		else {
 			finalEstimateButton.setEnabled(false);
 		}
-	}
+	}		
 	
 	private void finalEstimateButtonPressed() {
 		int newEstimate = Integer.parseInt(finalEstimateBox.getText());
@@ -474,7 +484,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		finalEstimateDisplay.setText("Your Current Final Estimate is: " + newEstimate);
 	}
 	
-	public boolean verifyFinalEstimateField() {
+	private boolean verifyFinalEstimateField() {
 		String text = finalEstimateBox.getText();
 		String allowedChars = "0123456789";
 		String currChar;
@@ -504,7 +514,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		return false;
 	}
 
-	public Font makeFont(int fontSize) {
+	private Font makeFont(int fontSize) {
 		return new Font("Serif", Font.BOLD, fontSize);
 	}
 	

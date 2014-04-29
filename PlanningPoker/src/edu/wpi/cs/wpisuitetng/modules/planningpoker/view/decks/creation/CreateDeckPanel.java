@@ -23,6 +23,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -38,6 +39,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
@@ -87,6 +89,10 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	private final CardImage cardYellow = new CardImage(ColorEnum.YELLOW);*/
 	
 	private ArrayList<CardImage> cards = new ArrayList<CardImage>();	//array list to hold all the cards currently generated. TODO: IMPLEMENT THIS
+	
+	private List<Integer> values = new ArrayList<Integer>();
+	
+	private Deck deck;
 	
 	public CreateDeckPanel(){
 		
@@ -271,6 +277,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		
 		layout.putConstraint(SpringLayout.WEST, errorField, 10, SpringLayout.EAST, cancelDeckButton);
 		layout.putConstraint(SpringLayout.NORTH, errorField, 10, SpringLayout.SOUTH, cardScrollPane);
+		
+		deck = new Deck("", "", values, true, ColorEnum.RED);
 		
 		revalidate();
 		repaint();

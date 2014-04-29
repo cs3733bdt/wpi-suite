@@ -96,7 +96,7 @@ public class UserManager implements EntityManager<User> {
 			String hashedPassword = this.passwordHash.generateHash(newPassword);
 
 			p.setPassword(hashedPassword);
-			
+			p.setNotificationPreferences("");
 			p.setRole(Role.USER);
 			
 			save(s,p);
