@@ -497,11 +497,13 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	}
 	
 	/**
+	 * This is the first thing executed when a new value is entered, after the submit button action listener is invoked
 	 * Displays the number of cards as selected by the user.
 	 * TODO: store label values previously associated with cards and keep the saved for the new cards
 	 * TODO: this would require changes made to chooseCardColor() since that is where the cards are really generated.
 	 */
 	public void displayNumCards(){
+		updateValueArray();
 		int oldNumCards = values.size();
 		int numCardsSubmitted = Integer.parseInt(getNumCards().getText());
 		int difference = numCardsSubmitted - oldNumCards;
@@ -524,8 +526,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
        cardsPanel.revalidate();
        cardsPanel.repaint();
 	}
-
-
+	
 	/**
 	 * Shortens the array of stored card values by difference
 	 * @param difference the amount of indexes to remove from the end of the array
@@ -534,7 +535,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		while(difference > 0) {
 			values.remove(values.size() - 1);
 			difference--;
-		}	
+		}
+		System.out.println("The current size of value array is" + Integer.toString(values.size()));
 	}
 
 	/**
@@ -568,11 +570,26 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	
 	public void addCards(ColorEnum color, int numCardsPresent) {
 		for(int i=0; i < numCardsPresent; i++){
-			 cardsPanel.add(new CardImage(color));
-			 cards.add(new CardImage(color));
+			 CardImage newCard = new CardImage(color);
+			 cardsPanel.add(newCard);
+			 cards.add(newCard);
 			 String valueAtIndexI = Integer.toString(values.get(i));
-			 cards.get(i).setValueLabel(valueAtIndexI);
+			 System.out.println("Retreived and set Value: " + valueAtIndexI + " from index " + Integer.toString(i) + " in the value array" );
+			 if (!valueAtIndexI.equals("-1")) {
+				 newCard.setValueLabel(valueAtIndexI);
+			 }
 		 }
+	}
+	
+	/**
+	 * Fills the values array by asking each card what value it contains
+	 */
+	public void updateValueArray() {
+		for (int i = 0; i < cards.size(); i++) {
+			int value = cards.get(i).getCardValue();
+			System.out.println("Saving the value " + Integer.toString(value) + " to Index " + Integer.toString(i) + "of the value array");
+			values.set(i, value);
+		}
 	}
 	
 }
