@@ -92,8 +92,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	
 	private List<Integer> values = new ArrayList<Integer>();
 	
-	private List<JLabel> boxLabels = new ArrayList<JLabel>();
-	
 	private Deck deck;
 	
 	public CreateDeckPanel(){
@@ -210,7 +208,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		/* Card panel and scrollPane for the cards to appear in */
 		JScrollPane cardScrollPane = new JScrollPane(cardsPanel);
 		
-		cardsPanel.setPreferredSize(new Dimension(10, 520));
+		cardsPanel.setPreferredSize(new Dimension(10, 450));
 		cardsPanel.add(cardRed);	//adds initial card to panel
 		cards.add(cardRed);			//adds initial card to card list
 		cardRed.setVisible(true);
@@ -519,7 +517,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 			return;
 		}
 		cardsPanel.removeAll();
-		boxLabels.clear();
         for(int i=0; i < numCardsSubmitted; i++){		// Here, we are creating the correct number of components in the cards panel,
 			cardsPanel.add(new JLabel("countLabel"));   // so that when chooseCardColor() is called it creates the correct number of
         }												// the correct color of cards.
