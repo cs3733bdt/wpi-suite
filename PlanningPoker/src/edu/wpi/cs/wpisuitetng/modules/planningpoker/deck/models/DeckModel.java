@@ -12,18 +12,26 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.AddDeckController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.UpdateDeckController;
 
 /**
  * Holds the all of the Decks for all users in the database
+ * This DeckModel is designed to continuously reflect the exact model on the database
  * @author jonathanleitschuh
  *
  */
 public class DeckModel extends AbstractStorageModel<Deck> {
+	/** Contains the singleton instance of this class */
 	private static DeckModel instance = null;
 	
+	/** Holds the logger for this class*/
+	private static Logger logger = Logger.getLogger(DeckModel.class.getName());
 	
 	private DeckModel(){
 		super(new ArrayList<Deck>());
@@ -45,8 +53,19 @@ public class DeckModel extends AbstractStorageModel<Deck> {
 		super.emptyModel();
 	}
 
+	/**
+	 * Adds a deck to the model as well as pushing this deck to the database.
+	 * @param deck
+	 */
 	public void addDeck(Deck deck) {
-		add(deck);	
+		add(deck);
+		try{
+			AddDeckController.getInstance().addGame(deck);
+		}catch (NullPointerException e){
+			logger.log(Level.WARNING, "Deck: " + deck.getName() + " could not be added", e);
+		}catch (Exception e){
+			logger.log(Level.WARNING, "Deck: " + deck.getName() + " could not be added", e);
+		}
 	}
 
 
@@ -55,18 +74,28 @@ public class DeckModel extends AbstractStorageModel<Deck> {
 		
 	}
 	
+	/**
+	 * Updates all of the decks within this model with the new version of the decks
+	 * @param allDecks the decks to update the model with
+	 */
 	public synchronized void updateDecks(Deck[] allDecks) {
 		boolean changes = updateModels(allDecks);
 	}
 
 
+	/**
+	 * Gets the contents of the DeckModel
+	 * @return
+	 */
 	public List<Deck> getDecks() {
 		return list;
 	}
 	
 	@Override
 	public void update(ObservableModel o, Object arg) {
-		// TODO Auto-generated method stub
+		if(o instanceof Deck){
+			UpdateDeckController.getInstance().updateDeck((Deck) o);
+		}
 		
 	}
 

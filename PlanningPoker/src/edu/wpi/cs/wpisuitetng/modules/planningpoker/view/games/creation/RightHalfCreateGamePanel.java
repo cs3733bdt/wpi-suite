@@ -886,7 +886,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 		if (requirements.size() <= 0) {
 			if (warningField != null) {
 				if (showLabel) {
-					warningField.setText("At least one requirement is needed to start a game");
+					warningField.setText("At least one requirement is needed");
 				}
 				if (showBox) {
 					currentReqsPanel.setBorder(errorBorder);

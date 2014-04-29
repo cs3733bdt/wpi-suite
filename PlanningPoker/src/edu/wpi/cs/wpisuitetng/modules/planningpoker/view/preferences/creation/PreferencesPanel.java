@@ -125,12 +125,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		//Create and add the "you are not receiving email" warning message. 
 		emailOffNotify = new JLabel("*You are not receiving email notifications");
 		emailOffNotify.setForeground(Color.blue);
-		if (!receivingEmail()) {
-			emailOffNotify.setVisible(true);
-		}
-		else {
-			emailOffNotify.setVisible(false);
-		}
 		emailPanel.add(emailOffNotify);
 
 		//Create and add the user email label to the panel
@@ -201,12 +195,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		//Create and add the "you are not receiving facebook" warning message. 
 		facebookOffNotify = new JLabel("*You are not receiving facebook notifications");
 		facebookOffNotify.setForeground(Color.blue);
-		if (!receivingFacebook()) {
-			facebookOffNotify.setVisible(true);
-		}
-		else {
-			facebookOffNotify.setVisible(false);
-		}
 		facebookPanel.add(facebookOffNotify);
 
 		//Create and add the user facebook label to the panel
@@ -272,12 +260,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		//Create and add the "you are not receiving mobile notifications" warning message. 
 		mobileOffNotify = new JLabel("*You are not receiving mobile notifications");
 		mobileOffNotify.setForeground(Color.blue);
-		if (!receivingMobile()) {
-			mobileOffNotify.setVisible(true);
-		}
-		else {
-			mobileOffNotify.setVisible(false);
-		}
 		mobilePanel.add(mobileOffNotify);
 
 		//Create and add the user mobile label to the panel
@@ -467,7 +449,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		repaint();
 	}
 
-	
 	public void updateEmailButtonPressed() {
 		User newUser = getUserController.getCurrentUser();
 		newUser.setEmail(emailField.getText());
@@ -702,20 +683,26 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			//E: Email preference
 			if(preferences.contains("E")){
 				emailCheckBox.setSelected(true);
+				emailOffNotify.setVisible(false);
 			}
 			//F: Facebook preference
 			if(preferences.contains("F")){
 				facebookCheckBox.setSelected(true);
+				facebookOffNotify.setVisible(false);
 			}
 			//M: Mobile preference
 			if(preferences.contains("M")){
 				mobileCheckBox.setSelected(true);
+				mobileOffNotify.setVisible(false);
 			}
 			
 		}catch(NullPointerException e){
 			emailCheckBox.setSelected(false);
 			facebookCheckBox.setSelected(false);
 			mobileCheckBox.setSelected(false);
+			emailOffNotify.setVisible(true);
+			facebookOffNotify.setVisible(true);
+			mobileOffNotify.setVisible(true);
 		}
 		reValidateEmailUpdateButton();
 		reValidateFacebookUpdateButton();
@@ -724,20 +711,61 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	}
 
 	public boolean receivingEmail() {
-		//TODO
-		return true;
+		if (emailCheckBox.isSelected()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public boolean receivingFacebook() {
-		//TODO
-		return true;
+		if (facebookCheckBox.isSelected()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	public boolean receivingMobile() {
-		//TODO 
-		return true;
+		if (mobileCheckBox.isSelected()) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
+	public void updateEmailNotifyLabel() {
+		if (!receivingEmail()) {
+			emailOffNotify.setVisible(true);
+		}
+		else {
+			emailOffNotify.setVisible(false);
+		}
 	}
 
+	public void updateFacebookNotifyLabel() {
+		if (!receivingFacebook()) {
+			facebookOffNotify.setVisible(true);
+		}
+		else {
+			facebookOffNotify.setVisible(false);
+		}
+	}
+
+	public void updateMobileNotifyLabel() {
+		if (!receivingMobile()) {
+			mobileOffNotify.setVisible(true);
+		}
+		else {
+			mobileOffNotify.setVisible(false);
+		}
+	}
+
+	
+	
 	/**
 	 * displays the option to update the user's email if 
 	 * the user selected the option to be notified through email

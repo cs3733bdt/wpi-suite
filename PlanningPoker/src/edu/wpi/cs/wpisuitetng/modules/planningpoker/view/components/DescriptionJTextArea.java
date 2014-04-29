@@ -58,7 +58,7 @@ public class DescriptionJTextArea extends JTextArea implements IDataField {
 			isDescriptionValid = false;
 			// TODO add a way to display error descriptions
 			if(showLabel){
-				errorField.setText("Description is required to start a game");
+				errorField.setText("Description is required");
 			}
 			if(showBox){
 				this.setBorder(errorBorder);

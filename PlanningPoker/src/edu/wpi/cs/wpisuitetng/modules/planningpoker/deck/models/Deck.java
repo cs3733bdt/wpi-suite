@@ -84,7 +84,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	private void buildDefaultDeck(int numCards) {
 		int numLoops;
 		if (numCards == 0) {
-			//errorBit = true; //this should throw an exception
+//			throw new EmptyDeckException(); //TODO implement proper catch in call heirarchy before uncommenting
 			return;
 		}
 		else { 
@@ -125,8 +125,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 
 	@Override
 	public String toJSON() {
-		// TODO Auto-generated method stub
-		return null;
+		return new Gson().toJson(this, Deck.class);
 	}
 
 	@Override
@@ -152,9 +151,9 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		return name;
 	}
 
-	public static Deck fromJSON(String body) {
-		// TODO Auto-generated method stub
-		return null;
+	public static Deck fromJSON(String json) {
+		final Gson parser = new Gson();
+		return parser.fromJson(json, Deck.class);
 	}
 	
 	/**
