@@ -21,7 +21,8 @@ import edu.wpi.cs.wpisuitetng.modules.Model;
 import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 
 /**
- * A mock data implementation for server-side testing. 
+ * A mock data implementation for server-side testing.
+ * Copied directly from the Requirements Manager
  * @author justinhess
  * @version $Revision: 1.0 $
  */
