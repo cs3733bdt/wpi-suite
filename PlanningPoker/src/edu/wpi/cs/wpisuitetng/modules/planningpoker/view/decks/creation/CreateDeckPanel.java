@@ -153,7 +153,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		numCards = new NameJTextField(5);
 		numCards.setText("1");
 		addKeyListenerTo(numCards);
-		initializeArrayList(numCards.getText());
+		initializeArrayList();
 		addMouseListenerToNumberOfCardsTextEntry(numCards);
 		submitNumCards = new JButton("Submit");
 		submitNumCards.addActionListener (new ActionListener () {
@@ -287,7 +287,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		setViewportView(view);
 	}
 	
-	private void initializeArrayList(String text) {
+	/**
+	 * This method is called once at initialization. It gets the text of the field for number of cards and 
+	 * initializes the value array with -1's as dummy values so it matches the size of the initial card array
+	 */
+	private void initializeArrayList() {
+		String text = numCards.getText();
 		if (text.isEmpty()) {
 			return;
 		}
@@ -469,6 +474,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	 * TODO: if the number of cards generated is less than the number of cards that had values, some values have to be lost in an organized manner.
 	 */
 	public void chooseCardColor(){
+		updateValueArray(); //ensures the array of values is up to date before cards are removed
 		String color = (String)getColorDropDown().getSelectedItem();
 		int numCardsPresent = cardsPanel.getComponentCount();
 		cardsPanel.removeAll();
@@ -497,6 +503,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	}
 	
 	/**
+	 * This is the first thing executed when a new value is entered, after the submit button action listener is invoked
 	 * Displays the number of cards as selected by the user.
 	 * TODO: store label values previously associated with cards and keep the saved for the new cards
 	 * TODO: this would require changes made to chooseCardColor() since that is where the cards are really generated.
@@ -505,7 +512,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		int oldNumCards = values.size();
 		int numCardsSubmitted = Integer.parseInt(getNumCards().getText());
 		int difference = numCardsSubmitted - oldNumCards;
-		if(difference > 0){
+		if(difference > 0) {
 			for(int i = 0; i<= difference; i++) {
 				values.add(-1);
 			}
@@ -524,8 +531,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
        cardsPanel.revalidate();
        cardsPanel.repaint();
 	}
-
-
+	
 	/**
 	 * Shortens the array of stored card values by difference
 	 * @param difference the amount of indexes to remove from the end of the array
@@ -534,7 +540,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		while(difference > 0) {
 			values.remove(values.size() - 1);
 			difference--;
-		}	
+		}
 	}
 
 	/**
@@ -568,11 +574,25 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	
 	public void addCards(ColorEnum color, int numCardsPresent) {
 		for(int i=0; i < numCardsPresent; i++){
-			 cardsPanel.add(new CardImage(color));
-			 cards.add(new CardImage(color));
+			 CardImage newCard = new CardImage(color);
+			 cardsPanel.add(newCard);
+			 cards.add(newCard);
 			 String valueAtIndexI = Integer.toString(values.get(i));
-			 cards.get(i).setValueLabel(valueAtIndexI);
+			 if (!valueAtIndexI.equals("-1")) {
+				 newCard.setValueLabel(valueAtIndexI);
+			 }
 		 }
+	}
+	
+	/**
+	 * Fills the values array equal to the total number of cards (so up to the index "cards.size() - 1")
+	 * by asking each card what value it contains
+	 */
+	public void updateValueArray() {
+		for (int i = 0; i < cards.size(); i++) {
+			int value = cards.get(i).getCardValue();
+			values.set(i, value);
+		}
 	}
 	
 }

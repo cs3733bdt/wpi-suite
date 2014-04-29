@@ -126,7 +126,10 @@ public class CardImage extends JPanel{
 	 * @return label's text as int
 	 */
 	public int getCardValue(){
-		return Integer.parseInt(valueLabel.getText());
+		try { return Integer.parseInt(valueLabel.getText()); 
+		} catch(NumberFormatException e) {
+			return -1;
+		}
 	}
 	
 	/**
@@ -163,6 +166,7 @@ public class CardImage extends JPanel{
 						return;
 					}
 					valueLabel.setText(addValue.getText());
+					//TODO here the value in the value array needs to be set for the array to function.
 					valueLabel.setVisible(true);
 					addValue.setVisible(false);
 					revalidate();
@@ -213,6 +217,9 @@ public class CardImage extends JPanel{
 	
 	public void setValueLabel(String value) {
 		valueLabel.setText(value);
+		if (!value.isEmpty()) {
+			valueLabel.setVisible(true);
+		}
 	}
 	
 	/**
