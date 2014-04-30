@@ -370,7 +370,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public void setDeck(Deck deck) {
 		if (!this.deck.equals(deck)) {
 			makeChanged();
-			delayChange();
+			delayChange("setDeck");
 			this.deck = deck;
 		}
 	}
