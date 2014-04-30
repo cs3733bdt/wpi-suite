@@ -228,7 +228,6 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		if(needsUpdate){
 			logger.log(Level.SEVERE, "WARNING! THERE WAS A COPY OVER FOR TWO NON MATCHING UUID GAMES!");
 			makeChanged();
-			notifyObservers();
 		}
 
 		return wasChanged;
@@ -267,7 +266,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		notifiedOfCreation = false;
 		notifiedOfCompletion = false;
 		identity = UUID.randomUUID();
-		
+		deck = new Deck();
 	}
 
 	/**
@@ -344,8 +343,6 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		return name;
 	}
 
-
-
 	/**
 	 * Sets the name of a game
 	 * @param newName
@@ -355,6 +352,26 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			makeChanged();
 			delayChange("setName");
 			name = newName;
+		}
+	}
+	
+	/**
+	 * Gets the deck from the game
+	 * @return the deck
+	 */
+	public Deck getDeck() {
+		return deck;
+	}
+	
+	/**
+	 * Sets the game's deck to a new deck
+	 * @param deck to be set
+	 */
+	public void setDeck(Deck deck) {
+		if (!this.deck.equals(deck)) {
+			makeChanged();
+			delayChange("setDeck");
+			this.deck = deck;
 		}
 	}
 
