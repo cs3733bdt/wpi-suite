@@ -26,8 +26,12 @@ import javax.swing.SpringLayout;
 
 public class EndGameHelp extends JScrollPane implements IHelpPanel {
 	JLabel headingLabel;
-	JLabel endGameImage;
+	JLabel endGame;
+	JLabel endGameLabel;
 	JTextArea endGameExplanation;
+	JLabel statsHelp;
+	JLabel statsLabel;
+	JTextArea statsExplanation;
 	
 	public EndGameHelp() {
 		build();
@@ -39,41 +43,57 @@ public class EndGameHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 750));
+		view.setPreferredSize(new Dimension(610, 675));
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("End Game Help");
 		headingLabel.setFont(makeFont(8));
 		
 		//Add the image for this panel
-		endGameImage = addImage("end_game.png");
+		endGame = addImage("ended_game_info.png");
+		
+		//Add label for end game explanation
+		endGameLabel = new JLabel("Game Information");
+		endGameLabel.setFont(makeFont(5));
 		
 		//Add the explanation for the end game image
 		endGameExplanation = new JTextArea();
-		endGameExplanation.setText("1. The name of the ended game.\n");
-		endGameExplanation.append("2. The description of the ended game.\n");
-		endGameExplanation.append("3. The game's creator.\n");
-		endGameExplanation.append("4. The date and time the game ends.\n");
-		endGameExplanation.append("5. The list of requirements voted on during the game.\n");
-		endGameExplanation.append("6. The description of the requirement that is being displayed. \n");
-		endGameExplanation.append("7. The mean, standard deviation, median, max, min of all the "
-				+ "votes in the requirement and the number of people who voted on the requirement.\n");
-		endGameExplanation.append("8. A list of each user's votes on the requirement.\n");
-		endGameExplanation.append("9. The final estimate that the game creator can input.\n");
-		endGameExplanation.append("10. Displays the current final estimate which is the mean of "
-				+ "all the votes in the requirement.\n");
-		endGameExplanation.append("11. Sets the final estimate for the requirement as entered in"
-				+ " 9.\n");
-		endGameExplanation.setFont(makeFont(5));
+		endGameExplanation.setText("After ending a game, the name, description, creator of the "
+				+ "game, the date and time the game ended, and the list of requirements voted on "
+				+ "in the game. Clicking one of the requirements will display the game statistcs "
+				+ "on the right side of the panel.");
 		
 		endGameExplanation.setEditable(false);
 		endGameExplanation.setBackground(null);
 		endGameExplanation.setWrapStyleWord(true);
 		endGameExplanation.setLineWrap(true);
 		
+		//Add statistics image
+		statsHelp = addImage("Stats.png");
+		
+		//Add label for statistics explanation
+		statsLabel = new JLabel("Requirement Statistics");
+		statsLabel.setFont(makeFont(5));
+		
+		//Add the explanation for the statistics image
+		statsExplanation = new JTextArea();
+		statsExplanation.setText("This displays the description of the requirement, how many "
+				+ "people voted on the requirement, the mean, standard "
+				+ "deviation, median, min and max of all the votes and what each user voted. "
+				+ "The creator of the game can also set the final estimate for the requirement.");
+		
+		statsExplanation.setEditable(false);
+		statsExplanation.setBackground(null);
+		statsExplanation.setWrapStyleWord(true);
+		statsExplanation.setLineWrap(true);
+		
 		view.add(headingLabel);
-		view.add(endGameImage);
+		view.add(endGame);
+		view.add(endGameLabel);
 		view.add(endGameExplanation);
+		view.add(statsHelp);
+		view.add(statsLabel);
+		view.add(statsExplanation);
 		
 		/**
 		 * Constraints for the overall panel layout
@@ -81,12 +101,27 @@ public class EndGameHelp extends JScrollPane implements IHelpPanel {
 		layout.putConstraint(SpringLayout.NORTH, headingLabel, 5, SpringLayout.NORTH, view);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, headingLabel, 0, SpringLayout.HORIZONTAL_CENTER, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, endGameImage, 5, SpringLayout.SOUTH, headingLabel);
-		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, endGameImage, 0, SpringLayout.HORIZONTAL_CENTER, headingLabel);
+		layout.putConstraint(SpringLayout.NORTH, endGame, 5, SpringLayout.SOUTH, headingLabel);
+		layout.putConstraint(SpringLayout.WEST, endGame, 5, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, endGameExplanation, 20, SpringLayout.SOUTH, endGameImage);
+		layout.putConstraint(SpringLayout.NORTH, endGameLabel, 5, SpringLayout.SOUTH, headingLabel); 
+		layout.putConstraint(SpringLayout.EAST, endGameLabel, 0, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.WEST, endGameLabel, 20, SpringLayout.EAST, endGame);
+		
+		layout.putConstraint(SpringLayout.NORTH, endGameExplanation, 5, SpringLayout.SOUTH, endGameLabel); 
 		layout.putConstraint(SpringLayout.EAST, endGameExplanation, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, endGameExplanation, 0, SpringLayout.WEST, view);
+		layout.putConstraint(SpringLayout.WEST, endGameExplanation, 20, SpringLayout.EAST, endGame);
+		
+		layout.putConstraint(SpringLayout.NORTH, statsHelp, 20, SpringLayout.SOUTH, endGame);
+		layout.putConstraint(SpringLayout.WEST, statsHelp, 5, SpringLayout.WEST, view);
+		
+		layout.putConstraint(SpringLayout.NORTH, statsLabel, 20, SpringLayout.SOUTH, endGame); 
+		layout.putConstraint(SpringLayout.EAST, statsLabel, 0, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.WEST, statsLabel, 20, SpringLayout.EAST, statsHelp);
+		
+		layout.putConstraint(SpringLayout.NORTH, statsExplanation, 5, SpringLayout.SOUTH, statsLabel); 
+		layout.putConstraint(SpringLayout.EAST, statsExplanation, 0, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.WEST, statsExplanation, 20, SpringLayout.EAST, statsHelp);		
 		
 		setViewportView(view);
 		revalidate();
