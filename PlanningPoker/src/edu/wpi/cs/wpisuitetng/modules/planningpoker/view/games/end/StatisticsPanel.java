@@ -218,7 +218,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param voteData list of user's votes
 	 * @return the number of user votes
 	 */
-	public int numVotes(ArrayList<Integer> voteData) {
+	public int numVotes(List<Integer> voteData) {
 		numVotes = voteData.size();
 		return numVotes;
 	}
@@ -228,8 +228,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @return a row object to be displayed in the statistics table
 	 */
 	public Object[] makeStatRow(PPRequirement requirement) {
-		ArrayList<Integer> rawVoteData = requirementToVotes(requirement);
-		ArrayList<Integer> voteData = removeIDKs(rawVoteData);
+		List<Integer> rawVoteData = requirementToVotes(requirement);
+		List<Integer> voteData = removeIDKs(rawVoteData);
 		
 		int idks = rawVoteData.size() - voteData.size();
 		
@@ -263,7 +263,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param requirement
 	 * @return an arrayList of the vote numbers from the passed requirement
 	 */
-	public ArrayList<Integer> requirementToVotes(PPRequirement requirement) {
+	public List<Integer> requirementToVotes(PPRequirement requirement) {
 		List<Vote> Votes = requirement.getVotes();
 		ArrayList<Integer> voteArray = new ArrayList<Integer>();
 		for (int i = 0; i < Votes.size(); i++) {
@@ -277,9 +277,9 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param requirement
 	 * @return an arrayList of usernames of users who have voted
 	 */
-	public ArrayList<String> requirementToNames(PPRequirement requirement) {
+	public List<String> requirementToNames(PPRequirement requirement) {
 		List<Vote> Votes = requirement.getVotes();
-		ArrayList<String> nameArray = new ArrayList<String>();
+		List<String> nameArray = new ArrayList<String>();
 		for (int i = 0; i < Votes.size(); i++) {
 			nameArray.add(Votes.get(i).getUsername());
 		}
@@ -290,9 +290,9 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param votes a list of the user's votes
 	 * @return a new array of votes that does not contain "I don't know" votes (zero votes)
 	 */
-	private ArrayList<Integer> removeIDKs(ArrayList<Integer> votes) {
+	private List<Integer> removeIDKs(List<Integer> votes) {
 		
-		ArrayList<Integer> newVotes = new ArrayList<Integer>();
+		List<Integer> newVotes = new ArrayList<Integer>();
 		
 		for (int i = 0; i < votes.size(); i++) {
 			if (votes.get(i) != 0) {
@@ -306,7 +306,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param votes a list of the integer values for the votes for a given requirement
 	 * @return the minimum of the array. will return -1 if the array is empty
 	 */
-	private int min(ArrayList<Integer> votes) {
+	private int min(List<Integer> votes) {
 		int min = -1;
 		
 		for (int i = 0; i < votes.size(); i++) {
@@ -322,7 +322,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param votes a list of the integer values for the votes for a given requirement
 	 * @return the maximum of the array. will return -1 if the array is empty
 	 */
-	private int max(ArrayList<Integer> votes) {
+	private int max(List<Integer> votes) {
 		int max = -1;
 		
 		for (int i = 0; i < votes.size(); i++) {
@@ -334,7 +334,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		return max;
 	}
 	
-	private double mean(ArrayList<Integer> a) {
+	private double mean(List<Integer> a) {
 		double sum = 0;
 		int i;
 		
@@ -345,9 +345,9 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		return mean;
 	}
 	
-	private double stDev(ArrayList<Integer> a) {
+	private double stDev(List<Integer> a) {
 		double mean = mean(a);
-		ArrayList<Double> numMinusMeanSquared = new ArrayList<Double>();
+		List<Double> numMinusMeanSquared = new ArrayList<Double>();
 	//	double[] numMinusMeanSquared = new double[a.length]; 
 		
 		for (int i = 0; i < a.size(); i++) {
@@ -365,7 +365,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		return stDev;
 	}
 
-	private double median(ArrayList<Integer> votes) {
+	private double median(List<Integer> votes) {
 		if (votes.size() == 0) {
 			median = 0;
 		}
@@ -394,8 +394,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param requirement
 	 */
 	public void fillVoteTable(PPRequirement requirement) {
-		ArrayList<String> nameArray = requirementToNames(requirement);
-		ArrayList<Integer> voteArray = requirementToVotes(requirement);
+		List<String> nameArray = requirementToNames(requirement);
+		List<Integer> voteArray = requirementToVotes(requirement);
 				for (int i = 0; i < nameArray.size(); i++) {
 					if (voteArray.get(i) == 0) {
 						voteTable.getTableModel().addRow(new Object[]{nameArray.get(i),"I don't know"});
