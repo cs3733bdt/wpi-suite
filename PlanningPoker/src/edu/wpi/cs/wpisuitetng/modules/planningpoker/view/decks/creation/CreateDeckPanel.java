@@ -16,7 +16,6 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -25,7 +24,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -52,11 +50,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IValidateButtons;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
+
 /**
  * The panel for the deck creation process
  * Used to allow the user to create a new deck by filling out the indicated fields
  */
-public class CreateDeckPanel extends JScrollPane implements IDataField, IValidateButtons{
+public class CreateDeckPanel extends JScrollPane implements IDataField, IValidateButtons, ICreateDeckPanel{
 	
 	/**
 	 * textfield for the deck name
@@ -138,6 +137,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		build();
 	}
 	
+	public CreateDeckPanel(Deck deck) {
+		build();
+		nameTextField.setText(deck.getName());
+		descriptionTextField.setText(deck.getDescription());
+	}
+
 	/**
 	 * Builds the layout for this panel
 	 * Sets up all of the elements in their respective locations
@@ -175,7 +180,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		multipleSelection.setSelected(true);
 		ButtonGroup radioGroup = new ButtonGroup();
 		radioGroup.add(singleSelection);
-		radioGroup.add(multipleSelection);
+		radioGroup.add(multipleSelection);	
 		
 		/* this panel holds the label and the two radio buttons */
 		JPanel radioButtonsPanel = new JPanel();
@@ -265,6 +270,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		JLabel checkboxLabel = new JLabel("Have 'I Don't Know Button'?");
 		iDontKnowCheck = new JCheckBox();
 		iDontKnowCheck.setSelected(true);
+		iDontKnowCheck.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	deck.updateHasIdk(iDontKnowCheck.isSelected());
+		    }
+		});
 		JPanel checkPanel = new JPanel();
 		checkPanel.add(iDontKnowCheck);
 		JPanel checkboxPanel = new JPanel();
@@ -686,6 +696,13 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 					+ "integer between 1 and 25");
 			numCards.setBorder(errorBorder);
 		}	
+	}
+	
+	public Deck getDeck() {
+		final Deck deck = new Deck(nameTextField.getText(), 
+				descriptionTextField.getText(), values, true, 
+					determineDeckColor());
+		return deck;
 	}
 }
 

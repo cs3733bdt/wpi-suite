@@ -13,6 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
 import javax.swing.JComponent;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.DeckTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
@@ -174,6 +175,17 @@ public class ViewEventController {
 		getTabbedView().invalidate();
 		getTabbedView().repaint();
 		
+	}
+	
+	/**
+	 * Shows the deck
+	 * Displays the deck creation panel
+	 * @param userObject
+	 */
+	public void viewDeck(Deck deck) {
+		getTabbedView().viewDeck(deck);
+		getTabbedView().invalidate();
+		getTabbedView().repaint();
 	}
 	
 	/**
