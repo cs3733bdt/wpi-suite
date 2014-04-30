@@ -21,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.logging.Level;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -30,6 +31,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+
+import com.sun.istack.internal.logging.Logger;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
@@ -56,18 +59,20 @@ public class CardImage extends JPanel implements IDataField{
 
 	private IErrorView errorField;
 	
+	private static Logger logger = Logger.getLogger(CardImage.class);
+	
 
 	
 	public CardImage(ColorEnum color,IErrorView errorField){
 		this.errorField = errorField;
 		this.color = color;
 		addValue.setIErrorView(errorField);
+		addValue.setMaxValue(999);
 		BufferedImage myPicture = null;
 		try {
 			myPicture = ColorCardImage.getColorCardImage(color);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Failed to load the images", e);
 		}
 		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);											//sets the layout of the class (the panel)
@@ -150,10 +155,13 @@ public class CardImage extends JPanel implements IDataField{
 		component.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {	
 				if(arg0.getKeyCode() == 10){		//if enter is pressed
-					if(!validateAddValueField()){
+					if(!addValue.validateField(errorField, true, false)){
+						logger.log(Level.INFO, "addValue was not validated");
 						//TODO: errorField.setText("The value for the card must be an integer between 1 and 999");
 						//TODO: but errorField is in CreateDeckPanel... HALP
 						return;
+					} else {
+						logger.log(Level.INFO, "addValue was validated");
 					}
 					valueLabel.setText(addValue.getText());
 					//TODO here the value in the value array needs to be set for the array to function.
@@ -193,7 +201,7 @@ public class CardImage extends JPanel implements IDataField{
 		});
 	}
 	
-	public boolean validateAddValueField(){
+	private boolean validateAddValueField(){
 		String stringText = addValue.getText();
 		int parsedText = Integer.parseInt(stringText);
 		if(parsedText <= 999 && parsedText >= 1){
@@ -237,8 +245,7 @@ public class CardImage extends JPanel implements IDataField{
 	@Override
 	public boolean validateField(IErrorView warningField, boolean showLabel,
 			boolean showBox) {
-		// TODO Auto-generated method stub
-		return false;
+		return addValue.validateField(warningField, showLabel, showBox);
 	}
 
 	@Override
