@@ -25,6 +25,12 @@ import javax.swing.SpringLayout;
 
 public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 	JLabel headingLabel;
+	JLabel setUpCardsHeading;
+	JLabel setUpCardspic;
+	JTextArea setUpCardsExplanation;
+	JLabel addingValuesToTheCardsHeading;
+	JLabel saddingValuesToTheCardspic;
+	JTextArea addingValuesToTheCardsExplanation;
 	
 	public CreateDeckHelp() {
 		build();
@@ -41,6 +47,24 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		headingLabel = new JLabel("Create Deck Help");
 		headingLabel.setFont(makeFont(8));
 		view.add(headingLabel);
+		
+		
+		//Add label to explanation for initalizing the cards
+		setUpCardsHeading = new JLabel("Initialize the Deck");
+		setUpCardsHeading.setFont(makeFont(5));
+
+		//Add deck set up pic to the image panel;
+		setUpCardspic = addImage("set_up_cards.png");
+
+		//Add explanation for the first image, the email help
+		setUpCardsExplanation = new JTextArea();
+		setUpCardsExplanation.setText("");
+
+		setUpCardsExplanation.setEditable(false);
+		setUpCardsExplanation.setBackground(null);
+		setUpCardsExplanation.setWrapStyleWord(true);
+		setUpCardsExplanation.setLineWrap(true);
+
 		
 		/**
 		 * Constraints for the overall panel layout
