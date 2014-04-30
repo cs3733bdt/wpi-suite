@@ -17,8 +17,8 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 
 /**
- * This observer is called when a response is received from a request to the server to add a game
- * ******Need to be modified according to the methods in the game models class******
+ * This observer is called when a response is received from a request to the server to add a Deck
+ * ******Need to be modified according to the methods in the Deck models class******
  * @author tianchanggu
  *
  */
@@ -29,20 +29,17 @@ public class AddDeckRequestObserver implements RequestObserver {
 	 * error messages.
 	 */
 	private final AddDeckController controller;
-	private final Deck theDeck;
 	
 	/**
-	 * constructs an AddGameRequestObserver with a controller and a game to observe
-	 * @param controller the controller acting on the game
-	 * @param theDeck the game being sent through
+	 * constructs an AddDeckRequestObserver with a controller and a Deck to observe
+	 * @param controller the controller acting on the Deck
 	 */
-	public AddDeckRequestObserver(AddDeckController controller, Deck theDeck) {
+	public AddDeckRequestObserver(AddDeckController controller) {
 		this.controller = controller;
-		this.theDeck = theDeck;
 	}
 	
 	/**
-	 * Parse the details of the new game that was received from the server 
+	 * Parse the details of the new Deck that was received from the server 
 	 * then pass them to the controller
 	 * 
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
@@ -52,16 +49,16 @@ public class AddDeckRequestObserver implements RequestObserver {
 		// Get the response to the given request
 		final ResponseModel response = iReq.getResponse();
 		
-		// The game that got added
+		// The deck that got added
 		Deck deck = Deck.fromJSON(response.getBody());
 		
 		System.out.println("The request to add a deck has succeeded!");
 	}
 	
 	/**
-	 * Prints out response error message and ensures the game 
+	 * Prints out response error message and ensures the Deck 
 	 * doesn't get added to the server. Also removes the
-	 * game from the current model.
+	 * Deck from the current model.
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
@@ -70,8 +67,8 @@ public class AddDeckRequestObserver implements RequestObserver {
 	}
 
 	/**
-	 * Called on game add failed. Prints out error message
-	 * and removes game from current model.
+	 * Called on Deck add failed. Prints out error message
+	 * and removes Deck from current model.
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
