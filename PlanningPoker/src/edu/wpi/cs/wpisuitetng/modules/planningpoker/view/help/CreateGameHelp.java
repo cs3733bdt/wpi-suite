@@ -31,18 +31,24 @@ import javax.swing.SpringLayout;
  */
 public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 	JLabel headingLabel;
-	JTextArea createGameExplanation;
-	JLabel gameInformation;
+	JLabel gameInformationHeading;
+	//JTextArea createGameExplanation;
+	JLabel gameInformationpic;
 	JTextArea gameInformationExplanation;
-	JLabel noRequirements;
+	JLabel noRequirementsHeading;
+	JLabel noRequirementspic;
 	JTextArea noRequirementsExplanation;
-	JLabel addRequirements;
+	JLabel addRequirementsHeading;
+	JLabel addRequirementspic;
 	JTextArea addRequirementsExplanation;
-	JLabel importRequirements;
+	JLabel importRequirementsHeading;
+	JLabel importRequirementspic;
 	JTextArea importRequirementsExplanation;
-	JLabel addedRequirements;
+	JLabel addedRequirementsHeading;
+	JLabel addedRequirementspic;
 	JTextArea addedRequirementsExplanation;
-	JLabel updateRequirements;
+	JLabel updateRequirementsHeading; 
+	JLabel updateRequirementspic;
 	JTextArea updateRequirementsExplanation;
 	
 	public CreateGameHelp() {
@@ -55,27 +61,31 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 1500));
+		view.setPreferredSize(new Dimension(610, 1750));
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("Create Game Help");
 		headingLabel.setFont(makeFont(8));
-		
-		//Add explanation for creating games
-		createGameExplanation = new JTextArea();
-		createGameExplanation.setText("The Create Game menu allows you to create a Planning "
-				+ "Poker game which you can save for further editing or start immediately. "
-				+ "Games that have been saved can be found in Pending Games in the Game Overview"
-				+ " tab and games that have been started can be found in Active GAmes in the Game "
-				+ "Overview tab.");
-		
-		createGameExplanation.setEditable(false);
-		createGameExplanation.setBackground(null);
-		createGameExplanation.setWrapStyleWord(true);
-		createGameExplanation.setLineWrap(true);
+
+//		//Add explanation for creating games
+//		createGameExplanation = new JTextArea();
+//		createGameExplanation.setText("The Create Game menu allows you to create a Planning "
+//				+ "Poker game which you can save for further editing or start immediately. "
+//				+ "Games that have been saved can be found in Pending Games in the Game Overview"
+//				+ " tab and games that have been started can be found in Active GAmes in the Game "
+//				+ "Overview tab.");
+//		
+//		createGameExplanation.setEditable(false);
+//		createGameExplanation.setBackground(null);
+//		createGameExplanation.setWrapStyleWord(true);
+//		createGameExplanation.setLineWrap(true);
+//		
+		//Add heading label for gameInformationHeading	
+		gameInformationHeading = new JLabel("Initializing a Game");
+		gameInformationHeading.setFont(makeFont(5)); 
 		
 		//Add game information image
-		gameInformation = addImage("create_game_help.png");
+		gameInformationpic = addImage("create_game_help.png");
 		
 		//Add explanation to first image, the game information
 		gameInformationExplanation = new JTextArea();
@@ -93,8 +103,12 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		gameInformationExplanation.setWrapStyleWord(true);
 		gameInformationExplanation.setLineWrap(true);
 		
+		//Add heading label for no requirments in the table	
+		noRequirementsHeading = new JLabel("Initial View of the Requirements Table");
+		noRequirementsHeading.setFont(makeFont(5)); 
+		
 		//Add no requirements image
-		noRequirements = addImage("no_requirements.png");
+		noRequirementspic = addImage("no_requirements.png");
 		
 		//Add explanation to the second image, no requirements
 		noRequirementsExplanation = new JTextArea();
@@ -107,8 +121,12 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		noRequirementsExplanation.setWrapStyleWord(true);
 		noRequirementsExplanation.setLineWrap(true);
 		
+		//Add heading label for adding a requirement 	
+		addRequirementsHeading = new JLabel("Adding a Requirement to a Game");
+		addRequirementsHeading.setFont(makeFont(5));
+				
 		//Add create requirement image
-		addRequirements = addImage("create_requirement_help.png");
+		addRequirementspic = addImage("create_requirement_help.png");
 		
 		//Add explanation to the third image, adding a requirement
 		addRequirementsExplanation = new JTextArea();
@@ -124,8 +142,12 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		addRequirementsExplanation.setWrapStyleWord(true);
 		addRequirementsExplanation.setLineWrap(true);
 		
+		//Add heading label for importing requirements 	
+		importRequirementsHeading = new JLabel("Importing a Requirement to the Game");
+		importRequirementsHeading.setFont(makeFont(5));
+
 		//Add import requirement image
-		importRequirements = addImage("import_requirements.png");
+		importRequirementspic = addImage("import_requirements.png");
 		
 		//Add explanation to fourth image, importing a requirement
 		importRequirementsExplanation = new JTextArea();
@@ -143,8 +165,12 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		importRequirementsExplanation.setWrapStyleWord(true);
 		importRequirementsExplanation.setLineWrap(true);
 		
+		//Add heading label for table with requirements added 	
+		addedRequirementsHeading = new JLabel("Requirements Table with Added Requirments");
+		addedRequirementsHeading.setFont(makeFont(5));
+
 		//Add added requirements image
-		addedRequirements = addImage("added_requirements.png");
+		addedRequirementspic = addImage("added_requirements.png");
 		
 		//Add explanation to fifth image, added requirements
 		addedRequirementsExplanation = new JTextArea();
@@ -158,8 +184,12 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		addedRequirementsExplanation.setWrapStyleWord(true);
 		addedRequirementsExplanation.setLineWrap(true);
 		
+		//Add heading label for table with requirements added 	
+		updateRequirementsHeading = new JLabel("Updating a Requirments");
+		updateRequirementsHeading.setFont(makeFont(5));
+
 		//Add edit requirements image
-		updateRequirements = addImage("updated_requirement.png");
+		updateRequirementspic = addImage("updated_requirement.png");
 		
 		//Add explanation to sixth image, editing requirements
 		updateRequirementsExplanation = new JTextArea();
@@ -178,17 +208,23 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		
 		view.add(headingLabel);
 		//view.add(createGameExplanation);
-		view.add(gameInformation);
+		view.add(gameInformationHeading);
+		view.add(gameInformationpic);
 		view.add(gameInformationExplanation);
-		view.add(noRequirements);
+		view.add(noRequirementsHeading);
+		view.add(noRequirementspic);
 		view.add(noRequirementsExplanation);
-		view.add(addRequirements);
+		view.add(addRequirementsHeading);
+		view.add(addRequirementspic);
 		view.add(addRequirementsExplanation);
-		view.add(importRequirements);
+		view.add(importRequirementsHeading);
+		view.add(importRequirementspic);
 		view.add(importRequirementsExplanation);
-		view.add(addedRequirements);
+		view.add(addedRequirementsHeading);
+		view.add(addedRequirementspic);
 		view.add(addedRequirementsExplanation);
-		view.add(updateRequirements);
+		view.add(updateRequirementsHeading);
+		view.add(updateRequirementspic);
 		view.add(updateRequirementsExplanation);
 		
 		/**
@@ -200,47 +236,78 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		//layout.putConstraint(SpringLayout.NORTH, createGameExplanation, 5, SpringLayout.SOUTH, headingLabel);
 		//layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, createGameExplanation, 0, SpringLayout.HORIZONTAL_CENTER, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, gameInformation, 5, SpringLayout.SOUTH, headingLabel); // will change to createGameExplanation when working
-		layout.putConstraint(SpringLayout.WEST, gameInformation, 5, SpringLayout.WEST, view);
+		//Game Information 
+		layout.putConstraint(SpringLayout.NORTH, gameInformationHeading, 5, SpringLayout.SOUTH, headingLabel); // will change to createGameExplanation when working
+		layout.putConstraint(SpringLayout.EAST, gameInformationHeading, 0, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.WEST, gameInformationHeading, 20, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, gameInformationExplanation, 5, SpringLayout.SOUTH, headingLabel); // will change to createGameExplanation when working
+		layout.putConstraint(SpringLayout.NORTH, gameInformationpic, 5, SpringLayout.SOUTH, gameInformationHeading); // will change to createGameExplanation when working
+		layout.putConstraint(SpringLayout.WEST, gameInformationpic, 5, SpringLayout.WEST, view);
+		
+		layout.putConstraint(SpringLayout.NORTH, gameInformationExplanation, 5, SpringLayout.SOUTH, gameInformationHeading); // will change to createGameExplanation when working
 		layout.putConstraint(SpringLayout.EAST, gameInformationExplanation, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, gameInformationExplanation, 20, SpringLayout.EAST, gameInformation);
+		layout.putConstraint(SpringLayout.WEST, gameInformationExplanation, 20, SpringLayout.EAST, gameInformationpic);
 		
-		layout.putConstraint(SpringLayout.NORTH, noRequirements, 20, SpringLayout.SOUTH, gameInformation);
-		layout.putConstraint(SpringLayout.WEST, noRequirements, 5, SpringLayout.WEST, view);
+		//No Requirements
+		layout.putConstraint(SpringLayout.NORTH, noRequirementsHeading, 20, SpringLayout.SOUTH, gameInformationpic);
+		layout.putConstraint(SpringLayout.EAST, noRequirementsHeading, 0, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.WEST, noRequirementsHeading, 20, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, noRequirementsExplanation, 20, SpringLayout.SOUTH, gameInformation);
+		layout.putConstraint(SpringLayout.NORTH, noRequirementspic, 20, SpringLayout.SOUTH, noRequirementsHeading);
+		layout.putConstraint(SpringLayout.WEST, noRequirementspic, 5, SpringLayout.WEST, view);
+		
+		layout.putConstraint(SpringLayout.NORTH, noRequirementsExplanation, 20, SpringLayout.SOUTH, noRequirementsHeading);
 		layout.putConstraint(SpringLayout.EAST, noRequirementsExplanation, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, noRequirementsExplanation, 20, SpringLayout.EAST, noRequirements);
+		layout.putConstraint(SpringLayout.WEST, noRequirementsExplanation, 20, SpringLayout.EAST, noRequirementspic);
 		
-		layout.putConstraint(SpringLayout.NORTH, addRequirements, 20, SpringLayout.SOUTH, noRequirements);
-		layout.putConstraint(SpringLayout.WEST, addRequirements, 5, SpringLayout.WEST, view);
+		//Add Requirements
+		layout.putConstraint(SpringLayout.NORTH, addRequirementsHeading, 20, SpringLayout.SOUTH, noRequirementspic);
+		layout.putConstraint(SpringLayout.EAST, addRequirementsHeading, 0, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.WEST, addRequirementsHeading, 20, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, addRequirementsExplanation, 20, SpringLayout.SOUTH, noRequirements);
+		layout.putConstraint(SpringLayout.NORTH, addRequirementspic, 20, SpringLayout.SOUTH, addRequirementsHeading);
+		layout.putConstraint(SpringLayout.WEST, addRequirementspic, 5, SpringLayout.WEST, view);
+		
+		layout.putConstraint(SpringLayout.NORTH, addRequirementsExplanation, 20, SpringLayout.SOUTH, addRequirementsHeading);
 		layout.putConstraint(SpringLayout.EAST, addRequirementsExplanation, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, addRequirementsExplanation, 20, SpringLayout.EAST, addRequirements);
+		layout.putConstraint(SpringLayout.WEST, addRequirementsExplanation, 20, SpringLayout.EAST, addRequirementspic);
 		
-		layout.putConstraint(SpringLayout.NORTH, importRequirements, 20, SpringLayout.SOUTH, addRequirements);
-		layout.putConstraint(SpringLayout.WEST, importRequirements, 5, SpringLayout.WEST, view);
+		//Import Requirements 
+		layout.putConstraint(SpringLayout.NORTH, importRequirementsHeading, 20, SpringLayout.SOUTH, addRequirementspic);
+		layout.putConstraint(SpringLayout.EAST, importRequirementsHeading, 0, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.WEST, importRequirementsHeading, 20, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, importRequirementsExplanation, 20, SpringLayout.SOUTH, addRequirements);
+		layout.putConstraint(SpringLayout.NORTH, importRequirementspic, 20, SpringLayout.SOUTH, importRequirementsHeading);
+		layout.putConstraint(SpringLayout.WEST, importRequirementspic, 5, SpringLayout.WEST, view);
+		
+		layout.putConstraint(SpringLayout.NORTH, importRequirementsExplanation, 20, SpringLayout.SOUTH, importRequirementsHeading);
 		layout.putConstraint(SpringLayout.EAST, importRequirementsExplanation, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, importRequirementsExplanation, 20, SpringLayout.EAST, importRequirements);
+		layout.putConstraint(SpringLayout.WEST, importRequirementsExplanation, 20, SpringLayout.EAST, importRequirementspic);
 		
-		layout.putConstraint(SpringLayout.NORTH, addedRequirements, 20, SpringLayout.SOUTH, importRequirements);
-		layout.putConstraint(SpringLayout.WEST, addedRequirements, 5, SpringLayout.WEST, view);
+		//Added Requirements 
+		layout.putConstraint(SpringLayout.NORTH, addedRequirementsHeading, 20, SpringLayout.SOUTH, importRequirementspic);
+		layout.putConstraint(SpringLayout.EAST, addedRequirementsHeading, 0, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.WEST, addedRequirementsHeading, 20, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, addedRequirementsExplanation, 20, SpringLayout.SOUTH, importRequirements);
+		layout.putConstraint(SpringLayout.NORTH, addedRequirementspic, 20, SpringLayout.SOUTH, addedRequirementsHeading);
+		layout.putConstraint(SpringLayout.WEST, addedRequirementspic, 5, SpringLayout.WEST, view);
+		
+		layout.putConstraint(SpringLayout.NORTH, addedRequirementsExplanation, 20, SpringLayout.SOUTH, addedRequirementsHeading);
 		layout.putConstraint(SpringLayout.EAST, addedRequirementsExplanation, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, addedRequirementsExplanation, 20, SpringLayout.EAST, addedRequirements);
+		layout.putConstraint(SpringLayout.WEST, addedRequirementsExplanation, 20, SpringLayout.EAST, addedRequirementspic);
 		
-		layout.putConstraint(SpringLayout.NORTH, updateRequirements, 20, SpringLayout.SOUTH, addedRequirements);
-		layout.putConstraint(SpringLayout.WEST, updateRequirements, 5, SpringLayout.WEST, view);
+		//Update Requirements
+		layout.putConstraint(SpringLayout.NORTH, updateRequirementsHeading, 20, SpringLayout.SOUTH, addedRequirementspic);
+		layout.putConstraint(SpringLayout.EAST, updateRequirementsHeading, 0, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.WEST, updateRequirementsHeading, 20, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, updateRequirementsExplanation, 20, SpringLayout.SOUTH, addedRequirements);
+		layout.putConstraint(SpringLayout.NORTH, updateRequirementspic, 20, SpringLayout.SOUTH, updateRequirementsHeading);
+		layout.putConstraint(SpringLayout.WEST, updateRequirementspic, 5, SpringLayout.WEST, view);
+		//layout.putConstraint(SpringLayout.SOUTH, updateRequirementspic, 20, SpringLayout.SOUTH, view);
+
+		layout.putConstraint(SpringLayout.NORTH, updateRequirementsExplanation, 20, SpringLayout.SOUTH, updateRequirementsHeading);
 		layout.putConstraint(SpringLayout.EAST, updateRequirementsExplanation, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, updateRequirementsExplanation, 20, SpringLayout.EAST, updateRequirements);
+		layout.putConstraint(SpringLayout.WEST, updateRequirementsExplanation, 20, SpringLayout.EAST, updateRequirementspic);
 		
 		setViewportView(view);
 		revalidate();
