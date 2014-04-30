@@ -474,22 +474,54 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 	}
 
 	public void updateEmailButtonPressed() {
-		User newUser = getUserController.getCurrentUser();
-		newUser.setEmail(emailField.getText());
-		updateUserController.updateUser(newUser);
-		
+		/**
+		 * IF TEST CONSTRUCTOR WAS CALLED, DO NOT
+		 * UPDATE USER CONTROLLER
+		 */
+		if(testUser != null) {
+			emailField.setText("newEmailaddress");
+			String newEmail = emailField.getText();
+			testUser.setEmail(newEmail);
+		}
+		else {
+			User newUser = getUserController.getCurrentUser();
+			newUser.setEmail(emailField.getText());
+	
+			updateUserController.updateUser(newUser);
+		}
 	}
 	public void updateFacebookButtonPressed() {
-		User newUser = getUserController.getCurrentUser();
-		newUser.setFacebookUsername(facebookField.getText());
-		updateUserController.updateUser(newUser);
-		
+		/**
+		 * IF TEST CONSTRUCTOR WAS CALLED, DO NOT
+		 * UPDATE USER CONTROLLER
+		 */
+		if(testUser != null) {
+			facebookField.setText("newFacebook");
+			String newFb = facebookField.getText();
+			testUser.setFacebookUsername(newFb);
+		}
+		else {
+			User newUser = getUserController.getCurrentUser();
+			newUser.setFacebookUsername(facebookField.getText());
+			updateUserController.updateUser(newUser);
+		}
 	}
 	public void updateMobileButtonPressed() {
-		User newUser = getUserController.getCurrentUser();
-		newUser.setPhoneNumber(mobileField.getText());
-		newUser.setCarrier(getCarrierFromIndex());
-		updateUserController.updateUser(newUser);
+		/**
+		 * IF TEST CONSTRUCTOR WAS CALLED, DO NOT
+		 * UPDATE USER CONTROLLER
+		 */
+		if(testUser != null) {
+			mobileField.setText("1234567890");
+			String newMobile = mobileField.getText();
+			testUser.setPhoneNumber(newMobile);
+		}
+		else {
+			User newUser = getUserController.getCurrentUser();
+			newUser.setPhoneNumber(mobileField.getText());
+			newUser.setCarrier(getCarrierFromIndex());
+			updateUserController.updateUser(newUser);
+		}
 	}
 	
 	/**
@@ -538,7 +570,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 			newPreferences= newPreferences + "F";
 		}
 		if(mobileCheckBox.isSelected()){
-			newPreferences= newPreferences + "M";;
+			newPreferences= newPreferences + "M";
 		}
 		newUser.setNotificationPreferences(newPreferences);
 		updateUserController.updateUser(newUser);
@@ -760,35 +792,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 			return false;
 		}
 	}
-	
-	public void updateEmailNotifyLabel() {
-		if (!receivingEmail()) {
-			emailOffNotify.setVisible(true);
-		}
-		else {
-			emailOffNotify.setVisible(false);
-		}
-	}
-
-	public void updateFacebookNotifyLabel() {
-		if (!receivingFacebook()) {
-			facebookOffNotify.setVisible(true);
-		}
-		else {
-			facebookOffNotify.setVisible(false);
-		}
-	}
-
-	public void updateMobileNotifyLabel() {
-		if (!receivingMobile()) {
-			mobileOffNotify.setVisible(true);
-		}
-		else {
-			mobileOffNotify.setVisible(false);
-		}
-	}
-
-	
 	
 	/**
 	 * displays the option to update the user's email if 
@@ -1120,6 +1123,22 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 	 */
 	public boolean readyToRemove() {
 		return true;
+	}
+	
+	/**
+	 * Getter for testing purposes
+	 * @return the text from mobileField
+	 */
+	public JLabel getemailOffNotify() {
+		return emailOffNotify;
+	}
+	
+	/**
+	 * Getter for testing purposes
+	 * @return the carrierDropdown
+	 */
+	public JComboBox<String> getCarrierDropDown() {
+		return carrierDropDown;
 	}
 	
 }

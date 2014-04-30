@@ -62,7 +62,7 @@ public class GetGameController implements ActionListener {
 	@Override
 	public synchronized void actionPerformed(ActionEvent e) {
 	    // Send a request to the core to read/get this Game
-		GetPPRequirementController.getInstance().retrieveRequirements();;
+		GetPPRequirementController.getInstance().retrieveRequirements();
 	    final Request request = 
 	    		Network.getInstance().makeRequest("planningpoker/game", HttpMethod.GET);
 	    // add an observer to process the response
