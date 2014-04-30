@@ -349,7 +349,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		repaint();
 		
 		setViewportView(view);
+	
 		updateButtons();
+		nameTextField.setBorder(defaultTextFieldBorder);
 	}
 	
 	/**
@@ -446,9 +448,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		isNameValid = getBoxName().validateField(errorField, showLabel, showBox);
 		
 		if (!isNameValid) {
-			getBoxName().setBorder(defaultTextFieldBorder);
+			nameTextField.setBorder(errorBorder);
 			errorField.setText("Name is required");
-		}		
+		}
+		else{
+			return true;
+		}
 		return isNameValid;
 	}
 	
@@ -661,10 +666,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	public void updateButtons() {
 		if (validateField(errorField,true, false)) {
 			saveButton.getSaveDeckButton().setEnabled(true);
+			nameTextField.setBorder(defaultTextFieldBorder);
 			errorField.setText("");
 		} 
 		else {
 			saveButton.getSaveDeckButton().setEnabled(false);
+			
 		}
 		
 		if (verifyNumberOfCards()) {
@@ -677,6 +684,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 			saveButton.getSaveDeckButton().setEnabled(false);
 			errorField.setText("Number of cards must be a 1-or-2-digit "
 					+ "integer between 1 and 25");
+			numCards.setBorder(errorBorder);
 		}	
 	}
 }
