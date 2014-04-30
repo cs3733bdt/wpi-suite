@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -161,7 +162,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		JScrollPane descriptionScroll = new JScrollPane(descriptionTextField);
 		descriptionScroll.setPreferredSize(new Dimension(400, 20));		
 		
-		/* panel underneath name and description, holds the radio buttons, the number of cards entry, and the color dropdown */
+		/* panel underneath name and description, holds the radio buttons, the number of cards entry, the color dropdown, and the i dont know check box */
 		JPanel numCardsAndColorAndSelectedTypePanel = new JPanel();
 		
 		/* radio buttons for type of card selection - single or multiple */
@@ -178,19 +179,28 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		
 		/* this panel holds the label and the two radio buttons */
 		JPanel radioButtonsPanel = new JPanel();
-		radioButtonsPanel.setLayout(new BorderLayout());
-		radioButtonsPanel.add(selectionLabelPanel, BorderLayout.PAGE_START);
-		radioButtonsPanel.add(singleSelection, BorderLayout.LINE_START);
-		radioButtonsPanel.add(multipleSelection, BorderLayout.LINE_END);
+		radioButtonsPanel.setPreferredSize(new Dimension(160, 80));
+		SpringLayout radioSpring = new SpringLayout();
+		radioButtonsPanel.setLayout(radioSpring);
+		radioButtonsPanel.add(selectionLabelPanel);
+		radioButtonsPanel.add(singleSelection);
+		radioButtonsPanel.add(multipleSelection);
+		/* Layout changes of radio button label/fields in radioButtonsPanel */
+		radioSpring.putConstraint(SpringLayout.HORIZONTAL_CENTER, selectionLabelPanel, 0, SpringLayout.HORIZONTAL_CENTER, radioButtonsPanel);
+		radioSpring.putConstraint(SpringLayout.NORTH, selectionLabelPanel, 2, SpringLayout.NORTH, radioButtonsPanel);	
+		radioSpring.putConstraint(SpringLayout.WEST, singleSelection, 2, SpringLayout.WEST, radioButtonsPanel);
+		radioSpring.putConstraint(SpringLayout.WEST, multipleSelection, 2, SpringLayout.WEST, radioButtonsPanel);
+		radioSpring.putConstraint(SpringLayout.EAST, singleSelection, -2, SpringLayout.EAST, radioButtonsPanel);
+		radioSpring.putConstraint(SpringLayout.EAST, multipleSelection, -2, SpringLayout.EAST, radioButtonsPanel);
+		radioSpring.putConstraint(SpringLayout.NORTH, singleSelection, 2, SpringLayout.SOUTH, selectionLabelPanel);
+		radioSpring.putConstraint(SpringLayout.NORTH, multipleSelection, 2, SpringLayout.SOUTH, singleSelection);
 		
 		/* blank panel for formatting */
 		JPanel blankPanel1 = new JPanel();
-		blankPanel1.setPreferredSize(new Dimension(35, 5));
+		blankPanel1.setPreferredSize(new Dimension(75, 5));
 		
 		/* number of cards desired by user */
 		JLabel numCardsLabel = new JLabel("Number of Cards * ");
-		JPanel numLabelPanel = new JPanel();
-		numLabelPanel.add(numCardsLabel);
 		numCards = new NameJTextField(5);
 		numCards.setText("1");
 		numCards.addKeyListener(this);
@@ -206,25 +216,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		});
 		addMouseListenerToNumberOfCardsSubmitButton(submitNumCards);
 		
-		/* this panel holds the label, the textfield, and the submit button */
-		JPanel numPanel = new JPanel();
-		numPanel.setLayout(new BorderLayout());
-		numPanel.add(numLabelPanel, BorderLayout.PAGE_START);
-		numPanel.add(numCards, BorderLayout.LINE_START);
-		numPanel.add(submitNumCards, BorderLayout.LINE_END);
-		
-		JPanel numFieldPanel = new JPanel();
-		numFieldPanel.add(numCards);
-		numFieldPanel.add(submitNumCards);
-		
-		/* blank panel for formatting */
-		JPanel blankPanel2 = new JPanel();
-		blankPanel2.setPreferredSize(new Dimension(15, 5));
-		
 		/* color desired by user */
 		JLabel colorLabel = new JLabel("Select Card Color * ");
-		JPanel colorLabelPanel = new JPanel();
-		colorLabelPanel.add(colorLabel);
 		colorDropDown = new JComboBox<String>();	
 		colorDropDown.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
@@ -236,19 +229,42 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		colorDropDown.addItem("Green");
 		colorDropDown.addItem("Purple");
 		colorDropDown.addItem("Yellow");
-		/* this panel holds the label and the dropdown */
-		JPanel colorPanel = new JPanel();
-		colorPanel.setLayout(new BorderLayout());
-		colorPanel.add(colorLabelPanel, BorderLayout.PAGE_START);
-		colorPanel.add(colorDropDown, BorderLayout.PAGE_END);
 		
 		/* blank panel for formatting */
-		JPanel blankPanel3 = new JPanel();
-		blankPanel3.setPreferredSize(new Dimension(15, 5));
+		JPanel blankPanel2 = new JPanel();
+		blankPanel2.setPreferredSize(new Dimension(75, 5));
+		
+		/* this panel holds the labels for the number of cards and for the color selection,
+		 * as well as the textfield and the submit button for the number of cards,
+		 * and the dropdown for color selection */
+		JPanel numberAndColorOfCards = new JPanel();
+		numberAndColorOfCards.setPreferredSize(new Dimension(260, 70));
+		SpringLayout numberAndColorOfCardsSpring = new SpringLayout();
+		numberAndColorOfCards.setLayout(numberAndColorOfCardsSpring);
+		numberAndColorOfCards.add(numCardsLabel);
+		numberAndColorOfCards.add(numCards);
+		numberAndColorOfCards.add(submitNumCards);
+		numberAndColorOfCards.add(colorLabel);
+		numberAndColorOfCards.add(colorDropDown);
+		/* Layout changes of number label/fields in numberAndColorOfCards */
+		numberAndColorOfCardsSpring.putConstraint(SpringLayout.WEST, numCardsLabel, 2, SpringLayout.WEST, numberAndColorOfCards);
+		numberAndColorOfCardsSpring.putConstraint(SpringLayout.NORTH, numCardsLabel, 5, SpringLayout.NORTH, numberAndColorOfCards);
+		numberAndColorOfCardsSpring.putConstraint(SpringLayout.WEST, numCards, 10, SpringLayout.EAST, numCardsLabel);
+		numberAndColorOfCardsSpring.putConstraint(SpringLayout.NORTH, numCards, 2, SpringLayout.NORTH, numberAndColorOfCards);
+		numberAndColorOfCardsSpring.putConstraint(SpringLayout.SOUTH, numCards, 0, SpringLayout.SOUTH, submitNumCards);
+		numberAndColorOfCardsSpring.putConstraint(SpringLayout.WEST, submitNumCards, 5, SpringLayout.EAST, numCards);
+		numberAndColorOfCardsSpring.putConstraint(SpringLayout.NORTH, submitNumCards, 2, SpringLayout.NORTH, numberAndColorOfCards);
+		/* Layout changes of color label/fields in numberAndColorOfCards */
+		numberAndColorOfCardsSpring.putConstraint(SpringLayout.WEST, colorLabel, 2, SpringLayout.WEST, numberAndColorOfCards);
+		numberAndColorOfCardsSpring.putConstraint(SpringLayout.NORTH, colorLabel, 16, SpringLayout.SOUTH, submitNumCards);
+		numberAndColorOfCardsSpring.putConstraint(SpringLayout.WEST, colorDropDown, 7, SpringLayout.EAST, colorLabel);
+		numberAndColorOfCardsSpring.putConstraint(SpringLayout.NORTH, colorDropDown, 15, SpringLayout.SOUTH, submitNumCards);
+		numberAndColorOfCardsSpring.putConstraint(SpringLayout.EAST, colorDropDown, 0, SpringLayout.EAST, submitNumCards);
 		
 		/* Checkbox for I Dont Know button */
 		JLabel checkboxLabel = new JLabel("Have 'I Don't Know Button'?");
 		iDontKnowCheck = new JCheckBox();
+		iDontKnowCheck.setSelected(true);
 		JPanel checkPanel = new JPanel();
 		checkPanel.add(iDontKnowCheck);
 		JPanel checkboxPanel = new JPanel();
@@ -256,23 +272,13 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		checkboxPanel.add(checkboxLabel, BorderLayout.PAGE_START);
 		checkboxPanel.add(checkPanel, BorderLayout.PAGE_END);		
 		
-		JPanel labelsPanel = new JPanel();
-		labelsPanel.setLayout(new GridLayout(0, 2));
-		labelsPanel.add(numLabelPanel);
-		labelsPanel.add(numFieldPanel);
-		labelsPanel.add(colorLabelPanel);
-		labelsPanel.add(colorDropDown);
-		
-		/* adds the 7 previous components (including formatting panels) to a single panel so the items can appear horizontally.
+		/* adds the 5 previous components (including formatting panels) to a single panel so the items can appear horizontally.
 		 * Initially they were all on the same panel because they needed to all stretch together, but now it is easier to just leave
 		 * them instead of re-doing each spring constraint. */
 		numCardsAndColorAndSelectedTypePanel.add(radioButtonsPanel);
 		numCardsAndColorAndSelectedTypePanel.add(blankPanel1);
-		//numCardsAndColorAndSelectedTypePanel.add(numPanel);
-		//numCardsAndColorAndSelectedTypePanel.add(blankPanel2);
-		//numCardsAndColorAndSelectedTypePanel.add(colorPanel);
-		numCardsAndColorAndSelectedTypePanel.add(labelsPanel);
-		numCardsAndColorAndSelectedTypePanel.add(blankPanel3);
+		numCardsAndColorAndSelectedTypePanel.add(numberAndColorOfCards);
+		numCardsAndColorAndSelectedTypePanel.add(blankPanel2);
 		numCardsAndColorAndSelectedTypePanel.add(checkboxPanel);
 		
 		/* Card panel and scrollPane for the cards to appear in */
@@ -319,8 +325,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		
 		layout.putConstraint(SpringLayout.WEST, descriptionScroll, 5, SpringLayout.EAST, descriptionLabel);
 		layout.putConstraint(SpringLayout.NORTH, descriptionScroll, 10, SpringLayout.NORTH, view);
+		layout.putConstraint(SpringLayout.EAST, descriptionScroll, -10, SpringLayout.EAST, view);
 		
-		layout.putConstraint(SpringLayout.WEST, numCardsAndColorAndSelectedTypePanel, 0, SpringLayout.WEST, view);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, numCardsAndColorAndSelectedTypePanel, 0, SpringLayout.HORIZONTAL_CENTER, view);
 		layout.putConstraint(SpringLayout.NORTH, numCardsAndColorAndSelectedTypePanel, 10, SpringLayout.SOUTH, nameLabel);
 		
 		layout.putConstraint(SpringLayout.WEST, cardScrollPane, 10, SpringLayout.WEST, view);
@@ -435,7 +442,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	 * @param warningField the field to output the errors to
 	 * @return true If all fields are valid and the window is ready to be removed
 	 */
-	@Override
 	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
 		boolean isNameValid = false;		
 		boolean isNumCardsValid = false;
@@ -454,7 +460,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		return (isNameValid && isNumCardsValid);
 	}
 	
-	@Override
 	public boolean hasChanges() {
 		// TODO Auto-generated method stub
 		return false;
