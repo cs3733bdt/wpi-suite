@@ -95,7 +95,7 @@ public class GetPPRequirementController implements ActionListener {
 	 */
 	public void receivedRequirements(PPRequirement[] requirements) {
 		PPRequirementModel rModel = PPRequirementModel.getInstance();
-		PPRequirmentHolder.getInstance().setRequirments( new ArrayList<PPRequirement>(Arrays.asList(requirements)) );
+		PPRequirementHolder.getInstance().setRequirements( new ArrayList<PPRequirement>(Arrays.asList(requirements)) );
 		// Make sure requirements exist in the PP DB
 		if (requirements != null) {
 			rModel.addRequirements(requirements);
