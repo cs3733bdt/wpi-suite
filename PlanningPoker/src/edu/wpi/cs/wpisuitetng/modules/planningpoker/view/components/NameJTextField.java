@@ -26,9 +26,17 @@ import javax.swing.border.Border;
  *
  */
 public class NameJTextField extends JTextField implements IDataField {
-	private final Border defaultBorder = (new JTextField()).getBorder();
-	private final Border errorBorder = BorderFactory
-			.createLineBorder(Color.RED);
+	//These can  be accessed externally in order to allow the user to debug and check for errors easier
+	/** The text error placed on an IErrorField when the name is longer than 100 characters */
+	public static final String STRING_ERROR_NAMELONG = "Name can be no more than 100 chars.";
+	
+	/** The text error placed on an IErrorField when the name empty */
+	public static final String STRING_ERROR_BLANK = "Name is required";
+	
+	/** The */
+	public static final Border DEFAULTBORDER = (new JTextField()).getBorder();
+	public static final Border ERRORBORDER = BorderFactory.createLineBorder(Color.RED);
+	
 	private String startingText;
 
 	/**
@@ -61,10 +69,6 @@ public class NameJTextField extends JTextField implements IDataField {
 		super.setText(text);
 	}
 
-	public void displayStandardBorder(){
-		setBorder(BorderFactory.createTitledBorder("Name"));
-	}
-
 	/**
 	 * adds a key listener that will update buttons based on this data field
 	 */
@@ -83,26 +87,26 @@ public class NameJTextField extends JTextField implements IDataField {
 		if (getText().length() >= 100) {
 			isNameValid = false;
 			if(showLabel){
-				if(errorField != null) errorField.setText("Name can be no more than 100 chars.");
+				if(errorField != null) errorField.setText(STRING_ERROR_NAMELONG);
 			}
 			if(showBox){
-				this.setBorder(errorBorder);
+				this.setBorder(ERRORBORDER);
 			}
 			
 		} else if (getText().length() <= 0) {
 			isNameValid = false;
 			if(errorField != null){
 				if(showLabel){
-					errorField.setText("Name is required");
+					errorField.setText(STRING_ERROR_BLANK);
 				}
 				if(showBox){
-					this.setBorder(errorBorder);
+					this.setBorder(ERRORBORDER);
 				}
 			}
 		} else {
 			errorField.setText("");
 			isNameValid = true;
-			this.setBorder(defaultBorder);
+			this.setBorder(DEFAULTBORDER);
 		}
 		return isNameValid;
 	}
