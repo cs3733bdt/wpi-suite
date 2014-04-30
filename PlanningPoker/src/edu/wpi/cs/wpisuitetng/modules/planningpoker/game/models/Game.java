@@ -14,10 +14,15 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+
+import javax.swing.JComponent;
+import javax.swing.JOptionPane;
 
 import com.google.gson.Gson;
 
@@ -33,6 +38,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotificatio
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.PPRequirmentHolder;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.UpdatePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
 
 /**
  * Basic Game class that contains the data to be store for a Game
@@ -176,7 +183,11 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		}
 
 		if(complete != toCopyFrom.complete){
-			complete = toCopyFrom.complete;
+			if (complete == true) {
+				complete = true;
+			} else {
+				complete = toCopyFrom.complete;
+			}
 			needsUpdate = true;
 			wasChanged = true;
 		}
@@ -249,7 +260,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		notifiedOfCreation = false;
 		notifiedOfCompletion = false;
 		identity = UUID.randomUUID();
-		deck = new Deck();
+		
 	}
 
 	/**
@@ -297,6 +308,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			Date creationTime) {
 		this(name, description, requirements, hasTimeLimit, usesCards);
 		this.creationTime = creationTime;
+		this.complete = false;
 	}
 
 	/**
@@ -700,8 +712,36 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		fbn.sendFacebookNotifications();
 
 	}
-
-	public Deck getDeck() {
-		return deck;
+	
+	/**
+	 * Checks if the current game has passed its deadline and sets it as
+	 * complete if so
+	 * 
+	 * @return returns true if the game has passed its deadline, false otherwise
+	 */
+	public boolean hasEnded() {
+		Calendar rightNow = Calendar.getInstance();
+		Calendar gameEnd = new GregorianCalendar();
+		gameEnd.setTime(getEndDate());
+		
+		if(isActive() && rightNow.after(gameEnd)) {
+			if(ViewEventController.getInstance().getTabbedView().hasActiveGameOpen(this)) {
+				JOptionPane.showMessageDialog(
+					ViewEventController.getInstance().getTabbedView().getActiveGamePanel(this),
+					"Current game has expired and will now close.");
+				ViewEventController.getInstance().getTabbedView().removeTab(
+							(JComponent) ViewEventController.getInstance().getTabbedView().getActiveGamePanel(
+							this));
+			}
+			makeChanged();
+			delayChange();
+			makeComplete();
+			setActive(false);
+			ViewEventController.getInstance().refreshGameTree();
+			return true;
+			}
+		else {
+			return false;
+		}
 	}
 }
