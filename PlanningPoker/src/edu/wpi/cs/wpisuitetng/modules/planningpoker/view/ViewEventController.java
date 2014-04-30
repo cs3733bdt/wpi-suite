@@ -14,6 +14,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 import javax.swing.JComponent;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.DeckTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CreateDeckPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
@@ -27,6 +28,7 @@ public class ViewEventController {
 	//private MainView main = null;
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
+	private DeckTree deckTree = null;
 	private TabbedView tabs = null;
 	
 	
@@ -219,6 +221,15 @@ public class ViewEventController {
 	}
 
 	/**
+	 * Refreshes the tree model using data from the Deck Model
+	 */
+	public void refreshDeckTree() {
+		//This method will call a method that refreshes the the tree
+		deckTree.refresh();
+		
+	}
+	
+	/**
 	 * Sets the game overview tree model
 	 * @param gameTree the game tree model
 	 */
@@ -227,5 +238,12 @@ public class ViewEventController {
 		
 	}
 
-
+	/**
+	 * Sets the deck overview tree model
+	 * @param deckTree the game tree model
+	 */
+	public void setDeckOverviewTree(DeckTree deckTree) {
+		this.deckTree = deckTree;
+		
+	}
 }

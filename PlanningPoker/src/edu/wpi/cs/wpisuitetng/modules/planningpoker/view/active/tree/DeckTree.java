@@ -45,6 +45,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  *
  */
 public class DeckTree extends JPanel implements MouseListener{
+	private static DeckTree instance = null;
+	
 	private boolean initialized = false; //Check if GameModel should be generated from the server
 	JTree deckTree; // JTree to hold the hierarchy of games
 	JScrollPane gameTreeScroll; // scrollPane to put the tree in
@@ -66,10 +68,22 @@ public class DeckTree extends JPanel implements MouseListener{
 	 */
 	public DeckTree(){
 		super(new GridBagLayout());
-		//ViewEventController.getInstance().setGameOverviewTree(this);
+		ViewEventController.getInstance().setDeckOverviewTree(this);
 		refresh();
 	}
 
+	/**
+	 * Instantiates the game tree if it does not already exist.
+	 * Otherwise it returns the current version of the GameTree
+	 * @return the singleton Game Tree
+	 */
+	public static DeckTree getInstance(){
+		if(instance == null){
+			instance = new DeckTree();
+		}
+		return instance;
+	}
+	
 	/**
 	 * Regenerates the table's components whenever called.
 	 * Used when the list of games is updated or changed.
@@ -172,7 +186,7 @@ public class DeckTree extends JPanel implements MouseListener{
 	
 	
 	/**
-	 * @param list the list of games to be sorted
+	 * @param list the list of decks to be sorted
 	 * @return the same list sorted by start date
 	 */
 	public List<Deck> sortDecks(List<Deck> list) {
@@ -181,7 +195,7 @@ public class DeckTree extends JPanel implements MouseListener{
 		return list;
 	}
 
-	public JTree getGameTree(){
+	public JTree getDeckTree(){
 		return deckTree;
 	}
 
@@ -273,7 +287,7 @@ public class DeckTree extends JPanel implements MouseListener{
  * Used to sort decks by their creation time.
  *
  */
-class GameComparator implements Comparator<Deck>{
+class DeckComparator implements Comparator<Deck>{
 	@Override
 	public int compare(Deck D1, Deck D2){
 		return -(D1.getName().compareTo(D2.getName()));
