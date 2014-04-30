@@ -114,7 +114,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	/**
 	 * errorfield to display validation errors
 	 */
-	private ErrorLabel errorField;
+	private ErrorLabel errorField = new ErrorLabel();
 
 	private final Border defaultTextFieldBorder = (new JTextField()).getBorder();
 	
@@ -123,7 +123,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	/**
 	 * an initial red card to be added to the view as a default starting deck
 	 */
-	private final CardImage cardRed = new CardImage(ColorEnum.RED);
+	private final CardImage cardRed = new CardImage(ColorEnum.RED, errorField);
 	
 	/**
 	 * array list to hold all the cards currently generated. TODO: IMPLEMENT THIS
@@ -294,7 +294,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		cancelDeckButton = new CancelButton("Cancel Deck", this);
 		
 		/* error label */
-		errorField = new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
 		errorField.setText("Name is required");
@@ -440,21 +439,14 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	 */
 	@Override
 	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
-		boolean isNameValid = false;		
-		boolean isNumCardsValid = false;
-		
-		isNumCardsValid = verifyNumberOfCards();
-		if(!isNumCardsValid) {
-			errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 25");
-			//getNumCards().setBorder(errorBorder);
-		}
-		
+		boolean isNameValid = false;			
 		isNameValid = getBoxName().validateField(errorField, showLabel, showBox);
+		
 		if (!isNameValid) {
 			getBoxName().setBorder(defaultTextFieldBorder);
 			errorField.setText("Name is required");
 		}		
-		return (isNameValid && isNumCardsValid);
+		return isNameValid;
 	}
 	
 	@Override
@@ -594,7 +586,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	
 	public void addCards(ColorEnum color, int numCardsPresent) {
 		for(int i=0; i < numCardsPresent; i++){
-			 CardImage newCard = new CardImage(color);
+			 CardImage newCard = new CardImage(color,errorField);
 			 cardsPanel.add(newCard);
 			 cards.add(newCard);
 			 String valueAtIndexI = Integer.toString(values.get(i));
@@ -668,16 +660,22 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		if (validateField(errorField,true, false)) {
 			saveButton.getSaveDeckButton().setEnabled(true);
 			errorField.setText("");
-		} else {
+		} 
+		else {
 			saveButton.getSaveDeckButton().setEnabled(false);
 		}
-		if (validateField(errorField,true, false)) {
+		
+		if (verifyNumberOfCards()) {
 			submitNumCards.setEnabled(true);
 			getNumCards().setBorder(defaultTextFieldBorder);
 			errorField.setText("");
-		} else {
+		} 
+		else {
 			submitNumCards.setEnabled(false);
-		}
+			saveButton.getSaveDeckButton().setEnabled(false);
+			errorField.setText("Number of cards must be a 1-or-2-digit "
+					+ "integer between 1 and 25");
+		}	
 	}
 }
 

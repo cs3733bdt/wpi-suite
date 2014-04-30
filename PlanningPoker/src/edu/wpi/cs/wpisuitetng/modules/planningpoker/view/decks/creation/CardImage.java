@@ -31,6 +31,11 @@ import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberJTextField;
+
 /**
  * Creates a CardImage, which is to be used to display the cards when creating a deck, as well
  * as when voting on an estimate.
@@ -39,18 +44,24 @@ import javax.swing.JTextField;
  * For the voting, it will have a permanent color and value.
  * @author Team BobbyDropTables
  */
-public class CardImage extends JPanel{
+public class CardImage extends JPanel implements IDataField{
 	
 	ColorEnum color;									//card's back color
 	
-	private JTextField addValue = new JTextField();		//the textfield that pops up when a user clicks a card, in which the user enters the desired value for the card
+	private NumberJTextField addValue = new NumberJTextField();		//the textfield that pops up when a user clicks a card, in which the user enters the desired value for the card
 	
 	private JLabel valueLabel = new JLabel("");			//the label that displays the value for each card as chosen by the user
 	
 	private GridBagConstraints c;
+
+	private IErrorView errorField;
 	
-	public CardImage(ColorEnum color){
+
+	
+	public CardImage(ColorEnum color,IErrorView errorField){
+		this.errorField = errorField;
 		this.color = color;
+		addValue.setIErrorView(errorField);
 		BufferedImage myPicture = null;
 		try {
 			myPicture = ColorCardImage.getColorCardImage(color);
@@ -91,7 +102,6 @@ public class CardImage extends JPanel{
 		valueLabel.setVisible(false);								//sets the label to be invisible at the start
 		valueLabel.setFont(makeFont(10));
 	}
-	
 	/**
 	 * A getter for the card's color
 	 * @return color
@@ -183,7 +193,7 @@ public class CardImage extends JPanel{
 		});
 	}
 	
-	private boolean validateAddValueField(){
+	public boolean validateAddValueField(){
 		String stringText = addValue.getText();
 		int parsedText = Integer.parseInt(stringText);
 		if(parsedText <= 999 && parsedText >= 1){
@@ -191,7 +201,7 @@ public class CardImage extends JPanel{
 				return true;
 			}
 			else {
-				//TODO: SET ERRORFIELD TEXT TO SAY "Value of cards must be a 3-digit-or-less integer between 1 and 999
+				errorField.setText("Value of cards must be a 3-digit-or-less integer between 1 and 999");
 				return false;
 			}
 		}
@@ -222,6 +232,18 @@ public class CardImage extends JPanel{
 		// set the bigger font for userStoryDesc
 		Font bigFont = newFont;
 		return bigFont;
+	}
+
+	@Override
+	public boolean validateField(IErrorView warningField, boolean showLabel,
+			boolean showBox) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean hasChanges() {
+		return addValue.hasChanges();
 	}
 	
 	
