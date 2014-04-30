@@ -36,6 +36,7 @@ public class DescriptionJTextFieldAreaTest {
 	
 	@Test
 	public void hasChangesTest() {
+		textArea.setText("Change text");
 		assertTrue(textArea.hasChanges());
 	}
 	

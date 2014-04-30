@@ -49,7 +49,6 @@ public class DescriptionJTextArea extends JTextArea implements IDataField {
 	
 	@Override
 	public void setText(String text){
-		startingText = text;
 		super.setText(text);
 	}
 	
