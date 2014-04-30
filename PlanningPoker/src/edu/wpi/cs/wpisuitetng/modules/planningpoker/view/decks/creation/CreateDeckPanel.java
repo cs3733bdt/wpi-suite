@@ -453,18 +453,18 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	 * @param warningField the field to output the errors to
 	 * @return true If all fields are valid and the window is ready to be removed
 	 */
-	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
-		boolean isNameValid = false;			
-		isNameValid = getBoxName().validateField(errorField, showLabel, showBox);
+	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {	
+		boolean isNameValid = getBoxName().validateField(errorField, showLabel, showBox);
 		
-		if (!isNameValid) {
-			nameTextField.setBorder(errorBorder);
-			errorField.setText("Name is required");
+		boolean isDescriptionValid = descriptionTextField.validateField(errorField, showLabel, showBox);
+		
+		boolean areCardsValid = true;
+		for(CardImage c : cards){
+			areCardsValid &= c.validateField(errorField, showLabel, showBox);
 		}
-		else{
-			return true;
-		}
-		return isNameValid;
+		
+		
+		return isNameValid && isDescriptionValid && areCardsValid;
 	}
 	
 	public boolean hasChanges() {
