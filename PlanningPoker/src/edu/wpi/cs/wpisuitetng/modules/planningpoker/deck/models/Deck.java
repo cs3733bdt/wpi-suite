@@ -73,7 +73,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		this.description = "Default Deck";
 		this.owner = "admin";
 		this.hasIdontKnow = true;
-		color = ColorEnum.BLUE;
+		color = ColorEnum.RED;
 		cards = new ArrayList<Integer>();
 		buildDefaultDeck(7);
 	}
