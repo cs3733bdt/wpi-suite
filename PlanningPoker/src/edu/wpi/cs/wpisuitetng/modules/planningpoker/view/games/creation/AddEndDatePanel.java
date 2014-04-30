@@ -305,7 +305,11 @@ public class AddEndDatePanel extends JPanel implements IDataField {
 
 	@Override
 	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean THIS_SHIT_IS_NOT_CHANGED = false;
+		if(THIS_SHIT_IS_NOT_CHANGED){
+			return THIS_SHIT_IS_NOT_CHANGED;
+		} else {
+			return THIS_SHIT_IS_NOT_CHANGED;
+		}
 	}
 }
