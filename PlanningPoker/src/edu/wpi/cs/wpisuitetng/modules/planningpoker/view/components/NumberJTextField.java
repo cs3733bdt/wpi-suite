@@ -2,6 +2,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 
 import java.awt.Color;
 import java.awt.Toolkit;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -134,7 +136,18 @@ public class NumberJTextField extends JTextField implements IDataField {
 			setBorder(BORDER_ERROR);
 		}
 	}
-
+	
+	/**
+	 * adds a key listener that will update buttons based on this data field
+	 */
+	public void addKeyListener(final IValidateButtons parent){
+		this.addKeyListener(new KeyAdapter(){
+			public void keyReleased(KeyEvent arg0) {	
+				parent.updateButtons();
+			}
+		});
+	}
+	
 	@Override
 	public boolean hasChanges() {
 		return !initialText.equals(getText());

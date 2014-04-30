@@ -34,7 +34,7 @@ public class PPRequirementHolder {
 		throw new DBModelNotInstantiatedException();
 	}
 	
-	public void setRequirments(List<PPRequirement> list){
+	public void setRequirements(List<PPRequirement> list){
 		this.list = list;
 	}
 }
