@@ -16,7 +16,7 @@ import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
 /**
- * This observer is called when a response is received from a request to the server to get a game
+ * This observer is called when a response is received from a request to the server to get a Deck
  * 
  * @author Andrew Busch
  */
@@ -25,8 +25,8 @@ public class GetDeckRequestObserver implements RequestObserver {
 	private GetDeckController controller;
 	
 	/**
-	 * Constructs an observer for requesting games
-	 * @param controller getGameController to be observed
+	 * Constructs an observer for requesting Decks
+	 * @param controller getDeckController to be observed
 	 */
 	public GetDeckRequestObserver(GetDeckController controller) {
 		this.controller = controller;
