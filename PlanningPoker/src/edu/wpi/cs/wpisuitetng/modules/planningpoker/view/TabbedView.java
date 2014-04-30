@@ -204,6 +204,45 @@ public class TabbedView extends JTabbedPane {
 
 
 	/**
+	 * Iterates through the list of active game panels currently open and returns true
+	 * if the given game is currently open in a tab and is active
+	 * @param game Game to check for in open tabs
+	 * @return returns true if the given game is open in a tab and active, returns false otherwise
+	 */
+	public boolean hasActiveGameOpen(Game game){
+		for(IActiveGamePanel gameSearch : listOfActiveGamePanels){
+			if(game.equals(gameSearch.getGame())) {
+				setSelectedComponent((Component) gameSearch);
+				invalidate();
+				repaint();
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Iterates through the list of active game panels currently open and returns the 
+	 * panel for the game given if it is found
+	 * @param game game to search for in the list of active game panels
+	 * @return returns the active game panel corresponding to the given game
+	 * @throws NullPointerException if the list of active panels is empty, throws an exception
+	 */
+	public Component getActiveGamePanel(Game game) throws NullPointerException{
+		if(listOfActiveGamePanels.isEmpty()) {
+			throw new NullPointerException("The list of game panels was null");
+		}
+		else {
+			for(IActiveGamePanel gameSearch : listOfActiveGamePanels) {
+				if(game.equals(gameSearch.getGame())) {
+					return (Component)gameSearch;
+				}
+			}
+		}
+		return null;
+	}
+	
+	/**
 	 * Creates an EditGamePanel instance, adds a tab representing 
 	 * that panel, and switches to that new panel
 	 * @param game The game to be added

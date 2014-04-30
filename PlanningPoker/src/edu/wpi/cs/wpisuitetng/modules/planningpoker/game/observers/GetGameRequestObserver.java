@@ -12,6 +12,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -40,6 +41,9 @@ public class GetGameRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 	    Game[] games = Game.fromJsonArray(iReq.getResponse().getBody());
+	    for(Game game: games) {
+	    	game.hasEnded();
+	    }
 	    controller.receivedGames(games);
 	}
 	

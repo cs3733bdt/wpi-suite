@@ -14,7 +14,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CardImage;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorCardImage;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorEnum;
 
