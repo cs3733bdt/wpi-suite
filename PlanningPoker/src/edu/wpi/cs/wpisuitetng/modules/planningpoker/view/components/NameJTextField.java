@@ -100,7 +100,7 @@ public class NameJTextField extends JTextField implements IDataField {
 				}
 			}
 		} else {
-			// getErrorName().setText("");
+			errorField.setText("");
 			isNameValid = true;
 			this.setBorder(defaultBorder);
 		}
