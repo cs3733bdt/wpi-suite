@@ -139,33 +139,33 @@ public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
 		layout.putConstraint(SpringLayout.NORTH, headingLabel, 5, SpringLayout.NORTH, view);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, headingLabel, 0, SpringLayout.HORIZONTAL_CENTER, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, gameInfoLabel, 5, SpringLayout.SOUTH, headingLabel);
-		layout.putConstraint(SpringLayout.WEST, gameInfoLabel, 5, SpringLayout.WEST, view);
+		layout.putConstraint(SpringLayout.NORTH, gameInfoLabel, 20, SpringLayout.SOUTH, headingLabel);
+		layout.putConstraint(SpringLayout.WEST, gameInfoLabel, 20, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, gameInfo, 5, SpringLayout.SOUTH, gameInfoLabel);
+		layout.putConstraint(SpringLayout.NORTH, gameInfo, 20, SpringLayout.SOUTH, gameInfoLabel);
 		layout.putConstraint(SpringLayout.WEST, gameInfo, 5, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, gameInfoExplanation, 5, SpringLayout.SOUTH, gameInfoLabel); 
+		layout.putConstraint(SpringLayout.NORTH, gameInfoExplanation, 20, SpringLayout.SOUTH, gameInfoLabel); 
 		layout.putConstraint(SpringLayout.EAST, gameInfoExplanation, 0, SpringLayout.EAST, view);
 		layout.putConstraint(SpringLayout.WEST, gameInfoExplanation, 20, SpringLayout.EAST, gameInfo);
 		
 		layout.putConstraint(SpringLayout.NORTH, cardVoteLabel, 20, SpringLayout.SOUTH, gameInfo);
-		layout.putConstraint(SpringLayout.WEST, cardVoteLabel, 5, SpringLayout.WEST, view);
+		layout.putConstraint(SpringLayout.WEST, cardVoteLabel, 20, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, cardVote, 5, SpringLayout.SOUTH, cardVoteLabel);
+		layout.putConstraint(SpringLayout.NORTH, cardVote, 20, SpringLayout.SOUTH, cardVoteLabel);
 		layout.putConstraint(SpringLayout.WEST, cardVote, 5, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, cardVoteExplanation, 5, SpringLayout.SOUTH, cardVoteLabel); 
+		layout.putConstraint(SpringLayout.NORTH, cardVoteExplanation, 20, SpringLayout.SOUTH, cardVoteLabel); 
 		layout.putConstraint(SpringLayout.EAST, cardVoteExplanation, 0, SpringLayout.EAST, view);
 		layout.putConstraint(SpringLayout.WEST, cardVoteExplanation, 20, SpringLayout.EAST, cardVote);
 		
 		layout.putConstraint(SpringLayout.NORTH, textVoteLabel, 20, SpringLayout.SOUTH, cardVote);
-		layout.putConstraint(SpringLayout.WEST, textVoteLabel, 5, SpringLayout.WEST, view);
+		layout.putConstraint(SpringLayout.WEST, textVoteLabel, 20, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, textVote, 5, SpringLayout.SOUTH, textVoteLabel);
+		layout.putConstraint(SpringLayout.NORTH, textVote, 20, SpringLayout.SOUTH, textVoteLabel);
 		layout.putConstraint(SpringLayout.WEST, textVote, 5, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, textVoteExplanation, 5, SpringLayout.SOUTH, textVoteLabel); 
+		layout.putConstraint(SpringLayout.NORTH, textVoteExplanation, 20, SpringLayout.SOUTH, textVoteLabel); 
 		layout.putConstraint(SpringLayout.EAST, textVoteExplanation, 0, SpringLayout.EAST, view);
 		layout.putConstraint(SpringLayout.WEST, textVoteExplanation, 20, SpringLayout.EAST, textVote);
 		
