@@ -38,26 +38,26 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
- * Displays and lists the game nodes and stores games in them which
- * is dependant on the status of the game
+ * Displays and lists the Deck nodes and stores Decks in them which
+ * is dependant on the status of the Deck
  * @author Bobby Drop Tables
  *
  */
 public class DeckTree extends JPanel implements MouseListener{
 	private static DeckTree instance = null;
 	
-	private boolean initialized = false; //Check if GameModel should be generated from the server
-	JTree deckTree; // JTree to hold the hierarchy of games
+	private boolean initialized = false; //Check if DeckModel should be generated from the server
+	JTree deckTree; // JTree to hold the hierarchy of Decks
 	JScrollPane deckTreeScroll; // scrollPane to put the tree in
 	DefaultMutableTreeNode deckNode = 
 			new DefaultMutableTreeNode("Decks"); //Make master node hold the other 3
 	DefaultMutableTreeNode currentDecks = 
-			new DefaultMutableTreeNode("Your Decks"); //Make pending games node
+			new DefaultMutableTreeNode("Your Decks"); //Make pending Decks node
 	
 	boolean isCurrentDecksCollapsed = true;
 	
 	/**
-	 * Constructor for a GameTree
+	 * Constructor for a DeckTree
 	 */
 	public DeckTree(){
 		super(new GridBagLayout());
@@ -66,9 +66,9 @@ public class DeckTree extends JPanel implements MouseListener{
 	}
 
 	/**
-	 * Instantiates the game tree if it does not already exist.
-	 * Otherwise it returns the current version of the GameTree
-	 * @return the singleton Game Tree
+	 * Instantiates the Deck tree if it does not already exist.
+	 * Otherwise it returns the current version of the DeckTree
+	 * @return the singleton Deck Tree
 	 */
 	public static DeckTree getInstance(){
 		if(instance == null){
@@ -79,7 +79,7 @@ public class DeckTree extends JPanel implements MouseListener{
 	
 	/**
 	 * Regenerates the table's components whenever called.
-	 * Used when the list of games is updated or changed.
+	 * Used when the list of Decks is updated or changed.
 	 */
 	public void refresh(){
 		if(getComponentCount() != 0){			
@@ -89,7 +89,7 @@ public class DeckTree extends JPanel implements MouseListener{
 		
 		currentDecks.removeAllChildren();
 		
-		List<Deck> deckList = DeckModel.getInstance().getDecks();//retrieve list of all games
+		List<Deck> deckList = DeckModel.getInstance().getDecks();//retrieve list of all Decks
 		System.out.println("Numb Decks: " + deckList.size());
 		for (Deck deck: deckList){
 			DefaultMutableTreeNode newDeckNode = new DefaultMutableTreeNode(deck);
@@ -97,7 +97,7 @@ public class DeckTree extends JPanel implements MouseListener{
 		}
 		
 		deckNode.add(currentDecks);
-		System.out.println("Numb Games: " + deckList.size());
+		System.out.println("Numb Decks: " + deckList.size());
 
 		
 		deckTree = new JTree(deckNode);
@@ -122,7 +122,7 @@ public class DeckTree extends JPanel implements MouseListener{
         cons.setHeight(layout.getConstraint(SpringLayout.SOUTH, this));
 		
 		add(deckTreeScroll);
-	    //ViewEventController.getInstance().setGameOverviewTree(this);
+	    //ViewEventController.getInstance().setDeckOverviewTree(this);
 	    
 	    
 	    if(isCurrentDecksCollapsed){
@@ -184,7 +184,7 @@ public class DeckTree extends JPanel implements MouseListener{
 			TreePath treePath = deckTree.getPathForLocation(x, y);
 			JTree clicked = deckTree;
 			if(treePath == null){
-				System.out.println("Not on gameTree");
+				System.out.println("Not on DeckTree");
 			}
 			if(treePath != null){
 				System.out.println("Tree Path valid");

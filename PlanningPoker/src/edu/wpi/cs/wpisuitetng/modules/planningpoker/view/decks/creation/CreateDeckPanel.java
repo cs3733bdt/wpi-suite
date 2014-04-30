@@ -344,7 +344,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		layout.putConstraint(SpringLayout.NORTH, errorField, 10, SpringLayout.SOUTH, cardScrollPane);
 		
 		
-		
+		ViewEventController.getInstance().refreshDeckTree();
 		revalidate();
 		repaint();
 		
@@ -626,9 +626,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	}
 	
 	/**
-	 * Triggered when the save game button is pressed using the mouse listener
+	 * Triggered when the save deck button is pressed using the mouse listener
 	 * 
-	 * @return true when a game is successfully added
+	 * @return true when a deck is successfully added
 	 */
 	public void SaveDeckPressed() {
 		final Deck deck = new Deck(nameTextField.getText(), 

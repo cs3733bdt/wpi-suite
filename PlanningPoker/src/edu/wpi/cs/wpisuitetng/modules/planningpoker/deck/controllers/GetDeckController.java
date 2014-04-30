@@ -23,9 +23,9 @@ import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
- * Used in order to get the games off of the database.
- * This is used to fill the GameModel from the database on build
- * The first call of this method is inside of the GameTree on paint method
+ * Used in order to get the deckss off of the database.
+ * This is used to fill the DeckModel from the database on build
+ * The first call of this method is inside of the DeckTree on paint method
  * This is done in order to prevent trying get the data before the network has been instantiated.
  * 
  * @author Andrew Busch
@@ -37,8 +37,8 @@ public class GetDeckController implements ActionListener {
 	private boolean isRunning = false;
 
 	/**
-	 * Gets the singleton instance of the GetGameController
-	 * @return the current instance of the GetGameController
+	 * Gets the singleton instance of the GetDeckController
+	 * @return the current instance of the GetDeckController
 	 */
 	public static GetDeckController getInstance() {
 		if (instance == null) {
@@ -48,7 +48,7 @@ public class GetDeckController implements ActionListener {
 	}
 	
 	/**
-	 * The constructor for the GetGameController
+	 * The constructor for the GetDeckController
 	 * Private in order to prevent multiple instantiations
 	 */
 	private GetDeckController() {
@@ -60,17 +60,17 @@ public class GetDeckController implements ActionListener {
 	 */
 	@Override
 	public synchronized void actionPerformed(ActionEvent e) {
-	    // Send a request to the core to read/get this Game
+	    // Send a request to the core to read/get this Deck
 	    final Request request = 
 	    		Network.getInstance().makeRequest("planningpoker/deck", HttpMethod.GET);
 	    // add an observer to process the response
-	    //request.addObserver(observer); 
+	    request.addObserver(observer); 
 	    // send the request
 	    request.send();
 	}
 	
 	/**
-	 * Sends an HTTP request to retrieve all requirements
+	 * Sends an HTTP request to retrieve all decks from the server
 	 */
 	public synchronized void retrieveDecks() {
 		if(!isRunning) {
@@ -80,19 +80,19 @@ public class GetDeckController implements ActionListener {
 			timer.start();
 			isRunning = true;
 		}
-		// Send a request to the core to read/get this Game
+		// Send a request to the core to get the decks
 		final Request request = 
 				Network.getInstance().makeRequest("planningpoker/deck", HttpMethod.GET);
 		// add an observer to process the response
-		//request.addObserver(observer);
+		request.addObserver(observer);
 		// send the request
 		request.send(); 
 	}
 	
 	/**
-	 * Add the given Games to the local model (they were received from the core).
-	 * This method is called by the GetGamesRequestObserver
-	 * @param decks an array of Games received from the server
+	 * Add the given Decks to the local model (they were received from the core).
+	 * This method is called by the GetDeckRequestObserver
+	 * @param decks an array of Decks received from the server
 	 */
 	public synchronized void receivedDecks(Deck[] decks) {
 		System.out.println("The size of the list returned from the server is: " + decks.length);
