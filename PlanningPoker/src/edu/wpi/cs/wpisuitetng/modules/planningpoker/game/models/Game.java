@@ -20,6 +20,8 @@ import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JOptionPane;
@@ -39,7 +41,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.PP
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.UpdatePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
 
 /**
  * Basic Game class that contains the data to be store for a Game
@@ -77,6 +78,8 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	private boolean notifiedOfCompletion;
 	/** Holds the deck for this game */
 	private Deck deck;
+	/** Holds the logger for this class */
+	private static Logger logger = Logger.getLogger(Game.class.getName());
 
 	/**
 	 * Copies all of the values from the given Game to this Game.
@@ -91,48 +94,56 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			name = toCopyFrom.name;
 			needsUpdate = true;
 			wasChanged = true;
+			logger.log(Level.FINEST, "Name coppied: " + name);
 		}
 
 		if(!description.equals(toCopyFrom.description)){
 			description = toCopyFrom.description;
 			needsUpdate = true;
 			wasChanged = true;
+			logger.log(Level.FINEST, "Description coppied: " + description);
 		}
 
 		if(hasTimeLimit != toCopyFrom.hasTimeLimit){
 			hasTimeLimit = toCopyFrom.hasTimeLimit;
 			needsUpdate = true;
 			wasChanged = true;
+			logger.log(Level.FINEST, "Has Time Limit coppied: " + hasTimeLimit);
 		}
 
 		if(usesCards != toCopyFrom.usesCards){
 			usesCards = toCopyFrom.usesCards;
 			needsUpdate = true;
 			wasChanged = true;
+			logger.log(Level.FINEST, "Uses Cards coppied: " + usesCards);
 		}
 
 		if(!creationTime.equals(toCopyFrom.creationTime)){
 			creationTime = toCopyFrom.creationTime;
 			needsUpdate = true;
 			wasChanged = true;
+			logger.log(Level.FINEST, "Creation Time coppied " + creationTime);
 		}
 
 		if(!creator.equals(toCopyFrom.creator)){
 			creator = toCopyFrom.creator;
 			needsUpdate = true;
 			wasChanged = true;
+			logger.log(Level.FINEST, "Creator coppied " + creator);
 		}
 
 		if(!endDate.equals(toCopyFrom.endDate)){
 			endDate = toCopyFrom.endDate;
 			needsUpdate = true;
 			wasChanged = true;
+			logger.log(Level.FINEST, "End Date coppied " + endDate);
 		}
 
 		if(active != toCopyFrom.active) {
 			active = toCopyFrom.active;
 			needsUpdate = true;
 			wasChanged = true;
+			logger.log(Level.FINEST, "Active coppied " + active);
 		}
 		
 		if(!requirements.equals(toCopyFrom.requirements)){
@@ -180,28 +191,23 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 				wasChanged = true;
 			}
 			needsUpdate = true;
+			logger.log(Level.FINEST, "Requirements coppied " + requirements);
 		}
 
 		if(complete != toCopyFrom.complete){
-			if (complete == true) {
-				complete = true;
-			} else {
+			if (!complete){
 				complete = toCopyFrom.complete;
 			}
 			needsUpdate = true;
 			wasChanged = true;
+			logger.log(Level.FINEST, "Complete coppied " + complete);
 		}
 
 		if(notifiedOfCreation != toCopyFrom.notifiedOfCreation) {
 			notifiedOfCreation = toCopyFrom.notifiedOfCreation;
 			needsUpdate = true;
 			wasChanged = true;
-		}
-
-		if(notifiedOfCompletion != toCopyFrom.notifiedOfCompletion) {
-			notifiedOfCompletion = toCopyFrom.notifiedOfCompletion;
-			needsUpdate = true;
-			wasChanged = true;
+			logger.log(Level.FINEST, "Notified Of Creation coppied " + notifiedOfCompletion);
 		}
 		
 		if(!deck.equals(toCopyFrom.deck)){
@@ -209,6 +215,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 				wasChanged = true;
 				needsUpdate = true;
 			}
+			logger.log(Level.FINEST, "Deck coppied " + deck);
 		}
 
 		if(identity.equals(toCopyFrom.identity)){
@@ -219,7 +226,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		}
 
 		if(needsUpdate){
-			System.err.println("WARNING! THERE WAS A COPY OVER FOR TWO NON MATCHING UUID GAMES!");
+			logger.log(Level.SEVERE, "WARNING! THERE WAS A COPY OVER FOR TWO NON MATCHING UUID GAMES!");
 			makeChanged();
 		}
 
@@ -315,7 +322,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 * @return the uuid of the game
 	 */
 	public void setIdentifier(UUID identifier){
-		delayChange();
+		delayChange("setIdentifier");
 		makeChanged();
 		identity = identifier;
 	}
@@ -343,7 +350,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public void setName(String newName){
 		if(!name.equals(newName)){
 			makeChanged();
-			delayChange();
+			delayChange("setName");
 			name = newName;
 		}
 	}
@@ -382,7 +389,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public void makeComplete(){
 		if(!complete ){
 			makeChanged();
-			delayChange();
+			delayChange("makeComplete");
 			complete = true;
 		}
 	}
@@ -402,7 +409,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public void setUsesCards(boolean newUsesCards){
 		if(usesCards != newUsesCards){
 			makeChanged();
-			delayChange();
+			delayChange("setUsesCards");
 			usesCards = newUsesCards;
 		}
 	}
@@ -422,7 +429,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public void setDescription(String newDescription){
 		if(!description.equals(newDescription)){
 			makeChanged();
-			delayChange();
+			delayChange("setDescription");
 			description = newDescription;
 		}
 	}
@@ -457,7 +464,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public void setRequirements(List<PPRequirement> newReqs){
 		if(!requirements.equals(newReqs)){
 			makeChanged();
-			delayChange();
+			delayChange("setRequiremets");
 			requirements = newReqs;
 			for(PPRequirement req : requirements){
 				req.addObserver(this);
@@ -480,7 +487,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public void setCreator(String creator) {
 		if(!this.creator.equals(creator)){
 			makeChanged();
-			delayChange();
+			delayChange("setCreator");
 			this.creator = creator;
 		}
 	}
@@ -519,7 +526,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public void setActive(boolean newActive){
 		if(active != newActive){
 			makeChanged();
-			delayChange();
+			delayChange("setActive");
 			active = newActive;
 		}
 	}
@@ -611,6 +618,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public void setEndDate(Date endDate) {
 		if(this.endDate != endDate){
 			makeChanged();
+			delayChange("setEndDate");
 			this.endDate = endDate;
 		}
 	}
@@ -639,7 +647,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public void setNotifiedOfCreation(boolean notifiedOfCreation) {
 		if (this.notifiedOfCreation != notifiedOfCreation) {
 			makeChanged();
-			delayChange();
+			delayChange("setNotifiedOfCreation");
 			this.notifiedOfCreation = notifiedOfCreation;
 		}
 	}
@@ -659,7 +667,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	public void setNotifiedOfCompletion(boolean notifiedOfCompletion) {
 		if (this.notifiedOfCompletion != notifiedOfCompletion) {
 			makeChanged();
-			delayChange();
+			delayChange("setNotifiedOfCompletion");
 			this.notifiedOfCompletion = notifiedOfCompletion;
 		}
 	}
@@ -668,11 +676,11 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	 * hold the code while the game model is updating
 	 * prevent race-time condition for fields setting/overriding
 	 */
-	private void delayChange(){
+	private void delayChange(String source){
 		while(GameModel.getInstance().isServerUpdating()){
 			try {
 				Thread.sleep(5);
-				System.out.println("Looping in the reqirement");
+				logger.log(Level.WARNING, "Looping in the game: From source " + source);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -751,7 +759,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 							this));
 			}
 			makeChanged();
-			delayChange();
+			delayChange("hasEnded");
 			makeComplete();
 			setActive(false);
 			//ViewEventController.getInstance().refreshGameTree();
