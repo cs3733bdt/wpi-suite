@@ -242,4 +242,9 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		this.isMultipleSelection = isMultipleSelection;
 	}
 	
+	@Override
+	public String toString() {
+		return name;
+	}
+	
 }

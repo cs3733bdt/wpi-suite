@@ -48,7 +48,7 @@ public class DeckTree extends JPanel implements MouseListener{
 	
 	private boolean initialized = false; //Check if GameModel should be generated from the server
 	JTree deckTree; // JTree to hold the hierarchy of games
-	JScrollPane gameTreeScroll; // scrollPane to put the tree in
+	JScrollPane deckTreeScroll; // scrollPane to put the tree in
 	DefaultMutableTreeNode deckNode = 
 			new DefaultMutableTreeNode("Decks"); //Make master node hold the other 3
 	DefaultMutableTreeNode currentDecks = 
@@ -101,28 +101,27 @@ public class DeckTree extends JPanel implements MouseListener{
 
 		
 		deckTree = new JTree(deckNode);
-		
+
 		deckTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 		deckTree.setToggleClickCount(0);
 		deckTree.addMouseListener(this);
-		
-		gameTreeScroll = new JScrollPane(deckTree);
-		gameTreeScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);		
-		gameTreeScroll.setPreferredSize(new Dimension(190, 500));
-		
+
+		deckTreeScroll = new JScrollPane(deckTree);
+		deckTreeScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		deckTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);		
+		deckTreeScroll.setPreferredSize(new Dimension(190, 500));
 
 		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
 	  
 		SpringLayout.Constraints  cons;
-        cons = layout.getConstraints(gameTreeScroll);
+        cons = layout.getConstraints(deckTreeScroll);
         cons.setX(Spring.constant(0));
         cons.setY(Spring.constant(0));
         cons.setWidth(Spring.scale(layout.getConstraint(SpringLayout.EAST, this), .995f)); // must be as close as possible to 1f without being 1f. 1f breaks it for some reason
         cons.setHeight(layout.getConstraint(SpringLayout.SOUTH, this));
 		
-		add(gameTreeScroll);
+		add(deckTreeScroll);
 	    //ViewEventController.getInstance().setGameOverviewTree(this);
 	    
 	    
@@ -137,10 +136,10 @@ public class DeckTree extends JPanel implements MouseListener{
 	    
 	    revalidate();
 	    deckTree.revalidate();
-	    gameTreeScroll.revalidate();
+	    deckTreeScroll.revalidate();
 	    repaint();
 	    deckTree.repaint();
-		gameTreeScroll.repaint();
+		deckTreeScroll.repaint();
 	    validate();
 		
 	}
