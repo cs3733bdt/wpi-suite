@@ -62,6 +62,11 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 			changes = true;
 		}
 		
+		if (hasIdontKnow != toCopyFrom.hasIdontKnow) {
+			hasIdontKnow = toCopyFrom.hasIdontKnow;
+			changes = true;
+		}
+		
 		
 		return changes;
 	}
