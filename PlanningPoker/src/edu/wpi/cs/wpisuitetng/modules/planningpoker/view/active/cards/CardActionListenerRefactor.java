@@ -113,10 +113,10 @@ public class CardActionListenerRefactor implements ActionListener {
 							System.out.println("isMultipleSelection");
 						}
 					
-					if (cardsPanel.getCardButtonArray().get(size)
+					if (cardsPanel.getCardButtonArray().get(size -1)
 							.isSelected()) {
 						cardsPanel.memoryArrayClear();
-						cardsPanel.getCardButtonArray().get(size).doClick();
+						cardsPanel.getCardButtonArray().get(size -1).doClick();
 					}
 					button.setIcon(new ImageIcon(backImg));
 
