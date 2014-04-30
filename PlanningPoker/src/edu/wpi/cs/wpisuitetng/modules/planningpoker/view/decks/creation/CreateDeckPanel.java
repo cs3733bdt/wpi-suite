@@ -288,7 +288,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		
 		/* save button */
 		saveButton = new SaveDeckButtonPanel(this);
-		saveButton.setEnabled(false);
+		saveButton.setEnabled(true);
 
 		/*cancel button */
 		cancelDeckButton = new CancelButton("Cancel Deck", this);
@@ -666,11 +666,15 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	public void updateButtons() {
 		if (validateField(errorField,true, false)) {
 			saveButton.getSaveDeckButton().setEnabled(true);
+			errorField.setText("");
+		} else {
+			saveButton.getSaveDeckButton().setEnabled(false);
+		}
+		if (validateField(errorField,true, false)) {
 			submitNumCards.setEnabled(true);
 			getNumCards().setBorder(defaultTextFieldBorder);
 			errorField.setText("");
 		} else {
-			saveButton.getSaveDeckButton().setEnabled(false);
 			submitNumCards.setEnabled(false);
 		}
 	}
