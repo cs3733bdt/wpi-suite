@@ -28,6 +28,7 @@ public class NumberJTextField extends JTextField implements IDataField {
 	
 	private String initialText;
 	private IErrorView warningField;
+	private int maxValue = -1;
 
 	public NumberJTextField() {
 		initialText = "";
@@ -71,6 +72,10 @@ public class NumberJTextField extends JTextField implements IDataField {
 		.setDocumentFilter(new MyDocumentFilter(this));
 	}
 	
+	public void setMaxValue(int maxValue){
+		this.maxValue = maxValue;
+	}
+	
 	public void setIErrorView(IErrorView warningField){
 		this.warningField = warningField;
 	}
@@ -78,29 +83,41 @@ public class NumberJTextField extends JTextField implements IDataField {
 	@Override
 	public boolean validateField(IErrorView warningField, boolean showLabel,
 			boolean showBox) {
+		this.warningField = warningField;
 		boolean isValid = false;
 		if(!hasChanges()){ //If this has changed
 			isValid = true;
+			showValid(showLabel, showBox);
 		} else if(getText().equals("")){
 			isValid = false;
-		} //Should not need to handle checking to see if there not numbers because this should have already been caught
+			showInvalid("The Field can not be empty", showLabel, showBox);
+		} else if(maxValue != -1){
+			if(Integer.getInteger(getText()) >= maxValue ){
+				isValid = false;
+				showInvalid("You can not enter a number greater than " + maxValue, showLabel, showBox);
+			}
+		} else{
+			isValid = true;
+		}	//Should not need to handle checking to see if there not numbers because this should have already been caught
 		
-		if(isValid){
-			if(showLabel){
-				warningField.setText("");
-			}
-			if(showBox){
-				setBorder(defaultBorder);
-			}
-			return true;
-		} else {
-			if(showLabel){
-				warningField.setText("The field can not be empty");
-			}
-			if(showBox){
-				setBorder(errorBorder);
-			}
-			return false;
+		return isValid;
+	}
+	
+	private void showValid(boolean showLabel, boolean showBox){
+		if(showLabel){
+			warningField.setText("");
+		}
+		if(showBox){
+			setBorder(defaultBorder);
+		}
+	}
+	
+	private void showInvalid(String text, boolean showLabel, boolean showBox){
+		if(showLabel){
+			warningField.setText(text);
+		}
+		if(showBox){
+			setBorder(errorBorder);
 		}
 	}
 
