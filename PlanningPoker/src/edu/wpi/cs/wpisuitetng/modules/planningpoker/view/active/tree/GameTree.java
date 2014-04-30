@@ -138,7 +138,7 @@ public class GameTree extends JPanel implements MouseListener{
 		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);		
 		gameTreeScroll.setPreferredSize(new Dimension(190, 500));
 		
-		gameTree.setCellRenderer(new CustomTreeCellRenderer());
+		gameTree.setCellRenderer(new CustomTreeCellRenderer(this));
 
 		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
