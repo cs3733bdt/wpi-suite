@@ -211,6 +211,13 @@ public class ViewEventController {
 		
 	}
 
+	public void refreshDeckTable() {
+		// TODO Auto-generated method stub
+		//This method will call a method that refreshes the data in the requirement model
+		// something like: overviewTable.refresh();
+		
+	}
+	
 	/**
 	 * Refreshes the tree model using data from the Game Model
 	 */

@@ -99,7 +99,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		this.description = "Default Deck";
 		this.owner = "admin";
 		this.hasIdontKnow = true;
-		color = ColorEnum.BLUE;
+		color = ColorEnum.RED;
 		cards = new ArrayList<Integer>();
 		buildDefaultDeck(7);
 	}
@@ -240,6 +240,11 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		makeChanged();
 		//delayChange(); //TODO This method is needed for changing
 		this.isMultipleSelection = isMultipleSelection;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 	
 }

@@ -12,7 +12,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
  
 /**
  * used to record user votes for a game
