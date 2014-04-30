@@ -39,12 +39,9 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
-import org.jdesktop.swingx.JXDatePicker;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveDeckButtonPanel;
@@ -52,6 +49,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJ
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IValidateButtons;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
@@ -650,6 +648,16 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		}
 		
 		return colorEnum;
+	}
+
+	@Override
+	public void updateButtons() {
+		if (validateField(true, false)) {
+			saveButton.getSaveDeckButton().setEnabled(true);
+		} else {
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+		}
+		
 	}
 }
 
