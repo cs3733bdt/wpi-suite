@@ -323,10 +323,6 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				submitButtonPressed();
-				
-				if (allUsersVoted()){
-					parentPanel.endGame();
-				}
 			}
 		});
 		addMouseListenerTo(submitButton);
@@ -736,14 +732,5 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 		descriptionTextField.setText(activeRequirement.getDescription());
 		counterLabel.setText("Your current selected estimate is: 0");
 		updateSavedEstimateLabel();
-	}
-	
-	private boolean allUsersVoted(){
-		for (PPRequirement p:currentGame.getRequirements()){
-			if (p.getVoteCount() != currentGame.getUsers()){
-				return false;
-			}	
-		}
-		return true;
 	}
 }

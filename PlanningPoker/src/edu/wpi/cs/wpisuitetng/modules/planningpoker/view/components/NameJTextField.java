@@ -58,7 +58,6 @@ public class NameJTextField extends JTextField implements IDataField {
 	
 	@Override
 	public void setText(String text){
-		startingText = text;
 		super.setText(text);
 	}
 
@@ -101,7 +100,7 @@ public class NameJTextField extends JTextField implements IDataField {
 				}
 			}
 		} else {
-			// getErrorName().setText("");
+			errorField.setText("");
 			isNameValid = true;
 			this.setBorder(defaultBorder);
 		}
@@ -111,6 +110,10 @@ public class NameJTextField extends JTextField implements IDataField {
 	@Override
 	public boolean hasChanges() {
 		return !getText().equals(startingText);
+	}
+	
+	public void setStartingText(String newStarting) {
+		this.startingText = newStarting;
 	}
 
 }
