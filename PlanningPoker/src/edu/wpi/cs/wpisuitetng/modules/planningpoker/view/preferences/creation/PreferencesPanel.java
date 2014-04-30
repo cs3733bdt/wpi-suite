@@ -33,18 +33,9 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
-import edu.wpi.cs.wpisuitetng.Session;
-import edu.wpi.*;
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.core.models.Carrier;
-import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.user.controllers.RetrieveUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.user.controllers.UpdateUserController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
@@ -86,6 +77,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 
 	RetrieveUserController getUserController;
 	UpdateUserController updateUserController;
+	User testUser;
 	
 
 	public PreferencesPanel() {
@@ -93,14 +85,22 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		InitializeControllers();
 		build();
 	}
-
+	/**
+	 * THIS CONSTRUCTOR IS ONLY USED FOR TESTING PURPOSES!!!
+	 * @param currentUser fake user which replaces the user retrieved from core/user
+	 */
+	public PreferencesPanel(User currentUser) {
+		testUser = currentUser;
+		InitializeControllers();
+		build();
+	}
+	
 	private void build(){
 		/**
 		 *  Set up initial container with spring layout */
 		Container 	view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-
 		/**
 		 * Create and add the heading label */
 		JLabel headingLabel = new JLabel("Change Your Preferences Here");
@@ -140,10 +140,18 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		emailPanel.add(emailField);
 
 		/**
-		 * TODO autopopulate email field with user's email.
+		 * IF TEST CONSTRUCTOR IS CALLED, FILL THE EMAIL FIELD
+		 * WITH THE GIVEN USER'S EMAIL FOR TESTING PURPOSES
 		 */
-		emailField.setText(getUserEmail());
-
+		if(testUser != null) {
+			emailField.setText(testUser.getEmail());
+		} 
+		else {
+			/**
+			 * TODO autopopulate email field with user's email.
+			 */
+			emailField.setText(getUserEmail());
+		}
 		//Create the update email button
 		updateEmailButton = new JButton("Update Email");
 		updateEmailButton.setEnabled(false);
@@ -208,9 +216,17 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		addKeyListenerTo(facebookField);
 		facebookField.setText("facebook.username");
 		facebookPanel.add(facebookField);
-
-		facebookField.setText(getUserFacebookUsername());
-
+		
+		/**
+		 * IF TEST CONSTRUCTOR IS CALLED, FILL THE FB USERNAME FIELD
+		 * WITH THE GIVEN USER'S FB USERNAME FOR TESTING PURPOSES
+		 */
+		if(testUser != null) {
+			facebookField.setText(testUser.getFacebookUsername());
+		}
+		else {
+			facebookField.setText(getUserFacebookUsername());
+		}
 		//Create the update facebook button
 		updateFacebookButton = new JButton("Update Facebook Username");
 		updateFacebookButton.setEnabled(false);
@@ -273,12 +289,20 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		addKeyListenerTo(mobileField);
 		mobileField.setText("555-555-5555");
 		mobilePanel.add(mobileField);
-
+		
 		/**
-		 * TODO autopopulate mobile field with user's number.
+		 * IF TEST CONSTRUCTOR IS CALLED, FILL THE MOBILE FIELD WITH
+		 * GIVEN USER'S MOBILE NUMBER FOR TESTING PURPOSES
 		 */
-		mobileField.setText(getUserMobile());
-
+		if(testUser != null) {
+			mobileField.setText(testUser.getPhoneNumber());
+		}
+		else {
+			/**
+			* TODO autopopulate mobile field with user's number.
+			*/
+			mobileField.setText(getUserMobile());
+		}
 		//Create the update mobile button
 		updateMobileButton = new JButton("Update Mobile Number");
 		updateMobileButton.setEnabled(false);
@@ -514,7 +538,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			newPreferences= newPreferences + "F";
 		}
 		if(mobileCheckBox.isSelected()){
-			newPreferences= newPreferences + "M";;
+			newPreferences= newPreferences + "M";
 		}
 		newUser.setNotificationPreferences(newPreferences);
 		updateUserController.updateUser(newUser);
@@ -783,7 +807,17 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			emailField.setEnabled(false);
 			updateEmailButton.setEnabled(false);	
 		}
-		updateNotificationPreferences();
+		
+		/**
+		 * IF TEST CONSTRUCTOR IS CALLED, DO NOT UPDATE THE
+		 * NOTIFICATION PREFERENCES
+		 */
+		if(testUser != null) {
+			
+		}
+		else {
+			updateNotificationPreferences();
+		}
 	}
 	
 	/**
@@ -805,7 +839,15 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			
 			reValidateFacebookUpdateButton();
 		}
-		updateNotificationPreferences();
+		/**
+		 * IF TEST CONSTRUCTOR IS CALLED, DO NOT 
+		 * UPDATE NOTIFICATION PREFERENCES
+		 */
+		if(testUser != null) {
+			
+		} else {
+			updateNotificationPreferences();
+		}
 	}
 	
 	/**
@@ -829,7 +871,16 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			updateMobileButton.setEnabled(true);
 			reValidateMobileUpdateButton();
 		}
-		updateNotificationPreferences();
+		/**
+		 * IF TEST CONSTRUCTOR IS CALLED DO NOT 
+		 * UPDATE NOTIFICATION PREFERENCES
+		 */
+		if(testUser != null) {
+			
+		}
+		else {
+			updateNotificationPreferences();
+		}
 	}
 
 	
@@ -1014,7 +1065,53 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
-
-
+	
+	/**
+	 * Getter for testing purposes
+	 * @return the text from emailField
+	 */
+	public JTextField getEmailField() {
+		return emailField;
+	}
+	
+	/**
+	 * Getter for testing purposes
+	 * @return the emailCheckBox
+	 */
+	public JCheckBox getEmailCheckBox() {
+		return emailCheckBox;
+	}
+	
+	/**
+	 * Getter for testing purposes
+	 * @return the text from emailField
+	 */
+	public JTextField getFacebookField() {
+		return facebookField;
+	}
+	
+	/**
+	 * Getter for testing purposes
+	 * @return the facebookCheckBox
+	 */
+	public JCheckBox getFacebookCheckBox() {
+		return facebookCheckBox;
+	}
+	
+	/**
+	 * Getter for testing purposes
+	 * @return the text from mobileField
+	 */
+	public JTextField getMobileField() {
+		return mobileField;
+	}
+	
+	/**
+	 * Getter for testing purposes
+	 * @return the mobileCheckBox
+	 */
+	public JCheckBox getMobileCheckBox() {
+		return mobileCheckBox;
+	}
+	
 }
