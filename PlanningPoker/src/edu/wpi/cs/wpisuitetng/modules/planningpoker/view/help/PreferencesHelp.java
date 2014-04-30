@@ -40,7 +40,10 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 	JLabel mobileHelpHeading;
 	JLabel mobileHelppic;
 	JTextArea mobileHelpExplanation;
-		
+
+	char leftArrow = 9654;
+	String leftArrowString = Character.toString(leftArrow);
+	
 	public PreferencesHelp() {
 		build();
 	}
@@ -51,10 +54,10 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 500));
+		view.setPreferredSize(new Dimension(610, 700));
 		
 		//Add the heading label to the Panel
-		headingLabel = new JLabel("Preferences Help");
+		headingLabel = new JLabel("Preferences Help" + leftArrowString);
 		headingLabel.setFont(makeFont(8));
 		
 		//Add email image panel;
@@ -131,34 +134,37 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		layout.putConstraint(SpringLayout.NORTH, headingLabel, 5, SpringLayout.NORTH, view);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, headingLabel, 0, SpringLayout.HORIZONTAL_CENTER, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, emailHelppic, 5, SpringLayout.SOUTH, headingLabel); 
-		layout.putConstraint(SpringLayout.WEST, emailHelppic, 5, SpringLayout.WEST, view);
-		
+		//Email
 		layout.putConstraint(SpringLayout.NORTH, emailHelpHeading, 5, SpringLayout.SOUTH, headingLabel); 
 		layout.putConstraint(SpringLayout.EAST, emailHelpHeading, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, emailHelpHeading, 20, SpringLayout.EAST, emailHelppic);
+		layout.putConstraint(SpringLayout.WEST, emailHelpHeading, 20, SpringLayout.WEST, view);
+		
+		layout.putConstraint(SpringLayout.NORTH, emailHelppic, 5, SpringLayout.SOUTH, emailHelpHeading); 
+		layout.putConstraint(SpringLayout.WEST, emailHelppic, 5, SpringLayout.WEST, view);
 		
 		layout.putConstraint(SpringLayout.NORTH, emailHelpExplanation, 5, SpringLayout.SOUTH, emailHelpHeading); 
 		layout.putConstraint(SpringLayout.EAST, emailHelpExplanation, 0, SpringLayout.EAST, view);
 		layout.putConstraint(SpringLayout.WEST, emailHelpExplanation, 20, SpringLayout.EAST, emailHelppic);
 		
-		layout.putConstraint(SpringLayout.NORTH, facebookHelppic, 20, SpringLayout.SOUTH, emailHelppic);
-		layout.putConstraint(SpringLayout.WEST, facebookHelppic, 5, SpringLayout.WEST, view);
-		
+		//Facebook
 		layout.putConstraint(SpringLayout.NORTH, facebookHelpHeading, 20, SpringLayout.SOUTH, emailHelppic);
 		layout.putConstraint(SpringLayout.EAST, facebookHelpHeading, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, facebookHelpHeading, 20, SpringLayout.EAST, facebookHelppic);
+		layout.putConstraint(SpringLayout.WEST, facebookHelpHeading, 20, SpringLayout.WEST, view);
+		
+		layout.putConstraint(SpringLayout.NORTH, facebookHelppic, 20, SpringLayout.SOUTH, facebookHelpHeading);
+		layout.putConstraint(SpringLayout.WEST, facebookHelppic, 5, SpringLayout.WEST, view);
 		
 		layout.putConstraint(SpringLayout.NORTH, facebookHelpExplanation, 5, SpringLayout.SOUTH, facebookHelpHeading);
 		layout.putConstraint(SpringLayout.EAST, facebookHelpExplanation, 0, SpringLayout.EAST, view);
 		layout.putConstraint(SpringLayout.WEST, facebookHelpExplanation, 20, SpringLayout.EAST, facebookHelppic);
 		
-		layout.putConstraint(SpringLayout.NORTH, mobileHelppic, 20, SpringLayout.SOUTH, facebookHelppic);
-		layout.putConstraint(SpringLayout.WEST, mobileHelppic, 5, SpringLayout.WEST, view);
-		
+		//Mobile
 		layout.putConstraint(SpringLayout.NORTH, mobileHelpHeading, 20, SpringLayout.SOUTH, facebookHelppic);
 		layout.putConstraint(SpringLayout.EAST, mobileHelpHeading, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, mobileHelpHeading, 20, SpringLayout.EAST, mobileHelppic);
+		layout.putConstraint(SpringLayout.WEST, mobileHelpHeading, 20, SpringLayout.WEST, view);
+		
+		layout.putConstraint(SpringLayout.NORTH, mobileHelppic, 20, SpringLayout.SOUTH, mobileHelpHeading);
+		layout.putConstraint(SpringLayout.WEST, mobileHelppic, 5, SpringLayout.WEST, view);
 		
 		layout.putConstraint(SpringLayout.NORTH, mobileHelpExplanation, 5, SpringLayout.SOUTH, mobileHelpHeading);
 		layout.putConstraint(SpringLayout.EAST, mobileHelpExplanation, 0, SpringLayout.EAST, view);
