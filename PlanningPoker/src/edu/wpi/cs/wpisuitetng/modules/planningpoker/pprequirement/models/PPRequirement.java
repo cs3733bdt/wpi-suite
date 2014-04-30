@@ -153,8 +153,8 @@ public class PPRequirement extends ObservableModel {
 	 * @param id value to set the id to
 	 */
 	public void setIdPlusOne(int id){
-		delayChange("setIdPlusOne");
 		makeChanged();
+		delayChange("setIdPlusOne");
 		fromRequirementModule = true;
 		// Make Id one more than the id in the 
 		// Requirement Manager
@@ -162,11 +162,9 @@ public class PPRequirement extends ObservableModel {
 	}
 	
 	public void setId(int id){
+		makeChanged();
 		delayChange("setId");
 		fromRequirementModule = true;
-		makeChanged();
-		// Make Id one more than the id in the 
-		// Requirement Manager
 		this.id = id;
 	}
 	
@@ -175,6 +173,7 @@ public class PPRequirement extends ObservableModel {
 	 * @param identity value to set the identity to
 	 */
 	public void setIdentity(UUID identity){
+		makeChanged();
 		delayChange("setUUID");
 		fromRequirementModule = false;
 		this.identity = identity;
