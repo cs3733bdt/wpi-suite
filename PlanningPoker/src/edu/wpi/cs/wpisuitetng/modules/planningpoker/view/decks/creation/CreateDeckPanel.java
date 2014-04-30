@@ -70,7 +70,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	/**
 	 * textfield for the number of cards desired
 	 */
-	private JTextField numCards;
+	private NameJTextField numCards;
 	/**
 	 * button to submit the number of cards desired and repaint the card panel with chosen number
 	 */
@@ -149,7 +149,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		/* name and description */
 		JLabel nameLabel = new JLabel("Name * ");
 		nameTextField = new NameJTextField(20);
-		addKeyListenerTo(nameTextField);
+		nameTextField.addKeyListener(this);
 		
 		JLabel descriptionLabel = new JLabel("Description");
 		descriptionTextField = new DescriptionJTextArea();
@@ -189,13 +189,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		numLabelPanel.add(numCardsLabel);
 		numCards = new NameJTextField(5);
 		numCards.setText("1");
-		addKeyListenerTo(numCards);
+		numCards.addKeyListener(this);
 		initializeArrayList();
 		addMouseListenerToNumberOfCardsTextEntry(numCards);
 		submitNumCards = new JButton("Submit");
 		submitNumCards.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		    	updateButtons();
 		    	displayNumCards();
 		        cardsPanel.revalidate();
 		        cardsPanel.repaint();
@@ -427,17 +426,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		return false;
 	}
 	
-	/**
-	 * Adds key listeners to validate all text entry
-	 * @param component whichever field needs to be validated
-	 */
-	private void addKeyListenerTo(JComponent component){
-		component.addKeyListener(new KeyAdapter(){
-			public void keyReleased(KeyEvent arg0) {	
-				validateField(errorField, true, true);
-			}
-		});
-	}
 	
 	/**
 	 * Checks to make sure the number of cards inputted is 1-24
