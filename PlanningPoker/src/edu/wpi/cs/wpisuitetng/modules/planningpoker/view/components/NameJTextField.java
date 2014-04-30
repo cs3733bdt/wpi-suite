@@ -12,6 +12,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JTextField;
@@ -64,6 +66,17 @@ public class NameJTextField extends JTextField implements IDataField {
 		setBorder(BorderFactory.createTitledBorder("Name"));
 	}
 
+	/**
+	 * adds a key listener that will update buttons based on this data field
+	 */
+	public void addKeyListener(final IValidateButtons parent){
+		this.addKeyListener(new KeyAdapter(){
+			public void keyReleased(KeyEvent arg0) {	
+				parent.updateButtons();
+			}
+		});
+	}
+	
 	@Override
 	public boolean validateField(IErrorView errorField, boolean showLabel, boolean showBox) {
 		boolean isNameValid = false;
