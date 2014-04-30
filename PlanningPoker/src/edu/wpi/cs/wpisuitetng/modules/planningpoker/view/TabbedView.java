@@ -36,6 +36,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateG
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.IEndedGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation.IPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation.PreferencesPanel;
 
 /**
@@ -340,7 +341,8 @@ public class TabbedView extends JTabbedPane {
 		}
 		if (comp instanceof PreferencesPanel){
 			//TODO Implement preferences like other panels to use readyToRemove
-			//if(!((IEndedGamePanel)comp).readyToRemove()) return;
+			if(!((PreferencesPanel)comp).readyToRemove()) return;
+			listOfEndedGamePanels.remove(comp);
 			hasPreferencesTab = false;
 			setSelectedComponent(gameOverview);
 		}
@@ -390,6 +392,12 @@ public class TabbedView extends JTabbedPane {
 				if(!((IEndedGamePanel)toBeRemoved).readyToRemove()) continue;
 				listOfEndedGamePanels.remove(toBeRemoved);
 			}
+			
+			if (toBeRemoved instanceof IPreferencesPanel){
+				if(!((IPreferencesPanel)toBeRemoved).readyToRemove()) continue;
+				listOfEndedGamePanels.remove(toBeRemoved);
+				hasPreferencesTab = false;
+			}
 
 			removeTabAt(i);
 		}
@@ -430,6 +438,12 @@ public class TabbedView extends JTabbedPane {
 			if (toBeRemoved instanceof IEndedGamePanel){
 				if(!((EndGamePanel)toBeRemoved).readyToRemove()) {continue;}
 				listOfEndedGamePanels.remove(toBeRemoved);
+			}
+			
+			if (toBeRemoved instanceof IPreferencesPanel){
+				if(!((IPreferencesPanel)toBeRemoved).readyToRemove()) continue;
+				listOfEndedGamePanels.remove(toBeRemoved);
+				hasPreferencesTab = false;
 			}
 
 			removeTabAt(i);
