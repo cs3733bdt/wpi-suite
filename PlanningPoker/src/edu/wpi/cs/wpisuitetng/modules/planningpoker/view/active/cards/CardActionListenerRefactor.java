@@ -83,6 +83,10 @@ public class CardActionListenerRefactor implements ActionListener {
 					button.setIcon(new ImageIcon(backImg)); //Swich image states
 					cardsPanel.memoryArrayAddElt(button); //Add this card to the memory array
 				} else { // if the IDK button is toggled off
+					if (!card.isMultipleSelection()) {
+						button.setIcon(new ImageIcon(frontImg));
+						return;
+					}
 					for (CardButton c: cardsPanel.memoryArray()) {
 						if(!button.equals(c)){
 							c.doClick();
@@ -93,21 +97,33 @@ public class CardActionListenerRefactor implements ActionListener {
 					button.setIcon(new ImageIcon(frontImg));
 					cardsPanel.memoryArrayClear();
 				}
-				
+
 			} else { // otherwise, if it is a button other than the I don't know
-						// button
+				// button
 				if (button.isSelected()) { // if button is toggled on
-					if (cardsPanel.getCardButtonArray().get(size)
+					if (!card.isMultipleSelection()) {
+							for (CardButton c: cardsPanel.getCardButtonArray()) {
+								if(!button.equals(c)){	//If this is not the "?" button
+									if (c.isSelected()) { //If it is selected
+										cardsPanel.memoryArrayAddElt(c);
+										c.doClick();
+									}
+								}
+							}
+							System.out.println("is SingleSelection");
+						}
+					
+					if (cardsPanel.getCardButtonArray().get(size-1)
 							.isSelected()) {
 						cardsPanel.memoryArrayClear();
-						cardsPanel.getCardButtonArray().get(size).doClick();
+						cardsPanel.getCardButtonArray().get(size-1).doClick();
 					}
 					button.setIcon(new ImageIcon(backImg));
 
 					addToCardSum(Integer.parseInt(card.getText()));
 				} else { // if button is toggled off
 					button.setIcon(new ImageIcon(frontImg));
-						decToCardSum(Integer.parseInt(card.getText()));
+					decToCardSum(Integer.parseInt(card.getText()));
 				}
 			}
 		} catch (IOException ex) {

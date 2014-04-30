@@ -80,5 +80,9 @@ public class Card {
 			return false;
 		}
 	}
+	
+	public boolean isMultipleSelection() {
+		return parentDeck.isMultipleSelection();
+	}
 
 }

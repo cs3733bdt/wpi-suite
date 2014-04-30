@@ -266,7 +266,7 @@ public class EmailNotification {
 	 * @param Votes the array list which contains the vote values
 	 * @return the median of votes
 	 */
-	public double median(List<Integer> Votes) {
+	private double median(List<Integer> Votes) {
 		double median = 0;
 		if (Votes.size() == 0) {
 			median = 0;

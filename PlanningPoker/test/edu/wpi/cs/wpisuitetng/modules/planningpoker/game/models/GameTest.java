@@ -17,7 +17,6 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -26,8 +25,9 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorEnum;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
@@ -168,17 +168,17 @@ public class GameTest {
 	
 	@Test
 	public void testCustomDeck() {
-		ArrayList<String> customDeck = new ArrayList<String>();
+		ArrayList<Integer> customDeck = new ArrayList<Integer>();
 		//populate customDeck
 		int i;
 		for (i = 0; i < 6; i++) {
-			customDeck.add(Integer.toString(i));
+			customDeck.add(i);
 		}
 		
-		Deck Deck = new Deck(customDeck);
+		Deck Deck = new Deck("", "", customDeck, false, ColorEnum.RED);
 		
 		for (int j = 0; j < i; j++) {
-			assertEquals(Integer.toString(j),Deck.get(j));
+			assertEquals(Integer.toString(j),Deck.getCards().get(j).getText());
 		}
 	}
 	

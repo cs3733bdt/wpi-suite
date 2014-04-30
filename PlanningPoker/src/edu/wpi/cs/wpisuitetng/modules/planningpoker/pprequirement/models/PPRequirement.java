@@ -20,7 +20,6 @@ import com.google.gson.GsonBuilder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
@@ -153,8 +152,8 @@ public class PPRequirement extends ObservableModel {
 	 * @param id value to set the id to
 	 */
 	public void setIdPlusOne(int id){
-		delayChange("setIdPlusOne");
 		makeChanged();
+		delayChange("setIdPlusOne");
 		fromRequirementModule = true;
 		// Make Id one more than the id in the 
 		// Requirement Manager
@@ -162,11 +161,9 @@ public class PPRequirement extends ObservableModel {
 	}
 	
 	public void setId(int id){
+		makeChanged();
 		delayChange("setId");
 		fromRequirementModule = true;
-		makeChanged();
-		// Make Id one more than the id in the 
-		// Requirement Manager
 		this.id = id;
 	}
 	
@@ -175,6 +172,7 @@ public class PPRequirement extends ObservableModel {
 	 * @param identity value to set the identity to
 	 */
 	public void setIdentity(UUID identity){
+		makeChanged();
 		delayChange("setUUID");
 		fromRequirementModule = false;
 		this.identity = identity;
@@ -193,7 +191,11 @@ public class PPRequirement extends ObservableModel {
 	 * @param name
 	 */
 	public void setName(String name){
-		this.name = name;
+		if (!this.name.equals(name)) {
+			makeChanged();
+			delayChange("setName");
+			this.name = name;
+		}
 	}
 
 	/**
@@ -209,7 +211,11 @@ public class PPRequirement extends ObservableModel {
 	 * @param description
 	 */
 	public void setDescription(String description){
-		this.description = description;
+		if (!this.description.equals(description)) {
+			makeChanged();
+			delayChange("setDescription");
+			this.description = description;
+		}
 	}
 
 	/**
@@ -237,7 +243,7 @@ public class PPRequirement extends ObservableModel {
 			if(vote.getUsername().equals(v.getUsername())) {	//Has person voted?
 				v.setVoteNumber(vote.getVoteNumber());		//Update their vote
 				makeChanged();
-				found = true;												//Exit this class
+				found = true;												
 			}
 		}
 		if(!found){
@@ -265,7 +271,11 @@ public class PPRequirement extends ObservableModel {
 	 * Setter for the final estimate
 	 */
 	public void setFinalEstimate(int newEstimate) {
-		finalEstimate = newEstimate;
+		if (this.finalEstimate != newEstimate) {
+			makeChanged();
+			delayChange("setFinalEstimate");
+			this.finalEstimate = newEstimate;
+		}
 	}
 	
 	/**
@@ -385,11 +395,18 @@ public class PPRequirement extends ObservableModel {
 		}
 		PPRequirement comp = (PPRequirement)o;
 		
-		if(fromRequirementModule) {
+		if(fromRequirementModule && comp.fromRequirementModule) {
 			if(id != comp.id) {
 				return false;
 			}
-		} else {
+		}
+		else if (fromRequirementModule && !comp.fromRequirementModule) {
+			return false;
+		}
+		else if (!fromRequirementModule && comp.fromRequirementModule) {
+			return false;
+		}
+		else {
 			if(!identity.equals(comp.identity)) {
 				return false;
 			}
@@ -463,11 +480,6 @@ public class PPRequirement extends ObservableModel {
 		
 		if(complete != toCopyFrom.complete) {
 			complete = toCopyFrom.complete;
-			wasChanged = true;
-		}
-		
-		if(finalEstimate != toCopyFrom.finalEstimate) {
-			finalEstimate = toCopyFrom.finalEstimate;
 			wasChanged = true;
 		}
 		
