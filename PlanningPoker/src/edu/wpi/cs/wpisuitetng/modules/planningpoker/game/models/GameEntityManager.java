@@ -116,8 +116,9 @@ public class GameEntityManager implements EntityManager<Game> {
 		if (oldGame.size() < 1 || oldGame.get(0) == null) {
 			throw new BadRequestException("Requirement with ID does not exist.");
 		}
-
+		
 		Game existingGame = (Game) oldGame.get(0);
+		
 		existingGame.copyFrom(updatedGame);
 
 		if (!db.save(existingGame, s.getProject())) {

@@ -176,7 +176,11 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		}
 
 		if(complete != toCopyFrom.complete){
-			complete = toCopyFrom.complete;
+			if (complete == true) {
+				complete = true;
+			} else {
+				complete = toCopyFrom.complete;
+			}
 			needsUpdate = true;
 			wasChanged = true;
 		}
@@ -297,6 +301,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			Date creationTime) {
 		this(name, description, requirements, hasTimeLimit, usesCards);
 		this.creationTime = creationTime;
+		this.complete = false;
 	}
 
 	/**
