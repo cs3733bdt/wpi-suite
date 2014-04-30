@@ -177,7 +177,8 @@ public class CreateDeckPanel extends JScrollPane {
 		multipleSelection.setSelected(true);
 		ButtonGroup radioGroup = new ButtonGroup();
 		radioGroup.add(singleSelection);
-		radioGroup.add(multipleSelection);		
+		radioGroup.add(multipleSelection);	
+		
 		/* this panel holds the label and the two radio buttons */
 		JPanel radioButtonsPanel = new JPanel();
 		radioButtonsPanel.setPreferredSize(new Dimension(160, 80));
@@ -266,6 +267,11 @@ public class CreateDeckPanel extends JScrollPane {
 		JLabel checkboxLabel = new JLabel("Have 'I Don't Know Button'?");
 		iDontKnowCheck = new JCheckBox();
 		iDontKnowCheck.setSelected(true);
+		iDontKnowCheck.addActionListener (new ActionListener () {
+		    public void actionPerformed(ActionEvent e) {
+		    	deck.updateHasIdk(iDontKnowCheck.isSelected());
+		    }
+		});
 		JPanel checkPanel = new JPanel();
 		checkPanel.add(iDontKnowCheck);
 		JPanel checkboxPanel = new JPanel();
