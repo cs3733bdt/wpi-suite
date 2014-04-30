@@ -53,30 +53,10 @@ public class CardImage extends JPanel{
 		this.color = color;
 		BufferedImage myPicture = null;
 		try {
-			switch (color) {				//loads the image of the card, depending on which color enum was passed in.
-			case RED:
-				myPicture = ImageIO.read(getClass().getResource("card_back.png"));
-				break;
-
-			case BLUE:
-				myPicture = ImageIO.read(getClass().getResource("card_back_blue.png"));
-				break;
-
-			case GREEN:
-				myPicture = ImageIO.read(getClass().getResource("card_back_green.png"));
-				break;
-
-			case PURPLE:
-				myPicture = ImageIO.read(getClass().getResource("card_back_purple.png"));
-				break;
-
-			case YELLOW:
-				myPicture = ImageIO.read(getClass().getResource("card_back_yellow.png"));
-				break;
-			}
-		} catch (IOException e1) {
+			myPicture = ColorCardImage.getColorCardImage(color);
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
 		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);											//sets the layout of the class (the panel)
@@ -204,10 +184,16 @@ public class CardImage extends JPanel{
 	}
 	
 	private boolean validateAddValueField(){
-		int parsedText = Integer.parseInt(addValue.getText());
+		String stringText = addValue.getText();
+		int parsedText = Integer.parseInt(stringText);
 		if(parsedText <= 999 && parsedText >= 1){
-			System.out.print(parsedText);
-			return true;
+			if(stringText.length() <=3 ){
+				return true;
+			}
+			else {
+				//TODO: SET ERRORFIELD TEXT TO SAY "Value of cards must be a 3-digit-or-less integer between 1 and 999
+				return false;
+			}
 		}
 		else {
 			return false;
