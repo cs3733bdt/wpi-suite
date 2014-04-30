@@ -185,7 +185,7 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		addedRequirementsExplanation.setLineWrap(true);
 		
 		//Add heading label for table with requirements added 	
-		updateRequirementsHeading = new JLabel("Updating a Requirments");
+		updateRequirementsHeading = new JLabel("Updating a Requirment");
 		updateRequirementsHeading.setFont(makeFont(5));
 
 		//Add edit requirements image
@@ -241,10 +241,10 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		layout.putConstraint(SpringLayout.EAST, gameInformationHeading, 0, SpringLayout.EAST, view);
 		layout.putConstraint(SpringLayout.WEST, gameInformationHeading, 20, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, gameInformationpic, 5, SpringLayout.SOUTH, gameInformationHeading); // will change to createGameExplanation when working
+		layout.putConstraint(SpringLayout.NORTH, gameInformationpic, 20, SpringLayout.SOUTH, gameInformationHeading); // will change to createGameExplanation when working
 		layout.putConstraint(SpringLayout.WEST, gameInformationpic, 5, SpringLayout.WEST, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, gameInformationExplanation, 5, SpringLayout.SOUTH, gameInformationHeading); // will change to createGameExplanation when working
+		layout.putConstraint(SpringLayout.NORTH, gameInformationExplanation, 20, SpringLayout.SOUTH, gameInformationHeading); // will change to createGameExplanation when working
 		layout.putConstraint(SpringLayout.EAST, gameInformationExplanation, 0, SpringLayout.EAST, view);
 		layout.putConstraint(SpringLayout.WEST, gameInformationExplanation, 20, SpringLayout.EAST, gameInformationpic);
 		

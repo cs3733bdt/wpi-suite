@@ -43,7 +43,7 @@ public class EndGameHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 675));
+		view.setPreferredSize(new Dimension(610, 775));
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("End Game Help");

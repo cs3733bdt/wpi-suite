@@ -46,7 +46,7 @@ public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 1375));
+		view.setPreferredSize(new Dimension(610, 1450));
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("Active Games Help");
