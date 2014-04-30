@@ -12,6 +12,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help;
 
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Image;
 import java.io.IOException;
@@ -25,6 +26,8 @@ import javax.swing.SpringLayout;
 
 public class EndGameHelp extends JScrollPane implements IHelpPanel {
 	JLabel headingLabel;
+	JLabel endGameImage;
+	JTextArea endGameExplanation;
 	
 	public EndGameHelp() {
 		build();
@@ -36,17 +39,54 @@ public class EndGameHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
+		view.setPreferredSize(new Dimension(610, 750));
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("End Game Help");
 		headingLabel.setFont(makeFont(8));
+		
+		//Add the image for this panel
+		endGameImage = addImage("end_game.png");
+		
+		//Add the explanation for the end game image
+		endGameExplanation = new JTextArea();
+		endGameExplanation.setText("1. The name of the ended game.\n");
+		endGameExplanation.append("2. The description of the ended game.\n");
+		endGameExplanation.append("3. The game's creator.\n");
+		endGameExplanation.append("4. The date and time the game ends.\n");
+		endGameExplanation.append("5. The list of requirements voted on during the game.\n");
+		endGameExplanation.append("6. The description of the requirement that is being displayed. \n");
+		endGameExplanation.append("7. The mean, standard deviation, median, max, min of all the "
+				+ "votes in the requirement and the number of people who voted on the requirement.\n");
+		endGameExplanation.append("8. A list of each user's votes on the requirement.\n");
+		endGameExplanation.append("9. The final estimate that the game creator can input.\n");
+		endGameExplanation.append("10. Displays the current final estimate which is the mean of "
+				+ "all the votes in the requirement.\n");
+		endGameExplanation.append("11. Sets the final estimate for the requirement as entered in"
+				+ " 9.\n");
+		endGameExplanation.setFont(makeFont(5));
+		
+		endGameExplanation.setEditable(false);
+		endGameExplanation.setBackground(null);
+		endGameExplanation.setWrapStyleWord(true);
+		endGameExplanation.setLineWrap(true);
+		
 		view.add(headingLabel);
+		view.add(endGameImage);
+		view.add(endGameExplanation);
 		
 		/**
 		 * Constraints for the overall panel layout
 		 */
 		layout.putConstraint(SpringLayout.NORTH, headingLabel, 5, SpringLayout.NORTH, view);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, headingLabel, 0, SpringLayout.HORIZONTAL_CENTER, view);
+		
+		layout.putConstraint(SpringLayout.NORTH, endGameImage, 5, SpringLayout.SOUTH, headingLabel);
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, endGameImage, 0, SpringLayout.HORIZONTAL_CENTER, headingLabel);
+		
+		layout.putConstraint(SpringLayout.NORTH, endGameExplanation, 20, SpringLayout.SOUTH, endGameImage);
+		layout.putConstraint(SpringLayout.EAST, endGameExplanation, 0, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.WEST, endGameExplanation, 0, SpringLayout.WEST, view);
 		
 		setViewportView(view);
 		revalidate();
