@@ -4,12 +4,19 @@ import static org.junit.Assert.*;
 
 import java.awt.event.KeyEvent;
 
+import javax.swing.JFrame;
+
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class NumberJTextFieldTest {
 	
 	private NumberJTextField testerField;
+	
+	private ErrorLabel label;
+	
+	private JFrame frame;
 	
 	/**
 	 * Sends a key pressed event to the number field
@@ -17,31 +24,53 @@ public class NumberJTextFieldTest {
 	 * @param tester
 	 * @param key
 	 */
-	private void sendKey(NumberJTextField tester, char key){
-		tester.dispatchEvent(new KeyEvent(tester,
-			    KeyEvent.KEY_TYPED, System.currentTimeMillis(),
-			    0, KeyEvent.VK_UNDEFINED, key));
+	private void sendKey(NumberJTextField tester, String text){
+		testerField.setTextNoUpdate(text);
+		
 	}
 	
 	@Before
 	public void setUp() throws Exception {
 		testerField = new NumberJTextField(27);
+		label = new ErrorLabel();
+		frame = new JFrame();
+		frame.add(testerField);
 	}
 	
 	@Test
 	public void testGoodKey() {
-		char key = '1';
-		sendKey(testerField, key);
+		testerField.setText("27");
+		sendKey(testerField, "271");
+		assertEquals("271", testerField.getText());
 		assertTrue(testerField.hasChanges());
-		assertTrue(testerField.validateField(null, false, false));
+		assertTrue(testerField.validateField(label, true, false));
+		assertEquals("", label.getText());
 	}
 
 	@Test
 	public void testBadKey() {
-		char key = 'C';
-		sendKey(testerField, key);
+		testerField.setIErrorView(label);
+		testerField.setText("27");
+		sendKey(testerField,"21C");
+		assertEquals("27", testerField.getText());
+		assertEquals(NumberJTextField.STRING_NOT_NUMBER, label.getText());
 		assertFalse(testerField.hasChanges());
-		assertTrue(testerField.validateField(null, false, false));
+		assertTrue(testerField.validateField(label, true, false));
+		assertEquals("", label.getText());
 	}
+	
+	@Test
+	public void testLargeNumber(){
+		//NumberJTextField testerField = new NumberJTextField(900);
+		testerField.setText("990");
+		int maxValue = 999;
+		testerField.setMaxValue(maxValue);
+		sendKey(testerField, "9909");
+		assertEquals("9909", testerField.getText());
+		assertTrue(testerField.hasChanges());
+		assertFalse(testerField.validateField(label, true, false));
+		assertEquals(NumberJTextField.STRING_TOO_LONG + maxValue, label.getText());
+	}
+	
 
 }
