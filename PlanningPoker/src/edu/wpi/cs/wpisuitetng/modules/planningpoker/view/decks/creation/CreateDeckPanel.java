@@ -39,12 +39,9 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
-import org.jdesktop.swingx.JXDatePicker;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveDeckButtonPanel;
@@ -52,13 +49,14 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJ
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IValidateButtons;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
  * The panel for the deck creation process
  * Used to allow the user to create a new deck by filling out the indicated fields
  */
-public class CreateDeckPanel extends JScrollPane implements IDataField{
+public class CreateDeckPanel extends JScrollPane implements IDataField, IValidateButtons{
 	
 	/**
 	 * textfield for the deck name
@@ -502,28 +500,13 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	 */
 	public void chooseCardColor(){
 		updateValueArray(); //ensures the array of values is up to date before cards are removed
-		String color = (String)getColorDropDown().getSelectedItem();
+		ColorEnum color = determineDeckColor();
 		int numCardsPresent = cardsPanel.getComponentCount();
 		cardsPanel.removeAll();
 		cards.removeAll(cards);
-		/* Later, when real functionality occurs, we will need a way of storing the cards 
-		 * being generated, along with their values so we can later tell if one is selected or not.
-		 * This will be necessary when assigning values to each card. */
-		if(color == "Red (Default)"){
-			addCards(ColorEnum.RED, numCardsPresent);
-		}
-		if(color == "Blue"){
-			addCards(ColorEnum.BLUE, numCardsPresent);
-		}
-		if(color == "Green"){
-			addCards(ColorEnum.GREEN, numCardsPresent);
-		}
-		if(color == "Purple"){
-			addCards(ColorEnum.PURPLE, numCardsPresent);
-		}
-		if(color == "Yellow"){
-			addCards(ColorEnum.YELLOW, numCardsPresent);
-		}
+
+		addCards(color, numCardsPresent);
+		
 		System.out.print(cards.size());
 		cardsPanel.revalidate();
         cardsPanel.repaint();
@@ -623,17 +606,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	 * Adds the deck to the model and to the server
 	 */
 	public void saveDeck(Deck deck) {
-		if (currentGame == null) {
-			currentGame = new Game();
-			setCurrentGame(false);
-			DeckModel.getInstance().addDeck(currentGame); // New Game gets added
-															// to the server
-			System.out.println("Launch Game Pressed Passed.");
-		} else {
-			setCurrentGame(false);
-		}
-		ViewEventController.getInstance().refreshGameTable();
-		ViewEventController.getInstance().refreshGameTree();
+		
+		DeckModel.getInstance().addDeck(deck); // New Deck gets added													// to the server
+
+		//ViewEventController.getInstance().refreshDeckTable();
+		//ViewEventController.getInstance().refreshDeckTree();
 	}
 	
 	/**
@@ -641,43 +618,46 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	 * 
 	 * @return true when a game is successfully added
 	 */
-	public boolean SaveDeckPressed() {
-		//Determines the color of the deck
-		final ColorEnum colorEnum;
-		String color = (String)getColorDropDown().getSelectedItem();
-		if(color == "Red (Default)"){
-			colorEnum = ColorEnum.RED;
-		}
-		if(color == "Blue"){
-			colorEnum = ColorEnum.BLUE;
-		}
-		if(color == "Green"){
-			colorEnum = ColorEnum.GREEN;
-		}
-		if(color == "Purple"){
-			colorEnum = ColorEnum.PURPLE;
-		}
-		if(color == "Yellow"){
-			colorEnum = ColorEnum.YELLOW;
-		}
-		
+	public void SaveDeckPressed() {
 		final Deck deck = new Deck(nameTextField.getText(), 
-				descriptionTextField.getText(), values, true, colorEnum);
+				descriptionTextField.getText(), values, true, 
+					determineDeckColor());
 		
-		if (leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true,
-				true)) {
-
-			leftHalf.getErrorField().setText("");
-			saveDeck(deck);
-			readyToClose = true;
-			ViewEventController.getInstance().removeTab(this);
-			System.out.println("Add Deck Pressed Passed.");
-			return true;
-		} else {
-			System.out.println("Add Game Pressed Failed.");
-			return false;
-		}
+		saveDeck(deck);
+		ViewEventController.getInstance().removeTab(this);
 
 	}
-	
+	/**Determines the color of the deck from the dropdown menu
+	 * 
+	 * @return the color of the deck
+	 */
+	private ColorEnum determineDeckColor(){
+		ColorEnum colorEnum = ColorEnum.RED;
+		String color = (String)getColorDropDown().getSelectedItem();
+		switch (color){
+		case "Blue": colorEnum = ColorEnum.BLUE;
+			 break;
+		case "Green": colorEnum = ColorEnum.GREEN;
+			 break;
+		case "Purple": colorEnum = ColorEnum.PURPLE;
+			 break;
+		case "Yellow": colorEnum = ColorEnum.YELLOW;
+			 break;
+		default: colorEnum = ColorEnum.RED;
+			 break;
+		}
+		
+		return colorEnum;
+	}
+
+	@Override
+	public void updateButtons() {
+		if (validateField(true, false)) {
+			saveButton.getSaveDeckButton().setEnabled(true);
+		} else {
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+		}
+		
+	}
 }
+

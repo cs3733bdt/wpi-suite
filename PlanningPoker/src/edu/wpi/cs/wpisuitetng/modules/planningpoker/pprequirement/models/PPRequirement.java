@@ -20,6 +20,7 @@ import com.google.gson.GsonBuilder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
@@ -65,7 +66,7 @@ public class PPRequirement extends ObservableModel {
 				return false;
 			}
 			@SuppressWarnings("unchecked")
-			ArrayList<Vote> comp = (ArrayList<Vote>)o;
+			List<Vote> comp = (ArrayList<Vote>)o;
 			for(Vote v : this){
 				if(!comp.contains(v)){
 					return false;
@@ -84,6 +85,8 @@ public class PPRequirement extends ObservableModel {
 	private boolean complete = false;
 	/** The final estimate for this requirement. This is -1 if a final estimate has not been submitted yet. */
 	private int finalEstimate = -1;
+	
+	
 	/**
 	 * The basic constructor for a game
 	 * Sets all of the default values for a game class

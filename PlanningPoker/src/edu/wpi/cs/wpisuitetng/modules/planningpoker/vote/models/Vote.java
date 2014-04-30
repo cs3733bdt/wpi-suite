@@ -10,6 +10,9 @@
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
  
 /**
  * used to record user votes for a game
@@ -18,6 +21,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models;
  */
 public class Vote {
 
+	private Game activeGame;
 	private final String username;
 	private int voteNumber;
 	
@@ -55,32 +59,4 @@ public class Vote {
 		voteNumber = newVote;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result
-				+ ((username == null) ? 0 : username.hashCode());
-		result = prime * result + voteNumber;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Vote other = (Vote) obj;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		if (voteNumber != other.voteNumber)
-			return false;
-		return true;
-	}
 }
