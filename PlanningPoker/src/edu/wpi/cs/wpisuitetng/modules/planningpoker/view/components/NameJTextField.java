@@ -111,5 +111,9 @@ public class NameJTextField extends JTextField implements IDataField {
 	public boolean hasChanges() {
 		return !getText().equals(startingText);
 	}
+	
+	public void setStartingText(String newStarting) {
+		this.startingText = newStarting;
+	}
 
 }
