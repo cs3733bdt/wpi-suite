@@ -21,15 +21,19 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberJTextField;
 
 /**
  * Creates a CardImage, which is to be used to display the cards when creating a deck, as well
@@ -39,24 +43,32 @@ import javax.swing.JTextField;
  * For the voting, it will have a permanent color and value.
  * @author Team BobbyDropTables
  */
-public class CardImage extends JPanel{
+public class CardImage extends JPanel implements IDataField{
 	
 	ColorEnum color;									//card's back color
 	
-	private JTextField addValue = new JTextField();		//the textfield that pops up when a user clicks a card, in which the user enters the desired value for the card
+	private NumberJTextField addValue = new NumberJTextField();		//the textfield that pops up when a user clicks a card, in which the user enters the desired value for the card
 	
 	private JLabel valueLabel = new JLabel("");			//the label that displays the value for each card as chosen by the user
 	
 	private GridBagConstraints c;
+
+	private IErrorView errorField;
 	
-	public CardImage(ColorEnum color){
+	private static Logger logger = Logger.getLogger(CardImage.class.getName());
+	
+
+	
+	public CardImage(ColorEnum color,IErrorView errorField){
+		this.errorField = errorField;
 		this.color = color;
+		addValue.setIErrorView(errorField);
+		addValue.setMaxValue(999);
 		BufferedImage myPicture = null;
 		try {
 			myPicture = ColorCardImage.getColorCardImage(color);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log(Level.SEVERE, "Failed to load the images", e);
 		}
 		GridBagLayout layout = new GridBagLayout();
 		setLayout(layout);											//sets the layout of the class (the panel)
@@ -91,7 +103,6 @@ public class CardImage extends JPanel{
 		valueLabel.setVisible(false);								//sets the label to be invisible at the start
 		valueLabel.setFont(makeFont(10));
 	}
-	
 	/**
 	 * A getter for the card's color
 	 * @return color
@@ -140,10 +151,13 @@ public class CardImage extends JPanel{
 		component.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {	
 				if(arg0.getKeyCode() == 10){		//if enter is pressed
-					if(!validateAddValueField()){
+					if(!addValue.validateField(errorField, true, false)){
+						logger.log(Level.INFO, "addValue was not validated");
 						//TODO: errorField.setText("The value for the card must be an integer between 1 and 999");
 						//TODO: but errorField is in CreateDeckPanel... HALP
 						return;
+					} else {
+						logger.log(Level.INFO, "addValue was validated");
 					}
 					valueLabel.setText(addValue.getText());
 					//TODO here the value in the value array needs to be set for the array to function.
@@ -191,7 +205,7 @@ public class CardImage extends JPanel{
 				return true;
 			}
 			else {
-				//TODO: SET ERRORFIELD TEXT TO SAY "Value of cards must be a 3-digit-or-less integer between 1 and 999
+				errorField.setText("Value of cards must be a 3-digit-or-less integer between 1 and 999");
 				return false;
 			}
 		}
@@ -222,6 +236,17 @@ public class CardImage extends JPanel{
 		// set the bigger font for userStoryDesc
 		Font bigFont = newFont;
 		return bigFont;
+	}
+
+	@Override
+	public boolean validateField(IErrorView warningField, boolean showLabel,
+			boolean showBox) {
+		return addValue.validateField(warningField, showLabel, showBox);
+	}
+
+	@Override
+	public boolean hasChanges() {
+		return addValue.hasChanges();
 	}
 	
 	

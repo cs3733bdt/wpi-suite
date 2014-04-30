@@ -48,7 +48,7 @@ public class DeckOverview extends JSplitPane {
 	
 	JXHyperlink videoTutorial;
 	
-	DeckTree filterPanel = new DeckTree();
+	DeckTree filterPanel = DeckTree.getInstance();
 	
 	/**
 	 * The constructor for the overview panel

@@ -13,8 +13,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards;
 
 import java.awt.Dimension;
 import java.awt.Image;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +27,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IValidateButtons;
 
 /**
  * creates the panel that displays all of the buttons and adds a clear button
@@ -60,6 +57,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 		this.setPreferredSize(new Dimension(525, (68 * (Math.round(deck.getSize()
 				/ cardsPerRow)))));
 		for (Card c : deck.getCards()) {
+			System.out.println("card value: " + c.getText());
 			JToggleButtonList.add(new CardButton(c, this));
 		}// idk button is part of array
 
@@ -119,7 +117,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public int getMaxSum() {
 		int sum = 0;
-		for (int i = 0; i < deck.getSize(); i++) {
+		for (int i = 0; i < (deck.getSize()) -1 ; i++) {
 			sum += Integer.parseInt(deck.getCards().get(i).getText());
 		}
 		return sum;

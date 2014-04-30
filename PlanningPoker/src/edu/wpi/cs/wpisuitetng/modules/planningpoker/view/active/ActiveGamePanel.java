@@ -47,9 +47,6 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 	}
 	
 	private void endGameNoRemove(){
-		//Date date = new Date();
-		//currentGame.setEndDate(date);
-		
 		currentGame.makeComplete();
 		currentGame.notifyObservers();
 	}

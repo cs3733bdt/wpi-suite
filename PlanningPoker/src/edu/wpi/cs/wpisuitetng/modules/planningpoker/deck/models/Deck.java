@@ -62,6 +62,11 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 			changes = true;
 		}
 		
+		if (hasIdontKnow != toCopyFrom.hasIdontKnow) {
+			hasIdontKnow = toCopyFrom.hasIdontKnow;
+			changes = true;
+		}
+		
 		
 		return changes;
 	}
@@ -199,14 +204,30 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		return description;
 	}
 
+	/**
+	 * Gets the owner of this deck
+	 * @return the name of the deck's owner
+	 */
 	public String getOwner() {
 		return owner;
 	}
 
+	/**
+	 * Sets the name of the deck
+	 * @param name the new deck name
+	 */
 	public void setName(String name) {
 		this.name = name;
 	}
 	
+	/**
+	 * USED FOR TESTING EXCLUSIVELY
+	 * @param name
+	 * @param description
+	 * @param cards
+	 * @param identifyingDeck
+	 * @return
+	 */
 	public static Deck makeDeckSameID(String name, String description, List<Integer> cards, Deck identifyingDeck){
 		return new Deck(name, description, cards, identifyingDeck.identity, true, identifyingDeck.color);	
 	}
@@ -217,6 +238,14 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		
 	}
 
+	/**
+	 * Gets the individual cards in this deck.
+	 * Note:
+	 * 		Cards are not saved as a part of this Deck
+	 * 		They are only instantiated when this method is called
+	 * 
+	 * @return the list of cards in this deck
+	 */
 	public List<Card> getCards() {
 		List<Card> returnedCards = new ArrayList<Card>();
 		for(Integer i: cards){
@@ -228,8 +257,12 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		return returnedCards;
 	}
 	
+	/**
+	 * Gets the number of cards in this deck
+	 * @return the size of this deck
+	 */
 	public int getSize(){
-		return cards.size();
+		return cards.size() + (hasIdontKnow ? 1 : 0);
 	}
 
 	public ColorEnum getColor() {
@@ -237,9 +270,30 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	}
 	
 	public void updateMultipleSelection(boolean isMultipleSelection) {
+		if (isMultipleSelection == this.isMultipleSelection) {
+			return;
+		}
 		makeChanged();
 		//delayChange(); //TODO This method is needed for changing
 		this.isMultipleSelection = isMultipleSelection;
+	}
+	
+	public boolean isMultipleSelection() {
+		return isMultipleSelection;
+	}
+	
+	public void updateHasIdk(boolean hasIdontKnow) {
+		if (hasIdontKnow == this.hasIdontKnow) {
+			return;
+		}
+		makeChanged();
+		//delayChange(); //TODO This method is needed for changing
+		this.hasIdontKnow = hasIdontKnow;
+	}
+	
+	@Override
+	public String toString() {
+		return name;
 	}
 	
 }

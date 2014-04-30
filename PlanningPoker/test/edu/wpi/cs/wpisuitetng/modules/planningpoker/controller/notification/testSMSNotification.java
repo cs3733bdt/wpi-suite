@@ -1,6 +1,14 @@
-/**
- * 
- */
+/*******************************************************************************
+ * Copyright (c) 2014 -- WPI Suite
+ *
+ * All rights reserved. This program and the accompanying materials
+ * are made available under the terms of the Eclipse Public License v1.0
+ * which accompanies this distribution, and is available at
+ * http://www.eclipse.org/legal/epl-v10.html
+ *
+ * Contributors: Team Bobby Drop Tables
+ *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.controller.notification;
 
 import static org.junit.Assert.assertEquals;
@@ -62,56 +70,51 @@ public class testSMSNotification {
 	@Test
 	public void testSendSMSVerizon()
 	{
-		/**
-		 *  Commented out to prevent spam. Works as of 4/8/14
-		 *  u1.setPhoneNumber("");
-		 *  u1.setCarrier("VERIZON");
-		 *  sms.sendSMS(sms.login(), u1);
-		 */
+
+		u1.setPhoneNumber("");
+		u1.setCarrier("VERIZON");
+		sms.sendSMS(sms.login(), u1);
+
 	}
 	
 	@Test
 	public void testSendSMSTMOBILE()
 	{
-		/**
-		 *  Commented out to prevent spam. Works as of 4/8/14
-		 *  u1.setPhoneNumber("");
-		 *  u1.setCarrier("TMOBILE");
-		 *  sms.sendSMS(sms.login(), u1);
-		 */
+
+		u1.setPhoneNumber("");
+		u1.setCarrier("TMOBILE");
+		sms.sendSMS(sms.login(), u1);
+
 	}
 	
 	@Test
 	public void testSendSMSSPRINT()
 	{
-		/**
-		 *  Commented out to prevent spam. Works as of 4/8/14
-		 *  u1.setPhoneNumber("");
-		 *  u1.setCarrier("SPRINT");
-		 *  sms.sendSMS(sms.login(), u1);
-		 */
+
+		u1.setPhoneNumber("");
+		u1.setCarrier("SPRINT");
+		sms.sendSMS(sms.login(), u1);
+
 	}
 	
 	@Test
 	public void testSendSMSATT()
 	{
-		/**
-		 *  Commented out to prevent spam. Works as of 4/8/14
-		 *  u1.setPhoneNumber("");
-		 *  u1.setCarrier("ATT");
-		 *  sms.sendSMS(sms.login(), u1);
-		 */
+
+		u1.setPhoneNumber("");
+		u1.setCarrier("ATT");
+		sms.sendSMS(sms.login(), u1);
+
 	}
 	
 	@Test
 	public void testSendSMSUSCellular()
 	{
-		/**
-		 *  Commented out to prevent spam. Works as of 4/8/14
-		 *  u1.setPhoneNumber("");
-		 *  u1.setCarrier("USCELLULAR");
-		 *  sms.sendSMS(sms.login(), u1);
-		 */
+
+		u1.setPhoneNumber("");
+		u1.setCarrier("USCELLULAR");
+		sms.sendSMS(sms.login(), u1);
+
 	}
 
 }

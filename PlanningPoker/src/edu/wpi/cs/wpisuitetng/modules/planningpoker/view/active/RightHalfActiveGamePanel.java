@@ -206,7 +206,7 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 //		int firstnum = 0;
 //		int secondnum = 1;
 //		int currnum;
-		deck = new Deck();
+		deck = currentGame.getDeck();
 		// Default value is 6.
 //		int Fibcount = 6; // if this is 6, the highest number generated will be
 //							// 13

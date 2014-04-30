@@ -17,26 +17,26 @@ import javax.swing.text.DocumentFilter;
 /**
  * @author jonathanleitschuh
  * 
- * The NumberJTextField is designed to prevent the user from entering
+ * The NumberJTextField is designed to prevent the user from entering anything besides
+ * numbers
  *
  */
 public class NumberJTextField extends JTextField implements IDataField {
-	private final Border defaultBorder = (new JTextField()).getBorder();
-	private final Border errorBorder = BorderFactory
-			.createLineBorder(Color.RED);
+	public static final String STRING_TOO_LONG = "You can not enter a number greater than ";
+	public static final String STRING_NOT_EMPTY = "The Field can not be empty";
+	public static final String STRING_NOT_NUMBER= "You can only enter numbers here";
+	
+	
+	public static final Border BORDER_DEFAULT = (new JTextField()).getBorder();
+	public static final Border BORDER_ERROR = BorderFactory.createLineBorder(Color.RED);
 	
 	private String initialText;
 	private IErrorView warningField;
+	private int maxValue = -1;
 
 	public NumberJTextField() {
 		initialText = "";
 		setup();
-	}
-	
-	@Override
-	public void setText(String text){
-		initialText = Integer.toString(Integer.getInteger(text));
-		super.setText(text);
 	}
 
 	public NumberJTextField(int text) {
@@ -67,7 +67,18 @@ public class NumberJTextField extends JTextField implements IDataField {
 	 */
 	private void setup(){
 		((AbstractDocument) this.getDocument())
-		.setDocumentFilter(new MyDocumentFilter());
+		.setDocumentFilter(new MyDocumentFilter(this));
+	}
+	
+	@Override
+	public void setText(String text){
+		text = text.replaceAll("\n", "");
+		initialText = text;
+		super.setText(text);
+	}
+	
+	public void setMaxValue(int maxValue){
+		this.maxValue = maxValue;
 	}
 	
 	public void setIErrorView(IErrorView warningField){
@@ -77,35 +88,57 @@ public class NumberJTextField extends JTextField implements IDataField {
 	@Override
 	public boolean validateField(IErrorView warningField, boolean showLabel,
 			boolean showBox) {
+		this.warningField = warningField;
 		boolean isValid = false;
-		if(!hasChanges()){ //If this has changed
-			isValid = true;
-		} else if(getText().equals("")){
+		if(getText().equals("")){
 			isValid = false;
-		} //Should not need to handle checking to see if there not numbers because this should have already been caught
+			showInvalid(STRING_NOT_EMPTY, showLabel, showBox);
+		} else if(!hasChanges()){ //If this has changed
+			isValid = true;
+			showValid(showLabel, showBox);
+		} else if(maxValue != -1){
+			if(Integer.parseInt(getText()) > maxValue ){
+				isValid = false;
+				showInvalid(STRING_TOO_LONG + maxValue, showLabel, showBox);
+			} else {
+				isValid = true;
+				showValid(showLabel, showBox);
+			}
+		} else{
+			isValid = true;
+			showValid(showLabel, showBox);
+		}	//Should not need to handle checking to see if there not numbers because this should have already been caught
 		
-		if(isValid){
-			if(showLabel){
-				warningField.setText("");
-			}
-			if(showBox){
-				setBorder(defaultBorder);
-			}
-			return true;
-		} else {
-			if(showLabel){
-				warningField.setText("The field can not be empty");
-			}
-			if(showBox){
-				setBorder(errorBorder);
-			}
-			return false;
+		return isValid;
+	}
+	
+	private void showValid(boolean showLabel, boolean showBox){
+		if(showLabel){
+			warningField.setText("");
+		}
+		if(showBox){
+			setBorder(BORDER_DEFAULT);
+		}
+	}
+	
+	private void showInvalid(String text, boolean showLabel, boolean showBox){
+		if(showLabel){
+			warningField.setText(text);
+		}
+		if(showBox){
+			setBorder(BORDER_ERROR);
 		}
 	}
 
 	@Override
 	public boolean hasChanges() {
-		return initialText.equals(getText());
+		return !initialText.equals(getText());
+	}
+	
+	public void setTextNoUpdate(String text){
+		text = text.replaceAll("\n", "");
+		super.setText(text);
+		
 	}
 	
 	public static void main(String... args){
@@ -141,13 +174,10 @@ class MyDocumentFilter extends DocumentFilter {
 		this.parent = parent;
 	}
 	
-	public MyDocumentFilter(){
-		parent = null;
-	}
-	
 	@Override
 	public void insertString(DocumentFilter.FilterBypass fp, int offset,
 			String string, AttributeSet aset) throws BadLocationException {
+		string = string.replaceAll("\n", ""); //Parse out newline character
 		int len = string.length();
 		boolean isValidInteger = true;
 
@@ -169,6 +199,7 @@ class MyDocumentFilter extends DocumentFilter {
 	@Override
 	public void replace(DocumentFilter.FilterBypass fp, int offset, int length,
 			String string, AttributeSet aset) throws BadLocationException {
+		string = string.replaceAll("\n", ""); //Parse out newline character
 		int len = string.length();
 		boolean isValidInteger = true;
 
@@ -177,6 +208,7 @@ class MyDocumentFilter extends DocumentFilter {
 				isValidInteger = false;
 				break;
 			}
+			//System.out.println("Char was: " + string.charAt(i));
 		}
 		if (isValidInteger) {
 			super.replace(fp, offset, length, string, aset);
@@ -189,7 +221,7 @@ class MyDocumentFilter extends DocumentFilter {
 	
 	private void numberInvalid(){
 		if(parent.getIErrorView() != null){
-			parent.getIErrorView().setText("You can only enter numbers here");
+			parent.getIErrorView().setText(parent.STRING_NOT_NUMBER);
 		}
 	}
 	
