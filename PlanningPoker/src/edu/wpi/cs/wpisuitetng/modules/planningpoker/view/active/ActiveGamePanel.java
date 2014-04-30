@@ -40,8 +40,6 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 	}
 	
 	public void endGame(){
-		Date date = new Date();
-		currentGame.setEndDate(date);
 		
 		currentGame.makeComplete();
 		currentGame.notifyObservers();
