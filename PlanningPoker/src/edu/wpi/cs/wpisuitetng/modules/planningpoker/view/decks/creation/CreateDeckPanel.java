@@ -343,6 +343,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		repaint();
 		
 		setViewportView(view);
+		updateButtons();
 	}
 	
 	/**
@@ -663,11 +664,15 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	public void updateButtons() {
 		if (validateField(errorField,true, false)) {
 			saveButton.getSaveDeckButton().setEnabled(true);
+			errorField.setText("");
+		} else {
+			saveButton.getSaveDeckButton().setEnabled(false);
+		}
+		if (validateField(errorField,true, false)) {
 			submitNumCards.setEnabled(true);
 			getNumCards().setBorder(defaultTextFieldBorder);
 			errorField.setText("");
 		} else {
-			saveButton.getSaveDeckButton().setEnabled(false);
 			submitNumCards.setEnabled(false);
 		}
 	}
