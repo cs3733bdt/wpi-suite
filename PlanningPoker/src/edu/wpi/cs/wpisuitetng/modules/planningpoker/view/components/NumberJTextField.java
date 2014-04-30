@@ -22,6 +22,11 @@ import javax.swing.text.DocumentFilter;
  *
  */
 public class NumberJTextField extends JTextField implements IDataField {
+	public static final String STRING_TOO_SHORT = "You can not enter a number greater than ";
+	public static final String STRING_NOT_EMPTY = "The Field can not be empty";
+	public static final String STRING_NOT_NUMBER= "You can only enter numbers here";
+	
+	
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
@@ -33,12 +38,6 @@ public class NumberJTextField extends JTextField implements IDataField {
 	public NumberJTextField() {
 		initialText = "";
 		setup();
-	}
-	
-	@Override
-	public void setText(String text){
-		initialText = text;
-		super.setText(text);
 	}
 
 	public NumberJTextField(int text) {
@@ -72,6 +71,12 @@ public class NumberJTextField extends JTextField implements IDataField {
 		.setDocumentFilter(new MyDocumentFilter(this));
 	}
 	
+	@Override
+	public void setText(String text){
+		initialText = text;
+		super.setText(text);
+	}
+	
 	public void setMaxValue(int maxValue){
 		this.maxValue = maxValue;
 	}
@@ -90,14 +95,15 @@ public class NumberJTextField extends JTextField implements IDataField {
 			showValid(showLabel, showBox);
 		} else if(getText().equals("")){
 			isValid = false;
-			showInvalid("The Field can not be empty", showLabel, showBox);
+			showInvalid(STRING_NOT_EMPTY, showLabel, showBox);
 		} else if(maxValue != -1){
-			if(Integer.getInteger(getText()) >= maxValue ){
+			if(Integer.parseInt(getText()) > maxValue ){
 				isValid = false;
-				showInvalid("You can not enter a number greater than " + maxValue, showLabel, showBox);
+				showInvalid(STRING_TOO_SHORT + maxValue, showLabel, showBox);
 			}
 		} else{
 			isValid = true;
+			showValid(showLabel, showBox);
 		}	//Should not need to handle checking to see if there not numbers because this should have already been caught
 		
 		return isValid;
@@ -123,7 +129,12 @@ public class NumberJTextField extends JTextField implements IDataField {
 
 	@Override
 	public boolean hasChanges() {
-		return initialText.equals(getText());
+		return !initialText.equals(getText());
+	}
+	
+	public void setTextNoUpdate(String a){
+		super.setText(a);
+		
 	}
 	
 	public static void main(String... args){
@@ -159,10 +170,6 @@ class MyDocumentFilter extends DocumentFilter {
 		this.parent = parent;
 	}
 	
-	public MyDocumentFilter(){
-		parent = null;
-	}
-	
 	@Override
 	public void insertString(DocumentFilter.FilterBypass fp, int offset,
 			String string, AttributeSet aset) throws BadLocationException {
@@ -195,6 +202,7 @@ class MyDocumentFilter extends DocumentFilter {
 				isValidInteger = false;
 				break;
 			}
+			//System.out.println("Char was: " + string.charAt(i));
 		}
 		if (isValidInteger) {
 			super.replace(fp, offset, length, string, aset);
@@ -207,7 +215,7 @@ class MyDocumentFilter extends DocumentFilter {
 	
 	private void numberInvalid(){
 		if(parent.getIErrorView() != null){
-			parent.getIErrorView().setText("You can only enter numbers here");
+			parent.getIErrorView().setText(parent.STRING_NOT_NUMBER);
 		}
 	}
 	
