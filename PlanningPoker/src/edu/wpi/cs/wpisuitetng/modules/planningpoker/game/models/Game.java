@@ -210,7 +210,6 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		if(needsUpdate){
 			System.err.println("WARNING! THERE WAS A COPY OVER FOR TWO NON MATCHING UUID GAMES!");
 			makeChanged();
-			notifyObservers();
 		}
 
 		return wasChanged;
