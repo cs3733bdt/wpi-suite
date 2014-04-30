@@ -65,6 +65,14 @@ public class ViewEventController {
 		toolbar.repaint(); 
 	}
 	
+	public void disableHelpButton() {
+		toolbar.disableHelpButton();
+	}
+	
+	public void enableHelpButton() {
+		toolbar.enableHelpButton();
+	}
+	
 	/**
 	 * Sets the modules tabbed view
 	 * @param tabs

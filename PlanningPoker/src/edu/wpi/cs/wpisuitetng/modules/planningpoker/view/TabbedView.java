@@ -42,6 +42,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help.CreateGameHelp;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help.EndGameHelp;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help.IHelpPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help.PreferencesHelp;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation.IPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation.PreferencesPanel;
 
 /**
@@ -182,6 +183,7 @@ public class TabbedView extends JTabbedPane {
 		for(IActiveGamePanel gameSearch : listOfActiveGamePanels){
 			if(game.equals(gameSearch.getGame())){
 				setSelectedComponent((Component)gameSearch);
+				ViewEventController.getInstance().enableHelpButton();
 				invalidate();
 				repaint();
 				return; //The game has been found and made active. Done!
@@ -193,10 +195,13 @@ public class TabbedView extends JTabbedPane {
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 
 		addTab(getTabName(game), viewGame);
+		setToolTipTextAt(getTabCount()-1, game.getName());
 
 		listOfActiveGamePanels.add(viewGame);
 
 		setSelectedComponent(viewGame);
+		ViewEventController.getInstance().enableHelpButton();
+		
 		invalidate();
 		repaint();
 	}
@@ -254,6 +259,7 @@ public class TabbedView extends JTabbedPane {
 		for(ICreateGamePanel gameSearch : listOfCreateGamePanels){
 			if(game.equals(gameSearch.getGame())){			//If found then make it the active
 				setSelectedComponent((Component)gameSearch);
+				ViewEventController.getInstance().enableHelpButton();
 				invalidate();
 				repaint();
 				return;
@@ -261,10 +267,12 @@ public class TabbedView extends JTabbedPane {
 		}
 
 		addTab(getTabName(game), newGame);
+		setToolTipTextAt(getTabCount()-1, game.getName());
 
 		listOfCreateGamePanels.add((ICreateGamePanel) newGame);
-
+		
 		setSelectedComponent(newGame);
+		ViewEventController.getInstance().enableHelpButton();
 		invalidate();
 		repaint();
 	}
@@ -274,6 +282,7 @@ public class TabbedView extends JTabbedPane {
 			preferencesPanel = new PreferencesPanel();
 			addTab("Preferences", null, preferencesPanel, "Preferences");
 			setSelectedComponent(preferencesPanel);
+			ViewEventController.getInstance().enableHelpButton();
 			hasPreferencesTab = true;
 			invalidate();
 			repaint();
@@ -281,6 +290,7 @@ public class TabbedView extends JTabbedPane {
 		}
 
 		setSelectedComponent(preferencesPanel);
+		ViewEventController.getInstance().enableHelpButton();
 		invalidate();
 		repaint();
 
@@ -379,9 +389,11 @@ public class TabbedView extends JTabbedPane {
 		EndGamePanel viewGame = new EndGamePanel(game);
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 
+		
+		
 		addTab(getTabName(game),  viewGame);
-
-
+		setToolTipTextAt(getTabCount()-1, game.getName());
+		
 		listOfEndedGamePanels.add(viewGame);
 
 		setSelectedComponent(viewGame);
@@ -392,16 +404,16 @@ public class TabbedView extends JTabbedPane {
 
 
 	/**
-	 * Creates a tab name that is shortened if the name of the game is longer than 6 characters
+	 * Creates a tab name that is shortened if the name of the game is longer than 12 characters
 	 * @param game the game to get the tab text from
 	 * @return the tabs text
 	 */
 	private String getTabName(Game game){
-		// Makes the game name not be longer than 6 characters
+		// Makes the game name not be longer than 12 characters
 		StringBuilder tabName = new StringBuilder();
-		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
+		int subStringLength = game.getName().length() > 12 ? 13 : game.getName().length();
 		tabName.append(game.getName().subSequence(0, subStringLength));
-		if (game.getName().length() > 6)
+		if (game.getName().length() > 12)
 			tabName.append("...");
 		return tabName.toString();
 	}
@@ -436,7 +448,8 @@ public class TabbedView extends JTabbedPane {
 		}
 		if (comp instanceof PreferencesPanel){
 			//TODO Implement preferences like other panels to use readyToRemove
-			//if(!((IEndedGamePanel)comp).readyToRemove()) return;
+			if(!((PreferencesPanel)comp).readyToRemove()) return;
+			listOfEndedGamePanels.remove(comp);
 			hasPreferencesTab = false;
 			setSelectedComponent(gameOverview);
 		}
@@ -451,6 +464,14 @@ public class TabbedView extends JTabbedPane {
 			setSelectedComponent(gameOverview);
 		}
 		remove(comp);
+	}
+
+	private void disableHelpButton() {
+		ViewEventController.getInstance().disableHelpButton(); 	
+	}
+	
+	private void enableHelpButton() {
+		ViewEventController.getInstance().enableHelpButton();
 	}
 
 	/**
@@ -490,6 +511,12 @@ public class TabbedView extends JTabbedPane {
 			if (toBeRemoved instanceof IEndedGamePanel){
 				if(!((IEndedGamePanel)toBeRemoved).readyToRemove()) continue;
 				listOfEndedGamePanels.remove(toBeRemoved);
+			}
+			
+			if (toBeRemoved instanceof IPreferencesPanel){
+				if(!((IPreferencesPanel)toBeRemoved).readyToRemove()) continue;
+				listOfEndedGamePanels.remove(toBeRemoved);
+				hasPreferencesTab = false;
 			}
 
 			removeTabAt(i);
@@ -532,6 +559,13 @@ public class TabbedView extends JTabbedPane {
 				if(!((EndGamePanel)toBeRemoved).readyToRemove()) {continue;}
 				listOfEndedGamePanels.remove(toBeRemoved);
 			}
+
+			if (toBeRemoved instanceof IPreferencesPanel){
+				if(!((IPreferencesPanel)toBeRemoved).readyToRemove()) continue;
+				listOfEndedGamePanels.remove(toBeRemoved);
+				hasPreferencesTab = false;
+			}
+
 			removeTabAt(i);
 		}
 		repaint();
@@ -566,6 +600,20 @@ public class TabbedView extends JTabbedPane {
 		}
 		else {
 			return;
+		}
+	}
+	
+	@Override
+	public void setSelectedComponent(Component comp) {
+		super.setSelectedComponent(comp);
+		if (comp instanceof DeckOverview) {
+			disableHelpButton();
+		}
+		else if (comp instanceof GameOverview) {
+			disableHelpButton();
+		}
+		else {
+			enableHelpButton();
 		}
 	}
 }
