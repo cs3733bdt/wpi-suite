@@ -19,7 +19,6 @@ import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -287,9 +286,9 @@ public class DeckTree extends JPanel implements MouseListener{
  * Used to sort decks by their creation time.
  *
  */
-class DeckComparator implements Comparator<Deck>{
+/*class DeckComparator implements Comparator<Deck>{
 	@Override
 	public int compare(Deck D1, Deck D2){
 		return -(D1.getName().compareTo(D2.getName()));
 	}
-}
+}*/
