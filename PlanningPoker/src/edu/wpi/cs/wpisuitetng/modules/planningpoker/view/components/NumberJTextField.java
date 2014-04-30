@@ -17,7 +17,8 @@ import javax.swing.text.DocumentFilter;
 /**
  * @author jonathanleitschuh
  * 
- * The NumberJTextField is designed to prevent the user from entering
+ * The NumberJTextField is designed to prevent the user from entering anything besides
+ * numbers
  *
  */
 public class NumberJTextField extends JTextField implements IDataField {
