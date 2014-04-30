@@ -306,6 +306,7 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel, IVa
 		currentGame.setRequirements(getRequirements());
 		currentGame.setEndDate(getEndDateField().getEndDate());
 		currentGame.setCreator(ConfigManager.getConfig().getUserName());
+		currentGame.setDeck(leftHalf.getDeck());
 		currentGame.notifyObservers();
 	}
 

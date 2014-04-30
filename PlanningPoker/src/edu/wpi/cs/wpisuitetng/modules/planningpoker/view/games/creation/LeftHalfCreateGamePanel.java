@@ -167,29 +167,23 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		addActionListenerTo(endDateField.getMinuteSelection());		//Adds ActionListener to update when a selection is made
 		addActionListenerTo(endDateField.getAmPmSelection());			//Adds ActionListener to update when a selection is made
 		
-		deck = game.getDeck();
-		
 		deckDropDownPanel = new JPanel();
 		JLabel deckDropDownLabel = new JLabel("Deck");
 		
 		deckDropDown = new JComboBox<Deck>();
-		deckDropDown.addActionListener (new ActionListener () {
-		    public void actionPerformed(ActionEvent e) {
-		        chooseDeck();
-		    }
-		});
-		/*
-		 * TODO:Actually add the decks available to the user into the dropdown
-		 * Will look something like this:
-		 * for(each deck in ArrayOfDecksBelongingToUser){
-		 * 		deckDropDown.addItem(deck.getName());
-		 * }
-		 */
 		List<Deck> deckList = DeckModel.getInstance().getDecks();
 		
-		
-		for(Deck d : deckList){
-			deckDropDown.addItem(d);
+		if(deckList.size() == 0){
+			deckDropDown.addItem(new Deck());		//default deck, if user doesn't have any decks.
+		}
+		else {
+			deckDropDown.addItem(new Deck());
+			for(Deck d : deckList){
+				deckDropDown.addItem(d);
+			}
+		}
+		if(game != null){
+			deckDropDown.setSelectedItem(game.getDeck());
 		}
 		
 		deckDropDownPanel.add(deckDropDownLabel);
@@ -348,8 +342,6 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		errorField.setText(error);
 	}
 	
-	
-	
 	public SaveGameButtonPanel getSaveGameButtonPanel() {
 		return saveGameButton;
 	}
@@ -399,8 +391,6 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		
 		return (isNameValid && isDescriptionValid && isEndDateValid);
 	}
-	
-	
 
 	@Override
 	public boolean hasChanges() {
@@ -431,9 +421,6 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		}
 	}
 	
-	
-	
-	
 	private void addActionListenerTo(JComponent component){
 		if(component instanceof JComboBox){
 			((JComboBox)component).addActionListener(new ActionListener(){
@@ -462,10 +449,8 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		});
 	}
 	
-	public void chooseDeck(){
-		String selectedDeckName = (String)deckDropDown.getSelectedItem();
-		System.out.print("Deck Selected = " + selectedDeckName + "\n");
-		//TODO: Actually then use the selected Deck...
+	public Deck getDeck(){
+		return (Deck)deckDropDown.getSelectedItem();
 	}
 	
 	private void setDeckOptionsVisibility(){
