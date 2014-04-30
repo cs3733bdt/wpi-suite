@@ -22,6 +22,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -39,6 +40,8 @@ import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.LaunchGameButtonPanel;
@@ -71,7 +74,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 	
 	private JPanel deckDropDownPanel;
 	
-	private JComboBox<String> deckDropDown;	
+	private JComboBox<Deck> deckDropDown;	
 	
 	private SaveGameButtonPanel saveGameButton;
 	private LaunchGameButtonPanel launchGameButton;
@@ -88,6 +91,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 	    
 	private final Border defaultDateBorder = (new JXDatePicker()).getBorder();	
 	
+	private Deck deck;
 	
 	/**
 	 * Builds the left half of the CreateGamePanel
@@ -163,10 +167,12 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		addActionListenerTo(endDateField.getMinuteSelection());		//Adds ActionListener to update when a selection is made
 		addActionListenerTo(endDateField.getAmPmSelection());			//Adds ActionListener to update when a selection is made
 		
+		deck = game.getDeck();
+		
 		deckDropDownPanel = new JPanel();
 		JLabel deckDropDownLabel = new JLabel("Deck");
 		
-		deckDropDown = new JComboBox<String>();
+		deckDropDown = new JComboBox<Deck>();
 		deckDropDown.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
 		        chooseDeck();
@@ -179,11 +185,12 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		 * 		deckDropDown.addItem(deck.getName());
 		 * }
 		 */
-		deckDropDown.addItem("Deck 1");
-		deckDropDown.addItem("Deck 2");
-		deckDropDown.addItem("Deck 3");
-		deckDropDown.addItem("Deck 4");
-		deckDropDown.addItem("Deck 5");
+		List<Deck> deckList = DeckModel.getInstance().getDecks();
+		
+		
+		for(Deck d : deckList){
+			deckDropDown.addItem(d);
+		}
 		
 		deckDropDownPanel.add(deckDropDownLabel);
 		deckDropDownPanel.add(deckDropDown);
@@ -261,7 +268,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		repaint();
 		
 		setViewportView(leftView);						//Sets the view of the scrollpane to be the entire container which has everything contained within it
-
+		
 	}
 	
 	/**
@@ -481,4 +488,5 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 	public String dateToString(){
 		return endDateField.toString();
 	}
+	
 }
