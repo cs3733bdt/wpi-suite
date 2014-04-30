@@ -43,7 +43,7 @@ public class NumberJTextFieldTest {
 		sendKey(testerField, "271");
 		assertEquals("271", testerField.getText());
 		assertTrue(testerField.hasChanges());
-		assertTrue(testerField.validateField(label, true, false));
+		assertTrue(testerField.validateField(label, true, true));
 		assertEquals("", label.getText());
 	}
 
@@ -55,8 +55,9 @@ public class NumberJTextFieldTest {
 		assertEquals("27", testerField.getText());
 		assertEquals(NumberJTextField.STRING_NOT_NUMBER, label.getText());
 		assertFalse(testerField.hasChanges());
-		assertTrue(testerField.validateField(label, true, false));
+		assertTrue(testerField.validateField(label, true, true));
 		assertEquals("", label.getText());
+		assertSame(NumberJTextField.BORDER_DEFAULT, testerField.getBorder());
 	}
 	
 	@Test
@@ -68,8 +69,31 @@ public class NumberJTextFieldTest {
 		sendKey(testerField, "9909");
 		assertEquals("9909", testerField.getText());
 		assertTrue(testerField.hasChanges());
-		assertFalse(testerField.validateField(label, true, false));
+		assertFalse(testerField.validateField(label, true, true));
 		assertEquals(NumberJTextField.STRING_TOO_LONG + maxValue, label.getText());
+		assertSame(NumberJTextField.BORDER_ERROR, testerField.getBorder());
+		
+		
+		testerField.setMaxValue(-1); //Reset this back to default
+	}
+	
+	@Test
+	public void testNoText(){
+		testerField.setText("");
+		assertEquals("", testerField.getText());
+		assertFalse(testerField.validateField(label, true, true));
+		assertEquals(NumberJTextField.STRING_NOT_EMPTY, label.getText());
+		assertSame(NumberJTextField.BORDER_ERROR, testerField.getBorder());
+	}
+	
+	@Test
+	public void testValidChange(){
+		testerField.setText("27");
+		testerField.setMaxValue(999);
+		sendKey(testerField, "30");
+		assertTrue(testerField.validateField(label, true, true));
+		assertEquals("", label.getText());
+		assertSame(NumberJTextField.BORDER_DEFAULT, testerField.getBorder());
 	}
 	
 
