@@ -26,14 +26,16 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 import javax.swing.JTabbedPane;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.DeckOverview;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.GameOverview;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.ActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CreateDeckPanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ICreateDeckPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.IEndedGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help.ActiveGameHelp;
@@ -63,8 +65,11 @@ public class TabbedView extends JTabbedPane {
 
 	private List<ICreateGamePanel> listOfCreateGamePanels = new ArrayList<ICreateGamePanel>();
 	private List<IActiveGamePanel> listOfActiveGamePanels = new ArrayList<IActiveGamePanel>();
+
 	private List<IEndedGamePanel>  listOfEndedGamePanels  = new ArrayList<IEndedGamePanel>();
-	private ArrayList<IHelpPanel>       listOfHelpPanels       = new ArrayList<IHelpPanel>();  
+	private ArrayList<IHelpPanel>  listOfHelpPanels = new ArrayList<IHelpPanel>();  
+	private List<ICreateDeckPanel>  listOfCreateDeckPanels = new ArrayList<ICreateDeckPanel>();
+
 
 	private PreferencesPanel preferencesPanel;
 	private boolean hasPreferencesTab=false;
@@ -400,6 +405,54 @@ public class TabbedView extends JTabbedPane {
 		invalidate();
 		repaint();
 
+	}
+
+	
+	/**
+	 * Shows the ended game.
+	 * Displays the End Game Panel
+	 * @param game Game to be searched for
+	 */
+	public void viewDeck(Deck deck){
+		//Attempt to find the game in the active panels list
+		for(ICreateDeckPanel deckSearch : listOfCreateDeckPanels){
+			if(deck.equals(deckSearch.getDeck())){
+				setSelectedComponent((Component) deckSearch);
+				invalidate();
+				repaint();
+				return; //The game has been found and made active. Done!
+			}
+		}
+		
+		//Game not found in the active game list
+		CreateDeckPanel viewDeck = new CreateDeckPanel(deck);
+		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
+		
+		
+		addTab(getTabName(deck),  viewDeck);
+		setToolTipTextAt(getTabCount()-1, deck.getName());
+		
+		listOfCreateDeckPanels.add(viewDeck);
+		
+		setSelectedComponent(viewDeck);
+		invalidate();
+		repaint();
+		
+	}
+
+	/**
+	 * Creates a tab name that is shortened if the name of the game is longer than 12 characters
+	 * @param game the game to get the tab text from
+	 * @return the tabs text
+	 */
+	private String getTabName(Deck deck){
+		// Makes the game name not be longer than 12 characters
+		StringBuilder tabName = new StringBuilder();
+		int subStringLength = deck.getName().length() > 12 ? 13 : deck.getName().length();
+		tabName.append(deck.getName().subSequence(0, subStringLength));
+		if (deck.getName().length() > 12)
+			tabName.append("...");
+		return tabName.toString();
 	}
 
 

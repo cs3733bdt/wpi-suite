@@ -22,6 +22,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -39,8 +40,9 @@ import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.EstimatePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.LaunchGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveGameButtonPanel;
@@ -72,7 +74,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 	
 	private JPanel deckDropDownPanel;
 	
-	private JComboBox<String> deckDropDown;	
+	private JComboBox<Deck> deckDropDown;	
 	
 	private SaveGameButtonPanel saveGameButton;
 	private LaunchGameButtonPanel launchGameButton;
@@ -87,8 +89,13 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 	 
 	private final Border defaultTextAreaBorder = (new JTextArea()).getBorder();
 	    
-	private final Border defaultDateBorder = (new JXDatePicker()).getBorder();	
+	private final Border defaultDateBorder = (new JXDatePicker()).getBorder();
 	
+	private boolean isCardsChanged;
+	
+	private boolean usesCardsInitial;
+	
+	private Deck deck;
 	
 	/**
 	 * Builds the left half of the CreateGamePanel
@@ -99,6 +106,9 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		game = mainPanel.getGame();
 		build();
 		buildFields();
+		isCardsChanged = textEntryButton.isSelected();
+		
+		usesCardsInitial = doesUseCards();
 		
 		nameTextField.requestFocus();
 		if(game != null){
@@ -167,24 +177,21 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		deckDropDownPanel = new JPanel();
 		JLabel deckDropDownLabel = new JLabel("Deck");
 		
-		deckDropDown = new JComboBox<String>();
-		deckDropDown.addActionListener (new ActionListener () {
-		    public void actionPerformed(ActionEvent e) {
-		        chooseDeck();
-		    }
-		});
-		/*
-		 * TODO:Actually add the decks available to the user into the dropdown
-		 * Will look something like this:
-		 * for(each deck in ArrayOfDecksBelongingToUser){
-		 * 		deckDropDown.addItem(deck.getName());
-		 * }
-		 */
-		deckDropDown.addItem("Deck 1");
-		deckDropDown.addItem("Deck 2");
-		deckDropDown.addItem("Deck 3");
-		deckDropDown.addItem("Deck 4");
-		deckDropDown.addItem("Deck 5");
+		deckDropDown = new JComboBox<Deck>();
+		List<Deck> deckList = DeckModel.getInstance().getDecks();
+		
+		if(deckList.size() == 0){
+			deckDropDown.addItem(new Deck());		//default deck, if user doesn't have any decks.
+		}
+		else {
+			deckDropDown.addItem(new Deck());
+			for(Deck d : deckList){
+				deckDropDown.addItem(d);
+			}
+		}
+		if(game != null){
+			deckDropDown.setSelectedItem(game.getDeck());
+		}
 		
 		deckDropDownPanel.add(deckDropDownLabel);
 		deckDropDownPanel.add(deckDropDown);
@@ -262,7 +269,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		repaint();
 		
 		setViewportView(leftView);						//Sets the view of the scrollpane to be the entire container which has everything contained within it
-
+		
 	}
 	
 	/**
@@ -342,8 +349,6 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		errorField.setText(error);
 	}
 	
-	
-	
 	public SaveGameButtonPanel getSaveGameButtonPanel() {
 		return saveGameButton;
 	}
@@ -393,13 +398,14 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		
 		return (isNameValid && isDescriptionValid && isEndDateValid);
 	}
-	
-	
 
 	@Override
 	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
+		return nameTextField.hasChanges()
+				|| descriptionTextField.hasChanges() 
+				//|| getEndDateField().hasChanges() 
+				//|| (isCardsChanged ==  textEntryButton.isSelected())
+				|| usesCardsInitial != doesUseCards();
 	}
 
 	/**
@@ -424,9 +430,6 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 			textEntryButton.setSelected(true);
 		}
 	}
-	
-	
-	
 	
 	private void addActionListenerTo(JComponent component){
 		if(component instanceof JComboBox){
@@ -456,10 +459,8 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		});
 	}
 	
-	public void chooseDeck(){
-		String selectedDeckName = (String)deckDropDown.getSelectedItem();
-		System.out.print("Deck Selected = " + selectedDeckName + "\n");
-		//TODO: Actually then use the selected Deck...
+	public Deck getDeck(){
+		return (Deck)deckDropDown.getSelectedItem();
 	}
 	
 	private void setDeckOptionsVisibility(){
@@ -482,4 +483,5 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 	public String dateToString(){
 		return endDateField.toString();
 	}
+	
 }
