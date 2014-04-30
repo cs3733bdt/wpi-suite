@@ -37,7 +37,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.exceptions.DBModelNotInstant
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotification;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.PPRequirmentHolder;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.PPRequirementHolder;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.UpdatePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
@@ -236,7 +236,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	private List<PPRequirement> getRequirementsFromDB(List<PPRequirement> match) {
 		try {
 			List<PPRequirement> newReq = new ArrayList<PPRequirement>();
-			for(PPRequirement req : PPRequirmentHolder.getInstance().getRequirments()){
+			for(PPRequirement req : PPRequirementHolder.getInstance().getRequirements()){
 				for(PPRequirement reqMatch : match){
 					if(req.identify(reqMatch)){
 						newReq.add(req);
