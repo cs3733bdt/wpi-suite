@@ -20,7 +20,6 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CardImage;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorEnum;
 
 /**
@@ -38,6 +37,30 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	private boolean hasIdontKnow = true;
 	private boolean isDefault = false;
 	private ColorEnum color;
+	
+	
+	@Override
+	public boolean copyFrom(Deck toCopyFrom) {
+		boolean changes = false;
+		if(!name.equals(toCopyFrom.name)){
+			name = toCopyFrom.name;
+			changes = true;
+		}
+		if(!description.equals(toCopyFrom.description)){
+			description = toCopyFrom.description;
+			changes = true;
+		}
+		if(!cards.equals(toCopyFrom.cards)){
+			cards = toCopyFrom.cards;
+			changes = true;
+		}
+		if(!cards.equals(toCopyFrom.cards)){
+			cards = toCopyFrom.cards;
+			changes = true;
+		}
+		
+		return changes;
+	}
 	
 	/**
 	 * Constructor for a Deck
@@ -184,23 +207,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		return new Deck(name, description, cards, identifyingDeck.identity, true, identifyingDeck.color);	
 	}
 
-	@Override
-	public boolean copyFrom(Deck toCopyFrom) {
-		boolean changes = false;
-		if(!name.equals(toCopyFrom.name)){
-			name = toCopyFrom.name;
-			changes = true;
-		}
-		if(!description.equals(toCopyFrom.description)){
-			description = toCopyFrom.description;
-			changes = true;
-		}
-		if(!cards.equals(toCopyFrom.cards)){
-			cards = toCopyFrom.cards;
-			changes = true;
-		}
-		return changes;
-	}
+	
 
 	@Override
 	public void update(ObservableModel o, Object arg) {
