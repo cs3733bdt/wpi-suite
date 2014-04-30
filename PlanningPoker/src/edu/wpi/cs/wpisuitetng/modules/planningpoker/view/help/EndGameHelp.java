@@ -101,23 +101,21 @@ public class EndGameHelp extends JScrollPane implements IHelpPanel {
 		layout.putConstraint(SpringLayout.NORTH, headingLabel, 5, SpringLayout.NORTH, view);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, headingLabel, 0, SpringLayout.HORIZONTAL_CENTER, view);
 		
-		layout.putConstraint(SpringLayout.NORTH, endGame, 5, SpringLayout.SOUTH, headingLabel);
+		layout.putConstraint(SpringLayout.NORTH, endGame, 5, SpringLayout.SOUTH, endGameLabel);
 		layout.putConstraint(SpringLayout.WEST, endGame, 5, SpringLayout.WEST, view);
 		
 		layout.putConstraint(SpringLayout.NORTH, endGameLabel, 5, SpringLayout.SOUTH, headingLabel); 
-		layout.putConstraint(SpringLayout.EAST, endGameLabel, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, endGameLabel, 20, SpringLayout.EAST, endGame);
+		layout.putConstraint(SpringLayout.WEST, endGameLabel, 5, SpringLayout.WEST, view);
 		
 		layout.putConstraint(SpringLayout.NORTH, endGameExplanation, 5, SpringLayout.SOUTH, endGameLabel); 
 		layout.putConstraint(SpringLayout.EAST, endGameExplanation, 0, SpringLayout.EAST, view);
 		layout.putConstraint(SpringLayout.WEST, endGameExplanation, 20, SpringLayout.EAST, endGame);
 		
-		layout.putConstraint(SpringLayout.NORTH, statsHelp, 20, SpringLayout.SOUTH, endGame);
+		layout.putConstraint(SpringLayout.NORTH, statsHelp, 5, SpringLayout.SOUTH, statsLabel);
 		layout.putConstraint(SpringLayout.WEST, statsHelp, 5, SpringLayout.WEST, view);
 		
 		layout.putConstraint(SpringLayout.NORTH, statsLabel, 20, SpringLayout.SOUTH, endGame); 
-		layout.putConstraint(SpringLayout.EAST, statsLabel, 0, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.WEST, statsLabel, 20, SpringLayout.EAST, statsHelp);
+		layout.putConstraint(SpringLayout.WEST, statsLabel, 5, SpringLayout.WEST, view);
 		
 		layout.putConstraint(SpringLayout.NORTH, statsExplanation, 5, SpringLayout.SOUTH, statsLabel); 
 		layout.putConstraint(SpringLayout.EAST, statsExplanation, 0, SpringLayout.EAST, view);
