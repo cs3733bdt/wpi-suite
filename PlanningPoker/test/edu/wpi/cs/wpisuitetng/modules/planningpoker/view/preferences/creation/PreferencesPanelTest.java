@@ -50,8 +50,11 @@ public class PreferencesPanelTest {
 	@Test
 	public void isReceivingEmailTest() {
 		assertFalse(prefPanel.receivingEmail());
+		prefPanel.emailCheckBoxListener();
+		assertTrue(prefPanel.getemailOffNotify().isVisible());
 		prefPanel.getEmailCheckBox().doClick();
 		assertTrue(prefPanel.receivingEmail());
+		assertFalse(prefPanel.getemailOffNotify().isVisible());
 	}
 	
 	@Test
@@ -62,6 +65,7 @@ public class PreferencesPanelTest {
 	@Test
 	public void isReceivingFacebookTest() {
 		assertFalse(prefPanel.receivingFacebook());
+		prefPanel.facebookCheckBoxListener();
 		prefPanel.getFacebookCheckBox().doClick();
 		assertTrue(prefPanel.receivingFacebook());
 	}
@@ -74,7 +78,47 @@ public class PreferencesPanelTest {
 	@Test
 	public void isReceivingMobileTest() {
 		assertFalse(prefPanel.receivingMobile());
+		prefPanel.mobileCheckBoxListener();
 		prefPanel.getMobileCheckBox().doClick();
 		assertTrue(prefPanel.receivingMobile());
+	}
+	
+	@Test
+	public void updateEmailButtonTest() {
+		prefPanel.updateEmailButtonPressed();
+		assertEquals("newEmailaddress", currentUser.getEmail());
+	}
+	
+	@Test
+	public void updateFacebookButtonTest() {
+		prefPanel.updateFacebookButtonPressed();
+		assertEquals("newFacebook", currentUser.getFacebookUsername());
+	}
+	
+	@Test
+	public void updateMobileButtonTest() {
+		prefPanel.updateMobileButtonPressed();
+		assertEquals("1234567890", currentUser.getPhoneNumber());
+	}
+	
+	@Test
+	public void getCarrierFromIndexTest() {
+		prefPanel.getCarrierDropDown().setSelectedIndex(0);
+		assertEquals("VERIZON", prefPanel.getCarrierFromIndex());
+		
+		prefPanel.getCarrierDropDown().setSelectedIndex(1);
+		assertEquals("ATT", prefPanel.getCarrierFromIndex());
+		
+		prefPanel.getCarrierDropDown().setSelectedIndex(2);
+		assertEquals("TMOBILE", prefPanel.getCarrierFromIndex());
+		
+		prefPanel.getCarrierDropDown().setSelectedIndex(3);
+		assertEquals("SPRINT", prefPanel.getCarrierFromIndex());
+		
+		prefPanel.getCarrierDropDown().setSelectedIndex(4);
+		assertEquals("USCELLULAR", prefPanel.getCarrierFromIndex());
+		
+		prefPanel.getCarrierDropDown().setSelectedIndex(5);
+		assertEquals("--", prefPanel.getCarrierFromIndex());	
 	}
 }
