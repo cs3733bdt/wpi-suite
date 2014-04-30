@@ -88,7 +88,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	
 	private final CardImage cardYellow = new CardImage(ColorEnum.YELLOW);*/
 	
-	private ArrayList<CardImage> cards = new ArrayList<CardImage>();//array list to hold all the cards currently generated. TODO: IMPLEMENT THIS
+	private List<CardImage> cards = new ArrayList<CardImage>();//array list to hold all the cards currently generated. TODO: IMPLEMENT THIS
 	
 	/**
 	 * ArrayList to hold all of the label values so they can be refreshed when card number of color is changed

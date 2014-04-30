@@ -514,7 +514,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 			newPreferences= newPreferences + "F";
 		}
 		if(mobileCheckBox.isSelected()){
-			newPreferences= newPreferences + "M";;
+			newPreferences= newPreferences + "M";
 		}
 		newUser.setNotificationPreferences(newPreferences);
 		updateUserController.updateUser(newUser);

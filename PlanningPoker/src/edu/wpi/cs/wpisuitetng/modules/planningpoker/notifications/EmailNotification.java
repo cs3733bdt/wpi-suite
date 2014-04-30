@@ -13,6 +13,7 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -252,7 +253,7 @@ public class EmailNotification {
 	 * @param m the array list which contains the vote values
 	 * @return the mean of votes
 	 */
-	private double mean(ArrayList<Integer> Votes) {
+	private double mean(List<Integer> Votes) {
 	    double sum = 0;
 	    for (int i = 0; i < Votes.size(); i++) {
 	        sum += Votes.get(i);
@@ -265,7 +266,7 @@ public class EmailNotification {
 	 * @param Votes the array list which contains the vote values
 	 * @return the median of votes
 	 */
-	public double median(ArrayList<Integer> Votes) {
+	public double median(List<Integer> Votes) {
 		double median = 0;
 		if (Votes.size() == 0) {
 			median = 0;
@@ -295,7 +296,7 @@ public class EmailNotification {
 	 * @param Votes the array list which contains the vote values
 	 * @return the standard deviation of votes
 	 */
-	private double stDev(ArrayList<Integer> Votes) {
+	private double stDev(List<Integer> Votes) {
 		double stDev = 0;
 		double mean = mean(Votes);
 		ArrayList<Double> numMinusMeanSquared = new ArrayList<Double>(); 
