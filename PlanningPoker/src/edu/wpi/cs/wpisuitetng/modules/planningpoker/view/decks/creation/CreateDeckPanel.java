@@ -39,8 +39,15 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import org.jdesktop.swingx.JXDatePicker;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveDeckButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
@@ -90,15 +97,14 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	 */
 	private final JPanel cardsPanel = new JPanel();
 	
+
 	/**
 	 * cancel button to cancel the deck creation process. same as X in tab
 	 */
 	private CancelButton cancelDeckButton;
-	
-	/**
-	 * save button to save deck to server
-	 */
-	private JButton saveButton;
+
+	private SaveDeckButtonPanel saveButton;					//save button to save deck to server
+
 	
 	/**
 	 * errorfield to display validation errors
@@ -124,13 +130,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 	 */
 	private List<Integer> values = new ArrayList<Integer>(); 
 	
-	/**
-	 * The final deck to be saved to server
-	 */
-	private Deck deck;
 	
 	public CreateDeckPanel(){
-		
 		build();
 	}
 	
@@ -151,6 +152,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		JLabel nameLabel = new JLabel("Name * ");
 		nameTextField = new NameJTextField(20);
 		addKeyListenerTo(nameTextField);
+		
 		JLabel descriptionLabel = new JLabel("Description");
 		descriptionTextField = new DescriptionJTextArea();
 		descriptionTextField.setLineWrap(true);
@@ -164,12 +166,14 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		JLabel selectionTypeLabel = new JLabel("Selection Type * ");
 		JPanel selectionLabelPanel = new JPanel();
 		selectionLabelPanel.add(selectionTypeLabel);
+		
 		singleSelection = new JRadioButton("Single Card Selection");
 		multipleSelection = new JRadioButton("Multiple Card Selection");
 		multipleSelection.setSelected(true);
 		ButtonGroup radioGroup = new ButtonGroup();
 		radioGroup.add(singleSelection);
-		radioGroup.add(multipleSelection);		
+		radioGroup.add(multipleSelection);
+		
 		/* this panel holds the label and the two radio buttons */
 		JPanel radioButtonsPanel = new JPanel();
 		radioButtonsPanel.setLayout(new BorderLayout());
@@ -249,9 +253,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		cardRed.setVisible(true);
 		
 		/* save button */
-		saveButton = new JButton("Save Deck");
+		saveButton = new SaveDeckButtonPanel(this);
 		saveButton.setEnabled(false);
-		
+
 		/*cancel button */
 		cancelDeckButton = new CancelButton("Cancel Deck", this);
 		
@@ -302,7 +306,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 		layout.putConstraint(SpringLayout.WEST, errorField, 10, SpringLayout.EAST, cancelDeckButton);
 		layout.putConstraint(SpringLayout.NORTH, errorField, 10, SpringLayout.SOUTH, cardScrollPane);
 		
-		deck = new Deck("", "", values, true, ColorEnum.RED);
+		
 		
 		revalidate();
 		repaint();
@@ -613,6 +617,67 @@ public class CreateDeckPanel extends JScrollPane implements IDataField{
 			int value = cards.get(i).getCardValue();
 			values.set(i, value);
 		}
+	}
+	
+	/**
+	 * Adds the deck to the model and to the server
+	 */
+	public void saveDeck(Deck deck) {
+		if (currentGame == null) {
+			currentGame = new Game();
+			setCurrentGame(false);
+			DeckModel.getInstance().addDeck(currentGame); // New Game gets added
+															// to the server
+			System.out.println("Launch Game Pressed Passed.");
+		} else {
+			setCurrentGame(false);
+		}
+		ViewEventController.getInstance().refreshGameTable();
+		ViewEventController.getInstance().refreshGameTree();
+	}
+	
+	/**
+	 * Triggered when the save game button is pressed using the mouse listener
+	 * 
+	 * @return true when a game is successfully added
+	 */
+	public boolean SaveDeckPressed() {
+		//Determines the color of the deck
+		final ColorEnum colorEnum;
+		String color = (String)getColorDropDown().getSelectedItem();
+		if(color == "Red (Default)"){
+			colorEnum = ColorEnum.RED;
+		}
+		if(color == "Blue"){
+			colorEnum = ColorEnum.BLUE;
+		}
+		if(color == "Green"){
+			colorEnum = ColorEnum.GREEN;
+		}
+		if(color == "Purple"){
+			colorEnum = ColorEnum.PURPLE;
+		}
+		if(color == "Yellow"){
+			colorEnum = ColorEnum.YELLOW;
+		}
+		
+		final Deck deck = new Deck(nameTextField.getText(), 
+				descriptionTextField.getText(), values, true, colorEnum);
+		
+		if (leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true,
+				true)) {
+
+			leftHalf.getErrorField().setText("");
+			saveDeck(deck);
+			readyToClose = true;
+			ViewEventController.getInstance().removeTab(this);
+			System.out.println("Add Deck Pressed Passed.");
+			return true;
+		} else {
+			System.out.println("Add Game Pressed Failed.");
+			return false;
+		}
+
 	}
 	
 }
