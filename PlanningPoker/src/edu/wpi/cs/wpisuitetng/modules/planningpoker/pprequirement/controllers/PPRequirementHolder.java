@@ -15,19 +15,19 @@ import java.util.List;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.exceptions.DBModelNotInstantiatedException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
-public class PPRequirmentHolder {
-	private static PPRequirmentHolder instance = null;
+public class PPRequirementHolder {
+	private static PPRequirementHolder instance = null;
 	
 	private List<PPRequirement> list = null;
 	
-	public static PPRequirmentHolder getInstance(){
+	public static PPRequirementHolder getInstance(){
 		if(instance == null){
-			instance = new PPRequirmentHolder();
+			instance = new PPRequirementHolder();
 		}
 		return instance;
 	}
 	
-	public List<PPRequirement> getRequirments() throws DBModelNotInstantiatedException{
+	public List<PPRequirement> getRequirements() throws DBModelNotInstantiatedException{
 		if(list != null){
 			return list;
 		}
