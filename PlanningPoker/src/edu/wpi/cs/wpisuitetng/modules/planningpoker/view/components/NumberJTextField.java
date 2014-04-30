@@ -37,7 +37,7 @@ public class NumberJTextField extends JTextField implements IDataField {
 	
 	@Override
 	public void setText(String text){
-		initialText = Integer.toString(Integer.getInteger(text));
+		initialText = text;
 		super.setText(text);
 	}
 
