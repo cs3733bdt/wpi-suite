@@ -27,9 +27,8 @@ public class NumberJTextField extends JTextField implements IDataField {
 	public static final String STRING_NOT_NUMBER= "You can only enter numbers here";
 	
 	
-	private static final Border defaultBorder = (new JTextField()).getBorder();
-	private static final Border errorBorder = BorderFactory
-			.createLineBorder(Color.RED);
+	public static final Border BORDER_DEFAULT = (new JTextField()).getBorder();
+	public static final Border BORDER_ERROR = BorderFactory.createLineBorder(Color.RED);
 	
 	private String initialText;
 	private IErrorView warningField;
@@ -90,16 +89,19 @@ public class NumberJTextField extends JTextField implements IDataField {
 			boolean showBox) {
 		this.warningField = warningField;
 		boolean isValid = false;
-		if(!hasChanges()){ //If this has changed
-			isValid = true;
-			showValid(showLabel, showBox);
-		} else if(getText().equals("")){
+		if(getText().equals("")){
 			isValid = false;
 			showInvalid(STRING_NOT_EMPTY, showLabel, showBox);
+		} else if(!hasChanges()){ //If this has changed
+			isValid = true;
+			showValid(showLabel, showBox);
 		} else if(maxValue != -1){
 			if(Integer.parseInt(getText()) > maxValue ){
 				isValid = false;
 				showInvalid(STRING_TOO_LONG + maxValue, showLabel, showBox);
+			} else {
+				isValid = true;
+				showValid(showLabel, showBox);
 			}
 		} else{
 			isValid = true;
@@ -114,7 +116,7 @@ public class NumberJTextField extends JTextField implements IDataField {
 			warningField.setText("");
 		}
 		if(showBox){
-			setBorder(defaultBorder);
+			setBorder(BORDER_DEFAULT);
 		}
 	}
 	
@@ -123,7 +125,7 @@ public class NumberJTextField extends JTextField implements IDataField {
 			warningField.setText(text);
 		}
 		if(showBox){
-			setBorder(errorBorder);
+			setBorder(BORDER_ERROR);
 		}
 	}
 
