@@ -19,6 +19,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorag
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.AddDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.UpdateDeckController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
  * Holds the all of the Decks for all users in the database
@@ -60,17 +61,20 @@ public class DeckModel extends AbstractStorageModel<Deck> {
 	public void addDeck(Deck deck) {
 		add(deck);
 		try{
-			AddDeckController.getInstance().addGame(deck);
+			AddDeckController.getInstance().addDeck(deck);
 		}catch (NullPointerException e){
 			logger.log(Level.WARNING, "Deck: " + deck.getName() + " could not be added", e);
 		}catch (Exception e){
 			logger.log(Level.WARNING, "Deck: " + deck.getName() + " could not be added", e);
 		}
+		
+		ViewEventController.getInstance().refreshDeckTree();
 	}
 
 
 	public synchronized void addDecks(Deck[] deckList) {
 		updateDecks(deckList);
+		
 		
 	}
 	
@@ -80,6 +84,9 @@ public class DeckModel extends AbstractStorageModel<Deck> {
 	 */
 	public synchronized void updateDecks(Deck[] allDecks) {
 		boolean changes = updateModels(allDecks);
+		if (changes){
+			ViewEventController.getInstance().refreshDeckTree();
+		}
 	}
 
 
@@ -96,6 +103,7 @@ public class DeckModel extends AbstractStorageModel<Deck> {
 		if(o instanceof Deck){
 			UpdateDeckController.getInstance().updateDeck((Deck) o);
 		}
+		ViewEventController.getInstance().refreshDeckTree();
 		
 	}
 

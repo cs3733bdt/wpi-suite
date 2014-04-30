@@ -64,7 +64,7 @@ public class GetDeckController implements ActionListener {
 	    final Request request = 
 	    		Network.getInstance().makeRequest("planningpoker/deck", HttpMethod.GET);
 	    // add an observer to process the response
-	    //request.addObserver(observer); 
+	    request.addObserver(observer); 
 	    // send the request
 	    request.send();
 	}
@@ -84,7 +84,7 @@ public class GetDeckController implements ActionListener {
 		final Request request = 
 				Network.getInstance().makeRequest("planningpoker/deck", HttpMethod.GET);
 		// add an observer to process the response
-		//request.addObserver(observer);
+		request.addObserver(observer);
 		// send the request
 		request.send(); 
 	}

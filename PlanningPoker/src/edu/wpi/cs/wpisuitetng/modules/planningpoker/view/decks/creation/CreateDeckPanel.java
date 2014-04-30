@@ -345,7 +345,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		layout.putConstraint(SpringLayout.NORTH, errorField, 10, SpringLayout.SOUTH, cardScrollPane);
 		
 		
-		
+		ViewEventController.getInstance().refreshDeckTree();
 		revalidate();
 		repaint();
 		

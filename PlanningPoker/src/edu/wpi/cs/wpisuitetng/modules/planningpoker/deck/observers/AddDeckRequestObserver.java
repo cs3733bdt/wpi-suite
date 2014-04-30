@@ -29,16 +29,14 @@ public class AddDeckRequestObserver implements RequestObserver {
 	 * error messages.
 	 */
 	private final AddDeckController controller;
-	private final Deck theDeck;
 	
 	/**
 	 * constructs an AddGameRequestObserver with a controller and a game to observe
 	 * @param controller the controller acting on the game
 	 * @param theDeck the game being sent through
 	 */
-	public AddDeckRequestObserver(AddDeckController controller, Deck theDeck) {
+	public AddDeckRequestObserver(AddDeckController controller) {
 		this.controller = controller;
-		this.theDeck = theDeck;
 	}
 	
 	/**
@@ -52,7 +50,7 @@ public class AddDeckRequestObserver implements RequestObserver {
 		// Get the response to the given request
 		final ResponseModel response = iReq.getResponse();
 		
-		// The game that got added
+		// The deck that got added
 		Deck deck = Deck.fromJSON(response.getBody());
 		
 		System.out.println("The request to add a deck has succeeded!");

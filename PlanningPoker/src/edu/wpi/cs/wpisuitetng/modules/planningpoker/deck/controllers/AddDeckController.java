@@ -11,6 +11,7 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers.AddDeckRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
@@ -28,8 +29,11 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class AddDeckController {
 	private static AddDeckController instance;
-	
-	private AddDeckController() {}
+	private AddDeckRequestObserver observer;
+	private AddDeckController() {
+		
+		observer = new AddDeckRequestObserver(this);
+	}
 	
 	/**
 	 * @return returns a new instance of an AddGameController
@@ -45,13 +49,12 @@ public class AddDeckController {
 	 * This method adds a game to the server
 	 * @param newGame is the game to add to the server
 	 */
-	public void addGame(Deck newDeck) {
+	public void addDeck(Deck newDeck) {
 		System.out.println("Adding: " + newDeck.getName() + " to server");
 		final Request request = 
 				Network.getInstance().makeRequest("planningpoker/deck", HttpMethod.PUT);
 		request.setBody(newDeck.toJSON());
-		//final AddGameRequestObserver observer = new AddGameRequestObserver(this, newGame);
-		//request.addObserver(observer) ;
+		request.addObserver(observer);
 		request.send();
 	}
 }
