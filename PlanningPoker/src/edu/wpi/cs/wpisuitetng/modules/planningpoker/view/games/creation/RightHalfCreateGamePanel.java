@@ -41,11 +41,13 @@ import javax.swing.event.ListSelectionListener;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
@@ -81,7 +83,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 
 	// THIS IS THE REQUIREMENT DESCRIPTION FIELD THAT WILL BE NEEDED FOR
 	// CONTROLLER
-	private JTextArea descArea = new JTextArea();
+	private DescriptionJTextArea descArea = new DescriptionJTextArea();
 
 	private ErrorLabel errorLabel = new ErrorLabel();
 	
@@ -113,6 +115,11 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	private JButton removeReqButton = new JButton("Remove");
 
 	private JButton submitImportReqButton;
+	
+	private List<PPRequirement> savedRequirements = new ArrayList<PPRequirement>();
+	
+	private Game game;
+
 
 	/**
 	 * Builds the right half of the CreateGamePanel.
@@ -121,8 +128,18 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	 */
 	public RightHalfCreateGamePanel(CreateGamePanel createGamePanel) {
 		parent = createGamePanel;
+		game = parent.getGame();
 		build();
 		buildFields();
+		
+		if(game != null) {
+			for(PPRequirement req : game.getRequirements()) {
+				PPRequirement newReq = new PPRequirement();
+				newReq.setName(req.getName());
+				newReq.setDescription(req.getDescription());
+				savedRequirements.add(newReq);
+			}
+		}
 	}
 
 	private void build() {
@@ -668,7 +685,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			importReqButton.setEnabled(true);
 			globalRow = -1;
 			parent.updateButtons();
-			displayError("");
+			displayError("");	
 		}
 	}
 
@@ -902,7 +919,22 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 
 	@Override
 	public boolean hasChanges() {
-		// TODO Auto-generated method stub
+		return reqsHasChanges() || nameArea.hasChanges() || descArea.hasChanges();
+	}
+	
+	private boolean reqsHasChanges() {
+		if(savedRequirements.size() != requirements.size()) {
+			return true;
+		}
+		else {
+			for (int i = 0; i < requirements.size(); i++) {
+				boolean nameChanged = !requirements.get(i).getName().equals(savedRequirements.get(i).getName());
+				boolean descChanged = !requirements.get(i).getDescription().equals(savedRequirements.get(i).getDescription());
+				if(nameChanged || descChanged) {
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 

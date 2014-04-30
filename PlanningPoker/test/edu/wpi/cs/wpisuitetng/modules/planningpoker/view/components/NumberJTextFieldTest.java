@@ -40,7 +40,7 @@ public class NumberJTextFieldTest {
 	@Test
 	public void testGoodKey() {
 		testerField.setText("27");
-		sendKey(testerField, "271");
+		sendKey(testerField, "271\n");
 		assertEquals("271", testerField.getText());
 		assertTrue(testerField.hasChanges());
 		assertTrue(testerField.validateField(label, true, true));
@@ -51,7 +51,7 @@ public class NumberJTextFieldTest {
 	public void testBadKey() {
 		testerField.setIErrorView(label);
 		testerField.setText("27");
-		sendKey(testerField,"21C");
+		sendKey(testerField,"21C\n");
 		assertEquals("27", testerField.getText());
 		assertEquals(NumberJTextField.STRING_NOT_NUMBER, label.getText());
 		assertFalse(testerField.hasChanges());

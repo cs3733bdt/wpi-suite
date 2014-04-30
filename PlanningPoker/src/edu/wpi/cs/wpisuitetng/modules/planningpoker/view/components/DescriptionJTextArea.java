@@ -86,4 +86,8 @@ public class DescriptionJTextArea extends JTextArea implements IDataField {
 	public boolean hasChanges() {
 		return !getText().equals(startingText);
 	}
+	
+	public void setStartingText(String newStarting) {
+		startingText = newStarting; 
+	}
 }
