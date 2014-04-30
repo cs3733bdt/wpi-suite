@@ -66,7 +66,7 @@ public class PPRequirement extends ObservableModel {
 				return false;
 			}
 			@SuppressWarnings("unchecked")
-			ArrayList<Vote> comp = (ArrayList<Vote>)o;
+			List<Vote> comp = (ArrayList<Vote>)o;
 			for(Vote v : this){
 				if(!comp.contains(v)){
 					return false;
