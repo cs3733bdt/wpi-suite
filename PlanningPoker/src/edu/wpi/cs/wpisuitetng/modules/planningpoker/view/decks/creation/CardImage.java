@@ -206,6 +206,7 @@ public class CardImage extends JPanel{
 		if (!value.isEmpty()) {
 			valueLabel.setVisible(true);
 		}
+		addValue.setVisible(false);
 	}
 	
 	/**
@@ -222,5 +223,7 @@ public class CardImage extends JPanel{
 		Font bigFont = newFont;
 		return bigFont;
 	}
+	
+	
 	
 }
