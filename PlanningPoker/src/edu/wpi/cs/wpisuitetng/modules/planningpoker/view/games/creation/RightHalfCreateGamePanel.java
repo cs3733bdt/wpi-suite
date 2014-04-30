@@ -41,6 +41,7 @@ import javax.swing.event.ListSelectionListener;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
@@ -117,7 +118,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	
 	private List<PPRequirement> savedRequirements = new ArrayList<PPRequirement>();
 	
-	private boolean reqsHasChanges;
+	private Game game;
 
 
 	/**
@@ -127,8 +128,18 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	 */
 	public RightHalfCreateGamePanel(CreateGamePanel createGamePanel) {
 		parent = createGamePanel;
+		game = parent.getGame();
 		build();
 		buildFields();
+		
+		if(game != null) {
+			for(PPRequirement req : game.getRequirements()) {
+				PPRequirement newReq = new PPRequirement();
+				newReq.setName(req.getName());
+				newReq.setDescription(req.getDescription());
+				savedRequirements.add(newReq);
+			}
+		}
 	}
 
 	private void build() {
@@ -139,8 +150,6 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 		currentTable = new RequirementTable(new ArrayList<PPRequirement>(),
 				RequirementTableMode.CREATE);
 		Font labelFont = makeFont();
-		
-		reqsHasChanges = false;
 
 		/**
 		 * Code for Current Reqs Panel
@@ -676,8 +685,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			importReqButton.setEnabled(true);
 			globalRow = -1;
 			parent.updateButtons();
-			displayError("");
-			reqsHasChanges = true;
+			displayError("");	
 		}
 	}
 
@@ -702,7 +710,6 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			submitAddReqButton.setEnabled(false);
 			enableButtons();
 			parent.updateButtons();
-			reqsHasChanges = true;
 		}
 	}
 
@@ -912,7 +919,23 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 
 	@Override
 	public boolean hasChanges() {
-		return reqsHasChanges || nameArea.hasChanges() || descArea.hasChanges();
+		return reqsHasChanges() || nameArea.hasChanges() || descArea.hasChanges();
+	}
+	
+	private boolean reqsHasChanges() {
+		if(savedRequirements.size() != requirements.size()) {
+			return true;
+		}
+		else {
+			for (int i = 0; i < requirements.size(); i++) {
+				boolean nameChanged = !requirements.get(i).getName().equals(savedRequirements.get(i).getName());
+				boolean descChanged = !requirements.get(i).getDescription().equals(savedRequirements.get(i).getDescription());
+				if(nameChanged || descChanged) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	private void addKeyListenerTo(JComponent component) {
