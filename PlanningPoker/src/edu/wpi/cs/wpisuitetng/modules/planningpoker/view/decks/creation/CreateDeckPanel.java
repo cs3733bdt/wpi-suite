@@ -288,7 +288,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		
 		/* save button */
 		saveButton = new SaveDeckButtonPanel(this);
-		saveButton.setEnabled(true);
+		saveButton.setEnabled(false);
 
 		/*cancel button */
 		cancelDeckButton = new CancelButton("Cancel Deck", this);
@@ -346,6 +346,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		repaint();
 		
 		setViewportView(view);
+		updateButtons();
 	}
 	
 	/**
