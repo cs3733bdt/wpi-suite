@@ -272,7 +272,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		iDontKnowCheck.setSelected(true);
 		iDontKnowCheck.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
-		    	deck.updateHasIdk(iDontKnowCheck.isSelected());
+		    	//deck.updateHasIdk(iDontKnowCheck.isSelected());
 		    }
 		});
 		JPanel checkPanel = new JPanel();
