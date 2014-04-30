@@ -46,7 +46,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
  * @author Bobby Drop Tables
  *
  */
-public class PreferencesPanel extends JScrollPane implements IDataField {
+public class PreferencesPanel extends JScrollPane implements IDataField, IPreferencesPanel {
 
 	JPanel emailPanel;
 
@@ -1118,6 +1118,14 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	}
 	
 	/**
+	 * Method to validate whether preferences tab is ready to be closed
+	 * @return true, no validation yet
+	 */
+	public boolean readyToRemove() {
+		return true;
+	}
+	
+	/**
 	 * Getter for testing purposes
 	 * @return the text from mobileField
 	 */
@@ -1132,4 +1140,5 @@ public class PreferencesPanel extends JScrollPane implements IDataField {
 	public JComboBox<String> getCarrierDropDown() {
 		return carrierDropDown;
 	}
+	
 }
