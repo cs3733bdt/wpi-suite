@@ -33,7 +33,9 @@ import javax.swing.SpringLayout;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
@@ -477,6 +479,13 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			if (r.identify(activeRequirement)) {
 				r.setFinalEstimate(newEstimate);
 				r.notifyObservers();
+				// Get requirement from requirement manager with that requirement id
+				PPRequirementModel rModel = PPRequirementModel.getInstance();
+				RetrievePPRequirementController.getInstance().retrieveRequirements();
+				// Set the new final estimate, possibly set wasEstimated field in their requirements
+				
+				// Send back to requirement manager (how to do this?)
+				
 				finalEstimateMessage.setForeground(Color.BLUE);
 				finalEstimateMessage.setText("Final estimate submitted successfully!");
 			}
