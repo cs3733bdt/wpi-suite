@@ -21,6 +21,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -97,6 +98,8 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 	
 	private Deck deck;
 	
+	private Date savedDate;
+	
 	/**
 	 * Builds the left half of the CreateGamePanel
 	 * @param mainPanel the main panel this half is located on
@@ -113,6 +116,9 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		nameTextField.requestFocus();
 		if(game != null){
 			nameTextField.select(game.getName().length(), game.getName().length());
+			nameTextField.setStartingText(game.getName());
+			descriptionTextField.setStartingText(game.getDescription());
+			savedDate = game.getEndDate();
 		}
 	}
 	
@@ -403,7 +409,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 	public boolean hasChanges() {
 		return nameTextField.hasChanges()
 				|| descriptionTextField.hasChanges() 
-				//|| getEndDateField().hasChanges() 
+				|| (getEndDateField().getEndDate().compareTo(savedDate) != 0)
 				//|| (isCardsChanged ==  textEntryButton.isSelected())
 				|| usesCardsInitial != doesUseCards();
 	}

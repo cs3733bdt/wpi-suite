@@ -22,19 +22,15 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
-import com.sun.istack.internal.logging.Logger;
-
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberJTextField;
@@ -59,7 +55,7 @@ public class CardImage extends JPanel implements IDataField{
 
 	private IErrorView errorField;
 	
-	private static Logger logger = Logger.getLogger(CardImage.class);
+	private static Logger logger = Logger.getLogger(CardImage.class.getName());
 	
 
 	
