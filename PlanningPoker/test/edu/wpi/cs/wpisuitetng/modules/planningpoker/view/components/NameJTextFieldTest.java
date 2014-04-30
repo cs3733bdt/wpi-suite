@@ -46,8 +46,11 @@ public class NameJTextFieldTest {
 	
 	@Test
 	public void hasChangesTextFieldTest() {
+		
+		blankTextField.setText("Change text");
+		
 		assertTrue(blankTextField.hasChanges());
-		assertTrue(textField.hasChanges());
+		assertFalse(textField.hasChanges());
 		
 	}
 	
