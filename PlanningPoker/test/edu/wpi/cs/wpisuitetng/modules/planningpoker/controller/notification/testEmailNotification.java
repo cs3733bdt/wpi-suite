@@ -35,20 +35,25 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequi
 
 public class testEmailNotification {
 
-	Game g;
+	Game g, g2;
 	User u1, u2, u3, u4;
 	User[] team1;
 	String[] support1;
-	Project p;
-	EmailNotification en;
+	Project p, p2;
+	EmailNotification en, en1;
 	List<PPRequirement> reqs;
+	PPRequirement req1;
 	
 	@Before
 	public void setUp()
 	{
 		team1 = new User[1];
+		req1 = new PPRequirement("Req1", "Desc1");
 		reqs = new ArrayList<PPRequirement>();
+		reqs.add(req1);
 		g = new Game("Game A", "Test description", reqs, true, false);
+		g2 = new Game("Game A", "Test description", reqs, true, false);
+		
 		u1 = new User("testuser1", "user1", "pass", "WPI.Suite.BDT.NoReply@gmail.com", "fb.user", 1123);
 		//u2 = new User("testuser2", "user2", "pass", "cs3733bdt@wpi.edu", "fbTest", 1291);
 		//u3 = new User("testuser3", "user3", "pass", "doruk.uzunoglu@gmail.com", "fbTest", 12911);
@@ -63,8 +68,11 @@ public class testEmailNotification {
 		support1[1] = "postboard";
 		support1[2] = "planningpoker";
 		p = new Project("testemailproject", "proj3", u1, team1, support1);
+		p2 = new Project("testemailproject", "proj3", u1, team1, support1);
 		g.setProject(p);
+		g2.setProject(p2);
 		en = new EmailNotification(g);
+		en1 = new EmailNotification(g2);
 	}
 	
 	/**
@@ -103,6 +111,7 @@ public class testEmailNotification {
 	@Test
 	public void testSendEmail() {
 		en.sendEmail(en.login(), u1);
+		en1.sendEmail(en1.login(), u1);
 	}
 
 	/**

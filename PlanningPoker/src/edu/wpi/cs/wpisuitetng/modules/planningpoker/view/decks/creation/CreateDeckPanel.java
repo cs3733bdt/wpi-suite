@@ -37,6 +37,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+import javax.swing.plaf.basic.BasicBorders.RadioButtonBorder;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
@@ -132,6 +133,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	 */
 	private List<Integer> values = new ArrayList<Integer>(); 
 	
+	private Deck deck;
 	
 	public CreateDeckPanel(){
 		build();
@@ -139,6 +141,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	
 	public CreateDeckPanel(Deck deck) {
 		build();
+		this.deck = deck;
 		nameTextField.setText(deck.getName());
 		descriptionTextField.setText(deck.getDescription());
 	}
@@ -628,6 +631,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	 * Adds the deck to the model and to the server
 	 */
 	public void saveDeck(Deck deck) {
+		deck.updateMultipleSelection(!singleSelection.isSelected()); //updates multiple selection boolean
+		deck.updateHasIdk(iDontKnowCheck.isSelected());
 		
 		DeckModel.getInstance().addDeck(deck); // New Deck gets added													// to the server
 
