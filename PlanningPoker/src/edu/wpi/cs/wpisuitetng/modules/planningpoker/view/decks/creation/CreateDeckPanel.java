@@ -19,8 +19,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -43,18 +41,22 @@ import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveDeckButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.ErrorLabel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IValidateButtons;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
  * The panel for the deck creation process
  * Used to allow the user to create a new deck by filling out the indicated fields
  */
-public class CreateDeckPanel extends JScrollPane {
+public class CreateDeckPanel extends JScrollPane implements IDataField, IValidateButtons{
 	
 	/**
 	 * textfield for the deck name
@@ -68,7 +70,7 @@ public class CreateDeckPanel extends JScrollPane {
 	/**
 	 * textfield for the number of cards desired
 	 */
-	private JTextField numCards;
+	private NameJTextField numCards;
 	/**
 	 * button to submit the number of cards desired and repaint the card panel with chosen number
 	 */
@@ -98,20 +100,19 @@ public class CreateDeckPanel extends JScrollPane {
 	 */
 	private final JPanel cardsPanel = new JPanel();
 	
+
 	/**
 	 * cancel button to cancel the deck creation process. same as X in tab
 	 */
 	private CancelButton cancelDeckButton;
-	
-	/**
-	 * save button to save deck to server
-	 */
-	private JButton saveButton;
+
+	private SaveDeckButtonPanel saveButton;					//save button to save deck to server
+
 	
 	/**
 	 * errorfield to display validation errors
 	 */
-	private ErrorLabel errorField;
+	private ErrorLabel errorField = new ErrorLabel();
 
 	private final Border defaultTextFieldBorder = (new JTextField()).getBorder();
 	
@@ -120,7 +121,7 @@ public class CreateDeckPanel extends JScrollPane {
 	/**
 	 * an initial red card to be added to the view as a default starting deck
 	 */
-	private final CardImage cardRed = new CardImage(ColorEnum.RED);
+	private final CardImage cardRed = new CardImage(ColorEnum.RED, errorField);
 	
 	/**
 	 * array list to hold all the cards currently generated. TODO: IMPLEMENT THIS
@@ -132,13 +133,8 @@ public class CreateDeckPanel extends JScrollPane {
 	 */
 	private List<Integer> values = new ArrayList<Integer>(); 
 	
-	/**
-	 * The final deck to be saved to server
-	 */
-	private Deck deck;
 	
 	public CreateDeckPanel(){
-		
 		build();
 	}
 	
@@ -158,7 +154,8 @@ public class CreateDeckPanel extends JScrollPane {
 		/* name and description */
 		JLabel nameLabel = new JLabel("Name * ");
 		nameTextField = new NameJTextField(20);
-		addKeyListenerTo(nameTextField);
+		nameTextField.addKeyListener(this);
+		
 		JLabel descriptionLabel = new JLabel("Description");
 		descriptionTextField = new DescriptionJTextArea();
 		descriptionTextField.setLineWrap(true);
@@ -172,12 +169,14 @@ public class CreateDeckPanel extends JScrollPane {
 		JLabel selectionTypeLabel = new JLabel("Selection Type * ");
 		JPanel selectionLabelPanel = new JPanel();
 		selectionLabelPanel.add(selectionTypeLabel);
+		
 		singleSelection = new JRadioButton("Single Card Selection");
 		multipleSelection = new JRadioButton("Multiple Card Selection");
 		multipleSelection.setSelected(true);
 		ButtonGroup radioGroup = new ButtonGroup();
 		radioGroup.add(singleSelection);
-		radioGroup.add(multipleSelection);		
+		radioGroup.add(multipleSelection);
+		
 		/* this panel holds the label and the two radio buttons */
 		JPanel radioButtonsPanel = new JPanel();
 		radioButtonsPanel.setPreferredSize(new Dimension(160, 80));
@@ -204,7 +203,7 @@ public class CreateDeckPanel extends JScrollPane {
 		JLabel numCardsLabel = new JLabel("Number of Cards * ");
 		numCards = new NameJTextField(5);
 		numCards.setText("1");
-		addKeyListenerTo(numCards);
+		numCards.addKeyListener(this);
 		initializeArrayList();
 		addMouseListenerToNumberOfCardsTextEntry(numCards);
 		submitNumCards = new JButton("Submit");
@@ -291,14 +290,13 @@ public class CreateDeckPanel extends JScrollPane {
 		cardRed.setVisible(true);
 		
 		/* save button */
-		saveButton = new JButton("Save Deck");
+		saveButton = new SaveDeckButtonPanel(this);
 		saveButton.setEnabled(false);
-		
+
 		/*cancel button */
 		cancelDeckButton = new CancelButton("Cancel Deck", this);
 		
 		/* error label */
-		errorField = new ErrorLabel();
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
 		errorField.setText("Name is required");
@@ -345,12 +343,15 @@ public class CreateDeckPanel extends JScrollPane {
 		layout.putConstraint(SpringLayout.WEST, errorField, 10, SpringLayout.EAST, cancelDeckButton);
 		layout.putConstraint(SpringLayout.NORTH, errorField, 10, SpringLayout.SOUTH, cardScrollPane);
 		
-		deck = new Deck("", "", values, true, ColorEnum.RED);
 		
+		ViewEventController.getInstance().refreshDeckTree();
 		revalidate();
 		repaint();
 		
 		setViewportView(view);
+	
+		updateButtons();
+		nameTextField.setBorder(defaultTextFieldBorder);
 	}
 	
 	/**
@@ -443,34 +444,17 @@ public class CreateDeckPanel extends JScrollPane {
 	 * @return true If all fields are valid and the window is ready to be removed
 	 */
 	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
-		boolean isNameValid = false;		
-		boolean isNumCardsValid = false;
-		
-		isNumCardsValid = verifyNumberOfCards();
-		if(!isNumCardsValid) {
-			errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 25");
-			//getNumCards().setBorder(errorBorder);
-			submitNumCards.setEnabled(false);
-			saveButton.setEnabled(false);
-		}
-		else {
-			getNumCards().setBorder(defaultTextFieldBorder);
-			errorField.setText("");
-			submitNumCards.setEnabled(true);
-		}
-		
+		boolean isNameValid = false;			
 		isNameValid = getBoxName().validateField(errorField, showLabel, showBox);
-		if (!isNameValid) {
-			getBoxName().setBorder(defaultTextFieldBorder);
-			errorField.setText("Name is required");
-			saveButton.setEnabled(false);
-		}
-		else if(isNameValid && isNumCardsValid){
-			errorField.setText("");
-			saveButton.setEnabled(true);
-		}
 		
-		return (isNameValid && isNumCardsValid);
+		if (!isNameValid) {
+			nameTextField.setBorder(errorBorder);
+			errorField.setText("Name is required");
+		}
+		else{
+			return true;
+		}
+		return isNameValid;
 	}
 	
 	public boolean hasChanges() {
@@ -478,17 +462,6 @@ public class CreateDeckPanel extends JScrollPane {
 		return false;
 	}
 	
-	/**
-	 * Adds key listeners to validate all text entry
-	 * @param component whichever field needs to be validated
-	 */
-	private void addKeyListenerTo(JComponent component){
-		component.addKeyListener(new KeyAdapter(){
-			public void keyReleased(KeyEvent arg0) {	
-				validateField(errorField, true, true);
-			}
-		});
-	}
 	
 	/**
 	 * Checks to make sure the number of cards inputted is 1-24
@@ -539,28 +512,13 @@ public class CreateDeckPanel extends JScrollPane {
 	 */
 	public void chooseCardColor(){
 		updateValueArray(); //ensures the array of values is up to date before cards are removed
-		String color = (String)getColorDropDown().getSelectedItem();
+		ColorEnum color = determineDeckColor();
 		int numCardsPresent = cardsPanel.getComponentCount();
 		cardsPanel.removeAll();
 		cards.removeAll(cards);
-		/* Later, when real functionality occurs, we will need a way of storing the cards 
-		 * being generated, along with their values so we can later tell if one is selected or not.
-		 * This will be necessary when assigning values to each card. */
-		if(color == "Red (Default)"){
-			addCards(ColorEnum.RED, numCardsPresent);
-		}
-		if(color == "Blue"){
-			addCards(ColorEnum.BLUE, numCardsPresent);
-		}
-		if(color == "Green"){
-			addCards(ColorEnum.GREEN, numCardsPresent);
-		}
-		if(color == "Purple"){
-			addCards(ColorEnum.PURPLE, numCardsPresent);
-		}
-		if(color == "Yellow"){
-			addCards(ColorEnum.YELLOW, numCardsPresent);
-		}
+
+		addCards(color, numCardsPresent);
+		
 		System.out.print(cards.size());
 		cardsPanel.revalidate();
         cardsPanel.repaint();
@@ -635,7 +593,7 @@ public class CreateDeckPanel extends JScrollPane {
 	
 	public void addCards(ColorEnum color, int numCardsPresent) {
 		for(int i=0; i < numCardsPresent; i++){
-			 CardImage newCard = new CardImage(color);
+			 CardImage newCard = new CardImage(color,errorField);
 			 cardsPanel.add(newCard);
 			 cards.add(newCard);
 			 String valueAtIndexI = Integer.toString(values.get(i));
@@ -656,4 +614,78 @@ public class CreateDeckPanel extends JScrollPane {
 		}
 	}
 	
+	/**
+	 * Adds the deck to the model and to the server
+	 */
+	public void saveDeck(Deck deck) {
+		
+		DeckModel.getInstance().addDeck(deck); // New Deck gets added													// to the server
+
+		ViewEventController.getInstance().refreshDeckTable();
+		ViewEventController.getInstance().refreshDeckTree();
+	}
+	
+	/**
+	 * Triggered when the save deck button is pressed using the mouse listener
+	 * 
+	 * @return true when a deck is successfully added
+	 */
+	public void SaveDeckPressed() {
+		final Deck deck = new Deck(nameTextField.getText(), 
+				descriptionTextField.getText(), values, true, 
+					determineDeckColor());
+		
+		saveDeck(deck);
+		ViewEventController.getInstance().removeTab(this);
+
+	}
+	/**Determines the color of the deck from the dropdown menu
+	 * 
+	 * @return the color of the deck
+	 */
+	private ColorEnum determineDeckColor(){
+		ColorEnum colorEnum = ColorEnum.RED;
+		String color = (String)getColorDropDown().getSelectedItem();
+		switch (color){
+		case "Blue": colorEnum = ColorEnum.BLUE;
+			 break;
+		case "Green": colorEnum = ColorEnum.GREEN;
+			 break;
+		case "Purple": colorEnum = ColorEnum.PURPLE;
+			 break;
+		case "Yellow": colorEnum = ColorEnum.YELLOW;
+			 break;
+		default: colorEnum = ColorEnum.RED;
+			 break;
+		}
+		
+		return colorEnum;
+	}
+
+	@Override
+	public void updateButtons() {
+		if (validateField(errorField,true, false)) {
+			saveButton.getSaveDeckButton().setEnabled(true);
+			nameTextField.setBorder(defaultTextFieldBorder);
+			errorField.setText("");
+		} 
+		else {
+			saveButton.getSaveDeckButton().setEnabled(false);
+			
+		}
+		
+		if (verifyNumberOfCards()) {
+			submitNumCards.setEnabled(true);
+			getNumCards().setBorder(defaultTextFieldBorder);
+			errorField.setText("");
+		} 
+		else {
+			submitNumCards.setEnabled(false);
+			saveButton.getSaveDeckButton().setEnabled(false);
+			errorField.setText("Number of cards must be a 1-or-2-digit "
+					+ "integer between 1 and 25");
+			numCards.setBorder(errorBorder);
+		}	
+	}
 }
+
