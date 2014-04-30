@@ -49,24 +49,27 @@ public class NumberJTextFieldTest {
 
 	@Test
 	public void testBadKey() {
+		testerField.setIErrorView(label);
 		testerField.setText("27");
 		sendKey(testerField,"21C");
-		testerField.setIErrorView(label);
-		assertEquals(testerField.STRING_NOT_NUMBER, label.getText());
 		assertEquals("27", testerField.getText());
+		assertEquals(NumberJTextField.STRING_NOT_NUMBER, label.getText());
 		assertFalse(testerField.hasChanges());
 		assertTrue(testerField.validateField(label, true, false));
+		assertEquals("", label.getText());
 	}
 	
 	@Test
 	public void testLargeNumber(){
 		//NumberJTextField testerField = new NumberJTextField(900);
 		testerField.setText("990");
-		testerField.setMaxValue(999);
+		int maxValue = 999;
+		testerField.setMaxValue(maxValue);
 		sendKey(testerField, "9909");
 		assertEquals("9909", testerField.getText());
 		assertTrue(testerField.hasChanges());
 		assertFalse(testerField.validateField(label, true, false));
+		assertEquals(NumberJTextField.STRING_TOO_LONG + maxValue, label.getText());
 	}
 	
 

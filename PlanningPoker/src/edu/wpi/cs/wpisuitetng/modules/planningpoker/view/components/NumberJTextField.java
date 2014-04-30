@@ -22,7 +22,7 @@ import javax.swing.text.DocumentFilter;
  *
  */
 public class NumberJTextField extends JTextField implements IDataField {
-	public static final String STRING_TOO_SHORT = "You can not enter a number greater than ";
+	public static final String STRING_TOO_LONG = "You can not enter a number greater than ";
 	public static final String STRING_NOT_EMPTY = "The Field can not be empty";
 	public static final String STRING_NOT_NUMBER= "You can only enter numbers here";
 	
@@ -99,7 +99,7 @@ public class NumberJTextField extends JTextField implements IDataField {
 		} else if(maxValue != -1){
 			if(Integer.parseInt(getText()) > maxValue ){
 				isValid = false;
-				showInvalid(STRING_TOO_SHORT + maxValue, showLabel, showBox);
+				showInvalid(STRING_TOO_LONG + maxValue, showLabel, showBox);
 			}
 		} else{
 			isValid = true;
