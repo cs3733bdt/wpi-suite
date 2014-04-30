@@ -17,8 +17,8 @@ import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
- * This controller adds the name of game and the game creator to the model as a
- * new game when the user clicks the create a new game button.
+ * This controller adds the name of Deck and the Deck creator to the model as a
+ * new Deck when the user clicks the Save Deck button.
  * 
  * ******This class should be modified after the planningpoker.models and .view
  * are finished.******
@@ -36,7 +36,7 @@ public class AddDeckController {
 	}
 	
 	/**
-	 * @return returns a new instance of an AddGameController
+	 * @return returns a new instance of an AddDeckController
 	 */
 	public static AddDeckController getInstance() {
 		if(instance == null) {
@@ -46,8 +46,8 @@ public class AddDeckController {
 	}
 	
 	/**
-	 * This method adds a game to the server
-	 * @param newGame is the game to add to the server
+	 * This method adds a Deck to the server
+	 * @param newDeck is the Deck to add to the server
 	 */
 	public void addDeck(Deck newDeck) {
 		System.out.println("Adding: " + newDeck.getName() + " to server");
