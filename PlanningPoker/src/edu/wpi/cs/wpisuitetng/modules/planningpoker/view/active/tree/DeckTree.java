@@ -19,7 +19,7 @@ import java.awt.Graphics;
 import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.JPanel;
@@ -32,10 +32,10 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
-import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.GetGameController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.GetDeckController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
@@ -46,12 +46,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  */
 public class DeckTree extends JPanel implements MouseListener{
 	private boolean initialized = false; //Check if GameModel should be generated from the server
-	JTree gameTree; // JTree to hold the hierarchy of games
+	JTree deckTree; // JTree to hold the hierarchy of games
 	JScrollPane gameTreeScroll; // scrollPane to put the tree in
-	DefaultMutableTreeNode gameNode = 
+	DefaultMutableTreeNode deckNode = 
 			new DefaultMutableTreeNode("Decks"); //Make master node hold the other 3
-	DefaultMutableTreeNode inactive = 
-			new DefaultMutableTreeNode("Red Decks"); //Make pending games node
+	DefaultMutableTreeNode currentDecks = 
+			new DefaultMutableTreeNode("Your Decks"); //Make pending games node
 	DefaultMutableTreeNode active = 
 			new DefaultMutableTreeNode("Blue Decks"); //Make active games node
 	DefaultMutableTreeNode history = 
@@ -76,48 +76,36 @@ public class DeckTree extends JPanel implements MouseListener{
 	 */
 	public void refresh(){
 		if(getComponentCount() != 0){			
-			isInactiveCollapsed = gameTree.isCollapsed(new TreePath(inactive.getPath()));
-			isActiveCollapsed = gameTree.isCollapsed(new TreePath(active.getPath()));			
-			isHistoryCollapsed = gameTree.isCollapsed(new TreePath(history.getPath()));
+			isInactiveCollapsed = deckTree.isCollapsed(new TreePath(currentDecks.getPath()));
+			isActiveCollapsed = deckTree.isCollapsed(new TreePath(active.getPath()));			
+			isHistoryCollapsed = deckTree.isCollapsed(new TreePath(history.getPath()));
 			remove(0);
 		}
 		
 		active.removeAllChildren();
-		inactive.removeAllChildren();
+		currentDecks.removeAllChildren();
 		history.removeAllChildren();
 		
-		List<Game> gameList = 
-				sortGames(GameModel.getInstance().getGames());//retrieve list of all games
-		System.out.println("Numb Games: " + gameList.size());
-		for (Game game: gameList){
-			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
-			
-			if(!game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
-
-				if(game.isActive()){
-					active.add(newGameNode);
-				}
-				else if(game.isCreator(ConfigManager.getConfig().getUserName())){
-					inactive.add(newGameNode);
-				}
-			} else { //If the game is complete then put it in the history
-				history.add(newGameNode);
-			}
+		List<Deck> deckList = DeckModel.getInstance().getDecks();//retrieve list of all games
+		System.out.println("Numb Decks: " + deckList.size());
+		for (Deck deck: deckList){
+			DefaultMutableTreeNode newDeckNode = new DefaultMutableTreeNode(deck);
+			currentDecks.add(newDeckNode);
 		}
 		
-		gameNode.add(inactive);
-		gameNode.add(active);
-		gameNode.add(history);
-		System.out.println("Numb Games: " + gameList.size());
+		deckNode.add(currentDecks);
+		deckNode.add(active);
+		deckNode.add(history);
+		System.out.println("Numb Games: " + deckList.size());
 
 		
-		gameTree = new JTree(gameNode);
+		deckTree = new JTree(deckNode);
 		
-		gameTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
-		gameTree.setToggleClickCount(0);
-		gameTree.addMouseListener(this);
+		deckTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+		deckTree.setToggleClickCount(0);
+		deckTree.addMouseListener(this);
 		
-		gameTreeScroll = new JScrollPane(gameTree);
+		gameTreeScroll = new JScrollPane(deckTree);
 		gameTreeScroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);		
 		gameTreeScroll.setPreferredSize(new Dimension(190, 500));
@@ -138,32 +126,32 @@ public class DeckTree extends JPanel implements MouseListener{
 	    
 	    
 	    if(isInactiveCollapsed){
-	    	gameTree.collapsePath(new TreePath(inactive.getPath()));
+	    	deckTree.collapsePath(new TreePath(currentDecks.getPath()));
 	    }
 	    else{
-	    	gameTree.expandPath(new TreePath(inactive.getPath()));
+	    	deckTree.expandPath(new TreePath(currentDecks.getPath()));
 	    }
 	   
 	    if(isActiveCollapsed){
-	    	gameTree.collapsePath(new TreePath(active.getPath()));
+	    	deckTree.collapsePath(new TreePath(active.getPath()));
 	    }
 	    else{
-	    	gameTree.expandPath(new TreePath(active.getPath()));
+	    	deckTree.expandPath(new TreePath(active.getPath()));
 	    }
 	    	    
 	    if(isHistoryCollapsed){
-	    	gameTree.collapsePath(new TreePath(history.getPath()));
+	    	deckTree.collapsePath(new TreePath(history.getPath()));
 	    }
 	    else{
-	    	gameTree.expandPath(new TreePath(history.getPath()));
+	    	deckTree.expandPath(new TreePath(history.getPath()));
 	    }
 	    
 	    
 	    revalidate();
-	    gameTree.revalidate();
+	    deckTree.revalidate();
 	    gameTreeScroll.revalidate();
 	    repaint();
-	    gameTree.repaint();
+	    deckTree.repaint();
 		gameTreeScroll.repaint();
 	    validate();
 		
@@ -173,7 +161,7 @@ public class DeckTree extends JPanel implements MouseListener{
 	public void paintComponent(Graphics g){
 		if(!initialized){
 			try{
-				GetGameController.getInstance().retrieveGames();
+				GetDeckController.getInstance().retrieveDecks();
 				initialized = true;
 			} catch (Exception e){
 				System.err.println("Problem instantiating the Game Model. " + e);
@@ -187,14 +175,14 @@ public class DeckTree extends JPanel implements MouseListener{
 	 * @param list the list of games to be sorted
 	 * @return the same list sorted by start date
 	 */
-	public List<Game> sortGames(List<Game> list) {
+	public List<Deck> sortDecks(List<Deck> list) {
 		
-		Collections.sort(list, new GameComparator());
+		//Collections.sort(list, new DeckComparator());
 		return list;
 	}
 
 	public JTree getGameTree(){
-		return gameTree;
+		return deckTree;
 	}
 
 	@Override
@@ -206,8 +194,8 @@ public class DeckTree extends JPanel implements MouseListener{
 		
 		if(e.getClickCount() == 2){
 			System.out.println("Double Click Detected");
-			TreePath treePath = gameTree.getPathForLocation(x, y);
-			JTree clicked = gameTree;
+			TreePath treePath = deckTree.getPathForLocation(x, y);
+			JTree clicked = deckTree;
 			if(treePath == null){
 				System.out.println("Not on gameTree");
 			}
@@ -231,11 +219,11 @@ public class DeckTree extends JPanel implements MouseListener{
 						}
 					}
 					else if(node.getUserObject() instanceof String){
-						if(gameTree.isCollapsed(gameTree.getPathForLocation(x, y))){
-							gameTree.expandPath(gameTree.getPathForLocation(x, y));
+						if(deckTree.isCollapsed(deckTree.getPathForLocation(x, y))){
+							deckTree.expandPath(deckTree.getPathForLocation(x, y));
 						}
 						else {
-							gameTree.collapsePath(gameTree.getPathForLocation(x, y));
+							deckTree.collapsePath(deckTree.getPathForLocation(x, y));
 						}
 					}
 				}
@@ -282,13 +270,12 @@ public class DeckTree extends JPanel implements MouseListener{
 
 
 /**
- * Used to sort games by their creation time.
- * @author jonathanleitschuh
+ * Used to sort decks by their creation time.
  *
  */
-/*class GameComparator implements Comparator<Game>{
+class GameComparator implements Comparator<Deck>{
 	@Override
-	public int compare(Game G1, Game G2){
-		return -(G1.getCreationTime().compareTo(G2.getCreationTime()));
+	public int compare(Deck D1, Deck D2){
+		return -(D1.getName().compareTo(D2.getName()));
 	}
-}*/
+}
