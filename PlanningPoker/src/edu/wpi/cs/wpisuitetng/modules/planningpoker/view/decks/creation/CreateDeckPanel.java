@@ -49,6 +49,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IValidateButtons;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberJTextField;
 
 /**
  * The panel for the deck creation process Used to allow the user to create a
@@ -69,7 +70,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	/**
 	 * textfield for the number of cards desired
 	 */
-	private NameJTextField numCards;
+	private NumberJTextField numCards;
 	/**
 	 * button to submit the number of cards desired and repaint the card panel
 	 * with chosen number
@@ -108,8 +109,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 */
 	private CancelButton cancelDeckButton;
 
-	private SaveDeckButtonPanel saveButton; // save button to save deck to
-											// server
+	private SaveDeckButtonPanel saveButtonPanel;					//save button to save deck to server
+
 
 	/**
 	 * errorfield to display validation errors
@@ -167,7 +168,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		JLabel nameLabel = new JLabel("Name * ");
 		nameTextField = new NameJTextField(20);
 		nameTextField.addKeyListener(this);
-
+		
+		
 		JLabel descriptionLabel = new JLabel("Description");
 		descriptionTextField = new DescriptionJTextArea();
 		descriptionTextField.setLineWrap(true);
@@ -226,7 +228,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 		/* number of cards desired by user */
 		JLabel numCardsLabel = new JLabel("Number of Cards * ");
-		numCards = new NameJTextField(5);
+		numCards = new NumberJTextField(10);
+		numCards.setPreferredSize(new Dimension(40,22));
 		numCards.setText("1");
 		numCards.addKeyListener(this);
 		initializeArrayList();
@@ -240,7 +243,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 			}
 		});
 		addMouseListenerToNumberOfCardsSubmitButton(submitNumCards);
-
+		
+		
 		/* color desired by user */
 		JLabel colorLabel = new JLabel("Select Card Color * ");
 		colorDropDown = new JComboBox<String>();
@@ -338,8 +342,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		cardRed.setVisible(true);
 
 		/* save button */
-		saveButton = new SaveDeckButtonPanel(this);
-		saveButton.setEnabled(false);
+		saveButtonPanel = new SaveDeckButtonPanel(this);
+		addMouseListenerTo(saveButtonPanel);
+		saveButtonPanel.getSaveDeckButton().setEnabled(true);
 
 		/* cancel button */
 		cancelDeckButton = new CancelButton("Cancel Deck", this);
@@ -356,72 +361,49 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		view.add(descriptionScroll);
 		view.add(numCardsAndColorAndSelectedTypePanel);
 		view.add(cardScrollPane);
-		view.add(saveButton);
+		view.add(saveButtonPanel);
 		view.add(cancelDeckButton);
 		view.add(errorField);
 
 		/* Sets the layout constraints for each component */
-		layout.putConstraint(SpringLayout.WEST, nameLabel, 10,
-				SpringLayout.WEST, view);
-		layout.putConstraint(SpringLayout.NORTH, nameLabel, 10,
-				SpringLayout.NORTH, view);
-
-		layout.putConstraint(SpringLayout.WEST, nameTextField, 5,
-				SpringLayout.EAST, nameLabel);
-		layout.putConstraint(SpringLayout.NORTH, nameTextField, 10,
-				SpringLayout.NORTH, view);
-
-		layout.putConstraint(SpringLayout.WEST, descriptionLabel, 10,
-				SpringLayout.EAST, nameTextField);
-		layout.putConstraint(SpringLayout.NORTH, descriptionLabel, 10,
-				SpringLayout.NORTH, view);
-
-		layout.putConstraint(SpringLayout.WEST, descriptionScroll, 5,
-				SpringLayout.EAST, descriptionLabel);
-		layout.putConstraint(SpringLayout.NORTH, descriptionScroll, 10,
-				SpringLayout.NORTH, view);
-		layout.putConstraint(SpringLayout.EAST, descriptionScroll, -10,
-				SpringLayout.EAST, view);
-
-		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER,
-				numCardsAndColorAndSelectedTypePanel, 0,
-				SpringLayout.HORIZONTAL_CENTER, view);
-		layout.putConstraint(SpringLayout.NORTH,
-				numCardsAndColorAndSelectedTypePanel, 10, SpringLayout.SOUTH,
-				nameLabel);
-
-		layout.putConstraint(SpringLayout.WEST, cardScrollPane, 10,
-				SpringLayout.WEST, view);
-		layout.putConstraint(SpringLayout.EAST, cardScrollPane, -10,
-				SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.NORTH, cardScrollPane, 10,
-				SpringLayout.SOUTH, numCardsAndColorAndSelectedTypePanel);
-		layout.putConstraint(SpringLayout.SOUTH, cardScrollPane, -45,
-				SpringLayout.SOUTH, view);
-
-		layout.putConstraint(SpringLayout.WEST, saveButton, 10,
-				SpringLayout.WEST, view);
-		layout.putConstraint(SpringLayout.NORTH, saveButton, 10,
-				SpringLayout.SOUTH, cardScrollPane);
-
-		layout.putConstraint(SpringLayout.WEST, cancelDeckButton, 10,
-				SpringLayout.EAST, saveButton);
-		layout.putConstraint(SpringLayout.NORTH, cancelDeckButton, 10,
-				SpringLayout.SOUTH, cardScrollPane);
-
-		layout.putConstraint(SpringLayout.WEST, errorField, 10,
-				SpringLayout.EAST, cancelDeckButton);
-		layout.putConstraint(SpringLayout.NORTH, errorField, 10,
-				SpringLayout.SOUTH, cardScrollPane);
-
+		layout.putConstraint(SpringLayout.WEST, nameLabel, 10, SpringLayout.WEST, view);
+		layout.putConstraint(SpringLayout.NORTH, nameLabel, 10, SpringLayout.NORTH, view);
+		
+		layout.putConstraint(SpringLayout.WEST, nameTextField, 5, SpringLayout.EAST, nameLabel);
+		layout.putConstraint(SpringLayout.NORTH, nameTextField, 10, SpringLayout.NORTH, view);
+		
+		layout.putConstraint(SpringLayout.WEST, descriptionLabel, 10, SpringLayout.EAST, nameTextField);
+		layout.putConstraint(SpringLayout.NORTH, descriptionLabel, 10, SpringLayout.NORTH, view);
+		
+		layout.putConstraint(SpringLayout.WEST, descriptionScroll, 5, SpringLayout.EAST, descriptionLabel);
+		layout.putConstraint(SpringLayout.NORTH, descriptionScroll, 10, SpringLayout.NORTH, view);
+		layout.putConstraint(SpringLayout.EAST, descriptionScroll, -10, SpringLayout.EAST, view);
+		
+		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, numCardsAndColorAndSelectedTypePanel, 0, SpringLayout.HORIZONTAL_CENTER, view);
+		layout.putConstraint(SpringLayout.NORTH, numCardsAndColorAndSelectedTypePanel, 10, SpringLayout.SOUTH, nameLabel);
+		
+		layout.putConstraint(SpringLayout.WEST, cardScrollPane, 10, SpringLayout.WEST, view);
+		layout.putConstraint(SpringLayout.EAST, cardScrollPane, -10, SpringLayout.EAST, view);
+		layout.putConstraint(SpringLayout.NORTH, cardScrollPane, 10, SpringLayout.SOUTH, numCardsAndColorAndSelectedTypePanel);
+		layout.putConstraint(SpringLayout.SOUTH, cardScrollPane, -45, SpringLayout.SOUTH, view);
+		
+		layout.putConstraint(SpringLayout.WEST, saveButtonPanel, 10, SpringLayout.WEST, view);
+		layout.putConstraint(SpringLayout.NORTH, saveButtonPanel, 10, SpringLayout.SOUTH, cardScrollPane);
+		
+		layout.putConstraint(SpringLayout.WEST, cancelDeckButton, 10, SpringLayout.EAST, saveButtonPanel);
+		layout.putConstraint(SpringLayout.NORTH, cancelDeckButton, 10, SpringLayout.SOUTH, cardScrollPane);
+		
+		layout.putConstraint(SpringLayout.WEST, errorField, 10, SpringLayout.EAST, cancelDeckButton);
+		layout.putConstraint(SpringLayout.NORTH, errorField, 10, SpringLayout.SOUTH, cardScrollPane);
+		
+		
 		ViewEventController.getInstance().refreshDeckTree();
 		revalidate();
 		repaint();
 
 		setViewportView(view);
-
-		updateButtons();
-		nameTextField.setBorder(defaultTextFieldBorder);
+	
+		
 	}
 
 	/**
@@ -519,31 +501,27 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	public JPanel getCardsPanel() {
 		return cardsPanel;
 	}
-
+	
 	/**
-	 * Checks all fields to determine if they are prepared to be removed. If a
-	 * field is invalid then it warns the user with a notification and by
-	 * highlighting the offending box on the GUI.
-	 * 
-	 * @param warningField
-	 *            the field to output the errors to
-	 * @return true If all fields are valid and the window is ready to be
-	 *         removed
+	 * Checks all fields to determine if they are prepared to be removed.
+	 * If a field is invalid then it warns the user with a notification and by highlighting
+	 * the offending box on the GUI.
+	 * @param warningField the field to output the errors to
+	 * @return true If all fields are valid and the window is ready to be removed
 	 */
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
-		boolean isNameValid = getBoxName().validateField(errorField, showLabel,
-				showBox);
-
-		boolean isDescriptionValid = descriptionTextField.validateField(
-				errorField, showLabel, showBox);
-
+	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {	
+		boolean isNameValid = nameTextField.validateField(warningField, showLabel, showBox);
+		
+		boolean isDescriptionValid = descriptionTextField.validateField(warningField, showLabel, showBox);
+		boolean isNumCardsValid = numCards.validateField(warningField, showLabel, showBox);
+		
 		boolean areCardsValid = true;
-		for (CardImage c : cards) {
-			areCardsValid &= c.validateField(errorField, showLabel, showBox);
+		for(CardImage c : cards){
+			areCardsValid &= c.validateField(warningField, showLabel, showBox);
 		}
-
-		return isNameValid && isDescriptionValid && areCardsValid;
+		
+		
+		return isNameValid && isDescriptionValid && isNumCardsValid && areCardsValid;
 	}
 
 	public boolean hasChanges() {
@@ -694,14 +672,18 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	}
 
 	public void addCards(ColorEnum color, int numCardsPresent) {
-		for (int i = 0; i < numCardsPresent; i++) {
-			CardImage newCard = new CardImage(color, errorField);
-			cardsPanel.add(newCard);
-			cards.add(newCard);
-			String valueAtIndexI = Integer.toString(values.get(i));
-			if (!valueAtIndexI.equals("-1")) {
-				newCard.setValueLabel(valueAtIndexI);
-			}
+		for(int i=0; i < numCardsPresent; i++){
+			 CardImage newCard = new CardImage(color,errorField);
+			 cardsPanel.add(newCard);
+			 cards.add(newCard);
+			 String valueAtIndexI = Integer.toString(values.get(i));
+			 if (!valueAtIndexI.equals("-1")) {
+				 newCard.setValueLabel(valueAtIndexI);
+			 }
+			 System.out.println("current cards:");
+				for(Integer j : values){
+					System.out.print(j + "\n");
+				}
 		}
 	}
 
@@ -741,10 +723,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * @return true when a deck is successfully added
 	 */
 	public void SaveDeckPressed() {
-		final Deck deck = new Deck(nameTextField.getText(),
-				descriptionTextField.getText(), values, true,
-				determineDeckColor());
-
+		final Deck deck = new Deck(nameTextField.getText(), 
+				descriptionTextField.getText(), values, true, 
+					determineDeckColor());
 		saveDeck(deck);
 		ViewEventController.getInstance().removeTab(this);
 
@@ -781,26 +762,33 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 	@Override
 	public void updateButtons() {
-		if (validateField(errorField, true, false)) {
-			saveButton.getSaveDeckButton().setEnabled(true);
-			nameTextField.setBorder(defaultTextFieldBorder);
-			errorField.setText("");
-		} else {
-			saveButton.getSaveDeckButton().setEnabled(false);
-
+		if (validateField(errorField,true, false)) {
+			saveButtonPanel.getSaveDeckButton().setEnabled(true);
+		} 
+		else {
+			saveButtonPanel.getSaveDeckButton().setEnabled(false);
+			
 		}
-
-		if (verifyNumberOfCards()) {
+		
+		/*if (verifyNumberOfCards()) {
 			submitNumCards.setEnabled(true);
-			numCards.setBorder(defaultTextFieldBorder);
+			getNumCards().setBorder(defaultTextFieldBorder);
 			errorField.setText("");
 		} else {
 			submitNumCards.setEnabled(false);
-			saveButton.getSaveDeckButton().setEnabled(false);
+			saveButtonPanel.getSaveDeckButton().setEnabled(false);
 			errorField.setText("Number of cards must be a 1-or-2-digit "
 					+ "integer between 1 and 25");
 			numCards.setBorder(errorBorder);
-		}
+		}*/	
+	}
+	
+	private void addMouseListenerTo(JComponent component){
+		component.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent arg0) {
+					validateField(errorField,true, true);
+			}
+		});
 	}
 
 	public Deck getDeck() {
