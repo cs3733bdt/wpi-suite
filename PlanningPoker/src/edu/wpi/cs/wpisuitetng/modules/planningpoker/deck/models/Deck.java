@@ -258,4 +258,9 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		this.hasIdontKnow = hasIdontKnow;
 	}
 	
+	@Override
+	public String toString() {
+		return name;
+	}
+	
 }

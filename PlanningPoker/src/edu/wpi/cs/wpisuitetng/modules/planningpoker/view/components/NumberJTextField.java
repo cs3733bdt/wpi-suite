@@ -67,7 +67,7 @@ public class NumberJTextField extends JTextField implements IDataField {
 	 */
 	private void setup(){
 		((AbstractDocument) this.getDocument())
-		.setDocumentFilter(new MyDocumentFilter());
+		.setDocumentFilter(new MyDocumentFilter(this));
 	}
 	
 	public void setIErrorView(IErrorView warningField){
