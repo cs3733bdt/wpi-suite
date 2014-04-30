@@ -19,8 +19,6 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -40,7 +38,6 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
-
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
@@ -621,8 +618,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		
 		DeckModel.getInstance().addDeck(deck); // New Deck gets added													// to the server
 
-		//ViewEventController.getInstance().refreshDeckTable();
-		//ViewEventController.getInstance().refreshDeckTree();
+		ViewEventController.getInstance().refreshDeckTable();
+		ViewEventController.getInstance().refreshDeckTree();
 	}
 	
 	/**
