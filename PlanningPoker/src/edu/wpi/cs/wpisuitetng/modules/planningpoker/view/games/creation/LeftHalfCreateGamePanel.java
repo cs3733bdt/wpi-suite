@@ -86,7 +86,11 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 	 
 	private final Border defaultTextAreaBorder = (new JTextArea()).getBorder();
 	    
-	private final Border defaultDateBorder = (new JXDatePicker()).getBorder();	
+	private final Border defaultDateBorder = (new JXDatePicker()).getBorder();
+	
+	private boolean isCardsChanged;
+	
+	private boolean usesCardsInitial;
 	
 	
 	/**
@@ -98,6 +102,9 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		game = mainPanel.getGame();
 		build();
 		buildFields();
+		isCardsChanged = textEntryButton.isSelected();
+		
+		usesCardsInitial = doesUseCards();
 		
 		nameTextField.requestFocus();
 		if(game != null){
@@ -392,13 +399,14 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		
 		return (isNameValid && isDescriptionValid && isEndDateValid);
 	}
-	
-	
 
 	@Override
 	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
+		return nameTextField.hasChanges()
+				|| descriptionTextField.hasChanges() 
+				|| getEndDateField().hasChanges() 
+				|| (isCardsChanged ==  textEntryButton.isSelected())
+				|| usesCardsInitial == doesUseCards();
 	}
 
 	/**

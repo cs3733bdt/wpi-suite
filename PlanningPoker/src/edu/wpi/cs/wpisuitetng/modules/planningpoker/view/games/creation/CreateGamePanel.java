@@ -88,12 +88,7 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel, IVa
 		savedDescription = getBoxDescription().getText();
 		useCards = leftHalf.doesUseCards();
 		savedEndDate = leftHalf.dateToString();
-		for (PPRequirement p : rightHalf.getRequirements()) {
-			PPRequirement temp = new PPRequirement();
-			temp.setName(p.getName());
-			temp.setDescription(p.getDescription());
-			savedRequirements.add(temp);
-		}
+
 	}
 
 	/**
@@ -150,15 +145,15 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel, IVa
 	 * @return whether the CreateGamePanel as a whole is ready to be removed.
 	 */
 	public boolean readyToRemove() {
-		if (readyToClose || noChange())
+		if (/*readyToClose ||*/ !hasChanges())
 			return true;
 
 		// TODO Check fields to see if this window has unsaved changes
-		if (containsData()) {
-			readyToRemove = false;
-		} else {
-			readyToRemove = true;
-		}
+//		if (containsData()) {
+//			readyToRemove = false;
+//		} else {
+//			readyToRemove = true;
+//		}
 
 		if (readyToRemove) {
 			return true;
@@ -178,13 +173,17 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel, IVa
 					.getRequirements().isEmpty()));
 	}
 
-	private boolean noChange() {
-		return ((savedName.equals(getBoxName().getText()))
-				&& (savedDescription.equals(getBoxDescription().getText()))
-				&& (useCards == (leftHalf.doesUseCards()))
-				&& (savedEndDate.equals(leftHalf.dateToString())) && (sameReqLists())
-				&& (rightHalf.isDescAreaEmpty())
-				&& (rightHalf.isNameAreaEmpty()));
+	private boolean hasChanges() {
+		return leftHalf.hasChanges();
+//				((savedName.equals(getBoxName().getText()))
+//				&& (savedDescription.equals(getBoxDescription().getText()))
+//				&& (useCards == (leftHalf.doesUseCards())));
+//				&& (savedEndDate.equals(leftHalf.dateToString()))
+//				&& (sameReqLists())
+//				&& (rightHalf.isDescAreaEmpty())
+//				&& (rightHalf.isNameAreaEmpty()));
+		
+		
 	}
 
 	/**
