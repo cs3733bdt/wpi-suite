@@ -72,6 +72,7 @@ public class NumberJTextField extends JTextField implements IDataField {
 	
 	@Override
 	public void setText(String text){
+		text = text.replaceAll("\n", "");
 		initialText = text;
 		super.setText(text);
 	}
@@ -134,8 +135,9 @@ public class NumberJTextField extends JTextField implements IDataField {
 		return !initialText.equals(getText());
 	}
 	
-	public void setTextNoUpdate(String a){
-		super.setText(a);
+	public void setTextNoUpdate(String text){
+		text = text.replaceAll("\n", "");
+		super.setText(text);
 		
 	}
 	
@@ -175,6 +177,7 @@ class MyDocumentFilter extends DocumentFilter {
 	@Override
 	public void insertString(DocumentFilter.FilterBypass fp, int offset,
 			String string, AttributeSet aset) throws BadLocationException {
+		string = string.replaceAll("\n", ""); //Parse out newline character
 		int len = string.length();
 		boolean isValidInteger = true;
 
@@ -196,6 +199,7 @@ class MyDocumentFilter extends DocumentFilter {
 	@Override
 	public void replace(DocumentFilter.FilterBypass fp, int offset, int length,
 			String string, AttributeSet aset) throws BadLocationException {
+		string = string.replaceAll("\n", ""); //Parse out newline character
 		int len = string.length();
 		boolean isValidInteger = true;
 
