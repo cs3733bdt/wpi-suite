@@ -36,8 +36,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
@@ -508,7 +508,7 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 		return sum;
 	}
 
-	public ArrayList<CardButton> getCardButtonArray() {
+	public List<CardButton> getCardButtonArray() {
 		return new ArrayList<CardButton>();
 	}
 
