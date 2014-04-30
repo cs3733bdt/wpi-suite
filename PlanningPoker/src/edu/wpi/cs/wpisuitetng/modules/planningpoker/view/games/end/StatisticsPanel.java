@@ -420,6 +420,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		Object[] row = makeStatRow(req);
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(req);
+		currFinalEstimate = activeRequirement.getFinalEstimate();
 		
 		if (currFinalEstimate == -1) {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: " + mean);
@@ -430,7 +431,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		
 		finalEstimateMessage.setText("");
 		finalEstimateBox.setText("");
-		}
+	}
 	
 	/**
 	 * determines if the current user is the creator of the game and displays components related to the final estimate
@@ -472,9 +473,10 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	
 	private void finalEstimateButtonPressed() {
 		int newEstimate = Integer.parseInt(finalEstimateBox.getText());
-		for (int i = 0; i < activeGame.getRequirements().size(); i++) {
-			if (activeGame.getRequirements().get(i).identify(activeRequirement)) {
-				activeGame.getRequirements().get(i).setFinalEstimate(newEstimate);
+		for (PPRequirement r: activeGame.getRequirements()) {
+			if (r.identify(activeRequirement)) {
+				r.setFinalEstimate(newEstimate);
+				r.notifyObservers();
 				finalEstimateMessage.setForeground(Color.BLUE);
 				finalEstimateMessage.setText("Final estimate submitted successfully!");
 			}
