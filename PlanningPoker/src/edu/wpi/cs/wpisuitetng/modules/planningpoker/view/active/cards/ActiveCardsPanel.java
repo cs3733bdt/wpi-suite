@@ -117,7 +117,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public int getMaxSum() {
 		int sum = 0;
-		for (int i = 0; i < deck.getSize(); i++) {
+		for (int i = 0; i < (deck.getSize()) -1 ; i++) {
 			sum += Integer.parseInt(deck.getCards().get(i).getText());
 		}
 		return sum;
