@@ -34,15 +34,13 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 	JLabel emailHelpHeading;
 	JLabel emailHelppic;
 	JTextArea emailHelpExplanation;
+	ArrowDropDown emailArrowLabel;
 	JLabel facebookHelpHeading;
 	JLabel facebookHelppic;
 	JTextArea facebookHelpExplanation;
 	JLabel mobileHelpHeading;
 	JLabel mobileHelppic;
 	JTextArea mobileHelpExplanation;
-
-	char leftArrow = 9654;
-	String leftArrowString = Character.toString(leftArrow);
 	
 	public PreferencesHelp() {
 		build();
@@ -57,8 +55,8 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		view.setPreferredSize(new Dimension(610, 700));
 		
 		//Add the heading label to the Panel
-		headingLabel = new JLabel("Preferences Help" + leftArrowString);
-		headingLabel.setFont(makeFont(8));
+		headingLabel = new JLabel("Preferences Help");
+		headingLabel.setFont(makeFont(8));		
 		
 		//Add email image panel;
 		emailHelppic = addImage("email_preferences1.png");
@@ -66,6 +64,8 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		//Add label to explanation for email
 		emailHelpHeading = new JLabel("Updating Email");
 		emailHelpHeading.setFont(makeFont(5));
+		
+		
 		
 		//Add explanation for the first image, the email help
 		emailHelpExplanation = new JTextArea();
@@ -78,6 +78,12 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		emailHelpExplanation.setBackground(null);
 		emailHelpExplanation.setWrapStyleWord(true);
 		emailHelpExplanation.setLineWrap(true);
+		
+		//Add arrow label //TODO test
+		emailArrowLabel = new ArrowDropDown();
+		view.add(emailArrowLabel);
+		emailArrowLabel.addComponentToGroup(emailHelpExplanation);
+		emailArrowLabel.addComponentToGroup(emailHelppic);
 		
 		//Add Facebook image panel
 		facebookHelppic = addImage("facebook_preferences1.png");
@@ -146,6 +152,10 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		layout.putConstraint(SpringLayout.EAST, emailHelpExplanation, 0, SpringLayout.EAST, view);
 		layout.putConstraint(SpringLayout.WEST, emailHelpExplanation, 20, SpringLayout.EAST, emailHelppic);
 		
+		//Constraints on the arrow dropdown //TODO test
+		layout.putConstraint(SpringLayout.EAST, emailArrowLabel, -3, SpringLayout.WEST, emailHelpHeading);
+		layout.putConstraint(SpringLayout.NORTH, emailArrowLabel, 3, SpringLayout.NORTH, emailHelpHeading); 
+		
 		//Facebook
 		layout.putConstraint(SpringLayout.NORTH, facebookHelpHeading, 20, SpringLayout.SOUTH, emailHelppic);
 		layout.putConstraint(SpringLayout.EAST, facebookHelpHeading, 0, SpringLayout.EAST, view);
@@ -175,6 +185,7 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		repaint();
 	}
 	
+
 	/**
 	 * Creates a font to be used for later
 	 * @param size The size of the font
