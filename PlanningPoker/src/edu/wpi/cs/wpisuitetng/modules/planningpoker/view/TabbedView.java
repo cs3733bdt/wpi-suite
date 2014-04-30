@@ -182,6 +182,7 @@ public class TabbedView extends JTabbedPane {
 		for(IActiveGamePanel gameSearch : listOfActiveGamePanels){
 			if(game.equals(gameSearch.getGame())){
 				setSelectedComponent((Component)gameSearch);
+				ViewEventController.getInstance().enableHelpButton();
 				invalidate();
 				repaint();
 				return; //The game has been found and made active. Done!
@@ -197,6 +198,8 @@ public class TabbedView extends JTabbedPane {
 		listOfActiveGamePanels.add(viewGame);
 
 		setSelectedComponent(viewGame);
+		ViewEventController.getInstance().enableHelpButton();
+		
 		invalidate();
 		repaint();
 	}
@@ -215,6 +218,7 @@ public class TabbedView extends JTabbedPane {
 		for(ICreateGamePanel gameSearch : listOfCreateGamePanels){
 			if(game.equals(gameSearch.getGame())){			//If found then make it the active
 				setSelectedComponent((Component)gameSearch);
+				ViewEventController.getInstance().enableHelpButton();
 				invalidate();
 				repaint();
 				return;
@@ -226,6 +230,7 @@ public class TabbedView extends JTabbedPane {
 		listOfCreateGamePanels.add((ICreateGamePanel) newGame);
 
 		setSelectedComponent(newGame);
+		ViewEventController.getInstance().enableHelpButton();
 		invalidate();
 		repaint();
 	}
@@ -235,6 +240,7 @@ public class TabbedView extends JTabbedPane {
 			preferencesPanel = new PreferencesPanel();
 			addTab("Preferences", null, preferencesPanel, "Preferences");
 			setSelectedComponent(preferencesPanel);
+			ViewEventController.getInstance().enableHelpButton();
 			hasPreferencesTab = true;
 			invalidate();
 			repaint();
@@ -242,6 +248,7 @@ public class TabbedView extends JTabbedPane {
 		}
 
 		setSelectedComponent(preferencesPanel);
+		ViewEventController.getInstance().enableHelpButton();
 		invalidate();
 		repaint();
 
@@ -414,6 +421,14 @@ public class TabbedView extends JTabbedPane {
 		remove(comp);
 	}
 
+	private void disableHelpButton() {
+		ViewEventController.getInstance().disableHelpButton(); 	
+	}
+	
+	private void enableHelpButton() {
+		ViewEventController.getInstance().enableHelpButton();
+	}
+
 	/**
 	 * Closes all of the tabs besides the overview tab in the main view.
 	 * Used in conjunction with the tab right click drop-down 
@@ -527,6 +542,20 @@ public class TabbedView extends JTabbedPane {
 		}
 		else {
 			return;
+		}
+	}
+	
+	@Override
+	public void setSelectedComponent(Component comp) {
+		super.setSelectedComponent(comp);
+		if (comp instanceof DeckOverview) {
+			disableHelpButton();
+		}
+		else if (comp instanceof GameOverview) {
+			disableHelpButton();
+		}
+		else {
+			enableHelpButton();
 		}
 	}
 }

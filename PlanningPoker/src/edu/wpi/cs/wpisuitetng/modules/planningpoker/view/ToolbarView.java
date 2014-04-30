@@ -11,6 +11,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
+import javax.swing.JButton;
 import javax.swing.SpringLayout;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;
@@ -57,5 +58,13 @@ public class ToolbarView extends DefaultToolbarView {
 		
 		repaint();
 	    
+	}
+	
+	public void disableHelpButton() {
+		helpButton.disableHelpButton();
+	}
+	
+	public void enableHelpButton() {
+		helpButton.enableHelpButton();
 	}
 }

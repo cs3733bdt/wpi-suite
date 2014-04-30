@@ -70,6 +70,7 @@ public class HelpButtonPanel extends ToolbarGroupView {
 		contentPanel.setOpaque(false);
 		
 		add(contentPanel);
+		helpIcon.setEnabled(false);
 	}
 	
 	/**
@@ -80,6 +81,14 @@ public class HelpButtonPanel extends ToolbarGroupView {
 	
 	public JButton gethelpIcon() {
 		return helpIcon;
+	}
+
+	public void disableHelpButton() {
+		helpIcon.setEnabled(false);
+	}
+	
+	public void enableHelpButton() {
+		helpIcon.setEnabled(true);
 	}
 
 }
