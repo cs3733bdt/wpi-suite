@@ -33,6 +33,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.DeckOverview;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.GameOverview;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.IActiveGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.CreateDeckPanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ICreateDeckPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
@@ -307,7 +308,7 @@ public class TabbedView extends JTabbedPane {
 	 */
 	public void viewDeck(Deck deck){
 		//Attempt to find the game in the active panels list
-		for(IEndedGamePanel deckSearch : listOfCreateDeckPanels){
+		for(ICreateDeckPanel deckSearch : listOfCreateDeckPanels){
 			if(deck.equals(deckSearch.getDeck())){
 				setSelectedComponent((Component) deckSearch);
 				invalidate();
@@ -330,6 +331,21 @@ public class TabbedView extends JTabbedPane {
 		invalidate();
 		repaint();
 		
+	}
+
+	/**
+	 * Creates a tab name that is shortened if the name of the game is longer than 12 characters
+	 * @param game the game to get the tab text from
+	 * @return the tabs text
+	 */
+	private String getTabName(Deck deck){
+		// Makes the game name not be longer than 12 characters
+		StringBuilder tabName = new StringBuilder();
+		int subStringLength = deck.getName().length() > 12 ? 13 : deck.getName().length();
+		tabName.append(deck.getName().subSequence(0, subStringLength));
+		if (deck.getName().length() > 12)
+			tabName.append("...");
+		return tabName.toString();
 	}
 
 	

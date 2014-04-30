@@ -183,7 +183,7 @@ public class ViewEventController {
 	 * @param userObject
 	 */
 	public void viewDeck(Deck deck) {
-		getTabbedView().viewEndGame(deck);
+		getTabbedView().viewDeck(deck);
 		getTabbedView().invalidate();
 		getTabbedView().repaint();
 	}
