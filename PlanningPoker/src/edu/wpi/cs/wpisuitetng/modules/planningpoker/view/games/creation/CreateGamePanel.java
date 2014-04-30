@@ -27,12 +27,13 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IValidateButtons;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
  * Used to create a new Planning Poker game using the input of the user.
  */
-public class CreateGamePanel extends JSplitPane implements ICreateGamePanel {
+public class CreateGamePanel extends JSplitPane implements ICreateGamePanel, IValidateButtons{
 	private LeftHalfCreateGamePanel leftHalf = new LeftHalfCreateGamePanel(
 			this);
 	private RightHalfCreateGamePanel rightHalf = new RightHalfCreateGamePanel(

@@ -18,7 +18,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
  */
 public interface IDataField {
 	
-	
 	/**
 	 * Runs over all of this DataFields subcomponents and validates all of the fields.
 	 * This method throws/displays any errors if there are any problems with the users input.
