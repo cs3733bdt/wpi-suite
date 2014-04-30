@@ -37,6 +37,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	private boolean hasIdontKnow = true;
 	private boolean isDefault = false;
 	private ColorEnum color;
+	private boolean isMultipleSelection = true;
 	
 	
 	@Override
@@ -46,6 +47,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 			name = toCopyFrom.name;
 			changes = true;
 		}
+		
 		if(!description.equals(toCopyFrom.description)){
 			description = toCopyFrom.description;
 			changes = true;
@@ -54,10 +56,12 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 			cards = toCopyFrom.cards;
 			changes = true;
 		}
-		if(!cards.equals(toCopyFrom.cards)){
-			cards = toCopyFrom.cards;
+		
+		if(isMultipleSelection != toCopyFrom.isMultipleSelection) {
+			isMultipleSelection = toCopyFrom.isMultipleSelection;
 			changes = true;
 		}
+		
 		
 		return changes;
 	}
@@ -207,8 +211,6 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		return new Deck(name, description, cards, identifyingDeck.identity, true, identifyingDeck.color);	
 	}
 
-	
-
 	@Override
 	public void update(ObservableModel o, Object arg) {
 		// TODO Auto-generated method stub
@@ -233,5 +235,11 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	public ColorEnum getColor() {
 		return color;
 	}
-
+	
+	public void updateMultipleSelection(boolean isMultipleSelection) {
+		makeChanged();
+		//delayChange(); //TODO This method is needed for changing
+		this.isMultipleSelection = isMultipleSelection;
+	}
+	
 }

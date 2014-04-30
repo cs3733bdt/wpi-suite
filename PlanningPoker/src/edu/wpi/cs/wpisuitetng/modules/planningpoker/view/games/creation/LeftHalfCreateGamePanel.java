@@ -129,8 +129,8 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		descriptionTextField = new DescriptionJTextArea();				//Initializes the text area for the game description
 		descriptionTextField.setBorder(defaultTextAreaBorder);					//Sets the default border to the description text area
 		
-		addKeyListenerTo(nameTextField);								//Adds KeyListener to update on key press
-		addKeyListenerTo(descriptionTextField);							//Adds KeyListener to update on key press
+		nameTextField.addKeyListener(parent);;								//Adds KeyListener to update on key press
+		descriptionTextField.addKeyListener(parent);						//Adds KeyListener to update on key press
 		
 		JScrollPane descPane = new JScrollPane(descriptionTextField);	//Creates the scrollPane for the description field
 		descPane.setPreferredSize(new Dimension(200, 200));				//Sets the preferred(which works as minimum for some reason) size of the description scroll pane
@@ -158,7 +158,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		
 		endDateField = new AddEndDatePanel(this);					//Creates an end date panel
 		
-		addKeyListenerTo(endDateField.getDatePicker());
+		endDateField.addKeyListener(parent);
 		addActionListenerTo(endDateField.getDatePicker());			//Adds ActionListener to update when a selection is made
 		addActionListenerTo(endDateField.getHourSelection());			//Adds ActionListener to update when a selection is made
 		addActionListenerTo(endDateField.getMinuteSelection());		//Adds ActionListener to update when a selection is made
@@ -425,13 +425,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 		}
 	}
 	
-	private void addKeyListenerTo(JComponent component){
-		component.addKeyListener(new KeyAdapter(){
-			public void keyReleased(KeyEvent arg0) {	
-				parent.updateButtons();
-			}
-		});
-	}
+	
 	
 	
 	private void addActionListenerTo(JComponent component){

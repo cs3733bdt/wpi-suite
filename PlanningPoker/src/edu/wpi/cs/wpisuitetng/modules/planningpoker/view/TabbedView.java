@@ -36,6 +36,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.ICreateG
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.EndGamePanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end.IEndedGamePanel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation.IPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation.PreferencesPanel;
 
 /**
@@ -172,12 +173,52 @@ public class TabbedView extends JTabbedPane {
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 		
 		addTab(getTabName(game), viewGame);
-		
+		setToolTipTextAt(getTabCount()-1, game.getName());
+
 		listOfActiveGamePanels.add(viewGame);
 		
 		setSelectedComponent(viewGame);
 		invalidate();
 		repaint();
+	}
+	
+	/**
+	 * Iterates through the list of active game panels currently open and returns true
+	 * if the given game is currently open in a tab and is active
+	 * @param game Game to check for in open tabs
+	 * @return returns true if the given game is open in a tab and active, returns false otherwise
+	 */
+	public boolean hasActiveGameOpen(Game game){
+		for(IActiveGamePanel gameSearch : listOfActiveGamePanels){
+			if(game.equals(gameSearch.getGame())) {
+				setSelectedComponent((Component) gameSearch);
+				invalidate();
+				repaint();
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	/**
+	 * Iterates through the list of active game panels currently open and returns the 
+	 * panel for the game given if it is found
+	 * @param game game to search for in the list of active game panels
+	 * @return returns the active game panel corresponding to the given game
+	 * @throws NullPointerException if the list of active panels is empty, throws an exception
+	 */
+	public Component getActiveGamePanel(Game game) throws NullPointerException{
+		if(listOfActiveGamePanels.isEmpty()) {
+			throw new NullPointerException("The list of game panels was null");
+		}
+		else {
+			for(IActiveGamePanel gameSearch : listOfActiveGamePanels) {
+				if(game.equals(gameSearch.getGame())) {
+					return (Component)gameSearch;
+				}
+			}
+		}
+		return null;
 	}
 	
 	/**
@@ -199,9 +240,10 @@ public class TabbedView extends JTabbedPane {
 		}
 		
 		addTab(getTabName(game), newGame);
+		setToolTipTextAt(getTabCount()-1, game.getName());
 
 		listOfCreateGamePanels.add((ICreateGamePanel) newGame);
-
+		
 		setSelectedComponent(newGame);
 		invalidate();
 		repaint();
@@ -244,8 +286,9 @@ public class TabbedView extends JTabbedPane {
 		EndGamePanel viewGame = new EndGamePanel(game);
 		//TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 		
-		addTab(getTabName(game),  viewGame);
 		
+		addTab(getTabName(game),  viewGame);
+		setToolTipTextAt(getTabCount()-1, game.getName());
 		
 		listOfEndedGamePanels.add(viewGame);
 		
@@ -257,16 +300,16 @@ public class TabbedView extends JTabbedPane {
 	
 	
 	/**
-	 * Creates a tab name that is shortened if the name of the game is longer than 6 characters
+	 * Creates a tab name that is shortened if the name of the game is longer than 12 characters
 	 * @param game the game to get the tab text from
 	 * @return the tabs text
 	 */
 	private String getTabName(Game game){
-		// Makes the game name not be longer than 6 characters
+		// Makes the game name not be longer than 12 characters
 		StringBuilder tabName = new StringBuilder();
-		int subStringLength = game.getName().length() > 6 ? 7 : game.getName().length();
+		int subStringLength = game.getName().length() > 12 ? 13 : game.getName().length();
 		tabName.append(game.getName().subSequence(0, subStringLength));
-		if (game.getName().length() > 6)
+		if (game.getName().length() > 12)
 			tabName.append("...");
 		return tabName.toString();
 	}
@@ -301,7 +344,8 @@ public class TabbedView extends JTabbedPane {
 		}
 		if (comp instanceof PreferencesPanel){
 			//TODO Implement preferences like other panels to use readyToRemove
-			//if(!((IEndedGamePanel)comp).readyToRemove()) return;
+			if(!((PreferencesPanel)comp).readyToRemove()) return;
+			listOfEndedGamePanels.remove(comp);
 			hasPreferencesTab = false;
 			setSelectedComponent(gameOverview);
 		}
@@ -351,6 +395,12 @@ public class TabbedView extends JTabbedPane {
 				if(!((IEndedGamePanel)toBeRemoved).readyToRemove()) continue;
 				listOfEndedGamePanels.remove(toBeRemoved);
 			}
+			
+			if (toBeRemoved instanceof IPreferencesPanel){
+				if(!((IPreferencesPanel)toBeRemoved).readyToRemove()) continue;
+				listOfEndedGamePanels.remove(toBeRemoved);
+				hasPreferencesTab = false;
+			}
 
 			removeTabAt(i);
 		}
@@ -391,6 +441,12 @@ public class TabbedView extends JTabbedPane {
 			if (toBeRemoved instanceof IEndedGamePanel){
 				if(!((EndGamePanel)toBeRemoved).readyToRemove()) {continue;}
 				listOfEndedGamePanels.remove(toBeRemoved);
+			}
+			
+			if (toBeRemoved instanceof IPreferencesPanel){
+				if(!((IPreferencesPanel)toBeRemoved).readyToRemove()) continue;
+				listOfEndedGamePanels.remove(toBeRemoved);
+				hasPreferencesTab = false;
 			}
 
 			removeTabAt(i);
