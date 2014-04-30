@@ -404,9 +404,9 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField{
 	public boolean hasChanges() {
 		return nameTextField.hasChanges()
 				|| descriptionTextField.hasChanges() 
-				|| getEndDateField().hasChanges() 
-				|| (isCardsChanged ==  textEntryButton.isSelected())
-				|| usesCardsInitial == doesUseCards();
+				//|| getEndDateField().hasChanges() 
+				//|| (isCardsChanged ==  textEntryButton.isSelected())
+				|| usesCardsInitial != doesUseCards();
 	}
 
 	/**
