@@ -82,7 +82,7 @@ public class ViewEventController {
 		tabs.repaint();
 	}
 	
-	private TabbedView getTabbedView(){
+	public TabbedView getTabbedView(){
 		return tabs;
 	}
 	

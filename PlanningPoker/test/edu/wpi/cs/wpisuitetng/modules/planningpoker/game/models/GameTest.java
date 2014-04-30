@@ -16,7 +16,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -34,13 +37,14 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  *
  */
 public class GameTest {
-
+	
 	@Before
 	public void setUp() throws Exception {
 		Network.initNetwork(new MockNetwork());
 		Network.getInstance().setDefaultNetworkConfiguration(
 				new NetworkConfiguration("http://wpisuitetng"));
 		GameModel.getInstance().emptyModel();
+		
 	}
 
 	@SuppressWarnings("static-access")
@@ -92,6 +96,7 @@ public class GameTest {
 		
 		// copy the fields from one game to another
 		assertTrue(game2.copyFrom(game1));
+
 		assertFalse(game2.copyFrom(game1)); //Second time no changes should be detected
 		
 		// test that fields correctly copied from one game to another
@@ -174,6 +179,27 @@ public class GameTest {
 		
 		for (int j = 0; j < i; j++) {
 			assertEquals(Integer.toString(j),Deck.get(j));
+		}
+	}
+	
+	@Test
+	public void testHasEnded() {
+		
+		Game game1 = new Game("Game 1", "First", new ArrayList<PPRequirement>(), true, false);
+		game1.setActive(true);
+		try{
+		Calendar testCal = Calendar.getInstance();
+		game1.setEndDate(testCal.getTime());
+		assertFalse(game1.hasEnded());
+
+		try{
+			TimeUnit.SECONDS.sleep(1);
+		} catch(InterruptedException e){
+			//Handle exception
+		}
+		assertTrue(game1.hasEnded());
+				} catch (NullPointerException e){
+			//Handle exception
 		}
 	}
 	
