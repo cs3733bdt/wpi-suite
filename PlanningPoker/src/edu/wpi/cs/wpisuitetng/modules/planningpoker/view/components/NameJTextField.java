@@ -58,7 +58,6 @@ public class NameJTextField extends JTextField implements IDataField {
 	
 	@Override
 	public void setText(String text){
-		startingText = text;
 		super.setText(text);
 	}
 
