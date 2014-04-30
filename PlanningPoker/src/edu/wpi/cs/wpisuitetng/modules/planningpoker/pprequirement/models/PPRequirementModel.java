@@ -19,9 +19,6 @@ import javax.swing.AbstractListModel;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.AddPPRequirementController;
 
-
-//import edu.wpi.cs.wpisuitetng.modules.requirementmanager.view.ViewEventController;
-
 /**
  * List of Requirements being pulled from the server
  * 
@@ -71,10 +68,6 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement>{
 		requirements.add(newReq);
 		try{
 			AddPPRequirementController.getInstance().addRequirement(newReq);
-			/*
-			ViewEventController.getInstance().refreshTable();
-			ViewEventController.getInstance().refreshTree();
-			*/
 		}
 		catch(Exception e){
 			e.printStackTrace();
@@ -88,18 +81,18 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement>{
 	
 	 * @return the requirement for the id or null if the requirement is not found
 	 */
-	public PPRequirement getRequirement(int id)
+	public PPRequirement getRequirement(int id) throws NullPointerException
 	{
-		PPRequirement temp = null;
 		// iterate through list of requirements until id is found
-		for (int i=0; i < requirements.size(); i++){
-			temp = requirements.get(i);
-			if (temp.getId() == id){
-				break;
+		for (PPRequirement r: requirements) {
+			if (r.getId() == id){
+				return r;
 			}
 		}
-		return temp;
+		throw new NullPointerException("Requirement with the given ID does not exist.");
 	}
+	
+	
 	
 	/**
 	 * Gets a requirement from the list of requirements
@@ -137,10 +130,6 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement>{
 	 * Provides the number of elements in the list of requirements for the project. This
 	 * function is called internally by the JList in NewRequirementPanel. Returns elements
 	 * in reverse order, so the newest requirement is returned first.
-	 * 
-	
-	
-	
 	 * @return the number of requirements in the project * 
 	 * @see javax.swing.ListModel#getSize() * @see javax.swing.ListModel#getSize() * 
 	 * @see javax.swing.ListModel#getSize()
@@ -150,18 +139,6 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement>{
 		return requirements.size();
 	}
 	
-	/**
-	 * 
-	 * Provides the next ID number that should be used for a new requirement that is created.
-	 * 
-	
-	 * @return the next open id number
-	 */
-	public int getNextID()
-	{
-		return nextID++;
-	}
-
 	/**
 	 * This function takes an index and finds the requirement in the list of requirements
 	 * for the project. Used internally by the JList in NewRequirementModel.
@@ -214,10 +191,6 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement>{
 			}
 		}
 		fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
-		/*
-		ViewEventController.getInstance().refreshTable();
-		ViewEventController.getInstance().refreshTree();
-		*/
 	}
 	
 	/**

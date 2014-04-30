@@ -12,11 +12,13 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 import java.util.Date;
 
+import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActiveGamePanel{
@@ -40,10 +42,13 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 	}
 	
 	public void endGame(){
-		
+		endGameNoRemove();
+		ViewEventController.getInstance().removeTab(this);
+	}
+	
+	private void endGameNoRemove(){
 		currentGame.makeComplete();
 		currentGame.notifyObservers();
-		ViewEventController.getInstance().removeTab(this);
 	}
 	
 	@Override
@@ -58,12 +63,34 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 	}
 
 	public boolean readyToRemove() {
-		// TODO Auto-generated method stub
-		return true;
+		if (allUsersVoted()){
+			int result = JOptionPane.showConfirmDialog(this,
+					"Since you are the last one to vote\nclosing this tab will end the game.",
+					"Game Ends", JOptionPane.OK_CANCEL_OPTION,
+					JOptionPane.INFORMATION_MESSAGE);
+			if (result==0){
+				endGameNoRemove();
+				return true;
+			}else{
+				return false;
+			}
+			
+		}else{
+			return true;
+		}
+	
 	}
 	
 	public RequirementTable getReqTable(){
 		return rightHalf.getReqTable();
 	}
 	
+	private boolean allUsersVoted(){
+		for (PPRequirement p:currentGame.getRequirements()){
+			if (p.getVoteCount() != currentGame.getUsers()){
+				return false;
+			}	
+		}
+		return true;
+	}
 }
