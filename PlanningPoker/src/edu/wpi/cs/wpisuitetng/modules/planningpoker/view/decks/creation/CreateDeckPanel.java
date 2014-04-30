@@ -16,6 +16,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -28,6 +29,7 @@ import java.util.List;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -89,6 +91,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	 * radio button to be able to select multiple cards at a time. TODO: IMPLEMENT THIS
 	 */
 	private JRadioButton multipleSelection;
+	
+	/**
+	 * checkbox for selecting whether or not the deck uses an I Don't Know button
+	 */
+	private JCheckBox iDontKnowCheck;
 	
 	/**
 	 * panel to display the cards
@@ -181,7 +188,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		
 		/* blank panel for formatting */
 		JPanel blankPanel1 = new JPanel();
-		blankPanel1.setPreferredSize(new Dimension(85, 5));
+		blankPanel1.setPreferredSize(new Dimension(35, 5));
 		
 		/* number of cards desired by user */
 		JLabel numCardsLabel = new JLabel("Number of Cards * ");
@@ -201,6 +208,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		    }
 		});
 		addMouseListenerToNumberOfCardsSubmitButton(submitNumCards);
+		
 		/* this panel holds the label, the textfield, and the submit button */
 		JPanel numPanel = new JPanel();
 		numPanel.setLayout(new BorderLayout());
@@ -208,9 +216,13 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		numPanel.add(numCards, BorderLayout.LINE_START);
 		numPanel.add(submitNumCards, BorderLayout.LINE_END);
 		
+		JPanel numFieldPanel = new JPanel();
+		numFieldPanel.add(numCards);
+		numFieldPanel.add(submitNumCards);
+		
 		/* blank panel for formatting */
 		JPanel blankPanel2 = new JPanel();
-		blankPanel2.setPreferredSize(new Dimension(95, 5));
+		blankPanel2.setPreferredSize(new Dimension(15, 5));
 		
 		/* color desired by user */
 		JLabel colorLabel = new JLabel("Select Card Color * ");
@@ -233,14 +245,38 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		colorPanel.add(colorLabelPanel, BorderLayout.PAGE_START);
 		colorPanel.add(colorDropDown, BorderLayout.PAGE_END);
 		
-		/* adds the 5 previous components (including formatting panels) to a single panel so the items can appear horizontally.
+		/* blank panel for formatting */
+		JPanel blankPanel3 = new JPanel();
+		blankPanel3.setPreferredSize(new Dimension(15, 5));
+		
+		/* Checkbox for I Dont Know button */
+		JLabel checkboxLabel = new JLabel("Have 'I Don't Know Button'?");
+		iDontKnowCheck = new JCheckBox();
+		JPanel checkPanel = new JPanel();
+		checkPanel.add(iDontKnowCheck);
+		JPanel checkboxPanel = new JPanel();
+		checkboxPanel.setLayout(new BorderLayout());
+		checkboxPanel.add(checkboxLabel, BorderLayout.PAGE_START);
+		checkboxPanel.add(checkPanel, BorderLayout.PAGE_END);		
+		
+		JPanel labelsPanel = new JPanel();
+		labelsPanel.setLayout(new GridLayout(0, 2));
+		labelsPanel.add(numLabelPanel);
+		labelsPanel.add(numFieldPanel);
+		labelsPanel.add(colorLabelPanel);
+		labelsPanel.add(colorDropDown);
+		
+		/* adds the 7 previous components (including formatting panels) to a single panel so the items can appear horizontally.
 		 * Initially they were all on the same panel because they needed to all stretch together, but now it is easier to just leave
 		 * them instead of re-doing each spring constraint. */
 		numCardsAndColorAndSelectedTypePanel.add(radioButtonsPanel);
 		numCardsAndColorAndSelectedTypePanel.add(blankPanel1);
-		numCardsAndColorAndSelectedTypePanel.add(numPanel);
-		numCardsAndColorAndSelectedTypePanel.add(blankPanel2);
-		numCardsAndColorAndSelectedTypePanel.add(colorPanel);
+		//numCardsAndColorAndSelectedTypePanel.add(numPanel);
+		//numCardsAndColorAndSelectedTypePanel.add(blankPanel2);
+		//numCardsAndColorAndSelectedTypePanel.add(colorPanel);
+		numCardsAndColorAndSelectedTypePanel.add(labelsPanel);
+		numCardsAndColorAndSelectedTypePanel.add(blankPanel3);
+		numCardsAndColorAndSelectedTypePanel.add(checkboxPanel);
 		
 		/* Card panel and scrollPane for the cards to appear in */
 		JScrollPane cardScrollPane = new JScrollPane(cardsPanel);
