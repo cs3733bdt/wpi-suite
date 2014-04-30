@@ -34,7 +34,6 @@ import javax.swing.tree.TreeSelectionModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.GetDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
@@ -184,26 +183,17 @@ public class DeckTree extends JPanel implements MouseListener{
 			TreePath treePath = deckTree.getPathForLocation(x, y);
 			JTree clicked = deckTree;
 			if(treePath == null){
-				System.out.println("Not on gameTree");
+				System.out.println("Not on deckTree");
 			}
 			if(treePath != null){
 				System.out.println("Tree Path valid");
 				DefaultMutableTreeNode node = 
 						(DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
 				if(node != null) {
-					if(node.getUserObject() instanceof Game){ //Confirm that this is a game
-						System.out.println("Setting view to game: " + 
-								((Game)node.getUserObject()).toString());
-						if(((Game)node.getUserObject()).isActive() &&
-								(!((Game)node.getUserObject()).isComplete())){
-							ViewEventController.getInstance().joinGame((Game)node.getUserObject());
-						}
-						else if(!((Game)node.getUserObject()).isComplete()){
-							ViewEventController.getInstance().editGame((Game)node.getUserObject());
-						}
-						else{
-							ViewEventController.getInstance().viewEndGame((Game)node.getUserObject());
-						}
+					if(node.getUserObject() instanceof Deck){ //Confirm that this is a game
+						System.out.println("Setting view to deck: " + 
+								((Deck)node.getUserObject()).toString());
+						ViewEventController.getInstance().viewDeck((Deck)node.getUserObject());
 					}
 					else if(node.getUserObject() instanceof String){
 						if(deckTree.isCollapsed(deckTree.getPathForLocation(x, y))){
