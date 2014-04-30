@@ -27,8 +27,8 @@ public class NumberJTextField extends JTextField implements IDataField {
 	public static final String STRING_NOT_NUMBER= "You can only enter numbers here";
 	
 	
-	private final Border defaultBorder = (new JTextField()).getBorder();
-	private final Border errorBorder = BorderFactory
+	private static final Border defaultBorder = (new JTextField()).getBorder();
+	private static final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
 	
 	private String initialText;
