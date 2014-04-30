@@ -195,6 +195,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		submitNumCards = new JButton("Submit");
 		submitNumCards.addActionListener (new ActionListener () {
 		    public void actionPerformed(ActionEvent e) {
+		    	updateButtons();
 		    	displayNumCards();
 		        cardsPanel.revalidate();
 		        cardsPanel.repaint();
@@ -410,26 +411,13 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		if(!isNumCardsValid) {
 			errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 25");
 			//getNumCards().setBorder(errorBorder);
-			submitNumCards.setEnabled(false);
-			saveButton.setEnabled(false);
-		}
-		else {
-			getNumCards().setBorder(defaultTextFieldBorder);
-			errorField.setText("");
-			submitNumCards.setEnabled(true);
 		}
 		
 		isNameValid = getBoxName().validateField(errorField, showLabel, showBox);
 		if (!isNameValid) {
 			getBoxName().setBorder(defaultTextFieldBorder);
 			errorField.setText("Name is required");
-			saveButton.setEnabled(false);
-		}
-		else if(isNameValid && isNumCardsValid){
-			errorField.setText("");
-			saveButton.setEnabled(true);
-		}
-		
+		}		
 		return (isNameValid && isNumCardsValid);
 	}
 	
@@ -652,12 +640,15 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 
 	@Override
 	public void updateButtons() {
-		if (validateField(true, false)) {
+		if (validateField(errorField,true, false)) {
 			saveButton.getSaveDeckButton().setEnabled(true);
+			submitNumCards.setEnabled(true);
+			getNumCards().setBorder(defaultTextFieldBorder);
+			errorField.setText("");
 		} else {
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+			saveButton.getSaveDeckButton().setEnabled(false);
+			submitNumCards.setEnabled(false);
 		}
-		
 	}
 }
 
