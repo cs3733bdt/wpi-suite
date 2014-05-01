@@ -196,7 +196,6 @@ public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
 		return true;
 	}
 
-
 	/* (non-Javadoc)
 	 * @see edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help.IHelpPanel#getIdentifierIndex()
 	 */
@@ -205,6 +204,9 @@ public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
 		return 2;
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help.IHelpPanel#addImage(java.lang.String)
+	 */
 	@Override
 	public JLabel addImage(String image){
 		JLabel helpLabel = new JLabel();
