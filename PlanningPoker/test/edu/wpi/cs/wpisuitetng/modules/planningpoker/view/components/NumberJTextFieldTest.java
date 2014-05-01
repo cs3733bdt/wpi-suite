@@ -54,14 +54,17 @@ public class NumberJTextFieldTest {
 
 	@Test
 	public void testBadKey() {
+		String initialError = label.getText();
+		
 		testerField.setIErrorView(label);
 		testerField.setText("27");
 		sendKey(testerField,"21C\n");
 		assertEquals("27", testerField.getText());
 		assertEquals(defaultErrors.STRING_NOT_NUMBER, label.getText());
+		initialError = label.getText();
 		assertFalse(testerField.hasChanges());
 		assertTrue(testerField.validateField(label, true, true));
-		assertEquals("", label.getText());
+		assertEquals(initialError, label.getText());
 		assertSame(NumberJTextField.BORDER_DEFAULT, testerField.getBorder());
 	}
 	

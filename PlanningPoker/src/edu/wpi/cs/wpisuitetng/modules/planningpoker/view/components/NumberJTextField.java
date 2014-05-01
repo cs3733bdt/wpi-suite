@@ -27,7 +27,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberTextFi
  */
 public class NumberJTextField extends JTextField implements IDataField {
 	
+	/** The default border when there aren't errors in this field */
 	public static final Border BORDER_DEFAULT = (new JTextField()).getBorder();
+	
+	/** The default border when there are errors in this field */
 	public static final Border BORDER_ERROR = BorderFactory.createLineBorder(Color.RED);
 	
 	private String initialText;
@@ -36,11 +39,17 @@ public class NumberJTextField extends JTextField implements IDataField {
 	private NumberFieldCustomError errorFields;
 
 	
+	/**
+	 * The Default constructor for the NumberJTextField
+	 */
 	public NumberJTextField() {
 		initialText = "";
 		setup();
 	}
 
+	/**
+	 * @param text the initial value of this 
+	 */
 	public NumberJTextField(int text) {
 		super(Integer.toString(text));
 		
@@ -121,7 +130,7 @@ public class NumberJTextField extends JTextField implements IDataField {
 	
 	private void showValid(boolean showLabel, boolean showBox){
 		if(showLabel){
-			warningField.setText("");
+			//NOTHING SHOULD HAPPEN HERE BECAUSE WE DONT WANT TO OVERWRITE A DIFFERENT ERROR
 		}
 		if(showBox){
 			setBorder(BORDER_DEFAULT);
