@@ -766,21 +766,16 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 			saveButtonPanel.getSaveDeckButton().setEnabled(true);
 		} 
 		else {
+			if(verifyNumberOfCards()){
+				submitNumCards.setEnabled(true);
+			}
+			else {
+				submitNumCards.setEnabled(false);
+			}
 			saveButtonPanel.getSaveDeckButton().setEnabled(false);
 			
 		}
 		
-		/*if (verifyNumberOfCards()) {
-			submitNumCards.setEnabled(true);
-			getNumCards().setBorder(defaultTextFieldBorder);
-			errorField.setText("");
-		} else {
-			submitNumCards.setEnabled(false);
-			saveButtonPanel.getSaveDeckButton().setEnabled(false);
-			errorField.setText("Number of cards must be a 1-or-2-digit "
-					+ "integer between 1 and 25");
-			numCards.setBorder(errorBorder);
-		}*/	
 	}
 	
 	private void addMouseListenerTo(JComponent component){
