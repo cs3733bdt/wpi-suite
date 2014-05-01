@@ -204,7 +204,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		JPanel numCardsAndColorAndSelectedTypePanel = new JPanel();
 
 		/* radio buttons for type of card selection - single or multiple */
-		JLabel selectionTypeLabel = new JLabel("Selection Type * ");
+		JLabel selectionTypeLabel = new JLabel("Selection Type");
 		JPanel selectionLabelPanel = new JPanel();
 		selectionLabelPanel.add(selectionTypeLabel);
 
@@ -356,7 +356,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 		/* Card panel and scrollPane for the cards to appear in */
 		JScrollPane cardScrollPane = new JScrollPane(cardsPanel);
-
 		cardsPanel.setPreferredSize(new Dimension(10, 450));
 		cardsPanel.add(cardRed); // adds initial card to panel
 		cards.add(cardRed); // adds initial card to card list
