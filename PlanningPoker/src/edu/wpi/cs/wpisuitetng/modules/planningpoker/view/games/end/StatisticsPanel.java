@@ -483,23 +483,25 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			if (ppr.identify(activeRequirement)) {
 				ppr.setFinalEstimate(newEstimate);
 				ppr.notifyObservers();
-				// Get requirement from requirement manager with that requirement id
-				RequirementModel rModel = RequirementModel.getInstance();
-				GetRequirementsController.getInstance().retrieveRequirements();
-				// Sleep for a sec to wait for retrieve to finish
-				try {
-					Thread.sleep(500);
-				} catch (InterruptedException e1) {
-					e1.printStackTrace();
-				}
-				try {
-					// Set new estimate (the ppr.getid() - 1 is for translating between
-					// our requirement id's and the requirement manager's)
-					rModel.getRequirement((ppr.getId() - 1)).setEstimate(newEstimate);
-					// Send updated requirement to server
-					UpdateRequirementController.getInstance().updateRequirement(rModel.getRequirement((ppr.getId() - 1)));
-				} catch(NullPointerException e) {
-					e.printStackTrace();
+				if (ppr.getFromRequirementModule()) {
+					// Get requirement from requirement manager with that requirement id
+					RequirementModel rModel = RequirementModel.getInstance();
+					GetRequirementsController.getInstance().retrieveRequirements();
+					// Sleep to wait for retrieve to finish
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					try {
+						// Set new estimate (the ppr.getid() - 1 is for translating between
+						// our requirement id's and the requirement manager's)
+						rModel.getRequirement((ppr.getId() - 1)).setEstimate(newEstimate);
+						// Send updated requirement to server
+						UpdateRequirementController.getInstance().updateRequirement(rModel.getRequirement((ppr.getId() - 1)));
+					} catch(NullPointerException e) {
+						// The requirement doesn't exist
+					}
 				}
 				
 				finalEstimateMessage.setForeground(Color.BLUE);
