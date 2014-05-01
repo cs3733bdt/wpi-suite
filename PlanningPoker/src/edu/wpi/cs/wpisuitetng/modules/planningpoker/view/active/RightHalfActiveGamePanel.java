@@ -265,7 +265,7 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 					rightView);
 			
 			layout.putConstraint(SpringLayout.NORTH, clearButton, 5, SpringLayout.SOUTH, cardScrollPanel);
-			layout.putConstraint(SpringLayout.WEST, clearButton, 115, SpringLayout.WEST, rightView);
+			layout.putConstraint(SpringLayout.WEST, clearButton, -115, SpringLayout.EAST, rightView);
 			
 
 			cardScrollPanel.setVisible(false);
@@ -489,8 +489,8 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 	}
 	
 	public void selectedIDK() {
-		sum = -1;
-		counterLabel.setText("Your current selected estimate is I don't know");
+		sum = 0;
+		counterLabel.setText("Your current selected estimate is: I don't know");
 	}
 	
 	/**
@@ -545,6 +545,7 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 		}
 		
 		try {
+			cardsPanel.memoryArrayClear();
 			cardsPanel.clearCards();
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
@@ -638,12 +639,20 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 	 * update the saved estimate label
 	 */
 	public void updateSavedEstimateLabel() {
-		previousEst.setText("Your saved estimate is: "
-				+ activeRequirement.userVote());
-		table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(),
-				2);
+		if(activeRequirement.userVote() == 0) {
+			previousEst.setText("Your saved estimate is: I don't know");
+			table.setValueAt("?", table.getSelectedRow(),
+					2);
+		} else {
+			previousEst.setText("Your saved estimate is: "
+					+ activeRequirement.userVote());
+			table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(),
+					2);
+		}
 		table.setValueAt(activeRequirement.displayComplete(), table.getSelectedRow(),
 				3);
+
+
 	}
 
 	/**

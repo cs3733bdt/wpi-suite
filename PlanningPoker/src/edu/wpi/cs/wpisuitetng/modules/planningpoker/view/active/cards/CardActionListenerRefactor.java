@@ -78,6 +78,7 @@ public class CardActionListenerRefactor implements ActionListener {
 								cardsPanel.memoryArrayAddElt(c);
 								c.doClick();
 							}
+							cardsPanel.addIDK();
 						}
 					}
 					button.setIcon(new ImageIcon(backImg)); //Swich image states
@@ -94,6 +95,7 @@ public class CardActionListenerRefactor implements ActionListener {
 							button.setIcon(new ImageIcon(frontImg));
 						}
 					}
+					estimatePanel.updateSum();
 					button.setIcon(new ImageIcon(frontImg));
 					cardsPanel.memoryArrayClear();
 				}
