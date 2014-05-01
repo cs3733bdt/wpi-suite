@@ -8,6 +8,7 @@
  *
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.exceptions;
 
 public class DBModelNotInstantiatedException extends Exception {
