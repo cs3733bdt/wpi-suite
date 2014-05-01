@@ -41,14 +41,17 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 		
 	}
 	
-	public void endGame(){
-		endGameNoRemove();
-		ViewEventController.getInstance().removeTab(this);
-	}
-	
-	private void endGameNoRemove(){
+	public void endGameManually(){
 		currentGame.makeComplete();
 		currentGame.notifyObservers();
+		ViewEventController.getInstance().removeTab(this);
+		ViewEventController.getInstance().viewEndGame(currentGame);
+	}
+	
+	private void endGameByVoting(){
+		currentGame.makeComplete();
+		currentGame.notifyObservers();
+		ViewEventController.getInstance().viewEndGame(currentGame);
 	}
 	
 	@Override
@@ -69,7 +72,7 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 					"Game Ends", JOptionPane.OK_CANCEL_OPTION,
 					JOptionPane.INFORMATION_MESSAGE);
 			if (result==0){
-				endGameNoRemove();
+				endGameByVoting();
 				return true;
 			}else{
 				return false;
