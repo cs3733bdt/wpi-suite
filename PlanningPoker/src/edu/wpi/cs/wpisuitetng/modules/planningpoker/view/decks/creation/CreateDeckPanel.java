@@ -217,7 +217,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 		/* this panel holds the label and the two radio buttons */
 		JPanel radioButtonsPanel = new JPanel();
-		radioButtonsPanel.setPreferredSize(new Dimension(160, 80));
+		radioButtonsPanel.setPreferredSize(new Dimension(170, 80));
 		SpringLayout radioSpring = new SpringLayout();
 		radioButtonsPanel.setLayout(radioSpring);
 		radioButtonsPanel.add(selectionLabelPanel);
@@ -244,7 +244,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 		/* blank panel for formatting */
 		JPanel blankPanel1 = new JPanel();
-		blankPanel1.setPreferredSize(new Dimension(75, 5));
+		blankPanel1.setPreferredSize(new Dimension(70, 5));
 
 		/* number of cards desired by user */
 		JLabel numCardsLabel = new JLabel("Number of Cards * ");
@@ -282,7 +282,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 		/* blank panel for formatting */
 		JPanel blankPanel2 = new JPanel();
-		blankPanel2.setPreferredSize(new Dimension(75, 5));
+		blankPanel2.setPreferredSize(new Dimension(70, 5));
 
 		/*
 		 * this panel holds the labels for the number of cards and for the color
@@ -521,6 +521,15 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 */
 	public JPanel getCardsPanel() {
 		return cardsPanel;
+	}
+	
+	/**
+	 * Gets the list of cards
+	 * 
+	 * @return cards
+	 */
+	public ArrayList<CardImage> getCards() {
+		return cards;
 	}
 	
 	/**
@@ -783,21 +792,16 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 			saveButtonPanel.getSaveDeckButton().setEnabled(true);
 		} 
 		else {
+			if(verifyNumberOfCards()){
+				submitNumCards.setEnabled(true);
+			}
+			else {
+				submitNumCards.setEnabled(false);
+			}
 			saveButtonPanel.getSaveDeckButton().setEnabled(false);
 			
 		}
 		
-		/*if (verifyNumberOfCards()) {
-			submitNumCards.setEnabled(true);
-			getNumCards().setBorder(defaultTextFieldBorder);
-			errorField.setText("");
-		} else {
-			submitNumCards.setEnabled(false);
-			saveButtonPanel.getSaveDeckButton().setEnabled(false);
-			errorField.setText("Number of cards must be a 1-or-2-digit "
-					+ "integer between 1 and 25");
-			numCards.setBorder(errorBorder);
-		}*/	
 	}
 	
 	private void addMouseListenerTo(JComponent component){

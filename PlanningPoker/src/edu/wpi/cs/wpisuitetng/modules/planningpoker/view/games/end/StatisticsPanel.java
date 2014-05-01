@@ -33,7 +33,13 @@ import javax.swing.SpringLayout;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.UpdateRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
@@ -473,10 +479,31 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	
 	private void finalEstimateButtonPressed() {
 		int newEstimate = Integer.parseInt(finalEstimateBox.getText());
-		for (PPRequirement r: activeGame.getRequirements()) {
-			if (r.identify(activeRequirement)) {
-				r.setFinalEstimate(newEstimate);
-				r.notifyObservers();
+		for (PPRequirement ppr: activeGame.getRequirements()) {
+			if (ppr.identify(activeRequirement)) {
+				ppr.setFinalEstimate(newEstimate);
+				ppr.notifyObservers();
+				if (ppr.getFromRequirementModule()) {
+					// Get requirement from requirement manager with that requirement id
+					RequirementModel rModel = RequirementModel.getInstance();
+					GetRequirementsController.getInstance().retrieveRequirements();
+					// Sleep to wait for retrieve to finish
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
+					try {
+						// Set new estimate (the ppr.getid() - 1 is for translating between
+						// our requirement id's and the requirement manager's)
+						rModel.getRequirement((ppr.getId() - 1)).setEstimate(newEstimate);
+						// Send updated requirement to server
+						UpdateRequirementController.getInstance().updateRequirement(rModel.getRequirement((ppr.getId() - 1)));
+					} catch(NullPointerException e) {
+						// The requirement doesn't exist
+					}
+				}
+				
 				finalEstimateMessage.setForeground(Color.BLUE);
 				finalEstimateMessage.setText("Final estimate submitted successfully!");
 			}

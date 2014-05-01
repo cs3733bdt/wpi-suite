@@ -21,6 +21,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -58,11 +59,12 @@ public class CardImage extends JPanel implements IDataField{
 	
 	private static Logger logger = Logger.getLogger(CardImage.class.getName());
 	
-
+	private ArrayList<CardImage> cards;
 	
 	public CardImage(ColorEnum color,CreateDeckPanel parent){
-		this.errorField = parent.getErrorField();
+		errorField = parent.getErrorField();
 		this.color = color;
+		cards = parent.getCards();
 		addValue.setIErrorView(errorField);
 		addValue.setMaxValue(999);
 		BufferedImage myPicture = null;
@@ -161,10 +163,18 @@ public class CardImage extends JPanel implements IDataField{
 						parent.updateButtons();
 						logger.log(Level.INFO, "addValue was validated");
 					}
+					int indexOfEnteredCard = 0;
+					for(CardImage c : cards){
+						if(c.addValue.hasFocus()){
+							indexOfEnteredCard = cards.indexOf(c);
+						}
+					}
 					valueLabel.setText(addValue.getText());
 					//TODO here the value in the value array needs to be set for the array to function.
 					valueLabel.setVisible(true);
 					addValue.setVisible(false);
+					cards.get(indexOfEnteredCard + 1).addValue.requestFocus();
+					
 					revalidate();
 					repaint();
 				}

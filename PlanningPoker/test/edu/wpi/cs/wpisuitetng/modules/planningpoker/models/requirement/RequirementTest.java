@@ -132,7 +132,6 @@ public class RequirementTest {
 		StatisticsPanel statPanel = new StatisticsPanel(game1);
 		statPanel.makeStatRow(req1);
 		
-		
 		assertEquals((double)req1.getVoteCount(), statPanel.getStat("numVotes"), 0);
 		assertEquals( computedMean, statPanel.getStat("mean"), 0);
 		assertEquals(1.0,statPanel.getStat("min"),0);
@@ -148,6 +147,7 @@ public class RequirementTest {
 		PPRequirement copyTo = 
 				new PPRequirement(req1.getName() + " copy", req1.getDescription() + " copy");
 		copyTo.addVote(new Vote("Steve", 20));
+		assertFalse(copyTo.copyFrom(copyTo)); //Should be false because copying something to itself
 		assertTrue(copyTo.copyFrom(req1)); //Should return true because changes were made
 		assertFalse(copyTo.copyFrom(req1)); //Should return false; no changes are made to the class
 		
@@ -163,11 +163,10 @@ public class RequirementTest {
 		assertEquals(game2.getRequirements(), reqList);
 	}
 	
-	@Ignore
+
 	@Test
 	public void testGetVotes(){
-		//This should not pass... Change this test. Req1 has been modified
-		assertEquals(req1.getVotes(), req1Votes);
+		assertFalse(req1.getVotes().equals(req1Votes));
 	}
 
 	@Test

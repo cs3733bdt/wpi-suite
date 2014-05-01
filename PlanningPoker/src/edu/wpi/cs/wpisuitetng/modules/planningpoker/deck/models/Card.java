@@ -8,6 +8,7 @@
  *
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models;
 
 import java.awt.image.BufferedImage;

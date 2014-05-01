@@ -50,9 +50,11 @@ public class CardButton extends JToggleButton implements Accessible {
 	 * @param passedEstimatePanel
 	 *            the panel that displays the estimates
 	 */
+
 	public CardButton(Card card, ActiveCardsPanel passedCardsPanel) {
 		parent = passedCardsPanel;
 		this.card = card;
+
 		// Initialize the Button and the number on the button
 		String buttonNum = card.getText();
 		cardText = card.getText();
