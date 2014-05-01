@@ -35,7 +35,8 @@ public class NumberJTextField extends JTextField implements IDataField {
 	
 	private String initialText;
 	private IErrorView warningField;
-	private int maxValue = -1;
+	private Integer maxValue = null;
+	private Integer minValue = null;
 	private NumberFieldCustomError errorFields;
 
 	
@@ -92,6 +93,9 @@ public class NumberJTextField extends JTextField implements IDataField {
 	public void setMaxValue(int maxValue){
 		this.maxValue = maxValue;
 	}
+	public void setMinValue(int minValue){
+		this.minValue = minValue;
+	}
 	
 	public void setCustomErrorFields(NumberFieldCustomError errorFields){
 		this.errorFields = errorFields;
@@ -99,6 +103,10 @@ public class NumberJTextField extends JTextField implements IDataField {
 	
 	public void setIErrorView(IErrorView warningField){
 		this.warningField = warningField;
+	}
+	
+	public int getValue(){
+		return Integer.parseInt(getText());
 	}
 
 	@Override
@@ -112,11 +120,20 @@ public class NumberJTextField extends JTextField implements IDataField {
 		} else if(!hasChanges()){ //If this has not changed
 			isValid = true;
 			showValid(showLabel, showBox);
-		} else if(maxValue != -1){
-			System.out.print("hello");
-			if((Integer)Integer.parseInt(getText()) > (Integer)maxValue){
+		} else if(maxValue != null){
+			System.out.print("maxValue true");
+			if(Integer.parseInt(getText()) > (Integer)maxValue){
 				isValid = false;
-				showInvalid(errorFields.STRING_TOO_LONG + maxValue, showLabel, showBox);
+				showInvalid(errorFields.STRING_TOO_HIGH + maxValue, showLabel, showBox);
+			} else {
+				isValid = true;
+				showValid(showLabel, showBox);
+			}
+		} else if (minValue != null){
+			System.out.print("minValue true");
+			if(Integer.parseInt(getText()) < (Integer)minValue){
+				isValid = false;
+				showInvalid(errorFields.STRING_TOO_LOW + minValue, showLabel, showBox);
 			} else {
 				isValid = true;
 				showValid(showLabel, showBox);
