@@ -78,7 +78,7 @@ public class NumberJTextFieldTest {
 		assertEquals("9909", testerField.getText());
 		assertTrue(testerField.hasChanges());
 		assertFalse(testerField.validateField(label, true, true));
-		assertEquals(defaultErrors.STRING_TOO_LONG + maxValue, label.getText());
+		assertEquals(defaultErrors.STRING_TOO_HIGH + maxValue, label.getText());
 		assertSame(NumberJTextField.BORDER_ERROR, testerField.getBorder());
 		
 		
