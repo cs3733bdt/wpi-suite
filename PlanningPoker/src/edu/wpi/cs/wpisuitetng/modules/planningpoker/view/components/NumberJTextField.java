@@ -61,7 +61,7 @@ public class NumberJTextField extends JTextField implements IDataField {
 		setup(text);
 	}
 	
-	IErrorView getIErrorView(){
+	IErrorView getIErrorView(){ //The scope of this method is intentionally set to package only
 		return warningField;
 	}
 
