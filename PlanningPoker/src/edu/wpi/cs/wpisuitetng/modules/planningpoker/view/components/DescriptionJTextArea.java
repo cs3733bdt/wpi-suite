@@ -27,7 +27,7 @@ import javax.swing.border.Border;
  * @author Bobby Drop Tables
  *
  */
-public class DescriptionJTextArea extends JTextArea implements IDataField {
+public class DescriptionJTextArea extends CustomJTextArea implements IDataField {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);

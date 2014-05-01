@@ -25,7 +25,7 @@ import javax.swing.border.Border;
  * @author Bobby Drop Tables
  *
  */
-public class NameJTextField extends JTextField implements IDataField {
+public class NameJTextField extends CustomJTextField implements IDataField {
 	//These can  be accessed externally in order to allow the user to debug and check for errors easier
 	/** The text error placed on an IErrorField when the name is longer than 100 characters */
 	public static final String STRING_ERROR_NAMELONG = "Name can be no more than 100 chars.";
@@ -46,6 +46,7 @@ public class NameJTextField extends JTextField implements IDataField {
 	public NameJTextField(String text) {
 		super(text);
 		startingText = text;
+		enableSelectAllTextOnMouseListener();
 	}
 
 	/**
