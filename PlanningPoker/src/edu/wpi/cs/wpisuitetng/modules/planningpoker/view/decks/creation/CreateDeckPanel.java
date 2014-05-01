@@ -555,7 +555,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * 
 	 * @return true if a valid input
 	 */
-	public boolean verifyNumberOfCards() {
+	private boolean verifyNumberOfCards() {
 		String text = numCards.getText();
 		String allowedChars = "123456789";
 		String allowedChars1 = "01234";
@@ -602,7 +602,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * generated is less than the number of cards that had values, some values
 	 * have to be lost in an organized manner.
 	 */
-	public void chooseCardColor() {
+	private void chooseCardColor() {
 		updateValueArray(); // ensures the array of values is up to date before
 							// cards are removed
 		ColorEnum color = determineDeckColor();
@@ -624,7 +624,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * changes made to chooseCardColor() since that is where the cards are
 	 * really generated.
 	 */
-	public void displayNumCards() {
+	private void displayNumCards() {
 		int oldNumCards = values.size();
 		int numCardsSubmitted = Integer.parseInt(numCards.getText());
 		int difference = numCardsSubmitted - oldNumCards;
