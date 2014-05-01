@@ -524,6 +524,15 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	}
 	
 	/**
+	 * Gets the list of cards
+	 * 
+	 * @return cards
+	 */
+	public ArrayList<CardImage> getCards() {
+		return cards;
+	}
+	
+	/**
 	 * Checks all fields to determine if they are prepared to be removed.
 	 * If a field is invalid then it warns the user with a notification and by highlighting
 	 * the offending box on the GUI.
