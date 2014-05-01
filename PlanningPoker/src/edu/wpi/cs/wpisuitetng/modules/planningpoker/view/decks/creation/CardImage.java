@@ -22,6 +22,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -47,7 +48,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberJTextF
  */
 public class CardImage extends JPanel implements IDataField{
 	
-	ColorEnum color;									//card's back color
+	private ColorEnum color;									//card's back color
 	
 	private NumberJTextField addValue = new NumberJTextField();		//the textfield that pops up when a user clicks a card, in which the user enters the desired value for the card
 	
@@ -59,16 +60,20 @@ public class CardImage extends JPanel implements IDataField{
 
 	private IErrorView errorField;
 	
+	private CardPanel parent;
+	
 	private static Logger logger = Logger.getLogger(CardImage.class.getName());
 	
-	private ArrayList<CardImage> cards;
-	
-	public CardImage(ColorEnum color,CreateDeckPanel parent){
-		errorField = parent.getErrorField();
+
+	public CardImage(ColorEnum color, CardPanel parent){
+		errorField = parent.getCardPanelParent().getErrorField();
+		this.parent = parent;
 		this.color = color;
-		cards = parent.getCards();
+		//cards = parent.getCards();
 		addValue.setIErrorView(errorField);
 		addValue.setMaxValue(999);
+		addValue.setMinValue(0);
+		
 		BufferedImage myPicture = null;
 		try {
 			myPicture = ColorCardImage.getColorCardImage(color);
@@ -101,7 +106,7 @@ public class CardImage extends JPanel implements IDataField{
 		c.insets = new Insets(0, 0, 0, 0);							//sets the layout constraints of the actual button
 		add(picButton, c);											//adds the button to the card panel
 		
-		addKeyListenerToAddValueText(addValue,parent);						//adds a key listener to the textfield (see method)
+		addKeyListenerToAddValueText(addValue,parent.getCardPanelParent());						//adds a key listener to the textfield (see method)
 		focusListenerAddValueText(addValue);						//adds a focus listener to the textfield (see method)
 		addValue.setPreferredSize(new Dimension(40, 18));			//sets the textfield to be the desired size.
 		addValue.setVisible(true);									//sets the textfield to be visible at the start
@@ -121,10 +126,13 @@ public class CardImage extends JPanel implements IDataField{
 	 * and also because the label is not yet associated with a specific card.
 	 * @return label's text as int
 	 */
-	public int getCardValue(){
+	public Integer getCardValue() throws NumberFormatException{
+		if(valueLabel.getText().equals("")){
+			throw new NumberFormatException();
+		}
 		try { return Integer.parseInt(valueLabel.getText()); 
 		} catch(NumberFormatException e) {
-			return -1;
+			throw e;
 		}
 	}
 	
@@ -142,6 +150,8 @@ public class CardImage extends JPanel implements IDataField{
 		picButton.setIcon(new ImageIcon(myPicture));
 		revalidate();
 		repaint();
+		parent.revalidate();
+		parent.repaint();
 	}
 	
 	/**
@@ -168,7 +178,7 @@ public class CardImage extends JPanel implements IDataField{
 	 * TODO: validation. the text should only be an integer in a reasonable range (0-50? 0-100?...)
 	 * @param component (this method should only be used with the textfield)
 	 */
-	private void addKeyListenerToAddValueText(JComponent component,final IValidateButtons parent){
+	private void addKeyListenerToAddValueText(JComponent component,final IValidateButtons buttonParent){
 		component.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {	
 				if(arg0.getKeyCode() == 10){		//if enter is pressed
@@ -178,10 +188,13 @@ public class CardImage extends JPanel implements IDataField{
 						//TODO: but errorField is in CreateDeckPanel... HALP
 						return;
 					} else {
-						parent.updateButtons();
+						buttonParent.updateButtons();
 						logger.log(Level.INFO, "addValue was validated");
 					}
 					int indexOfEnteredCard = 0;
+					
+					List<CardImage> cards = parent.getCards();
+					
 					for(CardImage c : cards){
 						if(c.addValue.hasFocus()){
 							indexOfEnteredCard = cards.indexOf(c);
@@ -227,6 +240,12 @@ public class CardImage extends JPanel implements IDataField{
 		});
 	}
 	
+	
+	
+	/**
+	 * FIXME currently unused code
+	 * @return
+	 */
 	private boolean validateAddValueField(){
 		String stringText = addValue.getText();
 		int parsedText = Integer.parseInt(stringText);
@@ -256,7 +275,7 @@ public class CardImage extends JPanel implements IDataField{
 	/**
 	 * Creates a new font for use later
 	 */
-	public Font makeFont(int size) {
+	private Font makeFont(int size) {
 		// create a dummy JTextArea
 		JTextArea editingArea = new JTextArea();
 		// get the current font
