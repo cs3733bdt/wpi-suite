@@ -282,6 +282,10 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		return isMultipleSelection;
 	}
 	
+	public boolean hasIDontKnowCard(){
+		return hasIdontKnow;
+	}
+	
 	public void updateHasIdk(boolean hasIdontKnow) {
 		if (hasIdontKnow == this.hasIdontKnow) {
 			return;
