@@ -8,17 +8,34 @@
  *
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help;
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
+import static org.junit.Assert.*;
 
-/**
- * Implemented by any class that can display errors on it.
- * This allows a class to be passed to an IDataField as a parameter to show errors
- * 
- * @author Bobby Drop Tables
- */
-public interface IErrorView {
+import java.util.ArrayList;
+
+import org.junit.Before;
+import org.junit.Test;
+
+
+
+public class CreateDeckHelpTest {
+
+	CreateDeckHelp panel = new CreateDeckHelp();
 	
-	void setText(String text);
+	
+	@Test
+	public void readyToRemoveTest(){
+		assertTrue(panel.readyToRemove());
+	}
+	
+	@Test
+	public void getIdentifierIndexTest(){
+		assertEquals(4, panel.getIdentifierIndex());
+	}
+	/*
+	@Test
+	public void addImageTest(){
 
+	} */
 }

@@ -15,6 +15,11 @@ import javax.swing.JLabel;
 
 public interface IHelpPanel {
 
+	/**
+	 * Since help panels do not take any inputs, they are always ready to 
+	 * be removed
+	 * @return return true if the panel is ready to be removed.
+	 */
 	boolean readyToRemove();
 	
 	/**
@@ -28,5 +33,10 @@ public interface IHelpPanel {
 	 */
 	int getIdentifierIndex();
 	
+	/**
+	 * Creates a label containing the image that was passed.
+	 * @param image image we want to add
+	 * @return JLabel containing the image
+	 */
 	JLabel addImage(String image);
 }

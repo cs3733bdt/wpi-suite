@@ -67,8 +67,11 @@ public class DeckModel extends AbstractStorageModel<Deck> {
 		}catch (Exception e){
 			logger.log(Level.WARNING, "Deck: " + deck.getName() + " could not be added", e);
 		}
-		
-		ViewEventController.getInstance().refreshDeckTree();
+		try{
+			ViewEventController.getInstance().refreshDeckTree();
+		} catch (NullPointerException e){
+			logger.log(Level.WARNING, "The view is not instantiated", e);
+		}
 	}
 
 
@@ -85,7 +88,11 @@ public class DeckModel extends AbstractStorageModel<Deck> {
 	public synchronized void updateDecks(Deck[] allDecks) {
 		boolean changes = updateModels(allDecks);
 		if (changes){
-			ViewEventController.getInstance().refreshDeckTree();
+			try{
+				ViewEventController.getInstance().refreshDeckTree();
+			} catch (NullPointerException e) {
+				logger.log(Level.WARNING, "The view is not instantiated", e);
+			}
 		}
 	}
 
@@ -103,7 +110,11 @@ public class DeckModel extends AbstractStorageModel<Deck> {
 		if(o instanceof Deck){
 			UpdateDeckController.getInstance().updateDeck((Deck) o);
 		}
-		ViewEventController.getInstance().refreshDeckTree();
+		try{
+			ViewEventController.getInstance().refreshDeckTree();
+		} catch (NullPointerException e){
+			logger.log(Level.WARNING, "The view is not instantiated", e);
+		}
 		
 	}
 

@@ -1,8 +1,18 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberTextField;
 
+/**
+ * Allows the NumberJTextField to display custom errors you can set manually.
+ * This is passed as a parameter in a setter on the NumberJTextField class
+ * 
+ * @author jonathanleitschuh
+ * @see NumberJTextField
+ *
+ */
 public class NumberFieldCustomError {
 	/** The error shown when the number is too long */
-	public final String STRING_TOO_LONG;
+	public final String STRING_TOO_HIGH;
+	
+	public final String STRING_TOO_LOW;
 	/** The error shown when field is empty */
 	public final String STRING_NOT_EMPTY;
 	/** The error shown when you attempt to enter something that isn't an error */
@@ -13,13 +23,15 @@ public class NumberFieldCustomError {
 	 * This can be passed to the the NumberJTextField in order to use custom errors.
 	 * @param too_long
 	 * 			The error if the number is too long
+	 * @param too_short TODO
 	 * @param not_empty
 	 * 			The error if the field is empty
 	 * @param not_number
 	 * 			The try to enter something that isn't a number
 	 */
-	public NumberFieldCustomError(String too_long, String not_empty, String not_number) {
-		STRING_TOO_LONG = too_long;
+	public NumberFieldCustomError(String too_long, String too_low, String not_empty, String not_number) {
+		STRING_TOO_HIGH = too_long;
+		STRING_TOO_LOW = too_low;
 		STRING_NOT_EMPTY = not_empty;
 		STRING_NOT_NUMBER = not_number;
 	}
@@ -33,8 +45,9 @@ public class NumberFieldCustomError {
 	 * then this version of the object is used.
 	 */
 	public NumberFieldCustomError(){
-		STRING_TOO_LONG = "You can not enter a number greater than ";
-		STRING_NOT_EMPTY = "The Field can not be empty";
+		STRING_TOO_HIGH = "You can not enter a number greater than ";
+		STRING_TOO_LOW = "You can not enter a number less than ";
+		STRING_NOT_EMPTY = "The number field can not be empty";
 		STRING_NOT_NUMBER= "You can only enter numbers here";
 	}
 
