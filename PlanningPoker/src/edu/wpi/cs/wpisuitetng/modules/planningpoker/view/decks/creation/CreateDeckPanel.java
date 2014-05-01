@@ -268,7 +268,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		numCards.setMaxValue(24);
 		numCards.addKeyListener(this);
 		//initializeArrayList();
-		addMouseListenerToNumberOfCardsTextEntry(numCards);
+		//Selection mode is now enabled by default
+		
 		submitNumCards = new JButton("Submit");
 		submitNumCards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -692,23 +693,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 					//errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 24");
 				} else {
 				}// it will perform the action listener
-			}
-		});
-	}
-
-	/**
-	 * Mouse listener for number of cards textfield. When the text field is
-	 * clicked, it selects all of the text so that the user can easily overwrite
-	 * their previous number.
-	 * 
-	 * @param component
-	 *            (this method should only be used with the textfield for the
-	 *            number of cards)
-	 */
-	private void addMouseListenerToNumberOfCardsTextEntry(JComponent component) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent arg0) {
-				numCards.selectAll();
 			}
 		});
 	}

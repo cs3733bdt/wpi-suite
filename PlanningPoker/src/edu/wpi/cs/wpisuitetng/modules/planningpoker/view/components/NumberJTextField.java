@@ -4,6 +4,8 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -25,7 +27,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberTextFi
  * numbers
  *
  */
-public class NumberJTextField extends JTextField implements IDataField {
+public class NumberJTextField extends CustomJTextField implements IDataField {
 	
 	/** The default border when there aren't errors in this field */
 	public static final Border BORDER_DEFAULT = (new JTextField()).getBorder();
@@ -49,14 +51,22 @@ public class NumberJTextField extends JTextField implements IDataField {
 	}
 
 	/**
-	 * @param text the initial value of this 
+	 * Constructor for the NumberJTextField
+	 * @param text the initial value of this field
+	 * @see CustomJTextField#CustomJTextField(String)
 	 */
 	public NumberJTextField(int text) {
 		super(Integer.toString(text));
 		
 		setup(text);
 	}
-
+	
+	/**
+	 * Constructor for the NumberJTextField
+	 * @param text the initial value of this field
+	 * @param colums the size of this field
+	 * @see CustomJTextField#CustomJTextField(String, int)
+	 */
 	public NumberJTextField(int text, int columns) {
 		super(Integer.toString(text), columns);
 		setup(text);
@@ -81,6 +91,7 @@ public class NumberJTextField extends JTextField implements IDataField {
 		((AbstractDocument) this.getDocument())
 		.setDocumentFilter(new MyDocumentFilter(this));
 		errorFields = new NumberFieldCustomError();
+		enableSelectAllTextOnMouseListener();
 	}
 	
 	@Override
@@ -170,6 +181,7 @@ public class NumberJTextField extends JTextField implements IDataField {
 	 */
 	public void addKeyListener(final IValidateButtons parent){
 		this.addKeyListener(new KeyAdapter(){
+			@Override
 			public void keyReleased(KeyEvent arg0) {	
 				parent.updateButtons();
 			}
