@@ -108,7 +108,7 @@ public class GameTree extends JPanel implements MouseListener{
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
-			if(!game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
+			if(!game.hasEnded() && !game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
 
 				if(game.isActive()){
 					active.add(newGameNode);
@@ -229,6 +229,14 @@ public class GameTree extends JPanel implements MouseListener{
 		int x = e.getX();
 		int y = e.getY();
 		
+        for (Game game: sortGames(GameModel.getInstance().getGames())) {
+            if(!game.isComplete() && game.isActive()) {
+                if(game.hasEnded()) {
+                    refresh();
+                }
+            }
+        }
+
 		//System.out.println("Single Click Detected");
 		
 		if(e.getClickCount() == 2){

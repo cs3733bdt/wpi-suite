@@ -16,6 +16,8 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberTextField.NumberFieldCustomError;
+
 /**
  * @author jonathanleitschuh
  * 
@@ -24,10 +26,6 @@ import javax.swing.text.DocumentFilter;
  *
  */
 public class NumberJTextField extends JTextField implements IDataField {
-	public static final String STRING_TOO_LONG = "You can not enter a number greater than ";
-	public static final String STRING_NOT_EMPTY = "The Field can not be empty";
-	public static final String STRING_NOT_NUMBER= "You can only enter numbers here";
-	
 	
 	public static final Border BORDER_DEFAULT = (new JTextField()).getBorder();
 	public static final Border BORDER_ERROR = BorderFactory.createLineBorder(Color.RED);
@@ -35,7 +33,9 @@ public class NumberJTextField extends JTextField implements IDataField {
 	private String initialText;
 	private IErrorView warningField;
 	private int maxValue = -1;
+	private NumberFieldCustomError errorFields;
 
+	
 	public NumberJTextField() {
 		initialText = "";
 		setup();
@@ -70,6 +70,7 @@ public class NumberJTextField extends JTextField implements IDataField {
 	private void setup(){
 		((AbstractDocument) this.getDocument())
 		.setDocumentFilter(new MyDocumentFilter(this));
+		errorFields = new NumberFieldCustomError();
 	}
 	
 	@Override
@@ -83,6 +84,10 @@ public class NumberJTextField extends JTextField implements IDataField {
 		this.maxValue = maxValue;
 	}
 	
+	public void setCustomErrorFields(NumberFieldCustomError errorFields){
+		this.errorFields = errorFields;
+	}
+	
 	public void setIErrorView(IErrorView warningField){
 		this.warningField = warningField;
 	}
@@ -94,14 +99,14 @@ public class NumberJTextField extends JTextField implements IDataField {
 		boolean isValid = false;
 		if(getText().equals("")){
 			isValid = false;
-			showInvalid(STRING_NOT_EMPTY, showLabel, showBox);
+			showInvalid(errorFields.STRING_NOT_EMPTY, showLabel, showBox);
 		} else if(!hasChanges()){ //If this has changed
 			isValid = true;
 			showValid(showLabel, showBox);
 		} else if(maxValue != -1){
 			if(Integer.parseInt(getText()) > maxValue ){
 				isValid = false;
-				showInvalid(STRING_TOO_LONG + maxValue, showLabel, showBox);
+				showInvalid(errorFields.STRING_TOO_LONG + maxValue, showLabel, showBox);
 			} else {
 				isValid = true;
 				showValid(showLabel, showBox);
@@ -170,6 +175,10 @@ public class NumberJTextField extends JTextField implements IDataField {
         frame.setLocationByPlatform(true);
         frame.setVisible(true);
 	}
+
+	public NumberFieldCustomError getErrorFields() {
+		return errorFields;
+	}
 }
 
 /**
@@ -234,7 +243,7 @@ class MyDocumentFilter extends DocumentFilter {
 	
 	private void numberInvalid(){
 		if(parent.getIErrorView() != null){
-			parent.getIErrorView().setText(parent.STRING_NOT_NUMBER);
+			parent.getIErrorView().setText(parent.getErrorFields().STRING_NOT_NUMBER);
 		}
 	}
 	

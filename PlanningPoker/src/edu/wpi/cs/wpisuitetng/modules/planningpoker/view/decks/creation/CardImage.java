@@ -33,6 +33,7 @@ import javax.swing.JTextArea;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IValidateButtons;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberJTextField;
 
 /**
@@ -59,8 +60,8 @@ public class CardImage extends JPanel implements IDataField{
 	
 
 	
-	public CardImage(ColorEnum color,IErrorView errorField){
-		this.errorField = errorField;
+	public CardImage(ColorEnum color,CreateDeckPanel parent){
+		this.errorField = parent.getErrorField();
 		this.color = color;
 		addValue.setIErrorView(errorField);
 		addValue.setMaxValue(999);
@@ -96,7 +97,7 @@ public class CardImage extends JPanel implements IDataField{
 		c.insets = new Insets(0, 0, 0, 0);							//sets the layout constraints of the actual button
 		add(picButton, c);											//adds the button to the card panel
 		
-		addKeyListenerToAddValueText(addValue);						//adds a key listener to the textfield (see method)
+		addKeyListenerToAddValueText(addValue,parent);						//adds a key listener to the textfield (see method)
 		focusListenerAddValueText(addValue);						//adds a focus listener to the textfield (see method)
 		addValue.setPreferredSize(new Dimension(40, 18));			//sets the textfield to be the desired size.
 		addValue.setVisible(true);									//sets the textfield to be visible at the start
@@ -147,7 +148,7 @@ public class CardImage extends JPanel implements IDataField{
 	 * TODO: validation. the text should only be an integer in a reasonable range (0-50? 0-100?...)
 	 * @param component (this method should only be used with the textfield)
 	 */
-	private void addKeyListenerToAddValueText(JComponent component){
+	private void addKeyListenerToAddValueText(JComponent component,final IValidateButtons parent){
 		component.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {	
 				if(arg0.getKeyCode() == 10){		//if enter is pressed
@@ -157,6 +158,7 @@ public class CardImage extends JPanel implements IDataField{
 						//TODO: but errorField is in CreateDeckPanel... HALP
 						return;
 					} else {
+						parent.updateButtons();
 						logger.log(Level.INFO, "addValue was validated");
 					}
 					valueLabel.setText(addValue.getText());
