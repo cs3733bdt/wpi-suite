@@ -108,7 +108,7 @@ public class GameTree extends JPanel implements MouseListener{
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
-			if(!game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
+			if(!game.hasEnded() && !game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
 
 				if(game.isActive()){
 					active.add(newGameNode);
@@ -138,7 +138,7 @@ public class GameTree extends JPanel implements MouseListener{
 		gameTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);		
 		gameTreeScroll.setPreferredSize(new Dimension(190, 500));
 		
-		gameTree.setCellRenderer(new CustomTreeCellRenderer());
+		gameTree.setCellRenderer(new CustomTreeCellRenderer(this));
 
 		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
@@ -229,6 +229,14 @@ public class GameTree extends JPanel implements MouseListener{
 		int x = e.getX();
 		int y = e.getY();
 		
+        for (Game game: sortGames(GameModel.getInstance().getGames())) {
+            if(!game.isComplete() && game.isActive()) {
+                if(game.hasEnded()) {
+                    refresh();
+                }
+            }
+        }
+
 		//System.out.println("Single Click Detected");
 		
 		if(e.getClickCount() == 2){

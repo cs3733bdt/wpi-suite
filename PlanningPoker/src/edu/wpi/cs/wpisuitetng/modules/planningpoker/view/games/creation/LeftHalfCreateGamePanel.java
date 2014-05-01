@@ -127,7 +127,6 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 		} else {
 			savedDate = endDateField.getEndDate();
 		}
-
 	}
 
 	/**

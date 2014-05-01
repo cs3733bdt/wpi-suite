@@ -110,6 +110,9 @@ public class DeckTree extends JPanel implements MouseListener{
 		deckTreeScroll.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);		
 		deckTreeScroll.setPreferredSize(new Dimension(190, 500));
 
+		deckTree.setCellRenderer(new CustomTreeCellRenderer(this));
+
+		
 		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
 	  
@@ -191,8 +194,7 @@ public class DeckTree extends JPanel implements MouseListener{
 						(DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
 				if(node != null) {
 					if(node.getUserObject() instanceof Deck){ //Confirm that this is a game
-						System.out.println("Setting view to deck: " + 
-								((Deck)node.getUserObject()).toString());
+						System.out.println("Setting view to deck: " + ((Deck)node.getUserObject()).toString());
 						ViewEventController.getInstance().viewDeck((Deck)node.getUserObject());
 					}
 					else if(node.getUserObject() instanceof String){
