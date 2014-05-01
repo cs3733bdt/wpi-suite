@@ -539,19 +539,24 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * @param warningField the field to output the errors to
 	 * @return true If all fields are valid and the window is ready to be removed
 	 */
-	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {	
-		boolean isNameValid = nameTextField.validateField(warningField, showLabel, showBox);
+	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
+		boolean areCardsValid = validateCardField(warningField, showLabel, showBox);
 		
-		boolean isDescriptionValid = descriptionTextField.validateField(warningField, showLabel, showBox);
+		//Note from Police: We do not need to validate the description field. Descriptions are not required
+		
 		boolean isNumCardsValid = numCards.validateField(warningField, showLabel, showBox);
 		
+		boolean isNameValid = nameTextField.validateField(warningField, showLabel, showBox);
+		
+		return isNameValid && isNumCardsValid && areCardsValid;
+	}
+	
+	private boolean validateCardField(IErrorView warningField, boolean showLabel, boolean showBox){
 		boolean areCardsValid = true;
 		for(CardImage c : cards){
 			areCardsValid &= c.validateField(warningField, showLabel, showBox);
 		}
-		
-		
-		return isNameValid && isDescriptionValid && isNumCardsValid && areCardsValid;
+		return areCardsValid;
 	}
 
 	public boolean hasChanges() {
@@ -730,10 +735,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * Adds the deck to the model and to the server
 	 */
 	public void saveDeck(Deck deck) {
-		deck.updateMultipleSelection(!singleSelection.isSelected()); // updates
-																		// multiple
-																		// selection
-																		// boolean
+		deck.updateMultipleSelection(!singleSelection.isSelected()); // updates multiple selection boolean
 		deck.updateHasIdk(iDontKnowCheck.isSelected());
 
 		DeckModel.getInstance().addDeck(deck); // New Deck gets added // to the
@@ -792,7 +794,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 			saveButtonPanel.getSaveDeckButton().setEnabled(true);
 		} 
 		else {
-			if(verifyNumberOfCards()){
+			if(numCards.validateField(errorField, false, false)){
 				submitNumCards.setEnabled(true);
 			}
 			else {
@@ -806,6 +808,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	
 	private void addMouseListenerTo(JComponent component){
 		component.addMouseListener(new MouseAdapter(){
+			@Override
 			public void mouseClicked(MouseEvent arg0) {
 					validateField(errorField,true, true);
 			}
