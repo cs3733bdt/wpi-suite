@@ -69,7 +69,6 @@ public class TabbedView extends JTabbedPane {
 	private ArrayList<IHelpPanel>  listOfHelpPanels = new ArrayList<IHelpPanel>();  
 	private List<ICreateDeckPanel>  listOfCreateDeckPanels = new ArrayList<ICreateDeckPanel>();
 
-
 	private PreferencesPanel preferencesPanel;
 	private boolean hasPreferencesTab=false;
 	
@@ -85,7 +84,6 @@ public class TabbedView extends JTabbedPane {
 	private boolean hasEndGameHelp=false;
 	private boolean hasCreateGameHelp=false;
 	private boolean hasCreateDeckHelp=false;
-	private IHelpPanel helpPanel;
 
 	/**
 	 * Adds Main View of the planning poker panel when the user goes to the planning poker tab
@@ -126,6 +124,7 @@ public class TabbedView extends JTabbedPane {
 			public void mousePressed(MouseEvent e)
 			{
 				if(e.isPopupTrigger()) popup.show(e.getComponent(), e.getX(), e.getY());
+				//Get the selected component, call setSelectedComponent so help is enabled correctly
 				JComponent selected = (JComponent)TabbedView.this.getSelectedComponent();
 				setSelectedComponent(selected);
 			}
@@ -572,9 +571,30 @@ public class TabbedView extends JTabbedPane {
 				listOfEndedGamePanels.remove(toBeRemoved);
 				hasPreferencesTab = false;
 			}
+			
+			if (toBeRemoved instanceof ActiveGameHelp) {
+				hasActiveGameHelp=false;
+			}
+			
+			if (toBeRemoved instanceof CreateDeckHelp) {
+				hasCreateDeckHelp=false;
+			}
+			
+			if (toBeRemoved instanceof CreateGameHelp) {
+				hasCreateGameHelp = false;
+			}
+			
+			if (toBeRemoved instanceof EndGameHelp) {
+				hasEndGameHelp = false;
+			}
+			
+			if (toBeRemoved instanceof PreferencesHelp) {
+				hasPreferencesHelp = false;
+			}
 
 			removeTabAt(i);
 		}
+		setSelectedComponent(this.getSelectedComponent());
 		repaint();
 	}
 
@@ -619,9 +639,30 @@ public class TabbedView extends JTabbedPane {
 				listOfEndedGamePanels.remove(toBeRemoved);
 				hasPreferencesTab = false;
 			}
+			
+			if (toBeRemoved instanceof ActiveGameHelp) {
+				hasActiveGameHelp=false;
+			}
+			
+			if (toBeRemoved instanceof CreateDeckHelp) {
+				hasCreateDeckHelp=false;
+			}
+			
+			if (toBeRemoved instanceof CreateGameHelp) {
+				hasCreateGameHelp = false;
+			}
+			
+			if (toBeRemoved instanceof EndGameHelp) {
+				hasEndGameHelp = false;
+			}
+			
+			if (toBeRemoved instanceof PreferencesHelp) {
+				hasPreferencesHelp = false;
+			}
 
 			removeTabAt(i);
 		}
+		setSelectedComponent(this.getSelectedComponent());
 		repaint();
 
 	}
@@ -651,7 +692,7 @@ public class TabbedView extends JTabbedPane {
 			return;
 		}
 	}
-	
+
 	@Override
 	public void setSelectedComponent(Component comp) {
 		super.setSelectedComponent(comp);
