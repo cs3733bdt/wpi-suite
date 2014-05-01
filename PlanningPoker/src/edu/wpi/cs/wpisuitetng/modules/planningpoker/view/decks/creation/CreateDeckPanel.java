@@ -38,6 +38,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Card;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
@@ -126,7 +127,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	/**
 	 * an initial red card to be added to the view as a default starting deck
 	 */
-	private final CardImage cardRed = new CardImage(ColorEnum.RED, errorField);
+
+	private final CardImage cardRed = new CardImage(ColorEnum.RED, this);
+	
 
 	/**
 	 * array list to hold all the cards currently generated. TODO: IMPLEMENT
@@ -148,9 +151,25 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 	public CreateDeckPanel(Deck deck) {
 		build();
+		numCards.setText(Integer.toString(deck.getCards().size()-2));
 		this.deck = deck;
 		nameTextField.setText(deck.getName());
 		descriptionTextField.setText(deck.getDescription());
+		System.out.println(deck.getColor().toString());
+		colorDropDown.setSelectedItem(deck.getColor().toString());
+		values.removeAll(values);
+		cards.removeAll(cards);
+		for(Card C : deck.getCards()) {
+			if(C.isInteger()) {
+				CardImage D = new CardImage(deck.getColor(), this);
+				D.setValueLabel(C.getText());
+				cards.add(D);
+				values.add(-1);
+			}
+		}
+		displayNumCards();
+		cardsPanel.revalidate();
+		cardsPanel.repaint();
 	}
 
 	/**
@@ -173,6 +192,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		JLabel descriptionLabel = new JLabel("Description");
 		descriptionTextField = new DescriptionJTextArea();
 		descriptionTextField.setLineWrap(true);
+		descriptionTextField.addKeyListener(this);
 		JScrollPane descriptionScroll = new JScrollPane(descriptionTextField);
 		descriptionScroll.setPreferredSize(new Dimension(400, 20));
 
@@ -231,6 +251,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		numCards = new NumberJTextField(10);
 		numCards.setPreferredSize(new Dimension(40,22));
 		numCards.setText("1");
+		numCards.setMaxValue(24);
 		numCards.addKeyListener(this);
 		initializeArrayList();
 		addMouseListenerToNumberOfCardsTextEntry(numCards);
@@ -344,7 +365,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		/* save button */
 		saveButtonPanel = new SaveDeckButtonPanel(this);
 		addMouseListenerTo(saveButtonPanel);
-		saveButtonPanel.getSaveDeckButton().setEnabled(true);
+		saveButtonPanel.getSaveDeckButton().setEnabled(false);
 
 		/* cancel button */
 		cancelDeckButton = new CancelButton("Cancel Deck", this);
@@ -417,7 +438,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 			return;
 		}
 
-		// int newNumCards = Integer.parseInt(text);
+		// int newNumCards = Integer.Int(text);
 		// for (int i = 0; i < newNumCards; i++) {
 		values.add(-1);
 		// }
@@ -673,17 +694,13 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 	public void addCards(ColorEnum color, int numCardsPresent) {
 		for(int i=0; i < numCardsPresent; i++){
-			 CardImage newCard = new CardImage(color,errorField);
+			 CardImage newCard = new CardImage(color,this);
 			 cardsPanel.add(newCard);
 			 cards.add(newCard);
 			 String valueAtIndexI = Integer.toString(values.get(i));
 			 if (!valueAtIndexI.equals("-1")) {
 				 newCard.setValueLabel(valueAtIndexI);
 			 }
-			 System.out.println("current cards:");
-				for(Integer j : values){
-					System.out.print(j + "\n");
-				}
 		}
 	}
 
