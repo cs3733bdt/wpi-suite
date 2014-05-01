@@ -12,9 +12,10 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 
 /**
- * TODO: add documentation
+ * Implemented by any class that can display errors on it.
+ * This allows a class to be passed to an IDataField as a parameter to show errors
+ * 
  * @author Bobby Drop Tables
- *
  */
 public interface IErrorView {
 	
