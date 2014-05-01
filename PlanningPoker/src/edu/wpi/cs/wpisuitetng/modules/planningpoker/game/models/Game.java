@@ -762,7 +762,8 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			delayChange("hasEnded");
 			makeComplete();
 			setActive(false);
-			//ViewEventController.getInstance().refreshGameTree();
+			notifyObservers();
+			ViewEventController.getInstance().refreshGameTree();
 			return true;
 			}
 		else {

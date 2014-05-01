@@ -46,7 +46,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help.IHelpPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help.PreferencesHelp;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation.IPreferencesPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.preferences.creation.PreferencesPanel;
-
 /**
  * This class sets the main view when the user goes to the PlanningPoker tab 
  * @author jonathanleitschuh
@@ -70,7 +69,6 @@ public class TabbedView extends JTabbedPane {
 	private ArrayList<IHelpPanel>  listOfHelpPanels = new ArrayList<IHelpPanel>();  
 	private List<ICreateDeckPanel>  listOfCreateDeckPanels = new ArrayList<ICreateDeckPanel>();
 
-
 	private PreferencesPanel preferencesPanel;
 	private boolean hasPreferencesTab=false;
 	
@@ -86,7 +84,6 @@ public class TabbedView extends JTabbedPane {
 	private boolean hasEndGameHelp=false;
 	private boolean hasCreateGameHelp=false;
 	private boolean hasCreateDeckHelp=false;
-	private IHelpPanel helpPanel;
 
 	/**
 	 * Adds Main View of the planning poker panel when the user goes to the planning poker tab
@@ -127,6 +124,9 @@ public class TabbedView extends JTabbedPane {
 			public void mousePressed(MouseEvent e)
 			{
 				if(e.isPopupTrigger()) popup.show(e.getComponent(), e.getX(), e.getY());
+				//Get the selected component, call setSelectedComponent so help is enabled correctly
+				JComponent selected = (JComponent)TabbedView.this.getSelectedComponent();
+				setSelectedComponent(selected);
 			}
 
 			@Override
@@ -149,7 +149,7 @@ public class TabbedView extends JTabbedPane {
 			}
 		});
 	}
-
+	
 	/**
 	 * needed to get controller functioning
 	 * TODO add purpose for this function
@@ -571,9 +571,30 @@ public class TabbedView extends JTabbedPane {
 				listOfEndedGamePanels.remove(toBeRemoved);
 				hasPreferencesTab = false;
 			}
+			
+			if (toBeRemoved instanceof ActiveGameHelp) {
+				hasActiveGameHelp=false;
+			}
+			
+			if (toBeRemoved instanceof CreateDeckHelp) {
+				hasCreateDeckHelp=false;
+			}
+			
+			if (toBeRemoved instanceof CreateGameHelp) {
+				hasCreateGameHelp = false;
+			}
+			
+			if (toBeRemoved instanceof EndGameHelp) {
+				hasEndGameHelp = false;
+			}
+			
+			if (toBeRemoved instanceof PreferencesHelp) {
+				hasPreferencesHelp = false;
+			}
 
 			removeTabAt(i);
 		}
+		setSelectedComponent(this.getSelectedComponent());
 		repaint();
 	}
 
@@ -618,44 +639,60 @@ public class TabbedView extends JTabbedPane {
 				listOfEndedGamePanels.remove(toBeRemoved);
 				hasPreferencesTab = false;
 			}
+			
+			if (toBeRemoved instanceof ActiveGameHelp) {
+				hasActiveGameHelp=false;
+			}
+			
+			if (toBeRemoved instanceof CreateDeckHelp) {
+				hasCreateDeckHelp=false;
+			}
+			
+			if (toBeRemoved instanceof CreateGameHelp) {
+				hasCreateGameHelp = false;
+			}
+			
+			if (toBeRemoved instanceof EndGameHelp) {
+				hasEndGameHelp = false;
+			}
+			
+			if (toBeRemoved instanceof PreferencesHelp) {
+				hasPreferencesHelp = false;
+			}
 
 			removeTabAt(i);
 		}
+		setSelectedComponent(this.getSelectedComponent());
 		repaint();
 
 	}
 	
 	public void removeHelpPanel(IHelpPanel comp) {
-		int panelToRemoveIndex = comp.getIdentifierIndex(); 
-		for (int i = 0; i <  listOfHelpPanels.size(); i++) {
-			if (listOfHelpPanels.get(i).getIdentifierIndex() == panelToRemoveIndex) {
-				listOfHelpPanels.remove(i);
-				resetBoolean(panelToRemoveIndex);
-			}
-		}
+		listOfHelpPanels.remove(comp);
+		resetBoolean(comp);
 	}
 	
-	public void resetBoolean(int index) {
-		if (index == activeGameIndex) {
+	public void resetBoolean(IHelpPanel comp) {
+		if (comp instanceof ActiveGameHelp) {
 			hasActiveGameHelp=false;
 		}
-		else if (index == createDeckIndex) {
+		else if (comp instanceof CreateDeckHelp) {
 			hasCreateDeckHelp=false;
 		}
-		else if (index == createGameIndex) {
+		else if (comp instanceof CreateGameHelp) {
 			hasCreateGameHelp = false;
 		}
-		else if (index == endGameIndex) {
+		else if (comp instanceof EndGameHelp) {
 			hasEndGameHelp = false;
 		}
-		else if (index == preferenceIndex) {
+		else if (comp instanceof PreferencesHelp) {
 			hasPreferencesHelp = false;
 		}
 		else {
 			return;
 		}
 	}
-	
+
 	@Override
 	public void setSelectedComponent(Component comp) {
 		super.setSelectedComponent(comp);

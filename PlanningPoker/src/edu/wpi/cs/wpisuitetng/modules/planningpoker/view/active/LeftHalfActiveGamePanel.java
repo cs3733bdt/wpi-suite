@@ -74,7 +74,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	 * Method to notify observers and set game complete if end game is pressed
 	 */
 	public void endGameManuallyButtonPressed(){
-		parentPanel.endGame();
+		parentPanel.endGameManually();
 	}
 	
 	/**

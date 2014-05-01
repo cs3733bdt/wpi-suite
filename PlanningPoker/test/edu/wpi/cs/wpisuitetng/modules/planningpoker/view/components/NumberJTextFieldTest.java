@@ -10,6 +10,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberTextField.NumberFieldCustomError;
+
 public class NumberJTextFieldTest {
 	
 	private NumberJTextField testerField;
@@ -17,6 +19,8 @@ public class NumberJTextFieldTest {
 	private ErrorLabel label;
 	
 	private JFrame frame;
+	
+	private NumberFieldCustomError defaultErrors;
 	
 	/**
 	 * Sends a key pressed event to the number field
@@ -35,6 +39,7 @@ public class NumberJTextFieldTest {
 		label = new ErrorLabel();
 		frame = new JFrame();
 		frame.add(testerField);
+		defaultErrors = new NumberFieldCustomError();
 	}
 	
 	@Test
@@ -49,14 +54,17 @@ public class NumberJTextFieldTest {
 
 	@Test
 	public void testBadKey() {
+		String initialError = label.getText();
+		
 		testerField.setIErrorView(label);
 		testerField.setText("27");
 		sendKey(testerField,"21C\n");
 		assertEquals("27", testerField.getText());
-		assertEquals(NumberJTextField.STRING_NOT_NUMBER, label.getText());
+		assertEquals(defaultErrors.STRING_NOT_NUMBER, label.getText());
+		initialError = label.getText();
 		assertFalse(testerField.hasChanges());
 		assertTrue(testerField.validateField(label, true, true));
-		assertEquals("", label.getText());
+		assertEquals(initialError, label.getText());
 		assertSame(NumberJTextField.BORDER_DEFAULT, testerField.getBorder());
 	}
 	
@@ -70,7 +78,7 @@ public class NumberJTextFieldTest {
 		assertEquals("9909", testerField.getText());
 		assertTrue(testerField.hasChanges());
 		assertFalse(testerField.validateField(label, true, true));
-		assertEquals(NumberJTextField.STRING_TOO_LONG + maxValue, label.getText());
+		assertEquals(defaultErrors.STRING_TOO_LONG + maxValue, label.getText());
 		assertSame(NumberJTextField.BORDER_ERROR, testerField.getBorder());
 		
 		
@@ -82,7 +90,7 @@ public class NumberJTextFieldTest {
 		testerField.setText("");
 		assertEquals("", testerField.getText());
 		assertFalse(testerField.validateField(label, true, true));
-		assertEquals(NumberJTextField.STRING_NOT_EMPTY, label.getText());
+		assertEquals(defaultErrors.STRING_NOT_EMPTY, label.getText());
 		assertSame(NumberJTextField.BORDER_ERROR, testerField.getBorder());
 	}
 	

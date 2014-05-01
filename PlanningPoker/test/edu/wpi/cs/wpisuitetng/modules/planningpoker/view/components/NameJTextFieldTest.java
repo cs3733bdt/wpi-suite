@@ -29,7 +29,6 @@ public class NameJTextFieldTest {
 	public void setUp() {
 		textField = new NameJTextField("Test Field");
 		blankTextField = new NameJTextField();
-		blankTextField.displayStandardBorder();
 		blankTextField1 = new NameJTextField();
 		textFieldInt = new NameJTextField(10);
 		errorLabel = new ErrorLabel();
@@ -82,5 +81,10 @@ public class NameJTextFieldTest {
 		assertFalse(textField.validateField(errorLabel, false, true));
 		assertFalse(textField.validateField(errorLabel, true, false));
 		assertFalse(textField.validateField(null, true, true));
+	}
+	
+	@Test
+	public void testValid(){
+		NameJTextField testerField = new NameJTextField("Name");
 	}
 }

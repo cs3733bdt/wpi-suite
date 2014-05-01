@@ -103,7 +103,7 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		gameInformationExplanation.setWrapStyleWord(true);
 		gameInformationExplanation.setLineWrap(true);
 		
-		//Add heading label for no requirments in the table	
+		//Add heading label for no requirements in the table	
 		noRequirementsHeading = new JLabel("Initial View of the Requirements Table");
 		noRequirementsHeading.setFont(makeFont(5)); 
 		
@@ -166,7 +166,7 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		importRequirementsExplanation.setLineWrap(true);
 		
 		//Add heading label for table with requirements added 	
-		addedRequirementsHeading = new JLabel("Requirements Table with Added Requirments");
+		addedRequirementsHeading = new JLabel("Requirements Table with Added Requirements");
 		addedRequirementsHeading.setFont(makeFont(5));
 
 		//Add added requirements image
@@ -185,7 +185,7 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		addedRequirementsExplanation.setLineWrap(true);
 		
 		//Add heading label for table with requirements added 	
-		updateRequirementsHeading = new JLabel("Updating a Requirment");
+		updateRequirementsHeading = new JLabel("Updating a Requirement");
 		updateRequirementsHeading.setFont(makeFont(5));
 
 		//Add edit requirements image
@@ -355,5 +355,6 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		return helpLabel;
 		
 	}
+	
 
 }
