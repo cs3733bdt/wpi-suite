@@ -84,7 +84,7 @@ public class NameJTextFieldTest {
 	}
 	
 	@Test
-	private void testValid(){
+	public void testValid(){
 		NameJTextField testerField = new NameJTextField("Name");
 	}
 }

@@ -70,7 +70,6 @@ public class GameTree extends JPanel implements MouseListener{
 	 */
 	private GameTree(){
 		super(new GridBagLayout());
-		ViewEventController.getInstance().setGameOverviewTree(this);
 		refresh();
 	}
 	
@@ -91,11 +90,11 @@ public class GameTree extends JPanel implements MouseListener{
 	 * Used when the list of games is updated or changed.
 	 */
 	public void refresh(){
-		if(getComponentCount() != 0){			
+		if(getComponentCount() != 0){
 			isInactiveCollapsed = gameTree.isCollapsed(new TreePath(inactive.getPath()));
 			isActiveCollapsed = gameTree.isCollapsed(new TreePath(active.getPath()));			
 			isHistoryCollapsed = gameTree.isCollapsed(new TreePath(history.getPath()));
-			remove(0);
+			removeAll();
 		}
 		
 		active.removeAllChildren();
@@ -150,9 +149,7 @@ public class GameTree extends JPanel implements MouseListener{
         cons.setWidth(Spring.scale(layout.getConstraint(SpringLayout.EAST, this), .995f)); // must be as close as possible to 1f without being 1f. 1f breaks it for some reason
         cons.setHeight(layout.getConstraint(SpringLayout.SOUTH, this));
 		
-		add(gameTreeScroll);
-	    ViewEventController.getInstance().setGameOverviewTree(this);
-	    
+		add(gameTreeScroll);	    
 	    
 	    if(isInactiveCollapsed){
 	    	gameTree.collapsePath(new TreePath(inactive.getPath()));
@@ -174,15 +171,9 @@ public class GameTree extends JPanel implements MouseListener{
 	    else{
 	    	gameTree.expandPath(new TreePath(history.getPath()));
 	    }
-	    
-	    
-	    revalidate();
-	    gameTree.revalidate();
-	    gameTreeScroll.revalidate();
-	    repaint();
-	    gameTree.repaint();
-		gameTreeScroll.repaint();
-	    validate();
+	   
+	    validate(); 
+	    ViewEventController.getInstance().setGameOverviewTree(this);
 		
 	}
 	
