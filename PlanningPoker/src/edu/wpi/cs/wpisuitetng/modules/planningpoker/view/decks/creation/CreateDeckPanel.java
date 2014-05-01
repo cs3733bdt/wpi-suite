@@ -161,7 +161,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		cards.removeAll(cards);
 		for(Card C : deck.getCards()) {
 			if(C.isInteger()) {
-				CardImage D = new CardImage(deck.getColor(), errorField);
+				CardImage D = new CardImage(deck.getColor(), this);
 				D.setValueLabel(C.getText());
 				cards.add(D);
 				values.add(-1);
