@@ -53,6 +53,8 @@ public class CardImage extends JPanel implements IDataField{
 	
 	private JLabel valueLabel = new JLabel("");			//the label that displays the value for each card as chosen by the user
 	
+	private JButton picButton; //The button where the image is displayed
+	
 	private GridBagConstraints c;
 
 	private IErrorView errorField;
@@ -77,7 +79,7 @@ public class CardImage extends JPanel implements IDataField{
 		setLayout(layout);											//sets the layout of the class (the panel)
 		c = new GridBagConstraints();
 		
-		JButton picButton = new JButton(new ImageIcon(myPicture));	//creates a button that holds the image that was rendered in the switch above
+		picButton = new JButton(new ImageIcon(myPicture));	//creates a button that holds the image that was rendered in the switch above
 		picButton.setBorderPainted(false);							//sets the button's border to invisible
 		picButton.setContentAreaFilled(false);						//sets the button's area to invisible so only the picture is visible
 		addMouseListenerToCard(picButton);							//adds a mouselistener (see method) to the button
@@ -124,6 +126,22 @@ public class CardImage extends JPanel implements IDataField{
 		} catch(NumberFormatException e) {
 			return -1;
 		}
+	}
+	
+	/**
+	 * Changes the color on this card to be the new color
+	 * @param color the new color to set
+	 */
+	public void setColor(ColorEnum color){
+		BufferedImage myPicture = null;
+		try {
+			myPicture = ColorCardImage.getColorCardImage(color);
+		} catch (IOException e) {
+			logger.log(Level.SEVERE, "Failed to load the images", e);
+		}
+		picButton.setIcon(new ImageIcon(myPicture));
+		revalidate();
+		repaint();
 	}
 	
 	/**
