@@ -119,6 +119,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	private List<PPRequirement> savedRequirements = new ArrayList<PPRequirement>();
 	
 	private Game game;
+	
+	private JButton cancelImportReqButton;
 
 
 	/**
@@ -324,7 +326,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 		 * Action listener for the cancel button in the import req panel
 		 */
 
-		JButton cancelImportReqButton = new JButton("Cancel");
+		cancelImportReqButton = new JButton("Cancel");
 		cancelImportReqButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -1002,6 +1004,25 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	
 	public boolean isDescAreaEmpty() {
 		return descArea.getText().equals("");
+	}
+	/**
+	 * Getter for testing purposes
+	 * @return importReqButton
+	 */
+	public JButton getImportReqButton() {
+		return importReqButton;
+	}
+	
+	public JButton getRemoveReqButton() {
+		return removeReqButton;
+	}
+	
+	public JButton getAddReqButton() {
+		return addReqButton;
+	}
+	
+	public JButton getCancelImportReqButton() {
+		return cancelImportReqButton;
 	}
 
 }
