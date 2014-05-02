@@ -535,14 +535,15 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		// with the same name and description
 		for (Requirement r: rModel.getRequirements()) {
 			if (r.getId() > nextId)
-				nextId = r.getId() + 1;
+				nextId = r.getId();
 			// Break out if already exists in manager
 			if (r.getName().equals(req.getName()) && r.getDescription().equals(req.getDescription())) {
 				// TODO: Do Logger Message
 				return;
 			}
 		}
-
+		// nextId = current highest id, set it to next
+		nextId += 1;
 		// Get new requirement to be added ready
 		Requirement newReq = new Requirement(nextId, req.getName(), req.getDescription());
 		newReq.setEstimate(estimate);
