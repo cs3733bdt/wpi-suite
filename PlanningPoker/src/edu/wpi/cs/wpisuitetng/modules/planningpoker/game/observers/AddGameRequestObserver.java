@@ -24,33 +24,40 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 
 /**
- * This observer is called when a response is received from a request to the server to add a game
- * ******Need to be modified according to the methods in the game models class******
+ * This observer is called when a response is received from a request to the
+ * server to add a game ******Need to be modified according to the methods in
+ * the game models class******
+ * 
  * @author tianchanggu
- *
+ * 
  */
 public class AddGameRequestObserver implements RequestObserver {
 	/**
-	 * We don't actually use the controller,
-	 * in the defect tracker they use it to print
-	 * error messages.
+	 * We don't actually use the controller, in the defect tracker they use it
+	 * to print error messages.
 	 */
 	private final AddGameController controller;
 	private final Game theGame;
-	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
+	private static Logger logger = Logger.getLogger(AbstractStorageModel.class
+			.getName());
+
 	/**
-	 * constructs an AddGameRequestObserver with a controller and a game to observe
-	 * @param controller the controller acting on the game
-	 * @param theGame the game being sent through
+	 * constructs an AddGameRequestObserver with a controller and a game to
+	 * observe
+	 * 
+	 * @param controller
+	 *            the controller acting on the game
+	 * @param theGame
+	 *            the game being sent through
 	 */
 	public AddGameRequestObserver(AddGameController controller, Game theGame) {
 		this.controller = controller;
 		this.theGame = theGame;
 	}
-	
+
 	/**
-	 * Parse the details of the new game that was received from the server 
-	 * then pass them to the controller
+	 * Parse the details of the new game that was received from the server then
+	 * pass them to the controller
 	 * 
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseSuccess(edu.wpi.cs.wpisuitetng.network.models.IRequest)
 	 */
@@ -58,34 +65,36 @@ public class AddGameRequestObserver implements RequestObserver {
 	public void responseSuccess(IRequest iReq) {
 		// Get the response to the given request
 		final ResponseModel response = iReq.getResponse();
-		
+
 		// The game that got added
 		Game game = Game.fromJSON(response.getBody());
-		
+
 		// Send out email, text, and facebook notifications on game creation
 		if (!game.isNotifiedOfCreation() && game.isActive()) {
 			Game realGame;
 			try {
-				realGame = GameModel.getInstance().getGameById(game.getIdentity());
-				// getGameByName will return null if a game with that name doesn't exist yet
+				realGame = GameModel.getInstance().getGameById(
+						game.getIdentity());
+				// getGameByName will return null if a game with that name
+				// doesn't exist yet
 				// Have to set Project because it doesn't have it yet
 				// and will throw a null pointer
 				realGame.setProject(game.getProject());
-				// Set notified before sending notifications, to ensure no looping
+				// Set notified before sending notifications, to ensure no
+				// looping
 				realGame.setNotifiedOfCreation(true);
 				realGame.sendNotifications();
 			} catch (NotFoundException e) {
-				logger.log(Level.WARNING,game.getName() + ": Does not exist.", e);
+				logger.log(Level.WARNING, "Game does not exist.", e);
 			}
 		}
-		
+
 		System.out.println("The request to add a game has succeeded!");
 	}
-	
+
 	/**
-	 * Prints out response error message and ensures the game 
-	 * doesn't get added to the server. Also removes the
-	 * game from the current model.
+	 * Prints out response error message and ensures the game doesn't get added
+	 * to the server. Also removes the game from the current model.
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
@@ -95,8 +104,8 @@ public class AddGameRequestObserver implements RequestObserver {
 	}
 
 	/**
-	 * Called on game add failed. Prints out error message
-	 * and removes game from current model.
+	 * Called on game add failed. Prints out error message and removes game from
+	 * current model.
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
@@ -104,11 +113,10 @@ public class AddGameRequestObserver implements RequestObserver {
 				+ exception.getMessage());
 		redisplayGame();
 	}
-	
+
 	/**
-	 * Removes the game from current model and
-	 * updates the tree so that it will not show
-	 * that game that failed to get added.
+	 * Removes the game from current model and updates the tree so that it will
+	 * not show that game that failed to get added.
 	 */
 	private void redisplayGame() {
 		GameModel.getInstance().removeGameFromModel(theGame);
