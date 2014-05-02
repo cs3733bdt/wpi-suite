@@ -44,6 +44,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.RequirementStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
@@ -295,23 +296,33 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 							submitImportReqButton.setEnabled(true);
 						}
 						boolean duplicateName = false;
+						boolean duplicateDesc = false;
 						int[] rows = importTable.getSelectedRows();
 						String selectedName = null;
+						String selectedDesc = null;
 						for (int i = 0; i < rows.length; i++) {
 							selectedName = (String) importTable.getValueAt(
 									rows[i], 0);
+							selectedDesc = (String) importTable.getValueAt(
+									rows[i], 1);
 							for (int j = 0; j < requirements.size(); j++) {
 								String reqName = requirements.get(j).getName();
+								String reqDesc = requirements.get(j).getDescription();
 								if (selectedName.equals(reqName)) {
 									duplicateName = true;
 								}
+								if ( selectedDesc.equals(reqDesc)) {
+									duplicateDesc = true;
+								}
+									
 							}
 						}
-						if (duplicateName) {
+						
+						if (duplicateName && duplicateDesc) {
 							submitImportReqButton.setEnabled(false);
 							importErrorLabel.setForeground(Color.RED);
 							importErrorLabel
-									.setText("The name of a selected requirement is already taken");
+									.setText("The name and description of a selected requirement is already taken");
 						} else {
 							submitImportReqButton.setEnabled(true);
 							importErrorLabel.setText("");
@@ -590,6 +601,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		importLayout.putConstraint(SpringLayout.SOUTH, tablePanel, -20,
 				SpringLayout.NORTH, submitImportReqButton);
 
+		
+		validateNameAndDesc(false, true);
 		/**
 		 * Set the minimum size and add components to the viewport of the
 		 * scrollpane
@@ -746,10 +759,13 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		// Add the imported requirements to the table
 		for (Requirement r : RequirementModel.getInstance().getRequirements()) {
 			if (r.getEstimate() == 0) {
-				// Don't allow duplicate requirements in table
-				if (!containsReq(r)) {
-					importTable.getTableModel().addRow(
-							new Object[] { r.getName(), r.getDescription() });
+				// Can't import deleted requirements
+				if (!r.getStatus().equals(RequirementStatus.DELETED)) {
+					// Don't allow duplicate requirements in table
+					if (!containsReq(r)) {
+						importTable.getTableModel().addRow(
+								new Object[] { r.getName(), r.getDescription() });
+					}
 				}
 			}
 		}
@@ -856,8 +872,9 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		int[] rows = importTable.getSelectedRows();
 		for (int i = 0; i < rows.length; i++) {
 			String selectedName = (String) importTable.getValueAt(rows[i], 0);
+			String selectedDesc = (String) importTable.getValueAt(rows[i], 1);
 			addRequirement(PPRequirementModel.getInstance().getRequirement(
-					selectedName));
+					selectedName, selectedDesc));
 		}
 
 		parent.updateButtons();
@@ -1019,11 +1036,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	 * @return true if the requirement is already in the table
 	 */
 	private boolean checkduplicateReq(PPRequirement requirement) {
-		List<PPRequirement> reqList = requirements;
-		String reqName;
-		for (int i = 0; i < reqList.size(); i++) {
-			reqName = reqList.get(i).getName();
-			if (reqName.equals(requirement.getName())) {
+		for (PPRequirement ppr: requirements) {
+			if (ppr.getName().equals(requirement.getName()) && ppr.getDescription().equals(requirement.getDescription())) {
 				return true;
 			}
 		}

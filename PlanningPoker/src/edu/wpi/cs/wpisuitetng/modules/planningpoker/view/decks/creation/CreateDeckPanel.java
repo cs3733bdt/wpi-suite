@@ -122,6 +122,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
+	
+	private final boolean isReopen;
 
 	/**
 	 * an initial red card to be added to the view as a default starting deck
@@ -145,11 +147,13 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	private Deck deck;
 
 	public CreateDeckPanel() {
+		isReopen = false;
 		cardsPanel2 = new CardPanel(this);
 		build();
 	}
 
 	public CreateDeckPanel(Deck deck) {
+		isReopen = true;
 		cardsPanel2 = new CardPanel(this);
 		build();
 		buildFields(deck);
@@ -811,6 +815,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		return deck;
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ICreateDeckPanel#disableFields()
+	 */
 	public void disableFields() {
 		
 		//Disable the input fields
@@ -832,6 +839,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		
 		//Hide the error field
 		errorField.setVisible(false);
-		
+}
+
+	/**
+	 * @return the isReopen
+	 */
+	public boolean isReopen() {
+		return isReopen;
 	}
 }
