@@ -41,6 +41,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequi
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.UpdateRequirementController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
