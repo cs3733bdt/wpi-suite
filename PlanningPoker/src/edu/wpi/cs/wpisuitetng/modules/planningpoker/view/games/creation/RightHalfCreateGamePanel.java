@@ -605,7 +605,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 						for (int i = 0; i < rows.length; i++) {
 							selectedName = (String) currentTable.getValueAt(
 									rows[i], 0);
-//							if (PPRequirementModel.getInstance().getRequirement(selectedName) != null) { //TODO this line always returns false. fix it if you wrote it. 
+//							if (PPRequirementModel.getInstance().getRequirement(selectedName) != null) { //TODO this line always returns true. fix it if you wrote it. 
 //								hasImported = true;
 //							}
 						}
@@ -743,7 +743,6 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	private void enableButtons() {
 		addReqButton.setEnabled(true);
 		importReqButton.setEnabled(true);
-		editReqButton.setEnabled(true); //TODO test
 		/*
 		 * removeReqButton.setEnabled(true); editReqButton.setEnabled(true);
 		 */
@@ -779,6 +778,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 		boolean descriptionValid = false;
 		boolean nameValid = false;
 		boolean uniqueName = false;
+		boolean returnBoolean;
 
 		if (checkduplicateReq(new PPRequirement(nameArea.getText(),
 				descArea.getText()))) {
@@ -813,7 +813,9 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 		}
 		nameValid = nameArea.validateField(errorLabel, showLabel, showBox);
 
-		if (nameValid && descriptionValid && uniqueName) {
+		returnBoolean = nameValid && descriptionValid && uniqueName;
+		System.out.println("Return boolean:" + returnBoolean);
+		if (returnBoolean) {
 			errorLabel.setText("");
 		}
 
@@ -822,8 +824,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			nameArea.setBorder(defaultTextFieldBorder);
 			descArea.setBorder(defaultTextAreaBorder);
 		}
-
-		return nameValid && descriptionValid && uniqueName;
+		
+		return returnBoolean;
 	}
 
 	private void displayError(String errorString) {
@@ -974,6 +976,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 				if (globalRow == -1) {
 					updateSubmitButton();
 				} else {
+					System.out.println("updating update");
 					updateUpdateButton();
 				}
 			}
@@ -990,21 +993,37 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 
 	private void updateUpdateButton() {
 		if (validateNameAndDesc(true, false) && updateValid()) {
+
+			System.out.println("First branch of updateupdate");
 			updateAddReqButton.setEnabled(true);
 			displayError("");
 		} else if (!updateValid()) {
+			System.out.println("Second branch of updateupdate");
 			updateAddReqButton.setEnabled(false);
 			displayError("No changes have been made");
 		} else {
+			System.out.println("Third branch of updateupdate");
 			updateAddReqButton.setEnabled(false);
-			validateNameAndDesc(true, false);
-			if (errorLabel.getText().equals("A requirement already exists with that name")) {
+			if (updateValid() && validateNameAndDescForUpdate()) {
 				if (nameArea.getText().equals((String) currentTable.getValueAt(globalRow, 0))) {
 					updateAddReqButton.setEnabled(true);
 					displayError("");
 				}
 			}
 		}
+	}
+
+	private boolean validateNameAndDescForUpdate() {
+		boolean returnStatus = true;
+		if (nameArea.getText().isEmpty()) {
+			displayError("Name is required");
+			returnStatus = false;
+		}
+		if (descArea.getText().isEmpty()) {
+			displayError("Description is required");
+			returnStatus = false;
+		}
+		return returnStatus;
 	}
 
 	private void updateSubmitButton() {
