@@ -36,6 +36,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
@@ -109,7 +110,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 */
 	private CancelButton cancelDeckButton;
 
-	private SaveDeckButtonPanel saveButtonPanel;					//save button to save deck to server
+	private SaveDeckButtonPanel saveButtonPanel;	//save button to save deck to server
 
 
 	/**
@@ -376,6 +377,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 		/* Card panel and scrollPane for the cards to appear in */
 		JScrollPane cardScrollPane = new JScrollPane(cardsPanel2);
+		TitledBorder titleBorder = BorderFactory.createTitledBorder("Type a value for each card and hit enter");
+		titleBorder.setTitleJustification(TitledBorder.CENTER);
+		cardScrollPane.setBorder(titleBorder);
 		cardsPanel2.setPreferredSize(new Dimension(10, 450));
 
 		/* save button */
@@ -783,18 +787,21 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 	@Override
 	public void updateButtons() {
+		
+		//FOR ENABLING THE SAVE GAME BUTTON
 		if (validateField(errorField,true, false)) {
 			saveButtonPanel.getSaveDeckButton().setEnabled(true);
 		} 
 		else {
-			if(numCards.validateField(errorField, false, false)){
-				submitNumCards.setEnabled(true);
-			}
-			else {
-				submitNumCards.setEnabled(false);
-			}
 			saveButtonPanel.getSaveDeckButton().setEnabled(false);
-			
+		}
+		
+		//FOR ENABLING THE SUBMIT NUMBER BUTTON
+		if(numCards.validateField(errorField, false, false)){
+			submitNumCards.setEnabled(true);
+		}
+		else {
+			submitNumCards.setEnabled(false);
 		}
 		
 	}
@@ -814,6 +821,32 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 				determineDeckColor());
 		return deck;
 	}
+	
+	/* (non-Javadoc)
+	 * @see edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ICreateDeckPanel#disableFields()
+	 */
+	public void disableFields() {
+		
+		//Disable the input fields
+		descriptionTextField.setEnabled(false);
+		nameTextField.setEnabled(false);
+		singleSelection.setEnabled(false);
+		multipleSelection.setEnabled(false);
+		colorDropDown.setEnabled(false);
+		submitNumCards.setEnabled(false);
+		numCards.setEnabled(false);
+		iDontKnowCheck.setEnabled(false);
+		
+		//Disables editing on each card in the view panel
+		cardsPanel2.disableCards();
+		
+		//Hide the save and cancel buttons
+		saveButtonPanel.setVisible(false);
+		cancelDeckButton.setVisible(false);
+		
+		//Hide the error field
+		errorField.setVisible(false);
+}
 
 	/**
 	 * @return the isReopen

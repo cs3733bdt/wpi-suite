@@ -77,13 +77,11 @@ public class Card {
 	}
 	
 	public boolean isInteger(){
-		try{
-			Integer.parseInt(text);
-			return true;
-		} catch (NumberFormatException e){
-			logger.log(Level.WARNING, "The text contains non-numerical characters.", e);
-			return false;
+		
+		for(int i=0; i< text.length(); i++){
+			if(Character.digit(text.charAt(i), 10)<0) return false;
 		}
+		return true;
 	}
 	
 	public boolean isMultipleSelection() {
