@@ -16,22 +16,21 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.JComponent;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 /**
  * creates a textbox which allows the user to enter a description for the game
  * the description cannot be empty when creating a game
+ * 
  * @author Bobby Drop Tables
- *
+ * 
  */
 public class DescriptionJTextArea extends CustomJTextArea implements IDataField {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
-	
+
 	private String startingText;
 
 	public DescriptionJTextArea(String text) {
@@ -42,37 +41,33 @@ public class DescriptionJTextArea extends CustomJTextArea implements IDataField 
 	public DescriptionJTextArea() {
 		startingText = "";
 	}
-	
-	public void displayStandardBorder(){
+
+	public void displayStandardBorder() {
 		setBorder(BorderFactory.createTitledBorder("Description"));
 	}
-	
-	@Override
-	public void setText(String text){
-		super.setText(text);
-	}
-	
+
 	/**
 	 * adds a key listener that will update buttons based on this data field
 	 */
-	public void addKeyListener(final IValidateButtons parent){
-		this.addKeyListener(new KeyAdapter(){
-			public void keyReleased(KeyEvent arg0) {	
+	public void addKeyListener(final IValidateButtons parent) {
+		this.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent arg0) {
 				parent.updateButtons();
 			}
 		});
 	}
 
 	@Override
-	public boolean validateField(IErrorView errorField, boolean showLabel, boolean showBox) {
+	public boolean validateField(IErrorView errorField, boolean showLabel,
+			boolean showBox) {
 		boolean isDescriptionValid = false;
 		if (getText().length() <= 0) {
 			isDescriptionValid = false;
 			// TODO add a way to display error descriptions
-			if(showLabel){
+			if (showLabel) {
 				errorField.setText("Description is required");
 			}
-			if(showBox){
+			if (showBox) {
 				this.setBorder(errorBorder);
 			}
 		} else {
@@ -86,8 +81,8 @@ public class DescriptionJTextArea extends CustomJTextArea implements IDataField 
 	public boolean hasChanges() {
 		return !getText().equals(startingText);
 	}
-	
+
 	public void setStartingText(String newStarting) {
-		startingText = newStarting; 
+		startingText = newStarting;
 	}
 }

@@ -33,9 +33,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
 /**
  * Used to create a new Planning Poker game using the input of the user.
  */
-public class CreateGamePanel extends JSplitPane implements ICreateGamePanel, IValidateButtons{
-	private LeftHalfCreateGamePanel leftHalf = new LeftHalfCreateGamePanel(
-			this);
+public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
+		IValidateButtons {
+	private LeftHalfCreateGamePanel leftHalf = new LeftHalfCreateGamePanel(this);
 	private RightHalfCreateGamePanel rightHalf = new RightHalfCreateGamePanel(
 			this);
 
@@ -70,15 +70,21 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel, IVa
 		setDividerLocation(420);
 
 		if (game == null) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
+					.setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
+					.setEnabled(false);
 			leftHalf.getErrorField().setText("Name is required");
 		} else if (!validateField(true, false)) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
+					.setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
+					.setEnabled(false);
 		} else {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
+					.setEnabled(true);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
+					.setEnabled(true);
 		}
 
 		revalidate();
@@ -146,25 +152,25 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel, IVa
 	 * @return whether the CreateGamePanel as a whole is ready to be removed.
 	 */
 	public boolean readyToRemove() {
-		if (readyToClose || !hasChanges())
+		if (readyToClose || !hasChanges()) {
 			return true;
+		}
 
 		// TODO Check fields to see if this window has unsaved changes
-//		if (containsData()) {
-//			readyToRemove = false;
-//		} else {
-//			readyToRemove = true;
-//		}
+		// if (containsData()) {
+		// readyToRemove = false;
+		// } else {
+		// readyToRemove = true;
+		// }
 
-//		if (readyToRemove) {
-//			return true;
-		//} else {
-			int result = JOptionPane.showConfirmDialog(this,
-					"Discard unsaved changes and close tab?",
-					"Discard Changes?", JOptionPane.YES_NO_OPTION,
-					JOptionPane.QUESTION_MESSAGE);
-			return result == 0;
-		//}
+		// if (readyToRemove) {
+		// return true;
+		// } else {
+		int result = JOptionPane.showConfirmDialog(this,
+				"Discard unsaved changes and close tab?", "Discard Changes?",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		return result == 0;
+		// }
 
 	}
 
@@ -307,15 +313,19 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel, IVa
 	 */
 	public void updateButtons() {
 		if (validateField(true, false)) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
+					.setEnabled(true);
 		} else {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
+					.setEnabled(false);
 		}
-		
+
 		if (validateField(true, false)) {
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
+					.setEnabled(true);
 		} else {
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
+					.setEnabled(false);
 		}
 
 	}
@@ -364,18 +374,24 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel, IVa
 		if (rightHalf.getRequirements() == null) {
 			return false;
 		}
-		if (rightHalf.getRequirements().size() != savedRequirements.size()){
+		if (rightHalf.getRequirements().size() != savedRequirements.size()) {
 			return false;
 		}
 		for (PPRequirement p : rightHalf.getRequirements()) {
 			boolean sameElement = false;
 			for (PPRequirement q : savedRequirements) {
-				if ((p.getName().equals(q.getName())) // check the name is the same
-						&& (p.getDescription().equals(q.getDescription()))) {// check the description is the same
-					sameElement=true;
+				if ((p.getName().equals(q.getName())) // check the name is the
+														// same
+						&& (p.getDescription().equals(q.getDescription()))) {// check
+																				// the
+																				// description
+																				// is
+																				// the
+																				// same
+					sameElement = true;
 				}
 			}
-			if (!sameElement){
+			if (!sameElement) {
 				return false;
 			}
 		}

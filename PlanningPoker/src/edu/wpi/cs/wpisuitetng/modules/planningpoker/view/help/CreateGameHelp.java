@@ -152,7 +152,7 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		//Add explanation to fourth image, importing a requirement
 		importRequirementsExplanation = new JTextArea();
 		importRequirementsExplanation.setText("You can import requirements from the requirements "
-				+ "manger into the Planning Poker game. You can select one or more requirements by "
+				+ "manager into the Planning Poker game. You can select one or more requirements by "
 				+ "using Ctrl + left mouse click and add all of the selected requirements to the "
 				+ "game all at once by clicking the Import button. Hitting Cancel will bring you "
 				+ "back to the list of Current Requirements in the game. You can import more requirements "
@@ -174,8 +174,8 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		
 		//Add explanation to fifth image, added requirements
 		addedRequirementsExplanation = new JTextArea();
-		addedRequirementsExplanation.setText("After adding and/or importing a requirement, the "
-				+ "requirements show up in a list of Current Requirements. Selecting a requirement will"
+		addedRequirementsExplanation.setText("After adding any requirements they "
+				+ "will show up in the list of Current Requirements. Selecting a requirement will "
 				+ "allow you to edit the requirement or remove it from the list. Only manually created "
 				+ "requirements can be edited.");
 		
@@ -195,9 +195,8 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		updateRequirementsExplanation = new JTextArea();
 		updateRequirementsExplanation.setText("Manually created requirements can be edited "
 				+ "after selecting it from the Current Requirements list and clicking the edit "
-				+ "button. You can change both the name and description of the requirement and to "
-				+ "save the changes, click the Update button. The Create button is disabled in this "
-				+ "mode. The Update button can only be used if there are changes to the requirement. "
+				+ "button. You can change both the name and description of the requirement. "
+				+ "To save your changes, click the Update button. "
 				+ "If you want to discard the changes you made, hitting the Cancel button will bring "
 				+ "you back to the Current Requirements list without any of your changes saved.");
 		

@@ -20,28 +20,36 @@ import javax.swing.JTextField;
 import javax.swing.border.Border;
 
 /**
- * creates a textbox which allows a user to input a name for a game.
- * the textbox cannot be empty when creating a new game and makes sure to check it
+ * creates a textbox which allows a user to input a name for a game. the textbox
+ * cannot be empty when creating a new game and makes sure to check it
+ * 
  * @author Bobby Drop Tables
- *
+ * 
  */
 public class NameJTextField extends CustomJTextField implements IDataField {
-	//These can  be accessed externally in order to allow the user to debug and check for errors easier
-	/** The text error placed on an IErrorField when the name is longer than 100 characters */
+	// These can be accessed externally in order to allow the user to debug and
+	// check for errors easier
+	/**
+	 * The text error placed on an IErrorField when the name is longer than 100
+	 * characters
+	 */
 	public static final String STRING_ERROR_NAMELONG = "Name can be no more than 100 chars.";
-	
+
 	/** The text error placed on an IErrorField when the name empty */
 	public static final String STRING_ERROR_BLANK = "Name is required";
-	
+
 	/** The */
 	public static final Border DEFAULTBORDER = (new JTextField()).getBorder();
-	public static final Border ERRORBORDER = BorderFactory.createLineBorder(Color.RED);
-	
+	public static final Border ERRORBORDER = BorderFactory
+			.createLineBorder(Color.RED);
+
 	private String startingText;
 
 	/**
 	 * initializes the textbox with a specific string
-	 * @param text the initialized text for the textbox
+	 * 
+	 * @param text
+	 *            the initialized text for the textbox
 	 */
 	public NameJTextField(String text) {
 		super(text);
@@ -51,7 +59,9 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 
 	/**
 	 * initializes the textbox to have a specific number of columns
-	 * @param size the number of columns the textbox has
+	 * 
+	 * @param size
+	 *            the number of columns the textbox has
 	 */
 	public NameJTextField(int size) {
 		super(size);
@@ -64,43 +74,41 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 	public NameJTextField() {
 		startingText = "";
 	}
-	
-	@Override
-	public void setText(String text){
-		super.setText(text);
-	}
 
 	/**
 	 * adds a key listener that will update buttons based on this data field
 	 */
-	public void addKeyListener(final IValidateButtons parent){
-		this.addKeyListener(new KeyAdapter(){
-			public void keyReleased(KeyEvent arg0) {	
+	public void addKeyListener(final IValidateButtons parent) {
+		this.addKeyListener(new KeyAdapter() {
+			public void keyReleased(KeyEvent arg0) {
 				parent.updateButtons();
 			}
 		});
 	}
-	
+
 	@Override
-	public boolean validateField(IErrorView errorField, boolean showLabel, boolean showBox) {
+	public boolean validateField(IErrorView errorField, boolean showLabel,
+			boolean showBox) {
 		boolean isNameValid = false;
-		
+
 		if (getText().length() >= 100) {
 			isNameValid = false;
-			if(showLabel){
-				if(errorField != null) errorField.setText(STRING_ERROR_NAMELONG);
+			if (showLabel) {
+				if (errorField != null) {
+					errorField.setText(STRING_ERROR_NAMELONG);
+				}
 			}
-			if(showBox){
+			if (showBox) {
 				this.setBorder(ERRORBORDER);
 			}
-			
+
 		} else if (getText().length() <= 0) {
 			isNameValid = false;
-			if(errorField != null){
-				if(showLabel){
+			if (errorField != null) {
+				if (showLabel) {
 					errorField.setText(STRING_ERROR_BLANK);
 				}
-				if(showBox){
+				if (showBox) {
 					this.setBorder(ERRORBORDER);
 				}
 			}
@@ -116,7 +124,7 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 	public boolean hasChanges() {
 		return !getText().equals(startingText);
 	}
-	
+
 	public void setStartingText(String newStarting) {
 		this.startingText = newStarting;
 	}

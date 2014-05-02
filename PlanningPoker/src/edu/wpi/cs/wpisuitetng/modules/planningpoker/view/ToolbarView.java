@@ -11,7 +11,6 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view;
 
-import javax.swing.JButton;
 import javax.swing.SpringLayout;
 
 import edu.wpi.cs.wpisuitetng.janeway.gui.container.toolbar.DefaultToolbarView;

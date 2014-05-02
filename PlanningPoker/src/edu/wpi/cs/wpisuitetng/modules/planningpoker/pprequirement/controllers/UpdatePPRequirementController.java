@@ -11,8 +11,6 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers.UpdateGameRequestObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers.UpdatePPRequirementRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;

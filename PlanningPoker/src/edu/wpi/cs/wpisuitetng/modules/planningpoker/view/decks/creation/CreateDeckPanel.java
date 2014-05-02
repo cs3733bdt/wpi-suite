@@ -122,6 +122,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
+	
+	private final boolean isReopen;
 
 	/**
 	 * an initial red card to be added to the view as a default starting deck
@@ -145,11 +147,13 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	private Deck deck;
 
 	public CreateDeckPanel() {
+		isReopen = false;
 		cardsPanel2 = new CardPanel(this);
 		build();
 	}
 
 	public CreateDeckPanel(Deck deck) {
+		isReopen = true;
 		cardsPanel2 = new CardPanel(this);
 		build();
 		buildFields(deck);
@@ -265,7 +269,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		numCards = new NumberJTextField(10);
 		numCards.setPreferredSize(new Dimension(40,22));
 		numCards.setText("1");
-		numCards.setMaxValue(24);
+		numCards.setMaxValue(15);
+		numCards.setMinValue(1);
 		numCards.addKeyListener(this);
 		//initializeArrayList();
 		//Selection mode is now enabled by default
@@ -341,7 +346,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 				colorDropDown, 0, SpringLayout.EAST, submitNumCards);
 
 		/* Checkbox for I Dont Know button */
-		JLabel checkboxLabel = new JLabel("Have 'I Don't Know Button'?");
+		JLabel checkboxLabel = new JLabel("Have 'I Don't Know' Card?");
 		iDontKnowCheck = new JCheckBox();
 		iDontKnowCheck.setSelected(true);
 		iDontKnowCheck.addActionListener(new ActionListener() {
@@ -570,15 +575,14 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	}
 
 	/**
-	 * Checks to make sure the number of cards inputted is 1-24
+	 * Checks to make sure the number of cards inputted is 1-15
 	 * 
 	 * @return true if a valid input
 	 */
 	private boolean verifyNumberOfCards() {
 		String text = numCards.getText();
 		String allowedChars = "123456789";
-		String allowedChars1 = "01234";
-		String allowedChars2 = "0123456789";
+		String allowedChars1 = "012345";
 		if (text.length() == 0) {
 			return false;
 		}
@@ -588,18 +592,14 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 				return true;
 			}
 		}
-		/* Checks to see if the number is 10-24 */
+		/* Checks to see if the number is 10-15 */
 		if (text.length() == 2) {
-			if (text.charAt(0) == '2') {
+			if (text.charAt(0) == '1') {
 				if (allowedChars1.contains(Character.toString(text.charAt(1)))) {
 					return true;
 				}
 			}
-			if (text.charAt(0) == '1') {
-				if (allowedChars2.contains(Character.toString(text.charAt(1)))) {
-					return true;
-				}
-			}
+			/* Checks to see if the number is 01-09 */
 			if (text.charAt(0) == '0') {
 				if (allowedChars.contains(Character.toString(text.charAt(1)))) {
 					return true;
@@ -690,7 +690,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 			public void mouseClicked(MouseEvent arg0) {
 				if (!submitNumCards.isEnabled()) {
 					numCards.validateField(errorField, true, true);
-					//errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 24");
+					//errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 15");
 				} else {
 				}// it will perform the action listener
 			}
@@ -813,5 +813,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 				descriptionTextField.getText(), cardsPanel2.getCardValues(), true,
 				determineDeckColor());
 		return deck;
+	}
+
+	/**
+	 * @return the isReopen
+	 */
+	public boolean isReopen() {
+		return isReopen;
 	}
 }

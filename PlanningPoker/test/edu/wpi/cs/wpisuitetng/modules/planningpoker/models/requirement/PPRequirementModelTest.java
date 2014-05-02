@@ -12,17 +12,21 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.models.requirement;
 
 import static org.junit.Assert.*;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 public class PPRequirementModelTest {
-
+	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	PPRequirementModel model;
 	PPRequirement req1, req2, req3, req4, req5;
 	PPRequirement[] reqsArray;
@@ -64,12 +68,12 @@ public class PPRequirementModelTest {
 	public void getRequirementTest() {
 		assertEquals(req1, model.getRequirement(1));
 		assertEquals(req2.getName(), model.getRequirement(2).getName());
-		assertEquals(req1, model.getRequirement("Requirement1"));
-		assertEquals(req2, model.getRequirement("Requirement2"));
+		assertEquals(req1, model.getRequirement("Requirement1", "Description1"));
+		assertEquals(req2, model.getRequirement("Requirement2", "Descripntion2"));
 	}
 	
 	@Test
-	public void removeRequirementTest() {
+	public void removeRequirementTest(){
 		model.emptyModel();
 		model.addRequirement(req2);
 		model.addRequirement(req1);
@@ -77,14 +81,12 @@ public class PPRequirementModelTest {
 		assertEquals(1, model.getSize());
 		model.removeRequirement(1);
 		assertEquals(0, model.getSize());
-		
-		// We are trying to reach a requirement which does not exist so
-		// a null pointer is expected
 		try {
-			model.getRequirement(1);
-		} catch(NullPointerException e) {
+		model.getRequirement(1);
+		} catch (NullPointerException e) {
 			assertEquals(0, model.getSize());
-		}	
+			logger.log(Level.FINEST, "An exception is expected since the requirement does not exist.", e);
+		}
 	}
 	
 	@Test
