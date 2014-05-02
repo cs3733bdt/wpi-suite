@@ -89,14 +89,14 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		facebookHelppic = addImage("facebook_preferences1.png");
 		
 		//Add label to explanation for facebook
-		facebookHelpHeading = new JLabel("Updating Facebook");
+		facebookHelpHeading = new JLabel("Updating Facebook Username");
 		facebookHelpHeading.setFont(makeFont(5));
 		
 		//Add explanation for the second image, the Facebook help
 		facebookHelpExplanation = new JTextArea();
 		facebookHelpExplanation.setText("This window allows you to choose whether or not you "
 				+ "want to be notified by Facebook messages and allows you to add or update "
-				+ "your Facebook username. The username must be a valid email address before "
+				+ "your Facebook username. The username must be a valid username before "
 				+ "it can be added or updated.");
 		
 		facebookHelpExplanation.setEditable(false);
