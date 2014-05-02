@@ -78,8 +78,9 @@ public class DeckOverview extends JSplitPane {
 		ppExplanation = new JTextArea();
 		ppExplanation.setText("A Deck in Planning Poker is a set of cards that is "
 				+ "used when voting on requirements. On each card is a number "
-				+ "that when selected, is added to a total. The user can continue "
-				+ "adding cards to their total and then submit their estimation"
+				+ "that when selected, is added to a total. The user can either select "
+				+ "a single card or "
+				+ "add cards to a total and then submit that total as their estimation"
 				+ "for the requirement.");
 		
 		ppExplanation.setEditable(false);
@@ -118,9 +119,22 @@ public class DeckOverview extends JSplitPane {
 		createDeckLabel = new JLabel("Creating a deck");
 		createDeckLabel.setFont(bigFont);
 		
-		// Adds text area describing how to create a planning poker game
+		// Adds text area describing how to create a planning poker deck
 		createDeckExp = new JTextArea();
-		createDeckExp.setText("This is probably where actually useful information would go.");
+		createDeckExp.setText("To create a custom deck, click the Create Deck button in the upper toolbar. "
+				+ "Decks must have a name, though a description is optional. You can choose whether or not "
+				+ "the deck is single selection or multiple selection. Single selection means that when "
+				+ "voting, users will only be able to choose one card tto submit their vote. Multiple "
+				+ "selection means that multiple cards can be slected to create a total. That total can "
+				+ "be submitted as the user's vote. You can have up to 15 cards in a single deck. To set "
+				+ "a value for a card in the deck, just click on the card and type an integer into the "
+				+ "given textbox. You may change card's value by clicking on the card and re-typing a "
+				+ "number. You can also have the "
+				+ "option to include a ? in the deck. The ? represents I Don't Know. If a user is not sure "
+				+ "how long a requirement will take, they can set that card as their submission. "
+				+ "You may also choose one of five colors for the back of cards, red is the default, blue "
+				+ "green, yellow and purple. Once "
+				+ "all of the cards have values associated with them, the deck can be saved.");
 		
 
 		createDeckExp.setEditable(false);
