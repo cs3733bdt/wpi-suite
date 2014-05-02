@@ -30,7 +30,7 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  * @author Chris Knapp
  */
 public class UpdateGameRequestObserver implements RequestObserver {
-	private static Logger logger = Logger.getLogger(AbstractStorageModel.class
+	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
 			.getName());
 	/**
 	 * We don't actually use the controller, in the defect tracker they use it

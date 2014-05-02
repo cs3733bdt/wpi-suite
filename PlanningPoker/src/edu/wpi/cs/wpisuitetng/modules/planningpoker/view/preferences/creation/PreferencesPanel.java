@@ -50,7 +50,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
  *
  */
 public class PreferencesPanel extends JScrollPane implements IDataField, IPreferencesPanel {
-	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
+	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	JPanel emailPanel;
 
 	JPanel mobilePanel;

@@ -40,7 +40,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
  *
  */
 public class GameOverview extends JSplitPane {
-	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
+	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	JLabel ppIntroLabel;
 	Font bigFont;
 	JTextArea ppExplanation;

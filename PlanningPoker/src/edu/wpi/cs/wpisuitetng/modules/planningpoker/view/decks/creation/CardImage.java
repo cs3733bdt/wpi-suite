@@ -61,7 +61,7 @@ public class CardImage extends JPanel implements IDataField{
 	
 	private CardPanel parent;
 	
-	private static Logger logger = Logger.getLogger(CardImage.class.getName());
+	private static final Logger logger = Logger.getLogger(CardImage.class.getName());
 	
 	
 	

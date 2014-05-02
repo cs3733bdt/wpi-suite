@@ -40,7 +40,7 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  *
  */
 public class GameTest {
-	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
+	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	@Before
 	public void setUp() throws Exception {
 		Network.initNetwork(new MockNetwork());

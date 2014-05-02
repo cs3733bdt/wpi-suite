@@ -54,7 +54,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 public class StatisticsPanel extends JScrollPane implements IDataField {
 	Game activeGame;
 	PPRequirement activeRequirement;
-	private static Logger logger = Logger.getLogger(AbstractStorageModel.class
+	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
 			.getName());
 	/**
 	 * Set the userStoryDesc equal to the description of the requirement being

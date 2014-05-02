@@ -30,7 +30,7 @@ public class TransactionHistory {
 	 */
 	public TransactionHistory()
 	{
-		this.history = new LinkedList<Transaction>();
+		history = new LinkedList<Transaction>();
 	}
 	
 	/**
@@ -39,7 +39,7 @@ public class TransactionHistory {
 	
 	 * @return the iterator containing all the elements of the list */
 	public ListIterator<Transaction> getIterator(int index){
-		return this.history.listIterator(index);
+		return history.listIterator(index);
 	}
 	
 	/**
@@ -47,7 +47,7 @@ public class TransactionHistory {
 	
 	 * @return the linked list of transactions */
 	public LinkedList<Transaction> getHistory(){
-		return this.history;
+		return history;
 	}
 	
 	/**
@@ -58,7 +58,7 @@ public class TransactionHistory {
 	 * @return the transaction that was just added to the history */
 	
 	public Transaction add(String msg){
-		long time = this.TimeStamp;
+		long time = TimeStamp;
 		String user = ConfigManager.getConfig().getUserName();
 		Transaction newTransaction = new Transaction(user, time, msg);
 		history.add(newTransaction);
@@ -71,7 +71,7 @@ public class TransactionHistory {
 	
 	 * @return the Transaction at the index given by the parameter */
 	public Transaction getItem(int index){
-		return this.history.get(index);
+		return history.get(index);
 	}
 	
 	/**
@@ -79,7 +79,7 @@ public class TransactionHistory {
 	
 	 * @return TimeStamp */
 	public long getTimestamp() {
-		return this.TimeStamp;
+		return TimeStamp;
 	}	
 	
 	/**
@@ -87,6 +87,6 @@ public class TransactionHistory {
 	 * @param ts
 	 */
 	public void setTimestamp (long ts) {
-		this.TimeStamp = ts;
+		TimeStamp = ts;
 	}	
 }
