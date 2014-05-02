@@ -341,7 +341,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 				colorDropDown, 0, SpringLayout.EAST, submitNumCards);
 
 		/* Checkbox for I Dont Know button */
-		JLabel checkboxLabel = new JLabel("Have 'I Don't Know Button'?");
+		JLabel checkboxLabel = new JLabel("Have 'I Don't Know' Card?");
 		iDontKnowCheck = new JCheckBox();
 		iDontKnowCheck.setSelected(true);
 		iDontKnowCheck.addActionListener(new ActionListener() {
