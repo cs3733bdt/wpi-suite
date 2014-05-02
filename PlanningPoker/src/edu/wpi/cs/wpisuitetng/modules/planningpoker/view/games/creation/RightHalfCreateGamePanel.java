@@ -589,8 +589,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 						if (currentTable.getSelectedRowCount() == 0) {
 							editReqButton.setEnabled(false);
 							removeReqButton.setEnabled(false);
-						} else if (currentTable.getSelectedRowCount() > 1) {
-							editReqButton.setEnabled(false);
+						} else if (currentTable.getSelectedRowCount() > 0) {
+							editReqButton.setEnabled(true);
 							removeReqButton.setEnabled(true);
 						} else {
 							editReqButton.setEnabled(true);
@@ -602,7 +602,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 						for (int i = 0; i < rows.length; i++) {
 							selectedName = (String) currentTable.getValueAt(
 									rows[i], 0);
-//							if (false){//PPRequirementModel.getInstance().getRequirement(selectedName) != null) { //TODO this line always returns false. fix it if you wrote it. 
+//							if (PPRequirementModel.getInstance().getRequirement(selectedName) != null) { //TODO this line always returns false. fix it if you wrote it. 
 //								hasImported = true;
 //							}
 						}
@@ -814,7 +814,6 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			for (PPRequirement r : parent.getGame().getRequirements()) {
 				addRequirement(r);
 			}
-			currentTable.setRowSelectionInterval(0, 0);
 		}
 	}
 
@@ -967,7 +966,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	private void updateUpdateButton() {
 		if (validateNameAndDesc(true, false) && updateValid()) {
 			updateAddReqButton.setEnabled(true);
-			displayError("{0}");
+			displayError("");
 		} else if (!updateValid()) {
 			updateAddReqButton.setEnabled(false);
 			displayError("No changes have been made");
@@ -977,7 +976,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			if (errorLabel.getText().equals("A requirement already exists with that name")) {
 				if (nameArea.getText().equals((String) currentTable.getValueAt(globalRow, 0))) {
 					updateAddReqButton.setEnabled(true);
-					displayError("8====D");
+					displayError("");
 				}
 			}
 		}
