@@ -371,7 +371,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 												// the panel stretches with the
 												// right side of the container
 
-		layout.putConstraint(SpringLayout.NORTH, deckDropDownPanel, 0,
+		layout.putConstraint(SpringLayout.NORTH, deckDropDownPanel, -2,
 				SpringLayout.SOUTH, estimateSelectionPanel); // Adds the deck
 																// dropdown and
 																// label panel
@@ -387,7 +387,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 												// the panel stretches with the
 												// right side of the container
 
-		layout.putConstraint(SpringLayout.NORTH, endDateField, 10,
+		layout.putConstraint(SpringLayout.NORTH, endDateField, 5,
 				SpringLayout.SOUTH, deckDropDownPanel); // Adds the end date
 														// field underneath the
 														// radio buttons panel
@@ -412,14 +412,14 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 												// the panel stretches with the
 												// right side of the container
 
-		layout.putConstraint(SpringLayout.NORTH, errorField, 3,
+		layout.putConstraint(SpringLayout.NORTH, errorField, 1,
 				SpringLayout.SOUTH, buttonPanel);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, errorField, 5,
 				SpringLayout.HORIZONTAL_CENTER, leftView);
 
 		setMinimumSize(new Dimension(333, 115)); // Sets the minimum size of the
 													// left half view
-		leftView.setPreferredSize(new Dimension(410, 450)); // Sets the size of
+		leftView.setPreferredSize(new Dimension(360, 445)); // Sets the size of
 															// the view
 
 		revalidate();
@@ -644,16 +644,16 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 
 	private void setDeckOptionsVisibility() {
 		if (cardsButton.isSelected()) {
-			leftView.setPreferredSize(new Dimension(410, 455));
+			leftView.setPreferredSize(new Dimension(360, 445));
 			deckDropDownPanel.setVisible(true);
-			layout.putConstraint(SpringLayout.NORTH, endDateField, 10,
+			layout.putConstraint(SpringLayout.NORTH, endDateField, 5,
 					SpringLayout.SOUTH, deckDropDownPanel);
 			revalidate();
 			repaint();
 		} else {
-			leftView.setPreferredSize(new Dimension(410, 420));
+			leftView.setPreferredSize(new Dimension(360, 410));
 			deckDropDownPanel.setVisible(false);
-			layout.putConstraint(SpringLayout.NORTH, endDateField, 10,
+			layout.putConstraint(SpringLayout.NORTH, endDateField, 5,
 					SpringLayout.SOUTH, estimateSelectionPanel);
 			revalidate();
 			repaint();
