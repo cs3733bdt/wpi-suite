@@ -38,7 +38,7 @@ public class AddGameRequestObserver implements RequestObserver {
 	 */
 	private final AddGameController controller;
 	private final Game theGame;
-	private static Logger logger = Logger.getLogger(AbstractStorageModel.class
+	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
 			.getName());
 
 	/**

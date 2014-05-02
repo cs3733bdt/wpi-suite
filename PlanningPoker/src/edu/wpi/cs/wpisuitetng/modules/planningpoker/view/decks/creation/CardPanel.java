@@ -26,7 +26,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
 public class CardPanel extends JPanel implements IDataField {
 	
-	private static Logger logger = Logger.getLogger(CardPanel.class.getName());
+	private static final Logger logger = Logger.getLogger(CardPanel.class.getName());
 	
 	private CardPanel instance;
 	
