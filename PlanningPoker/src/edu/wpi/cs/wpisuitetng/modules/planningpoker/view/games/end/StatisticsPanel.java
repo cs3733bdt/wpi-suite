@@ -36,6 +36,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
@@ -484,24 +485,9 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 				ppr.setFinalEstimate(newEstimate);
 				ppr.notifyObservers();
 				if (ppr.getFromRequirementModule()) {
-					// Get requirement from requirement manager with that requirement id
-					RequirementModel rModel = RequirementModel.getInstance();
-					GetRequirementsController.getInstance().retrieveRequirements();
-					// Sleep to wait for retrieve to finish
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e1) {
-						e1.printStackTrace();
-					}
-					try {
-						// Set new estimate (the ppr.getid() - 1 is for translating between
-						// our requirement id's and the requirement manager's)
-						rModel.getRequirement((ppr.getId() - 1)).setEstimate(newEstimate);
-						// Send updated requirement to server
-						UpdateRequirementController.getInstance().updateRequirement(rModel.getRequirement((ppr.getId() - 1)));
-					} catch(NullPointerException e) {
-						// The requirement doesn't exist
-					}
+					sendEstimateToManager(ppr, newEstimate);
+				} else {
+					sendRequirementToManager(ppr, newEstimate);
 				}
 				
 				finalEstimateMessage.setForeground(Color.BLUE);
@@ -511,6 +497,60 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 		finalEstimateDisplay.setText("Your Current Final Estimate is: " + newEstimate);
+	}
+	
+	private void sendEstimateToManager(PPRequirement req, int estimate) {
+		// Get requirement from requirement manager with that requirement id
+		RequirementModel rModel = RequirementModel.getInstance();
+		GetRequirementsController.getInstance().retrieveRequirements();
+		// Sleep to wait for retrieve to finish
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
+		try {
+			// Set new estimate (the ppr.getid() - 1 is for translating between
+			// our requirement id's and the requirement manager's)
+			rModel.getRequirement((req.getId() - 1)).setEstimate(estimate);
+			// Send updated requirement to server
+			UpdateRequirementController.getInstance().updateRequirement(rModel.getRequirement((req.getId() - 1)));
+		} catch(NullPointerException e) {
+			// The requirement doesn't exist
+		}
+	}
+	
+	private void sendRequirementToManager(PPRequirement req, int estimate) {
+		int nextId = 0;
+		RequirementModel rModel = RequirementModel.getInstance();
+		GetRequirementsController.getInstance().retrieveRequirements();
+		// Sleep to wait for retrieve to finish
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		// Find next id that can be added
+		// and check to see if a requirement exists
+		// with the same name and description
+		for (Requirement r: rModel.getRequirements()) {
+			if (r.getId() > nextId)
+				nextId = r.getId() + 1;
+			// Break out if already exists in manager
+			if (r.getName().equals(req.getName()) && r.getDescription().equals(req.getDescription())) {
+				// TODO: Do Logger Message
+				return;
+			}
+		}
+
+		// Get new requirement to be added ready
+		Requirement newReq = new Requirement(nextId, req.getName(), req.getDescription());
+		newReq.setEstimate(estimate);
+		// Send Requirement to requirement manager
+		AddRequirementController.getInstance().addRequirement(newReq);
+		// Now exists in the requirement module/manager
+		req.setFromRequirementModule(true);
+		req.notifyObservers();
 	}
 	
 	private boolean verifyFinalEstimateField() {
