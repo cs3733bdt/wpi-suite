@@ -776,9 +776,9 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	}
 
 	private boolean validateNameAndDesc(boolean showLabel, boolean showBox) {
-		boolean descriptionValid = false;
-		boolean nameValid = false;
-		boolean uniqueName = false;
+		boolean descriptionValid = true;
+		boolean nameValid = true;
+		boolean uniqueName;
 		boolean returnBoolean;
 
 		if (checkduplicateReq(new PPRequirement(nameArea.getText(),
@@ -786,44 +786,39 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			uniqueName = false;
 			displayError("A requirement already exists with that name");
 		} else {
-			errorLabel.setText("");
+			displayError("");
 			uniqueName = true;
 		}
-
-		if (descArea.getText().equals("")) {
-			displayError("Description is required");
-			if (showBox) {
-				descArea.setBorder(errorBorder);
-			}
+		
+		if (descArea.getText().isEmpty()) {
+			if (showLabel){ displayError("Description is required"); }
+			if (showBox) { descArea.setBorder(errorBorder); }
 			descriptionValid = false;
-		} else {
-			descArea.setBorder(defaultTextAreaBorder);
-			descriptionValid = true;
+			System.out.println(descriptionValid + "descValid");
 		}
-
-		if (nameArea.getText().equals("")) {
-			displayError("Name is required");
-			if (showBox) {
-				nameArea.setBorder(errorBorder);
-			}
-			descArea.setBorder(defaultTextAreaBorder);
+		
+		if (nameArea.getText().isEmpty()) {
+			if (showLabel){ displayError("Name is required"); }
+			if (showBox) { nameArea.setBorder(errorBorder); }
 			nameValid = false;
-		} else {
-			nameArea.setBorder(defaultTextFieldBorder);
-			nameValid = true;
+		}
+		
+		if (!nameValid && !descriptionValid) {
+				displayError("Name and Description are required");
 		}
 		nameValid = nameArea.validateField(errorLabel, showLabel, showBox);
 
 		returnBoolean = nameValid && descriptionValid && uniqueName;
 		System.out.println("Return boolean:" + returnBoolean);
+		
 		if (returnBoolean) {
 			errorLabel.setText("");
 		}
 
 		if (!showLabel) {
 			errorLabel.setText("");
-			nameArea.setBorder(defaultTextFieldBorder);
-			descArea.setBorder(defaultTextAreaBorder);
+			//nameArea.setBorder(defaultTextFieldBorder);
+			//descArea.setBorder(defaultTextAreaBorder);
 		}
 		
 		return returnBoolean;
@@ -832,6 +827,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	private void displayError(String errorString) {
 		errorLabel.setForeground(Color.RED);
 		errorLabel.setText(errorString);
+		revalidate();
+		repaint();
 	}
 
 	/**
@@ -993,7 +990,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	}
 
 	private void updateUpdateButton() {
-		if (validateNameAndDesc(true, false) && updateValid()) {
+		if (validateNameAndDesc(false, true) && updateValid()) {//TODO figure out these branches. I don't think validateNameAndDesc is necessary here
 
 			System.out.println("First branch of updateupdate");
 			updateAddReqButton.setEnabled(true);
@@ -1005,7 +1002,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 		} else {
 			System.out.println("Third branch of updateupdate");
 			updateAddReqButton.setEnabled(false);
-			if (updateValid() && validateNameAndDescForUpdate()) {
+			if (updateValid() && validateNameAndDescForUpdate(false,true)) {
 				if (nameArea.getText().equals((String) currentTable.getValueAt(globalRow, 0))) {
 					updateAddReqButton.setEnabled(true);
 					displayError("");
@@ -1014,29 +1011,47 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 		}
 	}
 
-	private boolean validateNameAndDescForUpdate() {
+	/**
+	 * validates the name and description when a requirement is being edited. 
+	 * This is called in the updateupdatebutton function
+	 * @param showLabel show the error label with appropriate message
+	 * @param showBox show the error box around the appropriate field
+	 * @return
+	 */
+	private boolean validateNameAndDescForUpdate(boolean showLabel, boolean showBox) {
 		boolean returnStatus = true;
-		if (nameArea.getText().isEmpty()) {
-			displayError("Name is required");
-			returnStatus = false;
-		}
 		if (descArea.getText().isEmpty()) {
-			displayError("Description is required");
+			if (showLabel){ displayError("Description is required"); }
+			if (showBox) { descArea.setBorder(errorBorder); }
 			returnStatus = false;
 		}
+		
+		if (nameArea.getText().isEmpty()) {
+			if (showLabel){ displayError("Name is required"); }
+			if (showBox) { nameArea.setBorder(errorBorder); }
+			returnStatus = false;
+		}
+		
+		if (returnStatus) {
+			nameArea.setBorder(defaultTextFieldBorder);
+			descArea.setBorder(defaultTextAreaBorder);
+		}
+		
+		nameArea.validateField(errorLabel, showLabel, showBox);
+		
 		return returnStatus;
 	}
 
 	private void updateSubmitButton() {
-		if (validateNameAndDesc(true, false)) {
+		if (validateNameAndDesc(true, true)) {
 			submitAddReqButton.setEnabled(true);
 		} else {
 			submitAddReqButton.setEnabled(false);
 		}
 	}
 
-	/*
-	 * Returns true if the current update is different from the stored value
+	/**
+	 * @return true if the current update is different from the stored value
 	 */
 	private boolean updateValid() {
 		String updateName = nameArea.getText();
