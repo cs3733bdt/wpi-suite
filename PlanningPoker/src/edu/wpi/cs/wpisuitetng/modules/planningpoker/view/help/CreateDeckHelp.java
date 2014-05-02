@@ -60,10 +60,10 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		//Add explanation for setting up cards
 		setUpCardsExplanation = new JTextArea();
 		setUpCardsExplanation.setText("To start making a deck you have to enter the Name of the deck "
-				+ "you want created, and optionally, you can enter a Description of that deck.  The selection Type allows "
+				+ "you want created, and optionally, you can enter a Description of that deck. The Selection Type allows "
 				+ "you to be able to select either multiple cards or just a single card when voting. Selecting multiple cards "
-				+ "adds up all of the cards that yo select and puts that as your total.  The next step is to select the muber of cards that you want in your deck,"
-				+ "and then it gives you the option of changing the color of your cards."
+				+ "adds up all of the cards that yo select and puts that as your total. The next step is to select the muber of cards that you want in your deck,"
+				+ " and then it gives you the option of changing the color of your cards. "
 				+ "Finally you can choose whether or not to have an 'I dont know' button as an option when voting.");
 
 		setUpCardsExplanation.setEditable(false);
@@ -72,7 +72,7 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		setUpCardsExplanation.setLineWrap(true);
 
 		//Add label to explanation for adding values to cards
-		addingValuesToTheCardsHeading = new JLabel("Initialize the Deck");
+		addingValuesToTheCardsHeading = new JLabel("Adding Values");
 		addingValuesToTheCardsHeading.setFont(makeFont(5));
 
 		//Add value pic to the image panel;
@@ -80,10 +80,10 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 
 		//Add explanation for adding values to the cards
 		addingValuesToTheCardsExplanation = new JTextArea();
-		addingValuesToTheCardsExplanation.setText("After the initialization of the deck you will see the cards appear"
+		addingValuesToTheCardsExplanation.setText("After the initialization of the deck you will see the cards appear. "
 				+ "To add a value to a card select the text field that is on the card"
-				+ "and enter the desired value for that card.  To set this value to the card all you have to do is "
-				+ "unselect the card");
+				+ "and enter the desired value for that card. To set this value to the card all you have to do is "
+				+ "deselect the card");
 
 		addingValuesToTheCardsExplanation.setEditable(false);
 		addingValuesToTheCardsExplanation.setBackground(null);
@@ -116,7 +116,7 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		layout.putConstraint(SpringLayout.WEST, setUpCardsExplanation, 20, SpringLayout.EAST, setUpCardspic);
 
 		// adding values to the cards
-		layout.putConstraint(SpringLayout.NORTH, addingValuesToTheCardsHeading, 5, SpringLayout.SOUTH, setUpCardspic);
+		layout.putConstraint(SpringLayout.NORTH, addingValuesToTheCardsHeading, 20, SpringLayout.SOUTH, setUpCardspic);
 		layout.putConstraint(SpringLayout.WEST, addingValuesToTheCardsHeading, 20, SpringLayout.WEST, view);
 		
 		layout.putConstraint(SpringLayout.NORTH, addingValuesToTheCardspic, 20, SpringLayout.SOUTH, addingValuesToTheCardsHeading);

@@ -45,6 +45,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
@@ -248,7 +251,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 				importReqButton.setEnabled(true);
 				globalRow = -1;
 				submitAddReqButton.setEnabled(false);
-				// enableButtons();
+				enableButtons();
 			}
 		});
 
@@ -602,12 +605,12 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 						for (int i = 0; i < rows.length; i++) {
 							selectedName = (String) currentTable.getValueAt(
 									rows[i], 0);
-							if (PPRequirementModel.getInstance().getRequirement(
-									selectedName) != null) {
-								hasImported = true;
-							}
+//							if (PPRequirementModel.getInstance().getRequirement(selectedName) != null) { //TODO this line always returns false. fix it if you wrote it. 
+//								hasImported = true;
+//							}
 						}
 						if (hasImported) {
+							System.out.println("unexpected edit button disable 2");
 							editReqButton.setEnabled(false);
 						}
 
@@ -638,8 +641,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 		}
 
 		// Add the Requirements from the Requirement Manager to the model
-		RetrievePPRequirementController controller = RetrievePPRequirementController.getInstance();
-		controller.retrieveRequirements();
+		RetrievePPRequirementController.getInstance().retrieveRequirements();
+		GetRequirementsController.getInstance().retrieveRequirements();
 
 		// Sleep the thread for a little bit to ensure that
 		// the requirements get added to the model before
@@ -650,14 +653,11 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			e.printStackTrace();
 		}
 
-		// Get the requirements from the model
-		List<PPRequirement> requirements = PPRequirementModel.getInstance().getRequirements();
-
 		// Add the imported requirements to the table
-		for (PPRequirement r : requirements) {
-			if (r.getFromRequirementModule()) {
-				// Don't allow duplicate requirements
-				if (!r.existsIn(this.requirements)){
+		for (Requirement r : RequirementModel.getInstance().getRequirements()) {
+			if (r.getEstimate() == 0) {
+				// Don't allow duplicate requirements in table
+				if (!containsReq(r)) {
 					importTable.getTableModel().addRow(new Object[] { r.getName(), r.getDescription() });
 				}
 			}
@@ -674,6 +674,23 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	}
 
 	private void submitButtonPressed() {
+		// Get requirements from manager
+		GetRequirementsController.getInstance().retrieveRequirements();
+		// Sleep to make sure retrieve finishes
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		// Check to see if requirement exists in manager
+		for (Requirement r: RequirementModel.getInstance().getRequirements()) {
+			if (r.getName().equals(nameArea.getText()) && r.getDescription().equals(descArea.getText())) {
+				// TODO: error message not working on this branch
+				displayError("Requirement already exists in Requirement Manager.");
+				return;
+			}
+		}
+		// Submit requirement
 		if (validateNameAndDesc(true, true)) {
 			addRequirement(new PPRequirement(nameArea.getText(),
 					descArea.getText()));
@@ -689,6 +706,14 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			parent.updateButtons();
 			displayError("");	
 		}
+	}
+	
+	private boolean containsReq(Requirement req) {
+		for (PPRequirement ppr: requirements) {
+			if (ppr.getName().equals(req.getName()) && ppr.getDescription().equals(req.getDescription()))
+				return true;
+		}
+		return false;
 	}
 
 	private void updateButtonPressed() {
@@ -718,6 +743,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	private void enableButtons() {
 		addReqButton.setEnabled(true);
 		importReqButton.setEnabled(true);
+		editReqButton.setEnabled(true); //TODO test
 		/*
 		 * removeReqButton.setEnabled(true); editReqButton.setEnabled(true);
 		 */
@@ -727,6 +753,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 		addReqButton.setEnabled(false);
 		importReqButton.setEnabled(false);
 		removeReqButton.setEnabled(false);
+		System.out.println("Unexpected edit disable 3");
 		editReqButton.setEnabled(false);
 	}
 
@@ -812,7 +839,6 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			for (PPRequirement r : parent.getGame().getRequirements()) {
 				addRequirement(r);
 			}
-			currentTable.setRowSelectionInterval(0, 0);
 		}
 	}
 
@@ -875,6 +901,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			}
 			if (currentTable.getTableModel().getRowCount() == 0) {
 				removeReqButton.setEnabled(false);
+				System.out.println("Unexpected edit disable 1");
 				editReqButton.setEnabled(false);
 			}
 			parent.updateButtons();
