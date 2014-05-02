@@ -42,10 +42,9 @@ public class GameModel extends AbstractStorageModel<Game> {
 
 	/** Stores the next ID */
 	private final int nextID;
-	
-	/** Stores the logger for the GameModel*/
-	private static Logger logger = Logger.getLogger(GameModel.class.getName());
 
+	/** Stores the logger for the GameModel */
+	private static Logger logger = Logger.getLogger(GameModel.class.getName());
 
 	/**
 	 * Constructs an empty list of games for the project. This is private in
@@ -79,17 +78,18 @@ public class GameModel extends AbstractStorageModel<Game> {
 		try {
 			AddGameController.getInstance().addGame(newGame);
 		} catch (NullPointerException e) {
-			logger.log(Level.WARNING, "Game: " + newGame.getName() + " could not be added", e);
-		} catch (Exception e){
-			logger.log(Level.WARNING, "Game: " + newGame.getName() + " could not be added", e);
+			logger.log(Level.WARNING, "Game could not be added", e);
+		} catch (Exception e) {
+			logger.log(Level.WARNING, "Game could not be added", e);
 		}
-		
+
 		try { // Prevents a null pointer exception when the running tests (the
 				// JPanel's aren't instantiated)
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "ViewEventController not fully initialized", e);
+			logger.log(Level.WARNING,
+					"ViewEventController not fully initialized", e);
 		}
 	}
 
@@ -105,7 +105,8 @@ public class GameModel extends AbstractStorageModel<Game> {
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "ViewEventController not fully initialized",e);
+			logger.log(Level.WARNING,
+					"ViewEventController not fully initialized", e);
 		}
 	}
 
@@ -156,11 +157,13 @@ public class GameModel extends AbstractStorageModel<Game> {
 				// active
 				// table
 			} catch (Exception e) {
-				logger.log(Level.WARNING, "ViewEventController not fully initialized.", e);
+				logger.log(Level.WARNING,
+						"ViewEventController not fully initialized.", e);
 			}
 		} else {
 		}
-		serverUpdating = false; //Duplicate just because we want to be sure that the lock disengages
+		serverUpdating = false; // Duplicate just because we want to be sure
+								// that the lock disengages
 	}
 
 	@Override
@@ -199,7 +202,8 @@ public class GameModel extends AbstractStorageModel<Game> {
 				ViewEventController.getInstance().refreshGameTable();
 				ViewEventController.getInstance().refreshGameTree();
 			} catch (Exception e) {
-				logger.log(Level.WARNING, "The network has not been instantiated.", e);
+				logger.log(Level.WARNING,
+						"The network has not been instantiated.", e);
 			}
 		} else {
 			System.err
@@ -214,7 +218,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 	 * @param id
 	 *            the UUID of the game to get
 	 * @return return game with UUID
-	 * @throws NotFoundException 
+	 * @throws NotFoundException
 	 */
 	public Game getGameById(UUID id) throws NotFoundException {
 		return getModelById(id);
