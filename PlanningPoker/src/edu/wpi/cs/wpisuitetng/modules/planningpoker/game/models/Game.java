@@ -340,7 +340,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			boolean usesCards, Date creationTime) {
 		this(name, description, requirements, hasTimeLimit, usesCards);
 		this.creationTime = creationTime;
-		this.complete = false;
+		complete = false;
 	}
 
 	/**

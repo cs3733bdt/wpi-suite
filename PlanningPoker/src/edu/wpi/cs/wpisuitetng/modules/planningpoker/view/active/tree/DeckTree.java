@@ -56,7 +56,7 @@ public class DeckTree extends JPanel implements MouseListener{
 	/**
 	 * Constructor for a DeckTree
 	 */
-	public DeckTree(){
+	private DeckTree(){
 		super(new GridBagLayout());
 		ViewEventController.getInstance().setDeckOverviewTree(this);
 		refresh();

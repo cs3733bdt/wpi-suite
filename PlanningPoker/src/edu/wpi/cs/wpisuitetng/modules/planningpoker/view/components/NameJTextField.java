@@ -113,7 +113,7 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 				}
 			}
 		} else {
-			errorField.setText("");
+			//errorField.setText("");
 			isNameValid = true;
 			this.setBorder(DEFAULTBORDER);
 		}
@@ -126,7 +126,7 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 	}
 
 	public void setStartingText(String newStarting) {
-		this.startingText = newStarting;
+		startingText = newStarting;
 	}
 
 }

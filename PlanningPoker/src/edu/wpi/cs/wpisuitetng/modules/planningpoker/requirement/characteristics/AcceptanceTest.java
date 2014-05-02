@@ -31,8 +31,8 @@ public class AcceptanceTest {
 	public AcceptanceTest(int id, String testName, String testDescription) {
 		this.setName(testName);
 		this.testDescription = testDescription;
-		this.testStatus = TestStatus.STATUS_BLANK;
-		this.testId = id;
+		testStatus = TestStatus.STATUS_BLANK;
+		testId = id;
 	}
 	
 	/**
@@ -40,7 +40,7 @@ public class AcceptanceTest {
 	
 	 * @return name name of the acceptance test */
 	public String getName() {
-		return this.testName;
+		return testName;
 	}
 	
 	/**
@@ -54,9 +54,9 @@ public class AcceptanceTest {
 		} else {
 			// Limits name to 100 characters
 			if (name.length() > 100) {
-				this.testName = name.substring(0, 100);
+				testName = name.substring(0, 100);
 			} else {
-				this.testName = name;
+				testName = name;
 			}
 		}
 	}
@@ -66,7 +66,7 @@ public class AcceptanceTest {
 	
 	 * @return description of the acceptance test */
 	public String getDescription() {
-		return this.testDescription;
+		return testDescription;
 	}
 	
 	/**
@@ -74,7 +74,7 @@ public class AcceptanceTest {
 	 * @param description description of the acceptance test
 	 */
 	public void setDescription(String description) {
-		this.testDescription = description;
+		testDescription = description;
 	}
 	
 	/**
@@ -82,7 +82,7 @@ public class AcceptanceTest {
 	
 	 * @return the ID of the acceptance test */
 	public int getId() {
-		return this.testId;
+		return testId;
 	}
 	
 	/**
@@ -90,7 +90,7 @@ public class AcceptanceTest {
 	
 	 * @return status of the acceptance test */
 	public String getStatus() {
-		return this.testStatus.toString();
+		return testStatus.toString();
 	}
 	
 	/**
@@ -98,7 +98,7 @@ public class AcceptanceTest {
 	 * @param status status of the acceptance test
 	 */
 	public void setStatus(TestStatus status) {
-		this.testStatus = status;
+		testStatus = status;
 	}
 
 }

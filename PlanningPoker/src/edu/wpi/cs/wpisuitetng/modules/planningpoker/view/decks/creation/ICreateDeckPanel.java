@@ -19,4 +19,6 @@ public interface ICreateDeckPanel {
 	
 	public Deck getDeck();
 	
+	public void disableFields();
+	
 }

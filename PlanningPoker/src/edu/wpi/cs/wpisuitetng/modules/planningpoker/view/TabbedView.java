@@ -423,26 +423,26 @@ public class TabbedView extends JTabbedPane {
 	}
 
 	/**
-	 * Shows the ended game. Displays the End Game Panel
+	 * Shows the created deck. Displays the Create Deck panel
 	 * 
-	 * @param game
-	 *            Game to be searched for
+	 * @param deck
+	 *            Deck to be searched for
 	 */
 	public void viewDeck(Deck deck) {
-		// Attempt to find the game in the active panels list
+		// Attempt to find the deck in the active panels list
 		for (ICreateDeckPanel deckSearch : listOfCreateDeckPanels) {
 			if (deck.equals(deckSearch.getDeck())) {
 				setSelectedComponent((Component) deckSearch);
 				invalidate();
 				repaint();
-				return; // The game has been found and made active. Done!
+				return; // The deck has been found and made active. Done!
 			}
 		}
 
 		// Game not found in the active game list
 		CreateDeckPanel viewDeck = new CreateDeckPanel(deck);
 		// TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
-
+		viewDeck.disableFields();
 		addTab(getTabName(deck), viewDeck);
 		setToolTipTextAt(getTabCount() - 1, deck.getName());
 
