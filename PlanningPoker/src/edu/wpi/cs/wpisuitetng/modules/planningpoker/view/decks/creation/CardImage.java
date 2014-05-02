@@ -203,7 +203,9 @@ public class CardImage extends JPanel implements IDataField{
 					//TODO here the value in the value array needs to be set for the array to function.
 					valueLabel.setVisible(true);
 					addValue.setVisible(false);
-					cards.get(indexOfEnteredCard + 1).addValue.requestFocus();
+					if(!(indexOfEnteredCard + 1 >= cards.size())){
+						cards.get(indexOfEnteredCard + 1).addValue.requestFocus();
+					}
 					
 					revalidate();
 					repaint();
