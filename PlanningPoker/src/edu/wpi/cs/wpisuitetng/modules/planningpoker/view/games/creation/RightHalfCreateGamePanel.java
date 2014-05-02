@@ -509,7 +509,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 		 * scrollpane
 		 */
 		setMinimumSize(new Dimension(350, 350));
-		rightView.setPreferredSize(new Dimension(485, 350));
+		rightView.setPreferredSize(new Dimension(550, 350));
 		getViewport().add(rightView);
 
 		/**
