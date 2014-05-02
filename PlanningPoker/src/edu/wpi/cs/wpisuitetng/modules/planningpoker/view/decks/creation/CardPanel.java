@@ -1,7 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation;
 
 import java.awt.Dimension;
-import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -20,17 +19,19 @@ public class CardPanel extends JPanel implements IDataField {
 	
 	private CardPanel instance;
 	
+	private final boolean isReopen;
+	
 	//The current color image
 	private ColorEnum color = ColorEnum.RED;
 	private CreateDeckPanel parent;
-	private final CardImage cardRed;
+	private CardImage cardRed;
 	
 	private List<CardImage> cards;
 
 	public CardPanel(CreateDeckPanel parent) {
 		instance = this;
 		this.parent = parent;
-		cardRed = new CardImage(color, this);
+		isReopen = parent.isReopen();
 		cards = new ArrayList<CardImage>(){
 			@Override
 			public boolean add(CardImage o){
@@ -61,8 +62,11 @@ public class CardPanel extends JPanel implements IDataField {
 	private void build(){
 		setPreferredSize(new Dimension(10, 450));
 		//add(cardRed); // adds initial card to panel //Not needed done in the list
-		cards.add(cardRed); // adds initial card to card list
-		cardRed.setVisible(true);
+		if(!isReopen){
+			cardRed = new CardImage(color, this);
+			cards.add(cardRed); // adds initial card to card list
+			cardRed.setVisible(true);
+		}
 	}
 	
 	public void setDeck(Deck deck){
