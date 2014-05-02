@@ -44,6 +44,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.RequirementStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
@@ -748,10 +749,13 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		// Add the imported requirements to the table
 		for (Requirement r : RequirementModel.getInstance().getRequirements()) {
 			if (r.getEstimate() == 0) {
-				// Don't allow duplicate requirements in table
-				if (!containsReq(r)) {
-					importTable.getTableModel().addRow(
-							new Object[] { r.getName(), r.getDescription() });
+				// Can't import deleted requirements
+				if (!r.getStatus().equals(RequirementStatus.DELETED)) {
+					// Don't allow duplicate requirements in table
+					if (!containsReq(r)) {
+						importTable.getTableModel().addRow(
+								new Object[] { r.getName(), r.getDescription() });
+					}
 				}
 			}
 		}
