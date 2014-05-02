@@ -103,56 +103,56 @@ public class Game extends ObservableModel implements IModelObserver,
 			name = toCopyFrom.name;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "Name coppied: " + name);
+			logger.log(Level.FINEST, "Name copied");
 		}
 
 		if (!description.equals(toCopyFrom.description)) {
 			description = toCopyFrom.description;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "Description coppied: " + description);
+			logger.log(Level.FINEST, "Description copied");
 		}
 
 		if (hasTimeLimit != toCopyFrom.hasTimeLimit) {
 			hasTimeLimit = toCopyFrom.hasTimeLimit;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "Has Time Limit coppied: " + hasTimeLimit);
+			logger.log(Level.FINEST, "Has Time Limit copied");
 		}
 
 		if (usesCards != toCopyFrom.usesCards) {
 			usesCards = toCopyFrom.usesCards;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "Uses Cards coppied: " + usesCards);
+			logger.log(Level.FINEST, "Uses Cards copied");
 		}
 
 		if (!creationTime.equals(toCopyFrom.creationTime)) {
 			creationTime = toCopyFrom.creationTime;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "Creation Time coppied " + creationTime);
+			logger.log(Level.FINEST, "Creation Time copied");
 		}
 
 		if (!creator.equals(toCopyFrom.creator)) {
 			creator = toCopyFrom.creator;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "Creator coppied " + creator);
+			logger.log(Level.FINEST, "Creator copied");
 		}
 
 		if (!endDate.equals(toCopyFrom.endDate)) {
 			endDate = toCopyFrom.endDate;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "End Date coppied " + endDate);
+			logger.log(Level.FINEST, "End Date copied");
 		}
 
 		if (active != toCopyFrom.active) {
 			active = toCopyFrom.active;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "Active coppied " + active);
+			logger.log(Level.FINEST, "Active copied");
 		}
 
 		if (!requirements.equals(toCopyFrom.requirements)) {
@@ -207,7 +207,7 @@ public class Game extends ObservableModel implements IModelObserver,
 				wasChanged = true;
 			}
 			needsUpdate = true;
-			logger.log(Level.FINEST, "Requirements coppied " + requirements);
+			logger.log(Level.FINEST, "Requirements copied");
 		}
 
 		if (complete != toCopyFrom.complete) {
@@ -216,15 +216,14 @@ public class Game extends ObservableModel implements IModelObserver,
 			}
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "Complete coppied " + complete);
+			logger.log(Level.FINEST, "Complete copied");
 		}
 
 		if (notifiedOfCreation != toCopyFrom.notifiedOfCreation) {
 			notifiedOfCreation = toCopyFrom.notifiedOfCreation;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "Notified Of Creation coppied "
-					+ notifiedOfCompletion);
+			logger.log(Level.FINEST, "Notified Of Creation copied");
 		}
 
 		if (!deck.equals(toCopyFrom.deck)) {
@@ -232,7 +231,7 @@ public class Game extends ObservableModel implements IModelObserver,
 				wasChanged = true;
 				needsUpdate = true;
 			}
-			logger.log(Level.FINEST, "Deck coppied " + deck);
+			logger.log(Level.FINEST, "Deck copied");
 		}
 
 		if (identity.equals(toCopyFrom.identity)) {
@@ -749,8 +748,7 @@ public class Game extends ObservableModel implements IModelObserver,
 		while (GameModel.getInstance().isServerUpdating()) {
 			try {
 				Thread.sleep(5);
-				logger.log(Level.WARNING, "Looping in the game: From source "
-						+ source);
+				logger.log(Level.WARNING, "Looping in the game");
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
