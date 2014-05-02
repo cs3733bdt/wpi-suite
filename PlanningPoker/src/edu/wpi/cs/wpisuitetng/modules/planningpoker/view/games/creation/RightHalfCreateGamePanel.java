@@ -1036,13 +1036,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	 * @return true if the requirement is already in the table
 	 */
 	private boolean checkduplicateReq(PPRequirement requirement) {
-		List<PPRequirement> reqList = requirements;
-		String reqName;
-		String reqDesc;
-		for (int i = 0; i < reqList.size(); i++) {
-			reqName = reqList.get(i).getName();
-			reqDesc = reqList.get(i).getDescription();
-			if ((reqName.equals(requirement.getName())) && (reqDesc.equals(requirement.getDescription()))) {
+		for (PPRequirement ppr: requirements) {
+			if (ppr.getName().equals(requirement.getName()) && ppr.getDescription().equals(requirement.getDescription())) {
 				return true;
 			}
 		}
