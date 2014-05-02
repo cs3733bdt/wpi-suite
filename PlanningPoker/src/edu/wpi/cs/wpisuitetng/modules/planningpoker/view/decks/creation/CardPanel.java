@@ -1,7 +1,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation;
 
 import java.awt.Dimension;
-import java.awt.LayoutManager;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;

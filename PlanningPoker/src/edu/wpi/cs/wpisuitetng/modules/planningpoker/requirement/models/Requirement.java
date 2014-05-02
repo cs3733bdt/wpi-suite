@@ -24,7 +24,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.RequirementType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.TestStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.TransactionHistory;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
+
 
 /**
  * Basic Requirement class that contains the data to be stored for a Requirement

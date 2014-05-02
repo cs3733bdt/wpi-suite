@@ -42,7 +42,7 @@ public class RetrievePPRequirementRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		// Convert the JSON array of requirements to a Requirement object array
-		PPRequirement[] requirements = PPRequirement.fromRequirmentsManagerJsonArray(iReq.getResponse().getBody());
+		PPRequirement[] requirements = PPRequirement.fromRequirementsManagerJsonArray(iReq.getResponse().getBody());
 
 		// Pass these Requirements to the controller
 		controller.receivedRequirements(requirements);

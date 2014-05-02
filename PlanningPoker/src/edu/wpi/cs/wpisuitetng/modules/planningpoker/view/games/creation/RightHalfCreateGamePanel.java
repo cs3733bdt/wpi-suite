@@ -589,8 +589,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 						if (currentTable.getSelectedRowCount() == 0) {
 							editReqButton.setEnabled(false);
 							removeReqButton.setEnabled(false);
-						} else if (currentTable.getSelectedRowCount() > 0) {
-							editReqButton.setEnabled(true);
+						} else if (currentTable.getSelectedRowCount() > 1) {
+							editReqButton.setEnabled(false);
 							removeReqButton.setEnabled(true);
 						} else {
 							editReqButton.setEnabled(true);
@@ -814,6 +814,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			for (PPRequirement r : parent.getGame().getRequirements()) {
 				addRequirement(r);
 			}
+			currentTable.setRowSelectionInterval(0, 0);
 		}
 	}
 

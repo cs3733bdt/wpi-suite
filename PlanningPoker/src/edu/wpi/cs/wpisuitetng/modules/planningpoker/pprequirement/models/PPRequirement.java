@@ -328,23 +328,7 @@ public class PPRequirement extends ObservableModel {
 	public String toJSON() {
 		return new Gson().toJson(this, PPRequirement.class);
 	}
-	
-	/**
-	 * Returns an instance of Requirement constructed using the given
-	 * Requirement encoded as a JSON string.
-	 * 
-	 * @param json JSON-encoded Requirement to deserialize
-	 * @return the Requirement contained in the given JSON */
-	public static PPRequirement fromRequirmentsManagerJSON(String json) {
-		Gson gson;
-		GsonBuilder builder = new GsonBuilder();
-		// Use our custom deserializer
-		builder.registerTypeAdapter(PPRequirement.class, new PPRequirementDeserializer());
-		gson = builder.create();
 		
-		return gson.fromJson(json, PPRequirement.class);
-	}
-	
 	public static PPRequirement fromJSON(String json){
 		final Gson parser = new Gson();
 		return parser.fromJson(json, PPRequirement.class);
@@ -368,7 +352,7 @@ public class PPRequirement extends ObservableModel {
 	 * 
 	 * @param json string containing a JSON-encoded array of Requirement
 	 * @return an array of Requirement deserialized from the given JSON string */
-	public static PPRequirement[] fromRequirmentsManagerJsonArray(String json) {
+	public static PPRequirement[] fromRequirementsManagerJsonArray(String json) {
 		Gson gson;
 		GsonBuilder builder = new GsonBuilder();
 		// Use our custom deserializer
