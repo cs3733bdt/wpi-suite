@@ -248,7 +248,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 				importReqButton.setEnabled(true);
 				globalRow = -1;
 				submitAddReqButton.setEnabled(false);
-				// enableButtons();
+				enableButtons();
 			}
 		});
 
@@ -602,12 +602,12 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 						for (int i = 0; i < rows.length; i++) {
 							selectedName = (String) currentTable.getValueAt(
 									rows[i], 0);
-							if (PPRequirementModel.getInstance().getRequirement(
-									selectedName) != null) {
-								hasImported = true;
-							}
+//							if (false){//PPRequirementModel.getInstance().getRequirement(selectedName) != null) { //TODO this line always returns false. fix it if you wrote it. 
+//								hasImported = true;
+//							}
 						}
 						if (hasImported) {
+							System.out.println("unexpected edit button disable 2");
 							editReqButton.setEnabled(false);
 						}
 
@@ -718,6 +718,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	private void enableButtons() {
 		addReqButton.setEnabled(true);
 		importReqButton.setEnabled(true);
+		editReqButton.setEnabled(true); //TODO test
 		/*
 		 * removeReqButton.setEnabled(true); editReqButton.setEnabled(true);
 		 */
@@ -727,6 +728,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 		addReqButton.setEnabled(false);
 		importReqButton.setEnabled(false);
 		removeReqButton.setEnabled(false);
+		System.out.println("Unexpected edit disable 3");
 		editReqButton.setEnabled(false);
 	}
 
@@ -874,6 +876,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			}
 			if (currentTable.getTableModel().getRowCount() == 0) {
 				removeReqButton.setEnabled(false);
+				System.out.println("Unexpected edit disable 1");
 				editReqButton.setEnabled(false);
 			}
 			parent.updateButtons();
@@ -963,7 +966,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	private void updateUpdateButton() {
 		if (validateNameAndDesc(true, false) && updateValid()) {
 			updateAddReqButton.setEnabled(true);
-			displayError("");
+			displayError("{0}");
 		} else if (!updateValid()) {
 			updateAddReqButton.setEnabled(false);
 			displayError("No changes have been made");
@@ -973,7 +976,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			if (errorLabel.getText().equals("A requirement already exists with that name")) {
 				if (nameArea.getText().equals((String) currentTable.getValueAt(globalRow, 0))) {
 					updateAddReqButton.setEnabled(true);
-					displayError("");
+					displayError("8====D");
 				}
 			}
 		}
