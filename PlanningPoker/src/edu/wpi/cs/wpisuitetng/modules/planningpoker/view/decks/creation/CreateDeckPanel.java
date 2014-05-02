@@ -109,7 +109,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 */
 	private CancelButton cancelDeckButton;
 
-	private SaveDeckButtonPanel saveButtonPanel;					//save button to save deck to server
+	private SaveDeckButtonPanel saveButtonPanel;	//save button to save deck to server
 
 
 	/**
@@ -809,5 +809,29 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 				descriptionTextField.getText(), cardsPanel2.getCardValues(), true,
 				determineDeckColor());
 		return deck;
+	}
+	
+	public void disableFields() {
+		
+		//Disable the input fields
+		descriptionTextField.setEnabled(false);
+		nameTextField.setEnabled(false);
+		singleSelection.setEnabled(false);
+		multipleSelection.setEnabled(false);
+		colorDropDown.setEnabled(false);
+		submitNumCards.setEnabled(false);
+		numCards.setEnabled(false);
+		iDontKnowCheck.setEnabled(false);
+		
+		//Disables editing on each card in the view panel
+		cardsPanel2.disableCards();
+		
+		//Hide the save and cancel buttons
+		saveButtonPanel.setVisible(false);
+		cancelDeckButton.setVisible(false);
+		
+		//Hide the error field
+		errorField.setVisible(false);
+		
 	}
 }

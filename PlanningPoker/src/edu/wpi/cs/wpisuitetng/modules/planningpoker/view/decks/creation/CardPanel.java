@@ -160,5 +160,11 @@ public class CardPanel extends JPanel implements IDataField {
 	public List<CardImage> getCards() {
 		return cards;
 	}
+	
+	public void disableCards(){
+		for(CardImage c: cards){
+			c.disableCardMouseListener();
+		}
+	}
 
 }

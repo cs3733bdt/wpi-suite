@@ -63,6 +63,19 @@ public class CardImage extends JPanel implements IDataField{
 	
 	private static Logger logger = Logger.getLogger(CardImage.class.getName());
 	
+	
+	
+	 //Define the mouse adapter for the card image so that it may be both added
+	 //And removed.
+	private MouseAdapter adapter = new MouseAdapter(){
+		public void mouseClicked(MouseEvent arg0) {
+			addValue.setVisible(true);
+			revalidate();
+			repaint();
+			addValue.requestFocus();
+		}
+	};
+	
 
 	public CardImage(ColorEnum color, CardPanel parent){
 		errorField = parent.getCardPanelParent().getErrorField();
@@ -160,14 +173,7 @@ public class CardImage extends JPanel implements IDataField{
 	 * @param component (this method should only be used with the card)
 	 */
 	private void addMouseListenerToCard(JComponent component){
-		component.addMouseListener(new MouseAdapter(){
-			public void mouseClicked(MouseEvent arg0) {
-				addValue.setVisible(true);
-				revalidate();
-				repaint();
-				addValue.requestFocus();
-			}
-		});
+		component.addMouseListener(adapter);
 	}
 	
 	/**
@@ -297,6 +303,10 @@ public class CardImage extends JPanel implements IDataField{
 	@Override
 	public boolean hasChanges() {
 		return addValue.hasChanges();
+	}
+	
+	public void disableCardMouseListener(){
+		picButton.removeMouseListener(adapter);
 	}
 	
 	
