@@ -89,7 +89,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
-			logger.log(Level.WARNING, "ViewEventController not fully initiallized", e);
+			logger.log(Level.WARNING, "ViewEventController not fully initialized", e);
 		}
 	}
 
@@ -105,7 +105,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
-			System.err.println("ViewEventController not fully initiallized");
+			logger.log(Level.WARNING, "ViewEventController not fully initialized",e);
 		}
 	}
 
@@ -156,8 +156,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 				// active
 				// table
 			} catch (Exception e) {
-				System.err
-						.println("ViewEventController not fully initiallized");
+				logger.log(Level.WARNING, "ViewEventController not fully initialized.", e);
 			}
 		} else {
 		}
@@ -200,7 +199,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 				ViewEventController.getInstance().refreshGameTable();
 				ViewEventController.getInstance().refreshGameTree();
 			} catch (Exception e) {
-				System.err.println("The network has not been instantiated");
+				logger.log(Level.WARNING, "The network has not been instantiated.", e);
 			}
 		} else {
 			System.err

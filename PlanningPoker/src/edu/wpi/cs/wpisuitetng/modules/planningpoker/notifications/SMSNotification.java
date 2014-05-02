@@ -12,6 +12,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 
 import java.util.Properties;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -24,6 +26,7 @@ import javax.mail.internet.MimeMessage;
 import com.sun.mail.util.MailConnectException;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
 /**
@@ -32,7 +35,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
  * @author Bobby Drop Tables
  */
 public class SMSNotification {
-	
+	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	/** Game to get users from to send SMS messages to */
 	private final Game g;
 	/** Sender Email Information */
@@ -73,11 +76,11 @@ public class SMSNotification {
 						}
 					  });
 		} catch(NullPointerException e) {
+			logger.log(Level.WARNING, "Session.getInstance "
+					+ "threw a NullPointerException, trying again...", e);
 			try {
 				// Waiting 5 seconds then trying again.
 				Thread.sleep(5000);
-				System.err.println("Session.getInstance "
-						+ "threw a NullPointerException, trying again...");
 				session = Session.getInstance(properties,
 						  new javax.mail.Authenticator() {
 							@Override
@@ -203,10 +206,10 @@ public class SMSNotification {
 					Transport.send(message);
 					System.out.println("Sent text message successfully....");
 				} catch(MailConnectException e) {
+					logger.log(Level.WARNING, "Couldn't connect to host, trying again...", e);
 					try {
 						// Waiting 5 seconds and retrying
 						Thread.sleep(5000);
-						System.err.println("Couldn't connect to host, trying again...");
 						Transport.send(message);
 						System.out.println("Sent message successfully....");
 					} catch (InterruptedException e1) {

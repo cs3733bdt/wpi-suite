@@ -13,7 +13,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorCardImage;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorEnum;
 
@@ -29,6 +32,7 @@ public class Card {
 	private String text;
 	private BufferedImage imageBack = null;
 	private BufferedImage imageFront = null;
+	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	
 	public Card(String text, Deck parentDeck) {
 		this.text = text;
@@ -77,6 +81,7 @@ public class Card {
 			Integer.parseInt(text);
 			return true;
 		} catch (NumberFormatException e){
+			logger.log(Level.WARNING, "The text contains non-numerical characters.", e);
 			return false;
 		}
 	}

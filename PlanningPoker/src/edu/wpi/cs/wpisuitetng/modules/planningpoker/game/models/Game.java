@@ -245,7 +245,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			}
 			return newReq;
 		} catch (DBModelNotInstantiatedException e) {
-			System.out.println("The GetPPRequirmentController was null");
+			logger.log(Level.SEVERE, "GetPPRequirementController was null.", e);
 			return match;
 		}
 	}
