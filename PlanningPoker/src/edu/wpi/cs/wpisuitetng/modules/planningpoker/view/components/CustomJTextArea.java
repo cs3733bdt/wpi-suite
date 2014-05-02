@@ -16,25 +16,42 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JTextArea;
 
-public abstract class CustomJTextArea extends JTextArea implements IDataField {
+public class CustomJTextArea extends JTextArea implements IDataField {
 
-	/** @see JTextArea#JTextArea()*/
-	protected CustomJTextArea(){}
+	/** @see JTextArea#JTextArea() */
+	protected CustomJTextArea() {
+	}
+
 	/** @see JTextArea#JTextArea(String) */
-	protected CustomJTextArea(String text) { super(text); }
-	
+	protected CustomJTextArea(String text) {
+		super(text);
+	}
+
 	/**
 	 * Mouse listener for number of cards textfield. When the text field is
 	 * clicked, it selects all of the text so that the user can easily overwrite
 	 * their previous number.
 	 */
-	public void enableSelectAllTextOnMouseListener(){
+	public void enableSelectAllTextOnMouseListener() {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				selectAll();
 			}
 		});
+	}
+
+	@Override
+	public boolean validateField(IErrorView warningField, boolean showLabel,
+			boolean showBox) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public boolean hasChanges() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
