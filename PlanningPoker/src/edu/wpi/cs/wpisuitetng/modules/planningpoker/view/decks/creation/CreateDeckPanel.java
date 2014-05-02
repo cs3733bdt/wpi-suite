@@ -783,18 +783,21 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 	@Override
 	public void updateButtons() {
+		
+		//FOR ENABLING THE SAVE GAME BUTTON
 		if (validateField(errorField,true, false)) {
 			saveButtonPanel.getSaveDeckButton().setEnabled(true);
 		} 
 		else {
-			if(numCards.validateField(errorField, false, false)){
-				submitNumCards.setEnabled(true);
-			}
-			else {
-				submitNumCards.setEnabled(false);
-			}
 			saveButtonPanel.getSaveDeckButton().setEnabled(false);
-			
+		}
+		
+		//FOR ENABLING THE SUBMIT NUMBER BUTTON
+		if(numCards.validateField(errorField, false, false)){
+			submitNumCards.setEnabled(true);
+		}
+		else {
+			submitNumCards.setEnabled(false);
 		}
 		
 	}
