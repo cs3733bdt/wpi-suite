@@ -126,7 +126,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		emailPanel.add(emailPanelLabel);
 
 		//Create and add the "you are not receiving email" warning message. 
-		emailOffNotify = new JLabel("*You are not receiving email notifications");
+		emailOffNotify = new JLabel("You are not receiving email notifications");
 		emailOffNotify.setForeground(Color.blue);
 		emailPanel.add(emailOffNotify);
 
@@ -204,7 +204,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		facebookPanel.add(facebookPanelLabel);
 
 		//Create and add the "you are not receiving facebook" warning message. 
-		facebookOffNotify = new JLabel("*You are not receiving facebook notifications");
+		facebookOffNotify = new JLabel("You are not receiving facebook messages");
 		facebookOffNotify.setForeground(Color.blue);
 		facebookPanel.add(facebookOffNotify);
 
@@ -244,7 +244,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		});
 
 		//Create and add the checkbox for receiving facebooks
-		facebookCheckBox = new JCheckBox("Receive Facebook notifications", true);
+		facebookCheckBox = new JCheckBox("Receive Facebook messages", true);
 		//TODO make this field initialize to the correct toggled state. Do that by modifying the constant "true" above
 
 		facebookCheckBox.addActionListener(new ActionListener() {
@@ -277,7 +277,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		mobilePanel.add(mobilePanelLabel);
 
 		//Create and add the "you are not receiving mobile notifications" warning message. 
-		mobileOffNotify = new JLabel("*You are not receiving mobile notifications");
+		mobileOffNotify = new JLabel("You are not receiving mobile notifications");
 		mobileOffNotify.setForeground(Color.blue);
 		mobilePanel.add(mobileOffNotify);
 
