@@ -299,10 +299,10 @@ public class PPRequirement extends ObservableModel {
 	 * Setter for the final estimate
 	 */
 	public void setFinalEstimate(int newEstimate) {
-		if (this.finalEstimate != newEstimate) {
+		if (finalEstimate != newEstimate) {
 			makeChanged();
 			delayChange("setFinalEstimate");
-			this.finalEstimate = newEstimate;
+			finalEstimate = newEstimate;
 		}
 	}
 

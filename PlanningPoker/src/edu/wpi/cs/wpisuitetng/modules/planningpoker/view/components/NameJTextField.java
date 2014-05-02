@@ -126,7 +126,7 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 	}
 
 	public void setStartingText(String newStarting) {
-		this.startingText = newStarting;
+		startingText = newStarting;
 	}
 
 }
