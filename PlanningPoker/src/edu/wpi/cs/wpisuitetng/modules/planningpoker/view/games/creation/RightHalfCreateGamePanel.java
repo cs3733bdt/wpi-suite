@@ -340,7 +340,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 				importReqsPanel.setVisible(false);
 				addReqButton.setEnabled(true);
 				importReqButton.setEnabled(true);
-				// enableButtons();
+				enableButtons();
 			}
 		});
 
@@ -743,9 +743,10 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 	private void enableButtons() {
 		addReqButton.setEnabled(true);
 		importReqButton.setEnabled(true);
-		/*
-		 * removeReqButton.setEnabled(true); editReqButton.setEnabled(true);
-		 */
+		if (currentTable.getSelectedRowCount() != 0) {
+			editReqButton.setEnabled(true);
+			removeReqButton.setEnabled(true);
+		}
 	}
 
 	private void disableButtons() {
