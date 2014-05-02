@@ -11,14 +11,11 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 
-import javax.swing.BorderFactory;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.Border;
 import javax.swing.table.DefaultTableModel;
-
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
 /**
  * table that displays the end game results

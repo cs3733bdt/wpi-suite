@@ -19,12 +19,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorEnum;
@@ -37,7 +40,7 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  *
  */
 public class GameTest {
-	
+	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	@Before
 	public void setUp() throws Exception {
 		Network.initNetwork(new MockNetwork());
@@ -195,11 +198,11 @@ public class GameTest {
 		try{
 			TimeUnit.SECONDS.sleep(1);
 		} catch(InterruptedException e){
-			//Handle exception
+			logger.log(Level.FINEST, "Thread was interrupted.", e);
 		}
 		assertTrue(game1.hasEnded());
 				} catch (NullPointerException e){
-			//Handle exception
+					logger.log(Level.FINEST, "An NullPointer is expected here.", e);
 		}
 	}
 	

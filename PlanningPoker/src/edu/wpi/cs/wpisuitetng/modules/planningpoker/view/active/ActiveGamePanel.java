@@ -10,8 +10,6 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
-import java.util.Date;
-
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 

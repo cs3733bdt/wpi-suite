@@ -1,6 +1,5 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help;
 
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

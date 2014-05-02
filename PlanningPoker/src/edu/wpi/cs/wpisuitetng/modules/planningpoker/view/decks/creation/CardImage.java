@@ -21,7 +21,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -223,7 +222,7 @@ public class CardImage extends JPanel implements IDataField{
 		component.addFocusListener(new FocusListener(){
 			public void focusLost(FocusEvent e) {
 				//valueLabel.setText(addValue.getText());
-				if(valueLabel.getText() != ""){
+				if(!valueLabel.getText().equals("")){
 					valueLabel.setVisible(true);
 					addValue.setVisible(false);
 					revalidate();
