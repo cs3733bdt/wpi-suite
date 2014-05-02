@@ -29,7 +29,7 @@ public class NoteList {
 	 */
 	public NoteList()
 	{
-		this.notes = new LinkedList<Note>();
+		notes = new LinkedList<Note>();
 	}
 	
 	/**
@@ -38,7 +38,7 @@ public class NoteList {
 	
 	 * @return The iterator containing all the elements of the list */
 	public ListIterator<Note> getIterator(int index){
-		return this.notes.listIterator(index);
+		return notes.listIterator(index);
 	}
 	
 	/**
@@ -46,7 +46,7 @@ public class NoteList {
 	
 	 * @return the linked list of notes */
 	public LinkedList<Note> getNotes(){
-		return this.notes;
+		return notes;
 	}
 	
 	/**
@@ -71,6 +71,6 @@ public class NoteList {
 	
 	 * @return The note at the index given by the parameter */
 	public Note getItem(int index){
-		return this.notes.get(index);
+		return notes.get(index);
 	}
 }

@@ -640,7 +640,8 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 	 */
 	public void updateSavedEstimateLabel() {
 		if(activeRequirement.userVote() == 0) {
-			previousEst.setText("Your saved estimate is: I don't know");
+			
+			previousEst.setText("Your saved estimate is: 0");
 			table.setValueAt("?", table.getSelectedRow(), 2);
 		} else {
 			previousEst.setText("Your saved estimate is: "+ activeRequirement.userVote());
