@@ -808,6 +808,7 @@ public class Requirement extends AbstractModel {
 		this.name = toCopyFrom.name;
 		this.actualEffort = toCopyFrom.actualEffort;
 		this.estimate = toCopyFrom.estimate;
+		this.estimateEdited = toCopyFrom.estimateEdited;
 		this.iteration = toCopyFrom.iteration;
 		this.priority = toCopyFrom.priority;
 		this.release = toCopyFrom.release;

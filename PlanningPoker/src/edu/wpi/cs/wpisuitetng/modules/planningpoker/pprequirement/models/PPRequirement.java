@@ -125,6 +125,14 @@ public class PPRequirement extends ObservableModel {
 		return fromRequirementModule;
 	}
 	
+	public void setFromRequirementModule(boolean value) {
+		if (fromRequirementModule != value) {
+			makeChanged();
+			delayChange("setFromRequirementModule");
+			fromRequirementModule = value;
+		}
+	}
+	
 	/**
 	 * Checks if this requirement exists in list of requirements passed
 	 * **Specifically for requirements from requirement manager
