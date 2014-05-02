@@ -50,8 +50,6 @@ public class DeckTree extends JPanel implements MouseListener{
 	JScrollPane deckTreeScroll; // scrollPane to put the tree in
 	DefaultMutableTreeNode deckNode = 
 			new DefaultMutableTreeNode("Decks"); //Make master node hold the other 3
-	DefaultMutableTreeNode currentDecks = 
-			new DefaultMutableTreeNode("Your Decks"); //Make pending Decks node
 	
 	boolean isCurrentDecksCollapsed = true;
 	
@@ -82,20 +80,19 @@ public class DeckTree extends JPanel implements MouseListener{
 	 */
 	public void refresh(){
 		if(getComponentCount() != 0){			
-			isCurrentDecksCollapsed = deckTree.isCollapsed(new TreePath(currentDecks.getPath()));
+			isCurrentDecksCollapsed = deckTree.isCollapsed(new TreePath(deckNode.getPath()));
 			remove(0);
 		}
 		
-		currentDecks.removeAllChildren();
+		deckNode.removeAllChildren();
 		
 		List<Deck> deckList = DeckModel.getInstance().getDecks();//retrieve list of all Decks
 		System.out.println("Numb Decks: " + deckList.size());
 		for (Deck deck: deckList){
 			DefaultMutableTreeNode newDeckNode = new DefaultMutableTreeNode(deck);
-			currentDecks.add(newDeckNode);
+			deckNode.add(newDeckNode);
 		}
 		
-		deckNode.add(currentDecks);
 		System.out.println("Numb Decks: " + deckList.size());
 
 		
@@ -111,7 +108,6 @@ public class DeckTree extends JPanel implements MouseListener{
 		deckTreeScroll.setPreferredSize(new Dimension(190, 500));
 
 		deckTree.setCellRenderer(new CustomTreeCellRenderer(this));
-
 		
 		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
@@ -125,16 +121,6 @@ public class DeckTree extends JPanel implements MouseListener{
 		
 		add(deckTreeScroll);
 	    //ViewEventController.getInstance().setDeckOverviewTree(this);
-	    
-	    
-	    if(isCurrentDecksCollapsed){
-	    	deckTree.collapsePath(new TreePath(currentDecks.getPath()));
-	    }
-	    else{
-	    	deckTree.expandPath(new TreePath(currentDecks.getPath()));
-	    }
-	   
-	    
 	    
 	    revalidate();
 	    deckTree.revalidate();
