@@ -68,8 +68,8 @@ public class PPRequirementModelTest {
 	public void getRequirementTest() {
 		assertEquals(req1, model.getRequirement(1));
 		assertEquals(req2.getName(), model.getRequirement(2).getName());
-		assertEquals(req1, model.getRequirement("Requirement1"));
-		assertEquals(req2, model.getRequirement("Requirement2"));
+		assertEquals(req1, model.getRequirement("Requirement1", "Description1"));
+		assertEquals(req2, model.getRequirement("Requirement2", "Descripntion2"));
 	}
 	
 	@Test

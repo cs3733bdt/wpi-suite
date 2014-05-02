@@ -295,23 +295,33 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 							submitImportReqButton.setEnabled(true);
 						}
 						boolean duplicateName = false;
+						boolean duplicateDesc = false;
 						int[] rows = importTable.getSelectedRows();
 						String selectedName = null;
+						String selectedDesc = null;
 						for (int i = 0; i < rows.length; i++) {
 							selectedName = (String) importTable.getValueAt(
 									rows[i], 0);
+							selectedDesc = (String) importTable.getValueAt(
+									rows[i], 1);
 							for (int j = 0; j < requirements.size(); j++) {
 								String reqName = requirements.get(j).getName();
+								String reqDesc = requirements.get(j).getDescription();
 								if (selectedName.equals(reqName)) {
 									duplicateName = true;
 								}
+								if ( selectedDesc.equals(reqDesc)) {
+									duplicateDesc = true;
+								}
+									
 							}
 						}
-						if (duplicateName) {
+						
+						if (duplicateName && duplicateDesc) {
 							submitImportReqButton.setEnabled(false);
 							importErrorLabel.setForeground(Color.RED);
 							importErrorLabel
-									.setText("The name of a selected requirement is already taken");
+									.setText("The name and description of a selected requirement is already taken");
 						} else {
 							submitImportReqButton.setEnabled(true);
 							importErrorLabel.setText("");
@@ -858,8 +868,9 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		int[] rows = importTable.getSelectedRows();
 		for (int i = 0; i < rows.length; i++) {
 			String selectedName = (String) importTable.getValueAt(rows[i], 0);
+			String selectedDesc = (String) importTable.getValueAt(rows[i], 1);
 			addRequirement(PPRequirementModel.getInstance().getRequirement(
-					selectedName));
+					selectedName, selectedDesc));
 		}
 
 		parent.updateButtons();
@@ -1023,9 +1034,11 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	private boolean checkduplicateReq(PPRequirement requirement) {
 		List<PPRequirement> reqList = requirements;
 		String reqName;
+		String reqDesc;
 		for (int i = 0; i < reqList.size(); i++) {
 			reqName = reqList.get(i).getName();
-			if (reqName.equals(requirement.getName())) {
+			reqDesc = reqList.get(i).getDescription();
+			if ((reqName.equals(requirement.getName())) && (reqDesc.equals(requirement.getDescription()))) {
 				return true;
 			}
 		}

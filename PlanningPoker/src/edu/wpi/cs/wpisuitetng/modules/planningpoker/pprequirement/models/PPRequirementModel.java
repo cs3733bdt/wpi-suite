@@ -102,10 +102,10 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement> {
 	 *            the name of the requirement
 	 * @return the requirement with given name
 	 */
-	public PPRequirement getRequirement(String name) {
+	public PPRequirement getRequirement(String name, String description) {
 		PPRequirement req = null;
 		for (PPRequirement r : requirements) {
-			if (r.getName().equals(name)) {
+			if (r.getName().equals(name) && r.getDescription().equals(description)) {
 				req = r;
 			}
 		}
