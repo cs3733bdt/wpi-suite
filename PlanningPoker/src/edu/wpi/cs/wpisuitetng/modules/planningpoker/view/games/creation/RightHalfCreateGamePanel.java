@@ -812,6 +812,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements
 			for (PPRequirement r : parent.getGame().getRequirements()) {
 				addRequirement(r);
 			}
+			currentTable.setRowSelectionInterval(0, 0);
 		}
 	}
 
