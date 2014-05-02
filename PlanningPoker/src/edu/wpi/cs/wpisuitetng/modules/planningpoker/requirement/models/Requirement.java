@@ -209,14 +209,16 @@ public class Requirement extends AbstractModel {
 		if (!n.equals(this.name) && !wasCreated) {
 			String originalName = this.name;
 			String newName = n;
-			if (newName.length() > 100)
+			if (newName.length() > 100) {
 				newName = newName.substring(0, 100);
+			}
 			String message = ("Name changed from " + originalName + " to " + newName);
 			this.history.add(message);
 		}
 		this.name = n;
-		if (name.length() > 100)
+		if (name.length() > 100) {
 			this.name = n.substring(0, 100);
+		}
 	}
 
 	/**
@@ -240,14 +242,15 @@ public class Requirement extends AbstractModel {
 			String originalRelease = this.release;
 			String newRelease = rel;
 			String message = null;
-			if (originalRelease.isEmpty())
+			if (originalRelease.isEmpty()) {
 				message = ("Release Number set to '" + newRelease + "'");
-			else if (newRelease.isEmpty())
+			} else if (newRelease.isEmpty()) {
 				message = ("Release Number set to blank from '"
 						+ originalRelease + "'");
-			else
+			} else {
 				message = ("Release Number changed from '" + originalRelease
 						+ "' to '" + newRelease + "'");
+			}
 			this.history.add(message);
 		}
 		this.release = rel;
@@ -331,8 +334,9 @@ public class Requirement extends AbstractModel {
 	 */
 	public int getChildEstimate() {
 		List<Requirement> children = getChildren();
-		if (children.size() == 0)
+		if (children.size() == 0) {
 			return 0;
+		}
 
 		int childEstimates = 0;
 
@@ -432,13 +436,14 @@ public class Requirement extends AbstractModel {
 			String originalType = this.type.toString();
 			String newType = type.toString();
 			String message = null;
-			if (originalType.isEmpty())
+			if (originalType.isEmpty()) {
 				message = ("Type set to '" + newType + "'");
-			else if (newType.isEmpty())
+			} else if (newType.isEmpty()) {
 				message = ("Type set to blank from '" + originalType + "'");
-			else
+			} else {
 				message = ("Type changed from '" + originalType + "' to '"
 						+ newType + "'");
+			}
 			this.history.add(message);
 		}
 		this.type = type;
@@ -461,8 +466,9 @@ public class Requirement extends AbstractModel {
 	 *            String
 	 */
 	public void addNote(String noteMsg) {
-		if (!wasCreated)
+		if (!wasCreated) {
 			this.history.add("Note added");
+		}
 		// Add note to requirement
 		this.getNotes().add(noteMsg);
 	}
@@ -651,8 +657,9 @@ public class Requirement extends AbstractModel {
 	 * @return true if the parent is an ancestor
 	 */
 	public boolean hasAncestor(int parentId) {
-		if (this.parentID == -1)
+		if (this.parentID == -1) {
 			return false;
+		}
 
 		return RequirementModel.getInstance().getRequirement(this.parentID)
 				.hasAncestor(parentId)
@@ -671,8 +678,9 @@ public class Requirement extends AbstractModel {
 		List<Requirement> children = this.getChildren();
 		for (int i = 0; i < children.size(); i++) {
 			if (children.get(i).getId() == childId
-					|| children.get(i).isAncestor(childId))
+					|| children.get(i).isAncestor(childId)) {
 				return true;
+			}
 		}
 		return false;
 	}

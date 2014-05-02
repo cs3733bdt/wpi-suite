@@ -24,33 +24,37 @@ import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 /**
  * @author jonathanleitschuh
  * 
- * The Abstract Storage model
- * This Abstract Model's goal is to stores a client side copy of all
- * of the objects of this type on the database.
- *
- * @param <T> The model that this is storing. <code> <T extends ObservableModel & IStorageModel<T>> </code>
+ *         The Abstract Storage model This Abstract Model's goal is to stores a
+ *         client side copy of all of the objects of this type on the database.
+ * 
+ * @param <T>
+ *            The model that this is storing.
+ *            <code> <T extends ObservableModel & IStorageModel<T>> </code>
  */
 public abstract class AbstractStorageModel<T extends ObservableModel & IStorageModel<T>>
 		extends AbstractListModel<T> implements IModelObserver {
 	/** The list that holds all of the elements in this database */
 	protected final List<T> list;
-	
+
 	/** If the server is updating this model */
 	protected boolean serverUpdating = false;
-	
-	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
+
+	private static Logger logger = Logger.getLogger(AbstractStorageModel.class
+			.getName());
 
 	/**
 	 * Constructs the AbstractStorageModel with the given list
-	 * @param list the list to store the data in
+	 * 
+	 * @param list
+	 *            the list to store the data in
 	 */
 	protected AbstractStorageModel(List<T> list) {
 		this.list = list;
 	}
-	
+
 	/**
-	 * Adds a Model to the data model
-	 * Also attaches this model as an observer to the the passed object
+	 * Adds a Model to the data model Also attaches this model as an observer to
+	 * the the passed object
 	 * 
 	 * @param object
 	 *            object to be added and stored to the model
@@ -59,7 +63,8 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 		while (serverUpdating) {
 			try {
 				Thread.sleep(5);
-				logger.log(Level.WARNING, "Waiting for the server to finish updating before adding the object");
+				logger.log(Level.WARNING,
+						"Waiting for the server to finish updating before adding the object");
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -67,9 +72,10 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 		list.add(object);
 		object.addObserver(this);
 		this.fireIntervalAdded(this, 0, 0);
-		logger.log(Level.FINEST, object.getClass().getName() + "added to Abstract Storage Model");
+		logger.log(Level.FINEST, object.getClass().getName()
+				+ "added to Abstract Storage Model");
 	}
-	
+
 	/**
 	 * Empties the model of objects and resets the model back to the default
 	 * state.
@@ -86,9 +92,11 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 	}
 
 	/**
-	 * Removes a given model from the model without trying to remove it from the database
-	 * This is used when an object is not properly added to the model
-	 * @param toRemove the object to remove from the model
+	 * Removes a given model from the model without trying to remove it from the
+	 * database This is used when an object is not properly added to the model
+	 * 
+	 * @param toRemove
+	 *            the object to remove from the model
 	 */
 	protected void removeFromModel(T toRemove) {
 		int index = 0;
@@ -103,25 +111,26 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 			}
 			index++;
 		}
-		logger.log(Level.FINEST, "Removed " + toRemove.getName() + " from the AbstractStorageModel");
+		logger.log(Level.FINEST, "Removed " + toRemove.getName()
+				+ " from the AbstractStorageModel");
 	}
-	
+
 	/**
 	 * Retrieves a model from the model by using the UUID of the object
 	 * 
-	 * @throws NotFoundException when the UUID is not found in the storage model
+	 * @throws NotFoundException
+	 *             when the UUID is not found in the storage model
 	 * @return the model with the matching UUID
 	 */
-	public T getModelById(UUID id) throws NotFoundException{
-		for(T o : list){
-			if(o.getIdentity().equals(id)){
+	public T getModelById(UUID id) throws NotFoundException {
+		for (T o : list) {
+			if (o.getIdentity().equals(id)) {
 				return o;
 			}
 		}
 		throw new NotFoundException();
 	}
-	
-	
+
 	/**
 	 * Updates the list of models in this model. If the there is any matching
 	 * UUID's between the model and the list of games the values for the games
@@ -131,9 +140,8 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 	 * is currently in the state of "isUpdating"
 	 * 
 	 * @param allGames
-	 * 		the list of games already in the model
-	 * @return 
-	 * 		true if the model changes during the method
+	 *            the list of games already in the model
+	 * @return true if the model changes during the method
 	 */
 	protected synchronized boolean updateModels(T[] allModels) {
 		boolean changes = false;
@@ -142,9 +150,12 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 			serverUpdating = true;
 
 			int startingSize = getSize();
-			List<T> newModels = new ArrayList<T>();//Stores any new models for logging purposes
-			List<T> updatedModels = new ArrayList<T>(); //Stores any changed models for logging purposes
-			
+			List<T> newModels = new ArrayList<T>();// Stores any new models for
+													// logging purposes
+			List<T> updatedModels = new ArrayList<T>(); // Stores any changed
+														// models for logging
+														// purposes
+
 			for (T aModel : allModels) { // Iterates over the new model
 				boolean found = false; // Has this Game been found in the list
 				// GAME EXIST IN THE MODEL
@@ -157,8 +168,9 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 						found = true; // This game has been found in the list
 						// aGame.deleteObservers();
 						aModel.addObserver(this);
-						if(modelList.copyFrom(aModel)){
-							updatedModels.add(aModel); //Stores this for logging purposes
+						if (modelList.copyFrom(aModel)) {
+							updatedModels.add(aModel); // Stores this for
+														// logging purposes
 						}
 						changes = true;
 					}
@@ -173,25 +185,24 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 					aModel.addObserver(this); // Add an observer on this game
 					list.add(aModel); // Adds this game to the list of games in
 					// this list
-					newModels.add(aModel); //Adds to the system logger output
+					newModels.add(aModel); // Adds to the system logger output
 				}
 			}
 			this.fireIntervalAdded(this, startingSize - 1, getSize() - 1); // Fires
 			// the event listeners on this list.
-			
-			//Output the log of this interaction
+
+			// Output the log of this interaction
 			StringBuilder log = new StringBuilder();
 			log.append("Model Updated\nAdditions:\n");
-			for(T a: newModels){
+			for (T a : newModels) {
 				log.append("\t" + a.getName() + "\n");
 			}
 			log.append("Changes\n");
-			for(T a:updatedModels){
+			for (T a : updatedModels) {
 				log.append("\t" + a.getName() + "\n");
 			}
 			logger.log(Level.INFO, log.toString());
-			
-			
+
 		}
 		serverUpdating = false;
 		return changes;
@@ -201,7 +212,7 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 	public int getSize() {
 		return list.size();
 	}
-	
+
 	/**
 	 * Gets a game at the specified location
 	 * 
@@ -212,7 +223,7 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 	public T getElementAt(int index) {
 		return list.get(index);
 	}
-	
+
 	/**
 	 * checks to see if any element in the model is updating
 	 * 

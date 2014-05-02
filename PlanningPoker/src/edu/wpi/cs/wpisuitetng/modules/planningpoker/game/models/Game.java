@@ -776,12 +776,14 @@ public class Game extends ObservableModel implements IModelObserver,
 	 */
 	@Override
 	public synchronized boolean hasChanged() {
-		if (super.hasChanged())
+		if (super.hasChanged()) {
 			return true;
+		}
 
 		for (PPRequirement requirement : requirements) {
-			if (requirement.hasChanged())
+			if (requirement.hasChanged()) {
 				return true;
+			}
 		}
 		return false;
 	}

@@ -94,8 +94,9 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 		if (getText().length() >= 100) {
 			isNameValid = false;
 			if (showLabel) {
-				if (errorField != null)
+				if (errorField != null) {
 					errorField.setText(STRING_ERROR_NAMELONG);
+				}
 			}
 			if (showBox) {
 				this.setBorder(ERRORBORDER);
