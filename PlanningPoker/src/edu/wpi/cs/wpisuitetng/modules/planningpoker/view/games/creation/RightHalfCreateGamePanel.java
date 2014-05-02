@@ -818,8 +818,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 
 	private boolean containsReq(Requirement req) {
 		for (PPRequirement ppr : requirements) {
-			if (ppr.getName().equals(req.getName())
-					&& ppr.getDescription().equals(req.getDescription())) {
+			if (ppr.getName().equals(req.getName())	&& ppr.getDescription().equals(req.getDescription())) {
 				return true;
 			}
 		}
@@ -830,9 +829,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		if (globalRow != -1) {
 			int[] rows = currentTable.getSelectedRows();
 			for (int i = 0; i < requirements.size(); i++) {
-				if (requirements.get(i).getName()
-						.equals(currentTable.getValueAt(rows[0], 0))) {
-					System.out.println(requirements.get(i).getName());
+				if (requirements.get(i).getName().equals(currentTable.getValueAt(rows[0], 0)) && requirements.get(i).getDescription().equals(currentTable.getValueAt(rows[0], 1))) {
 					requirements.get(i).setName(nameArea.getText());
 					requirements.get(i).setDescription(descArea.getText());
 				}
