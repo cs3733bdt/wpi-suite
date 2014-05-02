@@ -332,11 +332,12 @@ public class PPRequirement extends ObservableModel {
 	 */
 	public String displayComplete() {
 		if (complete) {
-			return "*";
+			String completeText = Integer.toString(votes.size()) + "/"+ getProject().getTeam().length;
+			return "<html><b>"+completeText+"</b></html>";
+			
 		} else {
 			if (getProject() != null && getProject().getTeam() != null) {
-				return Integer.toString(votes.size()) + "/"
-						+ getProject().getTeam().length;
+				return Integer.toString(votes.size()) + "/"+ getProject().getTeam().length;
 			} else {
 				return "0";
 			}
