@@ -71,7 +71,7 @@ public class CardImage extends JPanel implements IDataField{
 		//cards = parent.getCards();
 		addValue.setIErrorView(errorField);
 		addValue.setMaxValue(999);
-		addValue.setMinValue(0);
+		addValue.setMinValue(1);
 		
 		BufferedImage myPicture = null;
 		try {

@@ -266,6 +266,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		numCards.setPreferredSize(new Dimension(40,22));
 		numCards.setText("1");
 		numCards.setMaxValue(15);
+		numCards.setMinValue(1);
 		numCards.addKeyListener(this);
 		//initializeArrayList();
 		//Selection mode is now enabled by default
