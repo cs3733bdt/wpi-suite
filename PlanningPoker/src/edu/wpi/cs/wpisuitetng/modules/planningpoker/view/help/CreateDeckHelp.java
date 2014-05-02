@@ -59,12 +59,12 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 
 		//Add explanation for setting up cards
 		setUpCardsExplanation = new JTextArea();
-		setUpCardsExplanation.setText("To start making a deck, you firstr have to enter the Name of the deck "
-				+ "you want created, and optionaly, you can enter a Discription of that deck.  The selection Type allows "
-				+ "you to be able to select either multiple cards or just a single card when voting, selecting multiple cards "
-				+ "adds up all of the cards that u select and puts that as your total.  The next step is to select the muber of cards that you want to be in your deck,"
-				+ "and then it gives you the option of changing the color of your cards, the default color is red.  "
-				+ "Finally you can choose whether or not to have an 'I dont know' button");
+		setUpCardsExplanation.setText("To start making a deck you have to enter the Name of the deck "
+				+ "you want created, and optionally, you can enter a Description of that deck.  The selection Type allows "
+				+ "you to be able to select either multiple cards or just a single card when voting. Selecting multiple cards "
+				+ "adds up all of the cards that yo select and puts that as your total.  The next step is to select the muber of cards that you want in your deck,"
+				+ "and then it gives you the option of changing the color of your cards."
+				+ "Finally you can choose whether or not to have an 'I dont know' button as an option when voting.");
 
 		setUpCardsExplanation.setEditable(false);
 		setUpCardsExplanation.setBackground(null);
@@ -80,8 +80,8 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 
 		//Add explanation for adding values to the cards
 		addingValuesToTheCardsExplanation = new JTextArea();
-		addingValuesToTheCardsExplanation.setText("After the initialization of the deck you will se the cards appear"
-				+ " in the open area of the view.  To add a value to a card select the text field that is on the card"
+		addingValuesToTheCardsExplanation.setText("After the initialization of the deck you will see the cards appear"
+				+ "To add a value to a card select the text field that is on the card"
 				+ "and enter the desired value for that card.  To set this value to the card all you have to do is "
 				+ "unselect the card");
 

@@ -4,7 +4,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.JTextArea;
-import javax.swing.text.Document;
 
 public abstract class CustomJTextArea extends JTextArea implements IDataField {
 

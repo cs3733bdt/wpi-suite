@@ -20,6 +20,8 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -29,6 +31,7 @@ import javax.swing.SpringLayout;
 
 import org.jdesktop.swingx.JXHyperlink;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 
 /**
@@ -37,7 +40,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
  *
  */
 public class GameOverview extends JSplitPane {
-	
+	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	JLabel ppIntroLabel;
 	Font bigFont;
 	JTextArea ppExplanation;
@@ -156,6 +159,7 @@ public class GameOverview extends JSplitPane {
                     Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=okqEVeNqBhc"));
                 } catch (URISyntaxException | IOException ex) {
                     //It looks like there's a problem
+                	logger.log(Level.WARNING, "The link cannot be opened", ex);
                 }
             }
         });

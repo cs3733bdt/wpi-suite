@@ -95,18 +95,12 @@ public class ActiveCardsPanelTest {
 	}
 	
 	@Test
-	public void cardsPanelClearCardsTest() {
+	public void cardsPanelClearCardsTest() throws IOException{
 		activeCardsPanel.getCardButtonArray().get(0).doClick();
 		assertTrue(activeCardsPanel.getCardButtonArray().get(0).isSelected());
 		activeCardsPanel.getCardButtonArray().get(1).doClick();
-		assertTrue(activeCardsPanel.getCardButtonArray().get(1).isSelected());
-			
-		try {
-			activeCardsPanel.clearCards();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+		assertTrue(activeCardsPanel.getCardButtonArray().get(1).isSelected());	
+		activeCardsPanel.clearCards();
 		assertFalse(activeCardsPanel.getCardButtonArray().get(0).isSelected());
 		assertFalse(activeCardsPanel.getCardButtonArray().get(1).isSelected());
 	}

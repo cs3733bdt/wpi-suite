@@ -12,12 +12,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help;
 
 import static org.junit.Assert.*;
 
-import java.util.ArrayList;
-
-import javax.imageio.ImageIO;
-import javax.swing.JLabel;
-
-import org.junit.Before;
 import org.junit.Test;
 
 
