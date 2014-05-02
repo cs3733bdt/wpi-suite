@@ -590,6 +590,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		importLayout.putConstraint(SpringLayout.SOUTH, tablePanel, -20,
 				SpringLayout.NORTH, submitImportReqButton);
 
+		
+		validateNameAndDesc(false, true);
 		/**
 		 * Set the minimum size and add components to the viewport of the
 		 * scrollpane
