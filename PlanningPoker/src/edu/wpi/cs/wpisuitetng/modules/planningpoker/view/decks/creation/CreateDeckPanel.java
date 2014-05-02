@@ -36,6 +36,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
@@ -376,6 +377,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 		/* Card panel and scrollPane for the cards to appear in */
 		JScrollPane cardScrollPane = new JScrollPane(cardsPanel2);
+		TitledBorder titleBorder = BorderFactory.createTitledBorder("Type a value for each card and hit enter");
+		titleBorder.setTitleJustification(TitledBorder.CENTER);
+		cardScrollPane.setBorder(titleBorder);
 		cardsPanel2.setPreferredSize(new Dimension(10, 450));
 
 		/* save button */
