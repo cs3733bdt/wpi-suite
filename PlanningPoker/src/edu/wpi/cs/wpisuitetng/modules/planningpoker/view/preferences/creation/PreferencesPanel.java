@@ -19,6 +19,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -34,6 +36,7 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.user.controllers.RetrieveUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.user.controllers.UpdateUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
@@ -47,7 +50,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
  *
  */
 public class PreferencesPanel extends JScrollPane implements IDataField, IPreferencesPanel {
-
+	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	JPanel emailPanel;
 
 	JPanel mobilePanel;
@@ -326,6 +329,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		try{
 		carrierDropDown.setSelectedIndex(getUserCarrierIndex());
 		}catch(NullPointerException e){
+			logger.log(Level.FINE, " '--' is selected.", e);
 			carrierDropDown.setSelectedIndex(5);
 		}
 		carrierDropDown.addActionListener(new ActionListener() {
@@ -621,11 +625,11 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 				return userEmail;
 			}
 		}catch(NullPointerException e){
+			logger.log(Level.WARNING, "Request couldn't be completed. Trying again...", e);
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				//e1.printStackTrace();
+				logger.log(Level.WARNING, "Thread is interrupted.", e1);
 			}
 			userEmail = getUserController.getCurrentUser().getEmail();
 			if (userEmail == null) {
@@ -753,6 +757,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 			}
 			
 		}catch(NullPointerException e){
+			logger.log(Level.WARNING, "Couldn't get user preferences.", e);
 			emailCheckBox.setSelected(false);
 			facebookCheckBox.setSelected(false);
 			mobileCheckBox.setSelected(false);
@@ -767,30 +772,15 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 	}
 
 	public boolean receivingEmail() {
-		if (emailCheckBox.isSelected()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (emailCheckBox.isSelected());
 	}
 
 	public boolean receivingFacebook() {
-		if (facebookCheckBox.isSelected()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (facebookCheckBox.isSelected());
 	}
 
 	public boolean receivingMobile() {
-		if (mobileCheckBox.isSelected()) {
-			return true;
-		}
-		else {
-			return false;
-		}
+		return (mobileCheckBox.isSelected());
 	}
 	
 	/**
@@ -1056,10 +1046,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 	 * otherwise a valid carrier has been selected, return true.
 	 */
 	private boolean verifyCarrierField(){
-		if(carrierDropDown.getSelectedIndex()==5)
-			return false;
-		else
-			return true;
+		return !(carrierDropDown.getSelectedIndex()==5);
 	}
 
 	@Override

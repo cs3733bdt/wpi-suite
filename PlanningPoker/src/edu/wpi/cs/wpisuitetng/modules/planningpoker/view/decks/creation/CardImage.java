@@ -21,7 +21,6 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -72,7 +71,7 @@ public class CardImage extends JPanel implements IDataField{
 		//cards = parent.getCards();
 		addValue.setIErrorView(errorField);
 		addValue.setMaxValue(999);
-		addValue.setMinValue(0);
+		addValue.setMinValue(1);
 		
 		BufferedImage myPicture = null;
 		try {
@@ -204,7 +203,9 @@ public class CardImage extends JPanel implements IDataField{
 					//TODO here the value in the value array needs to be set for the array to function.
 					valueLabel.setVisible(true);
 					addValue.setVisible(false);
-					cards.get(indexOfEnteredCard + 1).addValue.requestFocus();
+					if(!(indexOfEnteredCard + 1 >= cards.size())){
+						cards.get(indexOfEnteredCard + 1).addValue.requestFocus();
+					}
 					
 					revalidate();
 					repaint();
@@ -223,7 +224,7 @@ public class CardImage extends JPanel implements IDataField{
 		component.addFocusListener(new FocusListener(){
 			public void focusLost(FocusEvent e) {
 				//valueLabel.setText(addValue.getText());
-				if(valueLabel.getText() != ""){
+				if(!valueLabel.getText().equals("")){
 					valueLabel.setVisible(true);
 					addValue.setVisible(false);
 					revalidate();

@@ -91,7 +91,7 @@ public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
 				+ "selection, multiple cards can be selected can be added together and the sum can "
 				+ "be submitted as the estimation. The ? card is the 'I don't know' card. If it is "
 				+ "available, selecting it will deselct all other cards and the submitting it as "
-				+ "an esitmate will set the estimate as 'I don't know'. Deseleting the ? button will "
+				+ "an esitmate will set the estimate as 'I don't know'. Deselecting the ? button will "
 				+ "reselect the cards that were selecting before selecting the ? card. Hitting the "
 				+ "Clear Vote button will clear all currently selected cards. Hitting the Submit"
 				+ "Vote button will submit your estimation for that requirement.");
@@ -110,7 +110,7 @@ public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
 		
 		//Add explanation for text voting
 		textVoteExplanation = new JTextArea();
-		textVoteExplanation.setText("This is displated when votes are to be manually entered. The "
+		textVoteExplanation.setText("This is displayed when votes are to be manually entered. The "
 				+ "requirements for the game are displayed on the list. If you have submitted a "
 				+ "vote for a requirement, your estimate for that requirement is recorded and the "
 				+ "requirement is set as complete for you. You can change your vote for that requirement "
@@ -196,7 +196,6 @@ public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
 		return true;
 	}
 
-
 	/* (non-Javadoc)
 	 * @see edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help.IHelpPanel#getIdentifierIndex()
 	 */
@@ -205,6 +204,9 @@ public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
 		return 2;
 	}
 	
+	/* (non-Javadoc)
+	 * @see edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help.IHelpPanel#addImage(java.lang.String)
+	 */
 	@Override
 	public JLabel addImage(String image){
 		JLabel helpLabel = new JLabel();

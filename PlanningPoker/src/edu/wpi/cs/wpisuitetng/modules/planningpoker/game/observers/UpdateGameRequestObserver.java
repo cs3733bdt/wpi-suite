@@ -11,7 +11,11 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.UpdateGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
@@ -26,6 +30,7 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  * @author Chris Knapp
  */
 public class UpdateGameRequestObserver implements RequestObserver {
+	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	/** We don't actually use the controller,
 	 * in the defect tracker they use it to print
 	 * error messages.
@@ -63,9 +68,7 @@ public class UpdateGameRequestObserver implements RequestObserver {
 				// Finally send
 				realGame.sendNotifications();
 			} catch (NotFoundException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				System.err.println(game.getName() + ": Does not exist");
+				logger.log(Level.WARNING, game.getName() + ": Does not exist.", e);
 			}
 		// Send out email, text, and facebook notifications on game completion
 		} else if (!game.isNotifiedOfCompletion() && game.isComplete()) {
@@ -78,9 +81,7 @@ public class UpdateGameRequestObserver implements RequestObserver {
 				// Finally Send
 				realGame.sendNotifications();
 			} catch (NotFoundException e) {
-				// TODO Auto-generated catch block
-				//e.printStackTrace();
-				System.err.println(game.getName() + ": Does not exist");
+				logger.log(Level.WARNING, game.getName() + ": Does not exist.", e);
 			}
 		}
 		

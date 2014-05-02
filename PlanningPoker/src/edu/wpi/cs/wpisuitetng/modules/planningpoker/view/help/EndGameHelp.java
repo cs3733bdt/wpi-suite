@@ -60,7 +60,7 @@ public class EndGameHelp extends JScrollPane implements IHelpPanel {
 		endGameExplanation = new JTextArea();
 		endGameExplanation.setText("After ending a game, the name, description, creator of the "
 				+ "game, the date and time the game ended, and the list of requirements voted on "
-				+ "in the game. Clicking one of the requirements will display the game statistcs "
+				+ "in the game. Clicking one of the requirements will display the game statistics "
 				+ "on the right side of the panel.");
 		
 		endGameExplanation.setEditable(false);
@@ -80,7 +80,7 @@ public class EndGameHelp extends JScrollPane implements IHelpPanel {
 		statsExplanation.setText("This displays the description of the requirement, how many "
 				+ "people voted on the requirement, the mean, standard "
 				+ "deviation, median, min and max of all the votes and what each user voted. "
-				+ "The creator of the game can also set the final estimate for the requirement.");
+				+ "The creator of the game is able to set the final estimate for the requirement.");
 		
 		statsExplanation.setEditable(false);
 		statsExplanation.setBackground(null);

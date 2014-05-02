@@ -24,7 +24,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.RequirementType;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.TestStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.TransactionHistory;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 
 /**
  * Basic Requirement class that contains the data to be stored for a Requirement
@@ -54,10 +53,10 @@ public class Requirement extends AbstractModel {
 
 	/** the estimated amount of effort to complete the requirement */
 	private int estimate;
-	
+
 	/** flag to indicate when the requirement estimate was just edited */
 	private boolean estimateEdited;
-	
+
 	/** flag to indicate whether the requirement was just created or not */
 	private boolean wasCreated;
 
@@ -75,7 +74,7 @@ public class Requirement extends AbstractModel {
 
 	/** iteration the requirement is assigned to */
 	private String iteration;
-	
+
 	/** the ID of the requirement that this requirement is a sub-requirement of */
 	private int parentID = -1;
 
@@ -98,7 +97,6 @@ public class Requirement extends AbstractModel {
 	 * Constructs a Requirement with default characteristics
 	 */
 	public Requirement() {
-		super();
 		name = description = "";
 		release = "";
 		status = RequirementStatus.NEW;
@@ -146,7 +144,7 @@ public class Requirement extends AbstractModel {
 	 * @param status
 	 *            The status of the requirement
 	 * @param priority
-	 * 			The priorty of the requirement
+	 *            The priorty of the requirement
 	 * @param description
 	 *            A short description of the requirement
 	 * @param estimate
@@ -171,12 +169,12 @@ public class Requirement extends AbstractModel {
 		this.parentID = -1;
 	}
 
-
 	/**
 	 * /**Getter for the id
 	 * 
-	
-	 * @return the id */
+	 * 
+	 * @return the id
+	 */
 	public int getId() {
 		return id;
 	}
@@ -194,8 +192,9 @@ public class Requirement extends AbstractModel {
 	/**
 	 * getter for the name
 	 * 
-	
-	 * @return the name */
+	 * 
+	 * @return the name
+	 */
 	public String getName() {
 		return name;
 	}
@@ -210,21 +209,24 @@ public class Requirement extends AbstractModel {
 		if (!n.equals(this.name) && !wasCreated) {
 			String originalName = this.name;
 			String newName = n;
-			if (newName.length() > 100)
+			if (newName.length() > 100) {
 				newName = newName.substring(0, 100);
+			}
 			String message = ("Name changed from " + originalName + " to " + newName);
-			this.history.add(message);			
+			this.history.add(message);
 		}
 		this.name = n;
-		if (name.length() > 100)
+		if (name.length() > 100) {
 			this.name = n.substring(0, 100);
+		}
 	}
 
 	/**
 	 * getter for the release number
-	 *  
-	
-	 * @return the release */
+	 * 
+	 * 
+	 * @return the release
+	 */
 	public String getRelease() {
 		return release;
 	}
@@ -240,10 +242,16 @@ public class Requirement extends AbstractModel {
 			String originalRelease = this.release;
 			String newRelease = rel;
 			String message = null;
-			if (originalRelease.isEmpty()) message = ("Release Number set to '" + newRelease + "'");
-			else if (newRelease.isEmpty()) message = ("Release Number set to blank from '" + originalRelease + "'");
-			else message = ("Release Number changed from '" + originalRelease + "' to '" + newRelease + "'");
-			this.history.add(message);			
+			if (originalRelease.isEmpty()) {
+				message = ("Release Number set to '" + newRelease + "'");
+			} else if (newRelease.isEmpty()) {
+				message = ("Release Number set to blank from '"
+						+ originalRelease + "'");
+			} else {
+				message = ("Release Number changed from '" + originalRelease
+						+ "' to '" + newRelease + "'");
+			}
+			this.history.add(message);
 		}
 		this.release = rel;
 	}
@@ -251,8 +259,9 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Getter for the status
 	 * 
-	
-	 * @return the status */
+	 * 
+	 * @return the status
+	 */
 	public RequirementStatus getStatus() {
 		return status;
 	}
@@ -267,8 +276,9 @@ public class Requirement extends AbstractModel {
 		if ((status != this.status) && (!wasCreated)) {
 			String originalStatus = this.status.toString();
 			String newStatus = status.toString();
-			String message = ("Status changed from '" + originalStatus + "' to '" + newStatus + "'");
-			this.history.add(message);			
+			String message = ("Status changed from '" + originalStatus
+					+ "' to '" + newStatus + "'");
+			this.history.add(message);
 		}
 
 		this.status = status;
@@ -278,8 +288,9 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Getter for the description
 	 * 
-	
-	 * @return the description */
+	 * 
+	 * @return the description
+	 */
 	public String getDescription() {
 		return description;
 	}
@@ -292,7 +303,7 @@ public class Requirement extends AbstractModel {
 	 */
 	public void setDescription(String desc) {
 		if (!desc.equals(this.description) && !wasCreated) {
-			this.history.add("Description changed");			
+			this.history.add("Description changed");
 		}
 		this.description = desc;
 	}
@@ -300,35 +311,39 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Getter for the estimate
 	 * 
-	
-	 * @return the estimate */
+	 * 
+	 * @return the estimate
+	 */
 	public int getEstimate() {
 		return this.estimate;
 	}
-	
+
 	/**
 	 * Returns the estimate of the parent along with its children
-	
-	 * @return total estimate */
+	 * 
+	 * @return total estimate
+	 */
 	public int getTotalEstimate() {
 		return getEstimate() + getChildEstimate();
 	}
-	
+
 	/**
 	 * Returns the estimate of the children
-	
-	 * @return total estimate */
+	 * 
+	 * @return total estimate
+	 */
 	public int getChildEstimate() {
 		List<Requirement> children = getChildren();
-		if(children.size() == 0) return 0;
-		
+		if (children.size() == 0) {
+			return 0;
+		}
+
 		int childEstimates = 0;
-		
-		for(Requirement child : children)
-		{
+
+		for (Requirement child : children) {
 			childEstimates += child.getTotalEstimate();
 		}
-		
+
 		return childEstimates;
 	}
 
@@ -336,17 +351,18 @@ public class Requirement extends AbstractModel {
 	 * Setter for the estimate
 	 * 
 	 * @param estimate
-	 *            the estimate to set	 
+	 *            the estimate to set
 	 */
 	public void setEstimate(int estimate) {
 		if ((estimate != this.estimate) && (!wasCreated)) {
 			int originalEstimate = this.estimate;
 			int newEstimate = estimate;
-			String message = ("Estimate changed from '" + originalEstimate + "' to '" + newEstimate + "'");
+			String message = ("Estimate changed from '" + originalEstimate
+					+ "' to '" + newEstimate + "'");
 			this.history.add(message);
 			this.setEstimateEdited(true);
-		}	
-		
+		}
+
 		int diff = estimate - this.estimate;
 		this.estimate = estimate;
 	}
@@ -354,8 +370,9 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Getter for the effort
 	 * 
-	
-	 * @return the effort */
+	 * 
+	 * @return the effort
+	 */
 	public int getEffort() {
 		return actualEffort;
 	}
@@ -373,8 +390,9 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Getter for the priority
 	 * 
-	
-	 * @return the priority */
+	 * 
+	 * @return the priority
+	 */
 	public RequirementPriority getPriority() {
 		return priority;
 	}
@@ -389,8 +407,9 @@ public class Requirement extends AbstractModel {
 		if ((priority != this.priority) && (!wasCreated)) {
 			String originalPriority = this.priority.toString();
 			String newPriority = priority.toString();
-			String message = ("Priority changed from '" + originalPriority + "' to '" + newPriority + "'");
-			this.history.add(message);			
+			String message = ("Priority changed from '" + originalPriority
+					+ "' to '" + newPriority + "'");
+			this.history.add(message);
 		}
 
 		this.priority = priority;
@@ -399,8 +418,9 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Getter for the type
 	 * 
-	
-	 * @return the type */
+	 * 
+	 * @return the type
+	 */
 	public RequirementType getType() {
 		return type;
 	}
@@ -412,34 +432,43 @@ public class Requirement extends AbstractModel {
 	 *            the type to set the requirement to
 	 */
 	public void setType(RequirementType type) {
-		if ((type != this.type) && (!wasCreated)) {			
+		if ((type != this.type) && (!wasCreated)) {
 			String originalType = this.type.toString();
 			String newType = type.toString();
 			String message = null;
-			if (originalType.isEmpty()) message = ("Type set to '" + newType + "'");
-			else if (newType.isEmpty()) message = ("Type set to blank from '" + originalType + "'");
-			else message = ("Type changed from '" + originalType + "' to '" + newType + "'");
-			this.history.add(message);			
+			if (originalType.isEmpty()) {
+				message = ("Type set to '" + newType + "'");
+			} else if (newType.isEmpty()) {
+				message = ("Type set to blank from '" + originalType + "'");
+			} else {
+				message = ("Type changed from '" + originalType + "' to '"
+						+ newType + "'");
+			}
+			this.history.add(message);
 		}
 		this.type = type;
 	}
 
-	
 	/**
 	 * Getter for the notes
 	 * 
-	
-	 * @return the list of notes associated with the requirement */
-	public NoteList getNotes(){
+	 * 
+	 * @return the list of notes associated with the requirement
+	 */
+	public NoteList getNotes() {
 		return notes;
 	}
-	
+
 	/**
 	 * Method addNote.
-	 * @param noteMsg String
+	 * 
+	 * @param noteMsg
+	 *            String
 	 */
 	public void addNote(String noteMsg) {
-		if  (!wasCreated) this.history.add("Note added");		
+		if (!wasCreated) {
+			this.history.add("Note added");
+		}
 		// Add note to requirement
 		this.getNotes().add(noteMsg);
 	}
@@ -447,8 +476,9 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Getter for the list of development tasks
 	 * 
-	
-	 * @return the list of development tasks */
+	 * 
+	 * @return the list of development tasks
+	 */
 	public List<DevelopmentTask> getTasks() {
 		return tasks;
 	}
@@ -466,7 +496,8 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Method to remove a development task
 	 * 
-	 * @param id the id to remove
+	 * @param id
+	 *            the id to remove
 	 */
 	public void removeTask(int id) {
 		// iterate through the list looking for the task to remove
@@ -482,8 +513,9 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Getter for AcceptanceTests
 	 * 
-	
-	 * @return the list of acceptance tests for the requirement */
+	 * 
+	 * @return the list of acceptance tests for the requirement
+	 */
 	public ArrayList<AcceptanceTest> getTests() {
 		return tests;
 	}
@@ -501,11 +533,14 @@ public class Requirement extends AbstractModel {
 		}
 		tests.add(test);
 	}
-	
+
 	/**
 	 * Updates the test status
-	 * @param testID iD of test
-	 * @param status new status
+	 * 
+	 * @param testID
+	 *            iD of test
+	 * @param status
+	 *            new status
 	 */
 	public void updateTestStatus(int testID, TestStatus status) {
 		for (int i = 0; i < this.tests.size(); i++) {
@@ -535,8 +570,9 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Getter for attachments
 	 * 
-	
-	 * @return the list of attachments */
+	 * 
+	 * @return the list of attachments
+	 */
 	public List<Attachment> getAttachments() {
 		return attachments;
 	}
@@ -572,8 +608,9 @@ public class Requirement extends AbstractModel {
 	 * Getter for Iteration. Currently deals in Strings, but will deal with
 	 * Iterations in the future
 	 * 
-	
-	 * @return a string representing the iteration it has been assigned to */
+	 * 
+	 * @return a string representing the iteration it has been assigned to
+	 */
 	public String getIteration() {
 		return iteration;
 	}
@@ -581,23 +618,31 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Getter for parent IDs
 	 * 
-	
-	 * @return the parent ID, which is the ID of the parent of the requirement  */
+	 * 
+	 * @return the parent ID, which is the ID of the parent of the requirement
+	 */
 	public int getParentID() {
 		return parentID;
 	}
 
 	/**
-	 * Setter for parentID
-	 * Assign the parent ID for this requirement
-	 * @param parentReq ID of the parent          
-	
-	 * @throws Exception if the parent is an ancestor of the child already */
+	 * Setter for parentID Assign the parent ID for this requirement
+	 * 
+	 * @param parentReq
+	 *            ID of the parent
+	 * 
+	 * @throws Exception
+	 *             if the parent is an ancestor of the child already
+	 */
 	public void setParentID(int parentReq) throws Exception {
-		if (parentReq == -1 || !RequirementModel.getInstance().getRequirement(parentReq).isAncestor(this.getId())) {
+		if (parentReq == -1
+				|| !RequirementModel.getInstance().getRequirement(parentReq)
+						.isAncestor(this.getId())) {
 			this.parentID = parentReq;
-//			Requirement parentRequirement = RequirementModel.getInstance().getRequirement(parentID);
-//			parentRequirement.getHistory().add(this.getName() + " was added as a Child Requirement");
+			// Requirement parentRequirement =
+			// RequirementModel.getInstance().getRequirement(parentID);
+			// parentRequirement.getHistory().add(this.getName() +
+			// " was added as a Child Requirement");
 		} else {
 			throw new Exception("Cannot add ancestor as parent");
 		}
@@ -605,52 +650,67 @@ public class Requirement extends AbstractModel {
 
 	/**
 	 * Checks if a parent requirement is an ancestor of itself
-	 * @param parentId The ID of the parent requirement
-	
-	 * @return true if the parent is an ancestor */
+	 * 
+	 * @param parentId
+	 *            The ID of the parent requirement
+	 * 
+	 * @return true if the parent is an ancestor
+	 */
 	public boolean hasAncestor(int parentId) {
-		if(this.parentID == -1) return false;
-		
-		return RequirementModel.getInstance().getRequirement(this.parentID).hasAncestor(parentId) || this.parentID == parentId;
+		if (this.parentID == -1) {
+			return false;
+		}
+
+		return RequirementModel.getInstance().getRequirement(this.parentID)
+				.hasAncestor(parentId)
+				|| this.parentID == parentId;
 	}
-	
+
 	/**
 	 * Checks if a requirement is an ancestor of a given child
-	 * @param childId ID of the child
-	
-	 * @return true if it is an ancestor of the child */
+	 * 
+	 * @param childId
+	 *            ID of the child
+	 * 
+	 * @return true if it is an ancestor of the child
+	 */
 	public boolean isAncestor(int childId) {
 		List<Requirement> children = this.getChildren();
-		for (int i = 0; i < children.size(); i++ ) {
-			if (children.get(i).getId() == childId || children.get(i).isAncestor(childId))
+		for (int i = 0; i < children.size(); i++) {
+			if (children.get(i).getId() == childId
+					|| children.get(i).isAncestor(childId)) {
 				return true;
+			}
 		}
 		return false;
 	}
 
 	/**
 	 * Getter for children
-	
-	 * @return the children requirements of the requirement */
-	public List<Requirement> getChildren() {		
+	 * 
+	 * @return the children requirements of the requirement
+	 */
+	public List<Requirement> getChildren() {
 		return RequirementModel.getInstance().getChildren(this);
 	}
-	
+
 	/**
 	 * Getter for parent
-	
-	 * @return the parent requirement of the sub-requirement */
-	public Requirement getParent() {		
+	 * 
+	 * @return the parent requirement of the sub-requirement
+	 */
+	public Requirement getParent() {
 		return RequirementModel.getInstance().getRequirement(parentID);
 	}
-	
+
 	/**
-	 * Setter for parent
-	 * extracts the ID of parentReq and assigns it to parentID 
+	 * Setter for parent extracts the ID of parentReq and assigns it to parentID
 	 * 
-	 * @param parentReq            
-	
-	 * @throws Exception if invalid parent */
+	 * @param parentReq
+	 * 
+	 * @throws Exception
+	 *             if invalid parent
+	 */
 	public void setParent(Requirement parentReq) throws Exception {
 		setParentID(parentReq.getId());
 	}
@@ -658,9 +718,10 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Getter for AssignedTo
 	 * 
-	
+	 * 
 	 * @return the list of strings representing the users for whom the
-	 *         requirement has been assigned to. */
+	 *         requirement has been assigned to.
+	 */
 	public List<String> getAssignedTo() {
 		return assignedTo;
 	}
@@ -678,6 +739,7 @@ public class Requirement extends AbstractModel {
 
 	/**
 	 * Method save.
+	 * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.Model#save()
 	 */
 	@Override
@@ -688,6 +750,7 @@ public class Requirement extends AbstractModel {
 
 	/**
 	 * Method delete.
+	 * 
 	 * @see edu.wpi.cs.wpisuitetng.modules.Model#delete()
 	 */
 	@Override
@@ -698,9 +761,10 @@ public class Requirement extends AbstractModel {
 
 	/**
 	 * Method toJSON.
-	
-	
-	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
+	 * 
+	 * 
+	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * @see
+	 *         edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
 	 */
 	@Override
 	/**This returns a Json encoded String representation of this requirement object.
@@ -711,15 +775,16 @@ public class Requirement extends AbstractModel {
 	public String toJSON() {
 		return new Gson().toJson(this, Requirement.class);
 	}
-	
+
 	/**
 	 * Returns an instance of Requirement constructed using the given
 	 * Requirement encoded as a JSON string.
 	 * 
 	 * @param json
 	 *            JSON-encoded Requirement to deserialize
-	
-	 * @return the Requirement contained in the given JSON */
+	 * 
+	 * @return the Requirement contained in the given JSON
+	 */
 	public static Requirement fromJson(String json) {
 		final Gson parser = new Gson();
 		return parser.fromJson(json, Requirement.class);
@@ -731,8 +796,9 @@ public class Requirement extends AbstractModel {
 	 * 
 	 * @param json
 	 *            string containing a JSON-encoded array of Requirement
-	
-	 * @return an array of Requirement deserialized from the given JSON string */
+	 * 
+	 * @return an array of Requirement deserialized from the given JSON string
+	 */
 	public static Requirement[] fromJsonArray(String json) {
 		final Gson parser = new Gson();
 		return parser.fromJson(json, Requirement[].class);
@@ -740,10 +806,14 @@ public class Requirement extends AbstractModel {
 
 	/**
 	 * Method identify.
-	 * @param o Object
-	
-	
-	 * @return Boolean * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(Object) * @see edu.wpi.cs.wpisuitetng.modules.Model#identify(Object)
+	 * 
+	 * @param o
+	 *            Object
+	 * 
+	 * 
+	 * @return Boolean * @see
+	 *         edu.wpi.cs.wpisuitetng.modules.Model#identify(Object) * @see
+	 *         edu.wpi.cs.wpisuitetng.modules.Model#identify(Object)
 	 */
 	@Override
 	public Boolean identify(Object o) {
@@ -753,9 +823,10 @@ public class Requirement extends AbstractModel {
 
 	/**
 	 * Method toString.
-	
-	
-	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toString() * @see edu.wpi.cs.wpisuitetng.modules.Model#toString()
+	 * 
+	 * 
+	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toString() * @see
+	 *         edu.wpi.cs.wpisuitetng.modules.Model#toString()
 	 */
 	@Override
 	public String toString() {
@@ -765,8 +836,10 @@ public class Requirement extends AbstractModel {
 	/**
 	 * Returns whether the requirement has been deleted.
 	 * 
-	
-	 * @return true if the status of the requirement is deleted and false otherwise. */
+	 * 
+	 * @return true if the status of the requirement is deleted and false
+	 *         otherwise.
+	 */
 	public boolean isDeleted() {
 		return status == RequirementStatus.DELETED;
 	}
@@ -774,8 +847,9 @@ public class Requirement extends AbstractModel {
 	/**
 	 * The getter for Transaction History
 	 * 
-	
-	 * @return a TransactionHistory for this requirement */
+	 * 
+	 * @return a TransactionHistory for this requirement
+	 */
 	public TransactionHistory getHistory() {
 		return history;
 	}
@@ -791,12 +865,13 @@ public class Requirement extends AbstractModel {
 	}
 
 	/**
-	 * @param tests the tests to set
+	 * @param tests
+	 *            the tests to set
 	 */
 	public void setTests(ArrayList<AcceptanceTest> tests) {
 		this.tests = tests;
 	}
-	
+
 	/**
 	 * Copies all of the values from the given requirement to this requirement.
 	 * 
@@ -808,6 +883,7 @@ public class Requirement extends AbstractModel {
 		this.name = toCopyFrom.name;
 		this.actualEffort = toCopyFrom.actualEffort;
 		this.estimate = toCopyFrom.estimate;
+		this.estimateEdited = toCopyFrom.estimateEdited;
 		this.iteration = toCopyFrom.iteration;
 		this.priority = toCopyFrom.priority;
 		this.release = toCopyFrom.release;
@@ -820,28 +896,32 @@ public class Requirement extends AbstractModel {
 	}
 
 	/**
-	
-	 * @return the estimateEdited */
+	 * 
+	 * @return the estimateEdited
+	 */
 	public boolean getEstimateEdited() {
 		return estimateEdited;
 	}
 
 	/**
-	 * @param b the estimateEdited to be set
+	 * @param b
+	 *            the estimateEdited to be set
 	 */
 	public void setEstimateEdited(boolean b) {
 		this.estimateEdited = b;
 	}
 
 	/**
-	
-	 * @return the wasCreated */
+	 * 
+	 * @return the wasCreated
+	 */
 	public boolean getWasCreated() {
 		return wasCreated;
 	}
 
 	/**
-	 * @param wasCreated the wasCreated to set
+	 * @param wasCreated
+	 *            the wasCreated to set
 	 */
 	public void setWasCreated(boolean wasCreated) {
 		this.wasCreated = wasCreated;

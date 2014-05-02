@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.Session;
@@ -173,4 +172,18 @@ public class RequirementTest {
 	public void testGetInstance(){
 		assertNotNull(PPRequirementModel.getInstance());
 	}
+	
+	@Test
+	public void setFinalEstimateTest() {
+		req1.setFinalEstimate(50);
+		assertEquals(50, req1.getFinalEstimate());
+	}
+	
+	@Test
+	public void setIdPlusOneTest() {
+		assertEquals(2, req2.getId());
+		req1.setIdPlusOne(2);
+		assertEquals(3, req1.getId());
+	}
+	
 }

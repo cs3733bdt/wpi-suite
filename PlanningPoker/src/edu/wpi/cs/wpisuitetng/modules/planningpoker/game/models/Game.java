@@ -47,10 +47,13 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
  * 
  * @author jonathanleitschuh
  */
-public class Game extends ObservableModel implements IModelObserver, IStorageModel<Game>{
-	
-	/** This is the best way to keep games unique so 
-	 *  that you are not relying upon data that can change */
+public class Game extends ObservableModel implements IModelObserver,
+		IStorageModel<Game> {
+
+	/**
+	 * This is the best way to keep games unique so that you are not relying
+	 * upon data that can change
+	 */
 	private UUID identity;
 	/** The name of the game */
 	private String name;
@@ -68,7 +71,10 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	private List<PPRequirement> requirements = new ArrayList<>();
 	/** True if the game is complete, false otherwise */
 	private boolean complete;
-	/** True if the game is active and people can vote, false if people can't vote */
+	/**
+	 * True if the game is active and people can vote, false if people can't
+	 * vote
+	 */
 	private boolean active;
 	/** The date and time that the game ended/completed */
 	private Date endDate;
@@ -83,119 +89,129 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Copies all of the values from the given Game to this Game.
-	 * @param toCopyFrom the Game to copy from
+	 * 
+	 * @param toCopyFrom
+	 *            the Game to copy from
 	 * @return true if any modifications are made to the class
 	 */
 	public boolean copyFrom(Game toCopyFrom) {
-		boolean needsUpdate = false;		//Triggers if there was a change to to the UUID
-		boolean wasChanged = false;			//True if there were any changes made
+		boolean needsUpdate = false; // Triggers if there was a change to to the
+										// UUID
+		boolean wasChanged = false; // True if there were any changes made
 
-		if(!name.equals(toCopyFrom.name)){
+		if (!name.equals(toCopyFrom.name)) {
 			name = toCopyFrom.name;
 			needsUpdate = true;
 			wasChanged = true;
 			logger.log(Level.FINEST, "Name coppied: " + name);
 		}
 
-		if(!description.equals(toCopyFrom.description)){
+		if (!description.equals(toCopyFrom.description)) {
 			description = toCopyFrom.description;
 			needsUpdate = true;
 			wasChanged = true;
 			logger.log(Level.FINEST, "Description coppied: " + description);
 		}
 
-		if(hasTimeLimit != toCopyFrom.hasTimeLimit){
+		if (hasTimeLimit != toCopyFrom.hasTimeLimit) {
 			hasTimeLimit = toCopyFrom.hasTimeLimit;
 			needsUpdate = true;
 			wasChanged = true;
 			logger.log(Level.FINEST, "Has Time Limit coppied: " + hasTimeLimit);
 		}
 
-		if(usesCards != toCopyFrom.usesCards){
+		if (usesCards != toCopyFrom.usesCards) {
 			usesCards = toCopyFrom.usesCards;
 			needsUpdate = true;
 			wasChanged = true;
 			logger.log(Level.FINEST, "Uses Cards coppied: " + usesCards);
 		}
 
-		if(!creationTime.equals(toCopyFrom.creationTime)){
+		if (!creationTime.equals(toCopyFrom.creationTime)) {
 			creationTime = toCopyFrom.creationTime;
 			needsUpdate = true;
 			wasChanged = true;
 			logger.log(Level.FINEST, "Creation Time coppied " + creationTime);
 		}
 
-		if(!creator.equals(toCopyFrom.creator)){
+		if (!creator.equals(toCopyFrom.creator)) {
 			creator = toCopyFrom.creator;
 			needsUpdate = true;
 			wasChanged = true;
 			logger.log(Level.FINEST, "Creator coppied " + creator);
 		}
 
-		if(!endDate.equals(toCopyFrom.endDate)){
+		if (!endDate.equals(toCopyFrom.endDate)) {
 			endDate = toCopyFrom.endDate;
 			needsUpdate = true;
 			wasChanged = true;
 			logger.log(Level.FINEST, "End Date coppied " + endDate);
 		}
 
-		if(active != toCopyFrom.active) {
+		if (active != toCopyFrom.active) {
 			active = toCopyFrom.active;
 			needsUpdate = true;
 			wasChanged = true;
 			logger.log(Level.FINEST, "Active coppied " + active);
 		}
-		
-		if(!requirements.equals(toCopyFrom.requirements)){
+
+		if (!requirements.equals(toCopyFrom.requirements)) {
 			boolean changes = false;
 
-			//REMOVES REQUIREMENTS THAT HAVE BEEN REMOVED FROM THIS GAME
+			// REMOVES REQUIREMENTS THAT HAVE BEEN REMOVED FROM THIS GAME
 			Iterator<PPRequirement> existingReq = requirements.iterator();
-			while(existingReq.hasNext()){
+			while (existingReq.hasNext()) {
 				boolean found = false;
 				PPRequirement comp = existingReq.next();
-				for(PPRequirement serverReq : toCopyFrom.requirements){
-					if(serverReq.identify(comp)){
+				for (PPRequirement serverReq : toCopyFrom.requirements) {
+					if (serverReq.identify(comp)) {
 						found = true;
 					}
 				}
-				if(!found){
+				if (!found) {
 					existingReq.remove();
 					changes = true;
 				}
 			}
-			//END REMOVE REQUIREMENTS
-			
+			// END REMOVE REQUIREMENTS
+
 			List<PPRequirement> fromDB = getRequirementsFromDB(toCopyFrom.requirements);
 
-			for(PPRequirement serverReq: fromDB){//Iterate over the new requirements
+			for (PPRequirement serverReq : fromDB) {// Iterate over the new
+													// requirements
 				boolean found = false;
-				
-				for(PPRequirement req : requirements){//Iterate over the existing requirements list
-					if(serverReq.identify(req)){	//If this requirement is found
+
+				for (PPRequirement req : requirements) {// Iterate over the
+														// existing requirements
+														// list
+					if (serverReq.identify(req)) { // If this requirement is
+													// found
 						found = true;
-						if(req.copyFrom(serverReq)){//Copy the data over
-							changes = true;			//If there are changes then make those changes
+						if (req.copyFrom(serverReq)) {// Copy the data over
+							changes = true; // If there are changes then make
+											// those changes
 							req.addObserver(this);
 						}
 					}
 				}
-				if(!found){						//If this requirement does not exist in the list
-					changes = true;				//Indicates that this game has changes
-					serverReq.addObserver(this);//Add this game as an observer for this requirement
-					requirements.add(serverReq);//Add to the list of server requirements
+				if (!found) { // If this requirement does not exist in the list
+					changes = true; // Indicates that this game has changes
+					serverReq.addObserver(this);// Add this game as an observer
+												// for this requirement
+					requirements.add(serverReq);// Add to the list of server
+												// requirements
 				}
 			}
 
-			if(changes){											
+			if (changes) {
 				wasChanged = true;
 			}
 			needsUpdate = true;
 			logger.log(Level.FINEST, "Requirements coppied " + requirements);
 		}
 
-		if(complete != toCopyFrom.complete){
-			if (!complete){
+		if (complete != toCopyFrom.complete) {
+			if (!complete) {
 				complete = toCopyFrom.complete;
 			}
 			needsUpdate = true;
@@ -203,30 +219,32 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			logger.log(Level.FINEST, "Complete coppied " + complete);
 		}
 
-		if(notifiedOfCreation != toCopyFrom.notifiedOfCreation) {
+		if (notifiedOfCreation != toCopyFrom.notifiedOfCreation) {
 			notifiedOfCreation = toCopyFrom.notifiedOfCreation;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "Notified Of Creation coppied " + notifiedOfCompletion);
+			logger.log(Level.FINEST, "Notified Of Creation coppied "
+					+ notifiedOfCompletion);
 		}
-		
-		if(!deck.equals(toCopyFrom.deck)){
-			if(deck.copyFrom(toCopyFrom.deck)){
+
+		if (!deck.equals(toCopyFrom.deck)) {
+			if (deck.copyFrom(toCopyFrom.deck)) {
 				wasChanged = true;
 				needsUpdate = true;
 			}
 			logger.log(Level.FINEST, "Deck coppied " + deck);
 		}
 
-		if(identity.equals(toCopyFrom.identity)){
+		if (identity.equals(toCopyFrom.identity)) {
 			needsUpdate = false;
 		} else {
 			identity = toCopyFrom.identity;
 			needsUpdate = true;
 		}
 
-		if(needsUpdate){
-			logger.log(Level.SEVERE, "WARNING! THERE WAS A COPY OVER FOR TWO NON MATCHING UUID GAMES!");
+		if (needsUpdate) {
+			logger.log(Level.SEVERE,
+					"WARNING! THERE WAS A COPY OVER FOR TWO NON MATCHING UUID GAMES!");
 			makeChanged();
 		}
 
@@ -236,26 +254,27 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	private List<PPRequirement> getRequirementsFromDB(List<PPRequirement> match) {
 		try {
 			List<PPRequirement> newReq = new ArrayList<PPRequirement>();
-			for(PPRequirement req : PPRequirementHolder.getInstance().getRequirements()){
-				for(PPRequirement reqMatch : match){
-					if(req.identify(reqMatch)){
+			for (PPRequirement req : PPRequirementHolder.getInstance()
+					.getRequirements()) {
+				for (PPRequirement reqMatch : match) {
+					if (req.identify(reqMatch)) {
 						newReq.add(req);
 					}
 				}
 			}
 			return newReq;
 		} catch (DBModelNotInstantiatedException e) {
-			System.out.println("The GetPPRequirmentController was null");
+			logger.log(Level.SEVERE, "GetPPRequirementController was null.", e);
 			return match;
 		}
 	}
 
 	/**
-	 * The basic constructor for a game
-	 * Sets all of the default values for a game class
+	 * The basic constructor for a game Sets all of the default values for a
+	 * game class
 	 * 
 	 */
-	public Game(){
+	public Game() {
 		name = "";
 		description = "";
 		creator = "";
@@ -271,24 +290,28 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Constructs a Game without a creation time
-	 * @param name the name of the game
-	 * @param description the description of the game
-	 * @param requirements the list of requirements for the game
-	 * @param hasTimeLimit checks if game has a time limit
-	 * @param usesCards checks if the game uses cards or text entry
+	 * 
+	 * @param name
+	 *            the name of the game
+	 * @param description
+	 *            the description of the game
+	 * @param requirements
+	 *            the list of requirements for the game
+	 * @param hasTimeLimit
+	 *            checks if game has a time limit
+	 * @param usesCards
+	 *            checks if the game uses cards or text entry
 	 * 
 	 */
-	public Game(String name, 
-			String description, 
-			List<PPRequirement> requirements,
-			boolean hasTimeLimit, 
+	public Game(String name, String description,
+			List<PPRequirement> requirements, boolean hasTimeLimit,
 			boolean usesCards) {
-		this(); //Calls the default constructor
+		this(); // Calls the default constructor
 		this.name = name;
 		this.description = description;
 		this.hasTimeLimit = hasTimeLimit;
 		this.requirements = requirements;
-		for(PPRequirement req : this.requirements){
+		for (PPRequirement req : this.requirements) {
 			req.addObserver(this);
 			req.setProject(getProject());
 		}
@@ -298,20 +321,24 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Constructs a Game with a creation time
-	 * @param name the name of the game
-	 * @param description the description of the game
-	 * @param hasTimeLimit checks if game has a time limit
-	 * @param requirements the list of requirements for the game
-	 * @param usesCards checks if the game uses cards or text entry
-	 * @param creationTime the data and time a game is created on
+	 * 
+	 * @param name
+	 *            the name of the game
+	 * @param description
+	 *            the description of the game
+	 * @param hasTimeLimit
+	 *            checks if game has a time limit
+	 * @param requirements
+	 *            the list of requirements for the game
+	 * @param usesCards
+	 *            checks if the game uses cards or text entry
+	 * @param creationTime
+	 *            the data and time a game is created on
 	 * 
 	 */
-	public Game(String name, 
-			String description, 
-			List<PPRequirement> requirements, 
-			boolean hasTimeLimit, 
-			boolean usesCards, 
-			Date creationTime) {
+	public Game(String name, String description,
+			List<PPRequirement> requirements, boolean hasTimeLimit,
+			boolean usesCards, Date creationTime) {
 		this(name, description, requirements, hasTimeLimit, usesCards);
 		this.creationTime = creationTime;
 		this.complete = false;
@@ -319,9 +346,10 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Gets the universally unique identifier for this game
+	 * 
 	 * @return the uuid of the game
 	 */
-	public void setIdentifier(UUID identifier){
+	public void setIdentifier(UUID identifier) {
 		delayChange("setIdentifier");
 		makeChanged();
 		identity = identifier;
@@ -329,43 +357,49 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Gets the Identifier for this game
+	 * 
 	 * @return the UUID for this class
 	 */
-	public UUID getIdentity(){
+	public UUID getIdentity() {
 		return identity;
 	}
 
 	/**
 	 * Gets the name of this game
+	 * 
 	 * @return the name of the game
 	 */
-	public String getName(){
+	public String getName() {
 		return name;
 	}
 
 	/**
 	 * Sets the name of a game
+	 * 
 	 * @param newName
 	 */
-	public void setName(String newName){
-		if(!name.equals(newName)){
+	public void setName(String newName) {
+		if (!name.equals(newName)) {
 			makeChanged();
 			delayChange("setName");
 			name = newName;
 		}
 	}
-	
+
 	/**
 	 * Gets the deck from the game
+	 * 
 	 * @return the deck
 	 */
 	public Deck getDeck() {
 		return deck;
 	}
-	
+
 	/**
 	 * Sets the game's deck to a new deck
-	 * @param deck to be set
+	 * 
+	 * @param deck
+	 *            to be set
 	 */
 	public void setDeck(Deck deck) {
 		if (!this.deck.equals(deck)) {
@@ -377,17 +411,18 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Is this this game completed
+	 * 
 	 * @return true if the game is complete
 	 */
-	public boolean isComplete(){
+	public boolean isComplete() {
 		return complete;
 	}
 
 	/**
 	 * Change game status to complete
 	 */
-	public void makeComplete(){
-		if(!complete ){
+	public void makeComplete() {
+		if (!complete) {
 			makeChanged();
 			delayChange("makeComplete");
 			complete = true;
@@ -396,18 +431,21 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Does this game use cards to estimate
+	 * 
 	 * @return true if this game uses cards
 	 */
-	public boolean doesUseCards(){
+	public boolean doesUseCards() {
 		return usesCards;
 	}
 
 	/**
 	 * displays a given set of cards
-	 * @param newUsesCards cards to be displayed
+	 * 
+	 * @param newUsesCards
+	 *            cards to be displayed
 	 */
-	public void setUsesCards(boolean newUsesCards){
-		if(usesCards != newUsesCards){
+	public void setUsesCards(boolean newUsesCards) {
+		if (usesCards != newUsesCards) {
 			makeChanged();
 			delayChange("setUsesCards");
 			usesCards = newUsesCards;
@@ -416,6 +454,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Gets the description of the game
+	 * 
 	 * @return the description of the game
 	 */
 	public String getDescription() {
@@ -424,10 +463,12 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * sets the description box to a certain value to be displayed
-	 * @param newDescription new value for the description boxS
+	 * 
+	 * @param newDescription
+	 *            new value for the description boxS
 	 */
-	public void setDescription(String newDescription){
-		if(!description.equals(newDescription)){
+	public void setDescription(String newDescription) {
+		if (!description.equals(newDescription)) {
 			makeChanged();
 			delayChange("setDescription");
 			description = newDescription;
@@ -440,7 +481,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	@Override
 	public void setProject(Project p) {
 		// Set requirements' project
-		for(PPRequirement r: requirements) {
+		for (PPRequirement r : requirements) {
 			r.setProject(p);
 		}
 		// Set game's project
@@ -448,25 +489,27 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	}
 
 	/**
-	 * Gets the list of requirements for this game
-	 * *WARNING* ADDING ELEMENTS TO THIS ARRAY WILL MAKE THEM UNTRACKABLE 
-	 * TO THE GAME AND PREVENT THEM FROM BEING ADDED TO THE SERVER
+	 * Gets the list of requirements for this game *WARNING* ADDING ELEMENTS TO
+	 * THIS ARRAY WILL MAKE THEM UNTRACKABLE TO THE GAME AND PREVENT THEM FROM
+	 * BEING ADDED TO THE SERVER
+	 * 
 	 * @return the list of requirements for the game
 	 */
-	final public List<PPRequirement> getRequirements(){
+	public final List<PPRequirement> getRequirements() {
 		return requirements;
 	}
 
 	/**
 	 * TODO: add documentation
+	 * 
 	 * @param newReqs
 	 */
-	public void setRequirements(List<PPRequirement> newReqs){
-		if(!requirements.equals(newReqs)){
+	public void setRequirements(List<PPRequirement> newReqs) {
+		if (!requirements.equals(newReqs)) {
 			makeChanged();
 			delayChange("setRequiremets");
 			requirements = newReqs;
-			for(PPRequirement req : requirements){
+			for (PPRequirement req : requirements) {
 				req.addObserver(this);
 			}
 		}
@@ -474,6 +517,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Gets the username of the creator of the game
+	 * 
 	 * @return the list of requirements for the game
 	 */
 	public String getCreator() {
@@ -482,10 +526,12 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Sets the creator of the game.
-	 * @param creator the creator's username
+	 * 
+	 * @param creator
+	 *            the creator's username
 	 */
 	public void setCreator(String creator) {
-		if(!this.creator.equals(creator)){
+		if (!this.creator.equals(creator)) {
 			makeChanged();
 			delayChange("setCreator");
 			this.creator = creator;
@@ -494,14 +540,16 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Get the number of all users
+	 * 
 	 * @return the number of all users
 	 */
-	public int getUsers(){
+	public int getUsers() {
 		return getProject().getTeam().length;
 	}
 
 	/**
 	 * Gets the creating time and date of the game
+	 * 
 	 * @return a Formated Date String
 	 */
 	public String getCreationTime() {
@@ -513,18 +561,21 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Gets the active boolean
+	 * 
 	 * @return true if game is active, false otherwise
 	 */
-	public boolean isActive(){
+	public boolean isActive() {
 		return active;
 	}
 
 	/**
 	 * sets whether the game is active
-	 * @param newActive true if the game is active, false if it is inactive
+	 * 
+	 * @param newActive
+	 *            true if the game is active, false if it is inactive
 	 */
-	public void setActive(boolean newActive){
-		if(active != newActive){
+	public void setActive(boolean newActive) {
+		if (active != newActive) {
 			makeChanged();
 			delayChange("setActive");
 			active = newActive;
@@ -532,13 +583,14 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	}
 
 	@Override
-	public String toString(){
+	public String toString() {
 		return name;
 	}
 
 	/**
 	 * Method toJSON.
-	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() * 
+	 * 
+	 * @return String * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON() *
 	 * @see edu.wpi.cs.wpisuitetng.modules.Model#toJSON()
 	 */
 	@Override
@@ -547,10 +599,11 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	}
 
 	/**
-	 * Returns an instance of Game constructed using the given
-	 * Game encoded as a JSON string.
+	 * Returns an instance of Game constructed using the given Game encoded as a
+	 * JSON string.
 	 * 
-	 * @param json the json-encoded Game to deserialize
+	 * @param json
+	 *            the json-encoded Game to deserialize
 	 * @return the Game contained in the given JSON
 	 */
 	public static Game fromJSON(String json) {
@@ -559,10 +612,10 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	}
 
 	/**
-	 * Returns an array of Game parsed from the given JSON-encoded
-	 * string.
+	 * Returns an array of Game parsed from the given JSON-encoded string.
 	 * 
-	 * @param json a string containing a JSON-encoded array of Game
+	 * @param json
+	 *            a string containing a JSON-encoded array of Game
 	 * @return an array of Game deserialzied from the given json string
 	 */
 	public static Game[] fromJsonArray(String json) {
@@ -571,24 +624,27 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	}
 
 	@Override
-	public void save() {}
+	public void save() {
+	}
 
 	@Override
-	public void delete() {}
+	public void delete() {
+	}
 
 	@Override
 	public Boolean identify(Object o) {
-		if(o == null){
+		if (o == null) {
 			return false;
 		}
-		if(o.getClass() != this.getClass()){
+		if (o.getClass() != this.getClass()) {
 			return false;
 		}
-		Game comp = (Game)o;
-		/* Changed so that this comparison does not run off of the name because the
-		 * name of the game may be changed by the user at a later time.
+		Game comp = (Game) o;
+		/*
+		 * Changed so that this comparison does not run off of the name because
+		 * the name of the game may be changed by the user at a later time.
 		 */
-		if(!identity.equals(comp.identity)){
+		if (!identity.equals(comp.identity)) {
 			return false;
 		}
 		return true;
@@ -596,13 +652,15 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	@Override
 	public void update(ObservableModel o, Object arg) {
-		if (o instanceof PPRequirement){
-			UpdatePPRequirementController.getInstance().updateRequirement((PPRequirement)o);
+		if (o instanceof PPRequirement) {
+			UpdatePPRequirementController.getInstance().updateRequirement(
+					(PPRequirement) o);
 			makeChanged();
 			notifyObservers(arg);
 		}
-		System.out.println("Game: " + name + " has " + countObservers() + " observers");
-		if(countObservers()>0){
+		System.out.println("Game: " + name + " has " + countObservers()
+				+ " observers");
+		if (countObservers() > 0) {
 			System.out.println("\t" + this.getObserver(0));
 		}
 	}
@@ -613,10 +671,12 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * set the endDate of a game to a given Date
-	 * @param endDate the new end date
+	 * 
+	 * @param endDate
+	 *            the new end date
 	 */
 	public void setEndDate(Date endDate) {
-		if(this.endDate != endDate){
+		if (this.endDate != endDate) {
 			makeChanged();
 			delayChange("setEndDate");
 			this.endDate = endDate;
@@ -625,8 +685,11 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Checks if the user is the creator of the current game
-	 * @param user user to check
-	 * @return returns true if the user being checked is the creator, returns false otherwise
+	 * 
+	 * @param user
+	 *            user to check
+	 * @return returns true if the user being checked is the creator, returns
+	 *         false otherwise
 	 */
 	public boolean isCreator(String user) {
 		return creator.equals(user);
@@ -634,6 +697,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Checks if users have been notified after game creation
+	 * 
 	 * @return True if users have been notified after game creation
 	 */
 	public boolean isNotifiedOfCreation() {
@@ -642,7 +706,9 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Sets notifiedOfCreation to value of param
-	 * @param notifiedOfCreation value set
+	 * 
+	 * @param notifiedOfCreation
+	 *            value set
 	 */
 	public void setNotifiedOfCreation(boolean notifiedOfCreation) {
 		if (this.notifiedOfCreation != notifiedOfCreation) {
@@ -654,6 +720,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Checks if the users have been notified of a game completion
+	 * 
 	 * @return True if the users have been notified of the game completion
 	 */
 	public boolean isNotifiedOfCompletion() {
@@ -662,7 +729,9 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 
 	/**
 	 * Sets notifiedOfCompletion to value of param
-	 * @param notifiedOfCompletion value set
+	 * 
+	 * @param notifiedOfCompletion
+	 *            value set
 	 */
 	public void setNotifiedOfCompletion(boolean notifiedOfCompletion) {
 		if (this.notifiedOfCompletion != notifiedOfCompletion) {
@@ -673,14 +742,15 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	}
 
 	/**
-	 * hold the code while the game model is updating
-	 * prevent race-time condition for fields setting/overriding
+	 * hold the code while the game model is updating prevent race-time
+	 * condition for fields setting/overriding
 	 */
-	private void delayChange(String source){
-		while(GameModel.getInstance().isServerUpdating()){
+	private void delayChange(String source) {
+		while (GameModel.getInstance().isServerUpdating()) {
 			try {
 				Thread.sleep(5);
-				logger.log(Level.WARNING, "Looping in the game: From source " + source);
+				logger.log(Level.WARNING, "Looping in the game: From source "
+						+ source);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -689,38 +759,38 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 	}
 
 	@Override
-	public synchronized void addObserver(IModelObserver o){
-		for(PPRequirement r : requirements){
+	public synchronized void addObserver(IModelObserver o) {
+		for (PPRequirement r : requirements) {
 			r.addObserver(this);
 		}
 		super.addObserver(o);
 	}
 
-
 	/**
-	 * hasChanged in the super class does not check if the 
-	 * requirements has been changed. This method is to check
-	 * whether if the requirements are also changed.
+	 * hasChanged in the super class does not check if the requirements has been
+	 * changed. This method is to check whether if the requirements are also
+	 * changed.
+	 * 
 	 * @return true if the requirement is changed
 	 * 
 	 */
 	@Override
-	public synchronized boolean hasChanged()
-	{
-		if(super.hasChanged())
+	public synchronized boolean hasChanged() {
+		if (super.hasChanged()) {
 			return true;
+		}
 
-		for(PPRequirement requirement: requirements)
-		{
-			if(requirement.hasChanged())
+		for (PPRequirement requirement : requirements) {
+			if (requirement.hasChanged()) {
 				return true;
+			}
 		}
 		return false;
 	}
 
 	/**
-	 * Sends notifications via email, facebook, and text message
-	 * to the team associated with this game.
+	 * Sends notifications via email, facebook, and text message to the team
+	 * associated with this game.
 	 */
 	public void sendNotifications() {
 
@@ -737,7 +807,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		fbn.sendFacebookNotifications();
 
 	}
-	
+
 	/**
 	 * Checks if the current game has passed its deadline and sets it as
 	 * complete if so
@@ -748,15 +818,20 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 		Calendar rightNow = Calendar.getInstance();
 		Calendar gameEnd = new GregorianCalendar();
 		gameEnd.setTime(getEndDate());
-		
-		if(isActive() && rightNow.after(gameEnd)) {
-			if(ViewEventController.getInstance().getTabbedView().hasActiveGameOpen(this)) {
-				JOptionPane.showMessageDialog(
-					ViewEventController.getInstance().getTabbedView().getActiveGamePanel(this),
-					"Current game has expired and will now close.");
-				ViewEventController.getInstance().getTabbedView().removeTab(
-							(JComponent) ViewEventController.getInstance().getTabbedView().getActiveGamePanel(
-							this));
+
+		if (isActive() && rightNow.after(gameEnd)) {
+			if (ViewEventController.getInstance().getTabbedView()
+					.hasActiveGameOpen(this)) {
+				JOptionPane.showMessageDialog(ViewEventController.getInstance()
+						.getTabbedView().getActiveGamePanel(this),
+						"Current game has expired and will now close.");
+				ViewEventController
+						.getInstance()
+						.getTabbedView()
+						.removeTab(
+								(JComponent) ViewEventController.getInstance()
+										.getTabbedView()
+										.getActiveGamePanel(this));
 			}
 			makeChanged();
 			delayChange("hasEnded");
@@ -765,8 +840,7 @@ public class Game extends ObservableModel implements IModelObserver, IStorageMod
 			notifyObservers();
 			ViewEventController.getInstance().refreshGameTree();
 			return true;
-			}
-		else {
+		} else {
 			return false;
 		}
 	}

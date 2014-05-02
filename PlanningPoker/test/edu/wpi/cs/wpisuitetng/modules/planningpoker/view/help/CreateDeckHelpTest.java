@@ -8,15 +8,31 @@
  *
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
+package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.help;
 
-package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation;
+import static org.junit.Assert.*;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
+import org.junit.Test;
 
-public interface ICreateDeckPanel {
 
-	public void saveDeck(Deck deck);
+
+public class CreateDeckHelpTest {
+
+	CreateDeckHelp panel = new CreateDeckHelp();
 	
-	public Deck getDeck();
 	
+	@Test
+	public void readyToRemoveTest(){
+		assertTrue(panel.readyToRemove());
+	}
+	
+	@Test
+	public void getIdentifierIndexTest(){
+		assertEquals(4, panel.getIdentifierIndex());
+	}
+	/*
+	@Test
+	public void addImageTest(){
+
+	} */
 }
