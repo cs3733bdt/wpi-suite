@@ -22,6 +22,8 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -32,13 +34,11 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.RetrievePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.UpdateRequirementController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
@@ -50,7 +50,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 public class StatisticsPanel extends JScrollPane implements IDataField {
 	Game activeGame;
 	PPRequirement activeRequirement;
-	
+	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	/**
 	 * Set the userStoryDesc equal to the description of the requirement being
 	 * selected in the table
@@ -501,6 +501,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 						UpdateRequirementController.getInstance().updateRequirement(rModel.getRequirement((ppr.getId() - 1)));
 					} catch(NullPointerException e) {
 						// The requirement doesn't exist
+						logger.log(Level.SEVERE, "The requrirement does not exist.", e);
 					}
 				}
 				

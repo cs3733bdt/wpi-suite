@@ -16,17 +16,15 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.swing.ButtonGroup;
-import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -167,7 +165,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 																// text area
 
 		nameTextField.addKeyListener(parent);
-		; // Adds KeyListener to update on key press
+		// Adds KeyListener to update on key press
 		descriptionTextField.addKeyListener(parent); // Adds KeyListener to
 														// update on key press
 

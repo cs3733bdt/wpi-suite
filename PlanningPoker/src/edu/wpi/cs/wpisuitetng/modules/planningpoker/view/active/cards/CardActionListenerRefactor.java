@@ -16,9 +16,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JToggleButton;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Card;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;

@@ -11,10 +11,6 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers;
 
-import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.UpdateGameController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.UpdatePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
