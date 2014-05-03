@@ -481,7 +481,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		//Put constraints on the mobile checkbox
 		mobileLayout.putConstraint(SpringLayout.NORTH, mobileCheckBox, 5, SpringLayout.SOUTH, carrierDropDown);
 		mobileLayout.putConstraint(SpringLayout.WEST, mobileCheckBox, 20, SpringLayout.WEST, mobilePanel);
-
+		
+		setMinimumSize(new Dimension(350, 400));
+		view.setPreferredSize(new Dimension(550, 460));
+		
 		initializeCheckBoxes();
 		setViewportView(view);
 		revalidate();
