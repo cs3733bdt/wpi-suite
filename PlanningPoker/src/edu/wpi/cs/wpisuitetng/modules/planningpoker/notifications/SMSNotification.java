@@ -123,7 +123,7 @@ public class SMSNotification {
 			for (int i = 0; i < users.length; i++) {
 				// TODO implement verify if email format
 				if (users[i].getNotificationPreferences().contains("M")) {
-					if (users[i].getPhoneNumber() != null) {
+					if (users[i].getPhoneNumber() != null && !users[i].getPhoneNumber().equals("")) {
 						sendSMS(login(), users[i]);
 					} else {
 						System.err.println(users[i].getName()
