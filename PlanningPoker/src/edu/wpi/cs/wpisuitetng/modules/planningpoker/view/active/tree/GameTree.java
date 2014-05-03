@@ -113,6 +113,8 @@ public class GameTree extends JPanel implements MouseListener{
 
 				if(game.isActive()){
 					active.add(newGameNode);
+					System.out.println("UPDATING ACTIVE GAME IN GAMETREE");
+					ViewEventController.getInstance().updateActiveGame(game);
 				}
 				else if(game.isCreator(ConfigManager.getConfig().getUserName())){
 					inactive.add(newGameNode);

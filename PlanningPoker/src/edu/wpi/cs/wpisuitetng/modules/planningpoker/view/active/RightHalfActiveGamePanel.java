@@ -624,4 +624,16 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		counterLabel.setText("Your current selected estimate is: 0");
 		updateSavedEstimateLabel();
 	}
+
+	public void updateActiveGame(Game game) {
+		System.out.println("UPDATING ACTIVE GAME IN RIGHTHALFCREATEACTIVEGAMEPANEL");
+		currentGame = game;
+		for(PPRequirement r : currentGame.getRequirements()) {
+			for(int i=0; i < currentGame.getRequirements().size(); i++){
+				if(table.getValueAt(i, 1).equals(r.getName())) {
+					table.setValueAt(r.displayComplete(), i, 3);
+				}
+			}
+		}
+	}
 }

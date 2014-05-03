@@ -147,8 +147,10 @@ public class RequirementTest {
 				new PPRequirement(req1.getName() + " copy", req1.getDescription() + " copy");
 		copyTo.addVote(new Vote("Steve", 20));
 		assertFalse(copyTo.copyFrom(copyTo)); //Should be false because copying something to itself
-		assertTrue(copyTo.copyFrom(req1)); //Should return true because changes were made
-		assertFalse(copyTo.copyFrom(req1)); //Should return false; no changes are made to the class
+		boolean tryCopy1 = copyTo.copyFrom(req1);
+		boolean tryCopy2 = copyTo.copyFrom(req1);
+		assertTrue(tryCopy1); //Should return true because changes were made
+		assertFalse(tryCopy2); //Should return false; no changes are made to the class
 		
 		assertEquals(copyTo.getName(), req1.getName());
 		assertEquals(copyTo.getDescription(), req1.getDescription());

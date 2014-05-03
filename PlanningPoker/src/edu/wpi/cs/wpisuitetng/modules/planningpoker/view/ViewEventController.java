@@ -271,4 +271,10 @@ public class ViewEventController {
 		this.deckTree = deckTree;
 		
 	}
+
+	public void updateActiveGame(Game game) {
+		getTabbedView().updateActiveGame(game);
+		getTabbedView().invalidate();
+		getTabbedView().repaint();
+	}
 }

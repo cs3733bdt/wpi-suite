@@ -94,4 +94,10 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 		}
 		return true;
 	}
+
+	@Override
+	public void updateActiveGame(Game game) {
+		currentGame = game;
+		rightHalf.updateActiveGame(game);
+	}
 }

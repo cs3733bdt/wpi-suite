@@ -11,6 +11,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.IGamePanel;
 
 /**
@@ -20,6 +21,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.IGamePanel;
  *
  */
 public interface IActiveGamePanel extends IGamePanel{
+
+	void updateActiveGame(Game game);
 	
 	
 }

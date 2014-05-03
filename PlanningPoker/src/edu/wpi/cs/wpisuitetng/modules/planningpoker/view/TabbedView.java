@@ -736,4 +736,35 @@ public class TabbedView extends JTabbedPane {
 			enableHelpButton();
 		}
 	}
+
+	public void updateActiveGame(Game game) {
+		// Attempt to find the game in the active panels list
+		for (IActiveGamePanel gameSearch : listOfActiveGamePanels) {
+			if (game.getIdentity().equals(gameSearch.getGame().getIdentity())
+					&& !game.equals(gameSearch.getGame())) {
+				setSelectedComponent((Component) gameSearch);
+				gameSearch.updateActiveGame(game);
+				ViewEventController.getInstance().enableHelpButton();
+				invalidate();
+				repaint();
+				return; // The game has been found and made active. Done!
+			}
+		}
+		/*
+		// Game not found in the active game list
+		ActiveGamePanel viewGame = new ActiveGamePanel(game);
+		// TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
+
+		addTab(getTabName(game), viewGame);
+		setToolTipTextAt(getTabCount() - 1, game.getName());
+
+		listOfActiveGamePanels.add(viewGame);
+
+		setSelectedComponent(viewGame);
+		ViewEventController.getInstance().enableHelpButton();
+
+		invalidate();
+		repaint();		
+		*/
+	}
 }
