@@ -431,7 +431,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	}
 	
 	public void selectedIDK() {
-		sum = 0;
 		counterLabel.setText("Your current selected estimate is: I don't know");
 	}
 	
@@ -546,10 +545,9 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	 * update the saved estimate label
 	 */
 	public void updateSavedEstimateLabel() {
-		if(activeRequirement.userVote() == 0) {
-			
+		if(activeRequirement.userVote() == -8008135) {
 			previousEst.setText("Your saved estimate is: 0");
-			table.setValueAt("?", table.getSelectedRow(), 2);
+			table.setValueAt("?", table.getSelectedRow(), 2);		
 		} else {
 			previousEst.setText("Your saved estimate is: "+ activeRequirement.userVote());
             table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(), 2);

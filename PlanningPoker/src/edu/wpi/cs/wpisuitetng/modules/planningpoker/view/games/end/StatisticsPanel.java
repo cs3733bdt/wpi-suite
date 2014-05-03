@@ -354,7 +354,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		List<Integer> newVotes = new ArrayList<Integer>();
 
 		for (int i = 0; i < votes.size(); i++) {
-			if (votes.get(i) != 0) {
+			if (votes.get(i) != -8008135) {
 				newVotes.add(votes.get(i));
 			}
 		}
@@ -478,7 +478,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		List<String> nameArray = requirementToNames(requirement);
 		List<Integer> voteArray = requirementToVotes(requirement);
 		for (int i = 0; i < nameArray.size(); i++) {
-			if (voteArray.get(i) == 0) {
+			if (voteArray.get(i) == -8008135) {
 				voteTable.getTableModel().addRow(
 						new Object[] { nameArray.get(i), "I don't know" });
 			} else {
