@@ -101,9 +101,18 @@ public class GameTree extends JPanel implements MouseListener{
 		inactive.removeAllChildren();
 		history.removeAllChildren();
 		
+		List<Game> betterGameList = GameModel.getInstance().getGames();
+		
+		for (Game g: betterGameList) {
+			System.out.println("Game on unsorted game list: " + g.getName());
+		}
+		
 		List<Game> gameList = 
 				sortGames(GameModel.getInstance().getGames());//retrieve list of all games
 		System.out.println("Numb Games: " + gameList.size());
+		for (Game g : gameList) {
+			System.out.println("Game on gameList: " + g.getName());	
+		}
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
