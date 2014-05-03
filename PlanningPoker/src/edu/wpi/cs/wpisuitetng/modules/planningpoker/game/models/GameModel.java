@@ -85,9 +85,11 @@ public class GameModel extends AbstractStorageModel<Game> {
 
 		try { // Prevents a null pointer exception when the running tests (the
 				// JPanel's aren't instantiated)
-			ViewEventController.getInstance().refreshGameTable();
+			System.out.println("Is this refreshing");
 			ViewEventController.getInstance().refreshGameTree();
+			System.out.println("Yes it is refreshing");
 		} catch (Exception e) {
+			System.out.println("No it is not refreshing");
 			logger.log(Level.WARNING,
 					"ViewEventController not fully initialized", e);
 		}
