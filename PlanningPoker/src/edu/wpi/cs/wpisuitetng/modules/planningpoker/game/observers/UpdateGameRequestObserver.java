@@ -54,16 +54,20 @@ public class UpdateGameRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		final ResponseModel response = iReq.getResponse();
-
+		Game realGame;
 		// The game that got updated
 		Game game = Game.fromJSON(response.getBody());
+		//Retrieve game from game model based on the game ID from the response
+		try {
+			realGame = GameModel.getInstance().getGameById(game.getIdentity());
+					
+		} catch (NotFoundException e) {
+			logger.log(Level.WARNING, "Game does not exist.", e);
+			realGame = game;
+		}
 
 		// Send out email, text, and facebook notifications on game creation
-		if (!game.isNotifiedOfCreation() && game.isActive()) {
-			Game realGame;
-			try {
-				realGame = GameModel.getInstance().getGameById(
-						game.getIdentity());
+		if (!realGame.isNotifiedOfCreation() && realGame.isActive()) {
 				// Set the project of the game, without this it throws a null
 				// pointer
 				// if the game is created/added on an update call
@@ -73,25 +77,15 @@ public class UpdateGameRequestObserver implements RequestObserver {
 				realGame.setNotifiedOfCreation(true);
 				// Finally send
 				realGame.sendNotifications();
-			} catch (NotFoundException e) {
-				logger.log(Level.WARNING, "Game does not exist.", e);
-			}
 			// Send out email, text, and facebook notifications on game
 			// completion
-		} else if (!game.isNotifiedOfCompletion() && game.isComplete()) {
-			
-			Game realGame;
-			try {
-				realGame = GameModel.getInstance().getGameById(
-						game.getIdentity());
+		} else if (!realGame.isNotifiedOfCompletion() && realGame.isComplete()) {
 				// Set notified before sending notifications to remove looping
 				// possibility
-				realGame.setNotifiedOfCreation(true);
+				realGame.setProject(game.getProject());
+				realGame.setNotifiedOfCompletion(true);
 				// Finally Send
 				realGame.sendNotifications();
-			} catch (NotFoundException e) {
-				logger.log(Level.WARNING, "Game does not exist.", e);
-			}
 		}
 
 		System.out.println("The request to update a game has succeeded!");
