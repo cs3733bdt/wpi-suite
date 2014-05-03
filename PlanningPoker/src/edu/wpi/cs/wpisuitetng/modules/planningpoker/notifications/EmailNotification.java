@@ -129,7 +129,7 @@ public class EmailNotification {
 			for (int i = 0; i < users.length; i++) {
 				// TODO implement verify if email format
 				if (users[i].getNotificationPreferences().contains("E"))
-					if (users[i].getEmail() != null) {
+					if (users[i].getEmail() != null && !users[i].getEmail().equals("")) {
 						sendEmail(login(), users[i]);
 					} else {
 						System.err.println(users[i].getName()
