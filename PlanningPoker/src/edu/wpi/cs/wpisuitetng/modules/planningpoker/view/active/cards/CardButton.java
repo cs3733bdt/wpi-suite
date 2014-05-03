@@ -41,14 +41,10 @@ public class CardButton extends JToggleButton implements Accessible {
 	/**
 	 * creates the buttons based on the deck
 	 * 
-	 * @param cardNum
-	 *            the index of the card
-	 * @param passedDeck
-	 *            the deck of cards to be used
-	 * @param passedCardsPanel
+	 * @param card
+	 *            the singular card
+	 * @param ActiveCardsPanel
 	 *            the panel that displays the cards
-	 * @param passedEstimatePanel
-	 *            the panel that displays the estimates
 	 */
 
 	public CardButton(Card card, ActiveCardsPanel passedCardsPanel) {

@@ -39,7 +39,7 @@ public class FacebookNotificationTest {
 	List<PPRequirement> reqs;
 	
 	@Before
-	public void setUp()
+	public void setUp() // $codepro.audit.disable accessorMethodNamingConvention
 	{
 		reqs = new ArrayList<PPRequirement>();
 		g = new Game("Email Test Game", "Email Test Game Description", reqs, false, false);

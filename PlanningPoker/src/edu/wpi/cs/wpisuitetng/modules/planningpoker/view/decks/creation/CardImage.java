@@ -137,6 +137,7 @@ public class CardImage extends JPanel implements IDataField{
 	 * A getter for the card's value. This is not current functional since the label is reset through various ways in the GUI,
 	 * and also because the label is not yet associated with a specific card.
 	 * @return label's text as int
+	 * @throws NumberFormatException
 	 */
 	public Integer getCardValue() throws NumberFormatException{
 		if(valueLabel.getText().equals("")){

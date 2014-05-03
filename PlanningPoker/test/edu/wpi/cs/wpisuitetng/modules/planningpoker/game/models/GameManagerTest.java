@@ -55,7 +55,7 @@ public class GameManagerTest {
 	 * @throws java.lang.Exception
 	 */
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception { // $codepro.audit.disable accessorMethodNamingConvention
 		//Set up the network
 		Network.initNetwork(new MockNetwork());
 		Network.getInstance().setDefaultNetworkConfiguration(

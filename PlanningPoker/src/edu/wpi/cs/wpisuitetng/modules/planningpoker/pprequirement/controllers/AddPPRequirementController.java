@@ -18,48 +18,47 @@ import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 /**
- * This controller responds when the user
- * add the contents of the requirement text fields to the model as a new
- * requirement.
+ * This controller responds when the user add the contents of the requirement
+ * text fields to the model as a new requirement.
+ * 
  * @author tianchanggu
- *
+ * 
  */
-public class AddPPRequirementController{
-	
-	private static AddPPRequirementController instance;
+public class AddPPRequirementController {
+
+	private static AddPPRequirementController instance = null;
 	private AddPPRequirementRequestObserver observer;
-	
+
 	/**
 	 * Construct an AddRequirementController for the given model, view pair
 	 */
 	private AddPPRequirementController() {
 		observer = new AddPPRequirementRequestObserver(this);
 	}
-	
+
 	/**
-	 * @return the instance of the AddRequirementController or creates one if it does not exist.
+	 * @return the instance of the AddRequirementController or creates one if it
+	 *         does not exist.
 	 */
-	public static AddPPRequirementController getInstance()
-	{
-		if(instance == null)
-		{
+	public static AddPPRequirementController getInstance() {
+		if (instance == null) {
 			instance = new AddPPRequirementController();
 		}
-		
+
 		return instance;
 	}
 
 	/**
 	 * This method adds a requirement to the server.
-	 * @param newRequirement is the requirement to be added to the server.
+	 * 
+	 * @param newRequirement
+	 *            is the requirement to be added to the server.
 	 */
-	public void addRequirement(PPRequirement newRequirement) 
-	{
-		final Request request = 
-				Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.PUT);
-		request.setBody(newRequirement.toJSON()); 
-		request.addObserver(observer); 
-		request.send(); 
+	public void addRequirement(PPRequirement newRequirement) {
+		final Request request = Network.getInstance().makeRequest(
+				"planningpoker/requirement", HttpMethod.PUT);
+		request.setBody(newRequirement.toJSON());
+		request.addObserver(observer);
+		request.send();
 	}
 }
-

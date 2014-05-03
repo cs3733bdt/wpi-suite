@@ -609,7 +609,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	/**
 	 * Triggered when the save deck button is pressed using the mouse listener
 	 * 
-	 * @return true when a deck is successfully added
 	 */
 	public void SaveDeckPressed() {
 		if(validateField(errorField, true, true)){

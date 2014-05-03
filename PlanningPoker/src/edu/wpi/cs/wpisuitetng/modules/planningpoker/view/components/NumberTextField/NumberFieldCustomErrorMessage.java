@@ -41,6 +41,8 @@ public class NumberFieldCustomErrorMessage {
 	 *            The error if the field is empty
 	 * @param not_number
 	 *            The try to enter something that isn't a number
+	 * @param too_low
+	 *            The number is too low
 	 */
 	public NumberFieldCustomErrorMessage(String too_long, String too_low,
 			String not_empty, String not_number) {

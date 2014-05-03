@@ -70,21 +70,14 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 		setDividerLocation(420);
 
 		if (game == null) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(false);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(false);
-			leftHalf.getErrorField().setText("Name is required");
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
 		} else if (!validateField(true, false)) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(false);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
 		} else {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(true);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(true);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
 		}
 
 		revalidate();
@@ -188,8 +181,10 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 	 * Checks to see if all of this panels sub elements are valid to be saved or
 	 * launched
 	 * 
-	 * @param whether
-	 *            or not to show the error
+	 * @param showLabel
+	 *            Show the label or not
+	 * @param showBox
+	 * 			  Show the box or not
 	 * @return true when the all of this panel's sub elements are valid
 	 */
 	public boolean validateField(boolean showLabel, boolean showBox) {

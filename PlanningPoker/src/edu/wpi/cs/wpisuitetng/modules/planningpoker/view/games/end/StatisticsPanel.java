@@ -97,7 +97,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * If the ArrayList passed in is empty it will use the default deck
 	 * 
 	 * @param game
-	 * @param requirement
 	 */
 	public StatisticsPanel(Game game) {
 

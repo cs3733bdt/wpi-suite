@@ -22,7 +22,7 @@ import javax.swing.JTextArea;
  * @author jonathanleitschuh
  *
  */
-public abstract class CustomJTextArea extends JTextArea implements IDataField { //THIS MUST BE ABSTRACT DO NOT CHANGE!
+public abstract class CustomJTextArea extends JTextArea implements IDataField { //THIS MUST BE ABSTRACT DO NOT CHANGE! // $codepro.audit.disable abstractSpecialization
 
 	/** @see JTextArea#JTextArea() */
 	protected CustomJTextArea() {

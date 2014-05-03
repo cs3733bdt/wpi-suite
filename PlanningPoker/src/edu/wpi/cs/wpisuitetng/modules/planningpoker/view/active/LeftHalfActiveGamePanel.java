@@ -62,6 +62,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	/**
 	 * Constructor for NewLeftHalfActiveGamePanel
 	 * @param game the current planning poker game session
+	 * @param activeGamePanel the open game
 	 */
 	public LeftHalfActiveGamePanel(final Game game, final ActiveGamePanel activeGamePanel) {
 		active = game;

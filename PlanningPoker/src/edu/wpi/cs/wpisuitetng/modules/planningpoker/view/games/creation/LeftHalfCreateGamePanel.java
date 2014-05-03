@@ -18,7 +18,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -39,9 +38,11 @@ import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXDatePicker;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.GetDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.DeckTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.LaunchGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveGameButtonPanel;
@@ -95,6 +96,9 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 	private boolean isCardsChanged;
 
 	private boolean usesCardsInitial;
+	
+	//Boolean representing if decks have been retrieved from the server
+	private boolean isDeckInitialized = false;
 
 	private Deck deck;
 
@@ -247,16 +251,12 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 
 		deckDropDown = new JComboBox<Deck>();
 		List<Deck> deckList = DeckModel.getInstance().getDecks();
-
-		if (deckList.size() == 0) {
-			deckDropDown.addItem(new Deck()); // default deck, if user doesn't
-												// have any decks.
-		} else {
-			deckDropDown.addItem(new Deck());
-			for (Deck d : deckList) {
-				deckDropDown.addItem(d);
-			}
+		
+		deckDropDown.addItem(new Deck());
+		for (Deck d : deckList) {
+			deckDropDown.addItem(d);
 		}
+		
 		if (game != null) {
 			deckDropDown.setSelectedItem(game.getDeck());
 		}
@@ -535,42 +535,26 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 	 *         removed
 	 */
 	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
+	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
 		boolean isNameValid = false;
 		boolean isDescriptionValid = false;
 		boolean isEndDateValid = false;
+		boolean returnBoolean = false;
+		
+		isEndDateValid = getEndDateField().validateField(warningField, showLabel,showBox);
+		isDescriptionValid = getBoxDescription().validateField(warningField,showLabel, showBox);
+		isNameValid = getBoxName().validateField(warningField, showLabel, showBox);
+		
+		
+		returnBoolean = isNameValid && isDescriptionValid && isEndDateValid;
 
-		isEndDateValid = getEndDateField().validateField(errorField, showLabel,
-				showBox);
-		if (!isEndDateValid) {
-
-			getBoxDescription().setBorder(defaultTextAreaBorder);
-			getBoxName().setBorder(defaultTextFieldBorder);
-			parent.getRightHalf().getCurrentReqsPanel()
-					.setBorder((new JPanel().getBorder()));
+		if (returnBoolean) {
+			warningField.setText("");
 		}
 
-		isDescriptionValid = getBoxDescription().validateField(errorField,
-				showLabel, showBox);
-		if (!isDescriptionValid) {
-			getEndDateField().setBorder(defaultDateBorder);
-			getBoxName().setBorder(defaultTextFieldBorder);
-			parent.getRightHalf().getCurrentReqsPanel()
-					.setBorder((new JPanel().getBorder()));
-		} else {
-			getBoxDescription().setBorder(defaultTextAreaBorder);
-		}
-
-		isNameValid = getBoxName()
-				.validateField(errorField, showLabel, showBox);
-		if (!isNameValid) {
-			getEndDateField().setBorder(defaultDateBorder);
-			getBoxDescription().setBorder(defaultTextAreaBorder);
-			parent.getRightHalf().getCurrentReqsPanel()
-					.setBorder((new JPanel().getBorder()));
-		}
-
+		if (!showLabel) {
+			warningField.setText("");
+		}		
 		return (isNameValid && isDescriptionValid && isEndDateValid);
 	}
 
