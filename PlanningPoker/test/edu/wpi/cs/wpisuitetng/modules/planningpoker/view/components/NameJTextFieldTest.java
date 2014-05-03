@@ -26,7 +26,7 @@ public class NameJTextFieldTest {
 	
 	
 	@Before
-	public void setUp() {
+	public void setUp() { // $codepro.audit.disable accessorMethodNamingConvention
 		textField = new NameJTextField("Test Field");
 		blankTextField = new NameJTextField();
 		blankTextField1 = new NameJTextField();
@@ -36,7 +36,7 @@ public class NameJTextFieldTest {
 	}
 	
 	@Test
-	public void setTextBlankTextFieldTest() {
+	public void setTextBlankTextFieldTest() { // $codepro.audit.disable accessorMethodNamingConvention
 		blankTextField.setText("Bobby Drop Tables");
 		assertEquals("Bobby Drop Tables", blankTextField.getText());
 		textFieldInt.setText("aaa");

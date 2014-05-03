@@ -57,7 +57,7 @@ public class RequirementTest {
 
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception { // $codepro.audit.disable accessorMethodNamingConvention
 		req1 = new PPRequirement("Req1", "Desc1");
 		req2 = new PPRequirement("Req2", "Desc2");
 		req2.setId(2);
@@ -174,13 +174,13 @@ public class RequirementTest {
 	}
 	
 	@Test
-	public void setFinalEstimateTest() {
+	public void setFinalEstimateTest() { // $codepro.audit.disable accessorMethodNamingConvention
 		req1.setFinalEstimate(50);
 		assertEquals(50, req1.getFinalEstimate());
 	}
 	
 	@Test
-	public void setIdPlusOneTest() {
+	public void setIdPlusOneTest() { // $codepro.audit.disable accessorMethodNamingConvention
 		assertEquals(2, req2.getId());
 		req1.setIdPlusOne(2);
 		assertEquals(3, req1.getId());

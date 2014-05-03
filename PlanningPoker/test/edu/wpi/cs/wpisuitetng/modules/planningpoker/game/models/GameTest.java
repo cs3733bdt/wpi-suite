@@ -42,7 +42,7 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 public class GameTest {
 	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception { // $codepro.audit.disable accessorMethodNamingConvention
 		Network.initNetwork(new MockNetwork());
 		Network.getInstance().setDefaultNetworkConfiguration(
 				new NetworkConfiguration("http://wpisuitetng"));

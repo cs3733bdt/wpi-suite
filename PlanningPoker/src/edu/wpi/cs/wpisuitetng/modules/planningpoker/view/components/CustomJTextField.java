@@ -22,7 +22,7 @@ import javax.swing.JTextField;
  * @author jonathanleitschuh
  *
  */
-public abstract class CustomJTextField extends JTextField implements IDataField { //THIS MUST BE ABSTRACT DO NOT CHANGE!
+public abstract class CustomJTextField extends JTextField implements IDataField { //THIS MUST BE ABSTRACT DO NOT CHANGE! // $codepro.audit.disable abstractSpecialization
 	/** @see JTextField#JTextField() */
 	protected CustomJTextField() {
 	};

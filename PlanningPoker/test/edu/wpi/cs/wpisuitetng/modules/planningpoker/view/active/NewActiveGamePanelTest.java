@@ -32,7 +32,7 @@ public class NewActiveGamePanelTest {
 	
 	
 	@Before
-	public void setUp() {
+	public void setUp() { // $codepro.audit.disable accessorMethodNamingConvention
 		reqs = new ArrayList<PPRequirement>();
 		reqs.add(new PPRequirement("Test Req1", "Test Desc1"));
 		
