@@ -109,11 +109,12 @@ public class CardActionListenerRefactor implements ActionListener {
 							}
 							System.out.println("is SingleSelection");
 						}
-					
-					if (cardsPanel.getCardButtonArray().get(size-1)
-							.isSelected()) {
-						cardsPanel.memoryArrayClear();
-						cardsPanel.getCardButtonArray().get(size-1).doClick();
+					if (estimatePanel.getGame().getDeck().hasIDontKnowCard()) {
+						if (cardsPanel.getCardButtonArray().get(size-1)
+								.isSelected()) {
+							cardsPanel.memoryArrayClear();
+							cardsPanel.getCardButtonArray().get(size-1).doClick();
+						}
 					}
 					button.setIcon(new ImageIcon(backImg));
 
