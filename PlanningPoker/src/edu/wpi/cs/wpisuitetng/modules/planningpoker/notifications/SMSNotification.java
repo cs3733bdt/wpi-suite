@@ -265,8 +265,8 @@ public class SMSNotification {
 	 * @return String representing message to be sent on game end.
 	 */
 	private String generateEndGameMessage() {
-		return "Game: " + g.getName() + " has ended. \nRefer to the"
-				+ " email for game statistics.\n"
+		return "Game: " + g.getName() + " has ended.\n"
+				+ "Login to Janeway to see end game statistics.\n"
 				+ "Bobby Drop Tables\nWPI Suite";
 	}
 }
