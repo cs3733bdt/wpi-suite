@@ -32,7 +32,7 @@ public class DeckModel extends AbstractStorageModel<Deck> {
 	private static DeckModel instance = null;
 	
 	/** Holds the logger for this class*/
-	private static Logger logger = Logger.getLogger(DeckModel.class.getName());
+	private static final Logger logger = Logger.getLogger(DeckModel.class.getName());
 	
 	private DeckModel(){
 		super(new ArrayList<Deck>());

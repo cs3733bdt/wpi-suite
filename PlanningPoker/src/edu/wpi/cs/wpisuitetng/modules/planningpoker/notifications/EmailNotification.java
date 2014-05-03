@@ -40,7 +40,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequi
  * @author Bobby Drop Tables
  */
 public class EmailNotification {
-	private static Logger logger = Logger.getLogger(AbstractStorageModel.class
+	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
 			.getName());
 	/** Game to get users from to send emails to */
 	private final Game g;
