@@ -30,11 +30,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
-import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXDatePicker;
 
@@ -84,22 +81,8 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 
 	private Game game;
 
-	private final Border defaultTextFieldBorder = (new JTextField())
-			.getBorder();
-
-	private final Border defaultTextAreaBorder = (new JTextArea()).getBorder();
-
-	private final Border defaultDateBorder = (new JXDatePicker()).getBorder();
-
-	private boolean isCardsChanged;
-
 	private boolean usesCardsInitial;
 	
-	//Boolean representing if decks have been retrieved from the server
-	private boolean isDeckInitialized = false;
-
-	private Deck deck;
-
 	private Date savedDate;
 
 	/**
@@ -113,7 +96,6 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 		game = mainPanel.getGame();
 		build();
 		buildFields();
-		isCardsChanged = textEntryButton.isSelected();
 
 		usesCardsInitial = doesUseCards();
 

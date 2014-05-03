@@ -204,7 +204,6 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 	 */
 	public boolean SaveGamePressed() {
 		if (leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true, true)) {
-			leftHalf.getEndDateField().setBorder((new JXDatePicker()).getBorder());
 			leftHalf.getErrorField().setText("");
 			saveGame();
 			readyToClose = true;
