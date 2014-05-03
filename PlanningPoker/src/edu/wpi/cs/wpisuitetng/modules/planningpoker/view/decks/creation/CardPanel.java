@@ -100,6 +100,7 @@ public class CardPanel extends JPanel implements IDataField {
 		for(CardImage c: cards){
 			c.setColor(color);
 		}
+		this.color = color;
 	}
 
 	/**
