@@ -148,6 +148,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 			try { // This is used to prevent the a null pointer exception
 					// when running test cases (the JPanel's aren't
 					// instantiated)
+				System.out.println("refreshing this big booty bitch ass nigga");
 				ViewEventController.getInstance().refreshGameTree(); // Refreshes
 				// the
 				// active
