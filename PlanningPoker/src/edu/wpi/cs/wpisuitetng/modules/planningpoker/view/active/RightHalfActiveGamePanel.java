@@ -440,8 +440,14 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	 */
 	public int getMaxSum() {
 		int sum = 0;
-		for (int i = 0; i < deck.getSize()-1; i++) {
-			sum += Integer.parseInt(deck.getCards().get(i).getText());
+		if (currentGame.getDeck().hasIDontKnowCard()) {
+			for (int i = 0; i < deck.getSize()-1; i++) {
+				sum += Integer.parseInt(deck.getCards().get(i).getText());
+			}
+		} else {
+			for (int i = 0; i < deck.getSize(); i++) {
+				sum += Integer.parseInt(deck.getCards().get(i).getText());
+			}
 		}
 		return sum;
 	}
