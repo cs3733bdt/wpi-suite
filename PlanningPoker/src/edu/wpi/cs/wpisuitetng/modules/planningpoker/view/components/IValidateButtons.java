@@ -11,8 +11,17 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
 
+/**
+ * Implemented on any panel that needs to have buttons that get enabled when the fields are valid
+ * 
+ * @author jonathanleitschuh
+ *
+ */
 public interface IValidateButtons {
 	
+	/**
+	 * This method is used to enable the buttons when all fields on the panel are completely valdid
+	 */
 	public void updateButtons();
 	
 }
