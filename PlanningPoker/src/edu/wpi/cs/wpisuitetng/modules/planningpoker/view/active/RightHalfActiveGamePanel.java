@@ -511,6 +511,10 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	 */
 	public void submitButton() {
 		
+		if (!getGame().isActive()) {
+			displayError("You cannot submit a vote because this game has ended.");
+		}
+		
 		String currentUser = ConfigManager.getConfig().getUserName(); // Gets the currently active user
 		int voteNumber;
 		if (getGame().doesUseCards()) {
@@ -549,8 +553,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
             table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(), 2);
 		}
 		table.setValueAt(activeRequirement.displayComplete(), table.getSelectedRow(), 3);
-
-
 	}
 
 	/**
@@ -609,10 +611,10 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	
 	private void getNextRow() {
 		int nextRow;
-		if (currentRow<table.getRowCount()-1){
-			nextRow=currentRow+1;
-		}else{
-			nextRow=0;
+		if (currentRow < table.getRowCount()-1){
+			nextRow = currentRow + 1;
+		} else {
+			nextRow = 0;
 		}
 		table.setRowSelectionInterval(nextRow,nextRow);
 		activeRequirement = table.getSelectedReq();
