@@ -165,7 +165,6 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 			showValid(showLabel, showBox);
 		}	//Should not need to handle checking to see if there not numbers because this should have already been caught
 		
-		System.out.print(isValid);
 		return isValid;
 	}
 	
