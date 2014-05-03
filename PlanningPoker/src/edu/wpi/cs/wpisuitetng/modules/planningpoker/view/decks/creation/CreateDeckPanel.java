@@ -142,6 +142,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	public CreateDeckPanel(Deck deck) {
 		isReopen = true;
 		cardsPanel2 = new CardPanel(this);
+		this.deck = deck;
 		build();
 		buildFields(deck);
 	}
@@ -695,9 +696,15 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	}
 
 	public Deck getDeck() {
+		try{
+			return deck;
+		}catch(NullPointerException e){	
+		}
+		
 		final Deck deck = new Deck(nameTextField.getText(),
-				descriptionTextField.getText(), cardsPanel2.getCardValues(), true,
+				descriptionTextField.getText(), cardsPanel2.getCardValues(), iDontKnowCheck.isSelected(),
 				determineDeckColor());
+		deck.updateMultipleSelection(multipleSelection.isSelected());
 		return deck;
 	}
 	

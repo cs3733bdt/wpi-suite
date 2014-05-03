@@ -321,5 +321,4 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	public String toString() {
 		return name;
 	}
-	
 }
