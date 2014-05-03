@@ -114,19 +114,21 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 	@Override
 	public void setText(String text) {
 		text = text.replaceAll("\n", "");
-		if(text.length()>1){ 					// Checks to see if there is more than just one "0" at the begining
-			text = text.replaceFirst("^0+(?!$)", ""); 	// Replaces leading zeros
+		if (text.length() > 1) { // Checks to see if there is more than just one
+									// "0" at the begining
+			text = text.replaceFirst("^0+(?!$)", ""); // Replaces leading zeros
 		}
 		initialText = text;
 		super.setText(text);
 	}
-	
+
 	@Override
-	public String getText(){
+	public String getText() {
 		String text = super.getText();
-		if(text.length()>1){ 					// Checks to see if there is more than just one "0" at the begining
-			text = text.replaceFirst("^0+(?!$)", ""); 	// Replaces leading zeros
-			super.setText(text); 				//Set the field to the correct version
+		if (text.length() > 1) { // Checks to see if there is more than just one
+									// "0" at the begining
+			text = text.replaceFirst("^0+(?!$)", ""); // Replaces leading zeros
+			super.setText(text); // Set the field to the correct version
 		}
 		return text;
 	}
@@ -156,37 +158,45 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 			boolean showBox) {
 		this.warningField = warningField;
 		boolean isValid = false;
-		if (getText().equals("")) {
+		try {
+			Integer.parseInt(getText());
+
+			if (getText().equals("")) {
+				isValid = false;
+				showInvalid(errorFields.STRING_NOT_EMPTY, showLabel, showBox);
+			} else if (!hasChanges()) { // If this has not changed
+				isValid = true;
+				showValid(showLabel, showBox);
+			} else if (maxValue != null) {
+				System.out.print("maxValue true");
+				if (Integer.parseInt(getText()) > (Integer) maxValue) {
+					isValid = false;
+					showInvalid(errorFields.STRING_TOO_HIGH + maxValue,
+							showLabel, showBox);
+				} else {
+					isValid = true;
+					showValid(showLabel, showBox);
+				}
+			} else if (minValue != null) {
+				System.out.print("minValue true");
+				if (Integer.parseInt(getText()) < (Integer) minValue) {
+					isValid = false;
+					showInvalid(errorFields.STRING_TOO_LOW + minValue,
+							showLabel, showBox);
+				} else {
+					isValid = true;
+					showValid(showLabel, showBox);
+				}
+			} else {
+				isValid = true;
+				showValid(showLabel, showBox);
+			} // Should not need to handle checking to see if there not numbers
+				// because this should have already been caught
+		} catch (NumberFormatException e) {
 			isValid = false;
-			showInvalid(errorFields.STRING_NOT_EMPTY, showLabel, showBox);
-		} else if (!hasChanges()) { // If this has not changed
-			isValid = true;
-			showValid(showLabel, showBox);
-		} else if (maxValue != null) {
-			System.out.print("maxValue true");
-			if (Integer.parseInt(getText()) > (Integer) maxValue) {
-				isValid = false;
-				showInvalid(errorFields.STRING_TOO_HIGH + maxValue, showLabel,
-						showBox);
-			} else {
-				isValid = true;
-				showValid(showLabel, showBox);
-			}
-		} else if (minValue != null) {
-			System.out.print("minValue true");
-			if (Integer.parseInt(getText()) < (Integer) minValue) {
-				isValid = false;
-				showInvalid(errorFields.STRING_TOO_LOW + minValue, showLabel,
-						showBox);
-			} else {
-				isValid = true;
-				showValid(showLabel, showBox);
-			}
-		} else {
-			isValid = true;
-			showValid(showLabel, showBox);
-		}	//Should not need to handle checking to see if there not numbers because this should have already been caught
-		
+			showInvalid(errorFields.STRING_TOO_HIGH + Integer.MAX_VALUE,
+					showLabel, showBox);
+		}
 		return isValid;
 	}
 
