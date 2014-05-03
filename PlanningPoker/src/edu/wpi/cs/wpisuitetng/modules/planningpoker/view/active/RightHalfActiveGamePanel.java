@@ -133,7 +133,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 					try {
 						cardsPanel.clearCards();
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					setFieldsVisible(true);
@@ -490,7 +489,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 			cardsPanel.memoryArrayClear();
 			cardsPanel.clearCards();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
