@@ -52,12 +52,12 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(1000, 700));
+		view.setPreferredSize(new Dimension(1000, 620));
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("Preferences Help");
 		headingLabel.setFont(makeFont(8));
-		this.setMinimumSize(new Dimension(1600, 700));
-		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		setMinimumSize(new Dimension(1600, 620));
+		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		//Add email image panel;
 		emailHelppic = addImage("email_preferences1.png");
