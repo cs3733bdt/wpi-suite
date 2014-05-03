@@ -27,7 +27,6 @@ import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -175,17 +174,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		colorDropDown.setSelectedItem(deck.getColor().toString());
 		
 		cardsPanel2.setDeck(deck);
-//		values.removeAll(values);
-//		cards.removeAll(cards);
-//		for(Card C : deck.getCards()) {
-//			if(C.isInteger()) {
-//				CardImage D = new CardImage(deck.getColor(), this);
-//				D.setValueLabel(C.getText());
-//				cards.add(D);
-//				values.add(-1);
-//			}
-//		}
-//		displayNumCards();
 		
 		cardsPanel2.revalidate();
 		cardsPanel2.repaint();
@@ -384,7 +372,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 		/* save button */
 		saveButtonPanel = new SaveDeckButtonPanel(this);
-		addMouseListenerTo(saveButtonPanel);
+		addMouseListenerTo(saveButtonPanel.getSaveDeckButton());
 		saveButtonPanel.getSaveDeckButton().setEnabled(false);
 
 		/* cancel button */
@@ -578,40 +566,40 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		return false;
 	}
 
-	/**
-	 * Checks to make sure the number of cards inputted is 1-15
-	 * 
-	 * @return true if a valid input
-	 */
-	private boolean verifyNumberOfCards() {
-		String text = numCards.getText();
-		String allowedChars = "123456789";
-		String allowedChars1 = "012345";
-		if (text.length() == 0) {
-			return false;
-		}
-		/* Checks to see if the number is 1-9 */
-		if (text.length() == 1) {
-			if (allowedChars.contains(Character.toString(text.charAt(0)))) {
-				return true;
-			}
-		}
-		/* Checks to see if the number is 10-15 */
-		if (text.length() == 2) {
-			if (text.charAt(0) == '1') {
-				if (allowedChars1.contains(Character.toString(text.charAt(1)))) {
-					return true;
-				}
-			}
-			/* Checks to see if the number is 01-09 */
-			if (text.charAt(0) == '0') {
-				if (allowedChars.contains(Character.toString(text.charAt(1)))) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+//	/**
+//	 * Checks to make sure the number of cards inputted is 1-15
+//	 * 
+//	 * @return true if a valid input
+//	 */
+//	private boolean verifyNumberOfCards() {
+//		String text = numCards.getText();
+//		String allowedChars = "123456789";
+//		String allowedChars1 = "012345";
+//		if (text.length() == 0) {
+//			return false;
+//		}
+//		/* Checks to see if the number is 1-9 */
+//		if (text.length() == 1) {
+//			if (allowedChars.contains(Character.toString(text.charAt(0)))) {
+//				return true;
+//			}
+//		}
+//		/* Checks to see if the number is 10-15 */
+//		if (text.length() == 2) {
+//			if (text.charAt(0) == '1') {
+//				if (allowedChars1.contains(Character.toString(text.charAt(1)))) {
+//					return true;
+//				}
+//			}
+//			/* Checks to see if the number is 01-09 */
+//			if (text.charAt(0) == '0') {
+//				if (allowedChars.contains(Character.toString(text.charAt(1)))) {
+//					return true;
+//				}
+//			}
+//		}
+//		return false;
+//	}
 
 	/**
 	 * This method makes sure that the color selected in the dropdown is the
@@ -688,21 +676,27 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 *            (this method should only be used with the submit button for
 	 *            the number of cards)
 	 */
-	private void addMouseListenerToNumberOfCardsSubmitButton(
-			JComponent component) {
+	private void addMouseListenerToNumberOfCardsSubmitButton(JButton component) {
 		component.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				System.out.println(" The mouse event has been triggered");
+				
+				//Check for the submitNumbCards 
 				if (!submitNumCards.isEnabled()) {
 					numCards.validateField(errorField, true, true);
 					//errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 15");
 				} else {
 				}// it will perform the action listener
+				
+				//if(!sav)
 			}
 		});
 	}
-
-	private void addCards(ColorEnum color, int numCardsPresent) {
-		cardsPanel2.setNumberCards(numCardsPresent);
+	
+	
+//	private void addCards(ColorEnum color, int numCardsPresent) {
+//		cardsPanel2.setNumberCards(numCardsPresent);
 //		for(int i=0; i < numCardsPresent; i++){
 //			 CardImage newCard = new CardImage(color,this);
 //			 cardsPanel.add(newCard);
@@ -712,7 +706,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 //				 newCard.setValueLabel(valueAtIndexI);
 //			 }
 //		}
-	}
+//	}
 
 	/**
 	 * Fills the values array equal to the total number of cards (so up to the
@@ -806,11 +800,13 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		
 	}
 	
-	private void addMouseListenerTo(JComponent component){
+	private void addMouseListenerTo(final JButton component){
 		component.addMouseListener(new MouseAdapter(){
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
+				if(!component.isEnabled()){
 					validateField(errorField,true, true);
+				}
 			}
 		});
 	}
