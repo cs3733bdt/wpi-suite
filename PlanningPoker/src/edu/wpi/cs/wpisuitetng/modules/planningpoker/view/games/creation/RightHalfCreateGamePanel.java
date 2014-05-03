@@ -899,10 +899,6 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		descriptionValid = descArea.validateField(errorLabel, showLabel, showBox);
 		nameValid = nameArea.validateField(errorLabel, showLabel, showBox);
 		
-		if(!descriptionValid && !nameValid){
-			descArea.setBorder(defaultTextAreaBorder);
-		}
-		
 		returnBoolean = nameValid && descriptionValid && uniqueName;
 
 		if (returnBoolean) {
