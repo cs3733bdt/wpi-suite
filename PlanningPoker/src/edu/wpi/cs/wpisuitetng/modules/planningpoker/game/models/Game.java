@@ -833,18 +833,11 @@ public class Game extends ObservableModel implements IModelObserver,
 		gameEnd.setTime(getEndDate());
 		
 		if (isActive() && rightNow.after(gameEnd)) {
-			if (ViewEventController.getInstance().getTabbedView()
-					.hasActiveGameOpen(this)) {
-				JOptionPane.showMessageDialog(ViewEventController.getInstance()
-						.getTabbedView().getActiveGamePanel(this),
+			if (ViewEventController.getInstance().getTabbedView().hasActiveGameOpen(this)) {
+				JOptionPane.showMessageDialog(ViewEventController.getInstance().getTabbedView().getActiveGamePanel(this),
 						"Current game has expired and will now close.");
-				ViewEventController
-						.getInstance()
-						.getTabbedView()
-						.removeTab(
-								(JComponent) ViewEventController.getInstance()
-										.getTabbedView()
-										.getActiveGamePanel(this));
+				ViewEventController.getInstance().getTabbedView().removeTab(
+						(JComponent) ViewEventController.getInstance().getTabbedView().getActiveGamePanel(this));
 			}
 			if(notifyObservers){
 				delayChange("hasEnded");	//This order matters
@@ -852,10 +845,10 @@ public class Game extends ObservableModel implements IModelObserver,
 			}
 			complete = true;			//WARNING DO NOT CALL MAKE COMPLETE THIS BREAKS STUFF!
 			if(notifyObservers) notifyObservers();
-			if(notifyObservers)ViewEventController.getInstance().refreshGameTree();
+			if(notifyObservers) ViewEventController.getInstance().refreshGameTree();
 			return true;
 		} else {
-			return complete;
+			return false;
 		}
 	}
 }
