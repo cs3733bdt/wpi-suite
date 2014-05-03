@@ -26,7 +26,7 @@ import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 public class PPRequirementModelTest {
-	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
+	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	PPRequirementModel model;
 	PPRequirement req1, req2, req3, req4, req5;
 	PPRequirement[] reqsArray;

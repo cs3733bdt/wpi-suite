@@ -44,7 +44,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 	private final int nextID;
 
 	/** Stores the logger for the GameModel */
-	private static Logger logger = Logger.getLogger(GameModel.class.getName());
+	private static final Logger logger = Logger.getLogger(GameModel.class.getName());
 
 	/**
 	 * Constructs an empty list of games for the project. This is private in

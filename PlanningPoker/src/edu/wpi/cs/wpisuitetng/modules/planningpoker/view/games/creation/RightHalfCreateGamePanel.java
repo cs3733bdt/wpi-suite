@@ -818,8 +818,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 
 	private boolean containsReq(Requirement req) {
 		for (PPRequirement ppr : requirements) {
-			if (ppr.getName().equals(req.getName())
-					&& ppr.getDescription().equals(req.getDescription())) {
+			if (ppr.getName().equals(req.getName())	&& ppr.getDescription().equals(req.getDescription())) {
 				return true;
 			}
 		}
@@ -830,9 +829,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		if (globalRow != -1) {
 			int[] rows = currentTable.getSelectedRows();
 			for (int i = 0; i < requirements.size(); i++) {
-				if (requirements.get(i).getName()
-						.equals(currentTable.getValueAt(rows[0], 0))) {
-					System.out.println(requirements.get(i).getName());
+				if (requirements.get(i).getName().equals(currentTable.getValueAt(rows[0], 0)) && requirements.get(i).getDescription().equals(currentTable.getValueAt(rows[0], 1))) {
 					requirements.get(i).setName(nameArea.getText());
 					requirements.get(i).setDescription(descArea.getText());
 				}
@@ -896,7 +893,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		if (checkduplicateReq(new PPRequirement(nameArea.getText(),
 				descArea.getText()))) {
 			uniqueName = false;
-			displayError("A requirement already exists with that name");
+			displayError("A requirement already exists with that name and description");
 		} else {
 			displayError("");
 			uniqueName = true;
@@ -1115,75 +1112,16 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	}
 
 	private void updateUpdateButton() {
-		if (validateNameAndDesc(false, true) && updateValid()) {// TODO figure
-																// out these
-																// branches. I
-																// don't think
-																// validateNameAndDesc
-																// is necessary
-																// here
-
-			System.out.println("First branch of updateupdate");
+		if (validateNameAndDesc(true, false) && updateValid()) {
 			updateAddReqButton.setEnabled(true);
 			displayError("");
 		} else if (!updateValid()) {
-			System.out.println("Second branch of updateupdate");
 			updateAddReqButton.setEnabled(false);
 			displayError("No changes have been made");
 		} else {
-			System.out.println("Third branch of updateupdate");
 			updateAddReqButton.setEnabled(false);
-			if (updateValid() && validateNameAndDescForUpdate(false, true)) {
-				if (nameArea.getText().equals(
-						(String) currentTable.getValueAt(globalRow, 0))) {
-					updateAddReqButton.setEnabled(true);
-					displayError("");
-				}
-			}
+			displayError("A requirement already exists with that name and description");
 		}
-	}
-
-	/**
-	 * validates the name and description when a requirement is being edited.
-	 * This is called in the updateupdatebutton function
-	 * 
-	 * @param showLabel
-	 *            show the error label with appropriate message
-	 * @param showBox
-	 *            show the error box around the appropriate field
-	 * @return
-	 */
-	private boolean validateNameAndDescForUpdate(boolean showLabel,
-			boolean showBox) {
-		boolean returnStatus = true;
-		if (descArea.getText().isEmpty()) {
-			if (showLabel) {
-				displayError("Description is required");
-			}
-			if (showBox) {
-				descArea.setBorder(errorBorder);
-			}
-			returnStatus = false;
-		}
-
-		if (nameArea.getText().isEmpty()) {
-			if (showLabel) {
-				displayError("Name is required");
-			}
-			if (showBox) {
-				nameArea.setBorder(errorBorder);
-			}
-			returnStatus = false;
-		}
-
-		if (returnStatus) {
-			nameArea.setBorder(defaultTextFieldBorder);
-			descArea.setBorder(defaultTextAreaBorder);
-		}
-
-		nameArea.validateField(errorLabel, showLabel, showBox);
-
-		return returnStatus;
 	}
 
 	private void updateSubmitButton() {
@@ -1202,8 +1140,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		String currentName = (String) currentTable.getValueAt(globalRow, 0);
 		String updateDesc = descArea.getText();
 		String currentDesc = (String) currentTable.getValueAt(globalRow, 1);
-		return (!(currentName.equals(updateName)))
-				|| (!(currentDesc.equals(updateDesc)));
+		return (!(currentName.equals(updateName)))|| (!(currentDesc.equals(updateDesc)));
 	}
 
 	public boolean isNameAreaEmpty() {
