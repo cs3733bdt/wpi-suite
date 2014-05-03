@@ -46,6 +46,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequi
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.RequirementStatus;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.GetRequirementsController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.UpdateRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
@@ -808,10 +809,25 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	private void updateButtonPressed() {
 		if (globalRow != -1) {
 			int[] rows = currentTable.getSelectedRows();
+			GetRequirementsController.getInstance().retrieveRequirements();
+			// Sleep to wait for retrieve Requirements to finish
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			for (int i = 0; i < requirements.size(); i++) {
 				if (requirements.get(i).getName().equals(currentTable.getValueAt(rows[0], 0)) && requirements.get(i).getDescription().equals(currentTable.getValueAt(rows[0], 1))) {
 					requirements.get(i).setName(nameArea.getText());
 					requirements.get(i).setDescription(descArea.getText());
+					// Update the requirement in the requirement manager
+					if (requirements.get(i).getFromRequirementModule()) {
+						// getId - 1, translation of id's from our's to the requirement manager's
+						Requirement editedReq = RequirementModel.getInstance().getRequirement((requirements.get(i).getId() - 1));
+						editedReq.setName(nameArea.getText());
+						editedReq.setDescription(descArea.getText());
+						UpdateRequirementController.getInstance().updateRequirement(editedReq);
+					}
 				}
 			}
 
