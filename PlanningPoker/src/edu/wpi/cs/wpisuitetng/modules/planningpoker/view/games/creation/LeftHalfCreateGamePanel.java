@@ -535,42 +535,26 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 	 *         removed
 	 */
 	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-		boolean showBox) {
+	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
 		boolean isNameValid = false;
 		boolean isDescriptionValid = false;
 		boolean isEndDateValid = false;
-
-		isEndDateValid = getEndDateField().validateField(errorField, showLabel,
-				showBox);
-		if (!isEndDateValid) {
-
-			getBoxDescription().setBorder(defaultTextAreaBorder);
-			getBoxName().setBorder(defaultTextFieldBorder);
-			parent.getRightHalf().getCurrentReqsPanel()
-					.setBorder((new JPanel().getBorder()));
-		}
-
-		isDescriptionValid = getBoxDescription().validateField(errorField,showLabel, showBox);
+		boolean returnBoolean = false;
 		
-		if (!isDescriptionValid) {
-			getEndDateField().setBorder(defaultDateBorder);
-			getBoxName().setBorder(defaultTextFieldBorder);
-			parent.getRightHalf().getCurrentReqsPanel()
-					.setBorder((new JPanel().getBorder()));
-		} else {
-			getBoxDescription().setBorder(defaultTextAreaBorder);
+		isEndDateValid = getEndDateField().validateField(warningField, showLabel,showBox);
+		isDescriptionValid = getBoxDescription().validateField(warningField,showLabel, showBox);
+		isNameValid = getBoxName().validateField(warningField, showLabel, showBox);
+		
+		
+		returnBoolean = isNameValid && isDescriptionValid && isEndDateValid;
+
+		if (returnBoolean) {
+			warningField.setText("");
 		}
 
-		isNameValid = getBoxName()
-				.validateField(errorField, showLabel, showBox);
-		if (!isNameValid) {
-			getEndDateField().setBorder(defaultDateBorder);
-			getBoxDescription().setBorder(defaultTextAreaBorder);
-			parent.getRightHalf().getCurrentReqsPanel()
-					.setBorder((new JPanel().getBorder()));
-		}
-
+		if (!showLabel) {
+			warningField.setText("");
+		}		
 		return (isNameValid && isDescriptionValid && isEndDateValid);
 	}
 
