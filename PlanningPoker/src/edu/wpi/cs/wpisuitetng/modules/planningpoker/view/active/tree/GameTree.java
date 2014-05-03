@@ -100,7 +100,12 @@ public class GameTree extends JPanel implements MouseListener{
 		active.removeAllChildren();
 		inactive.removeAllChildren();
 		history.removeAllChildren();
-		GetGameController.getInstance().retrieveGames();
+		try{
+			GetGameController.getInstance().retrieveGames();
+		} catch (Exception e){
+			System.err.println("Problem refreshing the Game Model. " + e);
+		}
+		//GetGameController.getInstance().retrieveGames();
 		List<Game> betterGameList = GameModel.getInstance().getGames();
 		
 		for (Game g: betterGameList) {
