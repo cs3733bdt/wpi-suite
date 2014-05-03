@@ -691,11 +691,11 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 						if (currentTable.getSelectedRowCount() == 0) {
 							editReqButton.setEnabled(false);
 							removeReqButton.setEnabled(false);
-						} else if (currentTable.getSelectedRowCount() > 0) {
+						} else if (currentTable.getSelectedRowCount() == 1) {
 							editReqButton.setEnabled(true);
 							removeReqButton.setEnabled(true);
 						} else {
-							editReqButton.setEnabled(true);
+							editReqButton.setEnabled(false);
 							removeReqButton.setEnabled(true);
 						}
 						int[] rows = currentTable.getSelectedRows();
