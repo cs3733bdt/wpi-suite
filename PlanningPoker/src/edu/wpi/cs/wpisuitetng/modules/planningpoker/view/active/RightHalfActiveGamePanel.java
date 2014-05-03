@@ -495,6 +495,7 @@ public class RightHalfActiveGamePanel extends JScrollPane {
 	
 	/**
 	 * Returns the sum of all the cards
+	 * @return the total estimate from card presses
 	 */
 	public int getMaxSum() {
 		int sum = 0;

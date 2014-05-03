@@ -15,8 +15,6 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -26,7 +24,6 @@ import javax.swing.border.Border;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
-import javax.swing.text.Document;
 import javax.swing.text.DocumentFilter;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberTextField.NumberFieldCustomErrorMessage;
@@ -79,7 +76,7 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 	 * 
 	 * @param text
 	 *            the initial value of this field
-	 * @param colums
+	 * @param columns
 	 *            the size of this field
 	 * @see CustomJTextField#CustomJTextField(String, int)
 	 */
@@ -188,10 +185,8 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 		} else {
 			isValid = true;
 			showValid(showLabel, showBox);
-		} // Should not need to handle checking to see if there not numbers
-			// because this should have already been caught
-
-		System.out.print(isValid);
+		}	//Should not need to handle checking to see if there not numbers because this should have already been caught
+		
 		return isValid;
 	}
 

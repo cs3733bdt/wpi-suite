@@ -706,6 +706,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 
 	/**
 	 * Creates a new font for use later
+	 * @return the font to be used
 	 */
 	public Font makeFont() {
 		// create a dummy JTextArea
@@ -858,7 +859,6 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		addReqButton.setEnabled(false);
 		importReqButton.setEnabled(false);
 		removeReqButton.setEnabled(false);
-		System.out.println("Unexpected edit disable 3");
 		editReqButton.setEnabled(false);
 	}
 
@@ -867,8 +867,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		for (int i = 0; i < rows.length; i++) {
 			String selectedName = (String) importTable.getValueAt(rows[i], 0);
 			String selectedDesc = (String) importTable.getValueAt(rows[i], 1);
-			addRequirement(PPRequirementModel.getInstance().getRequirement(
-					selectedName, selectedDesc));
+			addRequirement(PPRequirementModel.getInstance().getRequirement(selectedName, selectedDesc));
 		}
 
 		parent.updateButtons();
@@ -1012,14 +1011,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	}
 
 	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
-		parent.getLeftHalf().getBoxName().setBorder(defaultTextFieldBorder);
-		parent.getLeftHalf().getBoxDescription()
-				.setBorder(defaultTextAreaBorder);
-		parent.getLeftHalf().getEndDateField()
-				.setBorder((new JXDatePicker()).getBorder());
-
+	public boolean validateField(IErrorView warningField, boolean showLabel,boolean showBox) {
 		if (requirements.size() <= 0) {
 			if (warningField != null) {
 				if (showLabel) {

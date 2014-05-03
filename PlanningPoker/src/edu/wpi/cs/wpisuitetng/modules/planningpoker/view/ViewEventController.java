@@ -149,7 +149,8 @@ public class ViewEventController {
 	/**
 	 * Creates a CreateGamePanel with an existing game.
 	 * At the moment this is used only when the database fails to add the object.
-	 * @param game
+	 * @param game the game to be updated
+	 * @param serverError
 	 */
 	public void updateGame(Game game, boolean serverError){
 		CreateGamePanel aGame = new CreateGamePanel(game, serverError);
@@ -185,7 +186,7 @@ public class ViewEventController {
 	/**
 	 * Shows the deck
 	 * Displays the deck creation panel
-	 * @param userObject
+	 * @deck the deck to be viewed
 	 */
 	public void viewDeck(Deck deck) {
 		getTabbedView().viewDeck(deck);

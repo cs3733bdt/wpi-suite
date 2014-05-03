@@ -79,9 +79,8 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement> {
 	 * 
 	 * @param id
 	 *            The ID number of the requirement to be returned
-	 * 
-	 * @return the requirement for the id or null if the requirement is not
-	 *         found
+	 * @throws NullPointerException if the requirement is not found
+	 * @return the requirement for the id 
 	 */
 	public PPRequirement getRequirement(int id) throws NullPointerException {
 		// iterate through list of requirements until id is found
@@ -100,6 +99,7 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement> {
 	 * 
 	 * @param name
 	 *            the name of the requirement
+	 * @param description the description of the requirement
 	 * @return the requirement with given name
 	 */
 	public PPRequirement getRequirement(String name, String description) {

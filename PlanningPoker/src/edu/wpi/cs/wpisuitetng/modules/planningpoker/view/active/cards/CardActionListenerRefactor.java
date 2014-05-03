@@ -42,16 +42,12 @@ public class CardActionListenerRefactor implements ActionListener {
 	/**
 	 * sets the action listener for each button
 	 * 
-	 * @param index
-	 *            of the button to be created
-	 * @param deckUsed
-	 *            to create the button
+	 * @param card the card being pressed
+	 * 
 	 * @param passedButton
 	 *            the button to be given an action
 	 * @param passedCardsPanel
 	 *            cards that have been selected
-	 * @param passedEstimatePanel
-	 *            the estimate before the action occurs
 	 */
 	public CardActionListenerRefactor(Card card,
 			CardButton passedButton, ActiveCardsPanel passedCardsPanel) {

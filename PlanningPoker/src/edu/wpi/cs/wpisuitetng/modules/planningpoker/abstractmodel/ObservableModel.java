@@ -71,8 +71,6 @@ public abstract class ObservableModel extends AbstractModel {
 	 * 
 	 * @param o
 	 *            an observer to be added.
-	 * @throws NullPointerException
-	 *             if the parameter o is null.
 	 */
 	public synchronized void addObserver(IModelObserver o) {
 		if (obs == null) {

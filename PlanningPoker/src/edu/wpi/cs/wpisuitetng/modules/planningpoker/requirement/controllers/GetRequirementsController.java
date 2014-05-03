@@ -12,9 +12,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers.GetRequirementsRequestObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers.GetRequirementsRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.Request;
 import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
