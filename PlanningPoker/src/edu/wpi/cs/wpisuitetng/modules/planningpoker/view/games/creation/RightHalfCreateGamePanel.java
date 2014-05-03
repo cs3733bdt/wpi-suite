@@ -699,28 +699,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 							editReqButton.setEnabled(false);
 							removeReqButton.setEnabled(true);
 						}
-						int[] rows = currentTable.getSelectedRows();
-						String selectedName = null;
-						boolean hasImported = false;
-						for (int i = 0; i < rows.length; i++) {
-							selectedName = (String) currentTable.getValueAt(
-									rows[i], 0);
-							// if
-							// (PPRequirementModel.getInstance().getRequirement(selectedName)
-							// != null) { //TODO this line always returns true.
-							// fix it if you wrote it.
-							// hasImported = true;
-							// }
-						}
-						if (hasImported) {
-							System.out
-									.println("unexpected edit button disable 2");
-							editReqButton.setEnabled(false);
-						}
-
 					}
 				});
-
 	}
 
 	/**
