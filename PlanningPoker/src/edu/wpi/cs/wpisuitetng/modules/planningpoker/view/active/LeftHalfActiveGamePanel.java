@@ -28,7 +28,6 @@ import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextField;
 
 /**
  * TODO Documentation
@@ -39,7 +38,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	
 	Game active;
 	private JLabel gameNameLabel;
-	private NameJTextField gameName;
+	private JTextField gameName;
 	private JLabel gameDescLabel;
 	private JTextArea gameDesc;
 	private JLabel gameCreatorLabel;
@@ -117,11 +116,10 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		gameNameLabel = new JLabel("Game Name");				
 
 		// Initializes and sets properties of game name label
-		gameName = new NameJTextField(30);						
-		gameName.setText(active.getName());				
+		gameName = new JTextField(30);						
+		gameName.setText(active.getName());
+		gameName.setEditable(false);
 		gameName.setBorder(defaultBorder);						
-		gameName.setEditable(false); 
-		gameName.setBackground(Color.WHITE);
 
 		// Initializes and sets game description label
 		gameDescLabel = new JLabel("Description");				

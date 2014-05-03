@@ -188,16 +188,16 @@ public class CardImage extends JPanel implements IDataField{
 	private void addKeyListenerToAddValueText(JComponent component,final IValidateButtons buttonParent){
 		component.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {	
+				if(!addValue.validateField(errorField, true, false)){
+					logger.log(Level.INFO, "addValue was not validated");
+					//TODO: errorField.setText("The value for the card must be an integer between 1 and 999");
+					//TODO: but errorField is in CreateDeckPanel... HALP
+					return;
+				} else {
+					buttonParent.updateButtons();
+					logger.log(Level.INFO, "addValue was validated");
+				}
 				if(arg0.getKeyCode() == 10){		//if enter is pressed
-					if(!addValue.validateField(errorField, true, false)){
-						logger.log(Level.INFO, "addValue was not validated");
-						//TODO: errorField.setText("The value for the card must be an integer between 1 and 999");
-						//TODO: but errorField is in CreateDeckPanel... HALP
-						return;
-					} else {
-						buttonParent.updateButtons();
-						logger.log(Level.INFO, "addValue was validated");
-					}
 					int indexOfEnteredCard = 0;
 					
 					List<CardImage> cards = parent.getCards();
