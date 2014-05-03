@@ -531,7 +531,9 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		updateSavedEstimateLabel();
 		getNextRow();
 		estText.setText("");
-		submitButton.setEnabled(false);
+		if (!getGame().doesUseCards()) {
+			submitButton.setEnabled(false);
+		}
 		submitButton.setBorder(defaultBorder);
 		errorField.setText("");
 	}
