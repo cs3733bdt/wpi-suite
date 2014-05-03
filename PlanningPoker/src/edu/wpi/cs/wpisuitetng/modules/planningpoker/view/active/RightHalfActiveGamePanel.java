@@ -511,7 +511,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	 * add vote and display success message when the button is pressed
 	 */
 	public void submitButton() {
-		
 		String currentUser = ConfigManager.getConfig().getUserName(); // Gets the currently active user
 		int voteNumber;
 		if (getGame().doesUseCards()) {
@@ -541,7 +540,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	 */
 	public void updateSavedEstimateLabel() {
 		if(activeRequirement.userVote() == 0) {
-			
 			previousEst.setText("Your saved estimate is: 0");
 			table.setValueAt("?", table.getSelectedRow(), 2);
 		} else {
@@ -549,8 +547,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
             table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(), 2);
 		}
 		table.setValueAt(activeRequirement.displayComplete(), table.getSelectedRow(), 3);
-
-
 	}
 
 	/**
@@ -609,10 +605,10 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	
 	private void getNextRow() {
 		int nextRow;
-		if (currentRow<table.getRowCount()-1){
-			nextRow=currentRow+1;
-		}else{
-			nextRow=0;
+		if (currentRow < table.getRowCount()-1){
+			nextRow = currentRow + 1;
+		} else {
+			nextRow = 0;
 		}
 		table.setRowSelectionInterval(nextRow,nextRow);
 		activeRequirement = table.getSelectedReq();
