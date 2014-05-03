@@ -36,7 +36,7 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement> {
 						// that are added.
 
 	// the static object to allow the requirement model to be
-	private static PPRequirementModel instance;
+	private static PPRequirementModel instance = null;
 
 	/**
 	 * Constructs an empty list of requirements for the project
@@ -79,9 +79,8 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement> {
 	 * 
 	 * @param id
 	 *            The ID number of the requirement to be returned
-	 * 
-	 * @return the requirement for the id or null if the requirement is not
-	 *         found
+	 * @throws NullPointerException if the requirement is not found
+	 * @return the requirement for the id 
 	 */
 	public PPRequirement getRequirement(int id) throws NullPointerException {
 		// iterate through list of requirements until id is found
@@ -100,12 +99,14 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement> {
 	 * 
 	 * @param name
 	 *            the name of the requirement
+	 * @param description the description of the requirement
 	 * @return the requirement with given name
 	 */
 	public PPRequirement getRequirement(String name, String description) {
 		PPRequirement req = null;
 		for (PPRequirement r : requirements) {
-			if (r.getName().equals(name) && r.getDescription().equals(description)) {
+			if (r.getName().equals(name)
+					&& r.getDescription().equals(description)) {
 				req = r;
 			}
 		}

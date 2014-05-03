@@ -70,6 +70,7 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
 	
 	/**
 	 * Creates a scrollPane to contain everything
+	 * @param game the game panel requested
 	 */
 	//private JScrollPane activeGameScrol
 

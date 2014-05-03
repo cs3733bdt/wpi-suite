@@ -23,33 +23,35 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author Chris Knapp
  */
 public class UpdateGameController {
-	
-	private static UpdateGameController instance;
+
+	private static UpdateGameController instance = null;
 	private UpdateGameRequestObserver observer;
-	
+
 	private UpdateGameController() {
 		observer = new UpdateGameRequestObserver(this);
 	}
-	
+
 	/**
 	 * @return a new instance of an UpdateGameController
 	 */
 	public static UpdateGameController getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new UpdateGameController();
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * updates a game with the same UUID on server
-	 * @param newGame Game to be updated
-	 * TODO: Need model for game data
+	 * 
+	 * @param newGame
+	 *            Game to be updated TODO: Need model for game data
 	 */
 	public void updateGame(Game newGame) {
 		System.out.println("Updating " + newGame.getName() + " to server");
 		// Update request
-		Request request = Network.getInstance().makeRequest("planningpoker/game", HttpMethod.POST);
+		Request request = Network.getInstance().makeRequest(
+				"planningpoker/game", HttpMethod.POST);
 		// Set the game to update
 		request.setBody(newGame.toJSON());
 		// Add observer to get response

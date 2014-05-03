@@ -59,8 +59,8 @@ public class ToolbarView extends DefaultToolbarView {
 	    
 	}
 	
-	public void disableHelpButton() {
-		helpButton.disableHelpButton();
+	public void disableHelpButton(String message) {
+		helpButton.disableHelpButton(message);
 	}
 	
 	public void enableHelpButton() {

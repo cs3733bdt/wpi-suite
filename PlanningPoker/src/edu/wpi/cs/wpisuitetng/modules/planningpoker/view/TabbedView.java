@@ -548,8 +548,8 @@ public class TabbedView extends JTabbedPane {
 		remove(comp);
 	}
 
-	private void disableHelpButton() {
-		ViewEventController.getInstance().disableHelpButton();
+	private void disableHelpButton(String errorMessage) {
+		ViewEventController.getInstance().disableHelpButton(errorMessage);
 	}
 
 	private void enableHelpButton() {
@@ -728,9 +728,10 @@ public class TabbedView extends JTabbedPane {
 	public void setSelectedComponent(Component comp) {
 		super.setSelectedComponent(comp);
 		if (comp instanceof DeckOverview) {
-			disableHelpButton();
+			disableHelpButton("Help is not available for the Overviews. You must navigate to a tab.");
+			
 		} else if (comp instanceof GameOverview) {
-			disableHelpButton();
+			disableHelpButton("Help is not available for the Overviews. You must navigate to a tab.");
 		} else {
 			enableHelpButton();
 		}

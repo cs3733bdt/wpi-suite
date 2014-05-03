@@ -11,20 +11,16 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.cards;
 
-import java.awt.Dimension;
 import java.awt.Image;
 import java.io.IOException;
-import java.util.List;
 
 import javax.accessibility.Accessible;
-import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JToggleButton;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Card;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;
 
 /**
  * creates all of the buttons to be used for the estimation
@@ -41,14 +37,10 @@ public class CardButton extends JToggleButton implements Accessible {
 	/**
 	 * creates the buttons based on the deck
 	 * 
-	 * @param cardNum
-	 *            the index of the card
-	 * @param passedDeck
-	 *            the deck of cards to be used
-	 * @param passedCardsPanel
+	 * @param card
+	 *            the singular card
+	 * @param ActiveCardsPanel
 	 *            the panel that displays the cards
-	 * @param passedEstimatePanel
-	 *            the panel that displays the estimates
 	 */
 
 	public CardButton(Card card, ActiveCardsPanel passedCardsPanel) {

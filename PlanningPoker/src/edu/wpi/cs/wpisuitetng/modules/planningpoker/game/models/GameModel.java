@@ -14,7 +14,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -38,13 +37,14 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 public class GameModel extends AbstractStorageModel<Game> {
 
 	/** Stores the singleton instance of this model */
-	private static GameModel instance;
+	private static GameModel instance = null;
 
 	/** Stores the next ID */
 	private final int nextID;
 
 	/** Stores the logger for the GameModel */
-	private static final Logger logger = Logger.getLogger(GameModel.class.getName());
+	private static final Logger logger = Logger.getLogger(GameModel.class
+			.getName());
 
 	/**
 	 * Constructs an empty list of games for the project. This is private in

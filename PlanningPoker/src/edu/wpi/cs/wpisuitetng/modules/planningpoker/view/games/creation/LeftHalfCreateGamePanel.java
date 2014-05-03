@@ -30,19 +30,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
-import javax.swing.border.Border;
 
 import org.jdesktop.swingx.JXDatePicker;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.GetDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.DeckTree;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.LaunchGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveGameButtonPanel;
@@ -86,22 +81,8 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 
 	private Game game;
 
-	private final Border defaultTextFieldBorder = (new JTextField())
-			.getBorder();
-
-	private final Border defaultTextAreaBorder = (new JTextArea()).getBorder();
-
-	private final Border defaultDateBorder = (new JXDatePicker()).getBorder();
-
-	private boolean isCardsChanged;
-
 	private boolean usesCardsInitial;
 	
-	//Boolean representing if decks have been retrieved from the server
-	private boolean isDeckInitialized = false;
-
-	private Deck deck;
-
 	private Date savedDate;
 
 	/**
@@ -115,7 +96,6 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 		game = mainPanel.getGame();
 		build();
 		buildFields();
-		isCardsChanged = textEntryButton.isSelected();
 
 		usesCardsInitial = doesUseCards();
 
@@ -162,12 +142,6 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 		descriptionTextField = new DescriptionJTextArea(); // Initializes the
 															// text area for the
 															// game description
-		descriptionTextField.setBorder(defaultTextAreaBorder); // Sets the
-																// default
-																// border to the
-																// description
-																// text area
-
 		nameTextField.addKeyListener(parent);
 		// Adds KeyListener to update on key press
 		descriptionTextField.addKeyListener(parent); // Adds KeyListener to
@@ -535,42 +509,26 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 	 *         removed
 	 */
 	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
+	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
 		boolean isNameValid = false;
 		boolean isDescriptionValid = false;
 		boolean isEndDateValid = false;
+		boolean returnBoolean = false;
+		
+		isEndDateValid = getEndDateField().validateField(warningField, showLabel,showBox);
+		isDescriptionValid = getBoxDescription().validateField(warningField,showLabel, showBox);
+		isNameValid = getBoxName().validateField(warningField, showLabel, showBox);
+		
+		
+		returnBoolean = isNameValid && isDescriptionValid && isEndDateValid;
 
-		isEndDateValid = getEndDateField().validateField(errorField, showLabel,
-				showBox);
-		if (!isEndDateValid) {
-
-			getBoxDescription().setBorder(defaultTextAreaBorder);
-			getBoxName().setBorder(defaultTextFieldBorder);
-			parent.getRightHalf().getCurrentReqsPanel()
-					.setBorder((new JPanel().getBorder()));
+		if (returnBoolean) {
+			warningField.setText("");
 		}
 
-		isDescriptionValid = getBoxDescription().validateField(errorField,
-				showLabel, showBox);
-		if (!isDescriptionValid) {
-			getEndDateField().setBorder(defaultDateBorder);
-			getBoxName().setBorder(defaultTextFieldBorder);
-			parent.getRightHalf().getCurrentReqsPanel()
-					.setBorder((new JPanel().getBorder()));
-		} else {
-			getBoxDescription().setBorder(defaultTextAreaBorder);
-		}
-
-		isNameValid = getBoxName()
-				.validateField(errorField, showLabel, showBox);
-		if (!isNameValid) {
-			getEndDateField().setBorder(defaultDateBorder);
-			getBoxDescription().setBorder(defaultTextAreaBorder);
-			parent.getRightHalf().getCurrentReqsPanel()
-					.setBorder((new JPanel().getBorder()));
-		}
-
+		if (!showLabel) {
+			warningField.setText("");
+		}		
 		return (isNameValid && isDescriptionValid && isEndDateValid);
 	}
 
@@ -615,7 +573,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 			((JComboBox) component).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					parent.updateButtons();
-					getEndDateField().validateField(errorField, true, false);
+					getEndDateField().validateField(errorField, false, false);
 				}
 			});
 		}
@@ -623,7 +581,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 			((JXDatePicker) component).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					parent.updateButtons();
-					getEndDateField().validateField(errorField, true, false);
+					getEndDateField().validateField(errorField, false, false);
 				}
 			});
 		}

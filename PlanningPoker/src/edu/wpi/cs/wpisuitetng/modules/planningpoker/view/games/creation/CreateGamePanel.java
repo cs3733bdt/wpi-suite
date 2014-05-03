@@ -70,21 +70,14 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 		setDividerLocation(420);
 
 		if (game == null) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(false);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(false);
-			leftHalf.getErrorField().setText("Name is required");
-		} else if (!validateField(true, false)) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(false);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
+		} else if (!validateField(false, false)) {
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
 		} else {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(true);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(true);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
 		}
 
 		revalidate();
@@ -188,28 +181,19 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 	 * Checks to see if all of this panels sub elements are valid to be saved or
 	 * launched
 	 * 
-	 * @param whether
-	 *            or not to show the error
+	 * @param showLabel
+	 *            Show the label or not
+	 * @param showBox
+	 * 			  Show the box or not
 	 * @return true when the all of this panel's sub elements are valid
 	 */
 	public boolean validateField(boolean showLabel, boolean showBox) {
 		boolean rightPanelValid;
 		boolean leftPanelValid;
-		if (showLabel && showBox) {
-			rightPanelValid = rightHalf.validateField(leftHalf.getErrorField(),
-					true, true);
-			leftPanelValid = leftHalf.validateField(null, true, true);
-		} else if (showLabel && !showBox) {
-			rightPanelValid = rightHalf.validateField(leftHalf.getErrorField(),
-					true, false);
-			leftPanelValid = leftHalf.validateField(null, true, false);
-		} else {
-			rightPanelValid = rightHalf.validateField(leftHalf.getErrorField(),
-					false, false);
-			leftPanelValid = leftHalf.validateField(null, false, false);
-			leftHalf.getErrorField().setText("");
-		}
-
+		
+		rightPanelValid = rightHalf.validateField(leftHalf.getErrorField(), showLabel, showBox);
+		leftPanelValid = leftHalf.validateField(leftHalf.getErrorField(), showLabel, showBox);
+		
 		return leftPanelValid && rightPanelValid;
 	}
 
@@ -219,10 +203,7 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 	 * @return true when a game is sucsessfully added
 	 */
 	public boolean SaveGamePressed() {
-		if (leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true,
-				true)) {
-			leftHalf.getEndDateField().setBorder(
-					(new JXDatePicker()).getBorder());
+		if (leftHalf.getBoxName().validateField(leftHalf.getErrorField(), true, true)) {
 			leftHalf.getErrorField().setText("");
 			saveGame();
 			readyToClose = true;
@@ -312,20 +293,16 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 	 * met
 	 */
 	public void updateButtons() {
-		if (validateField(true, false)) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(true);
+		if (validateField(false, false)) {
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
 		} else {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
 		}
 
-		if (validateField(true, false)) {
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(true);
+		if (validateField(false, false)) {
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
 		} else {
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
 		}
 
 	}

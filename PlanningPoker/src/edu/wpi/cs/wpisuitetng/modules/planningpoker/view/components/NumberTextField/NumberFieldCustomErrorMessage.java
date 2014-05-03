@@ -11,6 +11,8 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberTextField;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberJTextField;
+
 /**
  * Allows the NumberJTextField to display custom errors you can set manually.
  * This is passed as a parameter in a setter on the NumberJTextField class
@@ -41,6 +43,8 @@ public class NumberFieldCustomErrorMessage {
 	 *            The error if the field is empty
 	 * @param not_number
 	 *            The try to enter something that isn't a number
+	 * @param too_low
+	 *            The number is too low
 	 */
 	public NumberFieldCustomErrorMessage(String too_long, String too_low,
 			String not_empty, String not_number) {
