@@ -16,7 +16,13 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JTextArea;
 
-public class CustomJTextArea extends JTextArea implements IDataField {
+/**
+ * This class adds the functionality to allow enableSelectAllTextOnClick on this field
+ * 
+ * @author jonathanleitschuh
+ *
+ */
+public abstract class CustomJTextArea extends JTextArea implements IDataField { //THIS MUST BE ABSTRACT DO NOT CHANGE! // $codepro.audit.disable abstractSpecialization
 
 	/** @see JTextArea#JTextArea() */
 	protected CustomJTextArea() {
@@ -40,18 +46,4 @@ public class CustomJTextArea extends JTextArea implements IDataField {
 			}
 		});
 	}
-
-	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
 }

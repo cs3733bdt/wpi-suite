@@ -27,7 +27,7 @@ public class CreateGameHelpTest {
 	}
 	
 	@Test
-	public void getIdentifierIndexTest(){
+	public void getIdentifierIndexTest(){ // $codepro.audit.disable accessorMethodNamingConvention
 		assertEquals(3, panel.getIdentifierIndex());
 	}
 	/*

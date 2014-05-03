@@ -32,7 +32,7 @@ public class PPRequirementModelTest {
 	PPRequirement[] reqsArray;
 
 	@Before
-	public void setUp() {
+	public void setUp() { // $codepro.audit.disable accessorMethodNamingConvention
 		// Set up the network
 				Network.initNetwork(new MockNetwork());
 				Network.getInstance().setDefaultNetworkConfiguration(
@@ -65,7 +65,7 @@ public class PPRequirementModelTest {
 	}
 	
 	@Test
-	public void getRequirementTest() {
+	public void getRequirementTest() { // $codepro.audit.disable accessorMethodNamingConvention
 		assertEquals(req1, model.getRequirement(1));
 		assertEquals(req2.getName(), model.getRequirement(2).getName());
 		assertEquals(req1, model.getRequirement("Requirement1", "Description1"));
@@ -90,7 +90,7 @@ public class PPRequirementModelTest {
 	}
 	
 	@Test
-	public void getElementAtTest() {
+	public void getElementAtTest() { // $codepro.audit.disable accessorMethodNamingConvention
 		model.addRequirement(req1);
 		assertEquals(req1, model.getElementAt(2));
 	}
@@ -114,7 +114,7 @@ public class PPRequirementModelTest {
 	}
 	
 	@Test
-	public void getRequirementsTest() {
+	public void getRequirementsTest() { // $codepro.audit.disable accessorMethodNamingConvention
 		assertTrue((model.getRequirements()).contains(req1));
 		assertTrue((model.getRequirements()).contains(req2));
 		assertFalse((model.getRequirements()).contains(req3));

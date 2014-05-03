@@ -45,7 +45,7 @@ public class MainViewTest {
 	private ArrayList<PPRequirement> reqs;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception { // $codepro.audit.disable accessorMethodNamingConvention
 		reqs = new ArrayList<PPRequirement>();
 		reqs.add(new PPRequirement("Test Req1", "Test Desc1"));
 		

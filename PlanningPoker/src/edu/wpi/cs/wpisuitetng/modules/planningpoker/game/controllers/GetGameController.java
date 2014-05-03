@@ -12,6 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Timer;
 
@@ -32,6 +34,7 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author Andrew Busch
  */
 public class GetGameController implements ActionListener {
+	private static final Logger logger = Logger.getLogger(GetGameController.class.getName());
 	private final GetGameRequestObserver observer;
 	private static GetGameController instance;
 	private Timer timer;
@@ -61,8 +64,10 @@ public class GetGameController implements ActionListener {
 	 */
 	@Override
 	public synchronized void actionPerformed(ActionEvent e) {
-	    // Send a request to the core to read/get this Game
+	    //First send a request to get all of the requirements
 		GetPPRequirementController.getInstance().retrieveRequirements();
+		
+		// Send a request to the core to read/get this Game
 	    final Request request = 
 	    		Network.getInstance().makeRequest("planningpoker/game", HttpMethod.GET);
 	    // add an observer to process the response
@@ -78,7 +83,7 @@ public class GetGameController implements ActionListener {
 		if(!isRunning) {
 			timer = new Timer(15000, this);
 			timer.setInitialDelay(15000);
-			timer.setCoalesce(true);
+			timer.setCoalesce(true); //Calls should not build up in a queue if one has not executed
 			timer.start();
 			isRunning = true;
 		}
@@ -97,11 +102,17 @@ public class GetGameController implements ActionListener {
 	 * @param games an array of Games received from the server
 	 */
 	public synchronized void receivedGames(Game[] games) {
-		System.out.println("The size of the list returned from the server is: " + games.length);
+		logger.log(Level.INFO, "Games retrived from the server. Size: " + games.length);
+		
+		//BUILD A LOGGER MESSAGE FOR THIS
+		StringBuilder output = new StringBuilder();
 		for(Game game : games) {
-			System.out.println("\t" + game.getName() + " " + game.getIdentity());
+			output.append("\tName: " + game.getName().trim() + " UUID: " + game.getIdentity().toString().trim() + "\n");
 		}
-	    // Make sure the response was not null
+		logger.log(Level.FINE, output.toString().trim());
+	    
+		
+		// Make sure the response was not null
 	    if (games != null) {
 	        // add the Games to the local model
 	        GameModel.getInstance().updateGames(games);
