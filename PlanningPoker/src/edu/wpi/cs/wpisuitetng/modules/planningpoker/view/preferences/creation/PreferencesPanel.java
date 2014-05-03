@@ -521,8 +521,17 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 			testUser.setPhoneNumber(newMobile);
 		}
 		else {
+			String phoneNumber = mobileField.getText();
+			if(phoneNumber.length() > 10){
+				phoneNumber = phoneNumber.replace("-", "");
+				phoneNumber = phoneNumber.replace(" ", "");
+				if(phoneNumber.charAt(0) == '1'){
+					phoneNumber = phoneNumber.substring(1);
+				}
+				
+			}
 			User newUser = getUserController.getCurrentUser();
-			newUser.setPhoneNumber(mobileField.getText());
+			newUser.setPhoneNumber(phoneNumber);
 			newUser.setCarrier(getCarrierFromIndex());
 			updateUserController.updateUser(newUser);
 		}
