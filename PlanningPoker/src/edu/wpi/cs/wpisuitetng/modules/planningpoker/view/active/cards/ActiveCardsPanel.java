@@ -69,14 +69,23 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 
 	public void clearCards() throws IOException {
 		Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
-		for (int i = 0; i < (deck.getSize() - 1); i++) {
-			if (JToggleButtonList.get(i).isSelected()) {
-				JToggleButtonList.get(i).doClick();
-				JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+		if (parent.getGame().getDeck().hasIDontKnowCard()) {
+			for (int i = 0; i < (deck.getSize() - 1); i++) {
+				if (JToggleButtonList.get(i).isSelected()) {
+					JToggleButtonList.get(i).doClick();
+					JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+				}
 			}
-		}
-		if (JToggleButtonList.get(deck.getSize() - 1).isSelected()) {
-			JToggleButtonList.get(deck.getSize() - 1).doClick();
+			if (JToggleButtonList.get(deck.getSize() - 1).isSelected()) {
+				JToggleButtonList.get(deck.getSize() - 1).doClick();
+			}
+		} else {
+			for (int i = 0; i < deck.getSize(); i++) {
+				if (JToggleButtonList.get(i).isSelected()) {
+					JToggleButtonList.get(i).doClick();
+					JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+				}
+			}
 		}
 	}
 
@@ -99,6 +108,10 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	
 	public void subIDK() {
 		sum = 0;
+		for (CardButton card: JToggleButtonList) {
+			if (card.isSelected())
+				sum += Integer.parseInt(card.getValue());
+		}
 		System.out.println("I don't know is deselected.");
 	}
 	
@@ -121,8 +134,14 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public int getMaxSum() {
 		int sum = 0;
-		for (int i = 0; i < (deck.getSize()) -1 ; i++) {
-			sum += Integer.parseInt(deck.getCards().get(i).getText());
+		if (parent.getGame().getDeck().hasIDontKnowCard()) {
+			for (int i = 0; i < (deck.getSize() - 1); i++) {
+				sum += Integer.parseInt(deck.getCards().get(i).getText());
+			}
+		} else {
+			for (int i = 0; i < deck.getSize(); i++) {
+				sum += Integer.parseInt(deck.getCards().get(i).getText());
+			}
 		}
 		return sum;
 	}
