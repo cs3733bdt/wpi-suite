@@ -181,8 +181,10 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 	 * Checks to see if all of this panels sub elements are valid to be saved or
 	 * launched
 	 * 
-	 * @param whether
-	 *            or not to show the error
+	 * @param showLabel
+	 *            Show the label or not
+	 * @param showBox
+	 * 			  Show the box or not
 	 * @return true when the all of this panel's sub elements are valid
 	 */
 	public boolean validateField(boolean showLabel, boolean showBox) {

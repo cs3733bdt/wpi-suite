@@ -13,7 +13,6 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;

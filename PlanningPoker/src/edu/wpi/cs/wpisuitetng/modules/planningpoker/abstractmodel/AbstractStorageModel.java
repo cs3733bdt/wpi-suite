@@ -117,7 +117,7 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 
 	/**
 	 * Retrieves a model from the model by using the UUID of the object
-	 * 
+	 * @param id the UUID of the object
 	 * @throws NotFoundException
 	 *             when the UUID is not found in the storage model
 	 * @return the model with the matching UUID
@@ -139,8 +139,8 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 	 * This method will not update the model if any object stored in this model
 	 * is currently in the state of "isUpdating"
 	 * 
-	 * @param allGames
-	 *            the list of games already in the model
+	 * @param allModels
+	 *            the list of objects in the model
 	 * @return true if the model changes during the method
 	 */
 	protected synchronized boolean updateModels(T[] allModels) {

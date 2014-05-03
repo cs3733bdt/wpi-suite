@@ -297,6 +297,7 @@ public class PPRequirement extends ObservableModel {
 
 	/**
 	 * Setter for the final estimate
+	 * @param newEstimate the final estimate for a requirement
 	 */
 	public void setFinalEstimate(int newEstimate) {
 		if (finalEstimate != newEstimate) {

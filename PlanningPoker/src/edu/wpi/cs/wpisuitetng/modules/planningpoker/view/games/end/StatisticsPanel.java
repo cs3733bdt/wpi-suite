@@ -19,10 +19,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
@@ -37,7 +38,6 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.GetRequirementsController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.UpdateRequirementController;
@@ -95,7 +95,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * If the ArrayList passed in is empty it will use the default deck
 	 * 
 	 * @param game
-	 * @param requirement
 	 */
 	public StatisticsPanel(Game game) {
 
@@ -126,6 +125,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		finalEstimateLabel = new JLabel("Enter a Final Estimate here:");
 		finalEstimateBox = new JTextField(4);
 		addKeyListenerTo(finalEstimateBox);
+		addMouseListenerToFinalEstimateTextField(finalEstimateBox);
 		finalEstimateButton = new JButton("Submit Final Estimate");
 		finalEstimateButton.addActionListener(new ActionListener() {
 			@Override
@@ -135,14 +135,17 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		});
 
 		validateSubmitButton();
+		finalEstimateButton.setEnabled(true);
 		finalEstimateDisplay = new JLabel();
 		currFinalEstimate = activeRequirement.getFinalEstimate();
 		if (currFinalEstimate == -1) {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: "
 					+ (int) mean);
+			finalEstimateBox.setText("" + (int)mean);
 		} else {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: "
 					+ currFinalEstimate);
+			finalEstimateBox.setText("" + currFinalEstimate);
 		}
 		finalEstimateDisplay.setFont(makeFont(12));
 
@@ -491,13 +494,14 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		if (currFinalEstimate == -1) {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: "
 					+ mean);
+			finalEstimateBox.setText("" + mean);
 		} else {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: "
 					+ currFinalEstimate);
+			finalEstimateBox.setText("" + currFinalEstimate);
 		}
 
 		finalEstimateMessage.setText("");
-		finalEstimateBox.setText("");
 	}
 
 	/**
@@ -651,6 +655,15 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 
 	private Font makeFont(int fontSize) {
 		return new Font("Serif", Font.BOLD, fontSize);
+	}
+	
+	private void addMouseListenerToFinalEstimateTextField(JComponent component) {
+		component.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				finalEstimateBox.selectAll();
+			}
+		});
 	}
 
 }
