@@ -36,7 +36,7 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 	public static final String STRING_ERROR_NAMELONG = "Name can be no more than 100 chars.";
 
 	/** The text error placed on an IErrorField when the name empty */
-	public static final String STRING_ERROR_BLANK = "Name is required";
+	public static final String STRING_ERROR_BLANK = "Highlighted fields are required";
 	
 	/** The text when the string contains only spaces */
 	public static final String STRING_ERROR_SPACES = "Name can not be excusively spaces";

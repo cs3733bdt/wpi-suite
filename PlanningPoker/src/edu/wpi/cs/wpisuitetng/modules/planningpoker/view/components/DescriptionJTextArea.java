@@ -65,7 +65,7 @@ public class DescriptionJTextArea extends CustomJTextArea implements IDataField 
 			isDescriptionValid = false;
 			// TODO add a way to display error descriptions
 			if (showLabel) {
-				errorField.setText("Description is required");
+				errorField.setText("Highlighted fields are required");
 			}
 			if (showBox) {
 				this.setBorder(errorBorder);
