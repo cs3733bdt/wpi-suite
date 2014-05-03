@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 
 /**
@@ -51,11 +52,12 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 700));
-		
+		view.setPreferredSize(new Dimension(1000, 620));
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("Preferences Help");
-		headingLabel.setFont(makeFont(8));		
+		headingLabel.setFont(makeFont(8));
+		setMinimumSize(new Dimension(1600, 620));
+		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		//Add email image panel;
 		emailHelppic = addImage("email_preferences1.png");
