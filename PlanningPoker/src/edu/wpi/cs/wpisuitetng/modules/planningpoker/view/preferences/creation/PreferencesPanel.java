@@ -216,6 +216,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		facebookField = new JTextField(50);
 		facebookField.setEditable(true);
 		facebookField.setFocusable(true);
+		facebookField.setToolTipText("Your facebook username is the string after www.facebook.com/ in your facebook profile URL");
 		addKeyListenerTo(facebookField);
 		facebookField.setText("facebook.username");
 		facebookPanel.add(facebookField);

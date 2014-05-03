@@ -21,9 +21,14 @@ public interface IDataField {
 	/**
 	 * Runs over all of this DataFields subcomponents and validates all of the fields.
 	 * This method throws/displays any errors if there are any problems with the users input.
+	 * <p>
+	 * WARNING:
+	 * Be sure that all implementations of this method EXCEPT for the highest level call on this
+	 * method NEVER set the warningField to the empty string
 	 * 
 	 * @param warningField
-	 * 				The external warning field that you want to indicate the error to
+	 * 				The external warning field that you want to indicate the error to.
+	 * See the warning above on the use of this warningField
 	 * @param showLabel
 	 * 				to show a label if the text is invalid
 	 * @param showBox
