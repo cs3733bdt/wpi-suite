@@ -221,7 +221,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 		/* this panel holds the label and the two radio buttons */
 		JPanel radioButtonsPanel = new JPanel();
-		radioButtonsPanel.setPreferredSize(new Dimension(170, 80));
+		radioButtonsPanel.setPreferredSize(new Dimension(195, 80));
 		SpringLayout radioSpring = new SpringLayout();
 		radioButtonsPanel.setLayout(radioSpring);
 		radioButtonsPanel.add(selectionLabelPanel);
@@ -248,7 +248,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 		/* blank panel for formatting */
 		JPanel blankPanel1 = new JPanel();
-		blankPanel1.setPreferredSize(new Dimension(70, 5));
+		blankPanel1.setPreferredSize(new Dimension(60, 5));
 
 		/* number of cards desired by user */
 		JLabel numCardsLabel = new JLabel("Number of Cards * ");
@@ -288,7 +288,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 		/* blank panel for formatting */
 		JPanel blankPanel2 = new JPanel();
-		blankPanel2.setPreferredSize(new Dimension(70, 5));
+		blankPanel2.setPreferredSize(new Dimension(60, 5));
 
 		/*
 		 * this panel holds the labels for the number of cards and for the color
@@ -296,7 +296,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		 * number of cards, and the dropdown for color selection
 		 */
 		JPanel numberAndColorOfCards = new JPanel();
-		numberAndColorOfCards.setPreferredSize(new Dimension(260, 70));
+		numberAndColorOfCards.setPreferredSize(new Dimension(290, 70));
 		SpringLayout numberAndColorOfCardsSpring = new SpringLayout();
 		numberAndColorOfCards.setLayout(numberAndColorOfCardsSpring);
 		numberAndColorOfCards.add(numCardsLabel);
