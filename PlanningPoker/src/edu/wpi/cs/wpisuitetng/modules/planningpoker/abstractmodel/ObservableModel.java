@@ -13,6 +13,8 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel;
 
 import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
 
@@ -50,6 +52,8 @@ import edu.wpi.cs.wpisuitetng.modules.AbstractModel;
  * @since JDK1.0
  */
 public abstract class ObservableModel extends AbstractModel {
+	private static final Logger logger = Logger.getLogger(ObservableModel.class.getName());
+	
 	// These datatypes were made transient so that they are not parsed by the
 	// gson converter
 	private transient boolean changed = false; // $codepro.audit.disable
@@ -174,6 +178,16 @@ public abstract class ObservableModel extends AbstractModel {
 	 * <tt>hasChanged</tt> method will now return <tt>true</tt>.
 	 */
 	protected synchronized void makeChanged() {
+		//Print the stack trace on this call
+		StackTraceElement callers [] = Thread.currentThread().getStackTrace();
+		StringBuilder message = new StringBuilder();
+		for(StackTraceElement e : callers){
+			message.append(e.toString() + "\n");
+		}
+		
+		logger.log(Level.FINEST, "called from: " + message);
+		
+		
 		changed = true;
 	}
 

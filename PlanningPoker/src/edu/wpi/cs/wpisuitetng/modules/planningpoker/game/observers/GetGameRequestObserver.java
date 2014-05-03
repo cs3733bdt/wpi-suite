@@ -41,7 +41,7 @@ public class GetGameRequestObserver implements RequestObserver {
 	public void responseSuccess(IRequest iReq) {
 	    Game[] games = Game.fromJsonArray(iReq.getResponse().getBody());
 	    for(Game game: games) {
-	    	game.hasEnded();
+	    	game.hasEnded(false);  //makes games complete if they are complete
 	    }
 	    controller.receivedGames(games);
 	}

@@ -213,9 +213,9 @@ public class Game extends ObservableModel implements IModelObserver,
 		if (complete != toCopyFrom.complete) {
 			if (!complete) {
 				complete = toCopyFrom.complete;
+				needsUpdate = true;
+				wasChanged = true;
 			}
-			needsUpdate = true;
-			wasChanged = true;
 			logger.log(Level.FINEST, "Complete copied");
 		}
 
@@ -247,7 +247,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			//makeChanged();
 		}
 		if(hasChanged()){
-			logger.log(Level.WARNING, "hasChanges may have been set durring the copy over. Please check your logic.");
+			logger.log(Level.WARNING, "hasChanges may have been set in " + getName().trim() + " durring the copy over. Please check your logic.");
 		}
 
 		return wasChanged;
@@ -813,14 +813,18 @@ public class Game extends ObservableModel implements IModelObserver,
 	/**
 	 * Checks if the current game has passed its deadline and sets it as
 	 * complete if so
+	 * @param notifyObservers whether or not to attempt to notify observesr on this call
 	 * 
 	 * @return returns true if the game has passed its deadline, false otherwise
 	 */
-	public boolean hasEnded() {
+	public boolean hasEnded(boolean notifyObservers) {
+		if(complete){
+			return true;
+		}
 		Calendar rightNow = Calendar.getInstance();
 		Calendar gameEnd = new GregorianCalendar();
 		gameEnd.setTime(getEndDate());
-
+		
 		if (isActive() && rightNow.after(gameEnd)) {
 			if (ViewEventController.getInstance().getTabbedView()
 					.hasActiveGameOpen(this)) {
@@ -835,15 +839,16 @@ public class Game extends ObservableModel implements IModelObserver,
 										.getTabbedView()
 										.getActiveGamePanel(this));
 			}
-			makeChanged();
-			delayChange("hasEnded");
-			makeComplete();
-			setActive(false);
-			notifyObservers();
-			ViewEventController.getInstance().refreshGameTree();
+			if(notifyObservers){
+				delayChange("hasEnded");	//This order matters
+				makeChanged();				//This order matters
+			}
+			complete = true;			//WARNING DO NOT CALL MAKE COMPLETE THIS BREAKS STUFF!
+			if(notifyObservers) notifyObservers();
+			if(notifyObservers)ViewEventController.getInstance().refreshGameTree();
 			return true;
 		} else {
-			return false;
+			return complete;
 		}
 	}
 }

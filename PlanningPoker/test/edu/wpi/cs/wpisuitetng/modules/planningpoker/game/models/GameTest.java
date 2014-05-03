@@ -193,14 +193,14 @@ public class GameTest {
 		try{
 		Calendar testCal = Calendar.getInstance();
 		game1.setEndDate(testCal.getTime());
-		assertFalse(game1.hasEnded());
+		assertFalse(game1.hasEnded(false));
 
 		try{
 			TimeUnit.SECONDS.sleep(1);
 		} catch(InterruptedException e){
 			logger.log(Level.FINEST, "Thread was interrupted.", e);
 		}
-		assertTrue(game1.hasEnded());
+		assertTrue(game1.hasEnded(false));
 				} catch (NullPointerException e){
 					logger.log(Level.FINEST, "An NullPointer is expected here.", e);
 		}

@@ -204,7 +204,12 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 			logger.log(Level.INFO, log.toString());
 			
 			if(isUpdating()){
-				logger.log(Level.WARNING, getClass().getName().trim() +"'s isUpdating() may have been set durring the copy over. Please check your logic.");
+				logger.log(Level.WARNING, getClass().getName().trim() +"'s isUpdating() may have been set durring the copy over. Please check your logic. Changed:");
+				for(T a : list){
+					if(a.hasChanged()){
+						System.out.println(a.getName());
+					}
+				}
 			}
 
 		}
@@ -237,7 +242,7 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 	public boolean isUpdating() {
 		for (T o : list) {
 			if (o.hasChanged()) {
-				logger.log(Level.FINEST, "The model was updating itself");
+				logger.log(Level.INFO, "The model was updating itself no server changes were pushed");
 				return true;
 			}
 		}
