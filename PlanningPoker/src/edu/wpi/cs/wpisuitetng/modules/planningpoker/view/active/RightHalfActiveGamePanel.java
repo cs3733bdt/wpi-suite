@@ -512,6 +512,10 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	 */
 	public void submitButton() {
 		
+		if (!getGame().isActive()) {
+			displayError("You cannot submit a vote because this game has ended.");
+		}
+		
 		String currentUser = ConfigManager.getConfig().getUserName(); // Gets the currently active user
 		int voteNumber;
 		if (getGame().doesUseCards()) {
