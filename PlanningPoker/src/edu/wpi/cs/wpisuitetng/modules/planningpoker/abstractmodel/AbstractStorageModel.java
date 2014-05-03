@@ -39,7 +39,7 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 	/** If the server is updating this model */
 	protected boolean serverUpdating = false;
 
-	private static Logger logger = Logger.getLogger(AbstractStorageModel.class
+	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
 			.getName());
 
 	/**

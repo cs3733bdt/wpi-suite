@@ -105,7 +105,7 @@ public class Requirement extends AbstractModel {
 		history = new TransactionHistory();
 		iteration = "Backlog";
 		type = RequirementType.BLANK;
-		this.parentID = -1;
+		parentID = -1;
 		notes = new NoteList();
 		tasks = new ArrayList<DevelopmentTask>();
 		tests = new ArrayList<AcceptanceTest>();
@@ -129,7 +129,7 @@ public class Requirement extends AbstractModel {
 		this.id = id;
 		this.name = name;
 		this.description = description;
-		this.parentID = -1;
+		parentID = -1;
 	}
 
 	/**
@@ -165,8 +165,8 @@ public class Requirement extends AbstractModel {
 		this.priority = priority;
 		this.description = description;
 		this.estimate = estimate;
-		this.actualEffort = effort;
-		this.parentID = -1;
+		actualEffort = effort;
+		parentID = -1;
 	}
 
 	/**
@@ -206,18 +206,18 @@ public class Requirement extends AbstractModel {
 	 *            the name to set
 	 */
 	public void setName(String n) {
-		if (!n.equals(this.name) && !wasCreated) {
-			String originalName = this.name;
+		if (!n.equals(name) && !wasCreated) {
+			String originalName = name;
 			String newName = n;
 			if (newName.length() > 100) {
 				newName = newName.substring(0, 100);
 			}
 			String message = ("Name changed from " + originalName + " to " + newName);
-			this.history.add(message);
+			history.add(message);
 		}
-		this.name = n;
+		name = n;
 		if (name.length() > 100) {
-			this.name = n.substring(0, 100);
+			name = n.substring(0, 100);
 		}
 	}
 
@@ -238,8 +238,8 @@ public class Requirement extends AbstractModel {
 	 *            the release to set
 	 */
 	public void setRelease(String rel) {
-		if (!rel.equals(this.release) && !wasCreated) {
-			String originalRelease = this.release;
+		if (!rel.equals(release) && !wasCreated) {
+			String originalRelease = release;
 			String newRelease = rel;
 			String message = null;
 			if (originalRelease.isEmpty()) {
@@ -251,9 +251,9 @@ public class Requirement extends AbstractModel {
 				message = ("Release Number changed from '" + originalRelease
 						+ "' to '" + newRelease + "'");
 			}
-			this.history.add(message);
+			history.add(message);
 		}
-		this.release = rel;
+		release = rel;
 	}
 
 	/**
@@ -278,7 +278,7 @@ public class Requirement extends AbstractModel {
 			String newStatus = status.toString();
 			String message = ("Status changed from '" + originalStatus
 					+ "' to '" + newStatus + "'");
-			this.history.add(message);
+			history.add(message);
 		}
 
 		this.status = status;
@@ -302,10 +302,10 @@ public class Requirement extends AbstractModel {
 	 *            the description to set
 	 */
 	public void setDescription(String desc) {
-		if (!desc.equals(this.description) && !wasCreated) {
-			this.history.add("Description changed");
+		if (!desc.equals(description) && !wasCreated) {
+			history.add("Description changed");
 		}
-		this.description = desc;
+		description = desc;
 	}
 
 	/**
@@ -315,7 +315,7 @@ public class Requirement extends AbstractModel {
 	 * @return the estimate
 	 */
 	public int getEstimate() {
-		return this.estimate;
+		return estimate;
 	}
 
 	/**
@@ -359,7 +359,7 @@ public class Requirement extends AbstractModel {
 			int newEstimate = estimate;
 			String message = ("Estimate changed from '" + originalEstimate
 					+ "' to '" + newEstimate + "'");
-			this.history.add(message);
+			history.add(message);
 			this.setEstimateEdited(true);
 		}
 
@@ -384,7 +384,7 @@ public class Requirement extends AbstractModel {
 	 *            the effort to set
 	 */
 	public void setEffort(int effort) {
-		this.actualEffort = effort;
+		actualEffort = effort;
 	}
 
 	/**
@@ -409,7 +409,7 @@ public class Requirement extends AbstractModel {
 			String newPriority = priority.toString();
 			String message = ("Priority changed from '" + originalPriority
 					+ "' to '" + newPriority + "'");
-			this.history.add(message);
+			history.add(message);
 		}
 
 		this.priority = priority;
@@ -444,7 +444,7 @@ public class Requirement extends AbstractModel {
 				message = ("Type changed from '" + originalType + "' to '"
 						+ newType + "'");
 			}
-			this.history.add(message);
+			history.add(message);
 		}
 		this.type = type;
 	}
@@ -467,7 +467,7 @@ public class Requirement extends AbstractModel {
 	 */
 	public void addNote(String noteMsg) {
 		if (!wasCreated) {
-			this.history.add("Note added");
+			history.add("Note added");
 		}
 		// Add note to requirement
 		this.getNotes().add(noteMsg);
@@ -501,7 +501,7 @@ public class Requirement extends AbstractModel {
 	 */
 	public void removeTask(int id) {
 		// iterate through the list looking for the task to remove
-		for (int i = 0; i < this.tasks.size(); i++) {
+		for (int i = 0; i < tasks.size(); i++) {
 			if (tasks.get(i).getId() == id) {
 				// remove the id
 				tasks.remove(i);
@@ -529,7 +529,7 @@ public class Requirement extends AbstractModel {
 	public void addTest(AcceptanceTest test) {
 		if (!wasCreated) {
 			String msg = "Acceptance test '" + test.getName() + "' added.";
-			this.history.add(msg);
+			history.add(msg);
 		}
 		tests.add(test);
 	}
@@ -543,9 +543,9 @@ public class Requirement extends AbstractModel {
 	 *            new status
 	 */
 	public void updateTestStatus(int testID, TestStatus status) {
-		for (int i = 0; i < this.tests.size(); i++) {
-			if (this.tests.get(i).getId() == testID) {
-				this.tests.get(i).setStatus(status);
+		for (int i = 0; i < tests.size(); i++) {
+			if (tests.get(i).getId() == testID) {
+				tests.get(i).setStatus(status);
 			}
 		}
 	}
@@ -558,7 +558,7 @@ public class Requirement extends AbstractModel {
 	 */
 	public void removeTest(int id) {
 		// iterate through the list looking for the note to remove
-		for (int i = 0; i < this.tests.size(); i++) {
+		for (int i = 0; i < tests.size(); i++) {
 			if (tests.get(i).getId() == id) {
 				// remove the id
 				tests.remove(i);
@@ -595,7 +595,7 @@ public class Requirement extends AbstractModel {
 	 */
 	public void removeAttachment(int id) {
 		// iterate through the list looking for the attachment to remove
-		for (int i = 0; i < this.attachments.size(); i++) {
+		for (int i = 0; i < attachments.size(); i++) {
 			if (attachments.get(i).getId() == id) {
 				// remove the id
 				attachments.remove(i);
@@ -638,7 +638,7 @@ public class Requirement extends AbstractModel {
 		if (parentReq == -1
 				|| !RequirementModel.getInstance().getRequirement(parentReq)
 						.isAncestor(this.getId())) {
-			this.parentID = parentReq;
+			parentID = parentReq;
 			// Requirement parentRequirement =
 			// RequirementModel.getInstance().getRequirement(parentID);
 			// parentRequirement.getHistory().add(this.getName() +
@@ -657,13 +657,13 @@ public class Requirement extends AbstractModel {
 	 * @return true if the parent is an ancestor
 	 */
 	public boolean hasAncestor(int parentId) {
-		if (this.parentID == -1) {
+		if (parentID == -1) {
 			return false;
 		}
 
-		return RequirementModel.getInstance().getRequirement(this.parentID)
+		return RequirementModel.getInstance().getRequirement(parentID)
 				.hasAncestor(parentId)
-				|| this.parentID == parentId;
+				|| parentID == parentId;
 	}
 
 	/**
@@ -879,20 +879,20 @@ public class Requirement extends AbstractModel {
 	 *            the requirement to copy from.
 	 */
 	public void copyFrom(Requirement toCopyFrom) {
-		this.description = toCopyFrom.description;
-		this.name = toCopyFrom.name;
-		this.actualEffort = toCopyFrom.actualEffort;
-		this.estimate = toCopyFrom.estimate;
-		this.estimateEdited = toCopyFrom.estimateEdited;
-		this.iteration = toCopyFrom.iteration;
-		this.priority = toCopyFrom.priority;
-		this.release = toCopyFrom.release;
-		this.status = toCopyFrom.status;
-		this.type = toCopyFrom.type;
-		this.history = toCopyFrom.history;
-		this.notes = toCopyFrom.notes;
-		this.tests = toCopyFrom.tests;
-		this.parentID = toCopyFrom.parentID;
+		description = toCopyFrom.description;
+		name = toCopyFrom.name;
+		actualEffort = toCopyFrom.actualEffort;
+		estimate = toCopyFrom.estimate;
+		estimateEdited = toCopyFrom.estimateEdited;
+		iteration = toCopyFrom.iteration;
+		priority = toCopyFrom.priority;
+		release = toCopyFrom.release;
+		status = toCopyFrom.status;
+		type = toCopyFrom.type;
+		history = toCopyFrom.history;
+		notes = toCopyFrom.notes;
+		tests = toCopyFrom.tests;
+		parentID = toCopyFrom.parentID;
 	}
 
 	/**
@@ -908,7 +908,7 @@ public class Requirement extends AbstractModel {
 	 *            the estimateEdited to be set
 	 */
 	public void setEstimateEdited(boolean b) {
-		this.estimateEdited = b;
+		estimateEdited = b;
 	}
 
 	/**

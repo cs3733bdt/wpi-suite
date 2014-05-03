@@ -32,7 +32,7 @@ public class Card {
 	private String text;
 	private BufferedImage imageBack = null;
 	private BufferedImage imageFront = null;
-	private static Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
+	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	
 	public Card(String text, Deck parentDeck) {
 		this.text = text;

@@ -25,7 +25,7 @@ public class IterationDate {
 	 * @param curr date
 	 */
 	public IterationDate(Date curr) {
-		this.date = curr;
+		date = curr;
 	}
 
 	/**
@@ -33,7 +33,7 @@ public class IterationDate {
 	 *  * @return the date */
 	public Date getDate()
 	{
-		return this.date;
+		return date;
 	}
 	
 	/**

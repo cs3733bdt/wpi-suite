@@ -96,8 +96,9 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		facebookHelpExplanation = new JTextArea();
 		facebookHelpExplanation.setText("This window allows you to choose whether or not you "
 				+ "want to be notified by Facebook messages and allows you to add or update "
-				+ "your Facebook username. The username must be a valid username before "
-				+ "it can be added or updated.");
+				+ "your Facebook username. Your facebook username is in the link to your profile."
+				+ "In the link the username is the text after \"www.facebook.com/\" "
+				+ "The username must be a valid username before it can be added or updated.");
 		
 		facebookHelpExplanation.setEditable(false);
 		facebookHelpExplanation.setBackground(null);
