@@ -161,7 +161,9 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 				// GAME EXIST IN THE MODEL
 				for (T modelList : list) { // Iterates over the existing
 					// model
+					System.out.println("About to fail if statement");
 					if (aModel.identify(modelList)) { // Compares the UUID's of
+						System.out.println("Holy shit we didn't fail if statement");
 						// the two objects to
 						// see if they should be
 						// the same
@@ -173,6 +175,7 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 														// logging purposes
 						}
 						changes = true;
+						System.out.println("found changes bitchez");
 					}
 				}
 
