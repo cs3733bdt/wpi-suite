@@ -150,7 +150,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 	public synchronized void updateGames(Game[] allGames) {
 		boolean changes = updateModels(allGames);
 
-		if (changes) { // Only repaint game tree if the model has changed
+		//if (changes) { // Only repaint game tree if the model has changed
 			try { // This is used to prevent the a null pointer exception
 					// when running test cases (the JPanel's aren't
 					// instantiated)
@@ -163,8 +163,8 @@ public class GameModel extends AbstractStorageModel<Game> {
 				logger.log(Level.WARNING,
 						"ViewEventController not fully initialized.", e);
 			}
-		} else {
-		}
+		//} else {
+		//}
 		serverUpdating = false; // Duplicate just because we want to be sure
 								// that the lock disengages
 	}
