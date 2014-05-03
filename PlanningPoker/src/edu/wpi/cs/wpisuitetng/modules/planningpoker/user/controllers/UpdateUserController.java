@@ -19,32 +19,34 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
 
 public class UpdateUserController {
 
-
-	private static UpdateUserController instance;
+	private static UpdateUserController instance = null;
 	private UpdateUserRequestObserver observer;
-	
+
 	private UpdateUserController() {
 		observer = new UpdateUserRequestObserver(this);
 	}
-	
+
 	/**
 	 * @return a new instance of an UpdateGameController
 	 */
 	public static UpdateUserController getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new UpdateUserController();
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * updates a User with the same username?? on server
-	 * @param newUser User to be updated
+	 * 
+	 * @param newUser
+	 *            User to be updated
 	 */
 	public void updateUser(User newUser) {
 		System.out.println("Updating " + newUser.getName() + " to server");
 		// Update request
-		Request request = Network.getInstance().makeRequest("core/user", HttpMethod.POST);
+		Request request = Network.getInstance().makeRequest("core/user",
+				HttpMethod.POST);
 		// Set the game to update
 		request.setBody(newUser.toJSON());
 		// Add observer to get response
@@ -53,5 +55,3 @@ public class UpdateUserController {
 		request.send();
 	}
 }
-
-
