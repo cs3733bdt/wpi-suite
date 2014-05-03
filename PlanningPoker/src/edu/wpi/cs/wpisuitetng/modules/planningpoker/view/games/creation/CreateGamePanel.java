@@ -70,21 +70,14 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 		setDividerLocation(420);
 
 		if (game == null) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(false);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(false);
-			leftHalf.getErrorField().setText("Name is required");
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
 		} else if (!validateField(true, false)) {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(false);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(false);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(false);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(false);
 		} else {
-			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton()
-					.setEnabled(true);
-			leftHalf.getSaveGameButtonPanel().getSaveGameButton()
-					.setEnabled(true);
+			leftHalf.getLaunchGameButtonPanel().getLaunchGameButton().setEnabled(true);
+			leftHalf.getSaveGameButtonPanel().getSaveGameButton().setEnabled(true);
 		}
 
 		revalidate();

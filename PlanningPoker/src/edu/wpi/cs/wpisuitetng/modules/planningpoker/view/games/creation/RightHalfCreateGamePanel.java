@@ -908,12 +908,6 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		if (!showLabel) {
 			errorLabel.setText("");
 		}
-		
-		if (!showBox){
-			nameArea.setBorder(defaultTextFieldBorder);
-			descArea.setBorder(defaultTextAreaBorder);
-		}
-
 		return returnBoolean;
 	}
 
