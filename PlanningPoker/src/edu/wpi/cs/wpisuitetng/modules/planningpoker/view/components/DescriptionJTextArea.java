@@ -16,7 +16,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 import javax.swing.BorderFactory;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
 import javax.swing.border.Border;
 
 /**
@@ -27,7 +27,7 @@ import javax.swing.border.Border;
  * 
  */
 public class DescriptionJTextArea extends CustomJTextArea implements IDataField {
-	private final Border defaultBorder = (new JTextField()).getBorder();
+	private final Border defaultBorder = (new JTextArea()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
 

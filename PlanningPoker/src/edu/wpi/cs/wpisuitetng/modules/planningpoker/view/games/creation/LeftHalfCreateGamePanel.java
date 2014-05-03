@@ -162,12 +162,6 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 		descriptionTextField = new DescriptionJTextArea(); // Initializes the
 															// text area for the
 															// game description
-		descriptionTextField.setBorder(defaultTextAreaBorder); // Sets the
-																// default
-																// border to the
-																// description
-																// text area
-
 		nameTextField.addKeyListener(parent);
 		// Adds KeyListener to update on key press
 		descriptionTextField.addKeyListener(parent); // Adds KeyListener to
@@ -599,7 +593,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 			((JComboBox) component).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					parent.updateButtons();
-					getEndDateField().validateField(errorField, true, false);
+					getEndDateField().validateField(errorField, false, false);
 				}
 			});
 		}
@@ -607,7 +601,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 			((JXDatePicker) component).addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent arg0) {
 					parent.updateButtons();
-					getEndDateField().validateField(errorField, true, false);
+					getEndDateField().validateField(errorField, false, false);
 				}
 			});
 		}
