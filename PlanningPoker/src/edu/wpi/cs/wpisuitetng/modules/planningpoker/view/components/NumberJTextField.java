@@ -195,9 +195,7 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 			// NOTHING SHOULD HAPPEN HERE BECAUSE WE DONT WANT TO OVERWRITE A
 			// DIFFERENT ERROR
 		}
-		if (showBox) {
-			setBorder(BORDER_DEFAULT);
-		}
+		setBorder(BORDER_DEFAULT);
 	}
 
 	private void showInvalid(String text, boolean showLabel, boolean showBox) {
