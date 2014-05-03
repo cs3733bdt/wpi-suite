@@ -139,13 +139,14 @@ public class CardImage extends JPanel implements IDataField{
 	 * @return label's text as int
 	 */
 	public Integer getCardValue() throws NumberFormatException{
-		if(valueLabel.getText().equals("")){
+		if(addValue.getText().equals(""))
 			throw new NumberFormatException();
-		}
-		try { return Integer.parseInt(valueLabel.getText()); 
+		try { 
+			return Integer.parseInt(addValue.getText()); 
 		} catch(NumberFormatException e) {
 			throw e;
 		}
+			
 	}
 	
 	/**
