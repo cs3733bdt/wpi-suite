@@ -536,7 +536,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 	 */
 	@Override
 	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
+		boolean showBox) {
 		boolean isNameValid = false;
 		boolean isDescriptionValid = false;
 		boolean isEndDateValid = false;
@@ -551,8 +551,8 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 					.setBorder((new JPanel().getBorder()));
 		}
 
-		isDescriptionValid = getBoxDescription().validateField(errorField,
-				showLabel, showBox);
+		isDescriptionValid = getBoxDescription().validateField(errorField,showLabel, showBox);
+		
 		if (!isDescriptionValid) {
 			getEndDateField().setBorder(defaultDateBorder);
 			getBoxName().setBorder(defaultTextFieldBorder);
