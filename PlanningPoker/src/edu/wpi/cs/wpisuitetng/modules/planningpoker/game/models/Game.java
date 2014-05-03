@@ -225,6 +225,13 @@ public class Game extends ObservableModel implements IModelObserver,
 			wasChanged = true;
 			logger.log(Level.FINEST, "Notified Of Creation copied");
 		}
+		
+		if (notifiedOfCompletion != toCopyFrom.notifiedOfCompletion) {
+			notifiedOfCompletion = toCopyFrom.notifiedOfCompletion;
+			needsUpdate = true;
+			wasChanged = true;
+			logger.log(Level.FINEST, "Notified Of Completion copied");
+		}
 
 		if (!deck.equals(toCopyFrom.deck)) {
 			if (deck.copyFrom(toCopyFrom.deck)) {
