@@ -93,9 +93,14 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	}
 	
 	public void addIDK() {
-		sum = 0;
+		sum = -8008135;
 		parent.selectedIDK();
 		System.out.println("I don't know is selected.");
+	}
+	
+	public void subIDK() {
+		sum = 0;
+		System.out.println("I don't know is deselected.");
 	}
 	
 	/**
