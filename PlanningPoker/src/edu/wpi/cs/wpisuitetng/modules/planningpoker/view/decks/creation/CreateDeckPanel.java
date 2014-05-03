@@ -410,17 +410,17 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		
 		layout.putConstraint(SpringLayout.WEST, cardScrollPane, 10, SpringLayout.WEST, view);
 		layout.putConstraint(SpringLayout.EAST, cardScrollPane, -10, SpringLayout.EAST, view);
-		layout.putConstraint(SpringLayout.NORTH, cardScrollPane, 10, SpringLayout.SOUTH, numCardsAndColorAndSelectedTypePanel);
-		layout.putConstraint(SpringLayout.SOUTH, cardScrollPane, -45, SpringLayout.SOUTH, view);
+		layout.putConstraint(SpringLayout.NORTH, cardScrollPane, 0, SpringLayout.SOUTH, numCardsAndColorAndSelectedTypePanel);
+		layout.putConstraint(SpringLayout.SOUTH, cardScrollPane, -35, SpringLayout.SOUTH, view);
 		
 		layout.putConstraint(SpringLayout.WEST, saveButtonPanel, 10, SpringLayout.WEST, view);
-		layout.putConstraint(SpringLayout.NORTH, saveButtonPanel, 10, SpringLayout.SOUTH, cardScrollPane);
+		layout.putConstraint(SpringLayout.NORTH, saveButtonPanel, 5, SpringLayout.SOUTH, cardScrollPane);
 		
 		layout.putConstraint(SpringLayout.WEST, cancelDeckButton, 10, SpringLayout.EAST, saveButtonPanel);
-		layout.putConstraint(SpringLayout.NORTH, cancelDeckButton, 10, SpringLayout.SOUTH, cardScrollPane);
+		layout.putConstraint(SpringLayout.NORTH, cancelDeckButton, 5, SpringLayout.SOUTH, cardScrollPane);
 		
 		layout.putConstraint(SpringLayout.WEST, errorField, 10, SpringLayout.EAST, cancelDeckButton);
-		layout.putConstraint(SpringLayout.NORTH, errorField, 10, SpringLayout.SOUTH, cardScrollPane);
+		layout.putConstraint(SpringLayout.NORTH, errorField, 6, SpringLayout.SOUTH, cardScrollPane);
 		
 		
 		ViewEventController.getInstance().refreshDeckTree();
