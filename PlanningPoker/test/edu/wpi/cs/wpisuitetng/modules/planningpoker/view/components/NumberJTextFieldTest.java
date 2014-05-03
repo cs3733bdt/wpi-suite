@@ -46,7 +46,7 @@ public class NumberJTextFieldTest {
 	}
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception { // $codepro.audit.disable accessorMethodNamingConvention
 		testerField = new NumberJTextField(27);
 		label = new ErrorLabel();
 		frame = new JFrame();

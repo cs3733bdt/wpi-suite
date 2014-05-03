@@ -28,7 +28,7 @@ public class PreferencesPanelTest {
 	Session session;
 
 	@Before
-	public void setUp() {
+	public void setUp() { // $codepro.audit.disable accessorMethodNamingConvention
 
 		// Mock network
 		Network.initNetwork(new MockNetwork());
@@ -43,7 +43,7 @@ public class PreferencesPanelTest {
 	}
 
 	@Test
-	public void getEmailFieldTest() {
+	public void getEmailFieldTest() { // $codepro.audit.disable accessorMethodNamingConvention
 		assertEquals("email@email.com", prefPanel.getEmailField().getText());
 	}
 	
@@ -58,7 +58,7 @@ public class PreferencesPanelTest {
 	}
 	
 	@Test
-	public void getFacebookTest() {
+	public void getFacebookTest() { // $codepro.audit.disable accessorMethodNamingConvention
 		assertEquals("fb.username", prefPanel.getFacebookField().getText());
 	}
 	
@@ -71,7 +71,7 @@ public class PreferencesPanelTest {
 	}
 	
 	@Test
-	public void getMobileFieldTest() {
+	public void getMobileFieldTest() { // $codepro.audit.disable accessorMethodNamingConvention
 		assertEquals("5555555555", prefPanel.getMobileField().getText());
 	}
 	
@@ -102,7 +102,7 @@ public class PreferencesPanelTest {
 	}
 	
 	@Test
-	public void getCarrierFromIndexTest() {
+	public void getCarrierFromIndexTest() { // $codepro.audit.disable accessorMethodNamingConvention
 		prefPanel.getCarrierDropDown().setSelectedIndex(0);
 		assertEquals("VERIZON", prefPanel.getCarrierFromIndex());
 		
