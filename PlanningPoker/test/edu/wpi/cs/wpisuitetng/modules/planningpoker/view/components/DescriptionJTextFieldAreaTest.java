@@ -21,7 +21,7 @@ public class DescriptionJTextFieldAreaTest {
 	private ErrorLabel errorLabel;
 	
 	@Before
-	public void setUp() {
+	public void setUp() { // $codepro.audit.disable accessorMethodNamingConvention
 		textArea = new DescriptionJTextArea("Test Text Area");
 		textArea.displayStandardBorder();
 		blankTextArea = new DescriptionJTextArea();
@@ -29,7 +29,7 @@ public class DescriptionJTextFieldAreaTest {
 	}
 	
 	@Test
-	public void setTextTest() {
+	public void setTextTest() { // $codepro.audit.disable accessorMethodNamingConvention
 		textArea.setText("Bobby Drop Tables");
 		assertEquals("Bobby Drop Tables", textArea.getText());
 	}

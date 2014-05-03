@@ -27,7 +27,7 @@ public class VoteTest {
 	Vote aVote;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception { // $codepro.audit.disable accessorMethodNamingConvention
 		aVote = new Vote("Steve", 37);
 	}
 

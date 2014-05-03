@@ -38,7 +38,7 @@ public class CreateGamePanelTest {
 	GameModel model;
 	
 	@Before
-	public void setUp() {
+	public void setUp() { // $codepro.audit.disable accessorMethodNamingConvention
 		
 		// Set up the network
 				Network.initNetwork(new MockNetwork());
