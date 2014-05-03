@@ -706,6 +706,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 
 	/**
 	 * Creates a new font for use later
+	 * @return the font to be used
 	 */
 	public Font makeFont() {
 		// create a dummy JTextArea

@@ -79,7 +79,7 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 	 * 
 	 * @param text
 	 *            the initial value of this field
-	 * @param colums
+	 * @param columns
 	 *            the size of this field
 	 * @see CustomJTextField#CustomJTextField(String, int)
 	 */
