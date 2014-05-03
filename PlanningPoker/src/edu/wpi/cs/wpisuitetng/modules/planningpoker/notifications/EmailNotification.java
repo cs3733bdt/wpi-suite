@@ -136,9 +136,9 @@ public class EmailNotification {
 								+ " doesn't have an email Stored.");
 					}
 				else {
-				}
 				System.err.println(users[i].getName()
 						+ " doesnt want to receive email notifications.");
+				}
 			}
 		}
 

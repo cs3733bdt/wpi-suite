@@ -231,14 +231,11 @@ public class CardImage extends JPanel implements IDataField{
 	private void focusListenerAddValueText(JComponent component){
 		component.addFocusListener(new FocusListener(){
 			public void focusLost(FocusEvent e) {
-				//valueLabel.setText(addValue.getText());
-				if(!valueLabel.getText().equals("")){
-					valueLabel.setVisible(true);
-					addValue.setVisible(false);
-					revalidate();
-					repaint();
-				}
-				else {}
+				valueLabel.setText(addValue.getText());
+				valueLabel.setVisible(true);
+				addValue.setVisible(false);
+				revalidate();
+				repaint();
 			}
 
 			@Override

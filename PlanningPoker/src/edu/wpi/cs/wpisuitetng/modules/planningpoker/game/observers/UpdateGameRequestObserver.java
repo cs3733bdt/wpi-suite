@@ -79,7 +79,7 @@ public class UpdateGameRequestObserver implements RequestObserver {
 			// Send out email, text, and facebook notifications on game
 			// completion
 		} else if (!game.isNotifiedOfCompletion() && game.isComplete()) {
-			// TODO make a different method for sending completion text
+			
 			Game realGame;
 			try {
 				realGame = GameModel.getInstance().getGameById(
