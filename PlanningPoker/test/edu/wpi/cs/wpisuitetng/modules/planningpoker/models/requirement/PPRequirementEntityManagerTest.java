@@ -49,7 +49,7 @@ public class PPRequirementEntityManagerTest {
 	PPRequirement[] allReqs;
 	
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() throws Exception { // $codepro.audit.disable accessorMethodNamingConvention
 		// Set up the network
 		Network.initNetwork(new MockNetwork());
 		Network.getInstance().setDefaultNetworkConfiguration(

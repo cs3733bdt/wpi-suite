@@ -32,7 +32,7 @@ public class RequirementTableTest {
 	private PPRequirement req3;
 	
 	@Before
-	public void setUp() {
+	public void setUp() { // $codepro.audit.disable accessorMethodNamingConvention
 		reqList = new ArrayList<PPRequirement>();
 		req1 = new PPRequirement("Req1","Desc1");
 		req2 = new PPRequirement("Req2","Desc2");

@@ -620,36 +620,15 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 	 * @return returns the email of the user currently logged in
 	 */
 	private String getUserEmail() {
-		//Try to get user data, if the request has not completed, will catch
-		//exception and try again, this time waiting a few seconds to insure
-		//that the request has completed.
 		String userEmail;
-		try{
-			userEmail = getUserController.getCurrentUser().getEmail();
-			if (userEmail == null) {
-				hasEmail = false;
-				return "";
-			}
-			else {
-				hasEmail = true;
-				return userEmail;
-			}
-		}catch(NullPointerException e){
-			logger.log(Level.WARNING, "Request couldn't be completed. Trying again...", e);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e1) {
-				logger.log(Level.WARNING, "Thread is interrupted.", e1);
-			}
-			userEmail = getUserController.getCurrentUser().getEmail();
-			if (userEmail == null) {
-				hasEmail = false;
-				return "";
-			}
-			else {
-				hasEmail = true;
-				return userEmail;
-			}
+		userEmail = getUserController.getCurrentUser().getEmail();
+		if (userEmail == null) {
+			hasEmail = false;
+			return "";
+		}
+		else {
+			hasEmail = true;
+			return userEmail;
 		}
 	}
 
