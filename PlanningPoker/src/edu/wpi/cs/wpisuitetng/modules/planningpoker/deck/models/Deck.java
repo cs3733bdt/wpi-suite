@@ -270,6 +270,27 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		return color;
 	}
 	
+	/**
+	 * @return index for the color drop down for the associated color.
+	 */
+	public int getColorIndex() {
+		switch(color){
+		case YELLOW:
+			return 4;
+		case RED:
+			return 0;
+		case PURPLE:
+			return 3;
+		case BLUE:
+			return 1;
+		case GREEN:
+			return 2;
+		default:
+			return 0;
+		}
+		
+	}
+	
 	public void updateMultipleSelection(boolean isMultipleSelection) {
 		if (isMultipleSelection == this.isMultipleSelection) {
 			return;

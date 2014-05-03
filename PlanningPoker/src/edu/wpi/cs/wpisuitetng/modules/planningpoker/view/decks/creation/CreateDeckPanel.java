@@ -155,10 +155,19 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		
 		nameTextField.setText(deck.getName());
 		descriptionTextField.setText(deck.getDescription());
-		System.out.println(deck.getColor().toString());
+		iDontKnowCheck.setSelected(deck.hasIDontKnowCard());
+		
+		if(deck.isMultipleSelection()){
+			multipleSelection.setSelected(true);
+			singleSelection.setSelected(false);
+		}
+		else{
+			multipleSelection.setSelected(false);
+			singleSelection.setSelected(true);
+		}
 		
 		
-		colorDropDown.setSelectedItem(deck.getColor().toString());
+		colorDropDown.setSelectedIndex(deck.getColorIndex());
 		
 		cardsPanel2.setDeck(deck);
 		
