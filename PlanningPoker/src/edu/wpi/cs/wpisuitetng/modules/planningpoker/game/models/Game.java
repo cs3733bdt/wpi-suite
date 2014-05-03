@@ -244,7 +244,10 @@ public class Game extends ObservableModel implements IModelObserver,
 		if (needsUpdate) {
 			logger.log(Level.SEVERE,
 					"WARNING! THERE WAS A COPY OVER FOR TWO NON MATCHING UUID GAMES!");
-			makeChanged();
+			//makeChanged();
+		}
+		if(hasChanged()){
+			logger.log(Level.WARNING, "hasChanges may have been set durring the copy over. Please check your logic.");
 		}
 
 		return wasChanged;

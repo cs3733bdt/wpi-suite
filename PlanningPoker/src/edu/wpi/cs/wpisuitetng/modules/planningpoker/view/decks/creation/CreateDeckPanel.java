@@ -142,6 +142,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	public CreateDeckPanel(Deck deck) {
 		isReopen = true;
 		cardsPanel2 = new CardPanel(this);
+		this.deck = deck;
 		build();
 		buildFields(deck);
 	}
@@ -155,10 +156,19 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		
 		nameTextField.setText(deck.getName());
 		descriptionTextField.setText(deck.getDescription());
-		System.out.println(deck.getColor().toString());
+		iDontKnowCheck.setSelected(deck.hasIDontKnowCard());
+		
+		if(deck.isMultipleSelection()){
+			multipleSelection.setSelected(true);
+			singleSelection.setSelected(false);
+		}
+		else{
+			multipleSelection.setSelected(false);
+			singleSelection.setSelected(true);
+		}
 		
 		
-		colorDropDown.setSelectedItem(deck.getColor().toString());
+		colorDropDown.setSelectedIndex(deck.getColorIndex());
 		
 		cardsPanel2.setDeck(deck);
 		
@@ -686,9 +696,15 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	}
 
 	public Deck getDeck() {
+		try{
+			return deck;
+		}catch(NullPointerException e){	
+		}
+		
 		final Deck deck = new Deck(nameTextField.getText(),
-				descriptionTextField.getText(), cardsPanel2.getCardValues(), true,
+				descriptionTextField.getText(), cardsPanel2.getCardValues(), iDontKnowCheck.isSelected(),
 				determineDeckColor());
+		deck.updateMultipleSelection(multipleSelection.isSelected());
 		return deck;
 	}
 	
