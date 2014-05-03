@@ -263,7 +263,8 @@ public class Game extends ObservableModel implements IModelObserver,
 			}
 			return newReq;
 		} catch (DBModelNotInstantiatedException e) {
-			logger.log(Level.SEVERE, "GetPPRequirementController was null.", e);
+			// DO NOT PRINT THE EXCEPTION. THIS CATCH IS USED IN INTENTIONAL FUNCTIONALITY
+			logger.log(Level.SEVERE, "GetPPRequirementController was null."); 
 			return match;
 		}
 	}

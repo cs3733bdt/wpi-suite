@@ -97,7 +97,7 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		view.add(addingValuesToTheCardsHeading);
 		view.add(addingValuesToTheCardspic);
 		view.add(addingValuesToTheCardsExplanation);
-		
+
 		/**
 		 * Constraints for the overall panel layout
 		 */
@@ -114,9 +114,11 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		layout.putConstraint(SpringLayout.NORTH, setUpCardsExplanation, 20, SpringLayout.SOUTH, setUpCardsHeading);
 		layout.putConstraint(SpringLayout.EAST, setUpCardsExplanation, 0, SpringLayout.EAST, view);
 		layout.putConstraint(SpringLayout.WEST, setUpCardsExplanation, 20, SpringLayout.EAST, setUpCardspic);
+		layout.putConstraint(SpringLayout.SOUTH, setUpCardsExplanation, 20, SpringLayout.NORTH, addingValuesToTheCardsHeading);
+
 
 		// adding values to the cards
-		layout.putConstraint(SpringLayout.NORTH, addingValuesToTheCardsHeading, 20, SpringLayout.SOUTH, setUpCardspic);
+		layout.putConstraint(SpringLayout.NORTH, addingValuesToTheCardsHeading, 50, SpringLayout.SOUTH, setUpCardspic);
 		layout.putConstraint(SpringLayout.WEST, addingValuesToTheCardsHeading, 20, SpringLayout.WEST, view);
 		
 		layout.putConstraint(SpringLayout.NORTH, addingValuesToTheCardspic, 20, SpringLayout.SOUTH, addingValuesToTheCardsHeading);
