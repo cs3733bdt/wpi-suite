@@ -37,9 +37,14 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 
 	/** The text error placed on an IErrorField when the name empty */
 	public static final String STRING_ERROR_BLANK = "Highlighted fields are required";
+	
+	/** The text when the string contains only spaces */
+	public static final String STRING_ERROR_SPACES = "Name can not be excusively spaces";
 
-	/** The */
+	/** The default border when there are no errors */
 	public static final Border DEFAULTBORDER = (new JTextField()).getBorder();
+	
+	/** the default border when there are errors */
 	public static final Border ERRORBORDER = BorderFactory
 			.createLineBorder(Color.RED);
 
@@ -52,7 +57,7 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 	 *            the initialized text for the textbox
 	 */
 	public NameJTextField(String text) {
-		super(text);
+		super(text.trim());
 		startingText = text;
 		enableSelectAllTextOnMouseListener();
 	}
@@ -102,11 +107,15 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 				this.setBorder(ERRORBORDER);
 			}
 
-		} else if (getText().length() <= 0) {
+		} else if (getText().trim().length() <= 0) {
 			isNameValid = false;
 			if (errorField != null) {
 				if (showLabel) {
-					errorField.setText(STRING_ERROR_BLANK);
+					if(getText().trim().equals(getText())){
+						errorField.setText(STRING_ERROR_BLANK);
+					} else {
+						errorField.setText(STRING_ERROR_SPACES);
+					}
 				}
 				if (showBox) {
 					this.setBorder(ERRORBORDER);
@@ -128,5 +137,4 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 	public void setStartingText(String newStarting) {
 		startingText = newStarting;
 	}
-
 }
