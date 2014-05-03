@@ -89,6 +89,7 @@ public class CardActionListenerRefactor implements ActionListener {
 							button.setIcon(new ImageIcon(frontImg));
 						}
 					}
+					cardsPanel.subIDK();
 					estimatePanel.updateSum();
 					button.setIcon(new ImageIcon(frontImg));
 					cardsPanel.memoryArrayClear();
