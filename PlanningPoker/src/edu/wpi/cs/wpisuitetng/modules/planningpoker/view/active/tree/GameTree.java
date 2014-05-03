@@ -71,6 +71,7 @@ public class GameTree extends JPanel implements MouseListener{
 	private GameTree(){
 		super(new GridBagLayout());
 		refresh();
+		ViewEventController.getInstance().setGameOverviewTree(this);
 	}
 	
 	/**
@@ -186,8 +187,10 @@ public class GameTree extends JPanel implements MouseListener{
 	    	gameTree.expandPath(new TreePath(history.getPath()));
 	    }
 	   
+	    revalidate();
+	    repaint();
 	    validate(); 
-	    ViewEventController.getInstance().setGameOverviewTree(this);
+	    //ViewEventController.getInstance().setGameOverviewTree(this);
 		
 	}
 	
