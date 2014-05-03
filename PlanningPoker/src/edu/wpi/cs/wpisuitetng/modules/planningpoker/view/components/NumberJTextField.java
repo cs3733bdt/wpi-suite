@@ -114,8 +114,21 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 	@Override
 	public void setText(String text) {
 		text = text.replaceAll("\n", "");
+		if(text.length()>1){ 					// Checks to see if there is more than just one "0" at the begining
+			text = text.replaceFirst("^0+(?!$)", ""); 	// Replaces leading zeros
+		}
 		initialText = text;
 		super.setText(text);
+	}
+	
+	@Override
+	public String getText(){
+		String text = super.getText();
+		if(text.length()>1){ 					// Checks to see if there is more than just one "0" at the begining
+			text = text.replaceFirst("^0+(?!$)", ""); 	// Replaces leading zeros
+			super.setText(text); 				//Set the field to the correct version
+		}
+		return text;
 	}
 
 	public void setMaxValue(int maxValue) {
