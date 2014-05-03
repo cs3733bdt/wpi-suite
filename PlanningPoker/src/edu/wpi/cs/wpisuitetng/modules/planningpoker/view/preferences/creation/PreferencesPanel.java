@@ -1122,11 +1122,8 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 	public boolean readyToRemove() {
 		if((!emailField.getText().equals(savedEmail)) || 
 				(!mobileField.getText().equals(savedPhone)) || 
-				     (!facebookField.getText().equals(savedFacebook)) || 
-				     	(emailCheckBox.isSelected()!= isEmailChecked) || 
-				     	   (mobileCheckBox.isSelected() != isPhoneChecked) || 
-				     	      (facebookCheckBox.isSelected()!= isFacebookChecked) || 
-				     	         carrierDropDown.getSelectedIndex() != previousCarrierIndex){
+				     (!facebookField.getText().equals(savedFacebook)) ||
+				     	  carrierDropDown.getSelectedIndex() != previousCarrierIndex){
 			int result = JOptionPane.showConfirmDialog(this,
 					"Discard unsaved changes and close tab?", "Discard Changes?",
 					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
