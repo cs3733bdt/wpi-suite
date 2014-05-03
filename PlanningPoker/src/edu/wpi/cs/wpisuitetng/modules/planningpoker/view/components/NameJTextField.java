@@ -104,7 +104,7 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 				}
 			}
 			if (showBox) {
-				this.setBorder(ERRORBORDER);
+				setBorder(ERRORBORDER);
 			}
 
 		} else if (getText().trim().length() <= 0) {
@@ -118,13 +118,15 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 					}
 				}
 				if (showBox) {
-					this.setBorder(ERRORBORDER);
+					setBorder(ERRORBORDER);
 				}
 			}
 		} else {
-			//errorField.setText("");
 			isNameValid = true;
-			this.setBorder(DEFAULTBORDER);
+		}
+		
+		if(isNameValid){
+			setBorder(DEFAULTBORDER);
 		}
 		return isNameValid;
 	}

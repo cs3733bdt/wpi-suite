@@ -27,6 +27,8 @@ import javax.swing.border.Border;
  * 
  */
 public class DescriptionJTextArea extends CustomJTextArea implements IDataField {
+	public static final String STRING_ERROR_SPACES = "Name can not be excusively spaces";
+	
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private final Border errorBorder = BorderFactory
 			.createLineBorder(Color.RED);
@@ -61,18 +63,23 @@ public class DescriptionJTextArea extends CustomJTextArea implements IDataField 
 	public boolean validateField(IErrorView errorField, boolean showLabel,
 			boolean showBox) {
 		boolean isDescriptionValid = false;
-		if (getText().length() <= 0) {
+		if (getText().trim().length() <= 0) {
 			isDescriptionValid = false;
-			// TODO add a way to display error descriptions
 			if (showLabel) {
-				errorField.setText("Description is required");
+				if(getText().trim().equals(getText())){
+					errorField.setText("Description is required");
+				} else {
+					errorField.setText(STRING_ERROR_SPACES);
+				}
 			}
 			if (showBox) {
-				this.setBorder(errorBorder);
+				setBorder(errorBorder);
 			}
 		} else {
 			isDescriptionValid = true;
-			this.setBorder(defaultBorder);
+		}
+		if(isDescriptionValid){
+			setBorder(defaultBorder);
 		}
 		return isDescriptionValid;
 	}
