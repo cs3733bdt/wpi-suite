@@ -21,6 +21,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
@@ -56,6 +58,9 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberJTextF
  */
 public class CreateDeckPanel extends JScrollPane implements IDataField,
 		IValidateButtons, ICreateDeckPanel {
+	
+	/** The Logger for this class */
+	private static final Logger logger = Logger.getLogger(CreateDeckPanel.class.getName());
 
 	/**
 	 * textfield for the deck name
@@ -125,24 +130,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	
 	private final boolean isReopen;
 
-	/**
-	 * an initial red card to be added to the view as a default starting deck
-	 */
-
-	//private final CardImage cardRed = new CardImage(ColorEnum.RED, this);
-	
-
-	/**
-	 * array list to hold all the cards currently generated. TODO: IMPLEMENT
-	 * THIS
-	 */
-	//private ArrayList<CardImage> cards = new ArrayList<CardImage>();
-
-	/**
-	 * ArrayList to hold all of the label values so they can be refreshed when
-	 * card number of color is changed
-	 */
-	//private List<Integer> values = new ArrayList<Integer>();
 
 	private Deck deck;
 
@@ -435,22 +422,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		
 	}
 
-	/**
-	 * This method is called once at initialization. It gets the text of the
-	 * field for number of cards and initializes the value array with -1's as
-	 * dummy values so it matches the size of the initial card array
-	 */
-//	private void initializeArrayList() {
-//		String text = numCards.getText();
-//		if (text.isEmpty()) {
-//			return;
-//		}
-//
-//		// int newNumCards = Integer.Int(text);
-//		// for (int i = 0; i < newNumCards; i++) {
-//		values.add(-1);
-//		// }
-//	}
 
 	/**
 	 * Build a new font based on specified size
@@ -566,40 +537,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		return false;
 	}
 
-//	/**
-//	 * Checks to make sure the number of cards inputted is 1-15
-//	 * 
-//	 * @return true if a valid input
-//	 */
-//	private boolean verifyNumberOfCards() {
-//		String text = numCards.getText();
-//		String allowedChars = "123456789";
-//		String allowedChars1 = "012345";
-//		if (text.length() == 0) {
-//			return false;
-//		}
-//		/* Checks to see if the number is 1-9 */
-//		if (text.length() == 1) {
-//			if (allowedChars.contains(Character.toString(text.charAt(0)))) {
-//				return true;
-//			}
-//		}
-//		/* Checks to see if the number is 10-15 */
-//		if (text.length() == 2) {
-//			if (text.charAt(0) == '1') {
-//				if (allowedChars1.contains(Character.toString(text.charAt(1)))) {
-//					return true;
-//				}
-//			}
-//			/* Checks to see if the number is 01-09 */
-//			if (text.charAt(0) == '0') {
-//				if (allowedChars.contains(Character.toString(text.charAt(1)))) {
-//					return true;
-//				}
-//			}
-//		}
-//		return false;
-//	}
+
 
 	/**
 	 * This method makes sure that the color selected in the dropdown is the
@@ -615,17 +553,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 */
 	private void chooseCardColor() {
 		cardsPanel2.setColor(determineDeckColor());
-//		updateValueArray(); // ensures the array of values is up to date before
-//							// cards are removed
-//		ColorEnum color = determineDeckColor();
-//		int numCardsPresent = cardsPanel.getComponentCount();
-//		cardsPanel.removeAll();
-//		cards.removeAll(cards);
-//
-//		addCards(color, numCardsPresent);
-//
-//		cardsPanel.revalidate();
-//		cardsPanel.repaint();
+		
 	}
 
 	/**
@@ -638,34 +566,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 */
 	private void displayNumCards() {
 		cardsPanel2.setNumberCards(numCards.getValue());
-		
-//		int oldNumCards = values.size();
-//		int numCardsSubmitted = Integer.parseInt(numCards.getText());
-//		int difference = numCardsSubmitted - oldNumCards;
-//		if (difference > 0) {
-//			for (int i = 0; i < difference; i++) {
-//				values.add(-1);
-//			}
-//		}
-//
-//		cardsPanel.removeAll();
-//		for (int i = 0; i < numCardsSubmitted; i++) { // Here, we are creating
-//														// the correct number of
-//														// components in the
-//														// cards panel,
-//			cardsPanel.add(new JLabel("countLabel")); // so that when
-//														// chooseCardColor() is
-//														// called it creates the
-//														// correct number of
-//		} // the correct color of cards.
-//		chooseCardColor();
-//		if (difference < 0) {
-//			for (int i = 0; i < difference * (-1); i++) {
-//				values.remove(values.size()-1);
-//			}
-//		}
-//		cardsPanel.revalidate();
-//		cardsPanel.repaint();
 	}
 
 	/**
@@ -680,7 +580,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		component.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				System.out.println(" The mouse event has been triggered");
+				logger.log(Level.FINER, "The mouse listener has been triggered on a button.");
 				
 				//Check for the submitNumbCards 
 				if (!submitNumCards.isEnabled()) {
@@ -688,38 +588,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 					//errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 15");
 				} else {
 				}// it will perform the action listener
-				
-				//if(!sav)
 			}
 		});
 	}
-	
-	
-//	private void addCards(ColorEnum color, int numCardsPresent) {
-//		cardsPanel2.setNumberCards(numCardsPresent);
-//		for(int i=0; i < numCardsPresent; i++){
-//			 CardImage newCard = new CardImage(color,this);
-//			 cardsPanel.add(newCard);
-//			 cards.add(newCard);
-//			 String valueAtIndexI = Integer.toString(values.get(i));
-//			 if (!valueAtIndexI.equals("-1")) {
-//				 newCard.setValueLabel(valueAtIndexI);
-//			 }
-//		}
-//	}
-
-	/**
-	 * Fills the values array equal to the total number of cards (so up to the
-	 * index "cards.size() - 1") by asking each card what value it contains
-	 */
-//	private void updateValueArray() {
-//		if(cards.size() != 0){
-//			for (int i = 0; i < cards.size(); i++) {
-//				int value = cards.get(i).getCardValue();
-//				values.set(i, value);
-//			}
-//		}
-//	}
 
 	/**
 	 * Adds the deck to the model and to the server
@@ -800,6 +671,10 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		
 	}
 	
+	/**
+	 * Adds a mouse listener to a button to show errors borders when the fields are not set
+	 * @param component the button to add the mouse listener on
+	 */
 	private void addMouseListenerTo(final JButton component){
 		component.addMouseListener(new MouseAdapter(){
 			@Override
