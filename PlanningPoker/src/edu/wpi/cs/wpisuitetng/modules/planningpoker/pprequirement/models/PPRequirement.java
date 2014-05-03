@@ -259,33 +259,45 @@ public class PPRequirement extends ObservableModel {
 	public void addVote(Vote vote) {
 		delayChange("addVote"); // Holds the code until the server is finished
 								// re-populating the model
-		addNoDelay(vote);
+		if(addNoDelay(vote)){	//If makes a change
+			makeChanged();
+		}
 		notifyObservers(vote);
 	}
 
-	private void addNoDelay(Vote vote) {
+	/**
+	 * 
+	 * 
+	 * 
+	 * @param vote the vote to add to the requirement
+	 * @return true if there are changes to the model
+	 */
+	private boolean addNoDelay(Vote vote) {
+		//WARNING DO NOT CALL MAKE CHANGE IN THIS METHOD! THIS WILL LOCK THE MODEL FROM UPDATING!
 		boolean found = false;
+		boolean changed = false;
 		for (Vote v : votes) {
 			if (vote.getUsername().equals(v.getUsername())) { // Has person
 																// voted?
 				v.setVoteNumber(vote.getVoteNumber()); // Update their vote
-				makeChanged();
+				changed = true;
 				found = true;
 			}
 		}
 		if (!found) {
 			votes.add(vote);
-			makeChanged();
+			changed = true;
 		}
 		if (getProject() != null) {
 			if (votes.size() == getProject().getTeam().length) {
 				makeComplete();
-				makeChanged();
+				changed = true;
 			}
 		} else {
 			System.err
 					.println("THE PROJECT IN THE REQUIREMENT WAS NULL: ADD VOTE METHOD");
 		}
+		return changed;
 	}
 
 	/**
@@ -297,6 +309,7 @@ public class PPRequirement extends ObservableModel {
 
 	/**
 	 * Setter for the final estimate
+	 * @param newEstimate the final estimate for a requirement
 	 */
 	public void setFinalEstimate(int newEstimate) {
 		if (finalEstimate != newEstimate) {
@@ -317,12 +330,15 @@ public class PPRequirement extends ObservableModel {
 
 	/**
 	 * Sets the requirement to completed
+	 * WARNING: This method does not call make changes.
+	 * You must call this method manually
 	 */
 	private void makeComplete() {
 		// DO NOT PUT DELAYCHANGE IN THIS METHOD
 		// IT WILL CAUSE AN INFINITE LOOP!
+		
+		//DO NOT CALL MAKE CHANGE IN THIS METHOD EITHER
 		complete = true;
-		makeChanged();
 	}
 
 	/**

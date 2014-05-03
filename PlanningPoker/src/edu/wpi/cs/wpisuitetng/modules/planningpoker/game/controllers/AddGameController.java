@@ -10,9 +10,6 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers.AddGameRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -25,39 +22,42 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * 
  * ******This class should be modified after the planningpoker.models and .view
  * are finished.******
+ * 
  * @author Andrew Busch
  * @author tianchanggu
  * @author Jonathan Leitschuh
  * 
  */
 public class AddGameController {
-	private static final Logger logger = Logger.getLogger(AddGameController.class.getName());
-	
-	private static AddGameController instance;
-	
-	private AddGameController() {}
-	
+	private static AddGameController instance = null;
+
+	private AddGameController() {
+	}
+
 	/**
 	 * @return returns a new instance of an AddGameController
 	 */
 	public static AddGameController getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new AddGameController();
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * This method adds a game to the server
-	 * @param newGame is the game to add to the server
+	 * 
+	 * @param newGame
+	 *            is the game to add to the server
 	 */
 	public void addGame(Game newGame) {
-		logger.log(Level.INFO, "Adding: " + newGame.getName().trim() + " to server");
-		final Request request = 
-				Network.getInstance().makeRequest("planningpoker/game", HttpMethod.PUT);
+		System.out.println("Adding: " + newGame.getName() + " to server");
+		final Request request = Network.getInstance().makeRequest(
+				"planningpoker/game", HttpMethod.PUT);
 		request.setBody(newGame.toJSON());
-		final AddGameRequestObserver observer = new AddGameRequestObserver(this, newGame);
-		request.addObserver(observer) ;
+		final AddGameRequestObserver observer = new AddGameRequestObserver(
+				this, newGame);
+		request.addObserver(observer);
 		request.send();
 	}
 }

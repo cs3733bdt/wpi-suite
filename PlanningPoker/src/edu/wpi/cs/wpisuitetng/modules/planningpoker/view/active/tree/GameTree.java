@@ -34,9 +34,11 @@ import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.GetDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.user.controllers.RetrieveUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 
 /**
@@ -49,7 +51,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 public class GameTree extends JPanel implements MouseListener{
 	private static GameTree instance = null;
 	
-	private boolean initialized = false; //Check if GameModel should be generated from the server
+	private boolean initialized = false; //Check if the Models should be generated from the server
 	JTree gameTree; // JTree to hold the hierarchy of games
 	JScrollPane gameTreeScroll; // scrollPane to put the tree in
 	DefaultMutableTreeNode gameNode = 
@@ -107,7 +109,7 @@ public class GameTree extends JPanel implements MouseListener{
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
-			if(!game.hasEnded() && !game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
+			if(!game.hasEnded(false) && !game.isComplete()){ //If the game is not complete and it is active, then add it to the active game dropdown
 
 				if(game.isActive()){
 					active.add(newGameNode);
@@ -180,17 +182,20 @@ public class GameTree extends JPanel implements MouseListener{
 	/* (non-Javadoc)
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 * 
-	 * This method is overridden in order to allow us to instantiated the games model when the network has been instantiated
+	 * This method is overridden in order to allow us to instantiated the necessary models when the network has been instantiated
 	 * 
 	 */
 	@Override
 	public void paintComponent(Graphics g){
 		if(!initialized){
 			try{
+				//Initialize the game, deck, and user data to prevent delay later
 				GetGameController.getInstance().retrieveGames();
+				GetDeckController.getInstance().retrieveDecks();
+				RetrieveUserController.getInstance().retrieveUsers();
 				initialized = true;
 			} catch (Exception e){
-				System.err.println("Problem instantiating the Game Model. " + e);
+				System.err.println("Problem instantiating the Models. " + e);
 			}
 		}
 		super.paintComponent(g);
@@ -222,7 +227,7 @@ public class GameTree extends JPanel implements MouseListener{
 		
         for (Game game: sortGames(GameModel.getInstance().getGames())) {
             if(!game.isComplete() && game.isActive()) {
-                if(game.hasEnded()) {
+                if(game.hasEnded(true)) {
                     refresh();
                 }
             }

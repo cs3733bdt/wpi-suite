@@ -36,7 +36,7 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 	public static final String STRING_ERROR_NAMELONG = "Name can be no more than 100 chars.";
 
 	/** The text error placed on an IErrorField when the name empty */
-	public static final String STRING_ERROR_BLANK = "Name is required";
+	public static final String STRING_ERROR_BLANK = "Highlighted fields are required";
 	
 	/** The text when the string contains only spaces */
 	public static final String STRING_ERROR_SPACES = "Name can not be excusively spaces";
@@ -104,7 +104,7 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 				}
 			}
 			if (showBox) {
-				this.setBorder(ERRORBORDER);
+				setBorder(ERRORBORDER);
 			}
 
 		} else if (getText().trim().length() <= 0) {
@@ -118,13 +118,15 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 					}
 				}
 				if (showBox) {
-					this.setBorder(ERRORBORDER);
+					setBorder(ERRORBORDER);
 				}
 			}
 		} else {
-			//errorField.setText("");
 			isNameValid = true;
-			this.setBorder(DEFAULTBORDER);
+		}
+		
+		if(isNameValid){
+			setBorder(DEFAULTBORDER);
 		}
 		return isNameValid;
 	}

@@ -29,7 +29,6 @@ public interface IHelpPanel {
 	 *	int activeGameIndex = 2;
      *  int createGameIndex = 3;
 	 *	int createDeckIndex = 4;
-	 * @return
 	 */
 	int getIdentifierIndex();
 	

@@ -72,7 +72,7 @@ public class HelpButtonPanel extends ToolbarGroupView {
 		contentPanel.setOpaque(false);
 		
 		add(contentPanel);
-		helpIcon.setEnabled(false);
+		disableHelpButton("Help is not available for the Overviews. You must navigate to a tab.");
 	}
 	
 	/**
@@ -85,12 +85,14 @@ public class HelpButtonPanel extends ToolbarGroupView {
 		return helpIcon;
 	}
 
-	public void disableHelpButton() {
+	public void disableHelpButton(String message) {
 		helpIcon.setEnabled(false);
+		helpIcon.setToolTipText(message);
 	}
 	
 	public void enableHelpButton() {
 		helpIcon.setEnabled(true);
+		helpIcon.setToolTipText("");
 	}
 
 }

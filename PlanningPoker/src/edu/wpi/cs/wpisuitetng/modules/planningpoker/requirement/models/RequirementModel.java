@@ -18,8 +18,8 @@ import javax.swing.AbstractListModel;
 import javax.swing.DefaultListModel;
 import javax.swing.ListModel;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.RequirementStatus;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
 
 /**
  * List of Requirements being pulled from the server
@@ -39,7 +39,7 @@ public class RequirementModel extends AbstractListModel {
 						// that are added.
 
 	// the static object to allow the requirement model to be
-	private static RequirementModel instance;
+	private static RequirementModel instance = null;
 
 	/**
 	 * Constructs an empty list of requirements for the project

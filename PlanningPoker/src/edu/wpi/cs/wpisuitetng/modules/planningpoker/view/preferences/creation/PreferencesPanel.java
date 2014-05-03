@@ -29,6 +29,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -72,11 +73,20 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 	JTextField facebookField;
 	JButton updateFacebookButton;
 	JCheckBox facebookCheckBox;
+	
+	String savedEmail;
+	String savedPhone;
+	String savedFacebook;
 
 	boolean hasNumber;
 	boolean hasCarrier;
 	boolean hasEmail;
 	boolean hasFaceBook;
+	boolean isEmailChecked;
+	boolean isPhoneChecked;
+	boolean isFacebookChecked;
+	
+	int previousCarrierIndex;
 
 	RetrieveUserController getUserController;
 	UpdateUserController updateUserController;
@@ -476,6 +486,14 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		setViewportView(view);
 		revalidate();
 		repaint();
+		savedEmail = emailField.getText();
+		savedPhone = mobileField.getText();
+		savedFacebook = facebookField.getText();
+		isEmailChecked = emailCheckBox.isSelected();
+		isPhoneChecked = mobileCheckBox.isSelected();
+		isFacebookChecked = facebookCheckBox.isSelected();
+		previousCarrierIndex = carrierDropDown.getSelectedIndex();
+		
 	}
 
 	public void updateEmailButtonPressed() {
@@ -483,6 +501,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		 * IF TEST CONSTRUCTOR WAS CALLED, DO NOT
 		 * UPDATE USER CONTROLLER
 		 */
+		savedEmail = emailField.getText();
 		if(testUser != null) {
 			emailField.setText("newEmailaddress");
 			String newEmail = emailField.getText();
@@ -500,6 +519,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		 * IF TEST CONSTRUCTOR WAS CALLED, DO NOT
 		 * UPDATE USER CONTROLLER
 		 */
+		savedFacebook = facebookField.getText();
 		if(testUser != null) {
 			facebookField.setText("newFacebook");
 			String newFb = facebookField.getText();
@@ -516,6 +536,8 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		 * IF TEST CONSTRUCTOR WAS CALLED, DO NOT
 		 * UPDATE USER CONTROLLER
 		 */
+		savedPhone = mobileField.getText();
+		previousCarrierIndex = carrierDropDown.getSelectedIndex();
 		if(testUser != null) {
 			mobileField.setText("1234567890");
 			String newMobile = mobileField.getText();
@@ -620,36 +642,15 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 	 * @return returns the email of the user currently logged in
 	 */
 	private String getUserEmail() {
-		//Try to get user data, if the request has not completed, will catch
-		//exception and try again, this time waiting a few seconds to insure
-		//that the request has completed.
 		String userEmail;
-		try{
-			userEmail = getUserController.getCurrentUser().getEmail();
-			if (userEmail == null) {
-				hasEmail = false;
-				return "";
-			}
-			else {
-				hasEmail = true;
-				return userEmail;
-			}
-		}catch(NullPointerException e){
-			logger.log(Level.WARNING, "Request couldn't be completed. Trying again...", e);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e1) {
-				logger.log(Level.WARNING, "Thread is interrupted.", e1);
-			}
-			userEmail = getUserController.getCurrentUser().getEmail();
-			if (userEmail == null) {
-				hasEmail = false;
-				return "";
-			}
-			else {
-				hasEmail = true;
-				return userEmail;
-			}
+		userEmail = getUserController.getCurrentUser().getEmail();
+		if (userEmail == null) {
+			hasEmail = false;
+			return "";
+		}
+		else {
+			hasEmail = true;
+			return userEmail;
 		}
 	}
 
@@ -1119,7 +1120,18 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 	 * @return true, no validation yet
 	 */
 	public boolean readyToRemove() {
-		return true;
+		if((!emailField.getText().equals(savedEmail)) || 
+				(!mobileField.getText().equals(savedPhone)) || 
+				     (!facebookField.getText().equals(savedFacebook)) ||
+				     	  carrierDropDown.getSelectedIndex() != previousCarrierIndex){
+			int result = JOptionPane.showConfirmDialog(this,
+					"Discard unsaved changes and close tab?", "Discard Changes?",
+					JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+			return result == 0;	
+		}
+		else{
+			return true;
+		}
 	}
 	
 	/**

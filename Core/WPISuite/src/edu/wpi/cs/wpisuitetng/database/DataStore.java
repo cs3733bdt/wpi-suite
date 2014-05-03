@@ -34,7 +34,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 
 public class DataStore implements Data {
 
-	static String WPI_TNG_DB ="WPISuite_TNG_local";
+	static String WPI_TNG_DB ="Team2Iteration4";
 	private static DataStore myself = null;
 	static ObjectContainer theDB;
 	static ObjectServer server;
@@ -63,6 +63,8 @@ public class DataStore implements Data {
 			config.common().objectClass(Project.class).updateDepth(2); //
 			
 			//Attempt to load the game class if it even exists
+			//This is added in order to allow the planning poker module to be removed without requiring you to delete
+			//much code
 			ClassLoader classLoader = DataStore.class.getClassLoader();
 			try{
 				Class gameClass = classLoader.loadClass("edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game");
@@ -79,6 +81,16 @@ public class DataStore implements Data {
 				logger.log(Level.FINER, "The requirment class could not be loaded");
 				System.out.println("The requirement class could not be loaded");
 			}
+			
+			try{
+				Class reqClass = classLoader.loadClass("edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck");
+				config.common().objectClass(reqClass).updateDepth(3);
+			} catch (ClassNotFoundException e){
+				logger.log(Level.FINER, "The deck class could not be loaded");
+				System.out.println("The deck class could not be loaded");
+			}
+			
+			
 			
 			//Connect to the Database
 			server = Db4oClientServer.openServer(config, WPI_TNG_DB, PORT);

@@ -75,8 +75,9 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	 * Constructor for a Deck
 	 * @param name the name of the deck
 	 * @param description a description of this deck
-	 * @param owner the user who created this deck
 	 * @param cards the numbers on this deck
+	 * @param hasIdontKnow whether the deck has the IdontKnow button or not
+	 * @param color the color of the deck
 	 */
 	public Deck(String name, String description, List<Integer> cards, boolean hasIdontKnow, ColorEnum color){
 		identity = UUID.randomUUID();
@@ -226,7 +227,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	 * @param description
 	 * @param cards
 	 * @param identifyingDeck
-	 * @return
+	 * @return the deck
 	 */
 	public static Deck makeDeckSameID(String name, String description, List<Integer> cards, Deck identifyingDeck){
 		return new Deck(name, description, cards, identifyingDeck.identity, true, identifyingDeck.color);	
@@ -269,6 +270,27 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		return color;
 	}
 	
+	/**
+	 * @return index for the color drop down for the associated color.
+	 */
+	public int getColorIndex() {
+		switch(color){
+		case YELLOW:
+			return 4;
+		case RED:
+			return 0;
+		case PURPLE:
+			return 3;
+		case BLUE:
+			return 1;
+		case GREEN:
+			return 2;
+		default:
+			return 0;
+		}
+		
+	}
+	
 	public void updateMultipleSelection(boolean isMultipleSelection) {
 		if (isMultipleSelection == this.isMultipleSelection) {
 			return;
@@ -299,5 +321,4 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	public String toString() {
 		return name;
 	}
-	
 }

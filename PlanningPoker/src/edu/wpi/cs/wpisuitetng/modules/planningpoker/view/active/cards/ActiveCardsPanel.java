@@ -176,8 +176,6 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	/**
 	 * adds index of the button to be remembered to the memory array
 	 * 
-	 * @param elt
-	 *            element to be searched for in the memory array
 	 * @return the index of the element in the memory array
 	 **/
 	public List<CardButton> memoryArray() {
