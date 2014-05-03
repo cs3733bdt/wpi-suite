@@ -365,7 +365,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param votes
 	 *            a list of the integer values for the votes for a given
 	 *            requirement
-	 * @return the minimum of the array. will return -1 if the array is empty
+	 * @return the minimum of the array. will return 0 if the array is empty
 	 */
 	private int min(List<Integer> votes) {
 		int min = -1;
@@ -376,6 +376,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			}
 		}
 		minEstimate = min;
+		if(min < 0) 
+			min = 0;
 		return min;
 	}
 
@@ -383,7 +385,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param votes
 	 *            a list of the integer values for the votes for a given
 	 *            requirement
-	 * @return the maximum of the array. will return -1 if the array is empty
+	 * @return the maximum of the array. will return 0 if the array is empty
 	 */
 	private int max(List<Integer> votes) {
 		int max = -1;
@@ -394,9 +396,14 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			}
 		}
 		maxEstimate = max;
+		if(max < 0) 
+			max = 0;
 		return max;
 	}
-
+	/**
+	 * @param a List of integers representing the votes
+	 * @return the mean of the vote data, return 0 if invalid data
+	 */
 	private double mean(List<Integer> a) {
 		double sum = 0;
 		int i;
@@ -405,9 +412,17 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			sum += a.get(i);
 		}
 		mean = sum / ((double) a.size());
-		return mean;
+		if(mean>=0)
+			return mean;
+		else
+			return 0;
 	}
 
+	/**
+	 * 
+	 * @param a List of integers representing the votes
+	 * @return the standard deviation of the vote data, return 0 if invalid data
+	 */
 	private double stDev(List<Integer> a) {
 		double mean = mean(a);
 		List<Double> numMinusMeanSquared = new ArrayList<Double>();
@@ -425,7 +440,10 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 
 		double variance = (sum / (double) numMinusMeanSquared.size());
 		stDev = Math.sqrt(variance);
-		return stDev;
+		if(stDev>=0)
+			return stDev;
+		else
+			return 0;
 	}
 
 	private double median(List<Integer> votes) {
