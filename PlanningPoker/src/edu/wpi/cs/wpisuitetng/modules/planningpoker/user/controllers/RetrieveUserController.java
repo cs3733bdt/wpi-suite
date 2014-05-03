@@ -25,84 +25,87 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * This controller handles retrieving users from the server.
  * 
  */
-public class RetrieveUserController implements ActionListener{
+public class RetrieveUserController implements ActionListener {
 
 	private RetrieveUserRequestObserver observer;
-	private static RetrieveUserController instance;
+	private static RetrieveUserController instance = null;
 	private User currentUser;
 
 	/**
-	 * Constructs the controller 
+	 * Constructs the controller
 	 */
 	private RetrieveUserController() {
-		
+
 		observer = new RetrieveUserRequestObserver(this);
 		retrieveUsers();
 	}
-	
+
 	/**
 	 * getter for an instance of the RetrieveRequirementsController
-	 * @return the instance of the RetrieveRequirementsController or creates one if it does not
-	 * exist.
+	 * 
+	 * @return the instance of the RetrieveRequirementsController or creates one
+	 *         if it does not exist.
 	 */
-	public static RetrieveUserController getInstance()
-	{
-		if(instance == null)
-		{
+	public static RetrieveUserController getInstance() {
+		if (instance == null) {
 			instance = new RetrieveUserController();
 		}
-		
+
 		return instance;
 	}
-	
+
 	/**
-	 * Sends an HTTP request to store a user when the
-	 * update button is pressed
-	 * @param e ActionEvent
+	 * Sends an HTTP request to store a user when the update button is pressed
+	 * 
+	 * @param e
+	 *            ActionEvent
 	 * @see java.awt.event.ActionListener#actionPerformed(ActionEvent)
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// Send a request to the core to save this requirement
-		final Request request = 
-				Network.getInstance().makeRequest("core/user", HttpMethod.GET);
-		request.addObserver(observer); 
-		request.send();
-	}
-	
-	/**
-	 * Sends an HTTP request to retrieve the current user
-	 */
-	public void retrieveUsers() {
-		final Request request = 
-				Network.getInstance().makeRequest("core/user", HttpMethod.GET);
-		request.addObserver(observer); 
+		final Request request = Network.getInstance().makeRequest("core/user",
+				HttpMethod.GET);
+		request.addObserver(observer);
 		request.send();
 	}
 
 	/**
-	 * Get the users from the server in order to set the currentUser
-	 * This method is called by the RetrieveUserRequestObserver
+	 * Sends an HTTP request to retrieve the current user
+	 */
+	public void retrieveUsers() {
+		final Request request = Network.getInstance().makeRequest("core/user",
+				HttpMethod.GET);
+		request.addObserver(observer);
+		request.send();
+	}
+
+	/**
+	 * Get the users from the server in order to set the currentUser This method
+	 * is called by the RetrieveUserRequestObserver
 	 * 
-	 * @param users array of users received from the server
+	 * @param users
+	 *            array of users received from the server
 	 */
 	public void receivedUsers(User[] users) {
-		
-		String currentUsername = ConfigManager.getInstance().getConfig().getUserName();
+
+		String currentUsername = ConfigManager.getInstance().getConfig()
+				.getUserName();
 		// Make sure the response was not null
 		if (users != null) {
-			//Compare the current username to the array of users to find correct User
-			for (User u : users){
-				if(u.getUsername().equals(currentUsername)){
+			// Compare the current username to the array of users to find
+			// correct User
+			for (User u : users) {
+				if (u.getUsername().equals(currentUsername)) {
 					currentUser = u;
 					return;
 				}
 			}
-			
+
 		}
 	}
-	
-	public User getCurrentUser(){
+
+	public User getCurrentUser() {
 		return currentUser;
 	}
 }

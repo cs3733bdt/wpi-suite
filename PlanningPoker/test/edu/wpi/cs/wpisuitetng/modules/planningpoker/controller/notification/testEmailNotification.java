@@ -45,7 +45,7 @@ public class testEmailNotification {
 	PPRequirement req1;
 	
 	@Before
-	public void setUp()
+	public void setUp() // $codepro.audit.disable accessorMethodNamingConvention
 	{
 		team1 = new User[1];
 		req1 = new PPRequirement("Req1", "Desc1");

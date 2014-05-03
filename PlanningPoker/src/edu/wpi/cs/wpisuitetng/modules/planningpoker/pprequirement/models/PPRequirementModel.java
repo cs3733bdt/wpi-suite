@@ -36,7 +36,7 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement> {
 						// that are added.
 
 	// the static object to allow the requirement model to be
-	private static PPRequirementModel instance;
+	private static PPRequirementModel instance = null;
 
 	/**
 	 * Constructs an empty list of requirements for the project
@@ -105,7 +105,8 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement> {
 	public PPRequirement getRequirement(String name, String description) {
 		PPRequirement req = null;
 		for (PPRequirement r : requirements) {
-			if (r.getName().equals(name) && r.getDescription().equals(description)) {
+			if (r.getName().equals(name)
+					&& r.getDescription().equals(description)) {
 				req = r;
 			}
 		}

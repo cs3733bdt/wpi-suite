@@ -27,7 +27,7 @@ public class PreferencesHelpTest {
 	}
 	
 	@Test
-	public void getIdentifierIndexTest(){
+	public void getIdentifierIndexTest(){ // $codepro.audit.disable accessorMethodNamingConvention
 		assertEquals(0, panel.getIdentifierIndex());
 	}
 	/*

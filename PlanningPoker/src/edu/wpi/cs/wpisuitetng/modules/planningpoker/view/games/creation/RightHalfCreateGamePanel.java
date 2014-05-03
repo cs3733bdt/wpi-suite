@@ -209,7 +209,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 
 		// Adds error label to the createReqPanel
 		createReqsPanel.add(errorLabel);
-		validateNameAndDesc(true, false);
+		validateNameAndDesc(false, false);
 
 		// initializes the Desc Label and area and adds them to the createPanel
 		/**
@@ -603,7 +603,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 				SpringLayout.NORTH, submitImportReqButton);
 
 		
-		validateNameAndDesc(false, true);
+		validateNameAndDesc(false, false);
 		/**
 		 * Set the minimum size and add components to the viewport of the
 		 * scrollpane
@@ -634,6 +634,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 				updateButtonPressed();
 			}
 		});
+		
+		addMouseListenerTo(updateAddReqButton);
 
 		/**
 		 * Action listener for the button to add a requirement
@@ -652,7 +654,6 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 				createReqsLabel.setVisible(true);
 				nameArea.requestFocus();
 				nameArea.select(0, 0);
-				displayError("Name is required");
 				disableButtons();
 			}
 		});
@@ -894,35 +895,11 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 			displayError("");
 			uniqueName = true;
 		}
-
-		if (descArea.getText().isEmpty()) {
-			if (showLabel) {
-				displayError("Description is required");
-			}
-			if (showBox) {
-				descArea.setBorder(errorBorder);
-			}
-			descriptionValid = false;
-			System.out.println(descriptionValid + "descValid");
-		}
-
-		if (nameArea.getText().isEmpty()) {
-			if (showLabel) {
-				displayError("Name is required");
-			}
-			if (showBox) {
-				nameArea.setBorder(errorBorder);
-			}
-			nameValid = false;
-		}
-
-		if (!nameValid && !descriptionValid) {
-			displayError("Name and Description are required");
-		}
+		
+		descriptionValid = descArea.validateField(errorLabel, showLabel, showBox);
 		nameValid = nameArea.validateField(errorLabel, showLabel, showBox);
-
+		
 		returnBoolean = nameValid && descriptionValid && uniqueName;
-		System.out.println("Return boolean:" + returnBoolean);
 
 		if (returnBoolean) {
 			errorLabel.setText("");
@@ -930,8 +907,11 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 
 		if (!showLabel) {
 			errorLabel.setText("");
-			// nameArea.setBorder(defaultTextFieldBorder);
-			// descArea.setBorder(defaultTextAreaBorder);
+		}
+		
+		if (!showBox){
+			nameArea.setBorder(defaultTextFieldBorder);
+			descArea.setBorder(defaultTextAreaBorder);
 		}
 
 		return returnBoolean;
@@ -1108,7 +1088,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	}
 
 	private void updateUpdateButton() {
-		if (validateNameAndDesc(true, false) && updateValid()) {
+		if (validateNameAndDesc(false, false) && updateValid()) {
 			updateAddReqButton.setEnabled(true);
 			displayError("");
 		} else if (!updateValid()) {
@@ -1121,7 +1101,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	}
 
 	private void updateSubmitButton() {
-		if (validateNameAndDesc(true, true)) {
+		if (validateNameAndDesc(false, false)) {
 			submitAddReqButton.setEnabled(true);
 		} else {
 			submitAddReqButton.setEnabled(false);

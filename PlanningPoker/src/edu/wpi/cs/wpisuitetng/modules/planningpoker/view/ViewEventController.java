@@ -68,8 +68,8 @@ public class ViewEventController {
 		toolbar.repaint(); 
 	}
 	
-	public void disableHelpButton() {
-		toolbar.disableHelpButton();
+	public void disableHelpButton(String message) {
+		toolbar.disableHelpButton(message);
 	}
 	
 	public void enableHelpButton() {
