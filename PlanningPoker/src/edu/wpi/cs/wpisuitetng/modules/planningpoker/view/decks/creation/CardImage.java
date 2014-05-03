@@ -122,7 +122,7 @@ public class CardImage extends JPanel implements IDataField{
 		focusListenerAddValueText(addValue);						//adds a focus listener to the textfield (see method)
 		addValue.setPreferredSize(new Dimension(40, 18));			//sets the textfield to be the desired size.
 		addValue.setVisible(true);									//sets the textfield to be visible at the start
-		valueLabel.setVisible(false);								//sets the label to be invisible at the start
+		valueLabel.setVisible(true);								//sets the label to be invisible at the start
 		valueLabel.setFont(makeFont(10));
 	}
 	/**
@@ -197,7 +197,7 @@ public class CardImage extends JPanel implements IDataField{
 					buttonParent.updateButtons();
 					logger.log(Level.INFO, "addValue was validated");
 				}
-				if(arg0.getKeyCode() == 10){		//if enter is pressed
+				if((arg0.getKeyCode() == KeyEvent.VK_ENTER) || (arg0.getKeyCode() == KeyEvent.VK_TAB)){		//if enter or tab is pressed
 					int indexOfEnteredCard = 0;
 					
 					List<CardImage> cards = parent.getCards();
@@ -231,11 +231,27 @@ public class CardImage extends JPanel implements IDataField{
 	private void focusListenerAddValueText(JComponent component){
 		component.addFocusListener(new FocusListener(){
 			public void focusLost(FocusEvent e) {
-				valueLabel.setText(addValue.getText());
-				valueLabel.setVisible(true);
-				addValue.setVisible(false);
-				revalidate();
-				repaint();
+				if((valueLabel.isVisible()) && (!hasChanges())){
+					valueLabel.setText(addValue.getText());
+					valueLabel.setVisible(true);
+					revalidate();
+					repaint();
+				}
+				else if (!valueLabel.isVisible()){
+					valueLabel.setText(addValue.getText());
+					valueLabel.setVisible(true);
+					revalidate();
+					repaint();
+				}
+				else {
+					if(hasChanges()){
+						valueLabel.setText(addValue.getText());
+						valueLabel.setVisible(true);
+						addValue.setVisible(false);
+						revalidate();
+						repaint();
+					}
+				}
 			}
 
 			@Override
