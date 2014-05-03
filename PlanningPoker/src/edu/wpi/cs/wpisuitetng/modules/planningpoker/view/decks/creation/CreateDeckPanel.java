@@ -32,6 +32,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -134,6 +135,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 			.createLineBorder(Color.RED);
 	
 	private final boolean isReopen;
+	
+	private boolean readyToClose = false;
+	private boolean cardsHaveChanges = false;
 
 
 	private Deck deck;
@@ -269,6 +273,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		submitNumCards = new JButton("Submit");
 		submitNumCards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cardsHaveChanges(true);
 				displayNumCards();
 				dynamicCardPanel(); //TODO test
 				cardsPanel2.revalidate();
@@ -449,14 +454,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		layout.putConstraint(SpringLayout.WEST, errorField, 10, SpringLayout.EAST, cancelDeckButton);
 		layout.putConstraint(SpringLayout.NORTH, errorField, 6, SpringLayout.SOUTH, cardScrollPane);
 		
-		
 		ViewEventController.getInstance().refreshDeckTree();
 		revalidate();
 		repaint();
 
 		setViewportView(view);
-	
-		
 	}
 
 
@@ -570,8 +572,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	}
 
 	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
+		return (cardsHaveChanges || nameTextField.hasChanges() || descriptionTextField.hasChanges() || cardsPanel2.hasChanges());
 	}
 
 
@@ -590,6 +591,16 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 */
 	private void chooseCardColor() {
 		cardsPanel2.setColor(determineDeckColor());
+		cardsHaveChanges(true);
+		
+	}
+
+	/**
+	 * updates the cards have changes boolean
+	 * @param b
+	 */
+	private void cardsHaveChanges(boolean b) {
+		cardsHaveChanges = b;
 		
 	}
 
@@ -653,6 +664,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 					descriptionTextField.getText(), cardsPanel2.getCardValues(), iDontKnowCheck.isSelected(), 
 						determineDeckColor());
 			saveDeck(deck);
+			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 		}
 	}
@@ -767,6 +779,17 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	public boolean isReopen() {
 		return isReopen;
 	}
+	public boolean readyToRemove() {
+		System.out.println("ready to remove called");
+		if (readyToClose || !hasChanges()) {
+			return true;
+		}
+		
+		int result = JOptionPane.showConfirmDialog(this,
+				"Discard unsaved changes and close tab?", "Discard Changes?",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		return result == 0;
+	}
 	
 	private void dynamicCardPanel(){
 		int numCards = Integer.parseInt(this.numCards.getText());
@@ -774,4 +797,5 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		int rowPerPanel = (int)Math.ceil((numCards)/cardsPerRow);
 		cardsPanel2.setPreferredSize(new Dimension(Math.round(view.getWidth()-60), Math.round(rowPerPanel*110)));
 	}
+	
 }
