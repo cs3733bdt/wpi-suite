@@ -23,33 +23,35 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author Chris Knapp
  */
 public class UpdateDeckController {
-	
-	private static UpdateDeckController instance;
+
+	private static UpdateDeckController instance = null;
 	private UpdateDeckRequestObserver observer;
-	
+
 	private UpdateDeckController() {
 		observer = new UpdateDeckRequestObserver(this);
 	}
-	
+
 	/**
 	 * @return a new instance of an UpdateGameController
 	 */
 	public static UpdateDeckController getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new UpdateDeckController();
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * updates a game with the same UUID on server
-	 * @param newDeck Game to be updated
-	 * TODO: Need model for game data
+	 * 
+	 * @param newDeck
+	 *            Game to be updated TODO: Need model for game data
 	 */
 	public void updateDeck(Deck newDeck) {
 		System.out.println("Updating " + newDeck.getName() + " to server");
 		// Update request
-		Request request = Network.getInstance().makeRequest("planningpoker/deck", HttpMethod.POST);
+		Request request = Network.getInstance().makeRequest(
+				"planningpoker/deck", HttpMethod.POST);
 		// Set the game to update
 		request.setBody(newDeck.toJSON());
 		// Add observer to get response

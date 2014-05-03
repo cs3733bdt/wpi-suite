@@ -23,33 +23,35 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  * @author Chris Knapp
  */
 public class UpdatePPRequirementController {
-	
-	private static UpdatePPRequirementController instance;
+
+	private static UpdatePPRequirementController instance = null;
 	private UpdatePPRequirementRequestObserver observer;
-	
+
 	private UpdatePPRequirementController() {
 		observer = new UpdatePPRequirementRequestObserver(this);
 	}
-	
+
 	/**
 	 * @return a new instance of an UpdateGameController
 	 */
 	public static UpdatePPRequirementController getInstance() {
-		if(instance == null) {
+		if (instance == null) {
 			instance = new UpdatePPRequirementController();
 		}
 		return instance;
 	}
-	
+
 	/**
 	 * updates a game with the same UUID on server
-	 * @param newReq Game to be updated
-	 * TODO: Need model for game data
+	 * 
+	 * @param newReq
+	 *            Game to be updated TODO: Need model for game data
 	 */
 	public void updateRequirement(PPRequirement newReq) {
 		System.out.println("Updating " + newReq.getName() + " to server");
 		// Update request
-		Request request = Network.getInstance().makeRequest("planningpoker/requirement", HttpMethod.POST);
+		Request request = Network.getInstance().makeRequest(
+				"planningpoker/requirement", HttpMethod.POST);
 		// Set the game to update
 		request.setBody(newReq.toJSON());
 		// Add observer to get response
