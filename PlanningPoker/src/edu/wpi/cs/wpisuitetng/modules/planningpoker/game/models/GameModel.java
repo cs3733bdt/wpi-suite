@@ -76,10 +76,14 @@ public class GameModel extends AbstractStorageModel<Game> {
 	public synchronized void addGame(Game newGame) {
 		add(newGame);
 		try {
+			System.out.println("Is this being added");
 			AddGameController.getInstance().addGame(newGame);
+			System.out.println("Yes it is being added");
 		} catch (NullPointerException e) {
+			System.out.println("It cannot be added");
 			logger.log(Level.WARNING, "Game could not be added", e);
 		} catch (Exception e) {
+			System.out.println("It cannot be added");
 			logger.log(Level.WARNING, "Game could not be added", e);
 		}
 
