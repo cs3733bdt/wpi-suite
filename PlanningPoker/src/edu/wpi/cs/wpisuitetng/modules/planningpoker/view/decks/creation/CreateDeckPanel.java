@@ -770,7 +770,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	
 	private void dynamicCardPanel(){
 		int numCards = Integer.parseInt(this.numCards.getText());
-		int cardsPerRow = Math.round((view.getWidth()-60)/140);
+		int cardsPerRow = Math.round((view.getWidth()-60)/135);
 		int rowPerPanel = (int)Math.ceil((numCards)/cardsPerRow);
 		cardsPanel2.setPreferredSize(new Dimension(Math.round(view.getWidth()-60), Math.round(rowPerPanel*110)));
 	}
