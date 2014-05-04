@@ -274,6 +274,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		submitNumCards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cardsHaveChanges(true);
+				System.out.println("here2");
 				displayNumCards();
 				dynamicCardPanel(); //TODO test
 				cardsPanel2.revalidate();
@@ -572,6 +573,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	}
 
 	public boolean hasChanges() {
+		System.out.println("cardsHaveChanges"+cardsHaveChanges);
+		System.out.println("nameTextField"+nameTextField.hasChanges());
+		System.out.println("descriptionTextField"+descriptionTextField.hasChanges());
+		System.out.println("cardsPanel2"+cardsPanel2.hasChanges());
+
 		return (cardsHaveChanges || nameTextField.hasChanges() || descriptionTextField.hasChanges() || cardsPanel2.hasChanges());
 	}
 
@@ -590,9 +596,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * have to be lost in an organized manner.
 	 */
 	private void chooseCardColor() {
-		cardsPanel2.setColor(determineDeckColor());
-		cardsHaveChanges(true);
-		
+		System.out.println("here1");
+		ColorEnum deckColor = determineDeckColor();
+		cardsPanel2.setColor(deckColor);
+		if (!(deckColor.equals(ColorEnum.RED))){
+			cardsHaveChanges(true);
+		}
 	}
 
 	/**
@@ -600,6 +609,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * @param b
 	 */
 	private void cardsHaveChanges(boolean b) {
+		System.out.println("cardshaveChanges =" +b);
 		cardsHaveChanges = b;
 		
 	}
