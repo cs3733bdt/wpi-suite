@@ -17,6 +17,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import java.util.logging.Level;
 
 import javax.swing.JButton;
@@ -31,6 +32,8 @@ import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 /**
  * Creates the left half of the active games panel
@@ -296,37 +299,8 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		
 	}
 	
-	
-	
-	/**
-	 * Updates the overall progress bar.
-	 *
-	 */
-	private void updateOverallProgress() {
-		/*int votes = 0;
-		for (RequirementEstimate requirement : requirements) {
-			if (requirement.getVotes().containsKey(user)) {
-				votes++;
-			}
-		}
-		overallProgress.setValue(votes * 1000 / requirements.size());
-		overallProgress.setString("Personal voting progress: "+
-				Double.toString(votes*100 / requirements.size()) + "%");*/
-		/*int i = 0;
-		for(i = 0; i <= overallProgress.getMaximum(); i = i+20){
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			overallProgress.setValue(20);
-		}
-		*/
-	}
-	
 	public void submitButtonPressed() {
-		UpdateOverallProgress();
+		updateOverallProgress();
 	}
 
 	public boolean endManually(){
@@ -362,17 +336,39 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		});
 	}
 	
-	public void UpdateOverallProgress(){
-		int i = overallProgress.getValue();
-		int numReqs;
-		if(parentPanel.getGame().getRequirements() != null){
-			numReqs = parentPanel.getGame().getRequirements().size();
+	/**
+	 * Updates the overall progress bar.
+	 *
+	 */
+	public void updateOverallProgress(){
+		
+		List<PPRequirement> reqList;
+		List<Vote> voteList;
+		if(active.getRequirements() != null){	//check if reqList isn't null
+			reqList = active.getRequirements();
 		}
 		else {
+			//logger.log(Level.SEVERE, "Requirement list is null");
 			return;
+		}		
+		overallProgress.setValue(0);
+		for(PPRequirement r : reqList){
+			if(r.getVotes() != null){				//check if voteList isn't null
+				voteList = r.getVotes();
+				for(Vote v : voteList){		//if the voter has the same username as the username associated with this progress bar
+					int i = overallProgress.getValue();
+					int numReqs;
+					if(active.getRequirements() != null){
+						numReqs = active.getRequirements().size();
+					}
+					else {
+						return;
+					}
+					int numUsers = usersProgressPanel.getNumUsers();
+					int j = (overallProgress.getMaximum())/(numReqs * numUsers);
+					overallProgress.setValue(i + j);
+				}
+			}
 		}
-		int numUsers = usersProgressPanel.getNumUsers();
-		int j = (overallProgress.getMaximum())/(numReqs * numUsers);
-		overallProgress.setValue(i + j);
 	}
 }

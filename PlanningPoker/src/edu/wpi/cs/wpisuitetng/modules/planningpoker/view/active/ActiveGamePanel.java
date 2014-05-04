@@ -45,7 +45,7 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 		timer.scheduleAtFixedRate(new TimerTask() {
 			  @Override
 			  public void run() {
-				  //leftHalf.updateOverallProgress();
+				  leftHalf.updateOverallProgress();
 				  rightHalf.updateVoteColumn();
 			  }
 			}, 2*1000, 2*1000);
