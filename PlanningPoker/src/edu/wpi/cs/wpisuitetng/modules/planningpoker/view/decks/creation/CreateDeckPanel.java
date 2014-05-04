@@ -18,6 +18,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -30,11 +32,13 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -107,7 +111,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * panel to display the cards
 	 */
 	//private final JPanel cardsPanel = new JPanel();
-	private final CardPanel cardsPanel2;
+	private CardPanel cardsPanel2;
 
 	/**
 	 * cancel button to cancel the deck creation process. same as X in tab
@@ -116,7 +120,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 	private SaveDeckButtonPanel saveButtonPanel;	//save button to save deck to server
 
+	private Container view;
 
+	private JScrollPane cardScrollPane;
 	/**
 	 * errorfield to display validation errors
 	 */
@@ -129,6 +135,9 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 			.createLineBorder(Color.RED);
 	
 	private final boolean isReopen;
+	
+	private boolean readyToClose = false;
+	private boolean cardsHaveChanges = false;
 
 
 	private Deck deck;
@@ -182,7 +191,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 */
 	private void build() {
 		/* Set up initial container with spring layout */
-		Container view = new Container();
+		view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
 
@@ -264,7 +273,10 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		submitNumCards = new JButton("Submit");
 		submitNumCards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				cardsHaveChanges(true);
+				System.out.println("here2");
 				displayNumCards();
+				dynamicCardPanel(); //TODO test
 				cardsPanel2.revalidate();
 				cardsPanel2.repaint();
 			}
@@ -361,11 +373,32 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		numCardsAndColorAndSelectedTypePanel.add(checkboxPanel);
 
 		/* Card panel and scrollPane for the cards to appear in */
-		JScrollPane cardScrollPane = new JScrollPane(cardsPanel2);
+		cardScrollPane = new JScrollPane(cardsPanel2);
 		TitledBorder titleBorder = BorderFactory.createTitledBorder("Type a value for each card and hit enter");
 		titleBorder.setTitleJustification(TitledBorder.CENTER);
 		cardScrollPane.setBorder(titleBorder);
+		cardScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		cardsPanel2.setPreferredSize(new Dimension(10, 450));
+		cardsPanel2.addComponentListener(new ComponentListener() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				dynamicCardPanel();
+				
+			}
+
+			@Override
+			public void componentMoved(ComponentEvent e) {
+			}
+
+			@Override
+			public void componentShown(ComponentEvent e) {
+				dynamicCardPanel();
+			}
+
+			@Override
+			public void componentHidden(ComponentEvent e) {
+			}
+		});
 
 		/* save button */
 		saveButtonPanel = new SaveDeckButtonPanel(this);
@@ -422,14 +455,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		layout.putConstraint(SpringLayout.WEST, errorField, 10, SpringLayout.EAST, cancelDeckButton);
 		layout.putConstraint(SpringLayout.NORTH, errorField, 6, SpringLayout.SOUTH, cardScrollPane);
 		
-		
 		ViewEventController.getInstance().refreshDeckTree();
 		revalidate();
 		repaint();
 
 		setViewportView(view);
-	
-		
 	}
 
 
@@ -543,8 +573,12 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	}
 
 	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
+		System.out.println("cardsHaveChanges"+cardsHaveChanges);
+		System.out.println("nameTextField"+nameTextField.hasChanges());
+		System.out.println("descriptionTextField"+descriptionTextField.hasChanges());
+		System.out.println("cardsPanel2"+cardsPanel2.hasChanges());
+
+		return (cardsHaveChanges || nameTextField.hasChanges() || descriptionTextField.hasChanges() || cardsPanel2.hasChanges());
 	}
 
 
@@ -562,7 +596,21 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * have to be lost in an organized manner.
 	 */
 	private void chooseCardColor() {
-		cardsPanel2.setColor(determineDeckColor());
+		System.out.println("here1");
+		ColorEnum deckColor = determineDeckColor();
+		cardsPanel2.setColor(deckColor);
+		if (!(deckColor.equals(ColorEnum.RED))){
+			cardsHaveChanges(true);
+		}
+	}
+
+	/**
+	 * updates the cards have changes boolean
+	 * @param b
+	 */
+	private void cardsHaveChanges(boolean b) {
+		System.out.println("cardshaveChanges =" +b);
+		cardsHaveChanges = b;
 		
 	}
 
@@ -626,6 +674,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 					descriptionTextField.getText(), cardsPanel2.getCardValues(), iDontKnowCheck.isSelected(), 
 						determineDeckColor());
 			saveDeck(deck);
+			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 		}
 	}
@@ -740,4 +789,23 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	public boolean isReopen() {
 		return isReopen;
 	}
+	public boolean readyToRemove() {
+		System.out.println("ready to remove called");
+		if (readyToClose || !hasChanges()) {
+			return true;
+		}
+		
+		int result = JOptionPane.showConfirmDialog(this,
+				"Discard unsaved changes and close tab?", "Discard Changes?",
+				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+		return result == 0;
+	}
+	
+	private void dynamicCardPanel(){
+		int numCards = Integer.parseInt(this.numCards.getText());
+		int cardsPerRow = Math.round((view.getWidth()-60)/135);
+		int rowPerPanel = (int)Math.ceil((numCards)/cardsPerRow);
+		cardsPanel2.setPreferredSize(new Dimension(Math.round(view.getWidth()-60), Math.round(rowPerPanel*110)));
+	}
+	
 }

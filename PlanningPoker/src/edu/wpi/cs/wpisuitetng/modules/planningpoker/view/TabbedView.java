@@ -536,6 +536,7 @@ public class TabbedView extends JTabbedPane {
 		}
 		if (comp instanceof CreateDeckPanel) {
 			if (comp.equals(getSelectedComponent())) {
+				((CreateDeckPanel) comp).readyToRemove();
 				setSelectedComponent(deckOverview);
 				listOfCreateDeckPanels.remove(comp);
 			}

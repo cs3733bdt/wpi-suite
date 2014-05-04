@@ -209,7 +209,6 @@ public class CardImage extends JPanel implements IDataField{
 					}
 					valueLabel.setText(addValue.getText());
 					//TODO here the value in the value array needs to be set for the array to function.
-					valueLabel.setVisible(true);
 					addValue.setVisible(false);
 					if(!(indexOfEnteredCard + 1 >= cards.size())){
 						cards.get(indexOfEnteredCard + 1).addValue.requestFocus();
@@ -231,23 +230,23 @@ public class CardImage extends JPanel implements IDataField{
 	private void focusListenerAddValueText(JComponent component){
 		component.addFocusListener(new FocusListener(){
 			public void focusLost(FocusEvent e) {
-				if((valueLabel.isVisible()) && (!hasChanges())){
-					valueLabel.setText(addValue.getText());
-					valueLabel.setVisible(true);
-					revalidate();
-					repaint();
-				}
-				else if (!valueLabel.isVisible()){
-					valueLabel.setText(addValue.getText());
-					valueLabel.setVisible(true);
-					revalidate();
-					repaint();
+				if((hasChanges())){
+					if(!addValue.validateField(errorField, true, false)){
+						addValue.setText("");
+						revalidate();
+						repaint();
+					}
+					else {
+						valueLabel.setText(addValue.getText());
+						addValue.setVisible(false);
+						revalidate();
+						repaint();
+					}
 				}
 				else {
-					if(hasChanges()){
+					if(!hasChanges()){
 						valueLabel.setText(addValue.getText());
-						valueLabel.setVisible(true);
-						addValue.setVisible(false);
+						//addValue.setVisible(false);
 						revalidate();
 						repaint();
 					}
@@ -288,9 +287,6 @@ public class CardImage extends JPanel implements IDataField{
 	
 	public void setValueLabel(String value) {
 		valueLabel.setText(value);
-		if (!value.isEmpty()) {
-			valueLabel.setVisible(true);
-		}
 		addValue.setVisible(false);
 	}
 	
