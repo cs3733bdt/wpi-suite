@@ -45,7 +45,7 @@ public class UserProgressList extends JScrollPane {
 	private int heightBasedOnUserNumber;
 	
 	private final Border defaultBorder = (new JTextField()).getBorder();
-	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
+	private static final Logger logger = Logger.getLogger(UserProgressList.class
 			.getName());
 	public UserProgressList(LeftHalfActiveGamePanel parent){
 		
