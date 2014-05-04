@@ -102,7 +102,7 @@ public class ActiveCardsPanel extends JPanel{
 	}
 	
 	public void addIDK() {
-		sum = -8008135;
+		sum = -1;
 		parent.selectedIDK();
 		logger.log(Level.INFO,"I don't know is selected.");
 	}

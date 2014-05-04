@@ -70,7 +70,7 @@ public class RequirementTable extends JTable{
 				
 				String displayVote;
 				
-				if(r.userVote() == -8008135) {
+				if(r.userVote() == -1) {
 					displayVote = "?";
 				} else {
 					displayVote = Integer.toString(r.userVote());

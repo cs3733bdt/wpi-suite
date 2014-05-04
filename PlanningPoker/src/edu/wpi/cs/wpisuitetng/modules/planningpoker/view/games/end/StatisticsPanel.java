@@ -352,7 +352,7 @@ public class StatisticsPanel extends JScrollPane {
 		List<Integer> newVotes = new ArrayList<Integer>();
 
 		for (int i = 0; i < votes.size(); i++) {
-			if (votes.get(i) != -8008135) {
+			if (votes.get(i) != -1) {
 				newVotes.add(votes.get(i));
 			}
 		}
@@ -482,7 +482,7 @@ public class StatisticsPanel extends JScrollPane {
 		List<String> nameArray = requirementToNames(requirement);
 		List<Integer> voteArray = requirementToVotes(requirement);
 		for (int i = 0; i < nameArray.size(); i++) {
-			if (voteArray.get(i) == -8008135) {
+			if (voteArray.get(i) == -1) {
 				voteTable.getTableModel().addRow(
 						new Object[] { nameArray.get(i), "I don't know" });
 			} else {

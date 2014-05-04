@@ -22,6 +22,6 @@ public interface IValidateButtons {
 	/**
 	 * This method is used to enable the buttons when all fields on the panel are completely valdid
 	 */
-	public void updateButtons();
+	void updateButtons();
 	
 }

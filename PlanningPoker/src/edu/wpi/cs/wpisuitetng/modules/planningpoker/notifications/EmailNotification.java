@@ -255,7 +255,7 @@ public class EmailNotification {
 			idks = 0;
 			
 			for (int i = 0; i < r.getVotes().size(); i++) {
-				if(r.getVotes().get(i).getVoteNumber() != -8008135) {
+				if(r.getVotes().get(i).getVoteNumber() != -1) {
 					voteArray.add(r.getVotes().get(i).getVoteNumber());
 				} else {
 					idks++;
