@@ -256,7 +256,7 @@ public class EmailNotification {
 		for (PPRequirement r : g.getRequirements()) {
 
 			for (int i = 0; i < r.getVotes().size(); i++) {
-				if(r.getVotes().get(i).getVoteNumber() == -8008135) {
+				if(r.getVotes().get(i).getVoteNumber() != -8008135) {
 					voteArray.add(r.getVotes().get(i).getVoteNumber());
 				} else {
 					idks++;
