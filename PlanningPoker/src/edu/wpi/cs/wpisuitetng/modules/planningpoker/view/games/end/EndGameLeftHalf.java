@@ -113,23 +113,9 @@ public class EndGameLeftHalf extends JScrollPane {
 		table = new RequirementTable(ended.getRequirements(), RequirementTableMode.ENDED);
 		JScrollPane tablePanel = new JScrollPane(table);
 		
-		
-//		String[] columnNames = { "Requirement", "Description"};
-//		Object[][] data = {};
-//		ActiveGamesTable table = new ActiveGamesTable(data, columnNames);
-//		table.setBorder(defaultBorder);
-//		JScrollPane tablePanel = new JScrollPane(table);
-//		/**
-//		 * Display the requirement list in the table
-//		 */
-//		for (Requirement r : ended.getRequirements()) {
-//			table.getTableModel().addRow(new Object[] { r.getName(),
-//					r.getDescription() });
-//		}
-		
 		table.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 					JTable target = (JTable) e.getSource();
 					int row = target.getSelectedRow();
 					String selectedName = (String) target.getValueAt(row, 0);
@@ -143,6 +129,8 @@ public class EndGameLeftHalf extends JScrollPane {
 				}
 			}
 		});
+		
+		table.getTableHeader().setReorderingAllowed(false);
 		
 		/**
 		 * Add components to the container

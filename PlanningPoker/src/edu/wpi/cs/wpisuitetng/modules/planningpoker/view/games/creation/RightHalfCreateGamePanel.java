@@ -62,21 +62,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NameJTextFie
  * requirements to the game
  */
 public class RightHalfCreateGamePanel extends JScrollPane implements IDataField {
-	private AddRequirementsPanel reqPanel; // initialize new add requirements
-											// panel
-	private AddReqImportReqPanel importPanel; // initialize the panel with the
-												// buttons Add
-												// Requirement" and "Import
-												// Requirements"
 	private CreateGamePanel parent; // initialize variable to hold panel above
 									// this panel
 
 	private List<PPRequirement> requirements = new ArrayList<PPRequirement>();
-
-	private final Border defaultTextFieldBorder = (new JTextField())
-			.getBorder();
-
-	private final Border defaultTextAreaBorder = (new JTextArea()).getBorder();
 
 	private final Border defaultPanelBorder = (new JPanel()).getBorder();
 
@@ -85,8 +74,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 								// well as which row is being updated when the
 								// edit button is pressed
 
-	private final Border errorBorder = BorderFactory
-			.createLineBorder(Color.RED);
+	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
 
 	// THIS IS THE REQUIREMENT NAME FIELD THAT WILL BE NEEDED FOR CONTROLLER
 	private NameJTextField nameArea = new NameJTextField(30,PPRequirementModel.getInstance());
@@ -164,8 +152,9 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		rightView.setLayout(layout); // Sets the container to have the spring
 										// layout
 
-		currentTable = new RequirementTable(new ArrayList<PPRequirement>(),
-				RequirementTableMode.CREATE);
+		currentTable = new RequirementTable(new ArrayList<PPRequirement>(),	RequirementTableMode.CREATE);
+		currentTable.getTableHeader().setReorderingAllowed(false);
+
 		Font labelFont = makeFont();
 
 		/**
@@ -179,8 +168,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		currentReqs.setFont(labelFont);
 
 		JScrollPane tablePanel2 = new JScrollPane(currentTable);
-		tablePanel2
-				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		tablePanel2.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 
 		currentReqsPanel.add(currentReqs);
 		currentReqsPanel.add(tablePanel2);
@@ -288,8 +276,9 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 																// requirement
 		importReq.setFont(labelFont); // Sets the label font
 
-		importTable = new RequirementTable(new ArrayList<PPRequirement>(),
-				RequirementTableMode.ENDED);
+		importTable = new RequirementTable(new ArrayList<PPRequirement>(),RequirementTableMode.ENDED);
+		importTable.getTableHeader().setReorderingAllowed(false);
+
 		importTable.getSelectionModel().addListSelectionListener(
 				new ListSelectionListener() {
 					public void valueChanged(ListSelectionEvent event) {
