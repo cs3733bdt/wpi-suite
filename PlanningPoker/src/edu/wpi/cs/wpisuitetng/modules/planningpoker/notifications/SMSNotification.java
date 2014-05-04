@@ -26,7 +26,6 @@ import javax.mail.internet.MimeMessage;
 import com.sun.mail.util.MailConnectException;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
 /**
@@ -35,7 +34,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
  * @author Bobby Drop Tables
  */
 public class SMSNotification {
-	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
+	private static final Logger logger = Logger.getLogger(SMSNotification.class
 			.getName());
 	/** Game to get users from to send SMS messages to */
 	private final Game g;

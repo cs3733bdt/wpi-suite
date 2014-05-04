@@ -38,4 +38,5 @@ public interface IStorageModel <T>{
 	 * @return the UUID for this object
 	 */
 	UUID getIdentity();
+	boolean isActive();
 }

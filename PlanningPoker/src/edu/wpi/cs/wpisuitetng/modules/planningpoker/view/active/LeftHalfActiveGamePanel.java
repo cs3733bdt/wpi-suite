@@ -15,9 +15,13 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.logging.Level;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -34,6 +38,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 public class LeftHalfActiveGamePanel extends JScrollPane{
 	
 	Game active;
+	
+	private Container newLeftView;
+	private SpringLayout layout;
+	
 	private JLabel gameNameLabel;
 	private JTextField gameName;
 	private JLabel gameDescLabel;
@@ -52,9 +60,14 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	private JLabel overallProgressLabel = new JLabel("Team's overall voting progress: ");
 	private final JProgressBar overallProgress = new JProgressBar(0, 1000);
 	private JButton testButton = new JButton("testYo");
+	private JLabel individualUserProgressLabel;
+	private UserProgressList usersProgressPanel;
+	private int userPanelHeight;
 	
 	private boolean endManually;
 	private ActiveGamePanel parentPanel;
+	
+	private LeftHalfActiveGamePanel instance = this;
 	/**
 	 * Constructor for NewLeftHalfActiveGamePanel
 	 * @param game the current planning poker game session
@@ -98,14 +111,9 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		endManually=false;
 		// Creates the container to hold all the components
 		// and sets the container's layout to be SpringLayout
-		Container newLeftView = new Container();
-		SpringLayout layout = new SpringLayout();
+		newLeftView = new Container();
+		layout = new SpringLayout();
 		newLeftView.setLayout(layout);
-		setMinimumSize(new Dimension(325, 110));			//Sets the minimum size of the left half view
-		newLeftView.setPreferredSize(new Dimension(305, 445));		//Sets the size of the view
-		
-		revalidate();
-		repaint();
 
 		/**
 		 * Create and/or initialize components
@@ -143,7 +151,6 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		// Initializes and sets game creator name
 		gameCreatorName = new JLabel(active.getCreator());		
 		
-		
 		// Initializes and sets game end date
 		gameEndDate = new JLabel(active.getEndDate().toString());	
 		
@@ -173,6 +180,13 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 				endGameManuallyButtonPressed();
 				}
 		});
+		
+		// Initializes and sets the individualUserProgressLabel
+		individualUserProgressLabel = new JLabel("Individual Users Progress (click to view)");
+		newLeftView.add(individualUserProgressLabel);
+		addMouseListenerToProgressLabel(individualUserProgressLabel);
+		
+		usersProgressPanel = new UserProgressList(this);
 		
 		newLeftView.add(overallProgressLabel);
 		
@@ -204,7 +218,8 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		newLeftView.add(endGameManuallyNoteLabel1);
 		newLeftView.add(notePane);
 		newLeftView.add(endGameManuallyButton);
-
+		
+		newLeftView.add(usersProgressPanel);
 		/**
 		 * Adjust constraints on components
 		 */
@@ -236,12 +251,19 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 
 		layout.putConstraint(SpringLayout.NORTH, overallProgressLabel, 15, SpringLayout.SOUTH, gameEndDate);	
 		layout.putConstraint(SpringLayout.WEST, overallProgressLabel, 5, SpringLayout.WEST, newLeftView);
-
+		
 		layout.putConstraint(SpringLayout.NORTH, overallProgress, 5, SpringLayout.SOUTH, overallProgressLabel);	
 		layout.putConstraint(SpringLayout.WEST, overallProgress, 5, SpringLayout.WEST, newLeftView);
 		layout.putConstraint(SpringLayout.EAST, overallProgress, -5, SpringLayout.EAST, newLeftView);
 		
-		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 20, SpringLayout.SOUTH, overallProgress);	
+		layout.putConstraint(SpringLayout.NORTH, individualUserProgressLabel, 10, SpringLayout.SOUTH, overallProgress);	
+		layout.putConstraint(SpringLayout.WEST, individualUserProgressLabel, 5, SpringLayout.WEST, newLeftView);
+		
+		layout.putConstraint(SpringLayout.NORTH, usersProgressPanel, 5, SpringLayout.SOUTH, individualUserProgressLabel);	
+		layout.putConstraint(SpringLayout.WEST, usersProgressPanel, 5, SpringLayout.WEST, newLeftView);
+		layout.putConstraint(SpringLayout.EAST, usersProgressPanel, -5, SpringLayout.EAST, newLeftView);
+		
+		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 20, SpringLayout.SOUTH, individualUserProgressLabel);	
 		layout.putConstraint(SpringLayout.WEST, endGameManuallyNoteLabel, 5, SpringLayout.WEST, newLeftView);
 
 		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel1, 1, SpringLayout.SOUTH, endGameManuallyNoteLabel);	
@@ -258,8 +280,20 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.WEST, testButton, 10, SpringLayout.EAST, endGameManuallyButton);
 		layout.putConstraint(SpringLayout.SOUTH, testButton, -10, SpringLayout.SOUTH, newLeftView);
 
+		setMinimumSize(new Dimension(325, 150));			//Sets the minimum size of the left half view
+		newLeftView.setPreferredSize(new Dimension(305, 485));		//Sets the size of the view
 		
-		this.getViewport().add(newLeftView);
+		setViewportView(newLeftView);
+		
+		usersProgressPanel.setVisible(false);
+		revalidate();
+		repaint();
+		
+		userPanelHeight = usersProgressPanel.getHeight();
+		
+		revalidate();
+		repaint();
+		
 	}
 	
 	
@@ -292,10 +326,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	}
 	
 	public void submitButtonPressed() {
-		int i = overallProgress.getValue();
-		int numReqs = parentPanel.getReqTable().getRowCount();
-		int j = (overallProgress.getMaximum())/numReqs;
-		overallProgress.setValue(i + j);
+		UpdateOverallProgress();
 	}
 
 	public boolean endManually(){
@@ -304,5 +335,44 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		}else{
 			return false;
 		}
+	}
+	
+	public Game getGame(){
+		return active;
+	}
+	
+	private void addMouseListenerToProgressLabel(JLabel component) {
+		component.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				if(!usersProgressPanel.isVisible()){
+					newLeftView.setPreferredSize(new Dimension(305, 485 + userPanelHeight));		//Sets the size of the view
+					layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 10, SpringLayout.SOUTH, usersProgressPanel);
+					usersProgressPanel.setVisible(true);
+				}
+				else {
+					newLeftView.setPreferredSize(new Dimension(305, 485));
+					layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 20, SpringLayout.SOUTH, individualUserProgressLabel);
+					usersProgressPanel.setVisible(false);
+				}
+				
+				instance.revalidate();
+				instance.repaint();
+			}
+		});
+	}
+	
+	private void UpdateOverallProgress(){
+		int i = overallProgress.getValue();
+		int numReqs;
+		if(parentPanel.getGame().getRequirements() != null){
+			numReqs = parentPanel.getGame().getRequirements().size();
+		}
+		else {
+			return;
+		}
+		int numUsers = usersProgressPanel.getNumUsers();
+		int j = (overallProgress.getMaximum())/(numReqs * numUsers);
+		overallProgress.setValue(i + j);
 	}
 }

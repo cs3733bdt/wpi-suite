@@ -146,7 +146,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 															// Description
 
 		descriptionTextField = new DescriptionJTextArea(); // Initializes the
-															// text area for the
+		descriptionTextField.setLineWrap(true);												// text area for the
 															// game description
 		nameTextField.addKeyListener(parent);
 		// Adds KeyListener to update on key press

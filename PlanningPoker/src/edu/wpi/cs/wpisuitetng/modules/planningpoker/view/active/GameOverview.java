@@ -31,7 +31,6 @@ import javax.swing.SpringLayout;
 
 import org.jdesktop.swingx.JXHyperlink;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
 
 /**
@@ -40,7 +39,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.tree.GameTree;
  *
  */
 public class GameOverview extends JSplitPane {
-	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
+	private static final Logger logger = Logger.getLogger(GameOverview.class.getName());
 	JLabel ppIntroLabel;
 	Font bigFont;
 	JTextArea ppExplanation;
