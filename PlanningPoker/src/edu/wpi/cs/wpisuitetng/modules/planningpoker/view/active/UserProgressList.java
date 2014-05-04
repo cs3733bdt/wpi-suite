@@ -15,6 +15,8 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -23,6 +25,7 @@ import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
 public class UserProgressList extends JScrollPane {
@@ -42,8 +45,10 @@ public class UserProgressList extends JScrollPane {
 	private int heightBasedOnUserNumber;
 	
 	private final Border defaultBorder = (new JTextField()).getBorder();
-	
+	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
+			.getName());
 	public UserProgressList(LeftHalfActiveGamePanel parent){
+		
 		layout = new SpringLayout();
 		view.setLayout(layout);
 		
@@ -62,8 +67,11 @@ public class UserProgressList extends JScrollPane {
 	public void build(){
 		
 		game = parent.getGame();
-		
-		userList = game.getProject().getTeam();
+		try {
+			userList = game.getProject().getTeam();
+		} catch(NullPointerException e) {
+			logger.log(Level.SEVERE, "The team cannot be retrieved.", e);
+		}
 		
 		if(userList == null){
 			return;
