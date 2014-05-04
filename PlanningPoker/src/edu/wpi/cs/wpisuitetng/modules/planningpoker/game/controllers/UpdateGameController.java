@@ -52,27 +52,6 @@ public class UpdateGameController {
 	 */
 	public void updateGame(Game newGame) {
 		logger.log(Level.INFO,"Updating game on server");
-		
-		// Send out email, text, and facebook notifications on game creation
-				if (!newGame.isNotifiedOfCreation() && newGame.isActive()) {
-						// Set the project of the game, without this it throws a null
-						// pointer
-
-						// Set notified before sending notifications to remove looping
-						// possibility
-						newGame.setNotifiedOfCreation(true);
-						// Finally send
-						newGame.sendNotifications();
-					// Send out email, text, and facebook notifications on game
-					// completion
-				} else if (!newGame.isNotifiedOfCompletion() && newGame.isComplete()) {
-						// Set notified before sending notifications to remove looping
-						// possibility
-						newGame.setNotifiedOfCompletion(true);
-						// Finally Send
-						newGame.sendNotifications();
-				}
-		
 		// Update request
 		Request request = Network.getInstance().makeRequest(
 				"planningpoker/game", HttpMethod.POST);

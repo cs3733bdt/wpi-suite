@@ -65,7 +65,29 @@ public class UpdateGameRequestObserver implements RequestObserver {
 			realGame = game;
 		}
 
-		
+		// Send out email, text, and facebook notifications on game creation
+		if (!realGame.isNotifiedOfCreation() && realGame.isActive()) {
+				// Set the project of the game, without this it throws a null
+				// pointer
+				// if the game is created/added on an update call
+				realGame.setProject(game.getProject());
+				// Set notified before sending notifications to remove looping
+				// possibility
+				realGame.setNotifiedOfCreation(true);
+				realGame.notifyObservers();
+				// Finally send
+				realGame.sendNotifications();
+			// Send out email, text, and facebook notifications on game
+			// completion
+		} else if (!realGame.isNotifiedOfCompletion() && realGame.isComplete()) {
+				// Set notified before sending notifications to remove looping
+				// possibility
+				realGame.setProject(game.getProject());
+				realGame.setNotifiedOfCompletion(true);
+				realGame.notifyObservers();
+				// Finally Send
+				realGame.sendNotifications();
+		}
 
 		logger.log(Level.INFO,"The request to update a game has succeeded!");
 	}
@@ -85,6 +107,7 @@ public class UpdateGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		logger.log(Level.WARNING,"The request to update a game failed ");
+		logger.log(Level.WARNING,"The request to update a game failed with exception: "
+						+ exception.getMessage());
 	}
 }
