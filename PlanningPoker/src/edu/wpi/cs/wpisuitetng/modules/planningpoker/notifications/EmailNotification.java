@@ -251,16 +251,22 @@ public class EmailNotification {
 	private String generateEndGameMessage() {
 		String stats = "";
 		ArrayList<Integer> voteArray = new ArrayList<Integer>();
+		int idks = 0;
 
 		for (PPRequirement r : g.getRequirements()) {
 
 			for (int i = 0; i < r.getVotes().size(); i++) {
-				voteArray.add(r.getVotes().get(i).getVoteNumber());
+				if(r.getVotes().get(i).getVoteNumber() == -8008135) {
+					voteArray.add(r.getVotes().get(i).getVoteNumber());
+				} else {
+					idks++;
+				}
 			}
 
 			stats += "\nRequirement: " + r.getName() + "\n" + "Mean: "
 					+ mean(voteArray) + "\n" + "Median: " + median(voteArray)
-					+ "\n" + "Standard Deviation: " + stDev(voteArray) + "\n\n";
+					+ "\n" + "Standard Deviation: " + stDev(voteArray) 
+					+ "\n" + "I don't know Votes: " + idks + "\n\n";
 			voteArray.clear();
 		}
 
