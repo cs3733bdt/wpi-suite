@@ -117,7 +117,6 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	private void buildDefaultDeck(int numCards) {
 		int numLoops;
 		if (numCards == 0) {
-//			throw new EmptyDeckException(); //TODO implement proper catch in call heirarchy before uncommenting
 			return;
 		}
 		else { 
@@ -146,14 +145,10 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 
 	@Override
 	public void save() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void delete() {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -234,9 +229,7 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 	}
 
 	@Override
-	public void update(ObservableModel o, Object arg) {
-		// TODO Auto-generated method stub
-		
+	public void update(ObservableModel o, Object arg) {		
 	}
 
 	/**
@@ -296,7 +289,6 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 			return;
 		}
 		makeChanged();
-		//delayChange(); //TODO This method is needed for changing
 		this.isMultipleSelection = isMultipleSelection;
 	}
 	
@@ -313,7 +305,6 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 			return;
 		}
 		makeChanged();
-		//delayChange(); //TODO This method is needed for changing
 		this.hasIdontKnow = hasIdontKnow;
 	}
 	
