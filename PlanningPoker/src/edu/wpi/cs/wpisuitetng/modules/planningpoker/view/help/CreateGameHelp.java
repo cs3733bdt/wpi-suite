@@ -61,7 +61,7 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 1780));
+		view.setPreferredSize(new Dimension(610, 1750));
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("Create Game Help");
@@ -302,7 +302,7 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		
 		layout.putConstraint(SpringLayout.NORTH, updateRequirementspic, 20, SpringLayout.SOUTH, updateRequirementsHeading);
 		layout.putConstraint(SpringLayout.WEST, updateRequirementspic, 5, SpringLayout.WEST, view);
-		//layout.putConstraint(SpringLayout.SOUTH, updateRequirementspic, 10, SpringLayout.SOUTH, view);
+		//layout.putConstraint(SpringLayout.SOUTH, updateRequirementspic, 20, SpringLayout.SOUTH, view);
 
 		layout.putConstraint(SpringLayout.NORTH, updateRequirementsExplanation, 20, SpringLayout.SOUTH, updateRequirementsHeading);
 		layout.putConstraint(SpringLayout.EAST, updateRequirementsExplanation, 0, SpringLayout.EAST, view);
