@@ -21,7 +21,6 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -35,8 +34,6 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
-
-import java.util.Timer;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
@@ -80,18 +77,10 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 
 	private static final Logger logger = Logger.getLogger(RightHalfActiveGamePanel.class
 			.getName());
-	private Timer timer = new Timer();
+	
 	RightHalfActiveGamePanel(final Game game, final ActiveGamePanel activeGamePanel) {
 		currentGame = game;
 		build();
-		timer.scheduleAtFixedRate(new TimerTask() {
-			  @Override
-			  public void run() {
-				  for (int i=0;i<table.getRowCount();i++){
-				  table.setValueAt(table.getReq(i).displayComplete(), i, 3);
-				  }
-			  }
-			}, 2*1000, 2*1000);
 	}
 
 	public void build() {
@@ -641,5 +630,11 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		descriptionTextField.setText(activeRequirement.getDescription());
 		counterLabel.setText("Your current selected estimate is: 0");
 		updateSavedEstimateLabel();
+	}
+	
+	public void updateVoteColumn(){
+		  for (int i=0;i<table.getRowCount();i++){
+			  table.setValueAt(table.getReq(i).displayComplete(), i, 3);
+		  }
 	}
 }

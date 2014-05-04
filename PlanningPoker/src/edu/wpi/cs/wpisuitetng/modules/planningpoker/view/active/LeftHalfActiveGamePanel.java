@@ -362,7 +362,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		});
 	}
 	
-	private void UpdateOverallProgress(){
+	public void UpdateOverallProgress(){
 		int i = overallProgress.getValue();
 		int numReqs;
 		if(parentPanel.getGame().getRequirements() != null){
