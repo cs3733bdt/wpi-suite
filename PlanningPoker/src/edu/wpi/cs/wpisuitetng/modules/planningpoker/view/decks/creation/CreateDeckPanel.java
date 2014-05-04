@@ -198,7 +198,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		/* Create components */
 		/* name and description */
 		JLabel nameLabel = new JLabel("Name * ");
-		nameTextField = new NameJTextField(20);
+		nameTextField = new NameJTextField(20, DeckModel.getInstance());
 		nameTextField.addKeyListener(this);
 		
 		
