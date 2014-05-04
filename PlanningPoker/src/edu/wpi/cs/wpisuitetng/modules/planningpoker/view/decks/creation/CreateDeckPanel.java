@@ -565,7 +565,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		if(numCards.getText().equals("0") || cardsPanel2.getNumberCards() == 0){
 			isNumCardsValid = false;
 			if(showLabel){
-				errorField.setText("Your deack must have at least 1 card");
+				errorField.setText("Your deck must have at least 1 card");
 			}
 			if(showBox){
 				numCards.setBorder(BorderFactory.createLineBorder(Color.RED));
