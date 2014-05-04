@@ -48,7 +48,7 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 
 	private String initialText;
 	private IErrorView warningField;
-	private Integer maxValue = null;
+	private Integer maxValue = Integer.MAX_VALUE;
 	private Integer minValue = null;
 	private NumberFieldCustomErrorMessage errorFields;
 	private static final Logger logger = Logger.getLogger(NumberJTextField.class
@@ -161,8 +161,6 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 			boolean showBox) {
 		this.warningField = warningField;
 		boolean isValid = false;
-		try {
-			Integer.parseInt(getText());
 
 			if (getText().equals("")) {
 				isValid = false;
@@ -195,11 +193,6 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 				showValid(showLabel, showBox);
 			} // Should not need to handle checking to see if there not numbers
 				// because this should have already been caught
-		} catch (NumberFormatException e) {
-			isValid = false;
-			showInvalid(errorFields.STRING_TOO_HIGH + Integer.MAX_VALUE,
-					showLabel, showBox);
-		}
 		return isValid;
 	}
 

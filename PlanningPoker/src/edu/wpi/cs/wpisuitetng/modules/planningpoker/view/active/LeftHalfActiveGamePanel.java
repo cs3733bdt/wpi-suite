@@ -29,9 +29,7 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
 /**
- * TODO Documentation
- * @author Doruk Uzunoglu
- *
+ * Creates the left half of the active games panel
  */
 public class LeftHalfActiveGamePanel extends JScrollPane{
 	

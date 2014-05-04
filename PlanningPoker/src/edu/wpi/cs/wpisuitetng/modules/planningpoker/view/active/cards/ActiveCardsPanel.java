@@ -27,8 +27,6 @@ import javax.swing.JPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Card;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
 /**
  * creates the panel that displays all of the buttons and adds a clear button
@@ -36,7 +34,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
  * @author Bobby Drop Tables
  * 
  */
-public class ActiveCardsPanel extends JPanel implements IDataField {
+public class ActiveCardsPanel extends JPanel{
 
 	private int sum = 0;
 	private final Deck deck;
@@ -206,20 +204,6 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 **/
 	public List<CardButton> memoryArray() {
 		return memoryArray;
-	}
-
-	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	
-	@Override
-	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 	public RightHalfActiveGamePanel getParentPanel(){

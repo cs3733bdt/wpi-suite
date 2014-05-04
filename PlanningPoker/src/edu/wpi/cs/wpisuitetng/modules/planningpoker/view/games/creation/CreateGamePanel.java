@@ -152,21 +152,10 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 			return true;
 		}
 
-		// TODO Check fields to see if this window has unsaved changes
-		// if (containsData()) {
-		// readyToRemove = false;
-		// } else {
-		// readyToRemove = true;
-		// }
-
-		// if (readyToRemove) {
-		// return true;
-		// } else {
 		int result = JOptionPane.showConfirmDialog(this,
 				"Discard unsaved changes and close tab?", "Discard Changes?",
 				JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 		return result == 0;
-		// }
 
 	}
 
@@ -253,7 +242,6 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 		} else {
 			setCurrentGame(false);
 		}
-		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 	}
 
@@ -269,7 +257,6 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 		} else {
 			setCurrentGame(true);
 		}
-		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 	}
 

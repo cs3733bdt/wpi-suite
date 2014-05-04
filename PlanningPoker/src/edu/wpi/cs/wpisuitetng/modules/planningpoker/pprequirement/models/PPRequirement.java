@@ -136,6 +136,7 @@ public class PPRequirement extends ObservableModel {
 			makeChanged();
 			delayChange("setFromRequirementModule");
 			fromRequirementModule = value;
+			notifyObservers();
 		}
 	}
 
@@ -178,13 +179,17 @@ public class PPRequirement extends ObservableModel {
 		// Make Id one more than the id in the
 		// Requirement Manager
 		this.id = id + 1;
+		notifyObservers();
 	}
 
 	public void setId(int id) {
-		makeChanged();
-		delayChange("setId");
-		fromRequirementModule = true;
-		this.id = id;
+		if(this.id != id){
+			makeChanged();
+			delayChange("setId");
+			fromRequirementModule = true;
+			this.id = id;
+			notifyObservers();
+		}
 	}
 
 	/**
@@ -198,6 +203,7 @@ public class PPRequirement extends ObservableModel {
 		delayChange("setUUID");
 		fromRequirementModule = false;
 		this.identity = identity;
+		notifyObservers();
 	}
 
 	/**
@@ -219,6 +225,7 @@ public class PPRequirement extends ObservableModel {
 			makeChanged();
 			delayChange("setName");
 			this.name = name;
+			notifyObservers();
 		}
 	}
 
@@ -241,6 +248,7 @@ public class PPRequirement extends ObservableModel {
 			makeChanged();
 			delayChange("setDescription");
 			this.description = description;
+			notifyObservers();
 		}
 	}
 
@@ -262,10 +270,10 @@ public class PPRequirement extends ObservableModel {
 	public void addVote(Vote vote) {
 		delayChange("addVote"); // Holds the code until the server is finished
 								// re-populating the model
+		makeChanged();			// This may be about to be changed
 		if(addNoDelay(vote)){	//If makes a change
-			makeChanged();
 		}
-		notifyObservers(vote);
+		notifyObservers(vote);  //IF there were changes made then you can notify the observers
 	}
 
 	/**
@@ -293,7 +301,7 @@ public class PPRequirement extends ObservableModel {
 		}
 		if (getProject() != null) {
 			if (votes.size() == getProject().getTeam().length) {
-				makeComplete();
+				complete = true;
 				changed = true;
 			}
 		} else {
@@ -319,6 +327,7 @@ public class PPRequirement extends ObservableModel {
 			makeChanged();
 			delayChange("setFinalEstimate");
 			finalEstimate = newEstimate;
+			notifyObservers();
 		}
 	}
 

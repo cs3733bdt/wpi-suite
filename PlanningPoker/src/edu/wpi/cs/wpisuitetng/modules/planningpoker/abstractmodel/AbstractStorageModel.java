@@ -32,7 +32,7 @@ import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
  *            <code> <T extends ObservableModel & IStorageModel<T>> </code>
  */
 public abstract class AbstractStorageModel<T extends ObservableModel & IStorageModel<T>>
-		extends AbstractListModel<T> implements IModelObserver {
+		extends AbstractListModel<T> implements IModelObserver, IModelValidate {
 	/** The list that holds all of the elements in this database */
 	protected final List<T> list;
 
@@ -201,7 +201,7 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 			for (T a : updatedModels) {
 				log.append("\t" + a.getName() + "\n");
 			}
-			logger.log(Level.INFO, log.toString());
+			logger.log(Level.INFO, log.toString().trim());
 			
 			if(isUpdating()){
 				logger.log(Level.WARNING, getClass().getName().trim() +"'s isUpdating() may have been set durring the copy over. Please check your logic. Changed:");
@@ -231,6 +231,15 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 	@Override
 	public T getElementAt(int index) {
 		return list.get(index);
+	}
+	
+	public boolean hasName(String name) {
+		for (T a: list) {
+			if (a.getName().equals(name)) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**

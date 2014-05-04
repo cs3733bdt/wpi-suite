@@ -85,10 +85,9 @@ public class GameModel extends AbstractStorageModel<Game> {
 
 		try { // Prevents a null pointer exception when the running tests (the
 				// JPanel's aren't instantiated)
-			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
-			logger.log(Level.WARNING,
+			logger.log(Level.FINE,
 					"ViewEventController not fully initialized", e);
 		}
 	}
@@ -102,10 +101,9 @@ public class GameModel extends AbstractStorageModel<Game> {
 		super.emptyModel();
 		try { // Prevents a null pointer exception when the running tests (the
 				// JPanel's aren't instantiated)
-			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
-			logger.log(Level.WARNING,
+			logger.log(Level.FINE,
 					"ViewEventController not fully initialized", e);
 		}
 	}
@@ -140,30 +138,27 @@ public class GameModel extends AbstractStorageModel<Game> {
 	 * 
 	 * @param allGames
 	 *            the list of games already in the model
+	 * @return true
+	 * 			  when the game model was changed during this call
 	 */
-	public synchronized void updateGames(Game[] allGames) {
+	public synchronized boolean updateGames(Game[] allGames) {
 		boolean changes = updateModels(allGames);
 
 		if (changes) { // Only repaint game tree if the model has changed
 			try { // This is used to prevent the a null pointer exception
 					// when running test cases (the JPanel's aren't
 					// instantiated)
-				ViewEventController.getInstance().refreshGameTable(); // Currently
-				// serves
-				// no
-				// purpose
-				ViewEventController.getInstance().refreshGameTree(); // Refreshes
-				// the
-				// active
-				// table
+				ViewEventController.getInstance().refreshGameTree();
 			} catch (Exception e) {
-				logger.log(Level.WARNING,
+				logger.log(Level.FINE,
 						"ViewEventController not fully initialized.", e);
 			}
 		} else {
 		}
 		serverUpdating = false; // Duplicate just because we want to be sure
 								// that the lock disengages
+		
+		return changes;
 	}
 
 	@Override
@@ -199,7 +194,6 @@ public class GameModel extends AbstractStorageModel<Game> {
 				UpdateGameController.getInstance().updateGame((Game) o);
 				logger.log(Level.INFO,"A game is being updated: "
 						+ ((Game) o).getName());
-				ViewEventController.getInstance().refreshGameTable();
 				ViewEventController.getInstance().refreshGameTree();
 			} catch (Exception e) {
 				logger.log(Level.WARNING,

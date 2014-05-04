@@ -24,6 +24,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
@@ -44,14 +45,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.Upda
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 /**
  * used to display the end game statistics upon ending a game
  */
-public class StatisticsPanel extends JScrollPane implements IDataField {
+public class StatisticsPanel extends JScrollPane {
 	Game activeGame;
 	PPRequirement activeRequirement;
 	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
@@ -102,10 +101,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		overviewPanel.setLayout(layout);
 
 		activeGame = game;
-		activeRequirement = game.getRequirements().get(0); // default to first
-															// requirement
-															// //TODO dependent
-															// on the click
+		activeRequirement = game.getRequirements().get(0); 
 
 		JLabel descLabel = new JLabel("Description");
 		JLabel statLabel = new JLabel("Statistics");
@@ -577,7 +573,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 						.setText("Final estimate submitted successfully!");
 			}
 		}
-		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 		finalEstimateDisplay.setText("Your Current Final Estimate is: "
 				+ newEstimate);
@@ -625,7 +620,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			// Break out if already exists in manager
 			if (r.getName().equals(req.getName())
 					&& r.getDescription().equals(req.getDescription())) {
-				// TODO: Do Logger Message
+				logger.log(Level.WARNING, "Same requirement already exists in the"
+						+ " requirements manager.");
 				return;
 			}
 		}
@@ -658,18 +654,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		return true;
 	}
 
-	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	private Font makeFont(int fontSize) {
 		return new Font("Serif", Font.BOLD, fontSize);

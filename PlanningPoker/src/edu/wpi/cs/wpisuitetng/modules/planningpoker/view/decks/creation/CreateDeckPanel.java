@@ -91,13 +91,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	private JComboBox<String> colorDropDown;
 
 	/**
-	 * radio button to only be able to select one card at a time. TODO:
-	 * IMPLEMENT THIS
+	 * radio button to only be able to select one card at a time.
 	 */
 	private JRadioButton singleSelection;
 	/**
-	 * radio button to be able to select multiple cards at a time. TODO:
-	 * IMPLEMENT THIS
+	 * radio button to be able to select multiple cards at a time. 
 	 */
 	private JRadioButton multipleSelection;
 
@@ -198,7 +196,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		/* Create components */
 		/* name and description */
 		JLabel nameLabel = new JLabel("Name * ");
-		nameTextField = new NameJTextField(20);
+		nameTextField = new NameJTextField(20, DeckModel.getInstance());
 		nameTextField.addKeyListener(this);
 		
 		
@@ -237,8 +235,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		radioButtonsPanel.add(singleSelection);
 		radioButtonsPanel.add(multipleSelection);
 		/* Layout changes of radio button label/fields in radioButtonsPanel */
-		radioSpring.putConstraint(SpringLayout.HORIZONTAL_CENTER,
-				selectionLabelPanel, 0, SpringLayout.HORIZONTAL_CENTER,
+		radioSpring.putConstraint(SpringLayout.WEST,
+				selectionLabelPanel, 12, SpringLayout.WEST,
 				radioButtonsPanel);
 		radioSpring.putConstraint(SpringLayout.NORTH, selectionLabelPanel, 2,
 				SpringLayout.NORTH, radioButtonsPanel);
@@ -275,7 +273,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 			public void actionPerformed(ActionEvent e) {
 				cardsHaveChanges(true);
 				displayNumCards();
-				dynamicCardPanel(); //TODO test
+				dynamicCardPanel(); 
 				cardsPanel2.revalidate();
 				cardsPanel2.repaint();
 			}
@@ -589,10 +587,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * removes all the components in the card panel. It then generates the
 	 * number of cards of the correct color (since it now knows the color) that
 	 * was equal to the previously recorded number of components in the panel.
-	 * TODO: if a card had a value label associated with it, this method should
-	 * still associate the value with the new card. TODO: if the number of cards
-	 * generated is less than the number of cards that had values, some values
-	 * have to be lost in an organized manner.
 	 */
 	private void chooseCardColor() {
 		ColorEnum deckColor = determineDeckColor();
@@ -615,10 +609,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	/**
 	 * This is the first thing executed when a new value is entered, after the
 	 * submit button action listener is invoked Displays the number of cards as
-	 * selected by the user. TODO: store label values previously associated with
-	 * cards and keep the saved for the new cards TODO: this would require
-	 * changes made to chooseCardColor() since that is where the cards are
-	 * really generated.
+	 * selected by the user. 
 	 */
 	private void displayNumCards() {
 		cardsPanel2.setNumberCards(numCards.getValue());
@@ -657,8 +648,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 
 		DeckModel.getInstance().addDeck(deck); // New Deck gets added // to the
 												// server
-
-		ViewEventController.getInstance().refreshDeckTable();
 		ViewEventController.getInstance().refreshDeckTree();
 	}
 

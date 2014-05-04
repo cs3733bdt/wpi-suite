@@ -40,6 +40,7 @@ import org.jdesktop.swingx.JXDatePicker;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.CancelButton;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.LaunchGameButtonPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons.SaveGameButtonPanel;
@@ -135,7 +136,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 		 */
 		JLabel nameLabel = new JLabel("Name * "); // Creates the Label for the
 													// Name
-		nameTextField = new NameJTextField(30); // Initializes the text field
+		nameTextField = new NameJTextField(30,GameModel.getInstance()); // Initializes the text field
 												// for the game name and sets
 												// the size to 30
 		nameTextField.setFocusable(true);
@@ -248,10 +249,8 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 		launchGameButton = new LaunchGameButtonPanel(parent); // Creates a
 																// launch game
 																// button
-		cancelGameButton = new CancelButton("Cancel Game", parent); // TODO
-																	// implement
-																	// this
-
+		cancelGameButton = new CancelButton("Cancel Game", parent); 
+		
 		JPanel buttonPanel = new JPanel(); // Creates a panel for the buttons
 		buttonPanel.add(saveGameButton); // Adds the save button to the panel
 		buttonPanel.add(launchGameButton); // Adds the launch button to the
