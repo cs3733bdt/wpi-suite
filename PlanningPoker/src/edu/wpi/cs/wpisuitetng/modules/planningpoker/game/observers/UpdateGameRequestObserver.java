@@ -15,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.UpdateGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
@@ -30,7 +29,7 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
  * @author Chris Knapp
  */
 public class UpdateGameRequestObserver implements RequestObserver {
-	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
+	private static final Logger logger = Logger.getLogger(UpdateGameRequestObserver.class
 			.getName());
 	/**
 	 * We don't actually use the controller, in the defect tracker they use it

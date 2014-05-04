@@ -29,7 +29,6 @@ import javax.mail.internet.MimeMessage;
 import com.sun.mail.util.MailConnectException;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 
@@ -40,7 +39,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequi
  * @author Bobby Drop Tables
  */
 public class EmailNotification {
-	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
+	private static final Logger logger = Logger.getLogger(EmailNotification.class
 			.getName());
 	/** Game to get users from to send emails to */
 	private final Game g;

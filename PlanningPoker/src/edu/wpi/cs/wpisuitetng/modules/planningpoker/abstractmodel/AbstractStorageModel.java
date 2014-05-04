@@ -233,9 +233,9 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 		return list.get(index);
 	}
 	
-	public boolean hasName(String name) {
+	public boolean hasActiveName(String name) {
 		for (T a: list) {
-			if (a.getName().equals(name)) {
+			if (a.getName().equals(name) && a.isActive()) {
 				return true;
 			}
 		}

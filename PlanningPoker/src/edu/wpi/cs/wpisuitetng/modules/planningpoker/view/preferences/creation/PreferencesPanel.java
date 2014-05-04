@@ -37,11 +37,8 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.user.controllers.RetrieveUserController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.user.controllers.UpdateUserController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
 /**
  * used to display user preferences, allowing the user to
@@ -51,7 +48,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
  *
  */
 public class PreferencesPanel extends JScrollPane implements IPreferencesPanel {
-	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
+	private static final Logger logger = Logger.getLogger(PreferencesPanel.class.getName());
 	JPanel emailPanel;
 
 	JPanel mobilePanel;

@@ -27,7 +27,6 @@ import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorEnum;
@@ -40,7 +39,7 @@ import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
  *
  */
 public class GameTest {
-	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
+	private static final Logger logger = Logger.getLogger(GameTest.class.getName());
 	@Before
 	public void setUp() throws Exception { // $codepro.audit.disable accessorMethodNamingConvention
 		Network.initNetwork(new MockNetwork());
