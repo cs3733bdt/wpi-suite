@@ -86,7 +86,7 @@ public class NameJTextFieldTest {
 	}
 	
 	@Test
-	public void testValid(){
+	public void testValid(){ // $codepro.audit.disable missingAssertInTestMethod
 		NameJTextField testerField = new NameJTextField("Name", GameModel.getInstance());
 		//TODO: Add testing for this method
 	}

@@ -239,7 +239,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		radioButtonsPanel.add(multipleSelection);
 		/* Layout changes of radio button label/fields in radioButtonsPanel */
 		radioSpring.putConstraint(SpringLayout.WEST,
-				selectionLabelPanel, 12, SpringLayout.WEST,
+				selectionLabelPanel, 19, SpringLayout.WEST,
 				radioButtonsPanel);
 		radioSpring.putConstraint(SpringLayout.NORTH, selectionLabelPanel, 2,
 				SpringLayout.NORTH, radioButtonsPanel);

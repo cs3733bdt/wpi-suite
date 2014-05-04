@@ -113,7 +113,7 @@ public class UserProgressList extends JScrollPane {
 		}
 		
 		int users = userProgressList.size();
-		heightBasedOnUserNumber = 33*users;
+		heightBasedOnUserNumber = 30*users;
 		
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
