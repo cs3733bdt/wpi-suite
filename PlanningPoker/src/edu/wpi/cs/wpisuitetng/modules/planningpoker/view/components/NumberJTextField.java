@@ -267,7 +267,7 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 class MyDocumentFilter extends DocumentFilter {
 	private NumberJTextField parent;
 
-	public MyDocumentFilter(NumberJTextField parent) {
+	MyDocumentFilter(NumberJTextField parent) {
 		this.parent = parent;
 	}
 

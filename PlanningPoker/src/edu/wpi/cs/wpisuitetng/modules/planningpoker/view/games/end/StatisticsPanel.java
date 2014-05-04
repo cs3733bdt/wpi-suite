@@ -114,8 +114,11 @@ public class StatisticsPanel extends JScrollPane {
 		voteTable.getTableHeader().setReorderingAllowed(false);
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(activeRequirement);
+//		statTable.setPreferredSize(new Dimension(50, 25));
 
 		JScrollPane statsPanel = new JScrollPane(statTable);
+		//statTable.setPreferredSize(new Dimension(50, 25));
+
 		JScrollPane votePanel = new JScrollPane(voteTable);
 		JScrollPane descPanel = new JScrollPane(userStoryDesc);
 
@@ -170,7 +173,7 @@ public class StatisticsPanel extends JScrollPane {
 		userStoryDesc.setLineWrap(true);
 
 		descPanel.setPreferredSize(new Dimension(580, 100));
-		statsPanel.setPreferredSize(new Dimension(580, 60));
+		statsPanel.setPreferredSize(new Dimension(580, 39));
 
 		// Label for Desc
 		layout.putConstraint(SpringLayout.NORTH, descLabel, 5,
@@ -352,7 +355,7 @@ public class StatisticsPanel extends JScrollPane {
 		List<Integer> newVotes = new ArrayList<Integer>();
 
 		for (int i = 0; i < votes.size(); i++) {
-			if (votes.get(i) != -8008135) {
+			if (votes.get(i) != -1) {
 				newVotes.add(votes.get(i));
 			}
 		}
@@ -482,7 +485,7 @@ public class StatisticsPanel extends JScrollPane {
 		List<String> nameArray = requirementToNames(requirement);
 		List<Integer> voteArray = requirementToVotes(requirement);
 		for (int i = 0; i < nameArray.size(); i++) {
-			if (voteArray.get(i) == -8008135) {
+			if (voteArray.get(i) == -1) {
 				voteTable.getTableModel().addRow(
 						new Object[] { nameArray.get(i), "I don't know" });
 			} else {

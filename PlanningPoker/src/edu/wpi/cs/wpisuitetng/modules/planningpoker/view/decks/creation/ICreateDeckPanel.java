@@ -15,10 +15,10 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 
 public interface ICreateDeckPanel {
 
-	public void saveDeck(Deck deck);
+	void saveDeck(Deck deck);
 	
-	public Deck getDeck();
+	Deck getDeck();
 	
-	public void disableFields();
+	void disableFields();
 	
 }
