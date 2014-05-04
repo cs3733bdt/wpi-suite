@@ -129,21 +129,22 @@ public class StatisticsPanel extends JScrollPane {
 			}
 		});
 
-		validateSubmitButton();
 		finalEstimateButton.setEnabled(true);
 		finalEstimateDisplay = new JLabel();
 		currFinalEstimate = activeRequirement.getFinalEstimate();
 		if (currFinalEstimate == -1) {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: "
 					+ (int) mean);
-			finalEstimateBox.setText("" + (int)mean);
+			finalEstimateBox.setText("" + (int) mean);
 		} else {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: "
-					+ currFinalEstimate);
-			finalEstimateBox.setText("" + currFinalEstimate);
+					+ (int) currFinalEstimate);
+			finalEstimateBox.setText("" + (int) currFinalEstimate);
 		}
 		finalEstimateDisplay.setFont(makeFont(12));
-
+		// validate after we set estimate
+		validateSubmitButton();
+		
 		overviewPanel.add(descLabel);
 		overviewPanel.add(statLabel);
 		overviewPanel.add(votesLabel);
@@ -506,12 +507,12 @@ public class StatisticsPanel extends JScrollPane {
 
 		if (currFinalEstimate == -1) {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: "
-					+ mean);
-			finalEstimateBox.setText("" + mean);
+					+ (int) mean);
+			finalEstimateBox.setText("" + (int) mean);
 		} else {
 			finalEstimateDisplay.setText("Your Current Final Estimate is: "
-					+ currFinalEstimate);
-			finalEstimateBox.setText("" + currFinalEstimate);
+					+ (int) currFinalEstimate);
+			finalEstimateBox.setText("" + (int) currFinalEstimate);
 		}
 
 		finalEstimateMessage.setText("");
@@ -550,8 +551,11 @@ public class StatisticsPanel extends JScrollPane {
 	private void validateSubmitButton() {
 		if (verifyFinalEstimateField()) {
 			finalEstimateButton.setEnabled(true);
+			finalEstimateMessage.setText("");
 		} else {
 			finalEstimateButton.setEnabled(false);
+			finalEstimateMessage.setForeground(Color.RED);
+			finalEstimateMessage.setText("Final estimate is invalid.");
 		}
 	}
 
