@@ -67,7 +67,7 @@ public class AddPPRequirementRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println("The request to add a requirement failed.");
+		logger.log(Level.WARNING,"The request to add a requirement failed.");
 	}
 
 	/**
@@ -80,6 +80,6 @@ public class AddPPRequirementRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		System.err.println("The request to add a requirement failed.");
+		logger.log(Level.WARNING,"The request to add a requirement failed.");
 	}
 }

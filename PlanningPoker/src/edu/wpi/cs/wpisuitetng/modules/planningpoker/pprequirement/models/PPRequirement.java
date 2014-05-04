@@ -305,8 +305,7 @@ public class PPRequirement extends ObservableModel {
 				changed = true;
 			}
 		} else {
-			System.err
-					.println("THE PROJECT IN THE REQUIREMENT WAS NULL: ADD VOTE METHOD");
+			logger.log(Level.WARNING,"THE PROJECT IN THE REQUIREMENT WAS NULL: ADD VOTE METHOD");
 		}
 		return changed;
 	}
