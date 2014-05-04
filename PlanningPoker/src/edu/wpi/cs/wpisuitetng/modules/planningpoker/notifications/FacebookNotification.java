@@ -160,9 +160,6 @@ public class FacebookNotification {
 				e.printStackTrace();
 			}
 		} else {
-			// TODO possibly implement send email to user telling them their
-			// facebook
-			// username is invalid
 			logger.log(Level.WARNING,"User: " + user.getName()
 					+ " does not have a valid facebook username stored.");
 		}

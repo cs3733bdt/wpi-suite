@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 
 public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
@@ -43,7 +44,9 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 700));
+		view.setPreferredSize(new Dimension(1200, 600));
+		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("Create Deck Help");
@@ -63,8 +66,9 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 				+ "you want created, and optionally, you can enter a Description of that deck. The Selection Type allows "
 				+ "you to be able to select either multiple cards or just a single card when voting. Selecting multiple cards "
 				+ "adds up all of the cards that yo select and puts that as your total. The next step is to select the muber of cards that you want in your deck,"
-				+ " and then it gives you the option of changing the color of your cards. "
-				+ "Finally you can choose whether or not to have an 'I dont know' button as an option when voting.");
+				+ "and enter the desired value for that card. To set this value to the card and select the next card if appropriate,"
+				+ "all you have to do is click enter");
+
 
 		setUpCardsExplanation.setEditable(false);
 		setUpCardsExplanation.setBackground(null);
