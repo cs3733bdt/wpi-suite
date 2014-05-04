@@ -642,5 +642,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 				}
 			}
 		}
+		revalidate();
+		repaint();
 	}
 }

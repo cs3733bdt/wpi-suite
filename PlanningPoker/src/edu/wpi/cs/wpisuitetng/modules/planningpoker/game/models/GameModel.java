@@ -151,6 +151,9 @@ public class GameModel extends AbstractStorageModel<Game> {
 				
 				// Refreshes the active table
 				ViewEventController.getInstance().refreshGameTree();
+				for(Game g: getGames()){
+					ViewEventController.getInstance().updateActiveGame(g);
+				}
 			} catch (Exception e) {
 				logger.log(Level.FINE,
 						"ViewEventController not fully initialized.", e);

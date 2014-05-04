@@ -129,7 +129,7 @@ public class UserProgressList extends JScrollPane {
 		userProgressList.clear();
 		revalidate();
 		repaint();
-		build();
+		//build();
 	}
 	
 }
