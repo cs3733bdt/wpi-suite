@@ -134,4 +134,8 @@ public class UserProgressList extends JScrollPane {
 	public int getNumUsers(){
 		return userList.length;
 	}
+	
+	public List<UserProgress> getUserProgressList(){
+		return userProgressList;
+	}
 }

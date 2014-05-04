@@ -10,6 +10,7 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -45,7 +46,11 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 		timer.scheduleAtFixedRate(new TimerTask() {
 			  @Override
 			  public void run() {
-				  leftHalf.updateOverallProgress();
+				  leftHalf.updateOverallProgress();  
+				  List<UserProgress> usersProgress = leftHalf.getUsersProgressPanel().getUserProgressList();
+				  for(UserProgress u : usersProgress){
+					  u.setProgressBarValue();
+				  }
 				  rightHalf.updateVoteColumn();
 			  }
 			}, 2*1000, 2*1000);

@@ -68,7 +68,7 @@ public class UserProgress extends JPanel {
 		setPreferredSize(new Dimension(50, 25));
 	}
 	
-	private void setProgressBarValue(){
+	public void setProgressBarValue(){
 		List<PPRequirement> reqList;
 		List<Vote> voteList;
 		if(parentPanel.getGame().getRequirements() != null){	//check if reqList isn't null

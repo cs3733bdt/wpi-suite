@@ -371,4 +371,8 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 			}
 		}
 	}
+	
+	public UserProgressList getUsersProgressPanel(){
+		return usersProgressPanel;
+	}
 }
