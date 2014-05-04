@@ -49,7 +49,6 @@ public class UpdateDeckController {
 	 * updates a game with the same UUID on server
 	 * 
 	 * @param newDeck
-	 *            Game to be updated TODO: Need model for game data
 	 */
 	public void updateDeck(Deck newDeck) {
 		logger.log(Level.INFO,"Updating " + newDeck.getName() + " to server");
