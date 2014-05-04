@@ -166,6 +166,10 @@ public class CardPanel extends JPanel implements IDataField {
 		repaint();
 		
 	}
+	
+	public int getNumberCards(){
+		return cards.size();
+	}
 
 	public List<CardImage> getCards() {
 		return cards;
