@@ -44,11 +44,12 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
-		if (System.getProperty("os.name").contains("Linux") || System.getProperty("os.name").contains("Mac"))
+		if (System.getProperty("os.name").contains("Linux") || System.getProperty("os.name").contains("Mac")) {
 			setPreferredSize(new Dimension(370 ,50));
-		else
+		}
+		else {
 			setPreferredSize(new Dimension(400 ,50));
-		
+		}
 		
 	   try {
 	        Image img = ImageIO.read(getClass().getResource("Start_game_button.png"));

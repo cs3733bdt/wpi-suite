@@ -110,8 +110,9 @@ public class ActiveCardsPanel extends JPanel{
 	public void subIDK() {
 		sum = 0;
 		for (CardButton card: JToggleButtonList) {
-			if (card.isSelected())
+			if (card.isSelected()) {
 				sum += Integer.parseInt(card.getValue());
+			}
 		}
 		logger.log(Level.INFO,"I don't know is deselected.");
 	}

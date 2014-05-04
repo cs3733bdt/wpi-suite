@@ -186,8 +186,9 @@ public class RequirementModel extends AbstractListModel {
 	public void addRequirements(Requirement[] requirements) {
 		for (int i = 0; i < requirements.length; i++) {
 			this.requirements.add(requirements[i]);
-			if (requirements[i].getId() >= nextID)
+			if (requirements[i].getId() >= nextID) {
 				nextID = requirements[i].getId() + 1;
+			}
 		}
 		this.fireIntervalAdded(this, 0, Math.max(getSize() - 1, 0));
 		// ViewEventController.getInstance().refreshTable();
@@ -215,8 +216,9 @@ public class RequirementModel extends AbstractListModel {
 		List<Requirement> children = new ArrayList<Requirement>();
 
 		for (Requirement possibleChild : requirements) {
-			if (possibleChild.getParentID() == requirement.getId())
+			if (possibleChild.getParentID() == requirement.getId()) {
 				children.add(possibleChild);
+			}
 		}
 
 		return children;
@@ -234,14 +236,17 @@ public class RequirementModel extends AbstractListModel {
 		DefaultListModel<Requirement> possibleChildren = new DefaultListModel<Requirement>();
 
 		for (Requirement possChild : requirements) {
-			if (possChild.isAncestor(req.getId())
-					|| possChild.getParentID() != -1)
+			if (possChild.isAncestor(req.getId()) 
+					|| possChild.getParentID() != -1) {
 				continue;
-			if (possChild == req)
+			}
+			if (possChild == req) {
 				continue;
+			}
 			if (possChild.getStatus() == RequirementStatus.COMPLETE
-					|| possChild.getStatus() == RequirementStatus.DELETED)
+					|| possChild.getStatus() == RequirementStatus.DELETED) {
 				continue;
+			}
 			possibleChildren.addElement(possChild);
 		}
 
@@ -260,13 +265,16 @@ public class RequirementModel extends AbstractListModel {
 		DefaultListModel<Requirement> possibleParents = new DefaultListModel<Requirement>();
 
 		for (Requirement possParent : requirements) {
-			if (possParent.hasAncestor(req.getId()))
+			if (possParent.hasAncestor(req.getId())) {
 				continue;
-			if (possParent == req)
+			}
+			if (possParent == req) {
 				continue;
+			}
 			if (possParent.getStatus() == RequirementStatus.COMPLETE
-					|| possParent.getStatus() == RequirementStatus.DELETED)
+					|| possParent.getStatus() == RequirementStatus.DELETED) {
 				continue;
+			}
 			possibleParents.addElement(possParent);
 		}
 
@@ -285,8 +293,9 @@ public class RequirementModel extends AbstractListModel {
 		List<Requirement> reqForIteration = new LinkedList<Requirement>();
 
 		boolean backlog = false;
-		if (name.trim().length() == 0)
+		if (name.trim().length() == 0) {
 			backlog = true;
+		}
 
 		for (Requirement req : requirements) {
 			if (backlog) {

@@ -35,20 +35,26 @@ public class Vote {
 
 	@Override
 	public boolean equals(Object obj) { //DO NOT REMOVE THIS! THIS IS NESSASARY!
-		if (this == obj)
+		if (this == obj) {
 			return true;
-		if (obj == null)
+		}
+		if (obj == null) {
 			return false;
-		if (getClass() != obj.getClass())
+		}
+		if (getClass() != obj.getClass()) {
 			return false;
+		}
 		Vote other = (Vote) obj;
 		if (username == null) {
-			if (other.username != null)
+			if (other.username != null) {
 				return false;
-		} else if (!username.equals(other.username))
+			}
+		} else if (!username.equals(other.username)) {
 			return false;
-		if (voteNumber != other.voteNumber)
+		}
+		if (voteNumber != other.voteNumber) {
 			return false;
+		}
 		return true;
 	}
 

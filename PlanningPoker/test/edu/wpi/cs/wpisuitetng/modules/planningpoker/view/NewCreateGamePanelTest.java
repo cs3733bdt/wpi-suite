@@ -66,8 +66,7 @@ public class NewCreateGamePanelTest {
 	}
 	
 	@Test
-	public void CreateGameServerConnectionLostTest() {
+	public void CreateGameServerConnectionLostTest() { // $codepro.audit.disable missingAssertInTestMethod
 		createGameTab = new CreateGamePanel(activeGame, true);
-		
 	}
 }

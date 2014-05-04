@@ -88,5 +88,6 @@ public class NameJTextFieldTest {
 	@Test
 	public void testValid(){
 		NameJTextField testerField = new NameJTextField("Name", GameModel.getInstance());
+		//TODO: Add testing for this method
 	}
 }

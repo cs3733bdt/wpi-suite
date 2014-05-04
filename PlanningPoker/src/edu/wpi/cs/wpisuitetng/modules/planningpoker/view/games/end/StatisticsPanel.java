@@ -374,8 +374,9 @@ public class StatisticsPanel extends JScrollPane {
 			}
 		}
 		minEstimate = min;
-		if(min < 0) 
+		if(min < 0) {
 			min = 0;
+		}
 		return min;
 	}
 
@@ -394,8 +395,9 @@ public class StatisticsPanel extends JScrollPane {
 			}
 		}
 		maxEstimate = max;
-		if(max < 0) 
+		if(max < 0) {
 			max = 0;
+		}
 		return max;
 	}
 	/**
@@ -410,10 +412,12 @@ public class StatisticsPanel extends JScrollPane {
 			sum += a.get(i);
 		}
 		mean = sum / ((double) a.size());
-		if(mean>=0)
+		if(mean >= 0) {
 			return mean;
-		else
+		}
+		else {
 			return 0;
+		}
 	}
 
 	/**
@@ -438,10 +442,12 @@ public class StatisticsPanel extends JScrollPane {
 
 		double variance = (sum / (double) numMinusMeanSquared.size());
 		stDev = Math.sqrt(variance);
-		if(stDev>=0)
+		if(stDev >= 0) {
 			return stDev;
-		else
+		}
+		else {
 			return 0;
+		}
 	}
 
 	private double median(List<Integer> votes) {
