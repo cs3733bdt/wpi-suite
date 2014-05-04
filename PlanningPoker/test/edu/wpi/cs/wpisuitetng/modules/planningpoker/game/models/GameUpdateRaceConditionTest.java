@@ -240,7 +240,6 @@ public class GameUpdateRaceConditionTest {
 		
 		// Wait until at least one thread finishes running
 		while(!isFinishedUpdate || !isFinishedVotes){
-			//System.out.println("isFinishedUpdate: " + isFinishedUpdate + " " + j + " , isFinishedVotes: " + isFinishedVotes);
 			try {
 				Thread.sleep(10);					//If this is not here then we hit an infinite loop
 			} catch (InterruptedException e) {

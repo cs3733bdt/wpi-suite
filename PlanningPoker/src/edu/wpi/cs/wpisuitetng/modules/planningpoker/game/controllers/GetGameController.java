@@ -12,6 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Timer;
 
@@ -36,7 +38,8 @@ public class GetGameController implements ActionListener {
 	private static GetGameController instance = null;
 	private Timer timer;
 	private boolean isRunning = false;
-
+	private static final Logger logger = Logger.getLogger(GetGameController.class
+			.getName());
 	/**
 	 * Gets the singleton instance of the GetGameController
 	 * 
@@ -100,11 +103,10 @@ public class GetGameController implements ActionListener {
 	 *            an array of Games received from the server
 	 */
 	public synchronized void receivedGames(Game[] games) {
-		System.out.println("The size of the list returned from the server is: "
+		logger.log(Level.INFO,"The size of the list returned from the server is: "
 				+ games.length);
 		for (Game game : games) {
-			System.out
-					.println("\t" + game.getName() + " " + game.getIdentity());
+			logger.log(Level.INFO,"\t" + game.getName() + " " + game.getIdentity());
 		}
 		// Make sure the response was not null
 		if (games != null) {

@@ -89,7 +89,7 @@ public class AddGameRequestObserver implements RequestObserver {
 				realGame.sendNotifications();
 		}
 
-		System.out.println("The request to add a game has succeeded!");
+		logger.log(Level.INFO,"The request to add a game has succeeded!");
 	}
 
 	/**

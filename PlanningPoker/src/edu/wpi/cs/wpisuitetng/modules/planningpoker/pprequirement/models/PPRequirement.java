@@ -52,7 +52,11 @@ public class PPRequirement extends ObservableModel {
 
 	/** If this requirement came from the requirement manager module */
 	private boolean fromRequirementModule = false;
+
 	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
+
+	private static final Logger logger = Logger.getLogger(PPRequirement.class
+
 			.getName());
 	/** list of votes for this requirement */
 	private List<Vote> votes = new ArrayList<Vote>() {
@@ -548,8 +552,7 @@ public class PPRequirement extends ObservableModel {
 		while (GameModel.getInstance().isServerUpdating()) {
 			try {
 				Thread.sleep(5);
-				System.out
-						.println("Looping in the reqirement: " + methodCalled);
+				logger.log(Level.INFO,"Looping in the reqirement: " + methodCalled);
 			} catch (InterruptedException e) {
 				logger.log(Level.WARNING, "Thread was interrupted.");
 			}
@@ -564,11 +567,11 @@ public class PPRequirement extends ObservableModel {
 		String currentUser = ConfigManager.getConfig().getUserName();
 		for (Vote v : getVotes()) {
 			if (currentUser.equals(v.getUsername())) {
-				System.out.println("name matches");
+				logger.log(Level.INFO,"name matches");
 				return v.getVoteNumber();
 			}
 		}
-		System.out.println("name does not match");
+		logger.log(Level.INFO,"name does not match");
 		return 0;
 	}
 

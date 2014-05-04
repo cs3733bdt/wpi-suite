@@ -11,6 +11,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers.UpdateGameRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -26,7 +29,8 @@ public class UpdateGameController {
 
 	private static UpdateGameController instance = null;
 	private UpdateGameRequestObserver observer;
-
+	private static final Logger logger = Logger.getLogger(UpdateGameController.class
+			.getName());
 	private UpdateGameController() {
 		observer = new UpdateGameRequestObserver(this);
 	}
@@ -47,7 +51,7 @@ public class UpdateGameController {
 	 * @param newGame
 	 */
 	public void updateGame(Game newGame) {
-		System.out.println("Updating " + newGame.getName() + " to server");
+		logger.log(Level.INFO,"Updating " + newGame.getName() + " to server");
 		// Update request
 		Request request = Network.getInstance().makeRequest(
 				"planningpoker/game", HttpMethod.POST);

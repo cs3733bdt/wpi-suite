@@ -23,6 +23,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -130,6 +132,9 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 
 	private JButton cancelImportReqButton;
 
+	private static final Logger logger = Logger.getLogger(RightHalfCreateGamePanel.class
+			.getName());
+	
 	/**
 	 * Builds the right half of the CreateGamePanel.
 	 * 
@@ -986,7 +991,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 			}
 			if (currentTable.getTableModel().getRowCount() == 0) {
 				removeReqButton.setEnabled(false);
-				System.out.println("Unexpected edit disable 1");
+				logger.log(Level.INFO,"Unexpected edit disable 1");
 				editReqButton.setEnabled(false);
 			}
 			parent.updateButtons();
@@ -1054,7 +1059,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 				if (globalRow == -1) {
 					updateSubmitButton();
 				} else {
-					System.out.println("updating update");
+					logger.log(Level.INFO,"updating update");
 					updateUpdateButton();
 				}
 			}

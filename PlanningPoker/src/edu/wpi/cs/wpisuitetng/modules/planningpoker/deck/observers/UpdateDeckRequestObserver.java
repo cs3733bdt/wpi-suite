@@ -11,6 +11,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.UpdateDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
@@ -29,7 +32,8 @@ public class UpdateDeckRequestObserver implements RequestObserver {
 	 * error messages.
 	 */
 	private final UpdateDeckController controller;
-	
+	private static final Logger logger = Logger.getLogger(UpdateDeckRequestObserver.class
+			.getName());
 	/**
 	 * Constructs an observer for updating games controller
 	 * @param controller updateGameController to be observed
@@ -49,7 +53,7 @@ public class UpdateDeckRequestObserver implements RequestObserver {
 		Deck game = Deck.fromJSON(response.getBody());
 		
 		
-		System.out.println("The request to update a deck has succeeded!");
+		logger.log(Level.INFO,"The request to update a deck has succeeded!");
 	}
 	
 	/**

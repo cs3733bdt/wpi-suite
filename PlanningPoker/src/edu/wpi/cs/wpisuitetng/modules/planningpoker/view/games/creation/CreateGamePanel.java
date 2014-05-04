@@ -14,6 +14,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation;
 import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -49,6 +51,9 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 	private String savedEndDate;
 	private List<PPRequirement> savedRequirements = new ArrayList<PPRequirement>();
 
+	private static final Logger logger = Logger.getLogger(CreateGamePanel.class
+			.getName());
+	
 	/**
 	 * Creates a NewCreateGamePanel with the game setting the fields for the
 	 * panel. This is used to edit an existing game in the model that has not
@@ -195,10 +200,10 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 			saveGame();
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
-			System.out.println("Add Game Pressed Passed.");
+			logger.log(Level.INFO,"Add Game Pressed Passed.");
 			return true;
 		} else {
-			System.out.println("Add Game Pressed Failed.");
+			logger.log(Level.INFO,"Add Game Pressed Failed.");
 			return false;
 		}
 
@@ -215,10 +220,10 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 			readyToClose = true;
 			ViewEventController.getInstance().removeTab(this);
 			ViewEventController.getInstance().joinGame(currentGame);
-			System.out.println("Launch Game Pressed Passed.");
+			logger.log(Level.INFO,"Launch Game Pressed Passed.");
 			return true;
 		} else {
-			System.out.println("Launch Game Pressed Failed.");
+			logger.log(Level.INFO,"Launch Game Pressed Failed.");
 			return false;
 		}
 
@@ -233,7 +238,7 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 			setCurrentGame(false);
 			GameModel.getInstance().addGame(currentGame); // New Game gets added
 															// to the server
-			System.out.println("Launch Game Pressed Passed.");
+			logger.log(Level.INFO,"Launch Game Pressed Passed.");
 		} else {
 			setCurrentGame(false);
 		}

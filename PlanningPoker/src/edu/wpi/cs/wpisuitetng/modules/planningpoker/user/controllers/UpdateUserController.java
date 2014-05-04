@@ -11,6 +11,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.user.controllers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.user.observers.UpdateUserRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -21,7 +24,8 @@ public class UpdateUserController {
 
 	private static UpdateUserController instance = null;
 	private UpdateUserRequestObserver observer;
-
+	private static final Logger logger = Logger.getLogger(UpdateUserController.class
+			.getName());
 	private UpdateUserController() {
 		observer = new UpdateUserRequestObserver(this);
 	}
@@ -43,7 +47,7 @@ public class UpdateUserController {
 	 *            User to be updated
 	 */
 	public void updateUser(User newUser) {
-		System.out.println("Updating " + newUser.getName() + " to server");
+		logger.log(Level.INFO,"Updating " + newUser.getName() + " to server");
 		// Update request
 		Request request = Network.getInstance().makeRequest("core/user",
 				HttpMethod.POST);

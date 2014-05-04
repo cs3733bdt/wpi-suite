@@ -9,6 +9,9 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  * Acceptance test for a specific requirement
@@ -21,7 +24,8 @@ public class AcceptanceTest {
 	private String testName;
 	private String testDescription;
 	private TestStatus testStatus;
-	
+	private static final Logger logger = Logger.getLogger(AcceptanceTest.class
+			.getName());
 	/**
 	 * Constructs a new acceptance test
 	 * @param id the id
@@ -48,7 +52,7 @@ public class AcceptanceTest {
 	 * @param name name of the acceptance test
 	 */
 	public void setName(String name) {
-		System.out.println(name);
+		logger.log(Level.INFO,name);
 		if (name.equals("")) {
 			throw new NullPointerException("Name must not be null");
 		} else {

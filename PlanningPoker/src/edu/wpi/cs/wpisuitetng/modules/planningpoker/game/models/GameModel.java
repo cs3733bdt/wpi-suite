@@ -188,11 +188,11 @@ public class GameModel extends AbstractStorageModel<Game> {
 	 */
 	@Override
 	public void update(ObservableModel o, Object arg) {
-		System.out.println("I'm here with: " + o.toString());
+		logger.log(Level.INFO,"I'm here with: " + o.toString());
 		if (o instanceof Game) {
 			try {
 				UpdateGameController.getInstance().updateGame((Game) o);
-				System.out.println("A game is being updated: "
+				logger.log(Level.INFO,"A game is being updated: "
 						+ ((Game) o).getName());
 				ViewEventController.getInstance().refreshGameTree();
 			} catch (Exception e) {

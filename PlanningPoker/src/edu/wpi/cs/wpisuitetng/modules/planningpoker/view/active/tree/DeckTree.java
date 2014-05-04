@@ -20,6 +20,8 @@ import java.awt.GridBagLayout;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -52,7 +54,8 @@ public class DeckTree extends JPanel implements MouseListener{
 			new DefaultMutableTreeNode("Decks"); //Make master node hold the other 3
 	
 	boolean isCurrentDecksCollapsed = true;
-	
+	private static final Logger logger = Logger.getLogger(DeckTree.class
+			.getName());
 	/**
 	 * Constructor for a DeckTree
 	 */
@@ -87,13 +90,13 @@ public class DeckTree extends JPanel implements MouseListener{
 		deckNode.removeAllChildren();
 		
 		List<Deck> deckList = DeckModel.getInstance().getDecks();//retrieve list of all Decks
-		System.out.println("Numb Decks: " + deckList.size());
+		logger.log(Level.INFO,"Numb Decks: " + deckList.size());
 		for (Deck deck: deckList){
 			DefaultMutableTreeNode newDeckNode = new DefaultMutableTreeNode(deck);
 			deckNode.add(newDeckNode);
 		}
 		
-		System.out.println("Numb Decks: " + deckList.size());
+		logger.log(Level.INFO,"Numb Decks: " + deckList.size());
 
 		
 		deckTree = new JTree(deckNode);
@@ -164,23 +167,21 @@ public class DeckTree extends JPanel implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
-		
-		//System.out.println("Single Click Detected");
-		
+				
 		if(e.getClickCount() == 2){
-			System.out.println("Double Click Detected");
+			logger.log(Level.INFO,"Double Click Detected");
 			TreePath treePath = deckTree.getPathForLocation(x, y);
 			JTree clicked = deckTree;
 			if(treePath == null){
-				System.out.println("Not on DeckTree");
+				logger.log(Level.INFO,"Not on DeckTree");
 			}
 			if(treePath != null){
-				System.out.println("Tree Path valid");
+				logger.log(Level.INFO,"Tree Path valid");
 				DefaultMutableTreeNode node = 
 						(DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
 				if(node != null) {
 					if(node.getUserObject() instanceof Deck){ //Confirm that this is a game
-						System.out.println("Setting view to deck: " + ((Deck)node.getUserObject()).toString());
+						logger.log(Level.INFO,"Setting view to deck: " + ((Deck)node.getUserObject()).toString());
 						ViewEventController.getInstance().viewDeck((Deck)node.getUserObject());
 					}
 					else if(node.getUserObject() instanceof String){

@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 
 public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
@@ -43,7 +44,8 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 700));
+		view.setPreferredSize(new Dimension(1200, 600));
+		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("Create Deck Help");
@@ -82,8 +84,8 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		addingValuesToTheCardsExplanation = new JTextArea();
 		addingValuesToTheCardsExplanation.setText("After the initialization of the deck you will see the cards appear. "
 				+ "To add a value to a card select the text field that is on the card"
-				+ "and enter the desired value for that card. To set this value to the card all you have to do is "
-				+ "deselect the card");
+				+ "and enter the desired value for that card. To set this value to the card and select the next card if appropriate,"
+				+ "all you have to do is click enter");
 
 		addingValuesToTheCardsExplanation.setEditable(false);
 		addingValuesToTheCardsExplanation.setBackground(null);

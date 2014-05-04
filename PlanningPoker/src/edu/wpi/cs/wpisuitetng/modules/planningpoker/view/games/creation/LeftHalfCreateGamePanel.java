@@ -22,6 +22,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JComboBox;
@@ -86,6 +88,9 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 	
 	private Date savedDate;
 
+	private static final Logger logger = Logger.getLogger(LeftHalfCreateGamePanel.class
+			.getName());
+	
 	/**
 	 * Builds the left half of the CreateGamePanel
 	 * 
@@ -458,7 +463,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 	 * @return descriptionTextField
 	 */
 	public String getDescText() {
-		System.out.println(descriptionTextField.getText());
+		logger.log(Level.INFO,descriptionTextField.getText());
 		return descriptionTextField.getText();
 	}
 

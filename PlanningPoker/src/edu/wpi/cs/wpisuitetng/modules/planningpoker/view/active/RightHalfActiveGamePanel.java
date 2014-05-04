@@ -21,6 +21,8 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -73,6 +75,9 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	private JButton clearButton;
 	private int currentRow;
 
+	private static final Logger logger = Logger.getLogger(RightHalfActiveGamePanel.class
+			.getName());
+	
 	RightHalfActiveGamePanel(final Game game, final ActiveGamePanel activeGamePanel) {
 		currentGame = game;
 		build();
@@ -478,15 +483,15 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	public void submitButtonPressed() {
 		if (getGame().doesUseCards()) {
 			submitButton();
-			System.out.println("Submit Vote Pressed Passed");
+			logger.log(Level.INFO,"Submit Vote Pressed Passed");
 		} else {
 			if (validateField(false, false)) {
 				submitButton();
-				System.out.println("Submit Vote Pressed Passed.");
+				logger.log(Level.INFO,"Submit Vote Pressed Passed.");
 				estText.requestFocus();
 				estText.select(estText.getText().length(), estText.getText().length());
 			} else {
-				System.out.println("Submit Vote Pressed Failed.");
+				logger.log(Level.INFO,"Submit Vote Pressed Failed.");
 			}
 		}
 		
@@ -528,7 +533,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		Vote vote = new Vote(currentUser, voteNumber);
 		activeRequirement.addVote(vote);
 
-		System.out.println("You voted: " + vote.getVoteNumber());
+		logger.log(Level.INFO,"You voted: " + vote.getVoteNumber());
 
 		ViewEventController.getInstance().refreshGameTree();
 

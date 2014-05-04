@@ -142,9 +142,9 @@ public class EmailNotification {
 		}
 
 		else {
-			System.out.println("Project: " + g.getProject().getName()
+			logger.log(Level.INFO,"Project: " + g.getProject().getName()
 					+ ", has no users in its team.");
-			System.out.println("No Emails were sent.");
+			logger.log(Level.INFO,"No Emails were sent.");
 		}
 	}
 
@@ -168,7 +168,7 @@ public class EmailNotification {
 		if (user.getEmail() != null) {
 			to = user.getEmail();
 		} else {
-			System.out.println("User: " + user.getName()
+			logger.log(Level.INFO,"User: " + user.getName()
 					+ ", does not have an email stored.");
 		}
 
@@ -204,7 +204,7 @@ public class EmailNotification {
 			try {
 				// Send message
 				Transport.send(message);
-				System.out.println("Sent email successfully....");
+				logger.log(Level.INFO,"Sent email successfully....");
 			} catch (MailConnectException e) {
 				logger.log(Level.WARNING,
 						"Couldn't connect to host, trying again...", e);
@@ -212,7 +212,7 @@ public class EmailNotification {
 					// Waiting 5 seconds and retrying
 					Thread.sleep(5000);
 					Transport.send(message);
-					System.out.println("Sent email successfully....");
+					logger.log(Level.INFO,"Sent email successfully....");
 				} catch (InterruptedException e1) {
 					System.err
 							.println("Can't connect to host; either internet or host is down");
