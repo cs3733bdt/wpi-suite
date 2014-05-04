@@ -98,7 +98,7 @@ public class ActiveCardsPanel extends JPanel{
 	 */
 	public void addToCardSum(int cardValue) {
 		sum += cardValue;
-		logger.log(Level.INFO,Integer.toString(sum));
+		logger.log(Level.INFO, "Sum updated");
 	}
 	
 	public void addIDK() {
@@ -124,7 +124,7 @@ public class ActiveCardsPanel extends JPanel{
 	 */
 	public void decToCardSum(int cardValue) {
 		sum -= cardValue;
-		logger.log(Level.INFO, Integer.toString(sum));
+		logger.log(Level.INFO, "Sum updated");
 	}
 
 

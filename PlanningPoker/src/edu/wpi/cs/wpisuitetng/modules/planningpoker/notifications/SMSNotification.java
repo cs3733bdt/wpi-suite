@@ -123,17 +123,14 @@ public class SMSNotification {
 					if (users[i].getPhoneNumber() != null && !users[i].getPhoneNumber().equals("")) {
 						sendSMS(login(), users[i]);
 					} else {
-						logger.log(Level.WARNING,users[i].getName()
-								+ " doesn't have an phone number Stored.");
+						logger.log(Level.WARNING, "User doesn't have an phone number Stored.");
 					}
 				} else {
-					logger.log(Level.WARNING,users[i].getName()
-							+ " doesn't want to receive text notifications");
+					logger.log(Level.WARNING, "User doesn't want to receive text notifications");
 				}
 			}
 		} else {
-			logger.log(Level.INFO, "Project: " + g.getProject().getName()
-					+ ", has no users in its team.");
+			logger.log(Level.INFO, "A Project has no users in its team.");
 			logger.log(Level.INFO, "No SMS messages were sent.");
 		}
 	}
@@ -228,8 +225,7 @@ public class SMSNotification {
 					} catch (InterruptedException e1) {
 						logger.log(Level.WARNING,"Can't connect to host; "
 								+ "either internet or host is down");
-						logger.log(Level.WARNING,"Users won't get messages for game: "
-										+ g.getName());
+						logger.log(Level.WARNING, "Users won't get messages for game");
 						e1.printStackTrace();
 					}
 				}
@@ -237,8 +233,7 @@ public class SMSNotification {
 				mex.printStackTrace();
 			}
 		} else {
-			logger.log(Level.INFO, "User: " + user.getName()
-					+ ", does not have a phone number stored.");
+			logger.log(Level.INFO, "User does not have a phone number stored.");
 		}
 	}
 

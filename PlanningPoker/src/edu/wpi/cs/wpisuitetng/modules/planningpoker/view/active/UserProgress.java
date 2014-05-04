@@ -37,8 +37,8 @@ public class UserProgress extends JPanel {
 	private UserProgressList parentPanel;
 	
 	public UserProgress(String name, UserProgressList parent){
-		this.username = name;
-		this.parentPanel = parent;
+		username = name;
+		parentPanel = parent;
 		build();
 	}
 	
