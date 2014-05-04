@@ -114,8 +114,11 @@ public class StatisticsPanel extends JScrollPane {
 		voteTable.getTableHeader().setReorderingAllowed(false);
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(activeRequirement);
+//		statTable.setPreferredSize(new Dimension(50, 25));
 
 		JScrollPane statsPanel = new JScrollPane(statTable);
+		//statTable.setPreferredSize(new Dimension(50, 25));
+
 		JScrollPane votePanel = new JScrollPane(voteTable);
 		JScrollPane descPanel = new JScrollPane(userStoryDesc);
 
@@ -170,7 +173,7 @@ public class StatisticsPanel extends JScrollPane {
 		userStoryDesc.setLineWrap(true);
 
 		descPanel.setPreferredSize(new Dimension(580, 100));
-		statsPanel.setPreferredSize(new Dimension(580, 60));
+		statsPanel.setPreferredSize(new Dimension(580, 39));
 
 		// Label for Desc
 		layout.putConstraint(SpringLayout.NORTH, descLabel, 5,
