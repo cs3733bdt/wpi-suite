@@ -20,6 +20,7 @@ import java.util.logging.Logger;
 import javax.swing.AbstractListModel;
 
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
+import edu.wpi.cs.wpisuitetng.modules.core.models.Project;
 
 /**
  * @author jonathanleitschuh
@@ -35,6 +36,8 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 		extends AbstractListModel<T> implements IModelObserver, IModelValidate {
 	/** The list that holds all of the elements in this database */
 	protected final List<T> list;
+	
+	private  Project currentProject = null;
 
 	/** If the server is updating this model */
 	protected boolean serverUpdating = false;
@@ -69,6 +72,10 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 				e.printStackTrace();
 			}
 		}
+		if(currentProject != null){
+			object.setProject(currentProject);
+		}
+		
 		list.add(object);
 		object.addObserver(this);
 		this.fireIntervalAdded(this, 0, 0);
@@ -145,6 +152,12 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 	 */
 	protected synchronized boolean updateModels(T[] allModels) {
 		boolean changes = false;
+		
+		for(T a:allModels){
+			if(a.getProject() != null){
+				currentProject = a.getProject();
+			}
+		}
 
 		if (!isUpdating()) {
 			serverUpdating = true;

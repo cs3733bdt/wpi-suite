@@ -8,7 +8,6 @@
  *
  * Contributors: Team Bobby Drop Tables
  *******************************************************************************/
-
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation;
 
 import java.awt.BorderLayout;
@@ -713,7 +712,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	public void updateButtons() {
 		
 		//FOR ENABLING THE SAVE GAME BUTTON
-		if (validateField(errorField,true, false)) {
+		if (validateField(errorField,false, false)) {
 			saveButtonPanel.getSaveDeckButton().setEnabled(true);
 		} 
 		else {
