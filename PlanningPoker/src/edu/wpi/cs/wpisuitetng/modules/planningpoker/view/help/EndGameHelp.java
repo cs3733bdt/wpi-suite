@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 
 public class EndGameHelp extends JScrollPane implements IHelpPanel {
@@ -43,7 +44,8 @@ public class EndGameHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 775));
+		view.setPreferredSize(new Dimension(1000, 775));
+		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("End Game Help");
@@ -58,9 +60,8 @@ public class EndGameHelp extends JScrollPane implements IHelpPanel {
 		
 		//Add the explanation for the end game image
 		endGameExplanation = new JTextArea();
-		endGameExplanation.setText("After ending a game, the name, description, creator of the "
-				+ "game, the date and time the game ended, and the list of requirements voted on "
-				+ "in the game. Clicking one of the requirements will display the game statistics "
+		endGameExplanation.setText("The left half displays information about the game and a list of the requirements "
+				+ "that were voted on in the game. Clicking one of the requirements will display the game statistics "
 				+ "on the right side of the panel.");
 		
 		endGameExplanation.setEditable(false);
@@ -77,10 +78,10 @@ public class EndGameHelp extends JScrollPane implements IHelpPanel {
 		
 		//Add the explanation for the statistics image
 		statsExplanation = new JTextArea();
-		statsExplanation.setText("This displays the description of the requirement, how many "
-				+ "people voted on the requirement, the mean, standard "
-				+ "deviation, median, min and max of all the votes and what each user voted. "
-				+ "The creator of the game is able to set the final estimate for the requirement.");
+		statsExplanation.setText("The right half displays statistics the description of the selected requirement,"
+				+ "as well as statistics on the estimates. \"I don't know\" counts as a 0 for statistics calculations."
+				+ "The creator of the game is able to submit a final estimate for the requirement at the bottom."
+				+ "This will get saved in the requirement manager.");
 		
 		statsExplanation.setEditable(false);
 		statsExplanation.setBackground(null);

@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 
 /**
@@ -61,10 +62,11 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 1780));
+		view.setPreferredSize(new Dimension(1100, 1780));
+		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		//Add the heading label to the Panel
-		headingLabel = new JLabel("Create Game Help");
+		headingLabel = new JLabel("Create and Edit Game Help");
 		headingLabel.setFont(makeFont(8));
 
 //		//Add explanation for creating games
@@ -152,12 +154,9 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		//Add explanation to fourth image, importing a requirement
 		importRequirementsExplanation = new JTextArea();
 		importRequirementsExplanation.setText("You can import requirements from the requirements "
-				+ "manager into the Planning Poker game. You can select one or more requirements by "
-				+ "using Ctrl + left mouse click and add all of the selected requirements to the "
-				+ "game all at once by clicking the Import button. Hitting Cancel will bring you "
-				+ "back to the list of Current Requirements in the game. You can import more requirements "
-				+ "from the requirements manager afterwards, but if there are no more unique "
-				+ "requirements, then an error message will display saying there are no requirements "
+				+ "manager into the Planning Poker game. Hitting Cancel will bring you "
+				+ "back to the list of Current Requirements in the game.  Ctrl + Click, Shift + Arrow Keys, "
+				+ "and clicking and dragging will all allow you to select multiple requirements. "
 				+ "to import and you will be forced to either exit the game or hit the cancel button.");
 		
 		importRequirementsExplanation.setEditable(false);

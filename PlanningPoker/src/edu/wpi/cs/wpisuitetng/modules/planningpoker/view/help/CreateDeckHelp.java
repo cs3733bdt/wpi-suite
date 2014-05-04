@@ -44,7 +44,7 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(1200, 600));
+		view.setPreferredSize(new Dimension(1100, 600));
 		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		//Add the heading label to the Panel
@@ -64,7 +64,7 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		setUpCardsExplanation.setText("To start making a deck you have to enter the Name of the deck "
 				+ "you want created, and optionally, you can enter a Description of that deck. The Selection Type allows "
 				+ "you to be able to select either multiple cards or just a single card when voting. Selecting multiple cards "
-				+ "adds up all of the cards that yo select and puts that as your total. The next step is to select the muber of cards that you want in your deck,"
+				+ "adds up all of the cards that yo select and puts that as your total. The next step is to select the number of cards that you want in your deck,"
 				+ " and then it gives you the option of changing the color of your cards. "
 				+ "Finally you can choose whether or not to have an 'I dont know' button as an option when voting.");
 
