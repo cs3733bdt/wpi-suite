@@ -47,7 +47,7 @@ public class PreferencesButtonPanel extends ToolbarGroupView{
 			setPreferredSize(new Dimension(172,50));
 		}
 		else {
-			setPreferredSize(new Dimension(159,50));
+			setPreferredSize(new Dimension(157,50));
 		}
 
 		preferencesIcon.setHorizontalAlignment(SwingConstants.CENTER);

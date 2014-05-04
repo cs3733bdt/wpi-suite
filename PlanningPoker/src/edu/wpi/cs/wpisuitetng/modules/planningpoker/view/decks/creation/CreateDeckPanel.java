@@ -60,8 +60,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.NumberJTextF
  * The panel for the deck creation process Used to allow the user to create a
  * new deck by filling out the indicated fields
  */
-public class CreateDeckPanel extends JScrollPane implements IDataField,
-		IValidateButtons, ICreateDeckPanel {
+public class CreateDeckPanel extends JScrollPane implements IDataField, IValidateButtons, ICreateDeckPanel {
 	
 	/** The Logger for this class */
 	private static final Logger logger = Logger.getLogger(CreateDeckPanel.class.getName());
@@ -240,7 +239,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		radioButtonsPanel.add(multipleSelection);
 		/* Layout changes of radio button label/fields in radioButtonsPanel */
 		radioSpring.putConstraint(SpringLayout.WEST,
-				selectionLabelPanel, 12, SpringLayout.WEST,
+				selectionLabelPanel, 19, SpringLayout.WEST,
 				radioButtonsPanel);
 		radioSpring.putConstraint(SpringLayout.NORTH, selectionLabelPanel, 2,
 				SpringLayout.NORTH, radioButtonsPanel);
@@ -280,6 +279,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 				dynamicCardPanel(); 
 				cardsPanel2.revalidate();
 				cardsPanel2.repaint();
+				updateButtons();
 			}
 		});
 		addMouseListenerToNumberOfCardsSubmitButton(submitNumCards);
@@ -412,7 +412,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		/* error label */
 		errorField.setMinimumSize(new Dimension(150, 25));
 		errorField.setForeground(Color.RED);
-		errorField.setText("Name is required");
 
 		/* Add components to the container */
 		view.add(nameLabel);
@@ -560,15 +559,25 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * @return true If all fields are valid and the window is ready to be removed
 	 */
 	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
-		boolean areCardsValid = cardsPanel2.validateField(warningField, showLabel, showBox);
-		
-		//Note from Police: We do not need to validate the description field. Descriptions are not required
-		
+		boolean areCardsValid = cardsPanel2.validateField(warningField, showLabel, showBox);		
 		boolean isNumCardsValid = numCards.validateField(warningField, showLabel, showBox);
-		
 		boolean isNameValid = nameTextField.validateField(warningField, showLabel, showBox);
 		
-		
+		if(numCards.getText().equals("0") || cardsPanel2.getNumberCards() == 0){
+			isNumCardsValid = false;
+			if(showLabel){
+				errorField.setText("Your deack must have at least 1 card");
+			}
+			if(showBox){
+				numCards.setBorder(BorderFactory.createLineBorder(Color.RED));
+			}
+		}
+		else{
+			errorField.setText("");
+			areCardsValid = cardsPanel2.validateField(warningField, showLabel, showBox);			
+			isNumCardsValid = numCards.validateField(warningField, showLabel, showBox);
+			isNameValid = nameTextField.validateField(warningField, showLabel, showBox);
+		}
 		//If the name is valid and the number of cards is valid and the card panel is valid
 		return isNameValid && isNumCardsValid && areCardsValid;
 	}
