@@ -146,4 +146,7 @@ public class RequirementTable extends JTable{
 		
 	}
 
+	public PPRequirement getReq(int index){
+		return reqList.get(index);
+	}
 }
