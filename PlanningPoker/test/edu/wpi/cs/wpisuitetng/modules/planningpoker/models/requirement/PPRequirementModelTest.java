@@ -19,14 +19,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
 import edu.wpi.cs.wpisuitetng.network.configuration.NetworkConfiguration;
 
 public class PPRequirementModelTest {
-	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
+	private static final Logger logger = Logger.getLogger(PPRequirementModelTest.class.getName());
 	PPRequirementModel model;
 	PPRequirement req1, req2, req3, req4, req5;
 	PPRequirement[] reqsArray;

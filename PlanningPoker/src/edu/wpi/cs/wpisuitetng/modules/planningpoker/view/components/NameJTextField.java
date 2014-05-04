@@ -19,9 +19,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelValidate;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 
 /**
  * creates a textbox which allows a user to input a name for a game. the textbox
