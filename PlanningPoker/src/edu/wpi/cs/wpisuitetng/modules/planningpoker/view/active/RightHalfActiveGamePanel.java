@@ -553,7 +553,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 
 		getEstimateText().setBorder(defaultBorder);
 		updateSavedEstimateLabel();
-		getNextRow();
+		selectNextRow();
 		estText.setText("");
 		if (!getGame().doesUseCards()) {
 			submitButton.setEnabled(false);
@@ -630,7 +630,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		return table;
 	}
 	
-	private void getNextRow() {
+	private void selectNextRow() {
 		int nextRow;
 		if (currentRow < table.getRowCount()-1){
 			nextRow = currentRow + 1;

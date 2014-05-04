@@ -49,7 +49,7 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 				  leftHalf.updateOverallProgress();  
 				  List<UserProgress> usersProgress = leftHalf.getUsersProgressPanel().getUserProgressList();
 				  for(UserProgress u : usersProgress){
-					  u.setProgressBarValue();
+					  u.updateProgressBarValue();
 				  }
 				  rightHalf.updateVoteColumn();
 			  }

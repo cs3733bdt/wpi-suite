@@ -191,12 +191,12 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 
 		cardsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setDeckOptionsVisibility();
+				deckOptionsVisibility();
 			}
 		});
 		textEntryButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				setDeckOptionsVisibility();
+				deckOptionsVisibility();
 			}
 		});
 
@@ -606,7 +606,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 		return (Deck) deckDropDown.getSelectedItem();
 	}
 
-	private void setDeckOptionsVisibility() {
+	private void deckOptionsVisibility() {
 		if (cardsButton.isSelected()) {
 			leftView.setPreferredSize(new Dimension(360, 445));
 			deckDropDownPanel.setVisible(true);
