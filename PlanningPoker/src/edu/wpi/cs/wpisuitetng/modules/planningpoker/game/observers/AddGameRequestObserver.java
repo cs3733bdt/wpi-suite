@@ -14,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
@@ -38,7 +37,7 @@ public class AddGameRequestObserver implements RequestObserver {
 	 */
 	private final AddGameController controller;
 	private final Game theGame;
-	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
+	private static final Logger logger = Logger.getLogger(AddGameRequestObserver.class
 			.getName());
 
 	/**

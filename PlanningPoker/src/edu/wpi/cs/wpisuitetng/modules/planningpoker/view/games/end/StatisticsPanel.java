@@ -36,7 +36,6 @@ import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
@@ -53,7 +52,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 public class StatisticsPanel extends JScrollPane {
 	Game activeGame;
 	PPRequirement activeRequirement;
-	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
+	private static final Logger logger = Logger.getLogger(StatisticsPanel.class
 			.getName());
 	/**
 	 * Set the userStoryDesc equal to the description of the requirement being
