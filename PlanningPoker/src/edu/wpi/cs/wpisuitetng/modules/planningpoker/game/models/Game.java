@@ -682,12 +682,6 @@ public class Game extends ObservableModel implements IModelObserver,
 			notifyObservers(arg);
 			logger.log(Level.INFO, "Game notified of update ");
 		}
-
-		/*logger.log(Level.INFO,"Game: " + identity + " has " + countObservers()
-				+ " observers");
-		if (countObservers() > 0) {
-			logger.log(Level.INFO,"\t" + this.getObserver(0));
-		}*/
 	}
 
 	public Date getEndDate() {

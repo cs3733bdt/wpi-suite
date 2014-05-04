@@ -125,15 +125,17 @@ public class EmailNotification {
 		if (users[0] != null) {
 			// Send email to each user
 			for (int i = 0; i < users.length; i++) {
-				if (users[i].getNotificationPreferences().contains("E"))
+				if (users[i].getNotificationPreferences().contains("E")) {
 					if (users[i].getEmail() != null && !users[i].getEmail().equals("")) {
 						sendEmail(login(), users[i]);
 					} else {
 						logger.log(Level.WARNING, "User doesn't have an email Stored.");
 					}
+				}
 				else {
 					logger.log(Level.WARNING,  "User doesnt want to receive email notifications.");
 				}
+				
 			}
 		}
 

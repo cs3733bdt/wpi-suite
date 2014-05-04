@@ -198,8 +198,9 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement> impleme
 			if (!this.requirements.contains(requirements[i].getId())
 					&& !requirements[i].getFromRequirementModule()) {
 				this.requirements.add(requirements[i]);
-				if (requirements[i].getId() >= nextID)
+				if (requirements[i].getId() >= nextID) {
 					nextID = requirements[i].getId() + 1;
+				}
 			} else if (requirements[i].getFromRequirementModule()
 					&& !requirements[i].existsIn(this.requirements)) {
 				this.requirements.add(requirements[i]);
