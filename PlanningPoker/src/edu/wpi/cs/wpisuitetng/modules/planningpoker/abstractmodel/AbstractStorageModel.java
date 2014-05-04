@@ -201,7 +201,7 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 			for (T a : updatedModels) {
 				log.append("\t" + a.getName() + "\n");
 			}
-			logger.log(Level.INFO, log.toString());
+			logger.log(Level.INFO, log.toString().trim());
 			
 			if(isUpdating()){
 				logger.log(Level.WARNING, getClass().getName().trim() +"'s isUpdating() may have been set durring the copy over. Please check your logic. Changed:");
