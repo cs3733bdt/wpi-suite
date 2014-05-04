@@ -59,6 +59,12 @@ public class UserProgressList extends JScrollPane {
 				view.add(o);
 				return super.add(o);
 			}
+			
+			@Override
+			public void clear(){
+				view.removeAll();
+				super.clear();
+			}
 		};
 		
 		build();
@@ -117,6 +123,13 @@ public class UserProgressList extends JScrollPane {
 	
 	public int getHeight(){
 		return heightBasedOnUserNumber;
+	}
+	
+	public void updateProgress(){
+		userProgressList.clear();
+		revalidate();
+		repaint();
+		build();
 	}
 	
 }

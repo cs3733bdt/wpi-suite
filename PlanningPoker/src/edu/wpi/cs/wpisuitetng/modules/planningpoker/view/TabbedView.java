@@ -736,14 +736,12 @@ public class TabbedView extends JTabbedPane {
 	public void updateActiveGame(Game game) {
 		// Attempt to find the game in the active panels list
 		for (IActiveGamePanel gameSearch : listOfActiveGamePanels) {
-			if (game.getIdentity().equals(gameSearch.getGame().getIdentity())
-					&& !game.equals(gameSearch.getGame())) {
-				setSelectedComponent((Component) gameSearch);
+			if (game.identify(gameSearch.getGame())) { //If the game we are updating currently is being viewed in a panel
 				gameSearch.updateActiveGame(game);
-				ViewEventController.getInstance().enableHelpButton();
+				//ViewEventController.getInstance().enableHelpButton();
 				invalidate();
 				repaint();
-				return; // The game has been found and made active. Done!
+				//return; // The game has been found and made active. Done!
 			}
 		}
 		/*

@@ -372,4 +372,13 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 			}
 		});
 	}
+
+	/**
+	 * This method causes the progress bar to update itself when called
+	 */
+	public void updateActiveGame() {
+		usersProgressPanel.updateProgress();
+		revalidate();
+		repaint();
+	}
 }
