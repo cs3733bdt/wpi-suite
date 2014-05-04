@@ -110,6 +110,8 @@ public class StatisticsPanel extends JScrollPane {
 
 		statTable = new EndGameTable(EndGameTableMode.STATISTIC);
 		voteTable = new EndGameTable(EndGameTableMode.VOTE);
+		statTable.getTableHeader().setReorderingAllowed(false);
+		voteTable.getTableHeader().setReorderingAllowed(false);
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(activeRequirement);
 
