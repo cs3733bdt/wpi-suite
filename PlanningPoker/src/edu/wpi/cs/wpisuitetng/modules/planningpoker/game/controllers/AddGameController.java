@@ -55,7 +55,7 @@ public class AddGameController {
 	 *            is the game to add to the server
 	 */
 	public void addGame(Game newGame) {
-		logger.log(Level.INFO,"Adding: " + newGame.getName() + " to server");
+		logger.log(Level.INFO,"Adding game to server");
 		final Request request = Network.getInstance().makeRequest(
 				"planningpoker/game", HttpMethod.PUT);
 		request.setBody(newGame.toJSON());

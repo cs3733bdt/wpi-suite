@@ -47,7 +47,7 @@ public class UpdateUserController {
 	 *            User to be updated
 	 */
 	public void updateUser(User newUser) {
-		logger.log(Level.INFO,"Updating " + newUser.getName() + " to server");
+		logger.log(Level.INFO,"Updating user on server");
 		// Update request
 		Request request = Network.getInstance().makeRequest("core/user",
 				HttpMethod.POST);

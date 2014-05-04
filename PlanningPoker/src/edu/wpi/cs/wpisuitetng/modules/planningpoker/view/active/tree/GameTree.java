@@ -109,7 +109,7 @@ public class GameTree extends JPanel implements MouseListener{
 		
 		List<Game> gameList = 
 				sortGames(GameModel.getInstance().getGames());//retrieve list of all games
-		logger.log(Level.INFO,"Numb Games: " + gameList.size());
+		logger.log(Level.INFO, "Numb games checked ");
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
@@ -129,7 +129,7 @@ public class GameTree extends JPanel implements MouseListener{
 		gameNode.add(inactive);
 		gameNode.add(active);
 		gameNode.add(history);
-		logger.log(Level.INFO,"Numb Games: " + gameList.size());
+		logger.log(Level.INFO,"Numb games checked ");
 
 		
 		gameTree = new JTree(gameNode);

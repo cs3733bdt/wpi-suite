@@ -51,7 +51,7 @@ public class UpdateGameController {
 	 * @param newGame
 	 */
 	public void updateGame(Game newGame) {
-		logger.log(Level.INFO,"Updating " + newGame.getName() + " to server");
+		logger.log(Level.INFO,"Updating game on server");
 		// Update request
 		Request request = Network.getInstance().makeRequest(
 				"planningpoker/game", HttpMethod.POST);

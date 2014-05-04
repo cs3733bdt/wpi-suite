@@ -119,8 +119,6 @@ public class PPRequirementEntityManagerTest {
 				new ArrayList<PPRequirement>(Arrays.asList(reqArrayDatabase));
 		
 		for(PPRequirement r: reqsArrayListDatabase) {
-			logger.log(Level.INFO,"Database : " + r.getName());
-			logger.log(Level.INFO,"Database : " + r.getIdentity());
 			identitiesArrayDatabase.add(r.getIdentity().toString());
 		}
 		
@@ -128,8 +126,6 @@ public class PPRequirementEntityManagerTest {
 				new ArrayList<PPRequirement>(Arrays.asList(allReqs));
 		
 		for(PPRequirement req: allReqsArrayList) {
-			logger.log(Level.INFO,"Test : " + req.getName());
-			logger.log(Level.INFO,"Database : " + req.getIdentity());
 			identitiesArrayTest.add(req.getIdentity().toString());
 		}
 		

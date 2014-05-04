@@ -192,8 +192,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 		if (o instanceof Game) {
 			try {
 				UpdateGameController.getInstance().updateGame((Game) o);
-				logger.log(Level.INFO,"A game is being updated: "
-						+ ((Game) o).getName());
+				logger.log(Level.INFO,"A game is being updated ");
 				ViewEventController.getInstance().refreshGameTree();
 			} catch (Exception e) {
 				logger.log(Level.WARNING,

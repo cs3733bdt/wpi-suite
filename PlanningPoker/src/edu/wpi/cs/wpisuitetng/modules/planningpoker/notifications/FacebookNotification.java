@@ -112,17 +112,14 @@ public class FacebookNotification {
 					if (users[i].getFacebookUsername() != null && !users[i].getFacebookUsername().equals("") ) {
 						sendFacebookNotification(connection, users[i]);
 					} else {
-						logger.log(Level.WARNING,users[i].getName()
-								+ " doesn't have a facebook Username Stored.");
+						logger.log(Level.WARNING, "User doesn't have a facebook Username Stored.");
 					}
 				} else {
-					logger.log(Level.WARNING,users[i].getName()
-									+ " doesn't want to receive facebook notifications");
+					logger.log(Level.WARNING, "User doesn't want to receive facebook notifications");
 				}
 			}
 		} else {
-			logger.log(Level.WARNING,"There are no users on the team of Project: "
-					+ g.getProject().getName());
+			logger.log(Level.WARNING,"There are no users on project team");
 		}
 	}
 
@@ -160,8 +157,7 @@ public class FacebookNotification {
 				e.printStackTrace();
 			}
 		} else {
-			logger.log(Level.WARNING,"User: " + user.getName()
-					+ " does not have a valid facebook username stored.");
+			logger.log(Level.WARNING, "User does not have a valid facebook username stored.");
 		}
 	}
 

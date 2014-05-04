@@ -103,7 +103,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			name = toCopyFrom.name;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.INFO, "Name copied " + name.trim());
+			logger.log(Level.INFO, "Name copied ");
 		}
 
 		if (!description.equals(toCopyFrom.description)) {
@@ -254,7 +254,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			//makeChanged();
 		}
 		if(hasChanged()){
-			logger.log(Level.WARNING, "hasChanges may have been set in " + getName().trim() + " durring the copy over. Please check your logic.");
+			logger.log(Level.WARNING, "hasChanges may have been set in game during the copy over. Please check your logic.");
 		}
 
 		return wasChanged;
@@ -676,18 +676,18 @@ public class Game extends ObservableModel implements IModelObserver,
 				UpdatePPRequirementController.getInstance().updateRequirement(
 						(PPRequirement) o);
 			} catch (NullPointerException e){
-				logger.log(Level.WARNING, "The network is not instatntiated");
+				logger.log(Level.WARNING, "The network is not instantiated");
 			}
 			makeChanged();
 			notifyObservers(arg);
-			logger.log(Level.INFO, "Game notified of update for: " + ((PPRequirement) o).getName());
+			logger.log(Level.INFO, "Game notified of update ");
 		}
 
-		logger.log(Level.INFO,"Game: " + name + " has " + countObservers()
+		/*logger.log(Level.INFO,"Game: " + identity + " has " + countObservers()
 				+ " observers");
 		if (countObservers() > 0) {
 			logger.log(Level.INFO,"\t" + this.getObserver(0));
-		}
+		}*/
 	}
 
 	public Date getEndDate() {

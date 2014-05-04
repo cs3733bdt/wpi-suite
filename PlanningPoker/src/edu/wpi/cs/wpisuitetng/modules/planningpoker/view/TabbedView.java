@@ -562,8 +562,6 @@ public class TabbedView extends JTabbedPane {
 
 		int tabCount = getTabCount();
 
-		logger.log(Level.INFO,"THE TAB COUNT IS:" + tabCount);
-
 		for (int i = tabCount - 1; i > 0; i--) {
 			Component toBeRemoved = getComponentAt(i);
 
