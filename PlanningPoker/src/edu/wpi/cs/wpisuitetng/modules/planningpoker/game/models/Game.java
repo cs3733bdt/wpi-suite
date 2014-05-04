@@ -85,7 +85,7 @@ public class Game extends ObservableModel implements IModelObserver,
 	/** Holds the deck for this game */
 	private Deck deck;
 	/** Holds the logger for this class */
-	private static Logger logger = Logger.getLogger(Game.class.getName());
+	private static final Logger logger = Logger.getLogger(Game.class.getName());
 
 	/**
 	 * Copies all of the values from the given Game to this Game.
