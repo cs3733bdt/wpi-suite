@@ -369,6 +369,8 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		usersProgressPanel.updateProgress();
 		revalidate();
 		repaint();
+	}
+	
 	
 	private void UpdateOverallProgress(){
 		int i = overallProgress.getValue();
