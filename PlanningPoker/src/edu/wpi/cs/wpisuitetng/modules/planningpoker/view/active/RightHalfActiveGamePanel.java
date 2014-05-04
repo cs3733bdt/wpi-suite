@@ -74,6 +74,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	private Font largeFont;
 	private JButton clearButton;
 	private int currentRow;
+	private String displayVote;
 
 	private static final Logger logger = Logger.getLogger(RightHalfActiveGamePanel.class
 			.getName());
@@ -131,8 +132,14 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 					errorField.setText("");
 					estText.requestFocus();
 					estText.select(0, 0);
+					
+					if(activeRequirement.userVote() == -8008135) {
+						displayVote = "?";
+					} else {
+						displayVote = Integer.toString(activeRequirement.userVote());
+					}
 
-					previousEst.setText("Your saved estimate is: " + activeRequirement.userVote());
+					previousEst.setText("Your saved estimate is: " + displayVote);
 					previousEst.setFont(largeFont);
 
 					try {
@@ -182,7 +189,14 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		previousEst = new JLabel();
 
 		PPRequirement firstRequirement = table.getSelectedReq();
-		previousEst.setText("Your saved estimate is: " + firstRequirement.userVote());
+		
+		if(firstRequirement.userVote() == -8008135) {
+			displayVote = "?";
+		} else {
+			displayVote = Integer.toString(firstRequirement.userVote());
+		}
+		
+		previousEst.setText("Your saved estimate is: " + displayVote);
 		previousEst.setFont(largeFont);
 		sum = 0;
 		deck = currentGame.getDeck();
