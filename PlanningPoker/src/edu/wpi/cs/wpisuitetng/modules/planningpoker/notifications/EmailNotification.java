@@ -246,12 +246,14 @@ public class EmailNotification {
 	private String generateEndGameMessage() {
 		String stats = "";
 		ArrayList<Integer> voteArray = new ArrayList<Integer>();
-		int idks = 0;
+		int idks;
 
 		for (PPRequirement r : g.getRequirements()) {
-
+				
+			idks = 0;
+			
 			for (int i = 0; i < r.getVotes().size(); i++) {
-				if(r.getVotes().get(i).getVoteNumber() == -8008135) {
+				if(r.getVotes().get(i).getVoteNumber() != -8008135) {
 					voteArray.add(r.getVotes().get(i).getVoteNumber());
 				} else {
 					idks++;
