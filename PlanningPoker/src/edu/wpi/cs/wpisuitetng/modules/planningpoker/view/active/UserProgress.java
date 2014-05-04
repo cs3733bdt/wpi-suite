@@ -11,13 +11,18 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
-import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.SpringLayout;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 public class UserProgress extends JPanel {
 	
@@ -27,8 +32,11 @@ public class UserProgress extends JPanel {
 	
 	private String username;
 	
-	public UserProgress(String name){
+	private UserProgressList parentPanel;
+	
+	public UserProgress(String name, UserProgressList parent){
 		this.username = name;
+		this.parentPanel = parent;
 		build();
 	}
 	
@@ -38,6 +46,7 @@ public class UserProgress extends JPanel {
 		
 		userNameLabel = new JLabel(username);
 		userNameLabel.setPreferredSize(new Dimension(80, 20));
+		addMouseListenerToProgressLabel(userNameLabel);
 		
 		userProgress.setStringPainted(true);
 		
@@ -53,5 +62,44 @@ public class UserProgress extends JPanel {
 		layout.putConstraint(SpringLayout.SOUTH, userProgress, 0, SpringLayout.SOUTH, this);
 		
 		setPreferredSize(new Dimension(50, 25));
+	}
+	
+	private void setProgressBarValue(){
+		List<PPRequirement> reqList;
+		List<Vote> voteList;
+		if(parentPanel.getGame().getRequirements() != null){	//check if reqList isn't null
+			reqList = parentPanel.getGame().getRequirements();
+		}
+		else {
+			return;
+		}		
+		for(PPRequirement r : reqList){
+			if(r.getVotes() != null){				//check if voteList isn't null
+				voteList = r.getVotes();
+				for(Vote v : voteList){
+					if(v.getUsername() == username){		//if the voter has the same username as the username associated with this progress bar
+						int i = userProgress.getValue();
+						int numReqs;
+						if(parentPanel.getGame().getRequirements() != null){
+							numReqs = parentPanel.getGame().getRequirements().size();
+						}
+						else {
+							return;
+						}
+						int j = (userProgress.getMaximum())/(numReqs);
+						userProgress.setValue(i + j);
+					}
+				}
+			}
+		}
+	}
+	
+	private void addMouseListenerToProgressLabel(JLabel component) {
+		component.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				setProgressBarValue();
+			}
+		});
 	}
 }

@@ -22,6 +22,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 
 public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
@@ -46,7 +47,8 @@ public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 1450));
+		view.setPreferredSize(new Dimension(1100, 1450));
+		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("Active Games Help");
@@ -61,12 +63,12 @@ public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
 		
 		//Add explanation for game info
 		gameInfoExplanation = new JTextArea();
-		gameInfoExplanation.setText("This displays the name, description, creator and end date of "
-				+ "the game. A progress bar displays the voting progress on the current game "
-				+ "displayed requirement. The game's creator also has the option to end the game "
-				+ "before the end date and time. The game's creator can provide a reason why "
-				+ "they ended the game early in the textbox provided. If you are not the game's "
-				+ "creator, this option is not available to you");
+		gameInfoExplanation.setText("This displays information about the game and voting progress"
+				+ "on the requirements. The game's creator also has the option to end the game "
+				+ "before the end date and time and provide a reason for doing so in the box provided"
+				+ "above the button. If you are not the game's creator, this button or the corresponding "
+				+ "textbox will not appear to you. You will be able to view statistics on "
+				+ "all estimates once the game has ended.");
 		
 		gameInfoExplanation.setEditable(false);
 		gameInfoExplanation.setBackground(null);
@@ -83,18 +85,14 @@ public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
 		//Add explanation for card info
 		cardVoteExplanation = new JTextArea();
 		cardVoteExplanation.setText("This is displayed when cards are being used for voting. "
-				+ "The requirements for the game are displayed on the list. If you have "
-				+ "submitted a vote for a requirement, your esitmate for that requirement "
-				+ "is recorded and the requirement is set as complete for you. You can change your vote for "
+				+ "The requirements for the game are displayed on the list. You can change your vote for "
 				+ "that requirement while the game is still active. If the deck is single selection, "
 				+ "then only one card can be selected for the estimation. If the deck is multiple "
 				+ "selection, multiple cards can be selected can be added together and the sum can "
-				+ "be submitted as the estimation. The ? card is the 'I don't know' card. If it is "
-				+ "available, selecting it will deselct all other cards and the submitting it as "
-				+ "an esitmate will set the estimate as 'I don't know'. Deselecting the ? button will "
-				+ "reselect the cards that were selecting before selecting the ? card. Hitting the "
-				+ "Clear Vote button will clear all currently selected cards. Hitting the Submit"
-				+ "Vote button will submit your estimation for that requirement.");
+				+ "be submitted as the estimation. The ? card is the 'I don't know' card. Submitting it as "
+				+ "an esitmate will set the estimate as 'I don't know'. Hitting the Submit"
+				+ "Vote button will submit your estimation for that requirement and indicate to all those "
+				+ "participating that you have voted.");
 		
 		cardVoteExplanation.setEditable(false);
 		cardVoteExplanation.setBackground(null);

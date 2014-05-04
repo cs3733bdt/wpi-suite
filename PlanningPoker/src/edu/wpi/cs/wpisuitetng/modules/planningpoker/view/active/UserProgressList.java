@@ -13,13 +13,9 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 import java.awt.Container;
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
-import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
@@ -40,8 +36,6 @@ public class UserProgressList extends JScrollPane {
 	private Game game;
 	
 	private List<UserProgress> userProgressList;
-	
-	private UserProgressList instance = this;
 	
 	private User[] userList;
 	
@@ -84,7 +78,7 @@ public class UserProgressList extends JScrollPane {
 		//create all User Progress's using the usernames from the project, and add them all to the user Progress List
 		for(User user : userList){
 			String userName = user.getUsername();
-			UserProgress userProgress = new UserProgress(userName);
+			UserProgress userProgress = new UserProgress(userName, this);
 			userProgressList.add(userProgress);
 		}
 		int prevIndex = 0;
@@ -132,4 +126,15 @@ public class UserProgressList extends JScrollPane {
 		//build();
 	}
 	
+	public Game getGame(){
+		return game;
+	}
+	
+	public LeftHalfActiveGamePanel getLeftHalfActiveGamePanel(){
+		return parent;
+	}
+	
+	public int getNumUsers(){
+		return userList.length;
+	}
 }
