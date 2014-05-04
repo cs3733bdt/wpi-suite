@@ -9,6 +9,10 @@
  ******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.observers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers.AddDeckRequestObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.AddRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
@@ -24,7 +28,8 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 public class AddRequirementRequestObserver implements RequestObserver {
 		
 	private AddRequirementController controller;
-	
+	private static final Logger logger = Logger.getLogger(AddRequirementRequestObserver.class
+			.getName());
 	/**
 	 * Constructs the observer given an AddRequirementController
 	 * @param controller the controller used to add requirements
@@ -56,7 +61,7 @@ public class AddRequirementRequestObserver implements RequestObserver {
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#responseError(IRequest) */
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println("The request to add a requirement failed.");
+		logger.log(Level.WARNING,"The request to add a requirement failed.");
 	}
 
 	/**
@@ -68,7 +73,7 @@ public class AddRequirementRequestObserver implements RequestObserver {
 	 * @see edu.wpi.cs.wpisuitetng.network.RequestObserver#fail(IRequest, Exception) */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		System.err.println("The request to add a requirement failed.");
+		logger.log(Level.WARNING,"The request to add a requirement failed.");
 	}
 
 }

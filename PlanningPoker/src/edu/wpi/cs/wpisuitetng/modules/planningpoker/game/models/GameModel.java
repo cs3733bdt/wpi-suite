@@ -200,8 +200,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 						"The network has not been instantiated.", e);
 			}
 		} else {
-			System.err
-					.println("GAME MODEL ATTEMPTED TO UPDATE SOMETHING NOT A GAME");
+			logger.log(Level.WARNING,"GAME MODEL ATTEMPTED TO UPDATE SOMETHING NOT A GAME");
 		}
 
 	}

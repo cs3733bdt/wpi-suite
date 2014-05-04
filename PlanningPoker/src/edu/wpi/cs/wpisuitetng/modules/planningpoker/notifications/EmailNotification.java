@@ -119,8 +119,7 @@ public class EmailNotification {
 			users = g.getProject().getTeam();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			System.err
-					.println("Could not set the list 'users' to the list 'team'.");
+			logger.log(Level.WARNING,"Could not set the list 'users' to the list 'team'.");
 		}
 
 		// Check to see if no users are attached to this project
@@ -131,11 +130,11 @@ public class EmailNotification {
 					if (users[i].getEmail() != null && !users[i].getEmail().equals("")) {
 						sendEmail(login(), users[i]);
 					} else {
-						System.err.println(users[i].getName()
+						logger.log(Level.WARNING,users[i].getName()
 								+ " doesn't have an email Stored.");
 					}
 				else {
-				System.err.println(users[i].getName()
+					logger.log(Level.WARNING,users[i].getName()
 						+ " doesnt want to receive email notifications.");
 				}
 			}
@@ -214,9 +213,8 @@ public class EmailNotification {
 					Transport.send(message);
 					logger.log(Level.INFO,"Sent email successfully....");
 				} catch (InterruptedException e1) {
-					System.err
-							.println("Can't connect to host; either internet or host is down");
-					System.err.println("Users won't get emails for game: "
+					logger.log(Level.WARNING,"Can't connect to host; either internet or host is down");
+					logger.log(Level.WARNING,"Users won't get emails for game: "
 							+ g.getName());
 					e1.printStackTrace();
 				}

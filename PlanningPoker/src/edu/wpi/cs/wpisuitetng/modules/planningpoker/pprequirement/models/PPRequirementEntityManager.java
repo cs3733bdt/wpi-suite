@@ -196,7 +196,7 @@ public class PPRequirementEntityManager implements EntityManager<PPRequirement> 
 		if(oldRequirements.size() < 1 || oldRequirements.get(0) == null) {
 			throw new BadRequestException("Requirement with ID does not exist.");
 		} else if (oldRequirements.size() > 1){
-			System.err.println("There are multiple requirements with this id on the server");
+			logger.log(Level.WARNING,"There are multiple requirements with this id on the server");
 		} else{
 			logger.log(Level.INFO,"Update should be sucsessful");
 		}

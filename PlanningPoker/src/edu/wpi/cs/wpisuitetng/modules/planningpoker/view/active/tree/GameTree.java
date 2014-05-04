@@ -199,7 +199,7 @@ public class GameTree extends JPanel implements MouseListener{
 				RetrieveUserController.getInstance().retrieveUsers();
 				initialized = true;
 			} catch (Exception e){
-				System.err.println("Problem instantiating the Models. " + e);
+				logger.log(Level.WARNING,"Problem instantiating the Models. " + e);
 			}
 		}
 		super.paintComponent(g);
