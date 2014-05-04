@@ -10,6 +10,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers.AddGameRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -30,7 +33,8 @@ import edu.wpi.cs.wpisuitetng.network.models.HttpMethod;
  */
 public class AddGameController {
 	private static AddGameController instance = null;
-
+	private static final Logger logger = Logger.getLogger(AddGameController.class
+			.getName());
 	private AddGameController() {
 	}
 
@@ -51,7 +55,7 @@ public class AddGameController {
 	 *            is the game to add to the server
 	 */
 	public void addGame(Game newGame) {
-		System.out.println("Adding: " + newGame.getName() + " to server");
+		logger.log(Level.INFO,"Adding: " + newGame.getName() + " to server");
 		final Request request = Network.getInstance().makeRequest(
 				"planningpoker/game", HttpMethod.PUT);
 		request.setBody(newGame.toJSON());

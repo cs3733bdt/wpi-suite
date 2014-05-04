@@ -26,7 +26,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.creation.CreateGa
  */
 public class ViewEventController {
 	private static ViewEventController instance = null;
-	//private MainView main = null;
 	private ToolbarView toolbar = null;
 	private GameTree gameTree = null;
 	private DeckTree deckTree = null;
@@ -220,20 +219,6 @@ public class ViewEventController {
 		getTabbedView().closeOthers();
 		getTabbedView().repaint();
 
-	}
-
-	public void refreshGameTable() {
-		// TODO Auto-generated method stub
-		//This method will call a method that refreshes the data in the requirement model
-		// something like: overviewTable.refresh();
-		
-	}
-
-	public void refreshDeckTable() {
-		// TODO Auto-generated method stub
-		//This method will call a method that refreshes the data in the requirement model
-		// something like: overviewTable.refresh();
-		
 	}
 	
 	/**

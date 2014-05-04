@@ -19,6 +19,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JTextField;
 import javax.swing.border.Border;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelValidate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
+
 /**
  * creates a textbox which allows a user to input a name for a game. the textbox
  * cannot be empty when creating a new game and makes sure to check it
@@ -34,6 +38,11 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 	 * characters
 	 */
 	public static final String STRING_ERROR_NAMELONG = "Name can be no more than 100 chars.";
+	
+	/**
+	 * 
+	 */
+	public static final String STRING_ERROR_DUPLICATENAME = "You cannot have a duplicate name";
 
 	/** The text error placed on an IErrorField when the name empty */
 	public static final String STRING_ERROR_BLANK = "Highlighted fields are required";
@@ -49,6 +58,11 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 			.createLineBorder(Color.RED);
 
 	private String startingText;
+	
+	/**
+	 * Abstract storage model for checking duplicate games and decks
+	 */
+	private IModelValidate model;
 
 	/**
 	 * initializes the textbox with a specific string
@@ -56,8 +70,9 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 	 * @param text
 	 *            the initialized text for the textbox
 	 */
-	public NameJTextField(String text) {
+	public NameJTextField(String text, IModelValidate model) {
 		super(text.trim());
+		this.model = model;
 		startingText = text;
 		enableSelectAllTextOnMouseListener();
 	}
@@ -68,15 +83,17 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 	 * @param size
 	 *            the number of columns the textbox has
 	 */
-	public NameJTextField(int size) {
+	public NameJTextField(int size, IModelValidate model) {
 		super(size);
+		this.model = model;
 		startingText = "";
 	}
 
 	/**
 	 * initializes a textbox with no initial string or columns
 	 */
-	public NameJTextField() {
+	public NameJTextField(IModelValidate model) {
+		this.model = model;
 		startingText = "";
 	}
 
@@ -121,7 +138,16 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 					setBorder(ERRORBORDER);
 				}
 			}
-		} else {
+		} else if (model.hasName(getText())) {
+			isNameValid = false;
+			if (showLabel) {
+				errorField.setText(STRING_ERROR_DUPLICATENAME);
+			}	
+			if (showBox) {
+				setBorder(ERRORBORDER);
+			}
+		} 
+		else {
 			isNameValid = true;
 		}
 		

@@ -143,6 +143,13 @@ public class RequirementTest {
 	
 	@Test
 	public void testCopyFrom(){
+		PPRequirement reqOrigin = new PPRequirement("Req1", "Desc1");
+		
+		reqOrigin.addVote(new Vote("Justin", 1));
+		reqOrigin.addVote(new Vote("Phil", 10));
+		reqOrigin.addVote(new Vote("Sam", 5));
+		reqOrigin.addVote(new Vote("Bill", 4));
+		reqOrigin.addVote(new Vote("Steve", 1));
 		PPRequirement copyTo = 
 				new PPRequirement(req1.getName() + " copy", req1.getDescription() + " copy");
 		copyTo.addVote(new Vote("Steve", 20));

@@ -19,11 +19,39 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
  * @author Bobby Drop Tables
  */
 public class Vote {
-
-	private Game activeGame;
+	
 	private final String username;
 	private int voteNumber;
 	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((username == null) ? 0 : username.hashCode());
+		result = prime * result + voteNumber;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) { //DO NOT REMOVE THIS! THIS IS NESSASARY!
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Vote other = (Vote) obj;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		if (voteNumber != other.voteNumber)
+			return false;
+		return true;
+	}
+
 	/**
 	 * Constructor for a vote 
 	 * @param username The username of the voter

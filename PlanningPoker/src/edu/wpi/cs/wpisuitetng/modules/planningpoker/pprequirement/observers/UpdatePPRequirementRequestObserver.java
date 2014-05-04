@@ -11,6 +11,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.UpdatePPRequirementController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
@@ -29,7 +32,8 @@ public class UpdatePPRequirementRequestObserver implements RequestObserver {
 	 * error messages.
 	 */
 	private final UpdatePPRequirementController controller;
-	
+	private static final Logger logger = Logger.getLogger(UpdatePPRequirementRequestObserver.class
+			.getName());
 	/**
 	 * Constructs an observer for updating games controller
 	 * @param controller updateGameController to be observed
@@ -48,7 +52,7 @@ public class UpdatePPRequirementRequestObserver implements RequestObserver {
 		// The game that got updated
 		PPRequirement req = PPRequirement.fromJSON(response.getBody());
 		
-		System.out.println("The request to update a game has succeeded!");
+		logger.log(Level.INFO,"The request to update a game has succeeded!");
 	}
 	
 	/**
@@ -56,7 +60,7 @@ public class UpdatePPRequirementRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println("Response Error: " + iReq.getResponse().getStatusMessage());
+		logger.log(Level.WARNING,"Response Error: " + iReq.getResponse().getStatusMessage());
 	}
 	
 	/**
@@ -64,7 +68,7 @@ public class UpdatePPRequirementRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		System.err.println("The request to update a game failed with exception: "
+		logger.log(Level.WARNING,"The request to update a game failed with exception: "
 				+ exception.getMessage());
 	}
 }

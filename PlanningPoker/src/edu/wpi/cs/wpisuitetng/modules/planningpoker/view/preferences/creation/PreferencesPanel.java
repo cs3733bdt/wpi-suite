@@ -50,7 +50,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
  * @author Bobby Drop Tables
  *
  */
-public class PreferencesPanel extends JScrollPane implements IDataField, IPreferencesPanel {
+public class PreferencesPanel extends JScrollPane implements IPreferencesPanel {
 	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class.getName());
 	JPanel emailPanel;
 
@@ -160,9 +160,7 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 			emailField.setText(testUser.getEmail());
 		} 
 		else {
-			/**
-			 * TODO autopopulate email field with user's email.
-			 */
+			
 			emailField.setText(getUserEmail());
 		}
 		//Create the update email button
@@ -180,7 +178,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 
 		//Create and add the checkbox for receiving emails
 		emailCheckBox = new JCheckBox("Receive Email notifications", true);
-		//TODO make this field initialize to the correct toggled state. Do that by modifying the constant "true" above
 
 		emailCheckBox.addActionListener(new ActionListener() {
 
@@ -190,7 +187,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 			}
 		});
 
-		//reValidateEmailPanel();
 		emailPanel.add(emailCheckBox);
 
 		//Add the email Panel to the view
@@ -256,7 +252,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 
 		//Create and add the checkbox for receiving facebooks
 		facebookCheckBox = new JCheckBox("Receive Facebook messages", true);
-		//TODO make this field initialize to the correct toggled state. Do that by modifying the constant "true" above
 
 		facebookCheckBox.addActionListener(new ActionListener() {
 
@@ -266,7 +261,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 			}
 		});
 
-		//reValidateFacebookPanel();
 		facebookPanel.add(facebookCheckBox);
 
 		//Add the facebook Panel to the view
@@ -312,9 +306,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 			mobileField.setText(testUser.getPhoneNumber());
 		}
 		else {
-			/**
-			* TODO autopopulate mobile field with user's number.
-			*/
 			mobileField.setText(getUserMobile());
 		}
 		//Create the update mobile button
@@ -355,7 +346,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 
 		//Create and add the checkbox for receiving mobile notifications
 		mobileCheckBox = new JCheckBox("Receive Mobile notifications", true);
-		//TODO make this field initialize to the correct toggled state. Do that by modifying the constant "true" above
 
 		mobileCheckBox.addActionListener(new ActionListener() {
 
@@ -481,7 +471,10 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		//Put constraints on the mobile checkbox
 		mobileLayout.putConstraint(SpringLayout.NORTH, mobileCheckBox, 5, SpringLayout.SOUTH, carrierDropDown);
 		mobileLayout.putConstraint(SpringLayout.WEST, mobileCheckBox, 20, SpringLayout.WEST, mobilePanel);
-
+		
+		setMinimumSize(new Dimension(350, 400));
+		view.setPreferredSize(new Dimension(550, 460));
+		
 		initializeCheckBoxes();
 		setViewportView(view);
 		revalidate();
@@ -673,8 +666,9 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 	 * @return returns the drop down index for the carrier of the user currently logged in
 	 */
 	private int getUserCarrierIndex() {
-		int carrierNum;	
-		String carrier = getUserController.getCurrentUser().getCarrier(); //TODO fix: this throws a null pointer exception
+		int carrierNum;
+		
+		String carrier = getUserController.getCurrentUser().getCarrier(); 
 		switch(carrier) {
 		case "ATT":
 			carrierNum = 1;
@@ -737,12 +731,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		//set the bigger font for userStoryDesc
 		Font bigFont = newFont;
 		return bigFont;
-	}
-
-	@Override
-	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 
 	public void initializeCheckBoxes() {
@@ -1060,12 +1048,6 @@ public class PreferencesPanel extends JScrollPane implements IDataField, IPrefer
 		return !(carrierDropDown.getSelectedIndex()==5);
 	}
 
-	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	/**
 	 * Getter for testing purposes

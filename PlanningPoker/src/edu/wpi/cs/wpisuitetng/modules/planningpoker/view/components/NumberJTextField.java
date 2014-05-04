@@ -15,6 +15,8 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -46,10 +48,11 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 
 	private String initialText;
 	private IErrorView warningField;
-	private Integer maxValue = null;
+	private Integer maxValue = Integer.MAX_VALUE;
 	private Integer minValue = null;
 	private NumberFieldCustomErrorMessage errorFields;
-
+	private static final Logger logger = Logger.getLogger(NumberJTextField.class
+			.getName());
 	/**
 	 * The Default constructor for the NumberJTextField
 	 */
@@ -114,19 +117,21 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 	@Override
 	public void setText(String text) {
 		text = text.replaceAll("\n", "");
-		if(text.length()>1){ 					// Checks to see if there is more than just one "0" at the begining
-			text = text.replaceFirst("^0+(?!$)", ""); 	// Replaces leading zeros
+		if (text.length() > 1) { // Checks to see if there is more than just one
+									// "0" at the begining
+			text = text.replaceFirst("^0+(?!$)", ""); // Replaces leading zeros
 		}
 		initialText = text;
 		super.setText(text);
 	}
-	
+
 	@Override
-	public String getText(){
+	public String getText() {
 		String text = super.getText();
-		if(text.length()>1){ 					// Checks to see if there is more than just one "0" at the begining
-			text = text.replaceFirst("^0+(?!$)", ""); 	// Replaces leading zeros
-			super.setText(text); 				//Set the field to the correct version
+		if (text.length() > 1) { // Checks to see if there is more than just one
+									// "0" at the begining
+			text = text.replaceFirst("^0+(?!$)", ""); // Replaces leading zeros
+			super.setText(text); // Set the field to the correct version
 		}
 		return text;
 	}
@@ -156,37 +161,38 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 			boolean showBox) {
 		this.warningField = warningField;
 		boolean isValid = false;
-		if (getText().equals("")) {
-			isValid = false;
-			showInvalid(errorFields.STRING_NOT_EMPTY, showLabel, showBox);
-		} else if (!hasChanges()) { // If this has not changed
-			isValid = true;
-			showValid(showLabel, showBox);
-		} else if (maxValue != null) {
-			System.out.print("maxValue true");
-			if (Integer.parseInt(getText()) > (Integer) maxValue) {
+
+			if (getText().equals("")) {
 				isValid = false;
-				showInvalid(errorFields.STRING_TOO_HIGH + maxValue, showLabel,
-						showBox);
+				showInvalid(errorFields.STRING_NOT_EMPTY, showLabel, showBox);
+			} else if (!hasChanges()) { // If this has not changed
+				isValid = true;
+				showValid(showLabel, showBox);
+			} else if (maxValue != null) {
+				logger.log(Level.INFO,"maxValue true");
+				if (Integer.parseInt(getText()) > (Integer) maxValue) {
+					isValid = false;
+					showInvalid(errorFields.STRING_TOO_HIGH + maxValue,
+							showLabel, showBox);
+				} else {
+					isValid = true;
+					showValid(showLabel, showBox);
+				}
+			} else if (minValue != null) {
+				logger.log(Level.INFO,"minValue true");
+				if (Integer.parseInt(getText()) < (Integer) minValue) {
+					isValid = false;
+					showInvalid(errorFields.STRING_TOO_LOW + minValue,
+							showLabel, showBox);
+				} else {
+					isValid = true;
+					showValid(showLabel, showBox);
+				}
 			} else {
 				isValid = true;
 				showValid(showLabel, showBox);
-			}
-		} else if (minValue != null) {
-			System.out.print("minValue true");
-			if (Integer.parseInt(getText()) < (Integer) minValue) {
-				isValid = false;
-				showInvalid(errorFields.STRING_TOO_LOW + minValue, showLabel,
-						showBox);
-			} else {
-				isValid = true;
-				showValid(showLabel, showBox);
-			}
-		} else {
-			isValid = true;
-			showValid(showLabel, showBox);
-		}	//Should not need to handle checking to see if there not numbers because this should have already been caught
-		
+			} // Should not need to handle checking to see if there not numbers
+				// because this should have already been caught
 		return isValid;
 	}
 
@@ -195,9 +201,7 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 			// NOTHING SHOULD HAPPEN HERE BECAUSE WE DONT WANT TO OVERWRITE A
 			// DIFFERENT ERROR
 		}
-		if (showBox) {
-			setBorder(BORDER_DEFAULT);
-		}
+		setBorder(BORDER_DEFAULT);
 	}
 
 	private void showInvalid(String text, boolean showLabel, boolean showBox) {
@@ -304,7 +308,6 @@ class MyDocumentFilter extends DocumentFilter {
 				isValidInteger = false;
 				break;
 			}
-			// System.out.println("Char was: " + string.charAt(i));
 		}
 		if (isValidInteger) {
 			super.replace(fp, offset, length, string, aset);

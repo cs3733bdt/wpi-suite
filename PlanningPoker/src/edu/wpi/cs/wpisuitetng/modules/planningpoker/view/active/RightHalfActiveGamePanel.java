@@ -21,6 +21,8 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -73,6 +75,9 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	private JButton clearButton;
 	private int currentRow;
 
+	private static final Logger logger = Logger.getLogger(RightHalfActiveGamePanel.class
+			.getName());
+	
 	RightHalfActiveGamePanel(final Game game, final ActiveGamePanel activeGamePanel) {
 		currentGame = game;
 		build();
@@ -133,7 +138,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 					try {
 						cardsPanel.clearCards();
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					setFieldsVisible(true);
@@ -400,7 +404,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 					SpringLayout.SOUTH, cardScrollPanel);
 		}
 
-		// TODO: make this into a method
 		activeRequirement = table.getSelectedReq();
 		nameTextField.setText(activeRequirement.getName());
 		descriptionTextField.setText(activeRequirement.getDescription());
@@ -431,7 +434,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	}
 	
 	public void selectedIDK() {
-		sum = 0;
 		counterLabel.setText("Your current selected estimate is: I don't know");
 	}
 	
@@ -441,8 +443,14 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	 */
 	public int getMaxSum() {
 		int sum = 0;
-		for (int i = 0; i < deck.getSize()-1; i++) {
-			sum += Integer.parseInt(deck.getCards().get(i).getText());
+		if (currentGame.getDeck().hasIDontKnowCard()) {
+			for (int i = 0; i < deck.getSize()-1; i++) {
+				sum += Integer.parseInt(deck.getCards().get(i).getText());
+			}
+		} else {
+			for (int i = 0; i < deck.getSize(); i++) {
+				sum += Integer.parseInt(deck.getCards().get(i).getText());
+			}
 		}
 		return sum;
 	}
@@ -475,15 +483,15 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	public void submitButtonPressed() {
 		if (getGame().doesUseCards()) {
 			submitButton();
-			System.out.println("Submit Vote Pressed Passed");
+			logger.log(Level.INFO,"Submit Vote Pressed Passed");
 		} else {
 			if (validateField(false, false)) {
 				submitButton();
-				System.out.println("Submit Vote Pressed Passed.");
+				logger.log(Level.INFO,"Submit Vote Pressed Passed.");
 				estText.requestFocus();
 				estText.select(estText.getText().length(), estText.getText().length());
 			} else {
-				System.out.println("Submit Vote Pressed Failed.");
+				logger.log(Level.INFO,"Submit Vote Pressed Failed.");
 			}
 		}
 		
@@ -491,7 +499,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 			cardsPanel.memoryArrayClear();
 			cardsPanel.clearCards();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 	}
@@ -512,6 +519,10 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	 */
 	public void submitButton() {
 		
+		if (!getGame().isActive()) {
+			displayError("You cannot submit a vote because this game has ended.");
+		}
+		
 		String currentUser = ConfigManager.getConfig().getUserName(); // Gets the currently active user
 		int voteNumber;
 		if (getGame().doesUseCards()) {
@@ -522,9 +533,8 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		Vote vote = new Vote(currentUser, voteNumber);
 		activeRequirement.addVote(vote);
 
-		System.out.println("You voted: " + vote.getVoteNumber());
+		logger.log(Level.INFO,"You voted: " + vote.getVoteNumber());
 
-		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 
 		getEstimateText().setBorder(defaultBorder);
@@ -542,17 +552,14 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	 * update the saved estimate label
 	 */
 	public void updateSavedEstimateLabel() {
-		if(activeRequirement.userVote() == 0) {
-			
+		if(activeRequirement.userVote() == -8008135) {
 			previousEst.setText("Your saved estimate is: 0");
-			table.setValueAt("?", table.getSelectedRow(), 2);
+			table.setValueAt("?", table.getSelectedRow(), 2);		
 		} else {
 			previousEst.setText("Your saved estimate is: "+ activeRequirement.userVote());
             table.setValueAt(activeRequirement.userVote(), table.getSelectedRow(), 2);
 		}
 		table.setValueAt(activeRequirement.displayComplete(), table.getSelectedRow(), 3);
-
-
 	}
 
 	/**
@@ -611,10 +618,10 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	
 	private void getNextRow() {
 		int nextRow;
-		if (currentRow<table.getRowCount()-1){
-			nextRow=currentRow+1;
-		}else{
-			nextRow=0;
+		if (currentRow < table.getRowCount()-1){
+			nextRow = currentRow + 1;
+		} else {
+			nextRow = 0;
 		}
 		table.setRowSelectionInterval(nextRow,nextRow);
 		activeRequirement = table.getSelectedReq();

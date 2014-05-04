@@ -164,7 +164,6 @@ public class GameEntityManager implements EntityManager<Game> {
 	@Override
 	public String advancedGet(Session s, String[] args)
 			throws WPISuiteException {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -183,14 +182,12 @@ public class GameEntityManager implements EntityManager<Game> {
 	@Override
 	public String advancedPut(Session s, String[] args, String content)
 			throws WPISuiteException {
-		// TODO Auto-generated method stub
 		throw new WPISuiteException();
 	}
 
 	@Override
 	public String advancedPost(Session s, String string, String content)
 			throws WPISuiteException {
-		// TODO Auto-generated method stub
 		throw new WPISuiteException();
 	}
 

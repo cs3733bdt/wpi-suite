@@ -10,8 +10,13 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.game.observers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers.AddDeckRequestObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.GetGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 
@@ -23,6 +28,9 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 public class GetGameRequestObserver implements RequestObserver {
 	/** Used to print messages from the controller */
 	private GetGameController controller;
+	
+	private static final Logger logger = Logger.getLogger(GetGameRequestObserver.class
+			.getName());
 	
 	/**
 	 * Constructs an observer for requesting games
@@ -41,7 +49,9 @@ public class GetGameRequestObserver implements RequestObserver {
 	public void responseSuccess(IRequest iReq) {
 	    Game[] games = Game.fromJsonArray(iReq.getResponse().getBody());
 	    for(Game game: games) {
-	    	game.hasEnded(false);  //makes games complete if they are complete
+	    	if(game.hasEnded(false)) {
+	    		ViewEventController.getInstance().refreshGameTree();
+	    	}  //makes games complete if they are complete
 	    }
 	    controller.receivedGames(games);
 	}
@@ -51,7 +61,7 @@ public class GetGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-	    System.err.println("Response Error: " + iReq.getResponse().getStatusMessage());
+		logger.log(Level.WARNING,"Response Error: " + iReq.getResponse().getStatusMessage());
 	}
 
 	/**
@@ -61,6 +71,6 @@ public class GetGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-	    System.err.println("Failed to get games with exception: " + exception.getMessage());
+		logger.log(Level.WARNING,"Failed to get games with exception: " + exception.getMessage());
 	}
 }

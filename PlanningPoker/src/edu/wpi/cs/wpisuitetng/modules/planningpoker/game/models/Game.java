@@ -68,7 +68,7 @@ public class Game extends ObservableModel implements IModelObserver,
 	/** The username of the game creator */
 	private String creator;
 	/** The list of requirements that need to be estimated */
-	private List<PPRequirement> requirements = new ArrayList<>();
+	private List<PPRequirement> requirements = new ArrayList<PPRequirement>();
 	/** True if the game is complete, false otherwise */
 	private boolean complete;
 	/**
@@ -103,7 +103,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			name = toCopyFrom.name;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "Name copied");
+			logger.log(Level.INFO, "Name copied " + name.trim());
 		}
 
 		if (!description.equals(toCopyFrom.description)) {
@@ -224,6 +224,13 @@ public class Game extends ObservableModel implements IModelObserver,
 			needsUpdate = true;
 			wasChanged = true;
 			logger.log(Level.FINEST, "Notified Of Creation copied");
+		}
+		
+		if (notifiedOfCompletion != toCopyFrom.notifiedOfCompletion) {
+			notifiedOfCompletion = toCopyFrom.notifiedOfCompletion;
+			needsUpdate = true;
+			wasChanged = true;
+			logger.log(Level.FINEST, "Notified Of Completion copied");
 		}
 
 		if (!deck.equals(toCopyFrom.deck)) {
@@ -356,6 +363,7 @@ public class Game extends ObservableModel implements IModelObserver,
 		delayChange("setIdentifier");
 		makeChanged();
 		identity = identifier;
+		notifyObservers();
 	}
 
 	/**
@@ -386,6 +394,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setName");
 			name = newName;
+			notifyObservers();
 		}
 	}
 
@@ -409,6 +418,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setDeck");
 			this.deck = deck;
+			notifyObservers();
 		}
 	}
 
@@ -429,6 +439,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("makeComplete");
 			complete = true;
+			notifyObservers();
 		}
 	}
 
@@ -452,6 +463,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setUsesCards");
 			usesCards = newUsesCards;
+			notifyObservers();
 		}
 	}
 
@@ -475,6 +487,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setDescription");
 			description = newDescription;
+			notifyObservers();
 		}
 	}
 
@@ -503,9 +516,9 @@ public class Game extends ObservableModel implements IModelObserver,
 	}
 
 	/**
-	 * TODO: add documentation
+	 * Sets the requirements of the current game
 	 * 
-	 * @param newReqs
+	 * @param newReqs the new requirements to be added
 	 */
 	public void setRequirements(List<PPRequirement> newReqs) {
 		if (!requirements.equals(newReqs)) {
@@ -515,6 +528,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			for (PPRequirement req : requirements) {
 				req.addObserver(this);
 			}
+			notifyObservers();
 		}
 	}
 
@@ -538,6 +552,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setCreator");
 			this.creator = creator;
+			notifyObservers();
 		}
 	}
 
@@ -582,6 +597,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setActive");
 			active = newActive;
+			notifyObservers();
 		}
 	}
 
@@ -656,15 +672,21 @@ public class Game extends ObservableModel implements IModelObserver,
 	@Override
 	public void update(ObservableModel o, Object arg) {
 		if (o instanceof PPRequirement) {
-			UpdatePPRequirementController.getInstance().updateRequirement(
-					(PPRequirement) o);
+			try{
+				UpdatePPRequirementController.getInstance().updateRequirement(
+						(PPRequirement) o);
+			} catch (NullPointerException e){
+				logger.log(Level.WARNING, "The network is not instatntiated");
+			}
 			makeChanged();
 			notifyObservers(arg);
+			logger.log(Level.INFO, "Game notified of update for: " + ((PPRequirement) o).getName());
 		}
-		System.out.println("Game: " + name + " has " + countObservers()
+
+		logger.log(Level.INFO,"Game: " + name + " has " + countObservers()
 				+ " observers");
 		if (countObservers() > 0) {
-			System.out.println("\t" + this.getObserver(0));
+			logger.log(Level.INFO,"\t" + this.getObserver(0));
 		}
 	}
 
@@ -683,6 +705,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setEndDate");
 			this.endDate = endDate;
+			notifyObservers();
 		}
 	}
 
@@ -718,6 +741,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setNotifiedOfCreation");
 			this.notifiedOfCreation = notifiedOfCreation;
+			notifyObservers();
 		}
 	}
 
@@ -741,6 +765,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setNotifiedOfCompletion");
 			this.notifiedOfCompletion = notifiedOfCompletion;
+			notifyObservers();
 		}
 	}
 
@@ -754,8 +779,7 @@ public class Game extends ObservableModel implements IModelObserver,
 				Thread.sleep(5);
 				logger.log(Level.WARNING, "Looping in the game");
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log(Level.WARNING, "The thread was interrupted.", e);
 			}
 		}
 	}
@@ -826,18 +850,11 @@ public class Game extends ObservableModel implements IModelObserver,
 		gameEnd.setTime(getEndDate());
 		
 		if (isActive() && rightNow.after(gameEnd)) {
-			if (ViewEventController.getInstance().getTabbedView()
-					.hasActiveGameOpen(this)) {
-				JOptionPane.showMessageDialog(ViewEventController.getInstance()
-						.getTabbedView().getActiveGamePanel(this),
+			if (ViewEventController.getInstance().getTabbedView().hasActiveGameOpen(this)) {
+				JOptionPane.showMessageDialog(ViewEventController.getInstance().getTabbedView().getActiveGamePanel(this),
 						"Current game has expired and will now close.");
-				ViewEventController
-						.getInstance()
-						.getTabbedView()
-						.removeTab(
-								(JComponent) ViewEventController.getInstance()
-										.getTabbedView()
-										.getActiveGamePanel(this));
+				ViewEventController.getInstance().getTabbedView().removeTab(
+						(JComponent) ViewEventController.getInstance().getTabbedView().getActiveGamePanel(this));
 			}
 			if(notifyObservers){
 				delayChange("hasEnded");	//This order matters
@@ -845,10 +862,10 @@ public class Game extends ObservableModel implements IModelObserver,
 			}
 			complete = true;			//WARNING DO NOT CALL MAKE COMPLETE THIS BREAKS STUFF!
 			if(notifyObservers) notifyObservers();
-			if(notifyObservers)ViewEventController.getInstance().refreshGameTree();
+			if(notifyObservers) ViewEventController.getInstance().refreshGameTree();
 			return true;
 		} else {
-			return complete;
+			return false;
 		}
 	}
 }

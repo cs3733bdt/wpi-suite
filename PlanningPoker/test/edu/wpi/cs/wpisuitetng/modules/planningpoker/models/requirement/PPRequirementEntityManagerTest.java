@@ -15,6 +15,8 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,6 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.core.models.Role;
 import edu.wpi.cs.wpisuitetng.modules.core.models.User;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockData;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.MockNetwork;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementEntityManager;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -48,6 +51,8 @@ public class PPRequirementEntityManagerTest {
 	PPRequirement[] reqArray;
 	PPRequirement[] allReqs;
 	
+	private static final Logger logger = Logger.getLogger(PPRequirementEntityManagerTest.class
+			.getName());
 	@Before
 	public void setUp() throws Exception { // $codepro.audit.disable accessorMethodNamingConvention
 		// Set up the network
@@ -115,8 +120,8 @@ public class PPRequirementEntityManagerTest {
 				new ArrayList<PPRequirement>(Arrays.asList(reqArrayDatabase));
 		
 		for(PPRequirement r: reqsArrayListDatabase) {
-			System.out.println("Database : " + r.getName());
-			System.out.println("Database : " + r.getIdentity());
+			logger.log(Level.INFO,"Database : " + r.getName());
+			logger.log(Level.INFO,"Database : " + r.getIdentity());
 			identitiesArrayDatabase.add(r.getIdentity().toString());
 		}
 		
@@ -124,8 +129,8 @@ public class PPRequirementEntityManagerTest {
 				new ArrayList<PPRequirement>(Arrays.asList(allReqs));
 		
 		for(PPRequirement req: allReqsArrayList) {
-			System.out.println("Test : " + req.getName());
-			System.out.println("Database : " + req.getIdentity());
+			logger.log(Level.INFO,"Test : " + req.getName());
+			logger.log(Level.INFO,"Database : " + req.getIdentity());
 			identitiesArrayTest.add(req.getIdentity().toString());
 		}
 		

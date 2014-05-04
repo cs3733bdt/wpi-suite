@@ -114,30 +114,28 @@ public class SMSNotification {
 			users = g.getProject().getTeam();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			System.err
-					.println("Could not set the list 'users' to the list 'team'.");
+			logger.log(Level.WARNING,"Could not set the list 'users' to the list 'team'.");
 		}
 
 		// Check to see if no users are attached to this project
 		if (users[0] != null) {
 			for (int i = 0; i < users.length; i++) {
-				// TODO implement verify if email format
 				if (users[i].getNotificationPreferences().contains("M")) {
 					if (users[i].getPhoneNumber() != null && !users[i].getPhoneNumber().equals("")) {
 						sendSMS(login(), users[i]);
 					} else {
-						System.err.println(users[i].getName()
+						logger.log(Level.WARNING,users[i].getName()
 								+ " doesn't have an phone number Stored.");
 					}
 				} else {
-					System.err.println(users[i].getName()
+					logger.log(Level.WARNING,users[i].getName()
 							+ " doesn't want to receive text notifications");
 				}
 			}
 		} else {
-			System.out.println("Project: " + g.getProject().getName()
+			logger.log(Level.INFO, "Project: " + g.getProject().getName()
 					+ ", has no users in its team.");
-			System.out.println("No SMS messages were sent.");
+			logger.log(Level.INFO, "No SMS messages were sent.");
 		}
 	}
 
@@ -168,7 +166,7 @@ public class SMSNotification {
 			numberWithCarrier += "@email.uscc.net";
 			break;
 		default:
-			System.out.print("No carrier.");
+			logger.log(Level.INFO, "No carrier.");
 			numberWithCarrier = null;
 			break;
 		}
@@ -219,7 +217,7 @@ public class SMSNotification {
 				try {
 					// Send message
 					Transport.send(message);
-					System.out.println("Sent text message successfully....");
+					logger.log(Level.INFO, "Sent text message successfully....");
 				} catch (MailConnectException e) {
 					logger.log(Level.WARNING,
 							"Couldn't connect to host, trying again...", e);
@@ -227,12 +225,11 @@ public class SMSNotification {
 						// Waiting 5 seconds and retrying
 						Thread.sleep(5000);
 						Transport.send(message);
-						System.out.println("Sent message successfully....");
+						logger.log(Level.INFO, "Sent message successfully....");
 					} catch (InterruptedException e1) {
-						System.err.println("Can't connect to host; "
+						logger.log(Level.WARNING,"Can't connect to host; "
 								+ "either internet or host is down");
-						System.err
-								.println("Users won't get messages for game: "
+						logger.log(Level.WARNING,"Users won't get messages for game: "
 										+ g.getName());
 						e1.printStackTrace();
 					}
@@ -241,7 +238,7 @@ public class SMSNotification {
 				mex.printStackTrace();
 			}
 		} else {
-			System.out.println("User: " + user.getName()
+			logger.log(Level.INFO, "User: " + user.getName()
 					+ ", does not have a phone number stored.");
 		}
 	}

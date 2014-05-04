@@ -162,8 +162,8 @@ public abstract class ObservableModel extends AbstractModel {
 
 		for (int i = arrLocal.length - 1; i >= 0; i--) {
 			((IModelObserver) arrLocal[i]).update(this, arg);
-			clearChanged();
 		}
+		clearChanged();
 	}
 
 	/**
@@ -181,11 +181,14 @@ public abstract class ObservableModel extends AbstractModel {
 		//Print the stack trace on this call
 		StackTraceElement callers [] = Thread.currentThread().getStackTrace();
 		StringBuilder message = new StringBuilder();
+		int count = 0;
 		for(StackTraceElement e : callers){
-			message.append(e.toString() + "\n");
+			if((count++) < 6){
+				message.append("\t" +  e.toString() + "\n");
+			}
 		}
 		
-		logger.log(Level.FINEST, "called from: " + message);
+		logger.log(Level.INFO, "called from: \n" + message);
 		
 		
 		changed = true;
@@ -227,12 +230,6 @@ public abstract class ObservableModel extends AbstractModel {
 		return obs.size();
 	}
 
-	/**
-	 * TODO add documenation
-	 * 
-	 * @param i
-	 * @return the observer
-	 */
 	protected synchronized IModelObserver getObserver(int i) {
 		return obs.get(i);
 	}
