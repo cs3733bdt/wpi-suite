@@ -45,7 +45,6 @@ public class UpdateGameController {
 	 * updates a game with the same UUID on server
 	 * 
 	 * @param newGame
-	 *            Game to be updated TODO: Need model for game data
 	 */
 	public void updateGame(Game newGame) {
 		System.out.println("Updating " + newGame.getName() + " to server");

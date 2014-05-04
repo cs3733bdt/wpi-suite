@@ -55,7 +55,6 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 	@Override
 	public void update(ObservableModel o, Object arg) {
 		if(o instanceof Game){
-			//TODO Handle an update to a model
 		}	
 	}
 	

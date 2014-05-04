@@ -13,11 +13,14 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
@@ -49,7 +52,8 @@ public class PPRequirement extends ObservableModel {
 
 	/** If this requirement came from the requirement manager module */
 	private boolean fromRequirementModule = false;
-
+	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
+			.getName());
 	/** list of votes for this requirement */
 	private List<Vote> votes = new ArrayList<Vote>() {
 		public boolean equals(Object o) {
@@ -547,8 +551,7 @@ public class PPRequirement extends ObservableModel {
 				System.out
 						.println("Looping in the reqirement: " + methodCalled);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log(Level.WARNING, "Thread was interrupted.");
 			}
 		}
 	}

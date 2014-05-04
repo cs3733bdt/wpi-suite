@@ -121,7 +121,6 @@ public class SMSNotification {
 		// Check to see if no users are attached to this project
 		if (users[0] != null) {
 			for (int i = 0; i < users.length; i++) {
-				// TODO implement verify if email format
 				if (users[i].getNotificationPreferences().contains("M")) {
 					if (users[i].getPhoneNumber() != null && !users[i].getPhoneNumber().equals("")) {
 						sendSMS(login(), users[i]);

@@ -399,7 +399,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 					SpringLayout.SOUTH, cardScrollPanel);
 		}
 
-		// TODO: make this into a method
 		activeRequirement = table.getSelectedReq();
 		nameTextField.setText(activeRequirement.getName());
 		descriptionTextField.setText(activeRequirement.getDescription());
