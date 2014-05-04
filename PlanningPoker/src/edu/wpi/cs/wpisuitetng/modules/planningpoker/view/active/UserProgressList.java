@@ -63,11 +63,11 @@ public class UserProgressList extends JScrollPane {
 		
 		game = parent.getGame();
 		
-		userList = game.getProject().getTeam();
-		
-		if(userList == null){
+		if((game.getProject().getTeam() == null) || (game.getProject().getTeam()[0].getUsername() == null)){
 			return;
 		}
+		
+		userList = game.getProject().getTeam();
 		
 		//create all User Progress's using the usernames from the project, and add them all to the user Progress List
 		for(User user : userList){

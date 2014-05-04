@@ -15,6 +15,8 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -25,6 +27,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequi
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 public class UserProgress extends JPanel {
+	
+	private static final Logger logger = Logger.getLogger(UserProgress.class.getName());
 	
 	private final JProgressBar userProgress = new JProgressBar(0, 1000);
 	
@@ -71,13 +75,15 @@ public class UserProgress extends JPanel {
 			reqList = parentPanel.getGame().getRequirements();
 		}
 		else {
+			logger.log(Level.SEVERE, "Requirement list is null");
 			return;
 		}		
+		userProgress.setValue(0);
 		for(PPRequirement r : reqList){
 			if(r.getVotes() != null){				//check if voteList isn't null
 				voteList = r.getVotes();
 				for(Vote v : voteList){
-					if(v.getUsername() == username){		//if the voter has the same username as the username associated with this progress bar
+					if(v.getUsername().equals(username)){		//if the voter has the same username as the username associated with this progress bar
 						int i = userProgress.getValue();
 						int numReqs;
 						if(parentPanel.getGame().getRequirements() != null){
