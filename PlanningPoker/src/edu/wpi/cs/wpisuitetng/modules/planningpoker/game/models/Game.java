@@ -68,7 +68,7 @@ public class Game extends ObservableModel implements IModelObserver,
 	/** The username of the game creator */
 	private String creator;
 	/** The list of requirements that need to be estimated */
-	private List<PPRequirement> requirements = new ArrayList<>();
+	private List<PPRequirement> requirements = new ArrayList<PPRequirement>();
 	/** True if the game is complete, false otherwise */
 	private boolean complete;
 	/**
@@ -103,7 +103,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			name = toCopyFrom.name;
 			needsUpdate = true;
 			wasChanged = true;
-			logger.log(Level.FINEST, "Name copied");
+			logger.log(Level.INFO, "Name copied " + name.trim());
 		}
 
 		if (!description.equals(toCopyFrom.description)) {
@@ -363,6 +363,7 @@ public class Game extends ObservableModel implements IModelObserver,
 		delayChange("setIdentifier");
 		makeChanged();
 		identity = identifier;
+		notifyObservers();
 	}
 
 	/**
@@ -393,6 +394,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setName");
 			name = newName;
+			notifyObservers();
 		}
 	}
 
@@ -416,6 +418,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setDeck");
 			this.deck = deck;
+			notifyObservers();
 		}
 	}
 
@@ -436,6 +439,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("makeComplete");
 			complete = true;
+			notifyObservers();
 		}
 	}
 
@@ -459,6 +463,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setUsesCards");
 			usesCards = newUsesCards;
+			notifyObservers();
 		}
 	}
 
@@ -482,6 +487,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setDescription");
 			description = newDescription;
+			notifyObservers();
 		}
 	}
 
@@ -522,6 +528,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			for (PPRequirement req : requirements) {
 				req.addObserver(this);
 			}
+			notifyObservers();
 		}
 	}
 
@@ -545,6 +552,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setCreator");
 			this.creator = creator;
+			notifyObservers();
 		}
 	}
 
@@ -589,6 +597,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setActive");
 			active = newActive;
+			notifyObservers();
 		}
 	}
 
@@ -663,16 +672,21 @@ public class Game extends ObservableModel implements IModelObserver,
 	@Override
 	public void update(ObservableModel o, Object arg) {
 		if (o instanceof PPRequirement) {
-			UpdatePPRequirementController.getInstance().updateRequirement(
-					(PPRequirement) o);
+			try{
+				UpdatePPRequirementController.getInstance().updateRequirement(
+						(PPRequirement) o);
+			} catch (NullPointerException e){
+				logger.log(Level.WARNING, "The network is not instatntiated");
+			}
 			makeChanged();
 			notifyObservers(arg);
+			logger.log(Level.INFO, "Game notified of update for: " + ((PPRequirement) o).getName());
 		}
-		System.out.println("Game: " + name + " has " + countObservers()
-				+ " observers");
-		if (countObservers() > 0) {
-			System.out.println("\t" + this.getObserver(0));
-		}
+//		System.out.println("Game: " + name + " has " + countObservers()
+//				+ " observers");
+//		if (countObservers() > 0) {
+//			System.out.println("\t" + this.getObserver(0));
+//		}
 	}
 
 	public Date getEndDate() {
@@ -690,6 +704,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setEndDate");
 			this.endDate = endDate;
+			notifyObservers();
 		}
 	}
 
@@ -725,6 +740,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setNotifiedOfCreation");
 			this.notifiedOfCreation = notifiedOfCreation;
+			notifyObservers();
 		}
 	}
 
@@ -748,6 +764,7 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			delayChange("setNotifiedOfCompletion");
 			this.notifiedOfCompletion = notifiedOfCompletion;
+			notifyObservers();
 		}
 	}
 

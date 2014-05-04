@@ -140,7 +140,8 @@ public class GameModelTest {
 		assertEquals("Requirement With New Votes", game1Changed.getRequirements().get(1).getName());
 		assertEquals(3, game1Changed.getRequirements().get(1).getVoteCount());
 		
-		model.updateGames(gameList); //Post the array to the model
+		//Step 1:
+		assertTrue(model.updateGames(gameList)); //Post the array to the model
 		//MIMIC THE 'BUILD' FROM THE SERVER
 		
 		
@@ -155,7 +156,8 @@ public class GameModelTest {
 		PPRequirement reqFromGame = model.getElementAt(0).getRequirements().get(0);
 		assertEquals(3, reqFromGame.getVoteCount());
 		
-		model.updateGames(gameList);  //CHANGES TO THE MODEL
+		//Step 2:
+		assertTrue(model.updateGames(gameList));  //CHANGES TO THE MODEL
 		//MIMICS CHANGES COMING FROM THE SERVER
 		
 		assertEquals(3, model.getSize());
@@ -180,8 +182,8 @@ public class GameModelTest {
 		model.getElementAt(0).getRequirements().get(0).addVote(new Vote("Annie", 10));
 		
 		model.getElementAt(1).setDescription("A Description");
-		assertTrue(model.getElementAt(1).hasChanged());
-		model.getElementAt(1).notifyObservers();
+		//assertTrue(model.getElementAt(1).hasChanged());
+		//model.getElementAt(1).notifyObservers();
 		assertFalse(model.getElementAt(1).hasChanged());
 		
 		model.emptyModel();

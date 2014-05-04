@@ -59,13 +59,8 @@ public class PPRequirementModelTest {
 	}
 	
 	@Test
-	public void emptyModelTest() {
-		model.emptyModel();
-		assertEquals(0, model.getSize());
-	}
-	
-	@Test
 	public void getRequirementTest() { // $codepro.audit.disable accessorMethodNamingConvention
+		setUp();
 		assertEquals(req1, model.getRequirement(1));
 		assertEquals(req2.getName(), model.getRequirement(2).getName());
 		assertEquals(req1, model.getRequirement("Requirement1", "Description1"));

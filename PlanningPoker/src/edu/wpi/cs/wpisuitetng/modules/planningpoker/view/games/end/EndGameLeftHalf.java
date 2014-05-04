@@ -27,6 +27,7 @@ import javax.swing.SpringLayout;
 import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTable;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RequirementTableMode;
@@ -73,7 +74,7 @@ public class EndGameLeftHalf extends JScrollPane {
 		gameNameLabel = new JLabel("Game Name");				
 
 		// Initializes and sets properties of game name label
-		gameName = new NameJTextField(30);						
+		gameName = new NameJTextField(30,GameModel.getInstance());						
 		gameName.setText(ended.getName());				
 		gameName.setBorder(defaultBorder);						
 		gameName.setEditable(false); 
