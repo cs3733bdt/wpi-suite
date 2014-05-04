@@ -61,7 +61,7 @@ public class UpdateDeckRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println("Response Error: " + iReq.getResponse().getStatusMessage());
+		logger.log(Level.WARNING,"Response Error: " + iReq.getResponse().getStatusMessage());
 	}
 	
 	/**
@@ -69,7 +69,7 @@ public class UpdateDeckRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		System.err.println("The request to update a deck failed with exception: "
+		logger.log(Level.WARNING,"The request to update a deck failed with exception: "
 				+ exception.getMessage());
 	}
 }

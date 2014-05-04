@@ -142,7 +142,7 @@ public class DeckTree extends JPanel implements MouseListener{
 				GetDeckController.getInstance().retrieveDecks();
 				initialized = true;
 			} catch (Exception e){
-				System.err.println("Problem instantiating the Deck Model. " + e);
+				logger.log(Level.WARNING,"Problem instantiating the Deck Model. " + e);
 			}
 		}
 		super.paintComponent(g);

@@ -10,6 +10,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.GetDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
@@ -23,6 +26,9 @@ import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 public class GetDeckRequestObserver implements RequestObserver {
 	/** Used to print messages from the controller */
 	private GetDeckController controller;
+	
+	private static final Logger logger = Logger.getLogger(GetDeckRequestObserver.class
+			.getName());
 	
 	/**
 	 * Constructs an observer for requesting Decks
@@ -48,7 +54,7 @@ public class GetDeckRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-	    System.err.println("Response Error: " + iReq.getResponse().getStatusMessage());
+		logger.log(Level.WARNING,"Response Error: " + iReq.getResponse().getStatusMessage());
 	}
 
 	/**
@@ -58,6 +64,6 @@ public class GetDeckRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-	    System.err.println("Failed to get deck with exception: " + exception.getMessage());
+		logger.log(Level.WARNING,"Failed to get deck with exception: " + exception.getMessage());
 	}
 }

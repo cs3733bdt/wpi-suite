@@ -10,7 +10,10 @@
  *******************************************************************************/
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.exceptions;
-
+/**
+ * Exception to be thrown if DB model cannot be instantiated
+ *
+ */
 public class DBModelNotInstantiatedException extends Exception {
 
 	public DBModelNotInstantiatedException() {
@@ -32,5 +35,4 @@ public class DBModelNotInstantiatedException extends Exception {
 			boolean enableSuppression, boolean writableStackTrace) {
 		super(message, cause, enableSuppression, writableStackTrace);
 	}
-
 }

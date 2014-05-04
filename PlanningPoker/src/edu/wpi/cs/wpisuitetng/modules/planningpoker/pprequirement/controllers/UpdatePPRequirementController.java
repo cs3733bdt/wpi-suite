@@ -49,7 +49,6 @@ public class UpdatePPRequirementController {
 	 * updates a game with the same UUID on server
 	 * 
 	 * @param newReq
-	 *            Game to be updated TODO: Need model for game data
 	 */
 	public void updateRequirement(PPRequirement newReq) {
 		logger.log(Level.INFO, "Updating " + newReq.getName() + " to server");

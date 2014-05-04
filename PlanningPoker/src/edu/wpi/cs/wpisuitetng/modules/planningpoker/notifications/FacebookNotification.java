@@ -91,8 +91,7 @@ public class FacebookNotification {
 			users = g.getProject().getTeam();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			System.err
-					.println("Could not set the list 'users' to the list 'team'.");
+			logger.log(Level.WARNING,"Could not set the list 'users' to the list 'team'.");
 		}
 
 		// Make sure there are users in the team
@@ -102,8 +101,7 @@ public class FacebookNotification {
 			try {
 				connection = login();
 			} catch (XMPPException e) {
-				System.err
-						.println("Could not connect to Facebook with given login.");
+				logger.log(Level.WARNING,"Could not connect to Facebook with given login.");
 				e.printStackTrace();
 			}
 
@@ -114,17 +112,16 @@ public class FacebookNotification {
 					if (users[i].getFacebookUsername() != null && !users[i].getFacebookUsername().equals("") ) {
 						sendFacebookNotification(connection, users[i]);
 					} else {
-						System.err.println(users[i].getName()
+						logger.log(Level.WARNING,users[i].getName()
 								+ " doesn't have a facebook Username Stored.");
 					}
 				} else {
-					System.err
-							.println(users[i].getName()
+					logger.log(Level.WARNING,users[i].getName()
 									+ " doesn't want to receive facebook notifications");
 				}
 			}
 		} else {
-			System.err.println("There are no users on the team of Project: "
+			logger.log(Level.WARNING,"There are no users on the team of Project: "
 					+ g.getProject().getName());
 		}
 	}
@@ -159,14 +156,11 @@ public class FacebookNotification {
 				chat.sendMessage(message);
 				logger.log(Level.INFO,"Sent facebook message successfully");
 			} catch (XMPPException e) {
-				System.err.println("Failed to send Facebook Notification.");
+				logger.log(Level.WARNING,"Failed to send Facebook Notification.");
 				e.printStackTrace();
 			}
 		} else {
-			// TODO possibly implement send email to user telling them their
-			// facebook
-			// username is invalid
-			System.err.println("User: " + user.getName()
+			logger.log(Level.WARNING,"User: " + user.getName()
 					+ " does not have a valid facebook username stored.");
 		}
 	}

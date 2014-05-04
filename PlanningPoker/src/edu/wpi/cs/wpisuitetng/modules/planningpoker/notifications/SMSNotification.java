@@ -114,23 +114,21 @@ public class SMSNotification {
 			users = g.getProject().getTeam();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			System.err
-					.println("Could not set the list 'users' to the list 'team'.");
+			logger.log(Level.WARNING,"Could not set the list 'users' to the list 'team'.");
 		}
 
 		// Check to see if no users are attached to this project
 		if (users[0] != null) {
 			for (int i = 0; i < users.length; i++) {
-				// TODO implement verify if email format
 				if (users[i].getNotificationPreferences().contains("M")) {
 					if (users[i].getPhoneNumber() != null && !users[i].getPhoneNumber().equals("")) {
 						sendSMS(login(), users[i]);
 					} else {
-						System.err.println(users[i].getName()
+						logger.log(Level.WARNING,users[i].getName()
 								+ " doesn't have an phone number Stored.");
 					}
 				} else {
-					System.err.println(users[i].getName()
+					logger.log(Level.WARNING,users[i].getName()
 							+ " doesn't want to receive text notifications");
 				}
 			}
@@ -229,10 +227,9 @@ public class SMSNotification {
 						Transport.send(message);
 						logger.log(Level.INFO, "Sent message successfully....");
 					} catch (InterruptedException e1) {
-						System.err.println("Can't connect to host; "
+						logger.log(Level.WARNING,"Can't connect to host; "
 								+ "either internet or host is down");
-						System.err
-								.println("Users won't get messages for game: "
+						logger.log(Level.WARNING,"Users won't get messages for game: "
 										+ g.getName());
 						e1.printStackTrace();
 					}

@@ -46,6 +46,7 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		view.setLayout(layout);
 		view.setPreferredSize(new Dimension(1100, 600));
 		setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("Create Deck Help");
@@ -64,8 +65,8 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		setUpCardsExplanation.setText("To start making a deck you have to enter the Name of the deck "
 				+ "you want created, and optionally, you can enter a Description of that deck. The Selection Type allows "
 				+ "you to be able to select either multiple cards or just a single card when voting. Selecting multiple cards "
-				+ "adds up all of the cards that yo select and puts that as your total. The next step is to select the number of cards that you want in your deck,"
-				+ " and then it gives you the option of changing the color of your cards. "
+				+ "adds up all of the cards that you select and puts that as your total. The next step is to select the number "
+				+ "of cards that you want in your deck, and then you have the option of changing the color of your cards. "
 				+ "Finally you can choose whether or not to have an 'I dont know' button as an option when voting.");
 
 		setUpCardsExplanation.setEditable(false);
@@ -83,9 +84,9 @@ public class CreateDeckHelp extends JScrollPane implements IHelpPanel {
 		//Add explanation for adding values to the cards
 		addingValuesToTheCardsExplanation = new JTextArea();
 		addingValuesToTheCardsExplanation.setText("After the initialization of the deck you will see the cards appear. "
-				+ "To add a value to a card select the text field that is on the card"
-				+ "and enter the desired value for that card. To set this value to the card and select the next card if appropriate,"
-				+ "all you have to do is click enter");
+				+ "To add a value to a card select the text field that is on the card and enter the desired value."
+				+ "If you press enter this value will be recorded and you be prompted to enter a value for the next card if"
+				+ "it is appropriate.");
 
 		addingValuesToTheCardsExplanation.setEditable(false);
 		addingValuesToTheCardsExplanation.setBackground(null);
