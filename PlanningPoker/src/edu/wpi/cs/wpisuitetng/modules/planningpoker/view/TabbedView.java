@@ -19,6 +19,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Icon;
 import javax.swing.JComponent;
@@ -86,6 +88,8 @@ public class TabbedView extends JTabbedPane {
 	private boolean hasCreateGameHelp = false;
 	private boolean hasCreateDeckHelp = false;
 
+	private static final Logger logger = Logger.getLogger(TabbedView.class
+			.getName());
 	/**
 	 * Adds Main View of the planning poker panel when the user goes to the
 	 * planning poker tab
@@ -567,12 +571,12 @@ public class TabbedView extends JTabbedPane {
 
 		int tabCount = getTabCount();
 
-		System.out.println("THE TAB COUNT IS:" + tabCount);
+		logger.log(Level.INFO,"THE TAB COUNT IS:" + tabCount);
 
 		for (int i = tabCount - 1; i > 0; i--) {
 			Component toBeRemoved = getComponentAt(i);
 
-			System.out.println(toBeRemoved.getClass().getName());
+			logger.log(Level.INFO,toBeRemoved.getClass().getName());
 
 			if ((toBeRemoved instanceof DeckOverview)
 					|| toBeRemoved instanceof GameOverview) {

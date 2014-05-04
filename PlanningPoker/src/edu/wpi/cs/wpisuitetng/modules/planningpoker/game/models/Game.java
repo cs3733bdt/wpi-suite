@@ -668,10 +668,10 @@ public class Game extends ObservableModel implements IModelObserver,
 			makeChanged();
 			notifyObservers(arg);
 		}
-		System.out.println("Game: " + name + " has " + countObservers()
+		logger.log(Level.INFO,"Game: " + name + " has " + countObservers()
 				+ " observers");
 		if (countObservers() > 0) {
-			System.out.println("\t" + this.getObserver(0));
+			logger.log(Level.INFO,"\t" + this.getObserver(0));
 		}
 	}
 

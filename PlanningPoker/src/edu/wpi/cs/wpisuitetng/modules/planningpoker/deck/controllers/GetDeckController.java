@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 
 import javax.swing.Timer;
 
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers.GetDeckRequestObserver;

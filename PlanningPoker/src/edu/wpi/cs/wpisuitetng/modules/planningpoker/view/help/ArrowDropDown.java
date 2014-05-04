@@ -15,6 +15,8 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -47,7 +49,9 @@ public class ArrowDropDown extends JLabel {
 
 	static Font hiddenArrowFont = makeFont(11);
 	static Font expandedArrowFont = makeFont(3);
-
+	
+	private static final Logger logger = Logger.getLogger(ArrowDropDown.class
+			.getName());
 	public ArrowDropDown() {
 		setText(expandedArrowString);
 		setFont(expandedArrowFont);
@@ -85,8 +89,7 @@ public class ArrowDropDown extends JLabel {
 	 * isExpanded boolean
 	 */
 	private void switchComponentState() {
-		System.out
-				.println("switching component state from:"
+		logger.log(Level.INFO,"switching component state from:"
 						+ isExpanded
 						+ " (true means it should have been expanded prior to clicking)");
 

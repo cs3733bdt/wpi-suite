@@ -13,6 +13,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,7 +51,8 @@ public class PPRequirement extends ObservableModel {
 
 	/** If this requirement came from the requirement manager module */
 	private boolean fromRequirementModule = false;
-
+	private static final Logger logger = Logger.getLogger(PPRequirement.class
+			.getName());
 	/** list of votes for this requirement */
 	private List<Vote> votes = new ArrayList<Vote>() {
 		public boolean equals(Object o) {
@@ -535,8 +538,7 @@ public class PPRequirement extends ObservableModel {
 		while (GameModel.getInstance().isServerUpdating()) {
 			try {
 				Thread.sleep(5);
-				System.out
-						.println("Looping in the reqirement: " + methodCalled);
+				logger.log(Level.INFO,"Looping in the reqirement: " + methodCalled);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -552,11 +554,11 @@ public class PPRequirement extends ObservableModel {
 		String currentUser = ConfigManager.getConfig().getUserName();
 		for (Vote v : getVotes()) {
 			if (currentUser.equals(v.getUsername())) {
-				System.out.println("name matches");
+				logger.log(Level.INFO,"name matches");
 				return v.getVoteNumber();
 			}
 		}
-		System.out.println("name does not match");
+		logger.log(Level.INFO,"name does not match");
 		return 0;
 	}
 

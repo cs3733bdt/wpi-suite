@@ -10,6 +10,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers.AddDeckController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
@@ -29,7 +32,8 @@ public class AddDeckRequestObserver implements RequestObserver {
 	 * error messages.
 	 */
 	private final AddDeckController controller;
-	
+	private static final Logger logger = Logger.getLogger(AddDeckRequestObserver.class
+			.getName());
 	/**
 	 * constructs an AddDeckRequestObserver with a controller and a Deck to observe
 	 * @param controller the controller acting on the Deck
@@ -52,7 +56,7 @@ public class AddDeckRequestObserver implements RequestObserver {
 		// The deck that got added
 		Deck deck = Deck.fromJSON(response.getBody());
 		
-		System.out.println("The request to add a deck has succeeded!");
+		logger.log(Level.INFO,"The request to add a deck has succeeded!");
 	}
 	
 	/**

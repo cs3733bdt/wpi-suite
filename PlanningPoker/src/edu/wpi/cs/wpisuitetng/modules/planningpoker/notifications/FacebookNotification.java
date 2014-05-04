@@ -11,6 +11,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import org.jivesoftware.smack.Chat;
 import org.jivesoftware.smack.ConnectionConfiguration;
 import org.jivesoftware.smack.SASLAuthentication;
@@ -40,7 +43,8 @@ public class FacebookNotification {
 	private final int XMPP_PORT = 5222;
 	private final String username = "wpi.suite.bdt.noreply@gmail.com";
 	private final String password = "bobbytablesfb";
-
+	private static final Logger logger = Logger.getLogger(FacebookNotification.class
+			.getName());
 	/**
 	 * Constructs an Facebook notification for a given game
 	 * 
@@ -153,7 +157,7 @@ public class FacebookNotification {
 			// Try to send the message
 			try {
 				chat.sendMessage(message);
-				System.out.println("Sent facebook message successfully");
+				logger.log(Level.INFO,"Sent facebook message successfully");
 			} catch (XMPPException e) {
 				System.err.println("Failed to send Facebook Notification.");
 				e.printStackTrace();

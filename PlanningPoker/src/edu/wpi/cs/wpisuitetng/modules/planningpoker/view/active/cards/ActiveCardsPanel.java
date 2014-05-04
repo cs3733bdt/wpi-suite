@@ -16,6 +16,8 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -41,7 +43,8 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	private final List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	private JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
 	private List<CardButton> memoryArray = new ArrayList<CardButton>();
-
+	private static final Logger logger = Logger.getLogger(ActiveCardsPanel.class
+			.getName());
 	// initialized array to remember what buttons were pressed if "0?" button is
 	// pressed
 
@@ -56,7 +59,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 
 		this.setPreferredSize(new Dimension(75 * (Math.round(deck.getSize())), 68));
 		for (Card c : deck.getCards()) {
-			System.out.println("card value: " + c.getText());
+			logger.log(Level.INFO,"card value: " + c.getText());
 			JToggleButtonList.add(new CardButton(c, this));
 		}// idk button is part of array
 
@@ -97,13 +100,13 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public void addToCardSum(int cardValue) {
 		sum += cardValue;
-		System.out.println(sum);
+		logger.log(Level.INFO,Integer.toString(sum));
 	}
 	
 	public void addIDK() {
 		sum = -8008135;
 		parent.selectedIDK();
-		System.out.println("I don't know is selected.");
+		logger.log(Level.INFO,"I don't know is selected.");
 	}
 	
 	public void subIDK() {
@@ -112,7 +115,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 			if (card.isSelected())
 				sum += Integer.parseInt(card.getValue());
 		}
-		System.out.println("I don't know is deselected.");
+		logger.log(Level.INFO,"I don't know is deselected.");
 	}
 	
 	/**
@@ -123,7 +126,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public void decToCardSum(int cardValue) {
 		sum -= cardValue;
-		System.out.println(sum);
+		logger.log(Level.INFO, Integer.toString(sum));
 	}
 
 

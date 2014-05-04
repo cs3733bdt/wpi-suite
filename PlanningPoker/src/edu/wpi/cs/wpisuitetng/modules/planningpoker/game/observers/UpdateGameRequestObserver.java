@@ -88,7 +88,7 @@ public class UpdateGameRequestObserver implements RequestObserver {
 				realGame.sendNotifications();
 		}
 
-		System.out.println("The request to update a game has succeeded!");
+		logger.log(Level.INFO,"The request to update a game has succeeded!");
 	}
 
 	/**

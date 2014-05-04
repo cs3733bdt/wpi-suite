@@ -15,6 +15,8 @@ import java.awt.Color;
 import java.awt.Toolkit;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -49,7 +51,8 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 	private Integer maxValue = null;
 	private Integer minValue = null;
 	private NumberFieldCustomErrorMessage errorFields;
-
+	private static final Logger logger = Logger.getLogger(NumberJTextField.class
+			.getName());
 	/**
 	 * The Default constructor for the NumberJTextField
 	 */
@@ -168,7 +171,7 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 				isValid = true;
 				showValid(showLabel, showBox);
 			} else if (maxValue != null) {
-				System.out.print("maxValue true");
+				logger.log(Level.INFO,"maxValue true");
 				if (Integer.parseInt(getText()) > (Integer) maxValue) {
 					isValid = false;
 					showInvalid(errorFields.STRING_TOO_HIGH + maxValue,
@@ -178,7 +181,7 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 					showValid(showLabel, showBox);
 				}
 			} else if (minValue != null) {
-				System.out.print("minValue true");
+				logger.log(Level.INFO,"minValue true");
 				if (Integer.parseInt(getText()) < (Integer) minValue) {
 					isValid = false;
 					showInvalid(errorFields.STRING_TOO_LOW + minValue,
@@ -312,7 +315,6 @@ class MyDocumentFilter extends DocumentFilter {
 				isValidInteger = false;
 				break;
 			}
-			// System.out.println("Char was: " + string.charAt(i));
 		}
 		if (isValidInteger) {
 			super.replace(fp, offset, length, string, aset);

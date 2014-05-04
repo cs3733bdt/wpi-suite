@@ -274,7 +274,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		submitNumCards.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cardsHaveChanges(true);
-				System.out.println("here2");
 				displayNumCards();
 				dynamicCardPanel(); //TODO test
 				cardsPanel2.revalidate();
@@ -573,10 +572,10 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	}
 
 	public boolean hasChanges() {
-		System.out.println("cardsHaveChanges"+cardsHaveChanges);
-		System.out.println("nameTextField"+nameTextField.hasChanges());
-		System.out.println("descriptionTextField"+descriptionTextField.hasChanges());
-		System.out.println("cardsPanel2"+cardsPanel2.hasChanges());
+		logger.log(Level.INFO,"cardsHaveChanges"+cardsHaveChanges);
+		logger.log(Level.INFO,"nameTextField"+nameTextField.hasChanges());
+		logger.log(Level.INFO,"descriptionTextField"+descriptionTextField.hasChanges());
+		logger.log(Level.INFO,"cardsPanel2"+cardsPanel2.hasChanges());
 
 		return (cardsHaveChanges || nameTextField.hasChanges() || descriptionTextField.hasChanges() || cardsPanel2.hasChanges());
 	}
@@ -596,7 +595,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * have to be lost in an organized manner.
 	 */
 	private void chooseCardColor() {
-		System.out.println("here1");
 		ColorEnum deckColor = determineDeckColor();
 		cardsPanel2.setColor(deckColor);
 		if (!(deckColor.equals(ColorEnum.RED))){
@@ -609,7 +607,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	 * @param b
 	 */
 	private void cardsHaveChanges(boolean b) {
-		System.out.println("cardshaveChanges =" +b);
+		logger.log(Level.INFO,"cardshaveChanges =" +b);
 		cardsHaveChanges = b;
 		
 	}
@@ -790,7 +788,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		return isReopen;
 	}
 	public boolean readyToRemove() {
-		System.out.println("ready to remove called");
+		logger.log(Level.INFO,"ready to remove called");
 		if (readyToClose || !hasChanges()) {
 			return true;
 		}
