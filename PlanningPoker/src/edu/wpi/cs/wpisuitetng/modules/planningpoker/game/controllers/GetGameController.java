@@ -105,9 +105,6 @@ public class GetGameController implements ActionListener {
 	public synchronized void receivedGames(Game[] games) {
 		logger.log(Level.INFO,"The size of the list returned from the server is: "
 				+ games.length);
-		for (Game game : games) {
-			logger.log(Level.INFO,"\t" + game.getName() + " " + game.getIdentity());
-		}
 		// Make sure the response was not null
 		if (games != null) {
 			// add the Games to the local model

@@ -125,8 +125,9 @@ public class TabbedView extends JTabbedPane {
 		addMouseListener(new MouseAdapter() {
 			@Override
 			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger())
+				if (e.isPopupTrigger()) {
 					popup.show(e.getComponent(), e.getX(), e.getY());
+				}
 				// Get the selected component, call setSelectedComponent so help
 				// is enabled correctly
 				JComponent selected = (JComponent) TabbedView.this
@@ -497,24 +498,27 @@ public class TabbedView extends JTabbedPane {
 	 */
 	public void removeTab(JComponent comp) {
 		if (comp instanceof ICreateGamePanel) {
-			if (!((ICreateGamePanel) comp).readyToRemove())
+			if (!((ICreateGamePanel) comp).readyToRemove()) {
 				return;
+			}
 			listOfCreateGamePanels.remove(comp);
 			if (comp.equals(getSelectedComponent())) {
 				setSelectedComponent(gameOverview);
 			}
 		}
 		if (comp instanceof IActiveGamePanel) {
-			if (!((IActiveGamePanel) comp).readyToRemove())
+			if (!((IActiveGamePanel) comp).readyToRemove()) {
 				return;
+			}
 			listOfActiveGamePanels.remove(comp);
 			if (comp.equals(getSelectedComponent())) {
 				setSelectedComponent(gameOverview);
 			}
 		}
 		if (comp instanceof IEndedGamePanel) {
-			if (!((IEndedGamePanel) comp).readyToRemove())
+			if (!((IEndedGamePanel) comp).readyToRemove()) {
 				return;
+			}
 			listOfEndedGamePanels.remove(comp);
 			if (comp.equals(getSelectedComponent())) {
 				setSelectedComponent(gameOverview);
@@ -522,23 +526,26 @@ public class TabbedView extends JTabbedPane {
 		}
 		if (comp instanceof PreferencesPanel) {
 
-			if (!((PreferencesPanel) comp).readyToRemove())
+			if (!((PreferencesPanel) comp).readyToRemove()) {
 				return;
+			}
 			listOfEndedGamePanels.remove(comp);
 			hasPreferencesTab = false;
 			setSelectedComponent(gameOverview);
 		}
 		if (comp instanceof CreateDeckPanel) {
-				if (!((CreateDeckPanel) comp).readyToRemove())
+				if (!((CreateDeckPanel) comp).readyToRemove()) {
 					return;
+				}
 				listOfCreateDeckPanels.remove(comp);
 				if (comp.equals(getSelectedComponent())) {
 					setSelectedComponent(deckOverview);
 			}
 		}
 		if (comp instanceof IHelpPanel) {
-			if (!((IHelpPanel) comp).readyToRemove())
+			if (!((IHelpPanel) comp).readyToRemove()) {
 				return;
+			}
 			removeHelpPanel((IHelpPanel) comp);
 			setSelectedComponent(gameOverview);
 		}
@@ -562,8 +569,6 @@ public class TabbedView extends JTabbedPane {
 
 		int tabCount = getTabCount();
 
-		logger.log(Level.INFO,"THE TAB COUNT IS:" + tabCount);
-
 		for (int i = tabCount - 1; i > 0; i--) {
 			Component toBeRemoved = getComponentAt(i);
 
@@ -575,26 +580,30 @@ public class TabbedView extends JTabbedPane {
 			}
 
 			if (toBeRemoved instanceof IActiveGamePanel) {
-				if (!((IActiveGamePanel) toBeRemoved).readyToRemove())
+				if (!((IActiveGamePanel) toBeRemoved).readyToRemove()) {
 					continue;
+				}
 				listOfActiveGamePanels.remove(toBeRemoved);
 			}
 
 			if (toBeRemoved instanceof ICreateGamePanel) {
-				if (!((ICreateGamePanel) toBeRemoved).readyToRemove())
+				if (!((ICreateGamePanel) toBeRemoved).readyToRemove()) {
 					continue;
+				}
 				listOfCreateGamePanels.remove(toBeRemoved);
 			}
 
 			if (toBeRemoved instanceof IEndedGamePanel) {
-				if (!((IEndedGamePanel) toBeRemoved).readyToRemove())
+				if (!((IEndedGamePanel) toBeRemoved).readyToRemove()) {
 					continue;
+				}
 				listOfEndedGamePanels.remove(toBeRemoved);
 			}
 
 			if (toBeRemoved instanceof IPreferencesPanel) {
-				if (!((IPreferencesPanel) toBeRemoved).readyToRemove())
+				if (!((IPreferencesPanel) toBeRemoved).readyToRemove()) {
 					continue;
+				}
 				listOfEndedGamePanels.remove(toBeRemoved);
 				hasPreferencesTab = false;
 			}
@@ -667,8 +676,9 @@ public class TabbedView extends JTabbedPane {
 			}
 
 			if (toBeRemoved instanceof IPreferencesPanel) {
-				if (!((IPreferencesPanel) toBeRemoved).readyToRemove())
+				if (!((IPreferencesPanel) toBeRemoved).readyToRemove()) {
 					continue;
+				}
 				listOfEndedGamePanels.remove(toBeRemoved);
 				hasPreferencesTab = false;
 			}

@@ -110,9 +110,9 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		/*
 		 * Initializes a table's columns and rows and the table
 		 */
-		table = new RequirementTable(currentGame.getRequirements(),
-				RequirementTableMode.ACTIVE);
-
+		table = new RequirementTable(currentGame.getRequirements(),RequirementTableMode.ACTIVE);
+		table.getTableHeader().setReorderingAllowed(false);
+		
 		/**
 		 * mouse listener
 		 */
@@ -547,7 +547,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		Vote vote = new Vote(currentUser, voteNumber);
 		activeRequirement.addVote(vote);
 
-		logger.log(Level.INFO,"You voted: " + vote.getVoteNumber());
+		logger.log(Level.INFO, "Vote recorded" );
 
 		ViewEventController.getInstance().refreshGameTree();
 

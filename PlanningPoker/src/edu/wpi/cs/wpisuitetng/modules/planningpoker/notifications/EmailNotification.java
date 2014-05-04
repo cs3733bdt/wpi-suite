@@ -125,23 +125,22 @@ public class EmailNotification {
 		if (users[0] != null) {
 			// Send email to each user
 			for (int i = 0; i < users.length; i++) {
-				if (users[i].getNotificationPreferences().contains("E"))
+				if (users[i].getNotificationPreferences().contains("E")) {
 					if (users[i].getEmail() != null && !users[i].getEmail().equals("")) {
 						sendEmail(login(), users[i]);
 					} else {
-						logger.log(Level.WARNING,users[i].getName()
-								+ " doesn't have an email Stored.");
+						logger.log(Level.WARNING, "User doesn't have an email Stored.");
 					}
-				else {
-					logger.log(Level.WARNING,users[i].getName()
-						+ " doesnt want to receive email notifications.");
 				}
+				else {
+					logger.log(Level.WARNING,  "User doesnt want to receive email notifications.");
+				}
+				
 			}
 		}
 
 		else {
-			logger.log(Level.INFO,"Project: " + g.getProject().getName()
-					+ ", has no users in its team.");
+			logger.log(Level.INFO,"Project has no users in its team.");
 			logger.log(Level.INFO,"No Emails were sent.");
 		}
 	}
@@ -166,8 +165,7 @@ public class EmailNotification {
 		if (user.getEmail() != null) {
 			to = user.getEmail();
 		} else {
-			logger.log(Level.INFO,"User: " + user.getName()
-					+ ", does not have an email stored.");
+			logger.log(Level.INFO,"User does not have an email stored.");
 		}
 
 		try {
@@ -213,8 +211,7 @@ public class EmailNotification {
 					logger.log(Level.INFO,"Sent email successfully....");
 				} catch (InterruptedException e1) {
 					logger.log(Level.WARNING,"Can't connect to host; either internet or host is down");
-					logger.log(Level.WARNING,"Users won't get emails for game: "
-							+ g.getName());
+					logger.log(Level.WARNING,"Users won't get emails for game ");
 					e1.printStackTrace();
 				}
 			}
@@ -251,16 +248,24 @@ public class EmailNotification {
 	private String generateEndGameMessage() {
 		String stats = "";
 		ArrayList<Integer> voteArray = new ArrayList<Integer>();
+		int idks;
 
 		for (PPRequirement r : g.getRequirements()) {
-
+				
+			idks = 0;
+			
 			for (int i = 0; i < r.getVotes().size(); i++) {
-				voteArray.add(r.getVotes().get(i).getVoteNumber());
+				if(r.getVotes().get(i).getVoteNumber() != -8008135) {
+					voteArray.add(r.getVotes().get(i).getVoteNumber());
+				} else {
+					idks++;
+				}
 			}
 
 			stats += "\nRequirement: " + r.getName() + "\n" + "Mean: "
 					+ mean(voteArray) + "\n" + "Median: " + median(voteArray)
-					+ "\n" + "Standard Deviation: " + stDev(voteArray) + "\n\n";
+					+ "\n" + "Standard Deviation: " + stDev(voteArray) 
+					+ "\n" + "I don't know Votes: " + idks + "\n\n";
 			voteArray.clear();
 		}
 

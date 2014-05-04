@@ -548,7 +548,7 @@ public class PPRequirement extends ObservableModel {
 		while (GameModel.getInstance().isServerUpdating()) {
 			try {
 				Thread.sleep(5);
-				logger.log(Level.INFO,"Looping in the reqirement: " + methodCalled);
+				logger.log(Level.INFO,"Looping in reqirement ");
 			} catch (InterruptedException e) {
 				logger.log(Level.WARNING, "Thread was interrupted.");
 			}

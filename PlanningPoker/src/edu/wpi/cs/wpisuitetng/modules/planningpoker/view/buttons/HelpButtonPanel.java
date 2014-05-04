@@ -43,10 +43,12 @@ public class HelpButtonPanel extends ToolbarGroupView {
 		
 		contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.X_AXIS));
 		
-		if (System.getProperty("os.name").contains("Linux") || System.getProperty("os.name").contains("Mac"))
+		if (System.getProperty("os.name").contains("Linux") || System.getProperty("os.name").contains("Mac")) {
 			setPreferredSize(new Dimension(122, 50));
-		else
+		}
+		else {
 			setPreferredSize(new Dimension(115, 50));
+		}
 		
 		helpIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		try {

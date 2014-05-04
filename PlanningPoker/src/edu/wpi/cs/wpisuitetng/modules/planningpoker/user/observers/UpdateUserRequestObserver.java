@@ -65,8 +65,7 @@ import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
 		 */
 		@Override
 		public void fail(IRequest iReq, Exception exception) {
-			logger.log(Level.WARNING,"The request to update a user failed with exception: "
-					+ exception.getMessage());
+			logger.log(Level.WARNING, "The request to update a user failed");
 		}
 }
 

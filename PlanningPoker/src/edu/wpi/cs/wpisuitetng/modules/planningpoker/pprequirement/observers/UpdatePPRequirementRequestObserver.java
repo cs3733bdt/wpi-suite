@@ -68,7 +68,6 @@ public class UpdatePPRequirementRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		logger.log(Level.WARNING,"The request to update a game failed with exception: "
-				+ exception.getMessage());
+		logger.log(Level.WARNING, "The request to update a game failed");
 	}
 }

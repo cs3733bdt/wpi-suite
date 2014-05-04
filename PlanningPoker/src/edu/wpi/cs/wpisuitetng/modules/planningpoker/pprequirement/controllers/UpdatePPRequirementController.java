@@ -51,7 +51,7 @@ public class UpdatePPRequirementController {
 	 * @param newReq
 	 */
 	public void updateRequirement(PPRequirement newReq) {
-		logger.log(Level.INFO, "Updating " + newReq.getName() + " to server");
+		logger.log(Level.INFO, "Updating game on server");
 		// Update request
 		Request request = Network.getInstance().makeRequest(
 				"planningpoker/requirement", HttpMethod.POST);
