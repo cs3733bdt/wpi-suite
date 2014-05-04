@@ -138,7 +138,7 @@ public class NameJTextField extends CustomJTextField implements IDataField {
 					setBorder(ERRORBORDER);
 				}
 			}
-		} else if (model.hasName(getText())) {
+		} else if (model.hasActiveName(getText())) {
 			isNameValid = false;
 			if (showLabel) {
 				errorField.setText(STRING_ERROR_DUPLICATENAME);

@@ -234,7 +234,7 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement> impleme
 	}
 	
 	@Override
-	public boolean hasName(String text) {
+	public boolean hasActiveName(String text) {
 		for (PPRequirement a: requirements) {
 			if (a.getName().equals(text)) {
 				return true;
