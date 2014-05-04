@@ -74,51 +74,58 @@ public class UserProgressList extends JScrollPane {
 		game = parent.getGame();
 		try {
 			userList = game.getProject().getTeam();
-		} catch(NullPointerException e) {
+
+			if (userList == null) {
+				return;
+			}
+
+			// create all User Progress's using the usernames from the project,
+			// and add them all to the user Progress List
+			for (User user : userList) {
+				String userName = user.getUsername();
+				UserProgress userProgress = new UserProgress(userName, this);
+				userProgressList.add(userProgress);
+			}
+			int prevIndex = 0;
+			for (UserProgress userP : userProgressList) {
+				if (userProgressList.indexOf(userP) == 0) {
+					layout.putConstraint(SpringLayout.NORTH, userP, 5,
+							SpringLayout.NORTH, view);
+					layout.putConstraint(SpringLayout.WEST, userP, 0,
+							SpringLayout.WEST, view);
+					layout.putConstraint(SpringLayout.EAST, userP, 0,
+							SpringLayout.EAST, view);
+					prevIndex = 0;
+				} else {
+					UserProgress prevUserProgress = userProgressList
+							.get(prevIndex);
+					layout.putConstraint(SpringLayout.NORTH, userP, 5,
+							SpringLayout.SOUTH, prevUserProgress);
+					layout.putConstraint(SpringLayout.WEST, userP, 0,
+							SpringLayout.WEST, view);
+					layout.putConstraint(SpringLayout.EAST, userP, 0,
+							SpringLayout.EAST, view);
+					prevIndex++;
+				}
+			}
+
+			int users = userProgressList.size();
+			heightBasedOnUserNumber = 33 * users;
+
+			setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+			setPreferredSize(new Dimension(50, 125));
+			view.setPreferredSize(new Dimension(150, heightBasedOnUserNumber));
+
+			setBorder(defaultBorder);
+
+			setViewportView(view);
+
+			revalidate();
+			repaint();
+		} catch (NullPointerException e) {
 			logger.log(Level.SEVERE, "The team cannot be retrieved.", e);
 		}
-		
-		if(userList == null){
-			return;
-		}
-		
-		//create all User Progress's using the usernames from the project, and add them all to the user Progress List
-		for(User user : userList){
-			String userName = user.getUsername();
-			UserProgress userProgress = new UserProgress(userName, this);
-			userProgressList.add(userProgress);
-		}
-		int prevIndex = 0;
-		for(UserProgress userP : userProgressList){
-			if(userProgressList.indexOf(userP) == 0){
-				layout.putConstraint(SpringLayout.NORTH, userP, 5, SpringLayout.NORTH, view);	
-				layout.putConstraint(SpringLayout.WEST, userP, 0, SpringLayout.WEST, view);
-				layout.putConstraint(SpringLayout.EAST, userP, 0, SpringLayout.EAST, view);
-				prevIndex = 0;
-			}
-			else{
-				UserProgress prevUserProgress = userProgressList.get(prevIndex);
-				layout.putConstraint(SpringLayout.NORTH, userP, 5, SpringLayout.SOUTH, prevUserProgress);	
-				layout.putConstraint(SpringLayout.WEST, userP, 0, SpringLayout.WEST, view);
-				layout.putConstraint(SpringLayout.EAST, userP, 0, SpringLayout.EAST, view);
-				prevIndex++;
-			}
-		}
-		
-		int users = userProgressList.size();
-		heightBasedOnUserNumber = 33*users;
-		
-		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-		
-		setPreferredSize(new Dimension(50, 125));
-		view.setPreferredSize(new Dimension(150, heightBasedOnUserNumber));
-
-		setBorder(defaultBorder);
-		
-		setViewportView(view);
-		
-		revalidate();
-		repaint();
 		
 	}
 	
