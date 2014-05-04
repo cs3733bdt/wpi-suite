@@ -74,11 +74,12 @@ public class UpdateGameRequestObserver implements RequestObserver {
 				// Set notified before sending notifications to remove looping
 				// possibility
 				realGame.setNotifiedOfCreation(true);
-				realGame.notifyObservers();
+				
 				// Finally send
 				realGame.sendNotifications();
 			// Send out email, text, and facebook notifications on game
 			// completion
+				controller.getInstance().updateGame(realGame);
 		} else if (!realGame.isNotifiedOfCompletion() && realGame.isComplete()) {
 				// Set notified before sending notifications to remove looping
 				// possibility
@@ -87,6 +88,7 @@ public class UpdateGameRequestObserver implements RequestObserver {
 				realGame.notifyObservers();
 				// Finally Send
 				realGame.sendNotifications();
+				controller.getInstance().updateGame(realGame);
 		}
 
 		logger.log(Level.INFO,"The request to update a game has succeeded!");
