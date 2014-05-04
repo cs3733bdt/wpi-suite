@@ -291,14 +291,6 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		
 		userPanelHeight = usersProgressPanel.getHeight();
 		
-		/*if(usersProgressPanel.isVisible()){
-			setMinimumSize(new Dimension(325, 150));			//Sets the minimum size of the left half view
-			newLeftView.setPreferredSize(new Dimension(305, 485 + userPanelHeight));		//Sets the size of the view
-		}
-		if(!usersProgressPanel.isVisible()){
-			layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 20, SpringLayout.SOUTH, individualUserProgressLabel);	
-		}*/
-		
 		revalidate();
 		repaint();
 		
@@ -334,10 +326,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	}
 	
 	public void submitButtonPressed() {
-		int i = overallProgress.getValue();
-		int numReqs = parentPanel.getReqTable().getRowCount();
-		int j = (overallProgress.getMaximum())/numReqs;
-		overallProgress.setValue(i + j);
+		UpdateOverallProgress();
 	}
 
 	public boolean endManually(){
@@ -371,5 +360,19 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 				instance.repaint();
 			}
 		});
+	}
+	
+	private void UpdateOverallProgress(){
+		int i = overallProgress.getValue();
+		int numReqs;
+		if(parentPanel.getGame().getRequirements() != null){
+			numReqs = parentPanel.getGame().getRequirements().size();
+		}
+		else {
+			return;
+		}
+		int numUsers = usersProgressPanel.getNumUsers();
+		int j = (overallProgress.getMaximum())/(numReqs * numUsers);
+		overallProgress.setValue(i + j);
 	}
 }
