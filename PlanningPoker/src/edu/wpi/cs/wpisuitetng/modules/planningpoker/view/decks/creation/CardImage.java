@@ -183,7 +183,6 @@ public class CardImage extends JPanel implements IDataField{
 	 * A key listener for the textfield.
 	 * When enter key is hit, it sets the input of the textfield to the label's text to display the chosen value.
 	 * It then maks the label visible, and the textfield invisible.
-	 * TODO: validation. the text should only be an integer in a reasonable range (0-50? 0-100?...)
 	 * @param component (this method should only be used with the textfield)
 	 */
 	private void addKeyListenerToAddValueText(JComponent component,final IValidateButtons buttonParent){
@@ -191,8 +190,6 @@ public class CardImage extends JPanel implements IDataField{
 			public void keyReleased(KeyEvent arg0) {	
 				if(!addValue.validateField(errorField, true, false)){
 					logger.log(Level.INFO, "addValue was not validated");
-					//TODO: errorField.setText("The value for the card must be an integer between 1 and 999");
-					//TODO: but errorField is in CreateDeckPanel... HALP
 					return;
 				} else {
 					buttonParent.updateButtons();
@@ -209,7 +206,7 @@ public class CardImage extends JPanel implements IDataField{
 						}
 					}
 					valueLabel.setText(addValue.getText());
-					//TODO here the value in the value array needs to be set for the array to function.
+					
 					addValue.setVisible(false);
 					if(!(indexOfEnteredCard + 1 >= cards.size())){
 						cards.get(indexOfEnteredCard + 1).addValue.requestFocus();
@@ -225,7 +222,6 @@ public class CardImage extends JPanel implements IDataField{
 	/**
 	 * A focus listener for the textfield.
 	 * When focus is lost, it does the exact same thing as when enter is hit.
-	 * TODO: is this implementation a good design decision?
 	 * @param component (this method should only be used with the textfield)
 	 */
 	private void focusListenerAddValueText(JComponent component){
@@ -255,9 +251,7 @@ public class CardImage extends JPanel implements IDataField{
 			}
 
 			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void focusGained(FocusEvent e) {			
 			}
 		});
 	}

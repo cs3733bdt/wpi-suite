@@ -12,6 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.Timer;
 
@@ -36,6 +38,8 @@ public class GetDeckController implements ActionListener {
 	private Timer timer;
 	private boolean isRunning = false;
 
+	private static final Logger logger = Logger.getLogger(GetDeckController.class
+			.getName());
 	/**
 	 * Gets the singleton instance of the GetDeckController
 	 * 
@@ -98,11 +102,10 @@ public class GetDeckController implements ActionListener {
 	 *            an array of Decks received from the server
 	 */
 	public synchronized void receivedDecks(Deck[] decks) {
-		System.out.println("The size of the list returned from the server is: "
+		logger.log(Level.INFO,"The size of the list returned from the server is: "
 				+ decks.length);
 		for (Deck deck : decks) {
-			System.out
-					.println("\t" + deck.getName() + " " + deck.getIdentity());
+			logger.log(Level.INFO,"\t" + deck.getName() + " " + deck.getIdentity());
 		}
 		// Make sure the response was not null
 		if (decks != null) {

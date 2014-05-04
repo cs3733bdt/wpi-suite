@@ -88,7 +88,7 @@ public class UpdateGameRequestObserver implements RequestObserver {
 				realGame.sendNotifications();
 		}
 
-		System.out.println("The request to update a game has succeeded!");
+		logger.log(Level.INFO,"The request to update a game has succeeded!");
 	}
 
 	/**
@@ -96,7 +96,7 @@ public class UpdateGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println("Response Error: "
+		logger.log(Level.WARNING,"Response Error: "
 				+ iReq.getResponse().getStatusMessage());
 	}
 
@@ -106,8 +106,7 @@ public class UpdateGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		System.err
-				.println("The request to update a game failed with exception: "
+		logger.log(Level.WARNING,"The request to update a game failed with exception: "
 						+ exception.getMessage());
 	}
 }

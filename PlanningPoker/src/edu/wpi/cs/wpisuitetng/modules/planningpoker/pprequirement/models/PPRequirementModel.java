@@ -14,9 +14,12 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.UUID;
 
 import javax.swing.AbstractListModel;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelValidate;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.AddPPRequirementController;
 
 /**
@@ -26,7 +29,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers.Ad
  * 
  */
 @SuppressWarnings("serial")
-public class PPRequirementModel extends AbstractListModel<PPRequirement> {
+public class PPRequirementModel extends AbstractListModel<PPRequirement> implements IModelValidate {
 
 	/**
 	 * The list in which all the requirements for a single project are contained
@@ -228,5 +231,15 @@ public class PPRequirementModel extends AbstractListModel<PPRequirement> {
 	 */
 	public List<PPRequirement> getRequirements() {
 		return requirements;
+	}
+	
+	@Override
+	public boolean hasName(String text) {
+		for (PPRequirement a: requirements) {
+			if (a.getName().equals(text)) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

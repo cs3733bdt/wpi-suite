@@ -97,56 +97,6 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
 		return;		
 	}
 
-	
-		
-//		/**
-//		 * Initializes the two columns for the table of requirements.
-//		 */
-//		String[] columnNames = { "Requirement", "Description", "Complete"};
-//		Object[][] data = {};
-//		final EndGameTable table = new EndGameTable(data, columnNames);
-//		table.getColumnModel().getColumn(0).setMinWidth(300);
-//		table.getColumnModel().getColumn(1).setMinWidth(300);
-//		table.getColumnModel().getColumn(2).setMinWidth(50);
-//		table.getColumnModel().getColumn(2).setMaxWidth(75);
-//		
-//
-//		/**
-//		 * Adds data to the table
-//		 */
-//		for (int i = 0; i < game.getRequirements().size(); i++) {
-//			table.getTableModel().addRow(new Object[] {
-//					game.getRequirements().get(i).getName(),
-//					game.getRequirements().get(i).getDescription(),
-//					game.getRequirements().get(i).displayComplete() });
-//		}
-//		
-//		table.addMouseListener(new MouseAdapter() {
-//			@Override
-//			public void mouseClicked(MouseEvent e) {
-//				if (e.getClickCount() == 1) {
-//					JTable target = (JTable) e.getSource();
-//					int row = target.getSelectedRow();
-//					int column = target.getSelectedColumn();
-//					String selected = (String) target.getValueAt(row, column);
-//					for (int i = 0; i < game.getRequirements().size(); i++) {
-//						if (selected.equals(game.getRequirements().get(i).getName()) ||
-//								selected.equals(game.getRequirements().get(i).getDescription())) {
-//							if(isEstimatePanelCreated){
-//								removeStatisticsPanel();
-//								updateStatisticsPanel(game, game.getRequirements().get(i));
-//							}
-//							else{
-//								updateStatisticsPanel(game, game.getRequirements().get(i));
-//								isEstimatePanelCreated = true;
-//							}
-//						}
-//					}
-//				}
-//			}
-//		});
-		
-		
 	public void setGameName(String newGameName) {
 		gameName.setText(newGameName);
 	}
@@ -160,34 +110,16 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
 	}
 
 	public boolean readyToRemove() {
-		// TODO Make this validate
 		return true;
 	}
 
 	public Game getGame() {
 		return active;
 	}
-	
-//	public void updateStatisticsPanel(Game game, Requirement requirement){ //TODO rewrite
-//		blankPanel2.setVisible(false);
-//		rightPanel.add(new StatisticsPanel(game, requirement));
-//		rightPanel.revalidate();
-//		revalidate();
-//	}
-//	
-//	public void removeStatisticsPanel(){ //TODO rewrite
-//		blankPanel2.setVisible(false);
-//		rightPanel.remove(1);
-//		rightPanel.repaint();
-//		//activeGameScrollPane.repaint();
-//		revalidate();
-//		//this.repaint();
-//	}
 
 	@Override
 	public void update(ObservableModel o, Object arg) {
 		if(o instanceof Game){
-			//TODO Handle an update to a model
 		}
 	}
 	
@@ -195,26 +127,4 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
 		active.makeComplete();
 		active.notifyObservers();
 	}
-	
-	public static void main(String args[]){
-		JFrame frame = new JFrame("GridBagLayoutDemo");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        
-        List<PPRequirement> reqs = new ArrayList<PPRequirement>();
-        reqs.add(new PPRequirement("WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW",
-				"WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
-				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
-				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW"
-				+ "WWWWWWWWWWWWWWWWWWWWWWWWWWWW"));
-				
-        //Set up the content pane.
-        frame.add(new EndGamePanel(new Game("name", "desc", reqs, false, true)));
-        frame.setSize(400, 400);
-
-        //Display the window.
-        frame.pack();
-        frame.setVisible(true);
-	}
-
 }

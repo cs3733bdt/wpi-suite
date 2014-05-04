@@ -15,6 +15,8 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+
 
 public class NameJTextFieldTest {
 
@@ -27,10 +29,10 @@ public class NameJTextFieldTest {
 	
 	@Before
 	public void setUp() { // $codepro.audit.disable accessorMethodNamingConvention
-		textField = new NameJTextField("Test Field");
-		blankTextField = new NameJTextField();
-		blankTextField1 = new NameJTextField();
-		textFieldInt = new NameJTextField(10);
+		textField = new NameJTextField("Test Field", GameModel.getInstance());
+		blankTextField = new NameJTextField(GameModel.getInstance());
+		blankTextField1 = new NameJTextField(GameModel.getInstance());
+		textFieldInt = new NameJTextField(10, GameModel.getInstance());
 		errorLabel = new ErrorLabel();
 		
 	}
@@ -85,6 +87,6 @@ public class NameJTextFieldTest {
 	
 	@Test
 	public void testValid(){
-		NameJTextField testerField = new NameJTextField("Name");
+		NameJTextField testerField = new NameJTextField("Name", GameModel.getInstance());
 	}
 }

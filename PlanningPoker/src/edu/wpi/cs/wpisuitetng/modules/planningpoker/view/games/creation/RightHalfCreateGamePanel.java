@@ -23,6 +23,8 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -87,7 +89,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 			.createLineBorder(Color.RED);
 
 	// THIS IS THE REQUIREMENT NAME FIELD THAT WILL BE NEEDED FOR CONTROLLER
-	private NameJTextField nameArea = new NameJTextField(30);
+	private NameJTextField nameArea = new NameJTextField(30,PPRequirementModel.getInstance());
 
 	// THIS IS THE REQUIREMENT DESCRIPTION FIELD THAT WILL BE NEEDED FOR
 	// CONTROLLER
@@ -130,6 +132,9 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 
 	private JButton cancelImportReqButton;
 
+	private static final Logger logger = Logger.getLogger(RightHalfCreateGamePanel.class
+			.getName());
+	
 	/**
 	 * Builds the right half of the CreateGamePanel.
 	 * 
@@ -774,7 +779,6 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		for (Requirement r : RequirementModel.getInstance().getRequirements()) {
 			if (r.getName().equals(nameArea.getText())
 					&& r.getDescription().equals(descArea.getText())) {
-				// TODO: error message not working on this branch
 				displayError("Requirement already exists in Requirement Manager.");
 				return;
 			}
@@ -968,8 +972,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 			requirements.add(requirement);
 		} else {
 			displayError("Duplicate Requirement Added");
-			errorLabel.setVisible(true); // TODO
-			// errorLabel.setVisible(false);
+			errorLabel.setVisible(true);
 		}
 	}
 
@@ -988,7 +991,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 			}
 			if (currentTable.getTableModel().getRowCount() == 0) {
 				removeReqButton.setEnabled(false);
-				System.out.println("Unexpected edit disable 1");
+				logger.log(Level.INFO,"Unexpected edit disable 1");
 				editReqButton.setEnabled(false);
 			}
 			parent.updateButtons();
@@ -1056,7 +1059,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 				if (globalRow == -1) {
 					updateSubmitButton();
 				} else {
-					System.out.println("updating update");
+					logger.log(Level.INFO,"updating update");
 					updateUpdateButton();
 				}
 			}

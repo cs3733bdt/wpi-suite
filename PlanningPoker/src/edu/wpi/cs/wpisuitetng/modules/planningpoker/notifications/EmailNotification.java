@@ -119,33 +119,31 @@ public class EmailNotification {
 			users = g.getProject().getTeam();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			System.err
-					.println("Could not set the list 'users' to the list 'team'.");
+			logger.log(Level.WARNING,"Could not set the list 'users' to the list 'team'.");
 		}
 
 		// Check to see if no users are attached to this project
 		if (users[0] != null) {
 			// Send email to each user
 			for (int i = 0; i < users.length; i++) {
-				// TODO implement verify if email format
 				if (users[i].getNotificationPreferences().contains("E"))
 					if (users[i].getEmail() != null && !users[i].getEmail().equals("")) {
 						sendEmail(login(), users[i]);
 					} else {
-						System.err.println(users[i].getName()
+						logger.log(Level.WARNING,users[i].getName()
 								+ " doesn't have an email Stored.");
 					}
 				else {
-				System.err.println(users[i].getName()
+					logger.log(Level.WARNING,users[i].getName()
 						+ " doesnt want to receive email notifications.");
 				}
 			}
 		}
 
 		else {
-			System.out.println("Project: " + g.getProject().getName()
+			logger.log(Level.INFO,"Project: " + g.getProject().getName()
 					+ ", has no users in its team.");
-			System.out.println("No Emails were sent.");
+			logger.log(Level.INFO,"No Emails were sent.");
 		}
 	}
 
@@ -169,7 +167,7 @@ public class EmailNotification {
 		if (user.getEmail() != null) {
 			to = user.getEmail();
 		} else {
-			System.out.println("User: " + user.getName()
+			logger.log(Level.INFO,"User: " + user.getName()
 					+ ", does not have an email stored.");
 		}
 
@@ -205,7 +203,7 @@ public class EmailNotification {
 			try {
 				// Send message
 				Transport.send(message);
-				System.out.println("Sent email successfully....");
+				logger.log(Level.INFO,"Sent email successfully....");
 			} catch (MailConnectException e) {
 				logger.log(Level.WARNING,
 						"Couldn't connect to host, trying again...", e);
@@ -213,11 +211,10 @@ public class EmailNotification {
 					// Waiting 5 seconds and retrying
 					Thread.sleep(5000);
 					Transport.send(message);
-					System.out.println("Sent email successfully....");
+					logger.log(Level.INFO,"Sent email successfully....");
 				} catch (InterruptedException e1) {
-					System.err
-							.println("Can't connect to host; either internet or host is down");
-					System.err.println("Users won't get emails for game: "
+					logger.log(Level.WARNING,"Can't connect to host; either internet or host is down");
+					logger.log(Level.WARNING,"Users won't get emails for game: "
 							+ g.getName());
 					e1.printStackTrace();
 				}

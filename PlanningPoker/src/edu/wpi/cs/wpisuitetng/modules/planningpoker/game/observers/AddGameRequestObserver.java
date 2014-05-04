@@ -89,7 +89,7 @@ public class AddGameRequestObserver implements RequestObserver {
 				realGame.sendNotifications();
 		}
 
-		System.out.println("The request to add a game has succeeded!");
+		logger.log(Level.INFO,"The request to add a game has succeeded!");
 	}
 
 	/**
@@ -98,7 +98,7 @@ public class AddGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void responseError(IRequest iReq) {
-		System.err.println("The request to add a Game failed. Response Error: "
+		logger.log(Level.WARNING,"The request to add a Game failed. Response Error: "
 				+ iReq.getResponse().getStatusMessage());
 		redisplayGame();
 	}
@@ -109,7 +109,7 @@ public class AddGameRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		System.err.println("The request to add a Game failed with exception: "
+		logger.log(Level.WARNING,"The request to add a Game failed with exception: "
 				+ exception.getMessage());
 		redisplayGame();
 	}

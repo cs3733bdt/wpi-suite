@@ -15,6 +15,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
 
@@ -38,7 +40,8 @@ public class CardActionListenerRefactor implements ActionListener {
 	private ActiveCardsPanel cardsPanel;
 	private Card card;
 	private RightHalfActiveGamePanel estimatePanel;
-
+	private static final Logger logger = Logger.getLogger(CardActionListenerRefactor.class
+			.getName());
 	/**
 	 * sets the action listener for each button
 	 * 
@@ -107,7 +110,7 @@ public class CardActionListenerRefactor implements ActionListener {
 									}
 								}
 							}
-							System.out.println("is SingleSelection");
+							logger.log(Level.INFO,"is SingleSelection");
 						}
 					if (estimatePanel.getGame().getDeck().hasIDontKnowCard()) {
 						if (cardsPanel.getCardButtonArray().get(size-1)
