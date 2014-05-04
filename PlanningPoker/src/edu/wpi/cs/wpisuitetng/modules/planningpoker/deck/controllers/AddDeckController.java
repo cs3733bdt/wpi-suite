@@ -10,6 +10,11 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers;
 
+import java.util.logging.Level;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers.AddDeckRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -51,7 +56,7 @@ public class AddDeckController {
 	 * @param newDeck is the Deck to add to the server
 	 */
 	public void addDeck(Deck newDeck) {
-		System.out.println("Adding: " + newDeck.getName() + " to server");
+		logger.log(Level.INFO,"Adding: " + newDeck.getName() + " to server");
 		final Request request = 
 				Network.getInstance().makeRequest("planningpoker/deck", HttpMethod.PUT);
 		request.setBody(newDeck.toJSON());
