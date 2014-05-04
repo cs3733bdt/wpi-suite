@@ -87,7 +87,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 			.createLineBorder(Color.RED);
 
 	// THIS IS THE REQUIREMENT NAME FIELD THAT WILL BE NEEDED FOR CONTROLLER
-	private NameJTextField nameArea = new NameJTextField(30);
+	private NameJTextField nameArea = new NameJTextField(30,PPRequirementModel.getInstance());
 
 	// THIS IS THE REQUIREMENT DESCRIPTION FIELD THAT WILL BE NEEDED FOR
 	// CONTROLLER
