@@ -192,7 +192,7 @@ public class CardImage extends JPanel implements IDataField{
 	private void addKeyListenerToAddValueText(JComponent component,final IValidateButtons buttonParent){
 		component.addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {	
-				if(!addValue.validateField(errorField, true, false)){
+				if(!addValue.validateField(errorField, false, false)){
 					logger.log(Level.INFO, "addValue was not validated");
 					return;
 				} else {
@@ -232,7 +232,7 @@ public class CardImage extends JPanel implements IDataField{
 		component.addFocusListener(new FocusListener(){
 			public void focusLost(FocusEvent e) {
 				if((hasChanges())){
-					if(!addValue.validateField(errorField, true, false)){
+					if(!addValue.validateField(errorField, false, false)){
 						addValue.setText("");
 						revalidate();
 						repaint();

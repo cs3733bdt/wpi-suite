@@ -157,8 +157,7 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 	}
 
 	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
+	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
 		this.warningField = warningField;
 		boolean isValid = false;
 
@@ -172,8 +171,7 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 				logger.log(Level.INFO,"maxValue true");
 				if (Integer.parseInt(getText()) > (Integer) maxValue) {
 					isValid = false;
-					showInvalid(errorFields.STRING_TOO_HIGH + maxValue,
-							showLabel, showBox);
+					showInvalid(errorFields.STRING_TOO_HIGH + maxValue,	showLabel, showBox);
 				} else {
 					isValid = true;
 					showValid(showLabel, showBox);
@@ -182,8 +180,7 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 				logger.log(Level.INFO,"minValue true");
 				if (Integer.parseInt(getText()) < (Integer) minValue) {
 					isValid = false;
-					showInvalid(errorFields.STRING_TOO_LOW + minValue,
-							showLabel, showBox);
+					showInvalid(errorFields.STRING_TOO_LOW + minValue, showLabel, showBox);
 				} else {
 					isValid = true;
 					showValid(showLabel, showBox);
@@ -320,8 +317,7 @@ class MyDocumentFilter extends DocumentFilter {
 
 	private void numberInvalid() {
 		if (parent.getIErrorView() != null) {
-			parent.getIErrorView().setText(
-					parent.getErrorFields().STRING_NOT_NUMBER);
+			parent.getIErrorView().setText(parent.getErrorFields().STRING_NOT_NUMBER);
 		}
 	}
 

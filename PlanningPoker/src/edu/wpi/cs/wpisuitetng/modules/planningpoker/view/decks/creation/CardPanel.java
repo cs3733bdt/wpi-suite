@@ -124,8 +124,7 @@ public class CardPanel extends JPanel implements IDataField {
 	}
 	
 	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
+	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox) {
 		boolean areCardsValid = true;
 		for(CardImage c : cards){
 			//If there are any cards that return false then this should fail
