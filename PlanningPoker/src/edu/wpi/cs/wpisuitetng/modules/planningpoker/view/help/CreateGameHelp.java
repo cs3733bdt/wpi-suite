@@ -33,7 +33,6 @@ import javax.swing.SpringLayout;
 public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 	JLabel headingLabel;
 	JLabel gameInformationHeading;
-	//JTextArea createGameExplanation;
 	JLabel gameInformationpic;
 	JTextArea gameInformationExplanation;
 	JLabel noRequirementsHeading;
@@ -69,19 +68,6 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		headingLabel = new JLabel("Create and Edit Game Help");
 		headingLabel.setFont(makeFont(8));
 
-//		//Add explanation for creating games
-//		createGameExplanation = new JTextArea();
-//		createGameExplanation.setText("The Create Game menu allows you to create a Planning "
-//				+ "Poker game which you can save for further editing or start immediately. "
-//				+ "Games that have been saved can be found in Pending Games in the Game Overview"
-//				+ " tab and games that have been started can be found in Active GAmes in the Game "
-//				+ "Overview tab.");
-//		
-//		createGameExplanation.setEditable(false);
-//		createGameExplanation.setBackground(null);
-//		createGameExplanation.setWrapStyleWord(true);
-//		createGameExplanation.setLineWrap(true);
-//		
 		//Add heading label for gameInformationHeading	
 		gameInformationHeading = new JLabel("Initializing a Game");
 		gameInformationHeading.setFont(makeFont(5)); 
@@ -230,9 +216,6 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		 */
 		layout.putConstraint(SpringLayout.NORTH, headingLabel, 5, SpringLayout.NORTH, view);
 		layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, headingLabel, 0, SpringLayout.HORIZONTAL_CENTER, view);
-		
-		//layout.putConstraint(SpringLayout.NORTH, createGameExplanation, 5, SpringLayout.SOUTH, headingLabel);
-		//layout.putConstraint(SpringLayout.HORIZONTAL_CENTER, createGameExplanation, 0, SpringLayout.HORIZONTAL_CENTER, view);
 		
 		//Game Information 
 		layout.putConstraint(SpringLayout.NORTH, gameInformationHeading, 5, SpringLayout.SOUTH, headingLabel); // will change to createGameExplanation when working
