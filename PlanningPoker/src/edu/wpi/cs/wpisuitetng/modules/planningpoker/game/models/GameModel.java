@@ -88,7 +88,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
-			logger.log(Level.WARNING,
+			logger.log(Level.FINE,
 					"ViewEventController not fully initialized", e);
 		}
 	}
@@ -105,7 +105,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
-			logger.log(Level.WARNING,
+			logger.log(Level.FINE,
 					"ViewEventController not fully initialized", e);
 		}
 	}
@@ -140,8 +140,10 @@ public class GameModel extends AbstractStorageModel<Game> {
 	 * 
 	 * @param allGames
 	 *            the list of games already in the model
+	 * @return true
+	 * 			  when the game model was changed during this call
 	 */
-	public synchronized void updateGames(Game[] allGames) {
+	public synchronized boolean updateGames(Game[] allGames) {
 		boolean changes = updateModels(allGames);
 
 		if (changes) { // Only repaint game tree if the model has changed
@@ -157,13 +159,15 @@ public class GameModel extends AbstractStorageModel<Game> {
 				// active
 				// table
 			} catch (Exception e) {
-				logger.log(Level.WARNING,
+				logger.log(Level.FINE,
 						"ViewEventController not fully initialized.", e);
 			}
 		} else {
 		}
 		serverUpdating = false; // Duplicate just because we want to be sure
 								// that the lock disengages
+		
+		return changes;
 	}
 
 	@Override
