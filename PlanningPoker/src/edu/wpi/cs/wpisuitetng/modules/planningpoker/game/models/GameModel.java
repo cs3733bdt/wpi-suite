@@ -149,9 +149,6 @@ public class GameModel extends AbstractStorageModel<Game> {
 					// when running test cases (the JPanel's aren't
 					// instantiated)
 				
-				//currently serves no purpose
-				ViewEventController.getInstance().refreshGameTable();
-				
 				// Refreshes the active table
 				ViewEventController.getInstance().refreshGameTree();
 			} catch (Exception e) {
