@@ -119,6 +119,7 @@ public class CardImage extends JPanel implements IDataField{
 		add(picButton, c);											//adds the button to the card panel
 		
 		addKeyListenerToAddValueText(addValue,parent.getCardPanelParent());						//adds a key listener to the textfield (see method)
+		addValue.setFocusTraversalKeysEnabled(false);
 		focusListenerAddValueText(addValue);						//adds a focus listener to the textfield (see method)
 		addValue.setPreferredSize(new Dimension(40, 18));			//sets the textfield to be the desired size.
 		addValue.setVisible(true);									//sets the textfield to be visible at the start
