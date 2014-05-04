@@ -81,10 +81,20 @@ public class UserProgressList extends JScrollPane {
 		
 		//create all User Progress's using the usernames from the project, and add them all to the user Progress List
 		for(User user : userList){
+			try {
 			String userName = user.getUsername();
 			UserProgress userProgress = new UserProgress(userName, this);
 			userProgressList.add(userProgress);
+			}
+			catch (NullPointerException e) {
+				logger.log(Level.SEVERE, "Null pointer exception occured when retreiving users.", e);
+			}
 		}
+		if (userProgressList == null) {
+			logger.log(Level.SEVERE, "Unable to retreive any users.");
+			return;
+		}
+		
 		int prevIndex = 0;
 		for(UserProgress userP : userProgressList){
 			if(userProgressList.indexOf(userP) == 0){
