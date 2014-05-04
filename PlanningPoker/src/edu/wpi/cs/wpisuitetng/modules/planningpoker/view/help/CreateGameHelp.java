@@ -134,8 +134,8 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 				+ "requirement. Every requirement must have a name or a description before it can "
 				+ "be added to the game. When both those fields are completed, the requirement can "
 				+ "then be added by hitting the create button. Hitting Cancel will return you to the "
-				+ "list of Current Requirements in the game. The Update button is functional when adding a "
-				+ "requirement.");
+				+ "list of Current Requirements in the game. The Update button is not functional when "
+				+ "initially creating a requirement.");
 		
 		addRequirementsExplanation.setEditable(false);
 		addRequirementsExplanation.setBackground(null);

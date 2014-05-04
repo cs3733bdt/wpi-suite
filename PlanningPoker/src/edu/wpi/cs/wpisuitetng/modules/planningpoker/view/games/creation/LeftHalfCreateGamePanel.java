@@ -563,9 +563,11 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 		if (usesCards) {
 			cardsButton.setSelected(true);
 			textEntryButton.setSelected(false);
+			deckDropDownPanel.setVisible(true);
 		} else {
 			cardsButton.setSelected(false);
 			textEntryButton.setSelected(true);
+			deckDropDownPanel.setVisible(false);
 		}
 	}
 

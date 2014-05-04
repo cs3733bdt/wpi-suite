@@ -11,6 +11,10 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.controllers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.AbstractStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.observers.UpdateDeckRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -26,7 +30,8 @@ public class UpdateDeckController {
 
 	private static UpdateDeckController instance = null;
 	private UpdateDeckRequestObserver observer;
-
+	private static final Logger logger = Logger.getLogger(UpdateDeckController.class
+			.getName());
 	private UpdateDeckController() {
 		observer = new UpdateDeckRequestObserver(this);
 	}
@@ -48,7 +53,7 @@ public class UpdateDeckController {
 	 *            Game to be updated TODO: Need model for game data
 	 */
 	public void updateDeck(Deck newDeck) {
-		System.out.println("Updating " + newDeck.getName() + " to server");
+		logger.log(Level.INFO,"Updating " + newDeck.getName() + " to server");
 		// Update request
 		Request request = Network.getInstance().makeRequest(
 				"planningpoker/deck", HttpMethod.POST);
