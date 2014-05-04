@@ -167,6 +167,9 @@ public abstract class AbstractStorageModel<T extends ObservableModel & IStorageM
 						// the same
 						found = true; // This game has been found in the list
 						// aGame.deleteObservers();
+						if(aModel.getProject() != null || aModel.getProject().getTeam() != null){
+							modelList.setProject(aModel.getProject());
+						}
 						aModel.addObserver(this);
 						if (modelList.copyFrom(aModel)) {
 							updatedModels.add(aModel); // Stores this for
