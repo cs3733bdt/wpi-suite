@@ -133,7 +133,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 					estText.requestFocus();
 					estText.select(0, 0);
 					
-					if(activeRequirement.userVote() == -8008135) {
+					if(activeRequirement.userVote() == -1) {
 						displayVote = "?";
 					} else {
 						displayVote = Integer.toString(activeRequirement.userVote());
@@ -190,7 +190,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 
 		PPRequirement firstRequirement = table.getSelectedReq();
 		
-		if(firstRequirement.userVote() == -8008135) {
+		if(firstRequirement.userVote() == -1) {
 			displayVote = "?";
 		} else {
 			displayVote = Integer.toString(firstRequirement.userVote());
@@ -566,7 +566,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	 * update the saved estimate label
 	 */
 	public void updateSavedEstimateLabel() {
-		if(activeRequirement.userVote() == -8008135) {
+		if(activeRequirement.userVote() == -1) {
 			previousEst.setText("Your saved estimate is: 0");
 			table.setValueAt("?", table.getSelectedRow(), 2);		
 		} else {

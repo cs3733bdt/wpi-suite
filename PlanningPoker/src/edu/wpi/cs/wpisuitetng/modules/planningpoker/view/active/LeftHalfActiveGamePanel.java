@@ -244,11 +244,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	}
 
 	public boolean endManually(){
-		if (endManually){
-			return true;
-		}else{
-			return false;
-		}
+		return endManually;
 	}
 	
 	public Game getGame(){
