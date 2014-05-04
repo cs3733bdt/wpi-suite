@@ -176,7 +176,7 @@ public class GameManagerTest {
 	 * @throws WPISuiteException
 	 */
 	@Test
-	public void testDeleteAllWhenEmpty() throws WPISuiteException{
+	public void testDeleteAllWhenEmpty() throws WPISuiteException{ // $codepro.audit.disable missingAssertInTestMethod
 		manager.deleteAll(adminSession);
 		manager.deleteAll(adminSession);
 		// no exceptions get thrown

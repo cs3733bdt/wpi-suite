@@ -110,9 +110,9 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		/*
 		 * Initializes a table's columns and rows and the table
 		 */
-		table = new RequirementTable(currentGame.getRequirements(),
-				RequirementTableMode.ACTIVE);
-
+		table = new RequirementTable(currentGame.getRequirements(),RequirementTableMode.ACTIVE);
+		table.getTableHeader().setReorderingAllowed(false);
+		
 		/**
 		 * mouse listener
 		 */

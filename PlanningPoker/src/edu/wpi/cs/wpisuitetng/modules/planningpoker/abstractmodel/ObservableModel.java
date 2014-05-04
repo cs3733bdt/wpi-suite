@@ -179,7 +179,7 @@ public abstract class ObservableModel extends AbstractModel {
 	 */
 	protected synchronized void makeChanged() {
 		//Print the stack trace on this call
-		StackTraceElement callers [] = Thread.currentThread().getStackTrace();
+		StackTraceElement [] callers = Thread.currentThread().getStackTrace();
 		StringBuilder message = new StringBuilder();
 		int count = 0;
 		for(StackTraceElement e : callers){
