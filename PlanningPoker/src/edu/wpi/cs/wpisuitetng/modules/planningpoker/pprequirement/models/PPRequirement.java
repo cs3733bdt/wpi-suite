@@ -53,11 +53,9 @@ public class PPRequirement extends ObservableModel {
 	/** If this requirement came from the requirement manager module */
 	private boolean fromRequirementModule = false;
 
-	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
-
-	private static final Logger logger = Logger.getLogger(PPRequirement.class
-
-			.getName());
+	private static final Logger logger = Logger.getLogger(PPRequirement.class.getName());
+	
+	
 	/** list of votes for this requirement */
 	private List<Vote> votes = new ArrayList<Vote>() {
 		public boolean equals(Object o) {
