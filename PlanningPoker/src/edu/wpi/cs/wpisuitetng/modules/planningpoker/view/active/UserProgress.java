@@ -12,8 +12,6 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -50,7 +48,6 @@ public class UserProgress extends JPanel {
 		
 		userNameLabel = new JLabel(username);
 		userNameLabel.setPreferredSize(new Dimension(80, 20));
-		addMouseListenerToProgressLabel(userNameLabel);
 		
 		userProgress.setStringPainted(true);
 		
@@ -98,14 +95,5 @@ public class UserProgress extends JPanel {
 				}
 			}
 		}
-	}
-	
-	private void addMouseListenerToProgressLabel(JLabel component) {
-		component.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				setProgressBarValue();
-			}
-		});
 	}
 }

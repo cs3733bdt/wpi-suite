@@ -19,10 +19,10 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -39,6 +39,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
  * Creates the left half of the active games panel
  */
 public class LeftHalfActiveGamePanel extends JScrollPane{
+	
+	private static final Logger logger = Logger.getLogger(UserProgress.class.getName());
 	
 	Game active;
 	
@@ -62,7 +64,6 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	
 	private JLabel overallProgressLabel = new JLabel("Team's overall voting progress: ");
 	private final JProgressBar overallProgress = new JProgressBar(0, 1000);
-	private JButton testButton = new JButton("testYo");
 	private JLabel individualUserProgressLabel;
 	private UserProgressList usersProgressPanel;
 	private int userPanelHeight;
@@ -197,14 +198,6 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		overallProgress.setPreferredSize(new Dimension(320,25));//make the bar higher
 		overallProgress.setStringPainted(true);
 		newLeftView.add(overallProgress);
-		newLeftView.add(testButton);
-		
-		testButton.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				submitButtonPressed();
-			}
-		});
 		
 		/**
 		 * Add components to the container
@@ -280,9 +273,6 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.WEST, endGameManuallyButton, 5, SpringLayout.WEST, newLeftView);
 		layout.putConstraint(SpringLayout.SOUTH, endGameManuallyButton, -10, SpringLayout.SOUTH, newLeftView);
 
-		layout.putConstraint(SpringLayout.WEST, testButton, 10, SpringLayout.EAST, endGameManuallyButton);
-		layout.putConstraint(SpringLayout.SOUTH, testButton, -10, SpringLayout.SOUTH, newLeftView);
-
 		setMinimumSize(new Dimension(325, 150));			//Sets the minimum size of the left half view
 		newLeftView.setPreferredSize(new Dimension(305, 485));		//Sets the size of the view
 		
@@ -297,10 +287,6 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		revalidate();
 		repaint();
 		
-	}
-	
-	public void submitButtonPressed() {
-		updateOverallProgress();
 	}
 
 	public boolean endManually(){
@@ -348,14 +334,14 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 			reqList = active.getRequirements();
 		}
 		else {
-			//logger.log(Level.SEVERE, "Requirement list is null");
+			logger.log(Level.SEVERE, "Requirement list is null");
 			return;
 		}		
 		overallProgress.setValue(0);
 		for(PPRequirement r : reqList){
 			if(r.getVotes() != null){				//check if voteList isn't null
 				voteList = r.getVotes();
-				for(Vote v : voteList){		//if the voter has the same username as the username associated with this progress bar
+				for(Vote v : voteList){		
 					int i = overallProgress.getValue();
 					int numReqs;
 					if(active.getRequirements() != null){
