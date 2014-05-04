@@ -531,7 +531,6 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 
 		System.out.println("You voted: " + vote.getVoteNumber());
 
-		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 
 		getEstimateText().setBorder(defaultBorder);

@@ -227,12 +227,6 @@ public abstract class ObservableModel extends AbstractModel {
 		return obs.size();
 	}
 
-	/**
-	 * TODO add documenation
-	 * 
-	 * @param i
-	 * @return the observer
-	 */
 	protected synchronized IModelObserver getObserver(int i) {
 		return obs.get(i);
 	}

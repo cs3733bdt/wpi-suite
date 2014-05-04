@@ -510,9 +510,9 @@ public class Game extends ObservableModel implements IModelObserver,
 	}
 
 	/**
-	 * TODO: add documentation
+	 * Sets the requirements of the current game
 	 * 
-	 * @param newReqs
+	 * @param newReqs the new requirements to be added
 	 */
 	public void setRequirements(List<PPRequirement> newReqs) {
 		if (!requirements.equals(newReqs)) {
@@ -761,8 +761,7 @@ public class Game extends ObservableModel implements IModelObserver,
 				Thread.sleep(5);
 				logger.log(Level.WARNING, "Looping in the game");
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log(Level.WARNING, "The thread was interrupted.", e);
 			}
 		}
 	}

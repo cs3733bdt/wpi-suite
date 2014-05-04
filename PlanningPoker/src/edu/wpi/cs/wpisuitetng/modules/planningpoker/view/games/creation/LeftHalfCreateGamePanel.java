@@ -243,10 +243,8 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 		launchGameButton = new LaunchGameButtonPanel(parent); // Creates a
 																// launch game
 																// button
-		cancelGameButton = new CancelButton("Cancel Game", parent); // TODO
-																	// implement
-																	// this
-
+		cancelGameButton = new CancelButton("Cancel Game", parent); 
+		
 		JPanel buttonPanel = new JPanel(); // Creates a panel for the buttons
 		buttonPanel.add(saveGameButton); // Adds the save button to the panel
 		buttonPanel.add(launchGameButton); // Adds the launch button to the

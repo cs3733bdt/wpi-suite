@@ -85,7 +85,6 @@ public class GameModel extends AbstractStorageModel<Game> {
 
 		try { // Prevents a null pointer exception when the running tests (the
 				// JPanel's aren't instantiated)
-			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
 			logger.log(Level.WARNING,
@@ -102,7 +101,6 @@ public class GameModel extends AbstractStorageModel<Game> {
 		super.emptyModel();
 		try { // Prevents a null pointer exception when the running tests (the
 				// JPanel's aren't instantiated)
-			ViewEventController.getInstance().refreshGameTable();
 			ViewEventController.getInstance().refreshGameTree();
 		} catch (Exception e) {
 			logger.log(Level.WARNING,
@@ -148,14 +146,7 @@ public class GameModel extends AbstractStorageModel<Game> {
 			try { // This is used to prevent the a null pointer exception
 					// when running test cases (the JPanel's aren't
 					// instantiated)
-				ViewEventController.getInstance().refreshGameTable(); // Currently
-				// serves
-				// no
-				// purpose
-				ViewEventController.getInstance().refreshGameTree(); // Refreshes
-				// the
-				// active
-				// table
+				ViewEventController.getInstance().refreshGameTree();
 			} catch (Exception e) {
 				logger.log(Level.WARNING,
 						"ViewEventController not fully initialized.", e);
@@ -199,7 +190,6 @@ public class GameModel extends AbstractStorageModel<Game> {
 				UpdateGameController.getInstance().updateGame((Game) o);
 				System.out.println("A game is being updated: "
 						+ ((Game) o).getName());
-				ViewEventController.getInstance().refreshGameTable();
 				ViewEventController.getInstance().refreshGameTree();
 			} catch (Exception e) {
 				logger.log(Level.WARNING,

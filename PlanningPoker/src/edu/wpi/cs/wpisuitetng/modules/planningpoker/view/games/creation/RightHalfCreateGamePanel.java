@@ -774,7 +774,6 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		for (Requirement r : RequirementModel.getInstance().getRequirements()) {
 			if (r.getName().equals(nameArea.getText())
 					&& r.getDescription().equals(descArea.getText())) {
-				// TODO: error message not working on this branch
 				displayError("Requirement already exists in Requirement Manager.");
 				return;
 			}
@@ -968,8 +967,7 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 			requirements.add(requirement);
 		} else {
 			displayError("Duplicate Requirement Added");
-			errorLabel.setVisible(true); // TODO
-			// errorLabel.setVisible(false);
+			errorLabel.setVisible(true);
 		}
 	}
 

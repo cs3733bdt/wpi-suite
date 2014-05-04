@@ -79,9 +79,7 @@ public class PreferencesHelp extends JScrollPane implements IHelpPanel {
 		emailHelpExplanation.setBackground(null);
 		emailHelpExplanation.setWrapStyleWord(true);
 		emailHelpExplanation.setLineWrap(true);
-		
-		//Add arrow label //TODO test
-		
+				
 		//Add Facebook image panel
 		facebookHelppic = addImage("facebook_preferences1.png");
 		

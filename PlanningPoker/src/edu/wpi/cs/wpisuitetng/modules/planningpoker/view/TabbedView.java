@@ -153,14 +153,6 @@ public class TabbedView extends JTabbedPane {
 		});
 	}
 
-	/**
-	 * needed to get controller functioning TODO add purpose for this function
-	 * 
-	 * @return boolean true always
-	 */
-	public boolean getNewGame() {
-		return true;
-	}
 
 	/**
 	 * Overridden insertTab function to add the closable tab element.
@@ -207,7 +199,6 @@ public class TabbedView extends JTabbedPane {
 
 		// Game not found in the active game list
 		ActiveGamePanel viewGame = new ActiveGamePanel(game);
-		// TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 
 		addTab(getTabName(game), viewGame);
 		setToolTipTextAt(getTabCount() - 1, game.getName());
@@ -409,7 +400,6 @@ public class TabbedView extends JTabbedPane {
 
 		// Game not found in the active game list
 		EndGamePanel viewGame = new EndGamePanel(game);
-		// TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
 
 		addTab(getTabName(game), viewGame);
 		setToolTipTextAt(getTabCount() - 1, game.getName());
@@ -441,7 +431,7 @@ public class TabbedView extends JTabbedPane {
 
 		// Game not found in the active game list
 		CreateDeckPanel viewDeck = new CreateDeckPanel(deck);
-		// TODO: MAKE THIS NOT A TAB, MAKE IT OVERWRITE THE MAIN VIEW.
+
 		viewDeck.disableFields();
 		addTab(getTabName(deck), viewDeck);
 		setToolTipTextAt(getTabCount() - 1, deck.getName());
@@ -527,7 +517,7 @@ public class TabbedView extends JTabbedPane {
 			}
 		}
 		if (comp instanceof PreferencesPanel) {
-			// TODO Implement preferences like other panels to use readyToRemove
+
 			if (!((PreferencesPanel) comp).readyToRemove())
 				return;
 			listOfEndedGamePanels.remove(comp);
