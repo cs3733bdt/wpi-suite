@@ -209,7 +209,6 @@ public class CardImage extends JPanel implements IDataField{
 					}
 					valueLabel.setText(addValue.getText());
 					//TODO here the value in the value array needs to be set for the array to function.
-					valueLabel.setVisible(true);
 					addValue.setVisible(false);
 					if(!(indexOfEnteredCard + 1 >= cards.size())){
 						cards.get(indexOfEnteredCard + 1).addValue.requestFocus();
@@ -239,7 +238,6 @@ public class CardImage extends JPanel implements IDataField{
 					}
 					else {
 						valueLabel.setText(addValue.getText());
-						valueLabel.setVisible(true);
 						addValue.setVisible(false);
 						revalidate();
 						repaint();
@@ -248,7 +246,6 @@ public class CardImage extends JPanel implements IDataField{
 				else {
 					if(!hasChanges()){
 						valueLabel.setText(addValue.getText());
-						valueLabel.setVisible(true);
 						//addValue.setVisible(false);
 						revalidate();
 						repaint();
@@ -290,9 +287,6 @@ public class CardImage extends JPanel implements IDataField{
 	
 	public void setValueLabel(String value) {
 		valueLabel.setText(value);
-		if (!value.isEmpty()) {
-			valueLabel.setVisible(true);
-		}
 		addValue.setVisible(false);
 	}
 	
