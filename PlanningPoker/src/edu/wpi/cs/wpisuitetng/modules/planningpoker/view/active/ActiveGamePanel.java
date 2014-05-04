@@ -10,6 +10,9 @@
  *******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import javax.swing.JOptionPane;
 import javax.swing.JSplitPane;
 
@@ -26,6 +29,8 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 	LeftHalfActiveGamePanel leftHalf;
 	RightHalfActiveGamePanel rightHalf; 
 	
+	private Timer timer = new Timer();
+	
 	public ActiveGamePanel(final Game game) {
 		game.addObserver(this);	
 		currentGame = game;
@@ -37,6 +42,13 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 		setLeftComponent(leftHalf);
 		setDividerLocation(400);
 		
+		timer.scheduleAtFixedRate(new TimerTask() {
+			  @Override
+			  public void run() {
+				  leftHalf.updateOverallProgress();
+				  rightHalf.updateVoteColumn();
+			  }
+			}, 2*1000, 2*1000);
 	}
 	
 	public void endGameManually(){

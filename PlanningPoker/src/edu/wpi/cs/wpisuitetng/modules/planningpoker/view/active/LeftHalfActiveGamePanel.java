@@ -340,7 +340,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	 * Updates the overall progress bar.
 	 *
 	 */
-	private void updateOverallProgress(){
+	public void updateOverallProgress(){
 		
 		List<PPRequirement> reqList;
 		List<Vote> voteList;
