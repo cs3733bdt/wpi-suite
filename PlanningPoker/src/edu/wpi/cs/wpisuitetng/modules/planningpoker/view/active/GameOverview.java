@@ -64,7 +64,7 @@ public class GameOverview extends JSplitPane {
 		panel.setLayout(layout);
 		JScrollPane scrollPanel = new JScrollPane(panel);
 		//scrollPanel.setMinimumSize(new Dimension(600, 450));
-		panel.setPreferredSize(new Dimension(610, 675)); //ADD HEIGHT AS 510
+		panel.setPreferredSize(new Dimension(610, 720)); //ADD HEIGHT AS 510
 		
 		// Adds introduction label
 		ppIntroLabel = new JLabel("What is Planning Poker?");
