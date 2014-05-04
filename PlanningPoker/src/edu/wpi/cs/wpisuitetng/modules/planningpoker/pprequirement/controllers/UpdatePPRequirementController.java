@@ -11,6 +11,9 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.controllers;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.observers.UpdatePPRequirementRequestObserver;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -26,7 +29,8 @@ public class UpdatePPRequirementController {
 
 	private static UpdatePPRequirementController instance = null;
 	private UpdatePPRequirementRequestObserver observer;
-
+	private static final Logger logger = Logger.getLogger(UpdatePPRequirementController.class
+			.getName());
 	private UpdatePPRequirementController() {
 		observer = new UpdatePPRequirementRequestObserver(this);
 	}
@@ -48,7 +52,7 @@ public class UpdatePPRequirementController {
 	 *            Game to be updated TODO: Need model for game data
 	 */
 	public void updateRequirement(PPRequirement newReq) {
-		System.out.println("Updating " + newReq.getName() + " to server");
+		logger.log(Level.INFO, "Updating " + newReq.getName() + " to server");
 		// Update request
 		Request request = Network.getInstance().makeRequest(
 				"planningpoker/requirement", HttpMethod.POST);

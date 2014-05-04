@@ -64,22 +64,25 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 	}
 
 	public boolean readyToRemove() {
-		if (allUsersVoted()){
-			int result = JOptionPane.showConfirmDialog(this,
-					"Since you are the last one to vote\nclosing this tab will end the game.",
-					"Game Ends", JOptionPane.OK_CANCEL_OPTION,
-					JOptionPane.INFORMATION_MESSAGE);
-			if (result==0){
-				endGameByVoting();
-				return true;
-			}else{
-				return false;
-			}
-			
-		}else{
+		if (leftHalf.endManually()){
 			return true;
+		}else{
+			if (allUsersVoted()){
+				int result = JOptionPane.showConfirmDialog(this,
+						"Since you are the last one to vote\nclosing this tab will end the game.",
+						"Game Ends", JOptionPane.OK_CANCEL_OPTION,
+						JOptionPane.INFORMATION_MESSAGE);
+				if (result==0){
+					endGameByVoting();
+					return true;
+				}else{
+					return false;
+				}
+				
+			}else{
+				return true;
+			}
 		}
-	
 	}
 	
 	public RequirementTable getReqTable(){

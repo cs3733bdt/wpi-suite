@@ -22,6 +22,8 @@ import java.awt.event.MouseListener;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -63,6 +65,8 @@ public class GameTree extends JPanel implements MouseListener{
 	DefaultMutableTreeNode history = 
 			new DefaultMutableTreeNode("Game History"); //Make games history node
 	
+	private static final Logger logger = Logger.getLogger(GameTree.class
+			.getName());
 	boolean isInactiveCollapsed = true;
 	boolean isActiveCollapsed = true;
 	boolean isHistoryCollapsed = true;
@@ -105,7 +109,7 @@ public class GameTree extends JPanel implements MouseListener{
 		
 		List<Game> gameList = 
 				sortGames(GameModel.getInstance().getGames());//retrieve list of all games
-		System.out.println("Numb Games: " + gameList.size());
+		logger.log(Level.INFO,"Numb Games: " + gameList.size());
 		for (Game game: gameList){
 			DefaultMutableTreeNode newGameNode = new DefaultMutableTreeNode(game);
 			
@@ -125,7 +129,7 @@ public class GameTree extends JPanel implements MouseListener{
 		gameNode.add(inactive);
 		gameNode.add(active);
 		gameNode.add(history);
-		System.out.println("Numb Games: " + gameList.size());
+		logger.log(Level.INFO,"Numb Games: " + gameList.size());
 
 		
 		gameTree = new JTree(gameNode);
@@ -224,31 +228,22 @@ public class GameTree extends JPanel implements MouseListener{
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();
 		int y = e.getY();
-		
-        for (Game game: sortGames(GameModel.getInstance().getGames())) {
-            if(!game.isComplete() && game.isActive()) {
-                if(game.hasEnded(true)) {
-                    refresh();
-                }
-            }
-        }
 
-		//System.out.println("Single Click Detected");
 		
 		if(e.getClickCount() == 2){
-			System.out.println("Double Click Detected");
+			logger.log(Level.INFO,"Double Click Detected");
 			TreePath treePath = gameTree.getPathForLocation(x, y);
 			JTree clicked = gameTree;
 			if(treePath == null){
-				System.out.println("Not on gameTree");
+				logger.log(Level.INFO,"Not on gameTree");
 			}
 			if(treePath != null){
-				System.out.println("Tree Path valid");
+				logger.log(Level.INFO,"Tree Path valid");
 				DefaultMutableTreeNode node = 
 						(DefaultMutableTreeNode)clicked.getLastSelectedPathComponent();
 				if(node != null) {
 					if(node.getUserObject() instanceof Game){ //Confirm that this is a game
-						System.out.println("Setting view to game: " + 
+						logger.log(Level.INFO,"Setting view to game: " + 
 								((Game)node.getUserObject()).toString());
 						if(((Game)node.getUserObject()).isActive() &&
 								(!((Game)node.getUserObject()).isComplete())){
@@ -271,42 +266,19 @@ public class GameTree extends JPanel implements MouseListener{
 					}
 				}
 			}
-		}
-		
-		//TODO add functionality for right clicking possibly
-		
+		}		
 	}
-
-
-
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
-
-
-
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
-
-
-
 	@Override
-	public void mouseEntered(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void mouseEntered(MouseEvent e) {	
 	}
-
-
-
 	@Override
 	public void mouseExited(MouseEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 }
 

@@ -38,7 +38,7 @@ public class NumberFieldCustomErrorMessage {
 	 * @param too_long
 	 *            The error if the number is too long
 	 * @param too_short
-	 *            TODO
+	 *            
 	 * @param not_empty
 	 *            The error if the field is empty
 	 * @param not_number

@@ -61,7 +61,7 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		Container view = new Container();
 		SpringLayout layout = new SpringLayout();
 		view.setLayout(layout);
-		view.setPreferredSize(new Dimension(610, 1750));
+		view.setPreferredSize(new Dimension(610, 1780));
 		
 		//Add the heading label to the Panel
 		headingLabel = new JLabel("Create Game Help");
@@ -134,8 +134,8 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 				+ "requirement. Every requirement must have a name or a description before it can "
 				+ "be added to the game. When both those fields are completed, the requirement can "
 				+ "then be added by hitting the create button. Hitting Cancel will return you to the "
-				+ "list of Current Requirements in the game. The Update button is functional when adding a "
-				+ "requirement.");
+				+ "list of Current Requirements in the game. The Update button is not functional when "
+				+ "initially creating a requirement.");
 		
 		addRequirementsExplanation.setEditable(false);
 		addRequirementsExplanation.setBackground(null);
@@ -302,7 +302,7 @@ public class CreateGameHelp extends JScrollPane implements IHelpPanel {
 		
 		layout.putConstraint(SpringLayout.NORTH, updateRequirementspic, 20, SpringLayout.SOUTH, updateRequirementsHeading);
 		layout.putConstraint(SpringLayout.WEST, updateRequirementspic, 5, SpringLayout.WEST, view);
-		//layout.putConstraint(SpringLayout.SOUTH, updateRequirementspic, 20, SpringLayout.SOUTH, view);
+		//layout.putConstraint(SpringLayout.SOUTH, updateRequirementspic, 10, SpringLayout.SOUTH, view);
 
 		layout.putConstraint(SpringLayout.NORTH, updateRequirementsExplanation, 20, SpringLayout.SOUTH, updateRequirementsHeading);
 		layout.putConstraint(SpringLayout.EAST, updateRequirementsExplanation, 0, SpringLayout.EAST, view);

@@ -16,6 +16,8 @@ import java.awt.Image;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -25,8 +27,6 @@ import javax.swing.JPanel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Card;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active.RightHalfActiveGamePanel;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 
 /**
  * creates the panel that displays all of the buttons and adds a clear button
@@ -34,14 +34,15 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
  * @author Bobby Drop Tables
  * 
  */
-public class ActiveCardsPanel extends JPanel implements IDataField {
+public class ActiveCardsPanel extends JPanel{
 
 	private int sum = 0;
 	private final Deck deck;
 	private final List<CardButton> JToggleButtonList = new ArrayList<CardButton>();
 	private JLabel counterLabel = new JLabel("Your current estimate total: " + 0);
 	private List<CardButton> memoryArray = new ArrayList<CardButton>();
-
+	private static final Logger logger = Logger.getLogger(ActiveCardsPanel.class
+			.getName());
 	// initialized array to remember what buttons were pressed if "0?" button is
 	// pressed
 
@@ -54,10 +55,9 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 
 		int cardsPerRow = 10;
 
-		this.setPreferredSize(new Dimension(525, (68 * (Math.round(deck.getSize()
-				/ cardsPerRow)))));
+		this.setPreferredSize(new Dimension(75 * (Math.round(deck.getSize())), 68));
 		for (Card c : deck.getCards()) {
-			System.out.println("card value: " + c.getText());
+			logger.log(Level.INFO,"card value: " + c.getText());
 			JToggleButtonList.add(new CardButton(c, this));
 		}// idk button is part of array
 
@@ -70,14 +70,23 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 
 	public void clearCards() throws IOException {
 		Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
-		for (int i = 0; i < (deck.getSize() - 1); i++) {
-			if (JToggleButtonList.get(i).isSelected()) {
-				JToggleButtonList.get(i).doClick();
-				JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+		if (parent.getGame().getDeck().hasIDontKnowCard()) {
+			for (int i = 0; i < (deck.getSize() - 1); i++) {
+				if (JToggleButtonList.get(i).isSelected()) {
+					JToggleButtonList.get(i).doClick();
+					JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+				}
 			}
-		}
-		if (JToggleButtonList.get(deck.getSize() - 1).isSelected()) {
-			JToggleButtonList.get(deck.getSize() - 1).doClick();
+			if (JToggleButtonList.get(deck.getSize() - 1).isSelected()) {
+				JToggleButtonList.get(deck.getSize() - 1).doClick();
+			}
+		} else {
+			for (int i = 0; i < deck.getSize(); i++) {
+				if (JToggleButtonList.get(i).isSelected()) {
+					JToggleButtonList.get(i).doClick();
+					JToggleButtonList.get(i).setIcon(new ImageIcon(frontImg));
+				}
+			}
 		}
 	}
 
@@ -89,13 +98,22 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public void addToCardSum(int cardValue) {
 		sum += cardValue;
-		System.out.println(sum);
+		logger.log(Level.INFO,Integer.toString(sum));
 	}
 	
 	public void addIDK() {
-		sum = 0;
+		sum = -8008135;
 		parent.selectedIDK();
-		System.out.println("I don't know is selected.");
+		logger.log(Level.INFO,"I don't know is selected.");
+	}
+	
+	public void subIDK() {
+		sum = 0;
+		for (CardButton card: JToggleButtonList) {
+			if (card.isSelected())
+				sum += Integer.parseInt(card.getValue());
+		}
+		logger.log(Level.INFO,"I don't know is deselected.");
 	}
 	
 	/**
@@ -106,7 +124,7 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public void decToCardSum(int cardValue) {
 		sum -= cardValue;
-		System.out.println(sum);
+		logger.log(Level.INFO, Integer.toString(sum));
 	}
 
 
@@ -117,8 +135,14 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 */
 	public int getMaxSum() {
 		int sum = 0;
-		for (int i = 0; i < (deck.getSize()) -1 ; i++) {
-			sum += Integer.parseInt(deck.getCards().get(i).getText());
+		if (parent.getGame().getDeck().hasIDontKnowCard()) {
+			for (int i = 0; i < (deck.getSize() - 1); i++) {
+				sum += Integer.parseInt(deck.getCards().get(i).getText());
+			}
+		} else {
+			for (int i = 0; i < deck.getSize(); i++) {
+				sum += Integer.parseInt(deck.getCards().get(i).getText());
+			}
 		}
 		return sum;
 	}
@@ -180,20 +204,6 @@ public class ActiveCardsPanel extends JPanel implements IDataField {
 	 **/
 	public List<CardButton> memoryArray() {
 		return memoryArray;
-	}
-
-	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	
-	@Override
-	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 	
 	public RightHalfActiveGamePanel getParentPanel(){

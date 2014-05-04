@@ -279,7 +279,6 @@ public class AddEndDatePanel extends JPanel implements IDataField {
 	@Override
 	public boolean validateField(IErrorView warningField, boolean showLabel,
 			boolean showBox) {
-		// TODO Auto-generated method stub
 		boolean isEndDateValid = false;
 		endDate = getEndDate();
 		Calendar endCalendar = new GregorianCalendar();

@@ -136,8 +136,11 @@ public class CardPanel extends JPanel implements IDataField {
 
 	@Override
 	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
+		boolean status = false;
+		for (CardImage c: cards) {
+			status &= c.hasChanges();
+		}
+		return status;
 	}
 
 	public void setNumberCards(int value) {

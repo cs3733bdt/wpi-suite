@@ -24,6 +24,7 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JButton;
@@ -44,14 +45,12 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.controllers.Upda
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
-import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.vote.models.Vote;
 
 /**
  * used to display the end game statistics upon ending a game
  */
-public class StatisticsPanel extends JScrollPane implements IDataField {
+public class StatisticsPanel extends JScrollPane {
 	Game activeGame;
 	PPRequirement activeRequirement;
 	private static final Logger logger = Logger.getLogger(AbstractStorageModel.class
@@ -102,10 +101,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		overviewPanel.setLayout(layout);
 
 		activeGame = game;
-		activeRequirement = game.getRequirements().get(0); // default to first
-															// requirement
-															// //TODO dependent
-															// on the click
+		activeRequirement = game.getRequirements().get(0); 
 
 		JLabel descLabel = new JLabel("Description");
 		JLabel statLabel = new JLabel("Statistics");
@@ -354,7 +350,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		List<Integer> newVotes = new ArrayList<Integer>();
 
 		for (int i = 0; i < votes.size(); i++) {
-			if (votes.get(i) != 0) {
+			if (votes.get(i) != -8008135) {
 				newVotes.add(votes.get(i));
 			}
 		}
@@ -365,7 +361,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param votes
 	 *            a list of the integer values for the votes for a given
 	 *            requirement
-	 * @return the minimum of the array. will return -1 if the array is empty
+	 * @return the minimum of the array. will return 0 if the array is empty
 	 */
 	private int min(List<Integer> votes) {
 		int min = -1;
@@ -376,6 +372,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			}
 		}
 		minEstimate = min;
+		if(min < 0) 
+			min = 0;
 		return min;
 	}
 
@@ -383,7 +381,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 	 * @param votes
 	 *            a list of the integer values for the votes for a given
 	 *            requirement
-	 * @return the maximum of the array. will return -1 if the array is empty
+	 * @return the maximum of the array. will return 0 if the array is empty
 	 */
 	private int max(List<Integer> votes) {
 		int max = -1;
@@ -394,9 +392,14 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			}
 		}
 		maxEstimate = max;
+		if(max < 0) 
+			max = 0;
 		return max;
 	}
-
+	/**
+	 * @param a List of integers representing the votes
+	 * @return the mean of the vote data, return 0 if invalid data
+	 */
 	private double mean(List<Integer> a) {
 		double sum = 0;
 		int i;
@@ -405,9 +408,17 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			sum += a.get(i);
 		}
 		mean = sum / ((double) a.size());
-		return mean;
+		if(mean>=0)
+			return mean;
+		else
+			return 0;
 	}
 
+	/**
+	 * 
+	 * @param a List of integers representing the votes
+	 * @return the standard deviation of the vote data, return 0 if invalid data
+	 */
 	private double stDev(List<Integer> a) {
 		double mean = mean(a);
 		List<Double> numMinusMeanSquared = new ArrayList<Double>();
@@ -425,7 +436,10 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 
 		double variance = (sum / (double) numMinusMeanSquared.size());
 		stDev = Math.sqrt(variance);
-		return stDev;
+		if(stDev>=0)
+			return stDev;
+		else
+			return 0;
 	}
 
 	private double median(List<Integer> votes) {
@@ -460,7 +474,7 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		List<String> nameArray = requirementToNames(requirement);
 		List<Integer> voteArray = requirementToVotes(requirement);
 		for (int i = 0; i < nameArray.size(); i++) {
-			if (voteArray.get(i) == 0) {
+			if (voteArray.get(i) == -8008135) {
 				voteTable.getTableModel().addRow(
 						new Object[] { nameArray.get(i), "I don't know" });
 			} else {
@@ -559,7 +573,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 						.setText("Final estimate submitted successfully!");
 			}
 		}
-		ViewEventController.getInstance().refreshGameTable();
 		ViewEventController.getInstance().refreshGameTree();
 		finalEstimateDisplay.setText("Your Current Final Estimate is: "
 				+ newEstimate);
@@ -607,7 +620,8 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 			// Break out if already exists in manager
 			if (r.getName().equals(req.getName())
 					&& r.getDescription().equals(req.getDescription())) {
-				// TODO: Do Logger Message
+				logger.log(Level.WARNING, "Same requirement already exists in the"
+						+ " requirements manager.");
 				return;
 			}
 		}
@@ -640,18 +654,6 @@ public class StatisticsPanel extends JScrollPane implements IDataField {
 		return true;
 	}
 
-	@Override
-	public boolean validateField(IErrorView warningField, boolean showLabel,
-			boolean showBox) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public boolean hasChanges() {
-		// TODO Auto-generated method stub
-		return false;
-	}
 
 	private Font makeFont(int fontSize) {
 		return new Font("Serif", Font.BOLD, fontSize);

@@ -11,7 +11,6 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
-import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -30,9 +29,7 @@ import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 
 /**
- * TODO Documentation
- * @author Doruk Uzunoglu
- *
+ * Creates the left half of the active games panel
  */
 public class LeftHalfActiveGamePanel extends JScrollPane{
 	
@@ -56,7 +53,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	private final JProgressBar overallProgress = new JProgressBar(0, 1000);
 	private JButton testButton = new JButton("testYo");
 	
-	
+	private boolean endManually;
 	private ActiveGamePanel parentPanel;
 	/**
 	 * Constructor for NewLeftHalfActiveGamePanel
@@ -74,6 +71,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	 * Method to notify observers and set game complete if end game is pressed
 	 */
 	public void endGameManuallyButtonPressed(){
+		endManually=true;
 		parentPanel.endGameManually();
 	}
 	
@@ -97,6 +95,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	}
 	
 	public void build(){
+		endManually=false;
 		// Creates the container to hold all the components
 		// and sets the container's layout to be SpringLayout
 		Container newLeftView = new Container();
@@ -299,4 +298,11 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		overallProgress.setValue(i + j);
 	}
 
+	public boolean endManually(){
+		if (endManually){
+			return true;
+		}else{
+			return false;
+		}
+	}
 }

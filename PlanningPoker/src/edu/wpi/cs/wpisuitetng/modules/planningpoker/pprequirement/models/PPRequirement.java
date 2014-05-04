@@ -13,6 +13,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -49,7 +51,8 @@ public class PPRequirement extends ObservableModel {
 
 	/** If this requirement came from the requirement manager module */
 	private boolean fromRequirementModule = false;
-
+	private static final Logger logger = Logger.getLogger(PPRequirement.class
+			.getName());
 	/** list of votes for this requirement */
 	private List<Vote> votes = new ArrayList<Vote>() {
 		public boolean equals(Object o) {
@@ -133,6 +136,7 @@ public class PPRequirement extends ObservableModel {
 			makeChanged();
 			delayChange("setFromRequirementModule");
 			fromRequirementModule = value;
+			notifyObservers();
 		}
 	}
 
@@ -175,13 +179,17 @@ public class PPRequirement extends ObservableModel {
 		// Make Id one more than the id in the
 		// Requirement Manager
 		this.id = id + 1;
+		notifyObservers();
 	}
 
 	public void setId(int id) {
-		makeChanged();
-		delayChange("setId");
-		fromRequirementModule = true;
-		this.id = id;
+		if(this.id != id){
+			makeChanged();
+			delayChange("setId");
+			fromRequirementModule = true;
+			this.id = id;
+			notifyObservers();
+		}
 	}
 
 	/**
@@ -195,6 +203,7 @@ public class PPRequirement extends ObservableModel {
 		delayChange("setUUID");
 		fromRequirementModule = false;
 		this.identity = identity;
+		notifyObservers();
 	}
 
 	/**
@@ -216,6 +225,7 @@ public class PPRequirement extends ObservableModel {
 			makeChanged();
 			delayChange("setName");
 			this.name = name;
+			notifyObservers();
 		}
 	}
 
@@ -238,6 +248,7 @@ public class PPRequirement extends ObservableModel {
 			makeChanged();
 			delayChange("setDescription");
 			this.description = description;
+			notifyObservers();
 		}
 	}
 
@@ -259,10 +270,10 @@ public class PPRequirement extends ObservableModel {
 	public void addVote(Vote vote) {
 		delayChange("addVote"); // Holds the code until the server is finished
 								// re-populating the model
+		makeChanged();			// This may be about to be changed
 		if(addNoDelay(vote)){	//If makes a change
-			makeChanged();
 		}
-		notifyObservers(vote);
+		notifyObservers(vote);  //IF there were changes made then you can notify the observers
 	}
 
 	/**
@@ -290,7 +301,7 @@ public class PPRequirement extends ObservableModel {
 		}
 		if (getProject() != null) {
 			if (votes.size() == getProject().getTeam().length) {
-				makeComplete();
+				complete = true;
 				changed = true;
 			}
 		} else {
@@ -316,6 +327,7 @@ public class PPRequirement extends ObservableModel {
 			makeChanged();
 			delayChange("setFinalEstimate");
 			finalEstimate = newEstimate;
+			notifyObservers();
 		}
 	}
 
@@ -535,8 +547,7 @@ public class PPRequirement extends ObservableModel {
 		while (GameModel.getInstance().isServerUpdating()) {
 			try {
 				Thread.sleep(5);
-				System.out
-						.println("Looping in the reqirement: " + methodCalled);
+				logger.log(Level.INFO,"Looping in the reqirement: " + methodCalled);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -552,11 +563,11 @@ public class PPRequirement extends ObservableModel {
 		String currentUser = ConfigManager.getConfig().getUserName();
 		for (Vote v : getVotes()) {
 			if (currentUser.equals(v.getUsername())) {
-				System.out.println("name matches");
+				logger.log(Level.INFO,"name matches");
 				return v.getVoteNumber();
 			}
 		}
-		System.out.println("name does not match");
+		logger.log(Level.INFO,"name does not match");
 		return 0;
 	}
 

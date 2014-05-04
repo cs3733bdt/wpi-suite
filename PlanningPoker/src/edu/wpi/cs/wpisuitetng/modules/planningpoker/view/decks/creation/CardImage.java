@@ -122,7 +122,7 @@ public class CardImage extends JPanel implements IDataField{
 		focusListenerAddValueText(addValue);						//adds a focus listener to the textfield (see method)
 		addValue.setPreferredSize(new Dimension(40, 18));			//sets the textfield to be the desired size.
 		addValue.setVisible(true);									//sets the textfield to be visible at the start
-		valueLabel.setVisible(false);								//sets the label to be invisible at the start
+		valueLabel.setVisible(true);								//sets the label to be invisible at the start
 		valueLabel.setFont(makeFont(10));
 	}
 	/**
@@ -182,7 +182,6 @@ public class CardImage extends JPanel implements IDataField{
 	 * A key listener for the textfield.
 	 * When enter key is hit, it sets the input of the textfield to the label's text to display the chosen value.
 	 * It then maks the label visible, and the textfield invisible.
-	 * TODO: validation. the text should only be an integer in a reasonable range (0-50? 0-100?...)
 	 * @param component (this method should only be used with the textfield)
 	 */
 	private void addKeyListenerToAddValueText(JComponent component,final IValidateButtons buttonParent){
@@ -190,14 +189,12 @@ public class CardImage extends JPanel implements IDataField{
 			public void keyReleased(KeyEvent arg0) {	
 				if(!addValue.validateField(errorField, true, false)){
 					logger.log(Level.INFO, "addValue was not validated");
-					//TODO: errorField.setText("The value for the card must be an integer between 1 and 999");
-					//TODO: but errorField is in CreateDeckPanel... HALP
 					return;
 				} else {
 					buttonParent.updateButtons();
 					logger.log(Level.INFO, "addValue was validated");
 				}
-				if(arg0.getKeyCode() == 10){		//if enter is pressed
+				if((arg0.getKeyCode() == KeyEvent.VK_ENTER) || (arg0.getKeyCode() == KeyEvent.VK_TAB)){		//if enter or tab is pressed
 					int indexOfEnteredCard = 0;
 					
 					List<CardImage> cards = parent.getCards();
@@ -208,8 +205,7 @@ public class CardImage extends JPanel implements IDataField{
 						}
 					}
 					valueLabel.setText(addValue.getText());
-					//TODO here the value in the value array needs to be set for the array to function.
-					valueLabel.setVisible(true);
+					
 					addValue.setVisible(false);
 					if(!(indexOfEnteredCard + 1 >= cards.size())){
 						cards.get(indexOfEnteredCard + 1).addValue.requestFocus();
@@ -225,26 +221,36 @@ public class CardImage extends JPanel implements IDataField{
 	/**
 	 * A focus listener for the textfield.
 	 * When focus is lost, it does the exact same thing as when enter is hit.
-	 * TODO: is this implementation a good design decision?
 	 * @param component (this method should only be used with the textfield)
 	 */
 	private void focusListenerAddValueText(JComponent component){
 		component.addFocusListener(new FocusListener(){
 			public void focusLost(FocusEvent e) {
-				//valueLabel.setText(addValue.getText());
-				if(!valueLabel.getText().equals("")){
-					valueLabel.setVisible(true);
-					addValue.setVisible(false);
-					revalidate();
-					repaint();
+				if((hasChanges())){
+					if(!addValue.validateField(errorField, true, false)){
+						addValue.setText("");
+						revalidate();
+						repaint();
+					}
+					else {
+						valueLabel.setText(addValue.getText());
+						addValue.setVisible(false);
+						revalidate();
+						repaint();
+					}
 				}
-				else {}
+				else {
+					if(!hasChanges()){
+						valueLabel.setText(addValue.getText());
+						//addValue.setVisible(false);
+						revalidate();
+						repaint();
+					}
+				}
 			}
 
 			@Override
-			public void focusGained(FocusEvent e) {
-				// TODO Auto-generated method stub
-				
+			public void focusGained(FocusEvent e) {			
 			}
 		});
 	}
@@ -275,9 +281,6 @@ public class CardImage extends JPanel implements IDataField{
 	
 	public void setValueLabel(String value) {
 		valueLabel.setText(value);
-		if (!value.isEmpty()) {
-			valueLabel.setVisible(true);
-		}
 		addValue.setVisible(false);
 	}
 	

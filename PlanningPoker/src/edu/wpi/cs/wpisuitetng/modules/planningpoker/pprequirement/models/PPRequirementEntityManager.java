@@ -13,6 +13,8 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import edu.wpi.cs.wpisuitetng.Session;
 import edu.wpi.cs.wpisuitetng.database.Data;
@@ -36,7 +38,8 @@ public class PPRequirementEntityManager implements EntityManager<PPRequirement> 
 
 	/** The database */
 	Data db;
-	
+	private static final Logger logger = Logger.getLogger(PPRequirementEntityManager.class
+			.getName());
 	/**
 	 * Constructs the entity manager. This constructor is called by
 	 * {@link edu.wpi.cs.wpisuitetng.ManagerLayer#ManagerLayer()}. To make sure
@@ -195,7 +198,7 @@ public class PPRequirementEntityManager implements EntityManager<PPRequirement> 
 		} else if (oldRequirements.size() > 1){
 			System.err.println("There are multiple requirements with this id on the server");
 		} else{
-			System.out.println("Update should be sucsessful");
+			logger.log(Level.INFO,"Update should be sucsessful");
 		}
 				
 		PPRequirement existingRequirement = (PPRequirement)oldRequirements.get(0);		

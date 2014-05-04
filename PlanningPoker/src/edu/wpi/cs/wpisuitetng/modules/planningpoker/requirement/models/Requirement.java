@@ -34,7 +34,7 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.requirement.characteristics.
  */
 public class Requirement extends AbstractModel {
 	/** the ID of the requirement */
-	private int id; // TODO: move ID stuff to server side?
+	private int id; 
 
 	/** the name of the requirement */
 	private String name;
@@ -744,8 +744,6 @@ public class Requirement extends AbstractModel {
 	 */
 	@Override
 	public void save() {
-		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -755,8 +753,6 @@ public class Requirement extends AbstractModel {
 	 */
 	@Override
 	public void delete() {
-		// TODO Auto-generated method stub
-
 	}
 
 	/**
@@ -817,7 +813,6 @@ public class Requirement extends AbstractModel {
 	 */
 	@Override
 	public Boolean identify(Object o) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

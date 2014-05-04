@@ -66,17 +66,20 @@ public class AddGameRequestObserver implements RequestObserver {
 		// Get the response to the given request
 		final ResponseModel response = iReq.getResponse();
 
-		// The game that got added
+		Game realGame;
+		// The game that got updated
 		Game game = Game.fromJSON(response.getBody());
+		//Retrieve game from game model based on the game ID from the response
+		try {
+			realGame = GameModel.getInstance().getGameById(game.getIdentity());
+					
+		} catch (NotFoundException e) {
+			logger.log(Level.WARNING, "Game does not exist.", e);
+			realGame = game;
+		}
 
 		// Send out email, text, and facebook notifications on game creation
 		if (!game.isNotifiedOfCreation() && game.isActive()) {
-			Game realGame;
-			try {
-				realGame = GameModel.getInstance().getGameById(
-						game.getIdentity());
-				// getGameByName will return null if a game with that name
-				// doesn't exist yet
 				// Have to set Project because it doesn't have it yet
 				// and will throw a null pointer
 				realGame.setProject(game.getProject());
@@ -84,12 +87,9 @@ public class AddGameRequestObserver implements RequestObserver {
 				// looping
 				realGame.setNotifiedOfCreation(true);
 				realGame.sendNotifications();
-			} catch (NotFoundException e) {
-				logger.log(Level.WARNING, "Game does not exist.", e);
-			}
 		}
 
-		System.out.println("The request to add a game has succeeded!");
+		logger.log(Level.INFO,"The request to add a game has succeeded!");
 	}
 
 	/**

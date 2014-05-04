@@ -71,8 +71,8 @@ public class NumberJTextFieldTest {
 		testerField.setIErrorView(label);
 		testerField.setText("27");
 		sendKey(testerField, "21C\n");
-		assertEquals("27", testerField.getText());
 		assertEquals(defaultErrors.STRING_NOT_NUMBER, label.getText());
+		assertEquals("27", testerField.getText());
 		initialError = label.getText();
 		assertFalse(testerField.hasChanges());
 		assertTrue(testerField.validateField(label, true, true));
