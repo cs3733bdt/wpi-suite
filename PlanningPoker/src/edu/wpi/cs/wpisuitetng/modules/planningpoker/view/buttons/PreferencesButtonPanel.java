@@ -46,7 +46,7 @@ public class PreferencesButtonPanel extends ToolbarGroupView{
 		if (System.getProperty("os.name").contains("Linux") || System.getProperty("os.name").contains("Mac"))
 			setPreferredSize(new Dimension(172,50));
 		else
-			setPreferredSize(new Dimension(159,50));
+			setPreferredSize(new Dimension(157,50));
 
 		preferencesIcon.setHorizontalAlignment(SwingConstants.CENTER);
 		try {

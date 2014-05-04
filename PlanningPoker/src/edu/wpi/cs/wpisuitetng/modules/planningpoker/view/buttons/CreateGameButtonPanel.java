@@ -47,7 +47,7 @@ public class CreateGameButtonPanel extends ToolbarGroupView{
 		if (System.getProperty("os.name").contains("Linux") || System.getProperty("os.name").contains("Mac"))
 			setPreferredSize(new Dimension(370 ,50));
 		else
-			setPreferredSize(new Dimension(400 ,50));
+			setPreferredSize(new Dimension(336 ,50));
 		
 		
 	   try {

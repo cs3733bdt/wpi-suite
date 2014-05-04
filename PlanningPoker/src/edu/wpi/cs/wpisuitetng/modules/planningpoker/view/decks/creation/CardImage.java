@@ -31,6 +31,7 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
+import javax.swing.SwingConstants;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IDataField;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.IErrorView;
@@ -51,7 +52,7 @@ public class CardImage extends JPanel implements IDataField{
 	
 	private NumberJTextField addValue = new NumberJTextField();		//the textfield that pops up when a user clicks a card, in which the user enters the desired value for the card
 	
-	private JLabel valueLabel = new JLabel("");			//the label that displays the value for each card as chosen by the user
+	private JLabel valueLabel;		//the label that displays the value for each card as chosen by the user
 	
 	private JButton picButton; //The button where the image is displayed
 	
@@ -81,10 +82,12 @@ public class CardImage extends JPanel implements IDataField{
 		errorField = parent.getCardPanelParent().getErrorField();
 		this.parent = parent;
 		this.color = color;
-		//cards = parent.getCards();
+		
 		addValue.setIErrorView(errorField);
 		addValue.setMaxValue(999);
 		addValue.setMinValue(1);
+		
+		valueLabel = new JLabel("");
 		
 		BufferedImage myPicture = null;
 		try {
