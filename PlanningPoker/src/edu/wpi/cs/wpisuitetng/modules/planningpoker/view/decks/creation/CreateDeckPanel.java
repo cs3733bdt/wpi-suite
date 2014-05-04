@@ -136,7 +136,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	
 	private boolean readyToClose = false;
 	private boolean cardsHaveChanges = false;
-
+    private ColorEnum initialColor;
 
 	private Deck deck;
 
@@ -162,8 +162,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		numCards.setText(Integer.toString(numberOfCards)); //set the field
 		
 		nameTextField.setText(deck.getName());
+		nameTextField.setStartingText(deck.getName());
 		descriptionTextField.setText(deck.getDescription());
+		descriptionTextField.setStartingText(deck.getDescription());
 		iDontKnowCheck.setSelected(deck.hasIDontKnowCard());
+		initialColor =  determineDeckColor();
 		
 		if(deck.isMultipleSelection()){
 			multipleSelection.setSelected(true);
@@ -206,7 +209,8 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		descriptionTextField.addKeyListener(this);
 		JScrollPane descriptionScroll = new JScrollPane(descriptionTextField);
 		descriptionScroll.setPreferredSize(new Dimension(400, 20));
-
+		
+		
 		/*
 		 * panel underneath name and description, holds the radio buttons, the
 		 * number of cards entry, the color dropdown, and the i dont know check
@@ -575,7 +579,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 		logger.log(Level.INFO,"descriptionTextField"+descriptionTextField.hasChanges());
 		logger.log(Level.INFO,"cardsPanel2"+cardsPanel2.hasChanges());
 
-		return (cardsHaveChanges || nameTextField.hasChanges() || descriptionTextField.hasChanges() || cardsPanel2.hasChanges());
+		return (cardsHaveChanges
+				|| (determineDeckColor().equals(initialColor))
+				|| nameTextField.hasChanges()
+				|| descriptionTextField.hasChanges() 
+			    || cardsPanel2.hasChanges());
 	}
 
 
@@ -591,9 +599,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 	private void chooseCardColor() {
 		ColorEnum deckColor = determineDeckColor();
 		cardsPanel2.setColor(deckColor);
-		if (!(deckColor.equals(ColorEnum.RED))){
-			cardsHaveChanges(true);
-		}
 	}
 
 	/**
@@ -629,7 +634,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField,
 			public void mouseClicked(MouseEvent arg0) {
 				logger.log(Level.FINER, "The mouse listener has been triggered on a button.");
 				
-				//Check for the submitNumbCards 
+				//Check for 1the submitNumbCards 
 				if (!submitNumCards.isEnabled()) {
 					numCards.validateField(errorField, true, true);
 					//errorField.setText("Number of cards must be a 1-or-2-digit integer between 1 and 15");
