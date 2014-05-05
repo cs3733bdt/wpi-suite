@@ -34,6 +34,8 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IStorageModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.exceptions.DBModelNotInstantiatedException;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models.GameNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models.GameNotificationModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.EmailNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.FacebookNotification;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.notifications.SMSNotification;
@@ -326,7 +328,6 @@ public class Game extends ObservableModel implements IModelObserver,
 			req.setProject(getProject());
 		}
 		this.usesCards = usesCards;
-
 	}
 
 	/**

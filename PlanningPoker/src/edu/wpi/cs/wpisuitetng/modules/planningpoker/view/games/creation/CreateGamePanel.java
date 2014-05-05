@@ -24,6 +24,8 @@ import javax.swing.JSplitPane;
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models.GameNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models.GameNotificationModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirement;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components.DescriptionJTextArea;
@@ -240,6 +242,7 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 		if (currentGame == null) {
 			currentGame = new Game();
 			setCurrentGame(false);
+			GameNotificationModel.getInstance().addGameNotification(new GameNotification(currentGame.getIdentity()));
 			GameModel.getInstance().addGame(currentGame); // New Game gets added
 															// to the server
 			logger.log(Level.INFO,"Launch Game Pressed Passed.");
@@ -256,6 +259,7 @@ public class CreateGamePanel extends JSplitPane implements ICreateGamePanel,
 		if (currentGame == null) {
 			currentGame = new Game();
 			setCurrentGame(true);
+			GameNotificationModel.getInstance().addGameNotification(new GameNotification(currentGame.getIdentity()));
 			GameModel.getInstance().addGame(currentGame); // New Game gets added
 															// to the server
 		} else {

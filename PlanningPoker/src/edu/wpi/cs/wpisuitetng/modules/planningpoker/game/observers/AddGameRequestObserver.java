@@ -17,6 +17,9 @@ import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.controllers.GetGameNotificationController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models.GameNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models.GameNotificationModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
@@ -65,27 +68,26 @@ public class AddGameRequestObserver implements RequestObserver {
 		// Get the response to the given request
 		final ResponseModel response = iReq.getResponse();
 
-		Game realGame;
 		// The game that got updated
 		Game game = Game.fromJSON(response.getBody());
-		//Retrieve game from game model based on the game ID from the response
+		
+		GetGameNotificationController.getInstance().retrieveGameNotifications();
 		try {
-			realGame = GameModel.getInstance().getGameById(game.getIdentity());
-					
-		} catch (NotFoundException e) {
-			logger.log(Level.WARNING, "Game does not exist.", e);
-			realGame = game;
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
+		GameNotification gn = GameNotificationModel.getInstance().getGameNotification(game.getIdentity());
 
-		// Send out email, text, and facebook notifications on game creation
-		if (!game.isNotifiedOfCreation() && game.isActive()) {
-				// Have to set Project because it doesn't have it yet
-				// and will throw a null pointer
-				realGame.setProject(game.getProject());
-				// Set notified before sending notifications, to ensure no
-				// looping
-				realGame.setNotifiedOfCreation(true);
-				realGame.sendNotifications();
+		if (gn != null) {
+			// Send out email, text, and facebook notifications on game creation
+			if (!gn.getGameCreationNotified() && game.isActive()) {
+					gn.setGameCreationNotified(true);
+					gn.notifyObservers();
+					game.sendNotifications();
+			}
+		} else {
+			logger.log(Level.INFO, "The GameNotification is Null for game: " + game.getName());
 		}
 
 		logger.log(Level.INFO,"The request to add a game has succeeded!");
