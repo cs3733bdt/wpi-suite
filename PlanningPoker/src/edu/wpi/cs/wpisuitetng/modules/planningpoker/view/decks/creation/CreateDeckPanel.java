@@ -15,18 +15,22 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -383,7 +387,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 			@Override
 			public void componentResized(ComponentEvent e) {
 				dynamicCardPanel();
-				
 			}
 
 			@Override
@@ -392,7 +395,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 
 			@Override
 			public void componentShown(ComponentEvent e) {
-				dynamicCardPanel();
 			}
 
 			@Override
@@ -582,10 +584,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	}
 
 	public boolean hasChanges() {
-		logger.log(Level.INFO,"cardsHaveChanges"+cardsHaveChanges);
-		logger.log(Level.INFO,"nameTextField"+nameTextField.hasChanges());
-		logger.log(Level.INFO,"descriptionTextField"+descriptionTextField.hasChanges());
-		logger.log(Level.INFO,"cardsPanel2"+cardsPanel2.hasChanges());
 
 		return (cardsHaveChanges
 				|| (determineDeckColor().equals(initialColor))
@@ -614,7 +612,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	 * @param b
 	 */
 	private void cardsHaveChanges(boolean b) {
-		logger.log(Level.INFO,"cardshaveChanges =" +b);
 		cardsHaveChanges = b;
 		
 	}
@@ -807,5 +804,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		int rowPerPanel = (int)Math.ceil((numCards)/cardsPerRow);
 		cardsPanel2.setPreferredSize(new Dimension(Math.round(view.getWidth()-60), Math.round(rowPerPanel*110)));
 	}
+	
 	
 }
