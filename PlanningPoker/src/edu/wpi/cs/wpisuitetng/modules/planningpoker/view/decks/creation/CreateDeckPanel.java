@@ -144,6 +144,10 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		build();
 	}
 
+	/**
+	 * create the deck panel
+	 * @param deck
+	 */
 	public CreateDeckPanel(Deck deck) {
 		isReopen = true;
 		cardsPanel2 = new CardPanel(this);
@@ -789,6 +793,11 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	public boolean isReopen() {
 		return isReopen;
 	}
+	
+	/**
+	 * 
+	 * @return true if this tab is ready to remove
+	 */
 	public boolean readyToRemove() {
 		logger.log(Level.INFO,"ready to remove called");
 		if (readyToClose || !hasChanges()) {

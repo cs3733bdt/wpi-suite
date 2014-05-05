@@ -38,7 +38,7 @@ public class CardButton extends JToggleButton implements Accessible {
 	 * creates the buttons based on the deck
 	 * 
 	 * @param card
-	 *            the singular card
+	 *            the single card
 	 * @param ActiveCardsPanel
 	 *            the panel that displays the cards
 	 */
@@ -89,6 +89,10 @@ public class CardButton extends JToggleButton implements Accessible {
 		return getText();
 	}
 	
+	/**
+	 * 
+	 * @return true if the text is an integer
+	 */
 	public boolean isInteger(){
 		try{
 			Integer.parseInt(getText());

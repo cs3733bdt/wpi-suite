@@ -87,11 +87,18 @@ public class HelpButtonPanel extends ToolbarGroupView {
 		return helpIcon;
 	}
 
+	/**
+	 * disable Help Button
+	 * @param message
+	 */
 	public void disableHelpButton(String message) {
 		helpIcon.setEnabled(false);
 		helpIcon.setToolTipText(message);
 	}
 	
+	/**
+	 * enable Help Button
+	 */
 	public void enableHelpButton() {
 		helpIcon.setEnabled(true);
 		helpIcon.setToolTipText("");

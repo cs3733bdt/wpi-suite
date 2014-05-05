@@ -31,6 +31,11 @@ public class RequirementTable extends JTable{
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	Object[][] data = {};
 	
+	/**
+	 * 
+	 * @param reqList
+	 * @param mode
+	 */
 	public RequirementTable(List<PPRequirement> reqList, RequirementTableMode mode) {
 		this.reqList = reqList;
 		this.mode = mode;
@@ -155,6 +160,11 @@ public class RequirementTable extends JTable{
 		
 	}
 
+	/**
+	 * 
+	 * @param index
+	 * @return a requirement with specific index
+	 */
 	public PPRequirement getReq(int index){
 		return reqList.get(index);
 	}

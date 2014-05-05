@@ -43,6 +43,9 @@ public class DescriptionJTextArea extends CustomJTextArea implements IDataField 
 		startingText = "";
 	}
 
+	/**
+	 * display Standard Border
+	 */
 	public void displayStandardBorder() {
 		setBorder(BorderFactory.createTitledBorder("Description"));
 	}

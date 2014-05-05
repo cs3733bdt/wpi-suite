@@ -46,6 +46,11 @@ public class UserProgressList extends JScrollPane {
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	private static final Logger logger = Logger.getLogger(UserProgressList.class
 			.getName());
+	
+	/**
+	 * 
+	 * @param LeftHalfActiveGamePanel
+	 */
 	public UserProgressList(LeftHalfActiveGamePanel parent){
 		
 		layout = new SpringLayout();
@@ -63,6 +68,9 @@ public class UserProgressList extends JScrollPane {
 		
 	}
 	
+	/**
+	 * initial build method
+	 */
 	public void build(){
 		
 		game = parent.getGame();

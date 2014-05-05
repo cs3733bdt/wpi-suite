@@ -39,6 +39,10 @@ public class CardPanel extends JPanel implements IDataField {
 	
 	private List<CardImage> cards;
 
+	/**
+	 * 
+	 * @param CreateDeckPanel parent
+	 */
 	public CardPanel(CreateDeckPanel parent) {
 		instance = this;
 		this.parent = parent;
@@ -80,6 +84,10 @@ public class CardPanel extends JPanel implements IDataField {
 		}
 	}
 	
+	/**
+	 * set a deck
+	 * @param deck
+	 */
 	public void setDeck(Deck deck){
 		for(Card c : deck.getCards()){
 			if(c.isInteger()){ //Make sure this card dosen't have the IDK card
@@ -143,6 +151,10 @@ public class CardPanel extends JPanel implements IDataField {
 		return false;
 	}
 
+	/**
+	 * set size of cards
+	 * @param int value
+	 */
 	public void setNumberCards(int value) {
 		int oldSize = cards.size();
 		int difference = value - oldSize;
@@ -174,6 +186,9 @@ public class CardPanel extends JPanel implements IDataField {
 		return cards;
 	}
 	
+	/**
+	 * disable Cards and mouseListener
+	 */
 	public void disableCards(){
 		for(CardImage c: cards){
 			c.disableCardMouseListener();

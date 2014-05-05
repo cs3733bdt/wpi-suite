@@ -32,6 +32,11 @@ public class Card {
 	private BufferedImage imageFront = null;
 	private static final Logger logger = Logger.getLogger(Card.class.getName());
 	
+	/**
+	 * 
+	 * @param a passing text
+	 * @param a passing deck
+	 */
 	public Card(String text, Deck parentDeck) {
 		this.text = text;
 		this.parentDeck = parentDeck;
@@ -60,6 +65,11 @@ public class Card {
 		return parentDeck.getSize();
 	}
 	
+	/**
+	 * 
+	 * @return back image of the card
+	 * @throws IOException
+	 */
 	public BufferedImage getBackImage() throws IOException{
 		if(imageBack == null){
 			throw new IOException();
@@ -67,6 +77,11 @@ public class Card {
 		return imageBack;
 	}
 	
+	/**
+	 * 
+	 * @return front image of the card
+	 * @throws IOException
+	 */
 	public BufferedImage getFrontImage() throws IOException{
 		if(imageFront == null){
 			throw new IOException();
@@ -74,6 +89,10 @@ public class Card {
 		return imageFront;
 	}
 	
+	/**
+	 * 
+	 * @return true if the text is an integer
+	 */
 	public boolean isInteger(){
 		
 		for(int i=0; i< text.length(); i++){

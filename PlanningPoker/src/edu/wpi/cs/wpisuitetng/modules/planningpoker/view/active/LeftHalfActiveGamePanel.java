@@ -95,6 +95,9 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		}
 	}
 	
+	/**
+	 * initial build method
+	 */
 	public void build(){
 		endManually=false;
 		// Creates the container to hold all the components
@@ -243,6 +246,10 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		
 	}
 
+	/**
+	 * 
+	 * @return true if the game ended manually
+	 */
 	public boolean endManually(){
 		return endManually;
 	}

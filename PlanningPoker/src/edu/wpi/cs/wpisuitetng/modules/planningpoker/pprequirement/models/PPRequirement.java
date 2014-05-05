@@ -133,6 +133,10 @@ public class PPRequirement extends ObservableModel {
 		return fromRequirementModule;
 	}
 
+	/**
+	 * set from Requirement Module
+	 * @param value
+	 */
 	public void setFromRequirementModule(boolean value) {
 		if (fromRequirementModule != value) {
 			makeChanged();
@@ -184,6 +188,10 @@ public class PPRequirement extends ObservableModel {
 		notifyObservers();
 	}
 
+	/**
+	 * set the id for PPRequirement
+	 * @param id
+	 */
 	public void setId(int id) {
 		if(this.id != id){
 			makeChanged();
@@ -342,19 +350,6 @@ public class PPRequirement extends ObservableModel {
 	}
 
 	/**
-	 * Sets the requirement to completed
-	 * WARNING: This method does not call make changes.
-	 * You must call this method manually
-	 */
-	private void makeComplete() {
-		// DO NOT PUT DELAYCHANGE IN THIS METHOD
-		// IT WILL CAUSE AN INFINITE LOOP!
-		
-		//DO NOT CALL MAKE CHANGE IN THIS METHOD EITHER
-		complete = true;
-	}
-
-	/**
 	 * displays that the progress of the requirement
 	 * 
 	 * @return the number of votes, or a star if the game is complete
@@ -394,6 +389,11 @@ public class PPRequirement extends ObservableModel {
 		return new Gson().toJson(this, PPRequirement.class);
 	}
 
+	/**
+	 * 
+	 * @param json
+	 * @return a PPRequirement
+	 */
 	public static PPRequirement fromJSON(String json) {
 		final Gson parser = new Gson();
 		return parser.fromJson(json, PPRequirement.class);

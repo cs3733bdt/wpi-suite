@@ -19,6 +19,10 @@ package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.components;
  */
 public interface IErrorView {
 	
+	/**
+	 * set text
+	 * @param string text
+	 */
 	void setText(String text);
 
 }

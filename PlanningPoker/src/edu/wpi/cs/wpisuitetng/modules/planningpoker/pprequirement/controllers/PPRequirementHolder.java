@@ -21,6 +21,10 @@ public class PPRequirementHolder {
 	
 	private List<PPRequirement> list = null;
 	
+	/**
+	 * 
+	 * @return an instance of PPRequirementHolder
+	 */
 	public static PPRequirementHolder getInstance(){
 		if(instance == null){
 			instance = new PPRequirementHolder();
@@ -28,6 +32,11 @@ public class PPRequirementHolder {
 		return instance;
 	}
 	
+	/**
+	 * 
+	 * @return the list of the PPRequirement
+	 * @throws DBModelNotInstantiatedException
+	 */
 	public List<PPRequirement> getRequirements() throws DBModelNotInstantiatedException{
 		if(list != null){
 			return list;

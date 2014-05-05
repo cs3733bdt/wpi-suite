@@ -79,11 +79,19 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	private static final Logger logger = Logger.getLogger(RightHalfActiveGamePanel.class
 			.getName());
 	
+	/**
+	 * 
+	 * @param game
+	 * @param activeGamePanel
+	 */
 	RightHalfActiveGamePanel(final Game game, final ActiveGamePanel activeGamePanel) {
 		currentGame = game;
 		build();
 	}
 
+	/**
+	 * initial build method
+	 */
 	public void build() {
 		Container rightView = new Container(); // Creates the container for everything in the view
 		SpringLayout layout = new SpringLayout(); // Creates the layout to be used: Spring Layout
@@ -447,6 +455,9 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		counterLabel.setText("Your current selected estimate is: " + sum);
 	}
 	
+	/**
+	 * set a text when the IDK is selected
+	 */
 	public void selectedIDK() {
 		counterLabel.setText("Your current selected estimate is: I don't know");
 	}
@@ -646,6 +657,9 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		updateSavedEstimateLabel();
 	}
 	
+	/**
+	 * update votes column
+	 */
 	public void updateVoteColumn(){
 		  for (int i=0;i<table.getRowCount();i++){
 			  table.setValueAt(table.getReq(i).displayComplete(), i, 3);

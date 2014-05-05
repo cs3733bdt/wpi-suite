@@ -77,7 +77,11 @@ public class CardImage extends JPanel implements IDataField{
 		}
 	};
 	
-
+	/**
+	 * 
+	 * @param ColorEnum color
+	 * @param CardPanel parent
+	 */
 	public CardImage(ColorEnum color, CardPanel parent){
 		errorField = parent.getCardPanelParent().getErrorField();
 		this.parent = parent;
@@ -284,6 +288,10 @@ public class CardImage extends JPanel implements IDataField{
 		
 	}
 	
+	/**
+	 * set the value label
+	 * @param string value
+	 */
 	public void setValueLabel(String value) {
 		valueLabel.setText(value);
 		addValue.setVisible(false);
@@ -315,6 +323,9 @@ public class CardImage extends JPanel implements IDataField{
 		return addValue.hasChanges();
 	}
 	
+	/**
+	 * disable the card mouse listener
+	 */
 	public void disableCardMouseListener(){
 		picButton.removeMouseListener(adapter);
 	}

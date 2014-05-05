@@ -25,6 +25,11 @@ public class CancelButton extends JPanel{
     private JComponent parent;
     private JButton cancelButton = new JButton();
     
+    /**
+     * 
+     * @param string buttonText
+     * @param JComponent parentComponent
+     */
     public CancelButton(String buttonText, JComponent parentComponent){
     	parent = parentComponent;
     	cancelButton.setText(buttonText);
@@ -49,6 +54,9 @@ public class CancelButton extends JPanel{
         return cancelButton;
     }
     
+    /**
+     * set up Action Listeners
+     */
     public void setupActionListeners(){
         cancelButton.addActionListener(new ActionListener(){
             @Override

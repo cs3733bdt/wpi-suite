@@ -31,6 +31,10 @@ public class SaveDeckButtonPanel extends JPanel{
 	private JButton saveDeckButton = new JButton("Save Deck");
 	CreateDeckPanel parent;
 	
+	/**
+	 * 
+	 * @param CreateDeckPanel panel
+	 */
 	public SaveDeckButtonPanel(CreateDeckPanel panel){
 		parent = panel;
 		
@@ -58,6 +62,9 @@ public class SaveDeckButtonPanel extends JPanel{
 		return saveDeckButton;
 	}
 	
+	/**
+	 * set up Action Listeners
+	 */
 	void setupActionListeners(){
 		saveDeckButton.addActionListener(new ActionListener(){
 			@Override

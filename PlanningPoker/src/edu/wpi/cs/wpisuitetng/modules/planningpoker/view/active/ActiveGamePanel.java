@@ -32,6 +32,10 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 	
 	private Timer timer = new Timer();
 	
+	/**
+	 * 
+	 * @param game
+	 */
 	public ActiveGamePanel(final Game game) {
 		game.addObserver(this);	
 		currentGame = game;
@@ -56,6 +60,9 @@ public class ActiveGamePanel extends JSplitPane implements IModelObserver, IActi
 			}, 2*1000, 2*1000);
 	}
 	
+	/**
+	 * end current game manually
+	 */
 	public void endGameManually(){
 		currentGame.makeComplete();
 		currentGame.notifyObservers();

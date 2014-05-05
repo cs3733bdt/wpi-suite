@@ -61,6 +61,9 @@ public class LaunchGameButtonPanel extends JPanel{
 		return launchGameButton;
 	}
 	
+	/**
+	 * set up Action Listeners
+	 */
 	void setupActionListeners(){
 		launchGameButton.addActionListener(new ActionListener(){
 			@Override

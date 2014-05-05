@@ -48,6 +48,11 @@ public class ActiveCardsPanel extends JPanel{
 
 	private RightHalfActiveGamePanel parent;
 
+	/**
+	 * 
+	 * @param passedDeck
+	 * @param passedPanel
+	 */
 	public ActiveCardsPanel(Deck passedDeck,
 			RightHalfActiveGamePanel passedPanel) {
 		parent = passedPanel;
@@ -68,6 +73,10 @@ public class ActiveCardsPanel extends JPanel{
 		return 0;
 	}
 
+	/**
+	 * clear the cards
+	 * @throws IOException
+	 */
 	public void clearCards() throws IOException {
 		Image frontImg = ImageIO.read(getClass().getResource("card_front.png"));
 		if (parent.getGame().getDeck().hasIDontKnowCard()) {
@@ -101,12 +110,18 @@ public class ActiveCardsPanel extends JPanel{
 		logger.log(Level.INFO, "Sum updated");
 	}
 	
+	/**
+	 * add I Don't Know card
+	 */
 	public void addIDK() {
 		sum = -1;
 		parent.selectedIDK();
 		logger.log(Level.INFO,"I don't know is selected.");
 	}
 	
+	/**
+	 * calculate the sum
+	 */
 	public void subIDK() {
 		sum = 0;
 		for (CardButton card: JToggleButtonList) {
@@ -157,6 +172,9 @@ public class ActiveCardsPanel extends JPanel{
 		return sum;
 	}
 	
+	/**
+	 * clear sum of the cards
+	 */
 	public void clearSum() {
 		sum = 0;
 	}

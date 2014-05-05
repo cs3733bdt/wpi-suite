@@ -29,6 +29,11 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.decks.creation.ColorEnu
 public class CustomTreeCellRenderer extends DefaultTreeCellRenderer {
 	Icon newIcon;
 	JPanel parent;
+	
+	/**
+	 * 
+	 * @param parent JPanel
+	 */
 	public CustomTreeCellRenderer(JPanel parent) {
 		this.parent = parent;
 	}

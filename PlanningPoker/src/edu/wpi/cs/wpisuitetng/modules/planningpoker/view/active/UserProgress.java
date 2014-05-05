@@ -36,12 +36,20 @@ public class UserProgress extends JPanel {
 	
 	private UserProgressList parentPanel;
 	
+	/**
+	 * 
+	 * @param string name
+	 * @param an UserProgressList 
+	 */
 	public UserProgress(String name, UserProgressList parent){
 		username = name;
 		parentPanel = parent;
 		build();
 	}
 	
+	/**
+	 * initial build method
+	 */
 	public void build(){
 		SpringLayout layout = new SpringLayout();
 		setLayout(layout);
@@ -65,6 +73,9 @@ public class UserProgress extends JPanel {
 		setPreferredSize(new Dimension(50, 25));
 	}
 	
+	/**
+	 * update the Progress Bar Value
+	 */
 	public void updateProgressBarValue(){
 		List<PPRequirement> reqList;
 		List<Vote> voteList;

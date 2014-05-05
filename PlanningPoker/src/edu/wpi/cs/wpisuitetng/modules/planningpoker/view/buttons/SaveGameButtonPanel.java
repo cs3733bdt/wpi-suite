@@ -31,6 +31,10 @@ public class SaveGameButtonPanel extends JPanel{
 	private JButton saveGameButton = new JButton("Save Game");
 	CreateGamePanel parent;
 	
+	/**
+	 * 
+	 * @param CreateGamePanel panel
+	 */
 	public SaveGameButtonPanel(CreateGamePanel panel){
 		parent = panel;
 		
@@ -58,6 +62,9 @@ public class SaveGameButtonPanel extends JPanel{
 		return saveGameButton;
 	}
 	
+	/**
+	 * set up Action Listeners
+	 */
 	void setupActionListeners(){
 		saveGameButton.addActionListener(new ActionListener(){
 			@Override

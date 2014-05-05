@@ -179,6 +179,11 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		return name;
 	}
 
+	/**
+	 * 
+	 * @param json
+	 * @return the Deck of cards
+	 */
 	public static Deck fromJSON(String json) {
 		final Gson parser = new Gson();
 		return parser.fromJson(json, Deck.class);
@@ -284,6 +289,10 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		
 	}
 	
+	/**
+	 * update multiple selection
+	 * @param isMultipleSelection
+	 */
 	public void updateMultipleSelection(boolean isMultipleSelection) {
 		if (isMultipleSelection == this.isMultipleSelection) {
 			return;
@@ -296,10 +305,18 @@ public class Deck extends ObservableModel implements IModelObserver, IStorageMod
 		return isMultipleSelection;
 	}
 	
+	/**
+	 * 
+	 * @return true if the deck includes I Don't Know card
+	 */
 	public boolean hasIDontKnowCard(){
 		return hasIdontKnow;
 	}
 	
+	/**
+	 * update boolean of has I Don't Know card 
+	 * @param hasIdontKnow
+	 */
 	public void updateHasIdk(boolean hasIdontKnow) {
 		if (hasIdontKnow == this.hasIdontKnow) {
 			return;

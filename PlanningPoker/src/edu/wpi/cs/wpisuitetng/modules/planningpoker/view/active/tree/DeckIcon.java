@@ -25,6 +25,10 @@ public class DeckIcon implements Icon {
 	private int height;
 	ColorEnum color;
 	
+	/**
+	 * 
+	 * @param newColor
+	 */
 	public DeckIcon(ColorEnum newColor){
 		width = 5;
 		height = 5;

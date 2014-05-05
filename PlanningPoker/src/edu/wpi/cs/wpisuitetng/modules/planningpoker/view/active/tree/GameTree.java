@@ -216,14 +216,6 @@ public class GameTree extends JPanel implements MouseListener{
 		return list;
 	}
 
-	/**
-	 * Gets the current game tree
-	 * @return
-	 */
-	private JTree getGameTree(){
-		return gameTree;
-	}
-
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		int x = e.getX();

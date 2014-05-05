@@ -26,6 +26,12 @@ public class ColorCardImage {
 		return instance;
 	}
 	
+	/**
+	 * 
+	 * @param color
+	 * @return color card image
+	 * @throws IOException
+	 */
 	public static BufferedImage getColorCardImage(ColorEnum color) throws IOException {
 		getInstance();
 		try {

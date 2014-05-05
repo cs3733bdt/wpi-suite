@@ -74,7 +74,10 @@ public class DeckModel extends AbstractStorageModel<Deck> {
 		}
 	}
 
-
+	/**
+	 * update the decks
+	 * @param deckList
+	 */
 	public synchronized void addDecks(Deck[] deckList) {
 		updateDecks(deckList);
 		

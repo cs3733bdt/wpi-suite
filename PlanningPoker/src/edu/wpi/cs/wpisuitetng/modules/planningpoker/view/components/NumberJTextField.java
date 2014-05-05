@@ -227,12 +227,20 @@ public class NumberJTextField extends CustomJTextField implements IDataField {
 		return !initialText.equals(getText());
 	}
 
+	/**
+	 * set Text without Update
+	 * @param string text
+	 */
 	public void setTextNoUpdate(String text) {
 		text = text.replaceAll("\n", "");
 		super.setText(text);
 
 	}
 
+	/**
+	 * 
+	 * @param string args
+	 */
 	public static void main(String... args) {
 		JFrame frame = new JFrame("Input Integer Example");
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
