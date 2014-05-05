@@ -149,19 +149,19 @@ public class GameOverview extends JSplitPane {
 		createPane.setBorder(null);
 		
 		//Creates a hyperlink for the video tutorial
-		videoTutorial = new JXHyperlink();
-		videoTutorial.setText("Here is a video tutorial showing how to create a new Planning Poker game.");
-		videoTutorial.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                try {
-                    Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=okqEVeNqBhc"));
-                } catch (URISyntaxException | IOException ex) {
-                    //It looks like there's a problem
-                	logger.log(Level.WARNING, "The link cannot be opened", ex);
-                }
-            }
-        });
+//		videoTutorial = new JXHyperlink();
+//		videoTutorial.setText("Here is a video tutorial showing how to create a new Planning Poker game.");
+//		videoTutorial.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                try {
+//                    Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=okqEVeNqBhc"));
+//                } catch (URISyntaxException | IOException ex) {
+//                    //It looks like there's a problem
+//                	logger.log(Level.WARNING, "The link cannot be opened", ex);
+//                }
+//            }
+//        });
 		
 		// Adds label
 		playPlanPokerLabel = new JLabel("Playing Planning Poker");
@@ -203,7 +203,7 @@ public class GameOverview extends JSplitPane {
 		//panel.add(playPane);
 		panel.add(playPlanPokerLabel);
 		panel.add(playPlanPokerExp);
-		panel.add(videoTutorial);
+		//panel.add(videoTutorial);
 		
 		// Adjusts constraints on components
 		layout.putConstraint(SpringLayout.NORTH, ppIntroLabel, 10, SpringLayout.NORTH, panel);
@@ -223,11 +223,11 @@ public class GameOverview extends JSplitPane {
 		layout.putConstraint(SpringLayout.NORTH, createGameLabel, 28, SpringLayout.SOUTH, ppWhyExp); //CHANGE BACK TO 40
 		layout.putConstraint(SpringLayout.WEST, createGameLabel, 5, SpringLayout.WEST, panel);
 		
-		layout.putConstraint(SpringLayout.NORTH, videoTutorial, 8, SpringLayout.SOUTH, createGameLabel);
-		layout.putConstraint(SpringLayout.WEST, videoTutorial, 5, SpringLayout.WEST, panel);
+		//layout.putConstraint(SpringLayout.NORTH, videoTutorial, 8, SpringLayout.SOUTH, createGameLabel);
+		//layout.putConstraint(SpringLayout.WEST, videoTutorial, 5, SpringLayout.WEST, panel);
 		
 		layout.putConstraint(SpringLayout.NORTH, createGameExp, 10, SpringLayout.SOUTH, createGameLabel);
-		layout.putConstraint(SpringLayout.NORTH, createGameExp, 8, SpringLayout.SOUTH, videoTutorial);
+		//layout.putConstraint(SpringLayout.NORTH, createGameExp, 8, SpringLayout.SOUTH, videoTutorial);
 		layout.putConstraint(SpringLayout.WEST, createGameExp, 5, SpringLayout.WEST, panel);
 		layout.putConstraint(SpringLayout.EAST, createGameExp, 600, SpringLayout.WEST, panel);
 		
