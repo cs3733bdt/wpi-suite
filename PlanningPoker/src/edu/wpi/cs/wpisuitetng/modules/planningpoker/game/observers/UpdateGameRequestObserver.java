@@ -56,17 +56,8 @@ public class UpdateGameRequestObserver implements RequestObserver {
 	@Override
 	public void responseSuccess(IRequest iReq) {
 		final ResponseModel response = iReq.getResponse();
-		Game realGame;
 		// The game that got updated
 		Game game = Game.fromJSON(response.getBody());
-		//Retrieve game from game model based on the game ID from the response
-		try {
-			realGame = GameModel.getInstance().getGameById(game.getIdentity());
-					
-		} catch (NotFoundException e) {
-			logger.log(Level.WARNING, "Game does not exist.", e);
-			realGame = game;
-		}
 
 		GetGameNotificationController.getInstance().retrieveGameNotifications();
 		try {
@@ -78,18 +69,18 @@ public class UpdateGameRequestObserver implements RequestObserver {
 
 		if (gn != null) {
 			// Send out email, text, and facebook notifications on game creation
-			if (!gn.getGameCreationNotified() && realGame.isActive()) {
+			if (!gn.getGameCreationNotified() && game.isActive()) {
 				gn.setGameCreationNotified(true);
 				gn.notifyObservers();
 				// Finally send
-				realGame.sendNotifications();
+				game.sendNotifications();
 				// Send out email, text, and facebook notifications on game
 				// completion
-			} else if (!gn.getGameCompletionNotified() && realGame.isComplete()) {
+			} else if (!gn.getGameCompletionNotified() && game.isComplete()) {
 				gn.setGameCompletionNotified(true);
 				gn.notifyObservers();
 				// Finally Send
-				realGame.sendNotifications();
+				game.sendNotifications();
 			}
 		} else {
 			logger.log(Level.INFO, "The GameNotification is Null for game: " + game.getName());

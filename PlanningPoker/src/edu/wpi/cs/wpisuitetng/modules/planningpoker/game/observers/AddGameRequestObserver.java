@@ -68,17 +68,8 @@ public class AddGameRequestObserver implements RequestObserver {
 		// Get the response to the given request
 		final ResponseModel response = iReq.getResponse();
 
-		Game realGame;
 		// The game that got updated
 		Game game = Game.fromJSON(response.getBody());
-		//Retrieve game from game model based on the game ID from the response
-		try {
-			realGame = GameModel.getInstance().getGameById(game.getIdentity());
-					
-		} catch (NotFoundException e) {
-			logger.log(Level.WARNING, "Game does not exist.", e);
-			realGame = game;
-		}
 		
 		GetGameNotificationController.getInstance().retrieveGameNotifications();
 		try {
@@ -93,7 +84,7 @@ public class AddGameRequestObserver implements RequestObserver {
 			if (!gn.getGameCreationNotified() && game.isActive()) {
 					gn.setGameCreationNotified(true);
 					gn.notifyObservers();
-					realGame.sendNotifications();
+					game.sendNotifications();
 			}
 		} else {
 			logger.log(Level.INFO, "The GameNotification is Null for game: " + game.getName());
