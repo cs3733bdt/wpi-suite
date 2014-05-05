@@ -80,7 +80,7 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
 		setLeftComponent(leftHalf);
 		setRightComponent(rightHalf);
 		
-		rightHalf.setMinimumSize(new Dimension(333, 500));
+		rightHalf.setMinimumSize(new Dimension(430, 500));
 		setDividerLocation(420);
 		
 	}
