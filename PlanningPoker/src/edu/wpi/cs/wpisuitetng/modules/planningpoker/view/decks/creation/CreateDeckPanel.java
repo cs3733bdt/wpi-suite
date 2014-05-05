@@ -40,6 +40,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
@@ -135,7 +136,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	private boolean readyToClose = false;
 	private boolean cardsHaveChanges = false;
     private ColorEnum initialColor;
-
+    private final Border etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 	private Deck deck;
 
 	public CreateDeckPanel() {
@@ -565,7 +566,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		if(numCards.getText().equals("0") || cardsPanel2.getNumberCards() == 0){
 			isNumCardsValid = false;
 			if(showLabel){
-				errorField.setText("Your deack must have at least 1 card");
+				errorField.setText("Your deck must have at least 1 card");
 			}
 			if(showBox){
 				numCards.setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -763,13 +764,19 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	public void disableFields() {
 		
 		//Disable the input fields
-		descriptionTextField.setEnabled(false);
-		nameTextField.setEnabled(false);
+		descriptionTextField.setEditable(false);
+		descriptionTextField.setBorder(etchedBorder);
+		descriptionTextField.setBackground(new Color(230,230,230));
+		nameTextField.setEditable(false);
+		nameTextField.setBorder(etchedBorder);
+		nameTextField.setBackground(new Color(230,230,230));
 		singleSelection.setEnabled(false);
 		multipleSelection.setEnabled(false);
 		colorDropDown.setEnabled(false);
 		submitNumCards.setEnabled(false);
 		numCards.setEnabled(false);
+		numCards.setBorder(etchedBorder);
+		numCards.setBackground(new Color(230,230,230));
 		iDontKnowCheck.setEnabled(false);
 		
 		//Disables editing on each card in the view panel

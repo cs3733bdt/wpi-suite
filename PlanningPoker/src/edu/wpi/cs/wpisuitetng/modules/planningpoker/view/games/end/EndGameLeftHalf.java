@@ -18,6 +18,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
+import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -25,6 +26,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
@@ -50,8 +52,7 @@ public class EndGameLeftHalf extends JScrollPane {
 	private JLabel gameCreatorName;
 	private JLabel gameEndDate;
 	private RequirementTable table;
-	
-	private final Border defaultBorder = (new JTextField()).getBorder();
+	private final Border etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 	
 	public EndGameLeftHalf(final Game game, EndGamePanel parent){
 		this.parent = parent;
@@ -76,9 +77,9 @@ public class EndGameLeftHalf extends JScrollPane {
 		// Initializes and sets properties of game name label
 		gameName = new NameJTextField(30,GameModel.getInstance());						
 		gameName.setText(ended.getName());				
-		gameName.setBorder(defaultBorder);						
+		gameName.setBorder(etchedBorder);
+		gameName.setBackground(new Color(230, 230, 230));
 		gameName.setEditable(false); 
-		gameName.setBackground(Color.WHITE);
 
 		// Initializes and sets game description label
 		gameDescLabel = new JLabel("Description");				
@@ -87,7 +88,8 @@ public class EndGameLeftHalf extends JScrollPane {
 		gameDesc = new JTextArea();
 		gameDesc.setText(ended.getDescription());
 		gameDesc.setEditable(false);
-		gameDesc.setBorder(defaultBorder);
+		gameDesc.setBorder(etchedBorder);
+		gameDesc.setBackground(new Color(230, 230, 230));
 		gameDesc.setLineWrap(true);									
 
 		// Creates a scroll pane to hold the area which to display game description
