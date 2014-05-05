@@ -15,18 +15,22 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
@@ -40,6 +44,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
@@ -135,7 +140,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	private boolean readyToClose = false;
 	private boolean cardsHaveChanges = false;
     private ColorEnum initialColor;
-
+    private final Border etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 	private Deck deck;
 
 	public CreateDeckPanel() {
@@ -387,7 +392,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 			@Override
 			public void componentResized(ComponentEvent e) {
 				dynamicCardPanel();
-				
 			}
 
 			@Override
@@ -396,7 +400,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 
 			@Override
 			public void componentShown(ComponentEvent e) {
-				dynamicCardPanel();
 			}
 
 			@Override
@@ -569,7 +572,7 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		if(numCards.getText().equals("0") || cardsPanel2.getNumberCards() == 0){
 			isNumCardsValid = false;
 			if(showLabel){
-				errorField.setText("Your deack must have at least 1 card");
+				errorField.setText("Your deck must have at least 1 card");
 			}
 			if(showBox){
 				numCards.setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -586,10 +589,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	}
 
 	public boolean hasChanges() {
-		logger.log(Level.INFO,"cardsHaveChanges"+cardsHaveChanges);
-		logger.log(Level.INFO,"nameTextField"+nameTextField.hasChanges());
-		logger.log(Level.INFO,"descriptionTextField"+descriptionTextField.hasChanges());
-		logger.log(Level.INFO,"cardsPanel2"+cardsPanel2.hasChanges());
 
 		return (cardsHaveChanges
 				|| (determineDeckColor().equals(initialColor))
@@ -618,7 +617,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	 * @param b
 	 */
 	private void cardsHaveChanges(boolean b) {
-		logger.log(Level.INFO,"cardshaveChanges =" +b);
 		cardsHaveChanges = b;
 		
 	}
@@ -767,13 +765,19 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 	public void disableFields() {
 		
 		//Disable the input fields
-		descriptionTextField.setEnabled(false);
-		nameTextField.setEnabled(false);
+		descriptionTextField.setEditable(false);
+		descriptionTextField.setBorder(etchedBorder);
+		descriptionTextField.setBackground(new Color(230,230,230));
+		nameTextField.setEditable(false);
+		nameTextField.setBorder(etchedBorder);
+		nameTextField.setBackground(new Color(230,230,230));
 		singleSelection.setEnabled(false);
 		multipleSelection.setEnabled(false);
 		colorDropDown.setEnabled(false);
 		submitNumCards.setEnabled(false);
 		numCards.setEnabled(false);
+		numCards.setBorder(etchedBorder);
+		numCards.setBackground(new Color(230,230,230));
 		iDontKnowCheck.setEnabled(false);
 		
 		//Disables editing on each card in the view panel
@@ -816,5 +820,6 @@ public class CreateDeckPanel extends JScrollPane implements IDataField, IValidat
 		int rowPerPanel = (int)Math.ceil((numCards)/cardsPerRow);
 		cardsPanel2.setPreferredSize(new Dimension(Math.round(view.getWidth()-60), Math.round(rowPerPanel*110)));
 	}
+	
 	
 }

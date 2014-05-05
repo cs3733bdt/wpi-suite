@@ -11,9 +11,13 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -49,6 +53,7 @@ public class LaunchGameButtonPanel extends JPanel{
 		layout.putConstraint(SpringLayout.WEST, launchGameButton, 0, SpringLayout.WEST, this);					//Makes sure the left side of the panel stretches with the left side of the container
 		layout.putConstraint(SpringLayout.EAST, launchGameButton, 0, SpringLayout.EAST, this);
 		
+		setIcon();
 		setPreferredSize(launchGameButton.getPreferredSize());
 		
 		parentPanel = panel;
@@ -71,6 +76,14 @@ public class LaunchGameButtonPanel extends JPanel{
 				parentPanel.LaunchGamePressed();
 			}
 		});
+	}
+	
+	public void setIcon() {
+		try {
+			Image img = ImageIO.read(getClass().getResource("start.png"));
+			launchGameButton.setIcon(new ImageIcon(img));
+
+		} catch (IOException ex) {}
 	}
 	
 }

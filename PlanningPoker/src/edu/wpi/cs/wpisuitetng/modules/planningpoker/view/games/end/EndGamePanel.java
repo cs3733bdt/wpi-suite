@@ -12,15 +12,10 @@
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.games.end;
 
 import java.awt.Dimension;
-import java.util.ArrayList;
-import java.util.List;
 
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JSplitPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.border.Border;
 
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.IModelObserver;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.abstractmodel.ObservableModel;
@@ -31,7 +26,6 @@ import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequi
  * @author TomPaolillo
  */
 public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGamePanel{
-	private final Border defaultBorder = (new JTextField()).getBorder();
 	
 	private final Game active;
 
@@ -67,7 +61,6 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
 	private StatisticsPanel rightHalf;
 	
 	private EndGameLeftHalf leftHalf;
-	
 	/**
 	 * Creates a scrollPane to contain everything
 	 * @param game the game panel requested

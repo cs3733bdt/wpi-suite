@@ -188,7 +188,7 @@ public abstract class ObservableModel extends AbstractModel {
 			}
 		}
 		
-		logger.log(Level.INFO, "called from: \n" + message);
+		logger.log(Level.FINEST, "called from: \n" + message);
 		
 		
 		changed = true;

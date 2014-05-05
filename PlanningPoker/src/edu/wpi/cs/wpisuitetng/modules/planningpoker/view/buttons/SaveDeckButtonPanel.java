@@ -11,9 +11,13 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.buttons;
 
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
@@ -50,6 +54,7 @@ public class SaveDeckButtonPanel extends JPanel{
 		layout.putConstraint(SpringLayout.WEST, saveDeckButton, 0, SpringLayout.WEST, this);					//Makes sure the left side of the panel stretches with the left side of the container
 		layout.putConstraint(SpringLayout.EAST, saveDeckButton, 0, SpringLayout.EAST, this);
 		
+		setIcon();
 		setPreferredSize(saveDeckButton.getPreferredSize());
 	}
 	
@@ -72,6 +77,15 @@ public class SaveDeckButtonPanel extends JPanel{
 				parent.SaveDeckPressed();
 			}
 		});
+	}
+	
+	public void setIcon() {
+		try {
+
+			Image img = ImageIO.read(getClass().getResource("save_image.png"));
+			saveDeckButton.setIcon(new ImageIcon(img));
+
+		} catch (IOException ex) {}
 	}
 	
 }
