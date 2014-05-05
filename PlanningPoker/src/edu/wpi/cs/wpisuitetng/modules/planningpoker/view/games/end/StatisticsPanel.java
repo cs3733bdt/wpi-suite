@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -38,6 +39,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
@@ -81,7 +84,9 @@ public class StatisticsPanel extends JScrollPane {
 	private double median;
 	private int numVotes;
 	int currFinalEstimate;
-
+	
+	private final Border etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+	
 	private EndGameTable statTable;
 
 	private EndGameTable voteTable;
@@ -180,6 +185,8 @@ public class StatisticsPanel extends JScrollPane {
 		 */
 		userStoryDesc.setText(game.getRequirements().get(0).getDescription());
 		userStoryDesc.setEditable(false);
+		userStoryDesc.setBorder(etchedBorder);
+		userStoryDesc.setBackground(new Color(230, 230, 230));
 		userStoryDesc.setLineWrap(true);
 
 		descPanel.setPreferredSize(new Dimension(580, 100));
