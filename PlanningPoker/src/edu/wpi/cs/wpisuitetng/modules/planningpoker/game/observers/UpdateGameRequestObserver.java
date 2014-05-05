@@ -18,6 +18,9 @@ import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.UpdateGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.controllers.GetGameNotificationController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models.GameNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models.GameNotificationModel;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
 import edu.wpi.cs.wpisuitetng.network.models.ResponseModel;
@@ -65,26 +68,31 @@ public class UpdateGameRequestObserver implements RequestObserver {
 			realGame = game;
 		}
 
-		// Send out email, text, and facebook notifications on game creation
-		if (!realGame.isNotifiedOfCreation() && realGame.isActive()) {
-				// Set the project of the game, without this it throws a null
-				// pointer
-				// if the game is created/added on an update call
-				realGame.setProject(game.getProject());
-				// Set notified before sending notifications to remove looping
-				// possibility
-				realGame.setNotifiedOfCreation(true);
+		GetGameNotificationController.getInstance().retrieveGameNotifications();
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		GameNotification gn = GameNotificationModel.getInstance().getGameNotification(game.getIdentity());
+
+		if (gn != null) {
+			// Send out email, text, and facebook notifications on game creation
+			if (!gn.getGameCreationNotified() && realGame.isActive()) {
+				gn.setGameCreationNotified(true);
+				gn.notifyObservers();
 				// Finally send
 				realGame.sendNotifications();
-			// Send out email, text, and facebook notifications on game
-			// completion
-		} else if (!realGame.isNotifiedOfCompletion() && realGame.isComplete()) {
-				// Set notified before sending notifications to remove looping
-				// possibility
-				realGame.setProject(game.getProject());
-				realGame.setNotifiedOfCompletion(true);
+				// Send out email, text, and facebook notifications on game
+				// completion
+			} else if (!gn.getGameCompletionNotified() && realGame.isComplete()) {
+				gn.setGameCompletionNotified(true);
+				gn.notifyObservers();
 				// Finally Send
 				realGame.sendNotifications();
+			}
+		} else {
+			logger.log(Level.INFO, "The GameNotification is Null for game: " + game.getName());
 		}
 
 		logger.log(Level.INFO,"The request to update a game has succeeded!");

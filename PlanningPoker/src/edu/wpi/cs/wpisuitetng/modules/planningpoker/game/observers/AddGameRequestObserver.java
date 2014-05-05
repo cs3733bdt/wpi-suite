@@ -17,6 +17,9 @@ import edu.wpi.cs.wpisuitetng.exceptions.NotFoundException;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.controllers.AddGameController;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameModel;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.controllers.GetGameNotificationController;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models.GameNotification;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models.GameNotificationModel;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.view.ViewEventController;
 import edu.wpi.cs.wpisuitetng.network.RequestObserver;
 import edu.wpi.cs.wpisuitetng.network.models.IRequest;
@@ -76,16 +79,24 @@ public class AddGameRequestObserver implements RequestObserver {
 			logger.log(Level.WARNING, "Game does not exist.", e);
 			realGame = game;
 		}
+		
+		GetGameNotificationController.getInstance().retrieveGameNotifications();
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		GameNotification gn = GameNotificationModel.getInstance().getGameNotification(game.getIdentity());
 
-		// Send out email, text, and facebook notifications on game creation
-		if (!game.isNotifiedOfCreation() && game.isActive()) {
-				// Have to set Project because it doesn't have it yet
-				// and will throw a null pointer
-				realGame.setProject(game.getProject());
-				// Set notified before sending notifications, to ensure no
-				// looping
-				realGame.setNotifiedOfCreation(true);
-				realGame.sendNotifications();
+		if (gn != null) {
+			// Send out email, text, and facebook notifications on game creation
+			if (!gn.getGameCreationNotified() && game.isActive()) {
+					gn.setGameCreationNotified(true);
+					gn.notifyObservers();
+					realGame.sendNotifications();
+			}
+		} else {
+			logger.log(Level.INFO, "The GameNotification is Null for game: " + game.getName());
 		}
 
 		logger.log(Level.INFO,"The request to add a game has succeeded!");

@@ -34,6 +34,7 @@ import edu.wpi.cs.wpisuitetng.modules.defecttracker.entitymanagers.CommentManage
 import edu.wpi.cs.wpisuitetng.modules.defecttracker.entitymanagers.DefectManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.DeckEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.GameEntityManager;
+import edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models.GameNotificationEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.pprequirement.models.PPRequirementEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.postboard.model.PostBoardEntityManager;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementEntityManager;
@@ -81,6 +82,7 @@ public class ManagerLayer {
 		map.put("planningpoker" + "game", new GameEntityManager(data));
 		map.put("planningpoker" + "requirement", new PPRequirementEntityManager(data));
 		map.put("planningpoker" + "deck", new DeckEntityManager(data));
+		map.put("planningpoker" + "gamenotification", new GameNotificationEntityManager(data));
 		
 		//add just your module to this list
 		String[] fullModuleList = {"core","defecttracker","postboard","requirementmanager","planningpoker"};
