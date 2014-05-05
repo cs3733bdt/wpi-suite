@@ -14,6 +14,7 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -24,6 +25,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -424,6 +427,15 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 					SpringLayout.SOUTH, cardScrollPanel);
 		}
 
+		try {
+		    Image img = ImageIO.read(getClass().getResource("clear.png"));
+		    clearButton.setIcon(new ImageIcon(img));
+		    
+		    img = ImageIO.read(getClass().getResource("submit.png"));
+		    submitButton.setIcon(new ImageIcon(img));
+		    
+		} catch (IOException ex) {}
+		
 		activeRequirement = table.getSelectedReq();
 		nameTextField.setText(activeRequirement.getName());
 		descriptionTextField.setText(activeRequirement.getDescription());

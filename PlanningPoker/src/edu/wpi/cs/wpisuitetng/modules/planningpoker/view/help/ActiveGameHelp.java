@@ -63,10 +63,10 @@ public class ActiveGameHelp extends JScrollPane implements IHelpPanel {
 		
 		//Add explanation for game info
 		gameInfoExplanation = new JTextArea();
-		gameInfoExplanation.setText("This displays information about the game and voting progress"
+		gameInfoExplanation.setText("This displays information about the game and the overall "
+				+ "team voting progress and individual user voting progress "
 				+ "on the requirements. The game's creator also has the option to end the game "
-				+ "before the end date and time and provide a reason for doing so in the box provided"
-				+ "above the button. If you are not the game's creator, this button or the corresponding "
+				+ "before the end date and time. If you are not the game's creator, this button  "
 				+ "textbox will not appear to you. You will be able to view statistics on "
 				+ "all estimates once the game has ended.");
 		
