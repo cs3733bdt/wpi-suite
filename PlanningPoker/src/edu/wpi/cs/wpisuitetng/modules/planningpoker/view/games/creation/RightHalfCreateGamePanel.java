@@ -75,6 +75,11 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 								// edit button is pressed
 
 	private final Border errorBorder = BorderFactory.createLineBorder(Color.RED);
+	
+	private final Border defaultFieldBorder = (new JTextField()).getBorder();
+	
+	private final Border defaultAreaBorder = (new JTextArea()).getBorder();
+
 
 	// THIS IS THE REQUIREMENT NAME FIELD THAT WILL BE NEEDED FOR CONTROLLER
 	private NameJTextField nameArea = new NameJTextField(30,PPRequirementModel.getInstance());
@@ -117,6 +122,10 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	private List<PPRequirement> savedRequirements = new ArrayList<PPRequirement>();
 
 	private Game game;
+	
+	private boolean creating = false;
+	
+	private boolean editing = false; 
 
 	private JButton cancelImportReqButton;
 
@@ -233,7 +242,14 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 				submitButtonPressed();
 			}
 		});
-		addMouseListenerTo(submitAddReqButton);
+		
+		submitAddReqButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent arg0) {
+					if(!submitAddReqButton.isEnabled() && creating){
+						validateNameAndDesc(true, true);
+					}
+				}
+			});
 
 		/**
 		 * Format and Create Cancel Button
@@ -595,7 +611,6 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 				SpringLayout.NORTH, submitImportReqButton);
 
 		
-		validateNameAndDesc(false, false);
 		/**
 		 * Set the minimum size and add components to the viewport of the
 		 * scrollpane
@@ -620,14 +635,19 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		 * requirements
 		 */
 		updateAddReqButton.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				updateButtonPressed();
 			}
 		});
 		
-		addMouseListenerTo(updateAddReqButton);
+		updateAddReqButton.addMouseListener(new MouseAdapter(){
+			public void mouseClicked(MouseEvent arg0) {
+				if(!updateAddReqButton.isEnabled() && editing){
+					updateUpdateButton(true, true);
+				}
+			}
+		});
 
 		/**
 		 * Action listener for the button to add a requirement
@@ -635,6 +655,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 		addReqButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				editing = false;
+				creating = true;
 				currentReqsPanel.setVisible(false);
 				createReqsPanel.setVisible(true);
 				importReqsPanel.setVisible(false);
@@ -756,6 +778,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	}
 
 	private void submitButtonPressed() {
+		editing = false;
+		creating = false;
 		// Get requirements from manager
 		GetRequirementsController.getInstance().retrieveRequirements();
 		// Sleep to make sure retrieve finishes
@@ -800,6 +824,8 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	}
 
 	private void updateButtonPressed() {
+		editing = false;
+		creating = false;
 		if (globalRow != -1) {
 			int[] rows = currentTable.getSelectedRows();
 			GetRequirementsController.getInstance().retrieveRequirements();
@@ -874,15 +900,21 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	private boolean validateNameAndDesc(boolean showLabel, boolean showBox) {
 		boolean descriptionValid = true;
 		boolean nameValid = true;
-		boolean uniqueName;
+		boolean uniqueName = false;
 		boolean returnBoolean;
 
-		if (checkduplicateReq(new PPRequirement(nameArea.getText(),
-				descArea.getText()))) {
-			uniqueName = false;
-			displayError("A requirement already exists with that name and description");
+		if (checkduplicateReq(new PPRequirement(nameArea.getText(), descArea.getText()))) {
+			if(showLabel){
+				displayError("A requirement already exists with that name and description");
+			}
+			if(showBox){
+				nameArea.setBorder(errorBorder);
+				descArea.setBorder(errorBorder);
+			}
 		} else {
 			displayError("");
+			nameArea.setBorder(defaultFieldBorder);
+			descArea.setBorder(defaultAreaBorder);
 			uniqueName = true;
 		}
 		
@@ -928,11 +960,12 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	}
 
 	private void editReqButtonAction() {
+		editing = true;
+		creating = false;
 		int row = currentTable.getSelectedRow();
 		if (row == -1) {
 			return;
 		}
-		displayError("No changes have been made");
 		currentReqsPanel.setVisible(false);
 		createReqsPanel.setVisible(true);
 		importReqsPanel.setVisible(false);
@@ -1045,34 +1078,50 @@ public class RightHalfCreateGamePanel extends JScrollPane implements IDataField 
 	private void addKeyListenerTo(JComponent component) {
 		component.addKeyListener(new KeyAdapter() {
 			public void keyReleased(KeyEvent arg0) {
-				if (globalRow == -1) {
+				if (creating) {
 					updateSubmitButton();
-				} else {
+				} else if(editing){
 					logger.log(Level.INFO,"updating update");
-					updateUpdateButton();
+					updateUpdateButton(false, false);
 				}
 			}
 		});
 	}
 
-	private void addMouseListenerTo(JComponent component) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent arg0) {
-				validateNameAndDesc(true, true);
+	private void updateUpdateButton(boolean showLabel, boolean showBox) {
+		if (!updateValid()) {
+			updateAddReqButton.setEnabled(false);
+			if(showLabel){
+				displayError("No changes have been made");
 			}
-		});
-	}
-
-	private void updateUpdateButton() {
-		if (validateNameAndDesc(false, false) && updateValid()) {
+			if(showBox){
+				nameArea.setBorder(errorBorder);
+				descArea.setBorder(errorBorder);
+			}
+		}
+		else{
 			updateAddReqButton.setEnabled(true);
 			displayError("");
-		} else if (!updateValid()) {
-			updateAddReqButton.setEnabled(false);
-			displayError("No changes have been made");
+			nameArea.setBorder(defaultFieldBorder);
+			descArea.setBorder(defaultAreaBorder);
+		}
+		
+		
+		if (validateNameAndDesc(showLabel, showBox) && updateValid()) {
+			updateAddReqButton.setEnabled(true);
+			displayError("");
 		} else {
 			updateAddReqButton.setEnabled(false);
-			displayError("A requirement already exists with that name and description");
+		}		
+		
+		if(!validateNameAndDesc(showLabel, showBox) && !updateValid()){
+			if(showLabel){
+				displayError("No changes have been made");
+			}
+			if(showBox){
+				nameArea.setBorder(errorBorder);
+				descArea.setBorder(errorBorder);
+			}
 		}
 	}
 

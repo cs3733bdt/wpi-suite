@@ -15,18 +15,23 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -34,6 +39,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
@@ -77,7 +84,9 @@ public class StatisticsPanel extends JScrollPane {
 	private double median;
 	private int numVotes;
 	int currFinalEstimate;
-
+	
+	private final Border etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+	
 	private EndGameTable statTable;
 
 	private EndGameTable voteTable;
@@ -114,8 +123,11 @@ public class StatisticsPanel extends JScrollPane {
 		voteTable.getTableHeader().setReorderingAllowed(false);
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(activeRequirement);
+//		statTable.setPreferredSize(new Dimension(50, 25));
 
 		JScrollPane statsPanel = new JScrollPane(statTable);
+		//statTable.setPreferredSize(new Dimension(50, 25));
+
 		JScrollPane votePanel = new JScrollPane(voteTable);
 		JScrollPane descPanel = new JScrollPane(userStoryDesc);
 
@@ -130,6 +142,12 @@ public class StatisticsPanel extends JScrollPane {
 				finalEstimateButtonPressed();
 			}
 		});
+		try {
+			Image img = ImageIO.read(getClass().getResource("submit.png"));
+			finalEstimateButton.setIcon(new ImageIcon(img));
+
+		} catch (IOException ex) {}
+		finalEstimateButton.setPreferredSize(finalEstimateButton.getPreferredSize());
 
 		finalEstimateButton.setEnabled(true);
 		finalEstimateDisplay = new JLabel();
@@ -167,10 +185,12 @@ public class StatisticsPanel extends JScrollPane {
 		 */
 		userStoryDesc.setText(game.getRequirements().get(0).getDescription());
 		userStoryDesc.setEditable(false);
+		userStoryDesc.setBorder(etchedBorder);
+		userStoryDesc.setBackground(new Color(230, 230, 230));
 		userStoryDesc.setLineWrap(true);
 
 		descPanel.setPreferredSize(new Dimension(580, 100));
-		statsPanel.setPreferredSize(new Dimension(580, 60));
+		statsPanel.setPreferredSize(new Dimension(580, 39));
 
 		// Label for Desc
 		layout.putConstraint(SpringLayout.NORTH, descLabel, 5,
@@ -352,7 +372,7 @@ public class StatisticsPanel extends JScrollPane {
 		List<Integer> newVotes = new ArrayList<Integer>();
 
 		for (int i = 0; i < votes.size(); i++) {
-			if (votes.get(i) != -8008135) {
+			if (votes.get(i) != -1) {
 				newVotes.add(votes.get(i));
 			}
 		}
@@ -482,7 +502,7 @@ public class StatisticsPanel extends JScrollPane {
 		List<String> nameArray = requirementToNames(requirement);
 		List<Integer> voteArray = requirementToVotes(requirement);
 		for (int i = 0; i < nameArray.size(); i++) {
-			if (voteArray.get(i) == -8008135) {
+			if (voteArray.get(i) == -1) {
 				voteTable.getTableModel().addRow(
 						new Object[] { nameArray.get(i), "I don't know" });
 			} else {

@@ -35,7 +35,7 @@ public interface IDataField {
 	 * 				to show a box around this field if the field is invalid
 	 * @return true when all of the fields in this component are valid
 	 */
-	public boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox);
+	boolean validateField(IErrorView warningField, boolean showLabel, boolean showBox);
 	
 	
 	/**
@@ -43,5 +43,5 @@ public interface IDataField {
 	 * changes since this panel was instantiated.
 	 * @return true when the user has made changes to the field since it was created or set
 	 */
-	public boolean hasChanges();
+	boolean hasChanges();
 }
