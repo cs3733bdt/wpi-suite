@@ -11,6 +11,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
@@ -27,6 +29,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
@@ -54,7 +57,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	private JLabel gameCreatorName;
 	private JLabel gameEndDate;
 	private JButton endGameManuallyButton;
-	private final Border defaultBorder = (new JTextField()).getBorder();
+	private final Border etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 	
 	private JLabel overallProgressLabel = new JLabel("Overall Team Voting Progress: ");
 	private final JProgressBar overallProgress = new JProgressBar(0, 1000);
@@ -114,7 +117,8 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		gameName = new JTextField(30);						
 		gameName.setText(active.getName());
 		gameName.setEditable(false);
-		gameName.setBorder(defaultBorder);						
+		gameName.setBackground(new Color(230,230,230));
+		gameName.setBorder(etchedBorder);
 
 		// Initializes and sets game description label
 		gameDescLabel = new JLabel("Description");				
@@ -123,7 +127,8 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		gameDesc = new JTextArea();
 		gameDesc.setText(active.getDescription());
 		gameDesc.setEditable(false);
-		gameDesc.setBorder(defaultBorder);
+		gameDesc.setBorder(etchedBorder);
+		gameDesc.setBackground(new Color(230,230,230));
 		gameDesc.setLineWrap(true);									
 
 		// Creates a scroll pane to hold the area which to display game description
@@ -165,6 +170,7 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		newLeftView.add(overallProgressLabel);
 		
 		overallProgress.setPreferredSize(new Dimension(320,25));//make the bar higher
+		overallProgress.setBackground(Color.WHITE);
 		overallProgress.setStringPainted(true);
 		newLeftView.add(overallProgress);
 		

@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -34,6 +35,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
@@ -75,6 +77,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	private JButton clearButton;
 	private int currentRow;
 	private String displayVote;
+	private final Border etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 
 	private static final Logger logger = Logger.getLogger(RightHalfActiveGamePanel.class
 			.getName());
@@ -124,6 +127,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 					activeRequirement = table.getSelectedReq();
 					currentRow=table.getSelectedRow();
 					nameTextField.setText(activeRequirement.getName());
+					
 					descriptionTextField.setText(activeRequirement
 							.getDescription());
 					
@@ -161,7 +165,8 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 
 		nameTextField = new JTextArea(1, 30); // Initializes the textfield for the game name and sets the size to 30
 		nameTextField.setText("");
-		nameTextField.setBorder(defaultBorder);
+		nameTextField.setBorder(etchedBorder);
+		nameTextField.setBackground(new Color(230, 230, 230));
 		nameTextField.setEditable(false);
 		nameTextField.setLineWrap(true);
 		
@@ -171,7 +176,8 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		// description
 		descriptionTextField.setText("");
 		// description
-		descriptionTextField.setBorder(defaultBorder);
+		descriptionTextField.setBorder(etchedBorder);
+		descriptionTextField.setBackground(new Color(230, 230, 230));
 		descriptionTextField.setEditable(false);
 		descriptionTextField.setLineWrap(true);
 
