@@ -117,9 +117,11 @@ public class GameNotificationModel extends AbstractStorageModel<GameNotification
 	}
 	
 	public GameNotification getGameNotification(UUID uuid) {
-		for (GameNotification gn: list) {
-			if (gn.getIdentity().equals(uuid))
-				return gn;
+		if (list != null) {
+			for (GameNotification gn: list) {
+				if (gn.getGameIdentity().equals(uuid))
+					return gn;
+			}
 		}
 		return null;
 	}

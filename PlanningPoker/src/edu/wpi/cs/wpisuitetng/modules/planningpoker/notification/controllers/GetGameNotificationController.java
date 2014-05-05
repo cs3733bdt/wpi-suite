@@ -95,7 +95,7 @@ public class GetGameNotificationController implements ActionListener {
 		logger.log(Level.INFO,"The size of the list returned from the server is: "
 				+ gns.length);
 		for (GameNotification gn : gns) {
-			logger.log(Level.INFO,"\t" + gn.getName() + " " + gn.getIdentity());
+			logger.log(Level.INFO,"\t" + gn.getName() + " " + gn.getGameIdentity());
 		}
 		// Make sure the response was not null
 		if (gns != null) {

@@ -179,7 +179,7 @@ public class GameNotification extends ObservableModel implements IModelObserver,
 	@Override
 	public UUID getIdentity() {
 		// TODO Auto-generated method stub
-		return null;
+		return gameIdentity;
 	}
 
 	@Override

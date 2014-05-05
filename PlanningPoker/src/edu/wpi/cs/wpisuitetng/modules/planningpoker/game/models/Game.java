@@ -298,7 +298,6 @@ public class Game extends ObservableModel implements IModelObserver,
 		notifiedOfCompletion = false;
 		identity = UUID.randomUUID();
 		deck = new Deck();
-		GameNotificationModel.getInstance().addGameNotification(new GameNotification(identity));
 	}
 
 	/**
@@ -329,7 +328,6 @@ public class Game extends ObservableModel implements IModelObserver,
 			req.setProject(getProject());
 		}
 		this.usesCards = usesCards;
-
 	}
 
 	/**
