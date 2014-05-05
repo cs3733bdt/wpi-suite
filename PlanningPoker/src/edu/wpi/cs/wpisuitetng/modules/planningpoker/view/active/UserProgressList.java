@@ -11,6 +11,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.util.ArrayList;
@@ -111,7 +112,7 @@ public class UserProgressList extends JScrollPane {
 		}
 		
 		int users = userProgressList.size();
-		heightBasedOnUserNumber = 33*users;
+		heightBasedOnUserNumber = 30*users;
 		
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		

@@ -11,16 +11,16 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JProgressBar;
@@ -29,6 +29,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
@@ -55,23 +56,16 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	private JLabel gameEndDateLabel;
 	private JLabel gameCreatorName;
 	private JLabel gameEndDate;
-	private JLabel endGameManuallyNoteLabel;
-	private JLabel endGameManuallyNoteLabel1;
-	private JTextArea endGameManuallyNote;
 	private JButton endGameManuallyButton;
-	JScrollPane notePane;
-	private final Border defaultBorder = (new JTextField()).getBorder();
+	private final Border etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 	
-	private JLabel overallProgressLabel = new JLabel("Team's overall voting progress: ");
+	private JLabel overallProgressLabel = new JLabel("Overall Team Voting Progress: ");
 	private final JProgressBar overallProgress = new JProgressBar(0, 1000);
 	private JLabel individualUserProgressLabel;
 	private UserProgressList usersProgressPanel;
-	private int userPanelHeight;
 	
 	private boolean endManually;
 	private ActiveGamePanel parentPanel;
-	
-	private LeftHalfActiveGamePanel instance = this;
 	/**
 	 * Constructor for NewLeftHalfActiveGamePanel
 	 * @param game the current planning poker game session
@@ -98,15 +92,8 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	 */
 	public void isUserCreator() {
 		if(ConfigManager.getConfig().getUserName().equals(active.getCreator())){
-			endGameManuallyNoteLabel.setVisible(true);
-			endGameManuallyNoteLabel1.setVisible(true);
-			endGameManuallyNote.setBorder(defaultBorder);
-			endGameManuallyNote.setVisible(true);
 			endGameManuallyButton.setVisible(true);
 		} else {
-			endGameManuallyNoteLabel.setVisible(false);
-			endGameManuallyNoteLabel1.setVisible(false);
-			notePane.setVisible(false);
 			endGameManuallyButton.setVisible(false);
 		}
 	}
@@ -130,7 +117,8 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		gameName = new JTextField(30);						
 		gameName.setText(active.getName());
 		gameName.setEditable(false);
-		gameName.setBorder(defaultBorder);						
+		gameName.setBackground(new Color(230,230,230));
+		gameName.setBorder(etchedBorder);
 
 		// Initializes and sets game description label
 		gameDescLabel = new JLabel("Description");				
@@ -139,7 +127,8 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		gameDesc = new JTextArea();
 		gameDesc.setText(active.getDescription());
 		gameDesc.setEditable(false);
-		gameDesc.setBorder(defaultBorder);
+		gameDesc.setBorder(etchedBorder);
+		gameDesc.setBackground(new Color(230,230,230));
 		gameDesc.setLineWrap(true);									
 
 		// Creates a scroll pane to hold the area which to display game description
@@ -157,19 +146,6 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		
 		// Initializes and sets game end date
 		gameEndDate = new JLabel(active.getEndDate().toString());	
-		
-		// Initializes end game manually note labels
-		endGameManuallyNoteLabel = new JLabel("If you wish to end the game manually,");
-		endGameManuallyNoteLabel1 = new JLabel("you have the option to enter your reason for doing so:");
-
-		// Initializes text area to enter end game note
-		endGameManuallyNote = new JTextArea();
-		endGameManuallyNote.setBorder(defaultBorder);
-		endGameManuallyNote.setLineWrap(true);
-
-		// Creates a scroll pane to hold the text area for end game note
-		notePane = new JScrollPane(endGameManuallyNote);
-		notePane.setPreferredSize(new Dimension(200, 110));
 
 		// Creates end game button
 		endGameManuallyButton = new JButton();
@@ -186,16 +162,15 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		});
 		
 		// Initializes and sets the individualUserProgressLabel
-		individualUserProgressLabel = new JLabel("Individual Users Progress (click to view)");
+		individualUserProgressLabel = new JLabel("Individual Users Voting Progress: ");
 		newLeftView.add(individualUserProgressLabel);
-		addMouseListenerToProgressLabel(individualUserProgressLabel);
 		
 		usersProgressPanel = new UserProgressList(this);
 		
 		newLeftView.add(overallProgressLabel);
 		
-		//updateOverallProgress();
 		overallProgress.setPreferredSize(new Dimension(320,25));//make the bar higher
+		overallProgress.setBackground(Color.WHITE);
 		overallProgress.setStringPainted(true);
 		newLeftView.add(overallProgress);
 		
@@ -210,9 +185,6 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		newLeftView.add(gameEndDateLabel);
 		newLeftView.add(gameCreatorName);
 		newLeftView.add(gameEndDate);
-		newLeftView.add(endGameManuallyNoteLabel);
-		newLeftView.add(endGameManuallyNoteLabel1);
-		newLeftView.add(notePane);
 		newLeftView.add(endGameManuallyButton);
 		
 		newLeftView.add(usersProgressPanel);
@@ -258,18 +230,8 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		layout.putConstraint(SpringLayout.NORTH, usersProgressPanel, 5, SpringLayout.SOUTH, individualUserProgressLabel);	
 		layout.putConstraint(SpringLayout.WEST, usersProgressPanel, 5, SpringLayout.WEST, newLeftView);
 		layout.putConstraint(SpringLayout.EAST, usersProgressPanel, -5, SpringLayout.EAST, newLeftView);
-		
-		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 20, SpringLayout.SOUTH, individualUserProgressLabel);	
-		layout.putConstraint(SpringLayout.WEST, endGameManuallyNoteLabel, 5, SpringLayout.WEST, newLeftView);
+		layout.putConstraint(SpringLayout.SOUTH, usersProgressPanel, -10, SpringLayout.NORTH, endGameManuallyButton);	
 
-		layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel1, 1, SpringLayout.SOUTH, endGameManuallyNoteLabel);	
-		layout.putConstraint(SpringLayout.WEST, endGameManuallyNoteLabel1, 5, SpringLayout.WEST, newLeftView);
-
-		layout.putConstraint(SpringLayout.NORTH, notePane, 5, SpringLayout.SOUTH, endGameManuallyNoteLabel1);	
-		layout.putConstraint(SpringLayout.WEST, notePane, 5, SpringLayout.WEST, newLeftView);
-		layout.putConstraint(SpringLayout.EAST, notePane, -5, SpringLayout.EAST, newLeftView);
-		layout.putConstraint(SpringLayout.SOUTH, notePane, -10, SpringLayout.NORTH, endGameManuallyButton);
-		
 		layout.putConstraint(SpringLayout.WEST, endGameManuallyButton, 5, SpringLayout.WEST, newLeftView);
 		layout.putConstraint(SpringLayout.SOUTH, endGameManuallyButton, -10, SpringLayout.SOUTH, newLeftView);
 
@@ -278,11 +240,9 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 		
 		setViewportView(newLeftView);
 		
-		usersProgressPanel.setVisible(false);
+		usersProgressPanel.setVisible(true);
 		revalidate();
 		repaint();
-		
-		userPanelHeight = usersProgressPanel.getHeight();
 		
 		revalidate();
 		repaint();
@@ -290,36 +250,11 @@ public class LeftHalfActiveGamePanel extends JScrollPane{
 	}
 
 	public boolean endManually(){
-		if (endManually){
-			return true;
-		}else{
-			return false;
-		}
+		return endManually;
 	}
 	
 	public Game getGame(){
 		return active;
-	}
-	
-	private void addMouseListenerToProgressLabel(JLabel component) {
-		component.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				if(!usersProgressPanel.isVisible()){
-					newLeftView.setPreferredSize(new Dimension(305, 485 + userPanelHeight));		//Sets the size of the view
-					layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 10, SpringLayout.SOUTH, usersProgressPanel);
-					usersProgressPanel.setVisible(true);
-				}
-				else {
-					newLeftView.setPreferredSize(new Dimension(305, 485));
-					layout.putConstraint(SpringLayout.NORTH, endGameManuallyNoteLabel, 20, SpringLayout.SOUTH, individualUserProgressLabel);
-					usersProgressPanel.setVisible(false);
-				}
-				
-				instance.revalidate();
-				instance.repaint();
-			}
-		});
 	}
 	
 	/**

@@ -78,9 +78,11 @@ public class EndGameHelp extends JScrollPane implements IHelpPanel {
 		
 		//Add the explanation for the statistics image
 		statsExplanation = new JTextArea();
-		statsExplanation.setText("The right half displays statistics the description of the selected requirement,"
-				+ "as well as statistics on the estimates. \"I don't know\" counts as a 0 for statistics calculations."
-				+ "The creator of the game is able to submit a final estimate for the requirement at the bottom."
+		statsExplanation.setText("The right half displays the statistics and description of the selected requirement. "
+				+ "The mean, median, standard deviation, min and max of all votes, the total votes and number of "
+				+ "\"I don't know\" votes are displayed. "
+				+ " \"I don't know\" counts as a 0 for statistics calculations. Each user's votes are also displayed. "
+				+ "The creator of the game is able to submit a final estimate for the requirement at the bottom. "
 				+ "This will get saved in the requirement manager.");
 		
 		statsExplanation.setEditable(false);

@@ -64,6 +64,6 @@ public class GetDeckRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		logger.log(Level.WARNING,"Failed to get deck with exception: " + exception.getMessage());
+		logger.log(Level.WARNING,"Failed to get deck ");
 	}
 }

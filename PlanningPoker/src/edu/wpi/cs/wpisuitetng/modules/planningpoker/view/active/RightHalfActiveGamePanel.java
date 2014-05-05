@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -34,6 +35,7 @@ import javax.swing.JTextField;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.SpringLayout;
 import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.deck.models.Deck;
@@ -74,6 +76,8 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	private Font largeFont;
 	private JButton clearButton;
 	private int currentRow;
+	private String displayVote;
+	private final Border etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
 
 	private static final Logger logger = Logger.getLogger(RightHalfActiveGamePanel.class
 			.getName());
@@ -109,9 +113,9 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		/*
 		 * Initializes a table's columns and rows and the table
 		 */
-		table = new RequirementTable(currentGame.getRequirements(),
-				RequirementTableMode.ACTIVE);
-
+		table = new RequirementTable(currentGame.getRequirements(),RequirementTableMode.ACTIVE);
+		table.getTableHeader().setReorderingAllowed(false);
+		
 		/**
 		 * mouse listener
 		 */
@@ -123,6 +127,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 					activeRequirement = table.getSelectedReq();
 					currentRow=table.getSelectedRow();
 					nameTextField.setText(activeRequirement.getName());
+					
 					descriptionTextField.setText(activeRequirement
 							.getDescription());
 					
@@ -131,8 +136,14 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 					errorField.setText("");
 					estText.requestFocus();
 					estText.select(0, 0);
+					
+					if(activeRequirement.userVote() == -1) {
+						displayVote = "?";
+					} else {
+						displayVote = Integer.toString(activeRequirement.userVote());
+					}
 
-					previousEst.setText("Your saved estimate is: " + activeRequirement.userVote());
+					previousEst.setText("Your saved estimate is: " + displayVote);
 					previousEst.setFont(largeFont);
 
 					try {
@@ -154,7 +165,8 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 
 		nameTextField = new JTextArea(1, 30); // Initializes the textfield for the game name and sets the size to 30
 		nameTextField.setText("");
-		nameTextField.setBorder(defaultBorder);
+		nameTextField.setBorder(etchedBorder);
+		nameTextField.setBackground(new Color(230, 230, 230));
 		nameTextField.setEditable(false);
 		nameTextField.setLineWrap(true);
 		
@@ -164,7 +176,8 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		// description
 		descriptionTextField.setText("");
 		// description
-		descriptionTextField.setBorder(defaultBorder);
+		descriptionTextField.setBorder(etchedBorder);
+		descriptionTextField.setBackground(new Color(230, 230, 230));
 		descriptionTextField.setEditable(false);
 		descriptionTextField.setLineWrap(true);
 
@@ -182,7 +195,14 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		previousEst = new JLabel();
 
 		PPRequirement firstRequirement = table.getSelectedReq();
-		previousEst.setText("Your saved estimate is: " + firstRequirement.userVote());
+		
+		if(firstRequirement.userVote() == -1) {
+			displayVote = "?";
+		} else {
+			displayVote = Integer.toString(firstRequirement.userVote());
+		}
+		
+		previousEst.setText("Your saved estimate is: " + displayVote);
 		previousEst.setFont(largeFont);
 		sum = 0;
 		deck = currentGame.getDeck();
@@ -533,7 +553,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 		Vote vote = new Vote(currentUser, voteNumber);
 		activeRequirement.addVote(vote);
 
-		logger.log(Level.INFO,"You voted: " + vote.getVoteNumber());
+		logger.log(Level.INFO, "Vote recorded" );
 
 		ViewEventController.getInstance().refreshGameTree();
 
@@ -552,7 +572,7 @@ public class RightHalfActiveGamePanel extends JScrollPane implements IValidateBu
 	 * update the saved estimate label
 	 */
 	public void updateSavedEstimateLabel() {
-		if(activeRequirement.userVote() == -8008135) {
+		if(activeRequirement.userVote() == -1) {
 			previousEst.setText("Your saved estimate is: 0");
 			table.setValueAt("?", table.getSelectedRow(), 2);		
 		} else {

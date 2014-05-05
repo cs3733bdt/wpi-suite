@@ -98,11 +98,11 @@ public class ActiveCardsPanel extends JPanel{
 	 */
 	public void addToCardSum(int cardValue) {
 		sum += cardValue;
-		logger.log(Level.INFO,Integer.toString(sum));
+		logger.log(Level.INFO, "Sum updated");
 	}
 	
 	public void addIDK() {
-		sum = -8008135;
+		sum = -1;
 		parent.selectedIDK();
 		logger.log(Level.INFO,"I don't know is selected.");
 	}
@@ -110,8 +110,9 @@ public class ActiveCardsPanel extends JPanel{
 	public void subIDK() {
 		sum = 0;
 		for (CardButton card: JToggleButtonList) {
-			if (card.isSelected())
+			if (card.isSelected()) {
 				sum += Integer.parseInt(card.getValue());
+			}
 		}
 		logger.log(Level.INFO,"I don't know is deselected.");
 	}
@@ -124,7 +125,7 @@ public class ActiveCardsPanel extends JPanel{
 	 */
 	public void decToCardSum(int cardValue) {
 		sum -= cardValue;
-		logger.log(Level.INFO, Integer.toString(sum));
+		logger.log(Level.INFO, "Sum updated");
 	}
 
 

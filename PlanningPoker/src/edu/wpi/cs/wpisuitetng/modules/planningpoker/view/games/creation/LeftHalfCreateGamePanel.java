@@ -463,7 +463,7 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 	 * @return descriptionTextField
 	 */
 	public String getDescText() {
-		logger.log(Level.INFO,descriptionTextField.getText());
+		logger.log(Level.INFO, "Description text retrieved");
 		return descriptionTextField.getText();
 	}
 

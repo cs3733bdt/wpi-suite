@@ -132,6 +132,7 @@ public class DeckEntityManagerTest {
 	public void testDeleteAllWhenEmpty() throws WPISuiteException{
 		manager.deleteAll(adminSession);
 		manager.deleteAll(adminSession);
+		assertEquals(adminSession, null);
 		// no exceptions get thrown
 	}
 	

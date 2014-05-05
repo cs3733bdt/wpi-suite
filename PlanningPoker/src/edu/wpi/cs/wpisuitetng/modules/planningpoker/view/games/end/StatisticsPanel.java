@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
@@ -34,6 +35,8 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.SpringLayout;
+import javax.swing.border.Border;
+import javax.swing.border.EtchedBorder;
 
 import edu.wpi.cs.wpisuitetng.janeway.config.ConfigManager;
 import edu.wpi.cs.wpisuitetng.modules.planningpoker.game.models.Game;
@@ -77,7 +80,9 @@ public class StatisticsPanel extends JScrollPane {
 	private double median;
 	private int numVotes;
 	int currFinalEstimate;
-
+	
+	private final Border etchedBorder = BorderFactory.createEtchedBorder(EtchedBorder.LOWERED);
+	
 	private EndGameTable statTable;
 
 	private EndGameTable voteTable;
@@ -110,10 +115,15 @@ public class StatisticsPanel extends JScrollPane {
 
 		statTable = new EndGameTable(EndGameTableMode.STATISTIC);
 		voteTable = new EndGameTable(EndGameTableMode.VOTE);
+		statTable.getTableHeader().setReorderingAllowed(false);
+		voteTable.getTableHeader().setReorderingAllowed(false);
 		statTable.getTableModel().addRow(row);
 		fillVoteTable(activeRequirement);
+//		statTable.setPreferredSize(new Dimension(50, 25));
 
 		JScrollPane statsPanel = new JScrollPane(statTable);
+		//statTable.setPreferredSize(new Dimension(50, 25));
+
 		JScrollPane votePanel = new JScrollPane(voteTable);
 		JScrollPane descPanel = new JScrollPane(userStoryDesc);
 
@@ -165,10 +175,12 @@ public class StatisticsPanel extends JScrollPane {
 		 */
 		userStoryDesc.setText(game.getRequirements().get(0).getDescription());
 		userStoryDesc.setEditable(false);
+		userStoryDesc.setBorder(etchedBorder);
+		userStoryDesc.setBackground(new Color(230, 230, 230));
 		userStoryDesc.setLineWrap(true);
 
 		descPanel.setPreferredSize(new Dimension(580, 100));
-		statsPanel.setPreferredSize(new Dimension(580, 60));
+		statsPanel.setPreferredSize(new Dimension(580, 39));
 
 		// Label for Desc
 		layout.putConstraint(SpringLayout.NORTH, descLabel, 5,
@@ -350,7 +362,7 @@ public class StatisticsPanel extends JScrollPane {
 		List<Integer> newVotes = new ArrayList<Integer>();
 
 		for (int i = 0; i < votes.size(); i++) {
-			if (votes.get(i) != -8008135) {
+			if (votes.get(i) != -1) {
 				newVotes.add(votes.get(i));
 			}
 		}
@@ -372,8 +384,9 @@ public class StatisticsPanel extends JScrollPane {
 			}
 		}
 		minEstimate = min;
-		if(min < 0) 
+		if(min < 0) {
 			min = 0;
+		}
 		return min;
 	}
 
@@ -392,8 +405,9 @@ public class StatisticsPanel extends JScrollPane {
 			}
 		}
 		maxEstimate = max;
-		if(max < 0) 
+		if(max < 0) {
 			max = 0;
+		}
 		return max;
 	}
 	/**
@@ -408,10 +422,12 @@ public class StatisticsPanel extends JScrollPane {
 			sum += a.get(i);
 		}
 		mean = sum / ((double) a.size());
-		if(mean>=0)
+		if(mean >= 0) {
 			return mean;
-		else
+		}
+		else {
 			return 0;
+		}
 	}
 
 	/**
@@ -436,10 +452,12 @@ public class StatisticsPanel extends JScrollPane {
 
 		double variance = (sum / (double) numMinusMeanSquared.size());
 		stDev = Math.sqrt(variance);
-		if(stDev>=0)
+		if(stDev >= 0) {
 			return stDev;
-		else
+		}
+		else {
 			return 0;
+		}
 	}
 
 	private double median(List<Integer> votes) {
@@ -474,7 +492,7 @@ public class StatisticsPanel extends JScrollPane {
 		List<String> nameArray = requirementToNames(requirement);
 		List<Integer> voteArray = requirementToVotes(requirement);
 		for (int i = 0; i < nameArray.size(); i++) {
-			if (voteArray.get(i) == -8008135) {
+			if (voteArray.get(i) == -1) {
 				voteTable.getTableModel().addRow(
 						new Object[] { nameArray.get(i), "I don't know" });
 			} else {

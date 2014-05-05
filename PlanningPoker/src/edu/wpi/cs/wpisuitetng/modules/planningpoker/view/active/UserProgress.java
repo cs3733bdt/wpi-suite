@@ -11,6 +11,7 @@
 
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.view.active;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
 import java.util.logging.Level;
@@ -37,8 +38,8 @@ public class UserProgress extends JPanel {
 	private UserProgressList parentPanel;
 	
 	public UserProgress(String name, UserProgressList parent){
-		this.username = name;
-		this.parentPanel = parent;
+		username = name;
+		parentPanel = parent;
 		build();
 	}
 	
@@ -50,7 +51,7 @@ public class UserProgress extends JPanel {
 		userNameLabel.setPreferredSize(new Dimension(80, 20));
 		
 		userProgress.setStringPainted(true);
-		
+		userProgress.setBackground(Color.WHITE);
 		add(userNameLabel);
 		add(userProgress);
 		

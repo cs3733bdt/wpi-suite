@@ -90,13 +90,13 @@ public class DeckTree extends JPanel implements MouseListener{
 		deckNode.removeAllChildren();
 		
 		List<Deck> deckList = DeckModel.getInstance().getDecks();//retrieve list of all Decks
-		logger.log(Level.INFO,"Numb Decks: " + deckList.size());
+		logger.log(Level.INFO,"Numb decks checked ");
 		for (Deck deck: deckList){
 			DefaultMutableTreeNode newDeckNode = new DefaultMutableTreeNode(deck);
 			deckNode.add(newDeckNode);
 		}
 		
-		logger.log(Level.INFO,"Numb Decks: " + deckList.size());
+		logger.log(Level.INFO,"Numb decks checked ");
 
 		
 		deckTree = new JTree(deckNode);

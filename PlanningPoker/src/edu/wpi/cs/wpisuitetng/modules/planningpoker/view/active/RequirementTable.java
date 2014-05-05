@@ -67,11 +67,20 @@ public class RequirementTable extends JTable{
 			getColumnModel().getColumn(3).setMaxWidth(150);
 			
 			for(PPRequirement r: reqList) {
+				
+				String displayVote;
+				
+				if(r.userVote() == -1) {
+					displayVote = "?";
+				} else {
+					displayVote = Integer.toString(r.userVote());
+				}
+				
 				getTableModel().addRow(new Object[]{r.getName(), r.getDescription(),
-						r.userVote(), r.displayComplete()});
+						displayVote, r.displayComplete()});
 			}
-			
-			break;
+
+				break;
 		case ENDED:
 			
 			// fall through to the next case
