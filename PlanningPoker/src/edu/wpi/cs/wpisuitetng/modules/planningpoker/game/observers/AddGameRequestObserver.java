@@ -87,7 +87,7 @@ public class AddGameRequestObserver implements RequestObserver {
 					game.sendNotifications();
 			}
 		} else {
-			logger.log(Level.INFO, "The GameNotification is Null for game: " + game.getName());
+			logger.log(Level.INFO, "The GameNotification is Null for game");
 		}
 
 		logger.log(Level.INFO,"The request to add a game has succeeded!");

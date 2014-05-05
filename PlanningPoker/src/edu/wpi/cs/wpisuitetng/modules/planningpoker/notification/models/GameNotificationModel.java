@@ -1,3 +1,12 @@
+/*******************************************************************************
+* Copyright (c) 2012-2014 -- WPI Suite
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
+
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models;
 
 import java.util.ArrayList;
@@ -119,8 +128,9 @@ public class GameNotificationModel extends AbstractStorageModel<GameNotification
 	public GameNotification getGameNotification(UUID uuid) {
 		if (list != null) {
 			for (GameNotification gn: list) {
-				if (gn.getGameIdentity().equals(uuid))
+				if (gn.getGameIdentity().equals(uuid)) {
 					return gn;
+				}
 			}
 		}
 		return null;
@@ -143,8 +153,7 @@ public class GameNotificationModel extends AbstractStorageModel<GameNotification
 		if (o instanceof GameNotification) {
 			try {
 				UpdateGameNotificationController.getInstance().updateGameNotification((GameNotification) o);
-				logger.log(Level.INFO,"A gamenotification is being updated: "
-						+ ((GameNotification) o).getName());
+				logger.log(Level.INFO,"A game notification is being updated");
 			} catch (Exception e) {
 				logger.log(Level.WARNING,
 						"The network has not been instantiated.", e);

@@ -73,7 +73,6 @@ public class AddGameNotificationRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		logger.log(Level.WARNING,"The request to add a Game failed with exception: "
-				+ exception.getMessage());
+		logger.log(Level.WARNING,"The request to add a Game failed");
 	}
 }

@@ -83,7 +83,7 @@ public class UpdateGameRequestObserver implements RequestObserver {
 				game.sendNotifications();
 			}
 		} else {
-			logger.log(Level.INFO, "The GameNotification is Null for game: " + game.getName());
+			logger.log(Level.INFO, "The GameNotification is Null for game");
 		}
 
 		logger.log(Level.INFO,"The request to update a game has succeeded!");
