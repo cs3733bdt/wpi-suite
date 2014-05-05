@@ -15,18 +15,22 @@ import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComponent;
@@ -138,6 +142,12 @@ public class StatisticsPanel extends JScrollPane {
 				finalEstimateButtonPressed();
 			}
 		});
+		try {
+			Image img = ImageIO.read(getClass().getResource("submit.png"));
+			finalEstimateButton.setIcon(new ImageIcon(img));
+
+		} catch (IOException ex) {}
+		finalEstimateButton.setPreferredSize(finalEstimateButton.getPreferredSize());
 
 		finalEstimateButton.setEnabled(true);
 		finalEstimateDisplay = new JLabel();
