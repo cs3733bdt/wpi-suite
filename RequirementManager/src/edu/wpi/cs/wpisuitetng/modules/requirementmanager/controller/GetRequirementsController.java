@@ -12,6 +12,8 @@ package edu.wpi.cs.wpisuitetng.modules.requirementmanager.controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Timer;
+
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.Requirement;
 import edu.wpi.cs.wpisuitetng.modules.requirementmanager.models.RequirementModel;
 import edu.wpi.cs.wpisuitetng.network.Network;
@@ -29,6 +31,8 @@ public class GetRequirementsController implements ActionListener {
 
 	private GetRequirementsRequestObserver observer;
 	private static GetRequirementsController instance;
+	private Timer timer;
+	private boolean isRunning = false;
 
 	/**
 	 * Constructs the controller given a RequirementModel
@@ -70,6 +74,13 @@ public class GetRequirementsController implements ActionListener {
 	 * Sends an HTTP request to retrieve all requirements
 	 */
 	public void retrieveRequirements() {
+		if (!isRunning) {
+			timer = new Timer(5000, this);
+			timer.setInitialDelay(5000);
+			timer.setCoalesce(true);
+			timer.start();
+			isRunning = true;
+		}
 		final Request request = Network.getInstance().makeRequest("requirementmanager/requirement", HttpMethod.GET); // GET == read
 		request.addObserver(observer); // add an observer to process the response
 		request.send(); // send the request
