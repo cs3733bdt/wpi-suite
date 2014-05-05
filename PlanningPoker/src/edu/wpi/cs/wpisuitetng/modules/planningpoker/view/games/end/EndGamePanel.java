@@ -92,19 +92,35 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
 		
 	}
 	
+	/**
+	 * update right half of the end game 
+	 * @param PPRequirement
+	 */
 	public void updateRightHalf(PPRequirement req) {
 		rightHalf.reqClicked(req);
 		return;		
 	}
 
+	/**
+	 * set the game name 
+	 * @param string newGameName
+	 */
 	public void setGameName(String newGameName) {
 		gameName.setText(newGameName);
 	}
 
+	/**
+	 * set the game description
+	 * @param string newGameDesc
+	 */
 	public void setGameDesc(String newGameDesc) {
 		gameDesc.setText(newGameDesc);
 	}
 
+	/**
+	 * set the user story description
+	 * @param string newUserStoryDesc
+	 */
 	public void setUserStoryDesc(String newUserStoryDesc) {
 		userStoryDesc.setText(newUserStoryDesc);
 	}
@@ -123,6 +139,9 @@ public class EndGamePanel extends JSplitPane implements IModelObserver, IEndedGa
 		}
 	}
 	
+	/**
+	 * run when end game button pressed
+	 */
 	public void endGameButtonPressed(){
 		active.makeComplete();
 		active.notifyObservers();

@@ -439,6 +439,10 @@ public class AddRequirementsPanel extends JPanel {
 		return currentReqsPanel;
 	}
 
+	/**
+	 * add requirements
+	 * @param PPRequirement requirement
+	 */
 	public void addRequirement(PPRequirement requirement){
 		//table2.getTableModel().addRow(new Object[]{requirement.getName(), requirement.getDescription()});
 	}

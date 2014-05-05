@@ -294,6 +294,9 @@ public class TabbedView extends JTabbedPane {
 		repaint();
 	}
 
+	/**
+	 * open Preferences Tab
+	 */
 	public void openPreferencesTab() {
 		if (!hasPreferencesTab) {
 			preferencesPanel = new PreferencesPanel();
@@ -313,6 +316,9 @@ public class TabbedView extends JTabbedPane {
 
 	}
 
+	/**
+	 * open Preferences Tab
+	 */
 	public void openHelpTab() {
 		Component currentComp = getSelectedComponent();
 		IHelpPanel helpPanel;
@@ -710,11 +716,19 @@ public class TabbedView extends JTabbedPane {
 
 	}
 
+	/**
+	 * remove Help Panel
+	 * @param IHelpPanel
+	 */
 	public void removeHelpPanel(IHelpPanel comp) {
 		listOfHelpPanels.remove(comp);
 		resetBoolean(comp);
 	}
 
+	/**
+	 * reset Boolean
+	 * @param IHelpPanel
+	 */
 	public void resetBoolean(IHelpPanel comp) {
 		if (comp instanceof ActiveGameHelp) {
 			hasActiveGameHelp = false;

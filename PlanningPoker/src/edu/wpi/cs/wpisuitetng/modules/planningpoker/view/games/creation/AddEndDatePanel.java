@@ -248,6 +248,10 @@ public class AddEndDatePanel extends JPanel implements IDataField {
 		AmPmSelection.setSelectedItem(oldAMPM);
 	}
 	
+	/**
+	 * add key listener
+	 * @param IValidateButtons parent
+	 */
 	public void addKeyListener(final IValidateButtons parent){
 		this.getDatePicker().addKeyListener(new KeyAdapter(){
 			public void keyReleased(KeyEvent arg0) {	

@@ -31,6 +31,10 @@ public class EndGameTable extends JTable
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	Object[][] data = {};
 	
+	/**
+	 * 
+	 * @param EndGameTableMode
+	 */
 	public EndGameTable(EndGameTableMode mode)
 	{
 		this.mode = mode;

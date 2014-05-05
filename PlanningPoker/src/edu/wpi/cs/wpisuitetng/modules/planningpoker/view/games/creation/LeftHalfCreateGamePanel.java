@@ -624,6 +624,10 @@ public class LeftHalfCreateGamePanel extends JScrollPane implements IDataField {
 		}
 	}
 
+	/**
+	 * 
+	 * @return a string of date
+	 */
 	public String dateToString() {
 		return endDateField.toString();
 	}

@@ -53,12 +53,20 @@ public class EndGameLeftHalf extends JScrollPane {
 	
 	private final Border defaultBorder = (new JTextField()).getBorder();
 	
+	/**
+	 * 
+	 * @param game
+	 * @param EndGamePanel
+	 */
 	public EndGameLeftHalf(final Game game, EndGamePanel parent){
 		this.parent = parent;
 		ended = game;
 		build();
 	}
 	
+	/**
+	 * initial build method
+	 */
 	public void build(){
 		// Creates the container to hold all the components
 		// and sets the container's layout to be SpringLayout

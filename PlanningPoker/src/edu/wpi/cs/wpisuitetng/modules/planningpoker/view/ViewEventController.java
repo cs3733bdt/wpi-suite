@@ -67,10 +67,17 @@ public class ViewEventController {
 		toolbar.repaint(); 
 	}
 	
+	/**
+	 * disable help button
+	 * @param string message
+	 */
 	public void disableHelpButton(String message) {
 		toolbar.disableHelpButton(message);
 	}
 	
+	/**
+	 * enable Help Button
+	 */
 	public void enableHelpButton() {
 		toolbar.enableHelpButton();
 	}
@@ -121,6 +128,9 @@ public class ViewEventController {
 		getTabbedView().repaint();
 	}
 	
+	/**
+	 * edit Preferences
+	 */
 	public void editPreferences() {
 		getTabbedView().openPreferencesTab();
 		getTabbedView().invalidate();
@@ -128,6 +138,9 @@ public class ViewEventController {
 		
 	}
 	
+	/**
+	 * open Help tab
+	 */
 	public void openHelp() {
 		getTabbedView().openHelpTab();
 		getTabbedView().invalidate();

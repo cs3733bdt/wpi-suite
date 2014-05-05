@@ -486,6 +486,9 @@ public class PreferencesPanel extends JScrollPane implements IPreferencesPanel {
 		
 	}
 
+	/**
+	 * update the email when the button pressed
+	 */
 	public void updateEmailButtonPressed() {
 		/**
 		 * IF TEST CONSTRUCTOR WAS CALLED, DO NOT
@@ -504,6 +507,10 @@ public class PreferencesPanel extends JScrollPane implements IPreferencesPanel {
 			updateUserController.updateUser(newUser);
 		}
 	}
+	
+	/**
+	 * update the Facebook when the button pressed
+	 */
 	public void updateFacebookButtonPressed() {
 		/**
 		 * IF TEST CONSTRUCTOR WAS CALLED, DO NOT
@@ -521,6 +528,10 @@ public class PreferencesPanel extends JScrollPane implements IPreferencesPanel {
 			updateUserController.updateUser(newUser);
 		}
 	}
+	
+	/**
+	 * update the mobile when the button pressed
+	 */
 	public void updateMobileButtonPressed() {
 		/**
 		 * IF TEST CONSTRUCTOR WAS CALLED, DO NOT
@@ -586,6 +597,9 @@ public class PreferencesPanel extends JScrollPane implements IPreferencesPanel {
 		return carrier;
 	}
 	
+	/**
+	 * update the notification when the button pressed
+	 */
 	public void updateNotificationPreferences(){
 		User newUser = getUserController.getCurrentUser();
 		String newPreferences = "";
@@ -730,6 +744,9 @@ public class PreferencesPanel extends JScrollPane implements IPreferencesPanel {
 		return bigFont;
 	}
 
+	/**
+	 * initialize check boxes
+	 */
 	public void initializeCheckBoxes() {
 		try{
 			String preferences = getUserController.getCurrentUser().getNotificationPreferences();
@@ -767,14 +784,26 @@ public class PreferencesPanel extends JScrollPane implements IPreferencesPanel {
 		
 	}
 
+	/**
+	 * 
+	 * @return true if user chooses receiving email
+	 */
 	public boolean receivingEmail() {
 		return (emailCheckBox.isSelected());
 	}
 
+	/**
+	 * 
+	 * @return true if user chooses receiving facebook message
+	 */
 	public boolean receivingFacebook() {
 		return (facebookCheckBox.isSelected());
 	}
 
+	/**
+	 * 
+	 * @return true if user chooses receiving mobile message
+	 */
 	public boolean receivingMobile() {
 		return (mobileCheckBox.isSelected());
 	}
