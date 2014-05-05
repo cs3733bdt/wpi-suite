@@ -1,3 +1,11 @@
+/*******************************************************************************
+* Copyright (c) 2012-2014 -- WPI Suite
+*
+* All rights reserved. This program and the accompanying materials
+* are made available under the terms of the Eclipse Public License v1.0
+* which accompanies this distribution, and is available at
+* http://www.eclipse.org/legal/epl-v10.html
+*******************************************************************************/
 package edu.wpi.cs.wpisuitetng.modules.planningpoker.notification.models;
 
 import java.util.UUID;
@@ -16,7 +24,7 @@ public class GameNotification extends ObservableModel implements IModelObserver,
 	private UUID gameIdentity;
 	private boolean gameCreationNotified;
 	private boolean gameCompletionNotified;
-	private static Logger logger = Logger.getLogger(GameNotification.class.getName());
+	private static final Logger logger = Logger.getLogger(GameNotification.class.getName());
 	
 	public GameNotification(UUID gameIdentity) {
 		this.gameIdentity = gameIdentity;

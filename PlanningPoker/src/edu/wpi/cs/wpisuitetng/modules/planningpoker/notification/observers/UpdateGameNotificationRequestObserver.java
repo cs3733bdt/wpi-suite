@@ -71,7 +71,6 @@ public class UpdateGameNotificationRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		logger.log(Level.WARNING,"The request to update a gamenotification failed with exception: "
-						+ exception.getMessage());
+		logger.log(Level.WARNING,"The request to update a gamenotification failed");
 	}
 }

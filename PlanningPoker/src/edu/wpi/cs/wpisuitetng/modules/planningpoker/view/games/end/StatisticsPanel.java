@@ -615,7 +615,7 @@ public class StatisticsPanel extends JScrollPane {
 		GetRequirementsController.getInstance().retrieveRequirements();
 		// Sleep to wait for retrieve to finish
 		try {
-			Thread.sleep(500);
+			Thread.sleep(1000);
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
@@ -632,12 +632,12 @@ public class StatisticsPanel extends JScrollPane {
 	}
 
 	private void sendRequirementToManager(PPRequirement req, int estimate) {
-		int nextId = 0;
+		int nextId = -1;
 		RequirementModel rModel = RequirementModel.getInstance();
 		GetRequirementsController.getInstance().retrieveRequirements();
 		// Sleep to wait for retrieve to finish
 		try {
-			Thread.sleep(500);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

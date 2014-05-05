@@ -70,6 +70,6 @@ public class GetGameNotificationRequestObserver implements RequestObserver {
 	 */
 	@Override
 	public void fail(IRequest iReq, Exception exception) {
-		logger.log(Level.WARNING,"Failed to get games with exception: " + exception.getMessage());
+		logger.log(Level.WARNING,"Failed to get games");
 	}
 }
