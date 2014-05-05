@@ -147,19 +147,19 @@ public class DeckOverview extends JSplitPane {
 		createPane.setBorder(null);
 		
 		//Creates a hyperlink for the video tutorial
-		videoTutorial = new JXHyperlink();
-		videoTutorial.setText("Here is a video tutorial showing how to create a new Planning Poker deck.");
-		videoTutorial.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=okqEVeNqBhc"));
-				} catch (URISyntaxException | IOException ex) {
-					//It looks like there's a problem
-					logger.log(Level.WARNING, "The link cannot be opened", ex);
-				}
-			}
-		});
+//		videoTutorial = new JXHyperlink();
+//		videoTutorial.setText("Here is a video tutorial showing how to create a new Planning Poker deck.");
+//		videoTutorial.addMouseListener(new MouseAdapter() {
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				try {
+//					Desktop.getDesktop().browse(new URI("https://www.youtube.com/watch?v=okqEVeNqBhc"));
+//				} catch (URISyntaxException | IOException ex) {
+//					//It looks like there's a problem
+//					logger.log(Level.WARNING, "The link cannot be opened", ex);
+//				}
+//			}
+//		});
 		
 		// Adds components to the panel
 		panel.add(ppIntroLabel);
@@ -171,7 +171,7 @@ public class DeckOverview extends JSplitPane {
 		panel.add(createDeckLabel);
 		//panel.add(createPane);
 		panel.add(createDeckExp);
-		panel.add(videoTutorial);
+		//panel.add(videoTutorial);
 		
 		// Adjusts constraints on components
 		layout.putConstraint(SpringLayout.NORTH, ppIntroLabel, 10, SpringLayout.NORTH, panel);
@@ -191,10 +191,11 @@ public class DeckOverview extends JSplitPane {
 		layout.putConstraint(SpringLayout.NORTH, createDeckLabel, 40, SpringLayout.SOUTH, ppWhyExp);
 		layout.putConstraint(SpringLayout.WEST, createDeckLabel, 5, SpringLayout.WEST, panel);
 		
-		layout.putConstraint(SpringLayout.NORTH, videoTutorial, 8, SpringLayout.SOUTH, createDeckLabel);
-		layout.putConstraint(SpringLayout.WEST, videoTutorial, 5, SpringLayout.WEST, panel);
+//		layout.putConstraint(SpringLayout.NORTH, videoTutorial, 8, SpringLayout.SOUTH, createDeckLabel);
+//		layout.putConstraint(SpringLayout.WEST, videoTutorial, 5, SpringLayout.WEST, panel);
 		
-		layout.putConstraint(SpringLayout.NORTH, createDeckExp, 8, SpringLayout.SOUTH, videoTutorial);
+		//layout.putConstraint(SpringLayout.NORTH, createDeckExp, 8, SpringLayout.SOUTH, videoTutorial);
+		layout.putConstraint(SpringLayout.NORTH, createDeckExp, 10, SpringLayout.SOUTH, createDeckLabel);
 		layout.putConstraint(SpringLayout.WEST, createDeckExp, 5, SpringLayout.WEST, panel);
 		layout.putConstraint(SpringLayout.EAST, createDeckExp, 600, SpringLayout.WEST, panel);
 		
